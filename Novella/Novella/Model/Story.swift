@@ -7,11 +7,11 @@
 //
 
 class Story {
-	var _rootVariableSet: VariableSet
+	var _rootVariableSet: Folder
 	var _flowGraphs: [FlowGraph]
 	
 	init() {
-		self._rootVariableSet = VariableSet(name: "story")
+		self._rootVariableSet = Folder(name: "story")
 		self._flowGraphs = []
 	}
 }

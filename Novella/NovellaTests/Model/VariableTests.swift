@@ -18,7 +18,7 @@ class VariableTests: XCTestCase {
 		XCTAssertEqual("zak", varA.Name)
 		
 		let varB = Novella.Variable(name: "mengna", type: .integer)
-		let setA = Novella.VariableSet(name: "set")
+		let setA = Novella.Folder(name: "set")
 		do {
 			try setA.addVariable(variable: varA)
 			try setA.addVariable(variable: varB)

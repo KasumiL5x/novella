@@ -13,7 +13,7 @@ class Variable {
 	var _value: Any
 	var _initialValue: Any
 	var _constant: Bool
-	var _set: VariableSet? // internal only
+	var _folder: Folder?
 	
 	init(name: String, type: DataType) {
 		self._name = name
@@ -22,7 +22,7 @@ class Variable {
 		self._value = type.defaultValue
 		self._initialValue = type.defaultValue
 		self._constant = false
-		self._set = nil
+		self._folder = nil
 	}
 	
 	// MARK:  Getters
@@ -35,15 +35,15 @@ class Variable {
 	
 	// MARK: Setters
 	func setName(name: String) throws {
-		// if not in a set, name conflict doesn't matter
-		if nil == _set {
+		// if not in a folder, name conflict doesn't matter
+		if nil == _folder {
 			_name = name
 			return
 		}
 		
-		// containing set can't contain the requested name already
-		if _set!.containsVariable(name: name) {
-			throw Errors.nameAlreadyTaken("Tried to change Variable \(_name) to \(name), but its set (\(_set!.Name) already contains that name.")
+		// containing folder can't contain the requested name already
+		if _folder!.containsVariable(name: name) {
+			throw Errors.nameAlreadyTaken("Tried to change Variable \(_name) to \(name), but its folder (\(_folder!.Name) already contains that name.")
 		}
 		_name = name
 	}
