@@ -13,6 +13,12 @@
 		658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CB1207E7E6600E2B46B /* Main.storyboard */; };
 		658C7CBF207E7E6600E2B46B /* NovellaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CBE207E7E6600E2B46B /* NovellaTests.swift */; };
 		658C7CCA207E7E6600E2B46B /* NovellaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */; };
+		658C7CDC207E7EB900E2B46B /* VariableSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CD8207E7EB800E2B46B /* VariableSet.swift */; };
+		658C7CDD207E7EB900E2B46B /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CD9207E7EB800E2B46B /* Variable.swift */; };
+		658C7CDE207E7EB900E2B46B /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CDA207E7EB900E2B46B /* Errors.swift */; };
+		658C7CDF207E7EB900E2B46B /* DataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CDB207E7EB900E2B46B /* DataType.swift */; };
+		658C7CE3207E7EDD00E2B46B /* VariableSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CE1207E7EDD00E2B46B /* VariableSetTests.swift */; };
+		658C7CE4207E7EDD00E2B46B /* VariableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CE2207E7EDD00E2B46B /* VariableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +52,12 @@
 		658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovellaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovellaUITests.swift; sourceTree = "<group>"; };
 		658C7CCB207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		658C7CD8207E7EB800E2B46B /* VariableSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableSet.swift; sourceTree = "<group>"; };
+		658C7CD9207E7EB800E2B46B /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		658C7CDA207E7EB900E2B46B /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		658C7CDB207E7EB900E2B46B /* DataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataType.swift; sourceTree = "<group>"; };
+		658C7CE1207E7EDD00E2B46B /* VariableSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableSetTests.swift; sourceTree = "<group>"; };
+		658C7CE2207E7EDD00E2B46B /* VariableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +108,7 @@
 		658C7CAA207E7E6500E2B46B /* Novella */ = {
 			isa = PBXGroup;
 			children = (
+				658C7CD7207E7E9B00E2B46B /* Model */,
 				658C7CAB207E7E6500E2B46B /* AppDelegate.swift */,
 				658C7CAD207E7E6500E2B46B /* ViewController.swift */,
 				658C7CAF207E7E6600E2B46B /* Assets.xcassets */,
@@ -109,6 +122,7 @@
 		658C7CBD207E7E6600E2B46B /* NovellaTests */ = {
 			isa = PBXGroup;
 			children = (
+				658C7CE0207E7EC000E2B46B /* Model */,
 				658C7CBE207E7E6600E2B46B /* NovellaTests.swift */,
 				658C7CC0207E7E6600E2B46B /* Info.plist */,
 			);
@@ -122,6 +136,26 @@
 				658C7CCB207E7E6600E2B46B /* Info.plist */,
 			);
 			path = NovellaUITests;
+			sourceTree = "<group>";
+		};
+		658C7CD7207E7E9B00E2B46B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				658C7CDB207E7EB900E2B46B /* DataType.swift */,
+				658C7CDA207E7EB900E2B46B /* Errors.swift */,
+				658C7CD9207E7EB800E2B46B /* Variable.swift */,
+				658C7CD8207E7EB800E2B46B /* VariableSet.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		658C7CE0207E7EC000E2B46B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				658C7CE1207E7EDD00E2B46B /* VariableSetTests.swift */,
+				658C7CE2207E7EDD00E2B46B /* VariableTests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,8 +288,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658C7CDC207E7EB900E2B46B /* VariableSet.swift in Sources */,
+				658C7CDF207E7EB900E2B46B /* DataType.swift in Sources */,
+				658C7CDE207E7EB900E2B46B /* Errors.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
+				658C7CDD207E7EB900E2B46B /* Variable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658C7CE3207E7EDD00E2B46B /* VariableSetTests.swift in Sources */,
+				658C7CE4207E7EDD00E2B46B /* VariableTests.swift in Sources */,
 				658C7CBF207E7E6600E2B46B /* NovellaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
