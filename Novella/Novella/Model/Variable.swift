@@ -6,7 +6,7 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-public class Variable {
+class Variable {
 	var _name: String
 	var _synopsis: String
 	var _type: DataType
@@ -15,7 +15,7 @@ public class Variable {
 	var _constant: Bool
 	var _set: VariableSet? // internal only
 	
-	public init(name: String, type: DataType) {
+	init(name: String, type: DataType) {
 		self._name = name
 		self._synopsis = ""
 		self._type = type
@@ -26,15 +26,15 @@ public class Variable {
 	}
 	
 	// MARK:  Getters
-	public var Name:         String   {get{ return _name }}
-	public var Synopsis:     String   {get{ return _synopsis }}
-	public var DataType:     DataType {get{ return _type }}
-	public var Value:        Any      {get{ return _value }}
-	public var InitialValue: Any      {get{ return _initialValue }}
-	public var IsConstant:   Bool     {get{ return _constant }}
+	var Name:         String   {get{ return _name }}
+	var Synopsis:     String   {get{ return _synopsis }}
+	var DataType:     DataType {get{ return _type }}
+	var Value:        Any      {get{ return _value }}
+	var InitialValue: Any      {get{ return _initialValue }}
+	var IsConstant:   Bool     {get{ return _constant }}
 	
 	// MARK: Setters
-	public func setName(name: String) throws {
+	func setName(name: String) throws {
 		// if not in a set, name conflict doesn't matter
 		if nil == _set {
 			_name = name
@@ -48,18 +48,18 @@ public class Variable {
 		_name = name
 	}
 	
-	public func setSynopsis(synopsis: String) {
+	func setSynopsis(synopsis: String) {
 		self._synopsis = synopsis
 	}
 	
-	public func setType(type: DataType) {
+	func setType(type: DataType) {
 		_type = type
 		_value = type.defaultValue
 		_initialValue = type.defaultValue
 		// TODO: Can I somehow convert existing data safely or revert to defaults otherwise?
 	}
 
-	public func setValue(val: Any) throws {
+	func setValue(val: Any) throws {
 		if self._constant {
 			throw Errors.isConstant("")
 		}
@@ -71,7 +71,7 @@ public class Variable {
 		_value = val
 	}
 	
-	public func setInitialValue(val: Any) throws {
+	func setInitialValue(val: Any) throws {
 		if !_type.matches(value: val) {
 			throw Errors.dataTypeMismatch("")
 		}
@@ -79,7 +79,7 @@ public class Variable {
 		_value = val
 	}
 	
-	public func setConstant(const: Bool) {
+	func setConstant(const: Bool) {
 		self._constant = const
 	}
 }

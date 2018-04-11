@@ -6,14 +6,14 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-public class VariableSet {
+class VariableSet {
 	var _name: String
 	var _synopsis: String
 	var _sets: [VariableSet]
 	var _variables: [Variable]
 	var _parent: VariableSet?
 	
-	public init(name: String) {
+	init(name: String) {
 		self._name = name
 		self._synopsis = ""
 		self._sets = []
@@ -22,11 +22,11 @@ public class VariableSet {
 	}
 	
 	// MARK: Getters
-	public var Name:     String {get{ return _name }}
-	public var Synopsis: String {get{ return _synopsis }}
+	var Name:     String {get{ return _name }}
+	var Synopsis: String {get{ return _synopsis }}
 	
 	// MARK: Setters
-	public func setName(name: String) throws {
+	func setName(name: String) throws {
 		// if not in a parent set, name conflict doesn't matter
 		if nil == _parent {
 			_name = name
@@ -40,16 +40,16 @@ public class VariableSet {
 		_name = name
 	}
 	
-	public func setSynopsis(synopsis: String) {
+	func setSynopsis(synopsis: String) {
 		self._synopsis = synopsis
 	}
 	
 	// MARK: Sets
-	public func containsSet(name: String) -> Bool {
+	func containsSet(name: String) -> Bool {
 		return _sets.contains(where: {$0._name == name})
 	}
 	
-	public func addSet(set: VariableSet) throws {
+	func addSet(set: VariableSet) throws {
 		if containsSet(name: set._name) {
 			throw Errors.nameAlreadyTaken("Tried to add set \(set._name) as a child of set \(_name), but its name was already taken.")
 		}
@@ -57,7 +57,7 @@ public class VariableSet {
 		_sets.append(set)
 	}
 	
-	public func removeSet(name: String) throws {
+	func removeSet(name: String) throws {
 		guard let idx = _sets.index(where: {$0._name == name}) else {
 			throw Errors.nameNotFound("Tried to remove set \(name) from parent set \(_name), but its name was not found.")
 		}
@@ -65,7 +65,7 @@ public class VariableSet {
 		_sets.remove(at: idx)
 	}
 	
-	public func getSet(name: String) throws -> VariableSet {
+	func getSet(name: String) throws -> VariableSet {
 		guard let existing = _sets.first(where: {$0._name == name}) else {
 			throw Errors.nameNotFound("Tried to get set \(name) from parent set \(_name), but its name was not found.")
 		}
@@ -73,11 +73,11 @@ public class VariableSet {
 	}
 	
 	// MARK: Variables
-	public func containsVariable(name: String) -> Bool {
+	func containsVariable(name: String) -> Bool {
 		return _variables.contains(where: {$0._name == name})
 	}
 	
-	public func addVariable(variable: Variable) throws {
+	func addVariable(variable: Variable) throws {
 		if containsVariable(name: variable._name) {
 			throw Errors.nameAlreadyTaken("Tried to add variable \(variable._name) as a child of set \(_name), but its name was already taken.")
 		}
@@ -85,7 +85,7 @@ public class VariableSet {
 		_variables.append(variable)
 	}
 	
-	public func removeVariable(name: String) throws {
+	func removeVariable(name: String) throws {
 		guard let idx = _variables.index(where: {$0._name == name}) else {
 			throw Errors.nameNotFound("Tried to remove variable \(name) from parent set \(_name), but its name was not found.")
 		}
@@ -93,7 +93,7 @@ public class VariableSet {
 		_variables.remove(at: idx)
 	}
 	
-	public func getVariable(name: String) throws -> Variable {
+	func getVariable(name: String) throws -> Variable {
 		guard let existing = _variables.first(where: {$0._name == name}) else {
 			throw Errors.nameNotFound("Tried to get variable \(name) from parent set \(_name), but its name was not found.")
 		}
@@ -102,7 +102,7 @@ public class VariableSet {
 	
 	
 	// MARK - Debug
-	public func debugPrint(indent: Int) {
+	func debugPrint(indent: Int) {
 		var str = ""
 		
 		// current set w/ indent
