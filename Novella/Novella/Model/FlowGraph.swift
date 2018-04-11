@@ -7,4 +7,11 @@
 //
 
 class FlowGraph {
+	var _nodes: [FlowNode]
+	var _links: [BaseLink]
+	
+	init() {
+		self._nodes = []
+		self._links = []
+	}
 }
