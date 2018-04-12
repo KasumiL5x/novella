@@ -90,7 +90,7 @@ class VariableFolderViewController: NSViewController {
 		}
 		if let variable = item as? Variable {
 			if variable._folder != nil {
-				try! variable._folder?.removeVariable(name: variable.Name)
+				try! variable._folder?.remove(variable: variable)
 			}
 		}
 		

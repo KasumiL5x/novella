@@ -124,26 +124,19 @@ class Folder {
 		}
 		// unparent first
 		if variable._folder != nil {
-			try! variable._folder?.removeVariable(name: variable._name)
+			try! variable._folder?.remove(variable: variable)
 		}
 		// now add
 		variable._folder = self
 		_variables.append(variable)
 	}
 	
-	func removeVariable(name: String) throws {
-		guard let idx = _variables.index(where: {$0._name == name}) else {
-			throw Errors.nameNotFound("Tried to remove variable \(name) from parent folder \(_name), but its name was not found.")
+	func remove(variable: Variable) throws {
+		guard let idx = _variables.index(of: variable) else {
+			throw Errors.invalid("Tried to remove Variable (\(variable._name)) from (\(_name)) but it was not a child.")
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
-	}
-	
-	func getVariable(name: String) throws -> Variable {
-		guard let existing = _variables.first(where: {$0._name == name}) else {
-			throw Errors.nameNotFound("Tried to get variable \(name) from parent folder \(_name), but its name was not found.")
-		}
-		return existing
 	}
 	
 	// MARK: Variable Convenience Functions
