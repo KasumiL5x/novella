@@ -20,8 +20,8 @@ class FolderTests: XCTestCase {
 		let setB = Novella.Folder(name: "mengna")
 		let parent = Novella.Folder(name: "egg")
 		do {
-			try parent.addFolder(folder: setA)
-			try parent.addFolder(folder: setB)
+			try parent.add(folder: setA)
+			try parent.add(folder: setB)
 		} catch { XCTFail() }
 		
 		// change name while in a parent set without conflict should work
@@ -43,11 +43,10 @@ class FolderTests: XCTestCase {
 		let parent = Novella.Folder(name: "parent")
 		let child = Novella.Folder(name: "inside")
 		do {
-			try parent.addFolder(folder: child)
+			try parent.add(folder: child)
 		} catch { XCTFail() }
 		
-		XCTAssertTrue(parent.containsFolder(name: child.Name))
-		XCTAssertFalse(parent.containsFolder(name: "thisNameIsNotIn"))
+		XCTAssertTrue(parent.contains(folder: child))
 	}
 	
 	func testAddSet() {
@@ -55,59 +54,35 @@ class FolderTests: XCTestCase {
 		let child = Novella.Folder(name: "child")
 		
 		// adding should work just fine w/o any clashes
-		XCTAssertNoThrow(try parent.addFolder(folder: child))
-		XCTAssertTrue(parent.containsFolder(name: child.Name))
+		XCTAssertNoThrow(try parent.add(folder: child))
+		XCTAssertTrue(parent.contains(folder: child))
 		
 		// should fail if we add a set with the same name
 		let conflict = Novella.Folder(name: child.Name)
-		XCTAssertThrowsError(try parent.addFolder(folder: conflict))
+		XCTAssertThrowsError(try parent.add(folder: conflict))
 	}
 	
 	func testRemoveSet() {
 		let parent = Novella.Folder(name: "parent")
 		let child = Novella.Folder(name: "child")
 		do {
-			try parent.addFolder(folder: child)
+			try parent.add(folder: child)
 		} catch { XCTFail() }
 		
 		// remove set that exists should work
-		XCTAssertTrue(parent.containsFolder(name: child.Name))
-		XCTAssertNoThrow(try parent.removeFolder(name: child.Name))
-		XCTAssertFalse(parent.containsFolder(name: child.Name))
-		XCTAssertThrowsError(try parent.removeFolder(name: child.Name))
-		
-		// remove set that doesn't exist should fail
-		XCTAssertThrowsError(try parent.removeFolder(name: "thisSetDoesntExist"))
-	}
-	
-	func testGetSet() {
-		let parent = Novella.Folder(name: "parent")
-		let child = Novella.Folder(name: "child")
-		do {
-			try parent.addFolder(folder: child)
-		} catch { XCTFail() }
-		
-		// get existing set
-		if let get = try? parent.getFolder(name: child.Name) {
-			// compare to set for certainty
-			XCTAssertEqual(get.Name, child.Name)
-		} else {
-			XCTFail()
-		}
-		
-		// get set that doesn't exist
-		XCTAssertThrowsError(try parent.getFolder(name: "doesntExist"))
+		XCTAssertTrue(parent.contains(folder: child))
+		XCTAssertNoThrow(try parent.remove(folder: child))
+		XCTAssertFalse(parent.contains(folder: child))
 	}
 	
 	func testContainsVariable() {
 		let parent = Novella.Folder(name: "set")
 		let variable = Novella.Variable(name: "var", type: .boolean)
 		do {
-			try parent.addVariable(variable: variable)
+			try parent.add(variable: variable)
 		} catch { XCTFail() }
 		
-		XCTAssertTrue(parent.containsVariable(name: variable.Name))
-		XCTAssertFalse(parent.containsVariable(name: "thisNameIsNotIn"))
+		XCTAssertTrue(parent.contains(variable: variable))
 	}
 	
 	func testAddVariable() {
@@ -115,47 +90,25 @@ class FolderTests: XCTestCase {
 		let variable = Novella.Variable(name: "var", type: .boolean)
 		
 		// adding should work just fine w/o any clashes
-		XCTAssertNoThrow(try parent.addVariable(variable: variable))
-		XCTAssertTrue(parent.containsVariable(name: variable.Name))
+		XCTAssertNoThrow(try parent.add(variable: variable))
+		XCTAssertTrue(parent.contains(variable: variable))
 
 		// should fail if we add a variable with the same name
 		let conflict = Novella.Variable(name: variable.Name, type: .boolean)
-		XCTAssertThrowsError(try parent.addVariable(variable: conflict))
+		XCTAssertThrowsError(try parent.add(variable: conflict))
 	}
 	
 	func testRemoveVariable() {
 		let parent = Novella.Folder(name: "parent")
 		let variable = Novella.Variable(name: "var", type: .boolean)
 		do {
-			try parent.addVariable(variable: variable)
+			try parent.add(variable: variable)
 		} catch { XCTFail() }
 		
 		// remove variable that exists should work
-		XCTAssertTrue(parent.containsVariable(name: variable.Name))
-		XCTAssertNoThrow(try parent.removeVariable(name: variable.Name))
-		XCTAssertFalse(parent.containsVariable(name: variable.Name))
-		XCTAssertThrowsError(try parent.removeVariable(name: variable.Name))
-		
-		// remove variable that doesn't exist should fail
-		XCTAssertThrowsError(try parent.removeVariable(name: "thisSetDoesntExist"))
-	}
-	
-	func testGetVariable() {
-		let parent = Novella.Folder(name: "parent")
-		let variable = Novella.Variable(name: "var", type: .boolean)
-		do {
-			try parent.addVariable(variable: variable)
-		} catch { XCTFail() }
-		
-		// get existing variable
-		if let get = try? parent.getVariable(name: variable.Name) {
-			// compare to variable for certainty
-			XCTAssertEqual(get.Name, variable.Name)
-		} else {
-			XCTFail()
-		}
-		
-		// get variable that doesn't exist
-		XCTAssertThrowsError(try parent.getVariable(name: "doesntExist"))
+		XCTAssertTrue(parent.contains(variable: variable))
+		XCTAssertNoThrow(try parent.remove(variable: variable))
+		XCTAssertFalse(parent.contains(variable: variable))
+		XCTAssertThrowsError(try parent.remove(variable: variable))
 	}
 }

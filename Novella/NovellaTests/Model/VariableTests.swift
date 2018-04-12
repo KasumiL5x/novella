@@ -20,8 +20,8 @@ class VariableTests: XCTestCase {
 		let varB = Novella.Variable(name: "mengna", type: .integer)
 		let setA = Novella.Folder(name: "set")
 		do {
-			try setA.addVariable(variable: varA)
-			try setA.addVariable(variable: varB)
+			try setA.add(variable: varA)
+			try setA.add(variable: varB)
 		} catch { XCTFail() }
 		
 		// change name while in a set without conflict should work
