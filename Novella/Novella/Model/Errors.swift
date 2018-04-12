@@ -9,6 +9,10 @@
 import Foundation
 
 enum Errors: Error {
+	// new errors
+	case nameTaken(String)
+	
+	// old errors
 	case nameNotFound(String)
 	case nameAlreadyTaken(String)
 	case notImplemented(String)

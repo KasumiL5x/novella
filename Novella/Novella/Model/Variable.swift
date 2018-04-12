@@ -40,10 +40,9 @@ class Variable {
 			_name = name
 			return
 		}
-		
 		// containing folder can't contain the requested name already
 		if _folder!.containsVariableName(name: name) {
-			throw Errors.nameAlreadyTaken("Tried to change Variable \(_name) to \(name), but its folder (\(_folder!.Name) already contains that name.")
+			throw Errors.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but it's folder (\(_folder!._name) already contains that.")
 		}
 		_name = name
 	}
