@@ -19,18 +19,19 @@ class VariableFolderViewController: NSViewController {
 		// dummy folder structure
 		let characters = try! root.mkdir(name: "Characters")
 			let player = try! characters.mkdir(name: "Player")
-				try! player.mkvar(name: "health", type: .integer)
-				try! player.mkvar(name: "strength", type: .integer)
+				let _ = try! player.mkvar(name: "health", type: .integer)
+				let _ = try! player.mkvar(name: "strength", type: .integer)
 		let locations = try! characters.mkdir(name: "Locations")
 			let cabin = try! locations.mkdir(name: "Cabin")
-				try! cabin.mkvar(name: "FoundSecret", type: .boolean)
+				let _ = try! cabin.mkvar(name: "FoundSecret", type: .boolean)
 		let decisions = try! root.mkdir(name: "Decisions")
 			let major = try! decisions.mkdir(name: "Major")
-				try! major.mkvar(name: "SolvedCrime", type: .boolean)
+				let _ = try! major.mkvar(name: "SolvedCrime", type: .boolean)
 			let minor = try! decisions.mkdir(name: "Minor")
-				try! minor.mkvar(name: "PickedFlowers", type: .boolean)
+				let _ = try! _ = minor.mkvar(name: "PickedFlowers", type: .boolean)
 		
 		outlineView.expandItem(root, expandChildren: true)
+		outlineView.sizeToFit()
 	}
 	
 	@IBAction func onPrintTree(_ sender: NSButton) {
@@ -51,7 +52,7 @@ class VariableFolderViewController: NSViewController {
 		}
 		if let folder = outlineView.item(atRow: idx) as? Folder {
 			let name = NSUUID().uuidString
-			do{ try folder.mkdir(name: name) } catch {
+			do{ let _ = try folder.mkdir(name: name) } catch {
 				statusLabel.stringValue = "Could not add Folder to \(folder.Name) as name was taken."
 			}
 		}
@@ -64,7 +65,7 @@ class VariableFolderViewController: NSViewController {
 		}
 		if let folder = outlineView.item(atRow: idx) as? Folder {
 			let name = NSUUID().uuidString
-			do{ try folder.mkvar(name: name, type: .boolean) } catch {
+			do{ let _ = try folder.mkvar(name: name, type: .boolean) } catch {
 				statusLabel.stringValue = "Could not add Variable to \(folder.Name) as name was taken."
 			}
 		}
@@ -126,7 +127,7 @@ class VariableFolderViewController: NSViewController {
 
 extension VariableFolderViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if let variable = item as? Variable {
+		if let _ = item as? Variable {
 			return 0
 		}
 		if let folder = item as? Folder {
@@ -146,7 +147,7 @@ extension VariableFolderViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		if let variable = item as? Variable {
+		if let _ = item as? Variable {
 			return false
 		}
 		if let folder = item as? Folder {
@@ -162,13 +163,21 @@ extension VariableFolderViewController: NSOutlineViewDelegate {
 		
 		var name = "default"
 		var info = "default"
+		var type = "default"
 		if let variable = item as? Variable {
 			name = variable.Name
 			info = "Variable"
+			switch variable.DataType {
+			case .boolean:
+				type = "boolean"
+			case .integer:
+				type = "integer"
+			}
 		}
 		if let folder = item as? Folder {
 			name = folder.Name
 			info = "Folder"
+			type = ""
 		}
 		
 		if tableColumn?.identifier.rawValue == "NameCell" {
@@ -181,6 +190,12 @@ extension VariableFolderViewController: NSOutlineViewDelegate {
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InfoCell"), owner: self) as? NSTableCellView
 			if let textField = view?.textField {
 				textField.stringValue = info
+			}
+		}
+		if tableColumn?.identifier.rawValue == "TypeCell" {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeCell"), owner: self) as? NSTableCellView
+			if let textField = view?.textField {
+				textField.stringValue = type
 			}
 		}
 		
