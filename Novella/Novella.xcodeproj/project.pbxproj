@@ -29,6 +29,7 @@
 		65F5DFA2207EA3C00041FB0D /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA1207EA3C00041FB0D /* Story.swift */; };
 		65F5DFA4207EA3DD0041FB0D /* FlowGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA3207EA3DD0041FB0D /* FlowGraph.swift */; };
 		65F5DFA6207EA3FB0041FB0D /* FlowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */; };
+		65F5DFA9207EC1090041FB0D /* VariableFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA8207EC1090041FB0D /* VariableFolderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		65F5DFA1207EA3C00041FB0D /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		65F5DFA3207EA3DD0041FB0D /* FlowGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowGraph.swift; sourceTree = "<group>"; };
 		65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowNode.swift; sourceTree = "<group>"; };
+		65F5DFA8207EC1090041FB0D /* VariableFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableFolderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		658C7CAA207E7E6500E2B46B /* Novella */ = {
 			isa = PBXGroup;
 			children = (
+				65F5DFA7207EBD960041FB0D /* ViewControllers */,
 				658C7CD7207E7E9B00E2B46B /* Model */,
 				658C7CAB207E7E6500E2B46B /* AppDelegate.swift */,
 				658C7CAD207E7E6500E2B46B /* ViewController.swift */,
@@ -161,20 +164,20 @@
 		658C7CD7207E7E9B00E2B46B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				65F5DF92207EA0910041FB0D /* BaseLink.swift */,
+				65F5DF97207EA0AF0041FB0D /* Branch.swift */,
+				65F5DF9B207EA0C70041FB0D /* Condition.swift */,
 				658C7CDB207E7EB900E2B46B /* DataType.swift */,
 				658C7CDA207E7EB900E2B46B /* Errors.swift */,
-				658C7CD9207E7EB800E2B46B /* Variable.swift */,
-				658C7CD8207E7EB800E2B46B /* Folder.swift */,
-				65F5DF92207EA0910041FB0D /* BaseLink.swift */,
-				65F5DF94207EA09C0041FB0D /* Link.swift */,
-				65F5DF97207EA0AF0041FB0D /* Branch.swift */,
-				65F5DF99207EA0BA0041FB0D /* Switch.swift */,
-				65F5DF9B207EA0C70041FB0D /* Condition.swift */,
-				65F5DF9D207EA0D40041FB0D /* Transfer.swift */,
-				65F5DF9F207EA1600041FB0D /* Function.swift */,
-				65F5DFA1207EA3C00041FB0D /* Story.swift */,
 				65F5DFA3207EA3DD0041FB0D /* FlowGraph.swift */,
 				65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */,
+				658C7CD8207E7EB800E2B46B /* Folder.swift */,
+				65F5DF9F207EA1600041FB0D /* Function.swift */,
+				65F5DF94207EA09C0041FB0D /* Link.swift */,
+				65F5DFA1207EA3C00041FB0D /* Story.swift */,
+				65F5DF99207EA0BA0041FB0D /* Switch.swift */,
+				65F5DF9D207EA0D40041FB0D /* Transfer.swift */,
+				658C7CD9207E7EB800E2B46B /* Variable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +189,14 @@
 				658C7CE2207E7EDD00E2B46B /* VariableTests.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		65F5DFA7207EBD960041FB0D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				65F5DFA8207EC1090041FB0D /* VariableFolderViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +342,7 @@
 				658C7CDE207E7EB900E2B46B /* Errors.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
+				65F5DFA9207EC1090041FB0D /* VariableFolderViewController.swift in Sources */,
 				658C7CDD207E7EB900E2B46B /* Variable.swift in Sources */,
 				65F5DF9E207EA0D40041FB0D /* Transfer.swift in Sources */,
 				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,

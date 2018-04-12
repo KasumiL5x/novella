@@ -72,6 +72,13 @@ class Folder {
 		return existing
 	}
 	
+	// MARK: Folder Convenience Functions
+	func mkdir(name: String) throws -> Folder {
+		let newFolder = Folder(name: name)
+		try addFolder(folder: newFolder)
+		return newFolder
+	}
+	
 	// MARK: Variables
 	func containsVariable(name: String) -> Bool {
 		return _variables.contains(where: {$0._name == name})
@@ -100,6 +107,13 @@ class Folder {
 		return existing
 	}
 	
+	// MARK: Variable Convenience Functions
+	func mkvar(name: String, type: DataType) throws -> Variable {
+		let newVar = Variable(name: name, type: type)
+		try addVariable(variable: newVar)
+		return newVar
+	}
+	
 	
 	// MARK - Debug
 	func debugPrint(indent: Int) {
@@ -110,7 +124,7 @@ class Folder {
 		for _ in 0...(indent <= 0 ? 0 : indent-1) {
 			str += "-"
 		}
-		str += "\(self._name)(S)\n"
+		str += "[\(self._name)](\(self._folders.count) subfolders; \(self._variables.count) variables)\n"
 		print(str, terminator: "")
 		
 		// all variables
@@ -119,7 +133,7 @@ class Folder {
 			for _ in 0...(indent+1) {
 				str += "-"
 			}
-			str += "\\\(v.Name)(V)\n"
+			str += "\(v.Name)(\(v.DataType))\n"
 			print(str, terminator: "")
 		}
 		
