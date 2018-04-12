@@ -82,14 +82,7 @@ class Folder {
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
 	}
-	
-	func getFolder(name: String) throws -> Folder {
-		guard let existing = _folders.first(where: {$0._name == name}) else {
-			throw Errors.nameNotFound("Tried to get folder \(name) from parent folder \(_name), but its name was not found.")
-		}
-		return existing
-	}
-	
+		
 	func hasDescendantFolder(folder: Folder) -> Bool {
 		// check this folder
 		if self.contains(folder: folder) {
