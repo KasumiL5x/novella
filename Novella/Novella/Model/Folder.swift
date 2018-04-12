@@ -34,7 +34,7 @@ class Folder {
 		}
 		
 		// parent folder can't contain the requested name already
-		if _parent!.containsFolder(name: name) {
+		if _parent!.containsFolderName(name: name) {
 			throw Errors.nameAlreadyTaken("Tried to change VariableSet \(_name) to \(name), but its parent folder (\(_parent!.Name) already contains that name.")
 		}
 		_name = name
@@ -45,15 +45,15 @@ class Folder {
 	}
 	
 	// MARK: Folders
-	func containsFolder(name: String) -> Bool {
-		return _folders.contains(where: {$0._name == name})
-	}
-	func containsFolder(folder: Folder) -> Bool {
+	func contains(folder: Folder) -> Bool {
 		return _folders.contains(folder)
+	}
+	func containsFolderName(name: String) -> Bool {
+		return _folders.contains(where: {$0._name == name})
 	}
 	
 	func addFolder(folder: Folder) throws {
-		if containsFolder(name: folder._name) {
+		if containsFolderName(name: folder._name) {
 			throw Errors.nameAlreadyTaken("Tried to add folder \(folder._name) as a child of folder \(_name), but its name was already taken.")
 		}
 		folder._parent = self
@@ -77,7 +77,7 @@ class Folder {
 	
 	func hasDescendantFolder(folder: Folder) -> Bool {
 		// check this folder
-		if self.containsFolder(folder: folder) {
+		if self.contains(folder: folder) {
 			return true
 		}
 		// check all children
@@ -95,7 +95,7 @@ class Folder {
 			throw Errors.nameAlreadyTaken("You tried to move to the same folder.")
 		}
 		
-		if folder.containsFolder(name: _name) {
+		if folder.containsFolderName(name: _name) {
 			throw Errors.nameAlreadyTaken("Tried to move Folder \(_name) to Folder \(folder._name) but the name was taken.")
 		}
 		
@@ -116,12 +116,16 @@ class Folder {
 	}
 	
 	// MARK: Variables
-	func containsVariable(name: String) -> Bool {
+	func contains(variable: Variable) -> Bool {
+		return _variables.contains(variable)
+	}
+	
+	func containsVariableName(name: String) -> Bool {
 		return _variables.contains(where: {$0._name == name})
 	}
 	
 	func addVariable(variable: Variable) throws {
-		if containsVariable(name: variable._name) {
+		if contains(variable: variable) {
 			throw Errors.nameAlreadyTaken("Tried to add variable \(variable._name) as a child of folder \(_name), but its name was already taken.")
 		}
 		variable._folder = self

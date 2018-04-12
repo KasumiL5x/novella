@@ -42,7 +42,7 @@ class Variable {
 		}
 		
 		// containing folder can't contain the requested name already
-		if _folder!.containsVariable(name: name) {
+		if _folder!.containsVariableName(name: name) {
 			throw Errors.nameAlreadyTaken("Tried to change Variable \(_name) to \(name), but its folder (\(_folder!.Name) already contains that name.")
 		}
 		_name = name
@@ -90,7 +90,7 @@ class Variable {
 		}
 		
 		// already contains
-		if folder.containsVariable(name: _name) {
+		if folder.containsVariableName(name: _name) {
 			throw Errors.nameAlreadyTaken("Tried to move Variable \(_name) to Folder \(folder._name) but the name was taken.")
 		}
 		
@@ -102,4 +102,12 @@ class Variable {
 		// add
 		try! folder.addVariable(variable: self)
 	}
+}
+
+extension Variable: Equatable {
+	static func == (lhs: Variable, rhs: Variable) -> Bool {
+		return (lhs._name == rhs._name) && (lhs._folder == rhs._folder)
+	}
+	
+	
 }
