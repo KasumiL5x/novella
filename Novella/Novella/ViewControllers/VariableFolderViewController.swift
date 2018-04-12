@@ -162,11 +162,9 @@ extension VariableFolderViewController: NSOutlineViewDelegate {
 		var view: NSTableCellView? = nil
 		
 		var name = "default"
-		var info = "default"
 		var type = "default"
 		if let variable = item as? Variable {
 			name = variable.Name
-			info = "Variable"
 			switch variable.DataType {
 			case .boolean:
 				type = "boolean"
@@ -176,20 +174,13 @@ extension VariableFolderViewController: NSOutlineViewDelegate {
 		}
 		if let folder = item as? Folder {
 			name = folder.Name
-			info = "Folder"
-			type = ""
+			type = "folder"
 		}
 		
 		if tableColumn?.identifier.rawValue == "NameCell" {
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
 			if let textField = view?.textField {
 				textField.stringValue = name
-			}
-		}
-		if tableColumn?.identifier.rawValue == "InfoCell" {
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InfoCell"), owner: self) as? NSTableCellView
-			if let textField = view?.textField {
-				textField.stringValue = info
 			}
 		}
 		if tableColumn?.identifier.rawValue == "TypeCell" {
