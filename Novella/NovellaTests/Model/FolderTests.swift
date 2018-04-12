@@ -10,105 +10,151 @@ import XCTest
 @testable import Novella
 
 class FolderTests: XCTestCase {
+	var root = Folder(name: "root")
+	
+	override func setUp() {
+		super.setUp()
+		
+		root = Folder(name: "root")
+	}
+	
+	// MARK: Folders
 	func testSetName() {
-		let setA = Novella.Folder(name: "daniel")
+		let f = Novella.Folder(name: "folder")
 		
-		// change the name without being in a parent set should work
-		XCTAssertNoThrow(try setA.setName(name: "zak"))
-		XCTAssertEqual("zak", setA.Name)
+		// change name without a parent fodler
+		XCTAssertNoThrow(try f.setName(name: "daniel"))
+		XCTAssertEqual("daniel", f.Name)
 		
-		let setB = Novella.Folder(name: "mengna")
-		let parent = Novella.Folder(name: "egg")
-		do {
-			try parent.add(folder: setA)
-			try parent.add(folder: setB)
-		} catch { XCTFail() }
+		// add to set
+		let _ = try! root.mkdir(name: "conflict")
+		try! root.add(folder: f)
 		
-		// change name while in a parent set without conflict should work
-		XCTAssertNoThrow(try setA.setName(name: "egg"))
-		XCTAssertEqual("egg", setA.Name)
+		// rename wihtout conflict while in a folder
+		XCTAssertNoThrow(try f.setName(name: "not conflicting"))
+		XCTAssertEqual("not conflicting", f.Name)
 		
-		// change name while in parent set with conflict should fail
-		XCTAssertThrowsError(try setA.setName(name: setB.Name))
+		// rename with conflict
+		XCTAssertThrowsError(try f.setName(name: "conflict"))
 	}
 	
 	func testSetSynopsis() {
-		let set = Novella.Folder(name: "test")
-		let synopsis = "This is the description of the variable."
-		set.setSynopsis(synopsis: synopsis)
-		XCTAssertEqual(synopsis, set.Synopsis)
+		let synopsis = "This is the description."
+		root.setSynopsis(synopsis: synopsis)
+		XCTAssertEqual(synopsis, root.Synopsis)
 	}
 	
-	func testContainsSet() {
-		let parent = Novella.Folder(name: "parent")
-		let child = Novella.Folder(name: "inside")
-		do {
-			try parent.add(folder: child)
-		} catch { XCTFail() }
+	func testContainsFolder() {
+		let child = try! root.mkdir(name: "child")
 		
-		XCTAssertTrue(parent.contains(folder: child))
+		// should find it
+		XCTAssertTrue(root.contains(folder: child))
+		
+		// should fail
+		let other = Novella.Folder(name: "other")
+		XCTAssertFalse(root.contains(folder: other))
 	}
 	
-	func testAddSet() {
-		let parent = Novella.Folder(name: "parent")
+	func testContainsFolderName() {
+		let name = "folder name"
+		let _ = try! root.mkdir(name: name)
+		
+		XCTAssertTrue(root.containsFolderName(name: name))
+		XCTAssertFalse(root.containsFolderName(name: "not existing"))
+	}
+	
+	func testAddFolder() {
+		// cannot add self
+		XCTAssertThrowsError(try root.add(folder: root))
+		
+		// cannot add to existing parent
+		let child = try! root.mkdir(name: "child")
+		XCTAssertThrowsError(try root.add(folder: child))
+		
+		// cannot add existing name
+		XCTAssertThrowsError(try root.add(folder: Folder(name: child.Name)))
+		
+		// otherwise all good
+		let other = Novella.Folder(name: "other")
+		XCTAssertNoThrow(try root.add(folder: other))
+		XCTAssertEqual(other._parent, root)
+		XCTAssertTrue(root.contains(folder: other))
+	}
+	
+	func testRemoveFolder() {
 		let child = Novella.Folder(name: "child")
+		try! root.add(folder: child)
 		
-		// adding should work just fine w/o any clashes
-		XCTAssertNoThrow(try parent.add(folder: child))
-		XCTAssertTrue(parent.contains(folder: child))
+		// remove should be good
+		XCTAssertTrue(root.contains(folder: child))
+		XCTAssertNoThrow(try root.remove(folder: child))
+		XCTAssertFalse(root.contains(folder: child))
+		XCTAssertNil(child._parent)
 		
-		// should fail if we add a set with the same name
-		let conflict = Novella.Folder(name: child.Name)
-		XCTAssertThrowsError(try parent.add(folder: conflict))
+		// remove nonexistent folder should fail
+		let other = Novella.Folder(name: "other")
+		XCTAssertThrowsError(try root.remove(folder: other))
 	}
 	
-	func testRemoveSet() {
-		let parent = Novella.Folder(name: "parent")
-		let child = Novella.Folder(name: "child")
-		do {
-			try parent.add(folder: child)
-		} catch { XCTFail() }
-		
-		// remove set that exists should work
-		XCTAssertTrue(parent.contains(folder: child))
-		XCTAssertNoThrow(try parent.remove(folder: child))
-		XCTAssertFalse(parent.contains(folder: child))
+	func testHasDescendantFolder() {
+		// TODO
 	}
 	
+	func testMkdir() {
+		// TODO
+	}
+	
+	// MARK: Variables
 	func testContainsVariable() {
-		let parent = Novella.Folder(name: "set")
-		let variable = Novella.Variable(name: "var", type: .boolean)
-		do {
-			try parent.add(variable: variable)
-		} catch { XCTFail() }
+		let child = try! root.mkvar(name: "child", type: .boolean)
 		
-		XCTAssertTrue(parent.contains(variable: variable))
+		// should find it
+		XCTAssertTrue(root.contains(variable: child))
+		
+		// should fail
+		let other = Novella.Variable(name: "other", type: .boolean)
+		XCTAssertFalse(root.contains(variable: other))
+	}
+	
+	func testContainsVariableName() {
+		let name = "variable name"
+		let _ = try! root.mkvar(name: name, type: .boolean)
+		
+		XCTAssertTrue(root.containsVariableName(name: name))
+		XCTAssertFalse(root.containsVariableName(name: "not existing"))
 	}
 	
 	func testAddVariable() {
-		let parent = Novella.Folder(name: "parent")
-		let variable = Novella.Variable(name: "var", type: .boolean)
+		// cannot add to existing parent
+		let child = try! root.mkvar(name: "child", type: .boolean)
+		XCTAssertThrowsError(try root.add(variable: child))
 		
-		// adding should work just fine w/o any clashes
-		XCTAssertNoThrow(try parent.add(variable: variable))
-		XCTAssertTrue(parent.contains(variable: variable))
-
-		// should fail if we add a variable with the same name
-		let conflict = Novella.Variable(name: variable.Name, type: .boolean)
-		XCTAssertThrowsError(try parent.add(variable: conflict))
+		// cannot add existing name
+		XCTAssertThrowsError(try root.add(variable: Variable(name: child.Name, type: .boolean)))
+		
+		// otherwise all good
+		let other = Novella.Variable(name: "other", type: .boolean)
+		XCTAssertNoThrow(try root.add(variable: other))
+		XCTAssertEqual(other._folder, root)
+		XCTAssertTrue(root.contains(variable: other))
 	}
 	
 	func testRemoveVariable() {
-		let parent = Novella.Folder(name: "parent")
-		let variable = Novella.Variable(name: "var", type: .boolean)
-		do {
-			try parent.add(variable: variable)
-		} catch { XCTFail() }
+		let child = Novella.Variable(name: "child", type: .boolean)
+		try! root.add(variable: child)
 		
-		// remove variable that exists should work
-		XCTAssertTrue(parent.contains(variable: variable))
-		XCTAssertNoThrow(try parent.remove(variable: variable))
-		XCTAssertFalse(parent.contains(variable: variable))
-		XCTAssertThrowsError(try parent.remove(variable: variable))
+		// remove should be good
+		XCTAssertTrue(root.contains(variable: child))
+		XCTAssertNoThrow(try root.remove(variable: child))
+		XCTAssertFalse(root.contains(variable: child))
+		XCTAssertNil(child._folder)
+		
+		// remove nonexistent folder should fail
+		let other = Novella.Variable(name: "other", type: .boolean)
+		XCTAssertThrowsError(try root.remove(variable: other))
+	}
+	
+	func testMkvar() {
+		// TODO
 	}
 }
