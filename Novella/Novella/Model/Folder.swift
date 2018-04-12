@@ -48,6 +48,7 @@ class Folder {
 	func contains(folder: Folder) -> Bool {
 		return _folders.contains(folder)
 	}
+	
 	func containsFolderName(name: String) -> Bool {
 		return _folders.contains(where: {$0._name == name})
 	}
@@ -67,16 +68,16 @@ class Folder {
 		}
 		// unparent first
 		if folder._parent != nil {
-			try! folder._parent?.removeFolder(name: folder._name)
+			try! folder._parent!.remove(folder: folder)
 		}
 		// now add
 		folder._parent = self
 		_folders.append(folder)
 	}
 	
-	func removeFolder(name: String) throws {
-		guard let idx = _folders.index(where: {$0._name == name}) else {
-			throw Errors.nameNotFound("Tried to remove folder \(name) from parent folder \(_name), but its name was not found.")
+	func remove(folder: Folder) throws {
+		guard let idx = _folders.index(of: folder) else {
+			throw Errors.invalid("Tried to remove Folder (\(folder._name)) from (\(_name)) but it was not a child.")
 		}
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
