@@ -52,10 +52,24 @@ class Folder {
 		return _folders.contains(where: {$0._name == name})
 	}
 	
-	func addFolder(folder: Folder) throws {
-		if containsFolderName(name: folder._name) {
-			throw Errors.nameAlreadyTaken("Tried to add folder \(folder._name) as a child of folder \(_name), but its name was already taken.")
+	func add(folder: Folder) throws {
+		// cannot add self
+		if folder == self {
+			throw Errors.invalid("Tried to add Folder to self (\(_name)).")
 		}
+		// already a child
+		if contains(folder: folder) {
+			throw Errors.invalid("Tried to add Folder but it already exists (\(folder._name) to \(_name)).")
+		}
+		// already contains same name
+		if containsFolderName(name: folder._name) {
+			throw Errors.nameTaken("Tried to add Folder but its name was already in use (\(folder._name) to \(_name)).")
+		}
+		// unparent first
+		if folder._parent != nil {
+			try! folder._parent?.removeFolder(name: folder._name)
+		}
+		// now add
 		folder._parent = self
 		_folders.append(folder)
 	}
@@ -89,29 +103,10 @@ class Folder {
 		return false
 	}
 	
-	func moveTo(folder: Folder) throws {
-		// same folder (duhhhhh)
-		if folder == _parent {
-			throw Errors.nameAlreadyTaken("You tried to move to the same folder.")
-		}
-		
-		if folder.containsFolderName(name: _name) {
-			throw Errors.nameAlreadyTaken("Tried to move Folder \(_name) to Folder \(folder._name) but the name was taken.")
-		}
-		
-		// remove existing parent
-		if _parent != nil {
-			try! _parent?.removeFolder(name: _name)
-		}
-		
-		// add to new
-		try! folder.addFolder(folder: self)
-	}
-	
 	// MARK: Folder Convenience Functions
 	func mkdir(name: String) throws -> Folder {
 		let newFolder = Folder(name: name)
-		try addFolder(folder: newFolder)
+		try add(folder: newFolder)
 		return newFolder
 	}
 	

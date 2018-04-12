@@ -10,6 +10,7 @@ import Foundation
 
 enum Errors: Error {
 	// new errors
+	case invalid(String)
 	case nameTaken(String)
 	
 	// old errors

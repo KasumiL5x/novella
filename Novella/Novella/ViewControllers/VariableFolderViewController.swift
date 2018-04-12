@@ -221,7 +221,7 @@ extension VariableFolderViewController: NSOutlineViewDataSource {
 		
 		if let targetFolder = item as? Folder {
 			if let sourceFolder = draggedItem as? Folder {
-				do{ try sourceFolder.moveTo(folder: targetFolder) } catch {
+				do{ try targetFolder.add(folder: sourceFolder) } catch {
 					statusLabel.stringValue = "Tried to move folder but name was taken (\(sourceFolder.Name)->\(targetFolder.Name))!"
 				}
 			}
