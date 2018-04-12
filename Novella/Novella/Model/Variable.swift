@@ -82,4 +82,24 @@ class Variable {
 	func setConstant(const: Bool) {
 		self._constant = const
 	}
+	
+	func moveTo(folder: Folder) throws {
+		// same folder (duhhhhh)
+		if folder == _folder {
+			throw Errors.nameAlreadyTaken("You tried to move to the same folder.")
+		}
+		
+		// already contains
+		if folder.containsVariable(name: _name) {
+			throw Errors.nameAlreadyTaken("Tried to move Variable \(_name) to Folder \(folder._name) but the name was taken.")
+		}
+		
+		// remove existing parent
+		if _folder != nil {
+			try! _folder?.removeVariable(name: _name)
+		}
+		
+		// add
+		try! folder.addVariable(variable: self)
+	}
 }

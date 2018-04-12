@@ -48,6 +48,9 @@ class Folder {
 	func containsFolder(name: String) -> Bool {
 		return _folders.contains(where: {$0._name == name})
 	}
+	func containsFolder(folder: Folder) -> Bool {
+		return _folders.contains(folder)
+	}
 	
 	func addFolder(folder: Folder) throws {
 		if containsFolder(name: folder._name) {
@@ -70,6 +73,39 @@ class Folder {
 			throw Errors.nameNotFound("Tried to get folder \(name) from parent folder \(_name), but its name was not found.")
 		}
 		return existing
+	}
+	
+	func hasDescendantFolder(folder: Folder) -> Bool {
+		// check this folder
+		if self.containsFolder(folder: folder) {
+			return true
+		}
+		// check all children
+		for child in _folders {
+			if child.hasDescendantFolder(folder: folder) {
+				return true
+			}
+		}
+		return false
+	}
+	
+	func moveTo(folder: Folder) throws {
+		// same folder (duhhhhh)
+		if folder == _parent {
+			throw Errors.nameAlreadyTaken("You tried to move to the same folder.")
+		}
+		
+		if folder.containsFolder(name: _name) {
+			throw Errors.nameAlreadyTaken("Tried to move Folder \(_name) to Folder \(folder._name) but the name was taken.")
+		}
+		
+		// remove existing parent
+		if _parent != nil {
+			try! _parent?.removeFolder(name: _name)
+		}
+		
+		// add to new
+		try! folder.addFolder(folder: self)
 	}
 	
 	// MARK: Folder Convenience Functions
@@ -142,4 +178,15 @@ class Folder {
 			c.debugPrint(indent: indent+2)
 		}
 	}
+}
+
+// MARK: Equatable
+extension Folder: Equatable {
+	static func == (lhs: Folder, rhs: Folder) -> Bool {
+		// if they have the same name and same parent, they are equal.
+		// may change this to an absolute path later.
+		return (lhs._parent == rhs._parent) && (lhs._name == rhs._name)
+	}
+	
+	
 }
