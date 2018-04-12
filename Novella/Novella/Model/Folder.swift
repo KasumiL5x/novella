@@ -82,7 +82,7 @@ class Folder {
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
 	}
-		
+	
 	func hasDescendantFolder(folder: Folder) -> Bool {
 		// check this folder
 		if self.contains(folder: folder) {
@@ -113,10 +113,20 @@ class Folder {
 		return _variables.contains(where: {$0._name == name})
 	}
 	
-	func addVariable(variable: Variable) throws {
+	func add(variable: Variable) throws {
+		// already a child
 		if contains(variable: variable) {
-			throw Errors.nameAlreadyTaken("Tried to add variable \(variable._name) as a child of folder \(_name), but its name was already taken.")
+			throw Errors.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
 		}
+		// already contains same name
+		if containsVariableName(name: variable._name) {
+			throw Errors.nameTaken("Tried to add Variable but its name was already in use (\(variable._name) to \(_name)).")
+		}
+		// unparent first
+		if variable._folder != nil {
+			try! variable._folder?.removeVariable(name: variable._name)
+		}
+		// now add
 		variable._folder = self
 		_variables.append(variable)
 	}
@@ -139,7 +149,7 @@ class Folder {
 	// MARK: Variable Convenience Functions
 	func mkvar(name: String, type: DataType) throws -> Variable {
 		let newVar = Variable(name: name, type: type)
-		try addVariable(variable: newVar)
+		try add(variable: newVar)
 		return newVar
 	}
 	
