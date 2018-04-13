@@ -763,7 +763,7 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rsf-vt-vpC">
-                                        <rect key="frame" x="20" y="20" width="51" height="17"/>
+                                        <rect key="frame" x="20" y="5" width="51" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status:" id="NMz-PC-BGe">
                                             <font key="font" metaFont="systemBold"/>
@@ -772,7 +772,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WuL-cp-ls3">
-                                        <rect key="frame" x="71" y="20" width="361" height="17"/>
+                                        <rect key="frame" x="71" y="5" width="361" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="All good." id="ynw-3T-5kn">
                                             <font key="font" metaFont="system"/>
@@ -800,6 +800,17 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="onPrintTree:" target="2fm-8I-GmH" id="2dV-9y-38t"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vje-1P-Fgr">
+                                        <rect key="frame" x="14" y="19" width="100" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Print Path" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="F9y-qP-jae">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onPrintPath:" target="2fm-8I-GmH" id="0I5-iO-Tc3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -870,11 +881,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="xem-LU-u9j">
-                                                            <rect key="frame" x="188.5" y="1" width="258" height="17"/>
+                                                            <rect key="frame" x="188.5" y="1" width="259" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxW-HO-mFB">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="258" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="259" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="eMM-1P-wfl">
                                                                         <font key="font" metaFont="system"/>

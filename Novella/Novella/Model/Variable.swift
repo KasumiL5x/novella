@@ -83,10 +83,22 @@ class Variable {
 	}
 }
 
+
+// MARK: Equatable
 extension Variable: Equatable {
 	static func == (lhs: Variable, rhs: Variable) -> Bool {
 		return (lhs._name == rhs._name) && (lhs._folder == rhs._folder)
 	}
+}
+
+
+// MARK: Pathable
+extension Variable: Pathable {
+	func localPath() -> String {
+		return _name
+	}
 	
-	
+	func parentPath() -> Pathable? {
+		return _folder
+	}
 }

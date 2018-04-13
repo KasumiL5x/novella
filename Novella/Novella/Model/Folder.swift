@@ -176,6 +176,7 @@ class Folder {
 	}
 }
 
+
 // MARK: Equatable
 extension Folder: Equatable {
 	static func == (lhs: Folder, rhs: Folder) -> Bool {
@@ -183,6 +184,16 @@ extension Folder: Equatable {
 		// may change this to an absolute path later.
 		return (lhs._parent == rhs._parent) && (lhs._name == rhs._name)
 	}
+}
+
+
+// MARK: Pathable
+extension Folder: Pathable {
+	func localPath() -> String {
+		return _name
+	}
 	
-	
+	func parentPath() -> Pathable? {
+		return _parent
+	}
 }

@@ -47,6 +47,17 @@ class VariableFolderViewController: NSViewController {
 		}
 	}
 	
+	@IBAction func onPrintPath(_ sender: NSButton) {
+		let idx = outlineView.selectedRow
+		if -1 == idx {
+			return
+		}
+		let item = outlineView.item(atRow: idx)
+		if let pathable = item as? Pathable {
+			print(Path.fullPathTo(object: pathable))
+		}
+	}
+	
 	@IBAction func onAddFolder(_ sender: NSButton) {
 		let idx = outlineView.selectedRow
 		if -1 == idx {
