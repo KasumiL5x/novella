@@ -23,7 +23,7 @@ class Path {
 		// add parent paths with delimiter
 		var currParent = object.parentPath()
 		while currParent != nil {
-			str += currParent!.localPath() + Path.DELIMITER
+			str = (currParent!.localPath() + Path.DELIMITER) + str // add reverse order b/c we're going bottom up
 			currParent = currParent!.parentPath()
 		}
 		
