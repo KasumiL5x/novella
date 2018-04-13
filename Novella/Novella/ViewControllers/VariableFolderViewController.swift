@@ -83,9 +83,7 @@ class VariableFolderViewController: NSViewController {
 		let item = outlineView.item(atRow: idx)
 		if let folder = item as? Folder {
 			if folder._parent != nil {
-				do{ try folder._parent!.remove(folder: folder) } catch {
-					
-				}
+				try! folder._parent!.remove(folder: folder)
 			}
 		}
 		if let variable = item as? Variable {
