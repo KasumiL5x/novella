@@ -9,82 +9,127 @@
 import Cocoa
 
 class StoryTestViewController: NSViewController {
-	var _story: Story? = nil
+	var _story: Story = Story()
 	
-	@IBOutlet weak var browser: NSBrowser!
+//	@IBOutlet weak var browser: NSBrowser!
+	@IBOutlet weak var outline: NSOutlineView!
 	@IBOutlet weak var statusLabel: NSTextField!
-	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self._story = Story()
+		let _ = try! _story.makeGraph(name: "side")
+		outline.reloadData()
+	}
+	
+	@IBAction func onAddRootgraph(_ sender: NSButton) {
+		let name = NSUUID().uuidString
+		do{ let _ = try _story.makeGraph(name: name) } catch {
+			statusLabel.stringValue = "Could not add FG to Story as name was taken."
+		}
+		outline.reloadData()
 	}
 	
 	@IBAction func onAddGraph(_ sender: NSButton) {
-		let idx = browser.selectionIndexPath
-		if nil == idx {
+		let idx = outline.selectedRow
+		if -1 == idx {
 			return
 		}
-		let item = browser.item(at: idx!)
-		
-		let name = NSUUID().uuidString
-		if let graph = item as? FlowGraph {
-			do{ try graph.makeGraph(name: name) } catch {
-				statusLabel.stringValue = "Tried to add FG but name was in use (\(name) to \(graph._name))"
+		if let graph = outline.item(atRow: idx) as? FlowGraph {
+			let name = NSUUID().uuidString
+			do{ let _ = try graph.makeGraph(name: name) } catch {
+				statusLabel.stringValue = "Could not add FG to \(graph.Name) as name was taken."
 			}
 		}
-		
-		browser.loadColumnZero()
+		outline.reloadData()
 	}
 	
 	@IBAction func onRemoveGraph(_ sender: NSButton) {
-//		let name = NSUUID().uuidString
-	}
-}
-
-extension StoryTestViewController: NSBrowserDelegate {
-	func rootItem(for browser: NSBrowser) -> Any? {
-		return _story
+		let idx = outline.selectedRow
+		if -1 == idx {
+			return
+		}
+		
+		let item = outline.item(atRow: idx)
+		if let graph = item as? FlowGraph {
+			if graph._parent != nil {
+				try! graph._parent?.remove(graph: graph)
+			} else {
+				try! graph._story?.remove(graph: graph)
+			}
+		}
+		
+		outline.reloadData()
 	}
 	
-	func browser(_ browser: NSBrowser, numberOfChildrenOfItem item: Any?) -> Int {
-		if let story = item as? Story {
-			return story._graphs.count
+	@IBAction func onNameEdited(_ sender: NSTextField) {
+		let idx = outline.selectedRow
+		if -1 == idx {
+			return
 		}
+
+		let newName = sender.stringValue
+		let item = outline.item(atRow: idx)
+		if let graph = item as? FlowGraph {
+			if newName == graph.Name {
+				return
+			}
+			do { try graph.setName(name: newName) } catch {
+				statusLabel.stringValue = "Could not rename FG (\(graph.Name)->\(newName))!"
+				sender.stringValue = graph.Name
+			}
+		}
+	}
+	
+}
+
+extension StoryTestViewController: NSOutlineViewDataSource {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if let graph = item as? FlowGraph {
 			return graph._graphs.count
 		}
-		return 0
+		return _story._graphs.count
 	}
 	
-	func browser(_ browser: NSBrowser, child index: Int, ofItem item: Any?) -> Any {
-		if let story = item as? Story {
-			return story._graphs[index]
-		}
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if let graph = item as? FlowGraph {
 			return graph._graphs[index]
 		}
-		return []
+		return _story._graphs[index]
 	}
 	
-	func browser(_ browser: NSBrowser, isLeafItem item: Any?) -> Bool {
-		if let story = item as? Story {
-			return story._graphs.count == 0
-		}
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		if let graph = item as? FlowGraph {
-			return graph._graphs.count == 0
+			return graph._graphs.count > 0
 		}
-		return false
+		return _story._graphs.count > 0
 	}
-	
-	func browser(_ browser: NSBrowser, objectValueForItem item: Any?) -> Any? {
-		if let story = item as? Story {
-			return "story"
-		}
+}
+
+extension StoryTestViewController: NSOutlineViewDelegate {
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+		var view: NSTableCellView? = nil
+		
+		var name = ""
+		var type = ""
 		if let graph = item as? FlowGraph {
-			return graph._name
+			name = graph._name
+			type = "FlowGraph"
 		}
-		return "error"
+		
+		if tableColumn?.identifier.rawValue == "NameCell" {
+			view = outline.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+			if let textField = view?.textField {
+				textField.stringValue = name
+			}
+		}
+		if tableColumn?.identifier.rawValue == "TypeCell" {
+			view = outline.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeCell"), owner: self) as? NSTableCellView
+			if let textField = view?.textField {
+				textField.stringValue = type
+			}
+		}
+		
+		return view
 	}
 }
