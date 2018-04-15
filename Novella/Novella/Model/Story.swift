@@ -8,16 +8,27 @@
 
 class Story {
 	var _rootFolder: Folder
-	var _mainGraph: FlowGraph
 	var _graphs: [FlowGraph]
 	
 	init() {
 		self._rootFolder = Folder(name: "story")
-		self._mainGraph = FlowGraph(name: "main")
-		self._graphs = [self._mainGraph]
+		self._graphs = []
 	}
 	
 	func setup() throws {
 		throw Errors.notImplemented("Story::setup()")
+	}
+	
+	func add(graph: FlowGraph) throws {
+		// already a child
+		
+		// already contains same name
+		// unparent if parent exists
+		// reparent to this
+		// then add
+	}
+	
+	func remove(graph: FlowGraph) throws {
+		
 	}
 }
