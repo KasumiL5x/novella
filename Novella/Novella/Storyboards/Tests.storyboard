@@ -230,7 +230,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="100"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qh-Fl-ijo">
-                                        <rect key="frame" x="155" y="52" width="127" height="32"/>
+                                        <rect key="frame" x="155" y="62" width="127" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Add Subgraph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Swg-CY-CV9">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -241,7 +241,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jxy-x8-Em6">
-                                        <rect key="frame" x="282" y="52" width="129" height="32"/>
+                                        <rect key="frame" x="282" y="62" width="129" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Remove Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2az-y4-7un">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -260,7 +260,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwD-HD-pBL">
-                                        <rect key="frame" x="18" y="52" width="137" height="32"/>
+                                        <rect key="frame" x="18" y="62" width="137" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Add Root Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wwW-xC-UHe">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -268,6 +268,17 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="onAddRootgraph:" target="zDT-my-Gmj" id="SmV-ds-zeA"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLi-CW-r5G">
+                                        <rect key="frame" x="18" y="29" width="100" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Print Path" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Tv-i9-MKj">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onPrintPath:" target="zDT-my-Gmj" id="kyf-RQ-gAx"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -299,7 +310,7 @@
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uM0-M2-kw3">
                                 <rect key="frame" x="0.0" y="100" width="450" height="150"/>
                                 <clipView key="contentView" id="R8v-LX-B6U">
-                                    <rect key="frame" x="1" y="23" width="448" height="126"/>
+                                    <rect key="frame" x="1" y="0.0" width="448" height="149"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="oQb-lZ-G36" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9Ad-dJ-uBY" id="BEO-kl-60E">
@@ -390,7 +401,7 @@
                                     <rect key="frame" x="1" y="133" width="448" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="CgI-ka-qvQ">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="CgI-ka-qvQ">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

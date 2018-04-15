@@ -62,6 +62,18 @@ class StoryTestViewController: NSViewController {
 		outline.reloadData()
 	}
 	
+	@IBAction func onPrintPath(_ sender: NSButton) {
+		let idx = outline.selectedRow
+		if -1 == idx {
+			return
+		}
+		
+		let item = outline.item(atRow: idx)
+		if let graph = item as? FlowGraph {
+			print(Path.fullPathTo(object: graph))
+		}
+	}
+	
 	@IBAction func onNameEdited(_ sender: NSTextField) {
 		let idx = outline.selectedRow
 		if -1 == idx {
