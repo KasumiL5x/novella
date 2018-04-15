@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6522C5B02083906300F76DC8 /* VariableFolderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* VariableFolderTest.storyboard */; };
+		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAD207E7E6500E2B46B /* ViewController.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6522C5AF2083906300F76DC8 /* VariableFolderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VariableFolderTest.storyboard; sourceTree = "<group>"; };
+		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		658C7CAD207E7E6500E2B46B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				658C7CB1207E7E6600E2B46B /* Main.storyboard */,
-				6522C5AF2083906300F76DC8 /* VariableFolderTest.storyboard */,
+				6522C5AF2083906300F76DC8 /* Tests.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -317,7 +317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6522C5B02083906300F76DC8 /* VariableFolderTest.storyboard in Resources */,
+				6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */,
 				658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */,
 				658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */,
 			);

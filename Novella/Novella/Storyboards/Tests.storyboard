@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="b2x-aR-lWC">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -9,7 +9,7 @@
         <scene sceneID="sbg-Vm-nQy">
             <objects>
                 <customObject id="QOS-mb-b6s" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController title="VariableFolder" id="b2x-aR-lWC" customClass="VariableFolderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="VariableFolder" storyboardIdentifier="VariableFolder" id="b2x-aR-lWC" customClass="VariableFolderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="kps-5v-4tF">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -95,13 +95,13 @@
                                     <constraint firstAttribute="height" constant="100" id="tDc-Uq-fup"/>
                                 </constraints>
                             </customView>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaT-gc-qrM">
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="43" horizontalPageScroll="10" verticalLineScroll="43" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaT-gc-qrM">
                                 <rect key="frame" x="0.0" y="100" width="450" height="300"/>
                                 <clipView key="contentView" drawsBackground="NO" id="v2i-GS-mfr">
-                                    <rect key="frame" x="1" y="23" width="448" height="276"/>
+                                    <rect key="frame" x="1" y="0.0" width="448" height="299"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="hTN-En-V01" viewBased="YES" indentationPerLevel="16" outlineTableColumn="0Ni-jg-RHZ" id="JxA-ix-8DF">
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" headerView="hTN-En-V01" viewBased="YES" indentationPerLevel="16" outlineTableColumn="0Ni-jg-RHZ" id="JxA-ix-8DF">
                                             <rect key="frame" x="0.0" y="0.0" width="448" height="276"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="2" height="3"/>
@@ -217,6 +217,30 @@
                 </viewController>
             </objects>
             <point key="canvasLocation" x="75" y="1168"/>
+        </scene>
+        <!--Story-->
+        <scene sceneID="9E5-OO-fSu">
+            <objects>
+                <viewController storyboardIdentifier="Story" id="zDT-my-Gmj" userLabel="Story" sceneMemberID="viewController">
+                    <view key="view" id="hcB-Z1-atX">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2L-QM-CkC">
+                                <rect key="frame" x="207" y="141" width="37" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="RO8-lB-B7V">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="Wnw-8r-oUh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682" y="1157"/>
         </scene>
     </scenes>
 </document>
