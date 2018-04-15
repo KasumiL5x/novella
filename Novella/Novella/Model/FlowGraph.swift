@@ -7,10 +7,12 @@
 //
 
 class FlowGraph {
+	var _name: String
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
 	
-	init() {
+	init(name: String) {
+		self._name = name
 		self._nodes = []
 		self._links = []
 	}

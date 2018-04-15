@@ -13,7 +13,7 @@ class Story {
 	
 	init() {
 		self._rootFolder = Folder(name: "story")
-		self._mainGraph = FlowGraph()
+		self._mainGraph = FlowGraph(name: "main")
 		self._graphs = [self._mainGraph]
 	}
 	
