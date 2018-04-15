@@ -5,11 +5,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--VariableFolder-->
+        <!--VariableFolderTest-->
         <scene sceneID="sbg-Vm-nQy">
             <objects>
                 <customObject id="QOS-mb-b6s" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController title="VariableFolder" storyboardIdentifier="VariableFolder" id="b2x-aR-lWC" customClass="VariableFolderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="VariableFolder" storyboardIdentifier="VariableFolderTest" id="b2x-aR-lWC" userLabel="VariableFolderTest" customClass="VariableFolderTestViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="kps-5v-4tF">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -218,10 +218,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="1168"/>
         </scene>
-        <!--Story-->
+        <!--StoryTest-->
         <scene sceneID="9E5-OO-fSu">
             <objects>
-                <viewController storyboardIdentifier="Story" id="zDT-my-Gmj" userLabel="Story" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StoryTest" id="zDT-my-Gmj" userLabel="StoryTest" customClass="StoryTestViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="hcB-Z1-atX">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

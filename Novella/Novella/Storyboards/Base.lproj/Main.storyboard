@@ -728,10 +728,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="655"/>
         </scene>
-        <!--VariableFolder-->
+        <!--VariableFolderTest-->
         <scene sceneID="BcC-zH-bTK">
             <objects>
-                <controllerPlaceholder storyboardName="Tests" referencedIdentifier="VariableFolder" id="0tw-xp-Qoj" sceneMemberID="viewController"/>
+                <controllerPlaceholder storyboardName="Tests" referencedIdentifier="VariableFolderTest" id="0tw-xp-Qoj" sceneMemberID="viewController"/>
                 <customObject id="1cF-I6-lIL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="69" y="979"/>

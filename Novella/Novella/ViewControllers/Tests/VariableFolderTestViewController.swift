@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class VariableFolderViewController: NSViewController {
+class VariableFolderTestViewController: NSViewController {
 	@IBOutlet weak var outlineView: NSOutlineView!
 	@IBOutlet weak var statusLabel: NSTextField!
 	let root = Folder(name: "root")
@@ -136,7 +136,7 @@ class VariableFolderViewController: NSViewController {
 	
 }
 
-extension VariableFolderViewController: NSOutlineViewDataSource {
+extension VariableFolderTestViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if let _ = item as? Variable {
 			return 0
@@ -246,7 +246,7 @@ extension VariableFolderViewController: NSOutlineViewDataSource {
 	}
 }
 
-extension VariableFolderViewController: NSOutlineViewDelegate {
+extension VariableFolderTestViewController: NSOutlineViewDelegate {
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
