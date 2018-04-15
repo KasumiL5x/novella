@@ -55,7 +55,7 @@ class Story {
 	
 	// MARK: FlowGraph Convenience Functions
 	func makeGraph(name: String) throws -> FlowGraph {
-		let fg = FlowGraph(name: name)
+		let fg = FlowGraph(name: name, story: self)
 		try add(graph: fg)
 		return fg
 	}

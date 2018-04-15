@@ -12,19 +12,46 @@ class FlowGraph {
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
 	
-	// only one of these should be valid
+	// parent flow graph is valid unless as a direct child of the story
 	var _parent: FlowGraph?
+	var _story: Story?
 	
-	init(name: String) {
+	init(name: String, story: Story) {
 		self._name = name
 		self._graphs = []
 		self._nodes = []
 		self._links = []
 		self._parent = nil
+		self._story = story
 	}
 	
 	// MARK:  Getters
 	var Name: String {get{ return _name }}
+	
+	// MARK: Setters
+	func setName(name: String) throws {
+		assert(_story != nil, "FlowGraph::setName - _story is nil.")
+		
+		// if there's no parent graph, check siblings of the story for name clashes
+		if nil == _parent {
+			if _story!.containsGraphName(name: name) {
+				throw Errors.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the Story already contains that name.")
+			}
+			_name = name
+			return
+		}
+		
+		// parent graph can't contain same name
+		if _parent != nil {
+			if _parent!.containsGraphName(name: name) {
+				throw Errors.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the parent FlowGraph (\(_parent!._name)) already contains that name.")
+			}
+			_name = name
+			return
+		}
+		
+		throw Errors.invalid("Oh dear.")
+	}
 	
 	// MARK: Sub-FlowGraphs
 	func contains(graph: FlowGraph) -> Bool {
@@ -67,7 +94,9 @@ class FlowGraph {
 	
 	// MARK: Sub-FlowGraph Convenience Functions
 	func makeGraph(name: String) throws -> FlowGraph {
-		let fg = FlowGraph(name: name)
+		assert(_story != nil, "FlowGraph::setName - _story is nil.")
+		
+		let fg = FlowGraph(name: name, story: _story!)
 		try add(graph: fg)
 		return fg
 	}
