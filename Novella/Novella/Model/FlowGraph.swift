@@ -13,32 +13,18 @@ class FlowGraph {
 	var _links: [BaseLink]
 	
 	// only one of these should be valid
-	var _parentStory: Story?
-	var _parentGraph: FlowGraph?
+	var _parent: FlowGraph?
 	
 	init(name: String) {
 		self._name = name
 		self._graphs = []
 		self._nodes = []
 		self._links = []
-		self._parentStory = nil
-		self._parentGraph = nil
+		self._parent = nil
 	}
 	
 	// MARK:  Getters
 	var Name: String {get{ return _name }}
-	
-	// MARK: Helper Functions
-	func unparent() throws {
-		if _parentStory != nil {
-			try _parentStory!.remove(graph: self)
-			_parentStory = nil
-		}
-		if _parentGraph != nil {
-			try _parentGraph!.remove(graph: self)
-			_parentGraph = nil
-		}
-	}
 	
 	// MARK: Sub-FlowGraphs
 	func contains(graph: FlowGraph) -> Bool {
@@ -63,10 +49,11 @@ class FlowGraph {
 			throw Errors.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to \(_name)).")
 		}
 		// unparent first
-		try graph.unparent()
+		if graph._parent != nil {
+			try! graph._parent!.remove(graph: graph)
+		}
 		// now add
-		graph._parentStory = nil
-		graph._parentGraph = self
+		graph._parent = self
 		_graphs.append(graph)
 	}
 	
@@ -74,7 +61,7 @@ class FlowGraph {
 		guard let idx = _graphs.index(of: graph) else {
 			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from (\(_name)) but it was not a child.")
 		}
-		_graphs[idx]._parentGraph = nil
+		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
 	}
 	
@@ -93,8 +80,7 @@ extension FlowGraph: Pathable {
 	}
 	
 	func parentPath() -> Pathable? {
-		// cna have two parents
-		return _parentStory != nil ? _parentStory : _parentGraph
+		return _parent
 	}
 }
 

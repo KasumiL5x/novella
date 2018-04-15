@@ -38,10 +38,11 @@ class Story {
 			throw Errors.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to story).")
 		}
 		// unparent first
-		try graph.unparent()
+		if graph._parent != nil {
+			try graph._parent?.remove(graph: graph)
+		}
 		// now add
-		graph._parentStory = self
-		graph._parentGraph = nil
+		graph._parent = nil
 		_graphs.append(graph)
 	}
 	
@@ -49,7 +50,6 @@ class Story {
 		guard let idx = _graphs.index(of: graph) else {
 			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
 		}
-		_graphs[idx]._parentStory = nil
 		_graphs.remove(at: idx)
 	}
 	
@@ -58,16 +58,5 @@ class Story {
 		let fg = FlowGraph(name: name)
 		try add(graph: fg)
 		return fg
-	}
-}
-
-// MARK: Pathable
-extension Story: Pathable {
-	func localPath() -> String {
-		return "story"
-	}
-	
-	func parentPath() -> Pathable? {
-		return nil // highest level object
 	}
 }
