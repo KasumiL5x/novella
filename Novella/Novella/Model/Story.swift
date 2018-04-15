@@ -7,11 +7,17 @@
 //
 
 class Story {
-	var _rootVariableSet: Folder
-	var _flowGraphs: [FlowGraph]
+	var _rootFolder: Folder
+	var _mainGraph: FlowGraph
+	var _graphs: [FlowGraph]
 	
 	init() {
-		self._rootVariableSet = Folder(name: "story")
-		self._flowGraphs = []
+		self._rootFolder = Folder(name: "story")
+		self._mainGraph = FlowGraph()
+		self._graphs = [self._mainGraph]
+	}
+	
+	func setup() throws {
+		throw Errors.notImplemented("Story::setup()")
 	}
 }
