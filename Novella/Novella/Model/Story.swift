@@ -29,11 +29,11 @@ class Story {
 	}
 	
 	func remove(graph: FlowGraph) throws {
-		
+		throw Errors.notImplemented("Story::remove(graph)")
 	}
 }
 
-// MARK - Pathable
+// MARK: Pathable
 extension Story: Pathable {
 	func localPath() -> String {
 		return "story"

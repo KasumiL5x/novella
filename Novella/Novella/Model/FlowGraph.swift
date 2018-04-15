@@ -29,7 +29,7 @@ class FlowGraph {
 	var Name: String {get{ return _name }}
 }
 
-// MARK - Pathable
+// MARK: Pathable
 extension FlowGraph: Pathable {
 	func localPath() -> String {
 		return _name
@@ -41,7 +41,7 @@ extension FlowGraph: Pathable {
 	}
 }
 
-// MARK - Equatable
+// MARK: Equatable
 extension FlowGraph: Equatable {
 	static func == (lhs: FlowGraph, rhs: FlowGraph) -> Bool {
 		return Path.fullPathTo(object: lhs) == Path.fullPathTo(object: rhs)
