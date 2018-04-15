@@ -712,7 +712,7 @@
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="t5V-ki-yZp" userLabel="TestEmbedView">
                                 <rect key="frame" x="20" y="20" width="440" height="230"/>
                                 <connections>
-                                    <segue destination="0tw-xp-Qoj" kind="embed" id="Y2Y-ao-SRp"/>
+                                    <segue destination="Cz0-Jb-cuJ" kind="embed" id="PSS-bU-0TJ"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -734,7 +734,15 @@
                 <controllerPlaceholder storyboardName="Tests" referencedIdentifier="VariableFolderTest" id="0tw-xp-Qoj" sceneMemberID="viewController"/>
                 <customObject id="1cF-I6-lIL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="979"/>
+            <point key="canvasLocation" x="6" y="957"/>
+        </scene>
+        <!--StoryTest-->
+        <scene sceneID="Ju4-wI-4dI">
+            <objects>
+                <controllerPlaceholder storyboardName="Tests" referencedIdentifier="StoryTest" id="Cz0-Jb-cuJ" sceneMemberID="viewController"/>
+                <customObject id="V6y-eF-ICz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="242" y="957"/>
         </scene>
     </scenes>
 </document>

@@ -226,17 +226,89 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2L-QM-CkC">
-                                <rect key="frame" x="207" y="141" width="37" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="RO8-lB-B7V">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="HPV-4E-778" userLabel="footer">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="100"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qh-Fl-ijo">
+                                        <rect key="frame" x="14" y="52" width="105" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Add Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Swg-CY-CV9">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onAddGraph:" target="zDT-my-Gmj" id="sP3-7a-D1d"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jxy-x8-Em6">
+                                        <rect key="frame" x="119" y="52" width="129" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Remove Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2az-y4-7un">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onRemoveGraph:" target="zDT-my-Gmj" id="dPm-Vt-a3A"/>
+                                        </connections>
+                                    </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g1b-hX-Fb9">
+                                        <rect key="frame" x="8" y="5" width="444" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nothing is on fire right now.  Do not worry." id="Mut-zW-inp">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="g1b-hX-Fb9" secondAttribute="bottom" constant="5" id="767-Ev-LmA"/>
+                                    <constraint firstAttribute="trailing" secondItem="g1b-hX-Fb9" secondAttribute="trailing" id="VnS-lt-qJm"/>
+                                    <constraint firstAttribute="height" constant="100" id="WXv-wu-SUg"/>
+                                    <constraint firstItem="g1b-hX-Fb9" firstAttribute="leading" secondItem="HPV-4E-778" secondAttribute="leading" constant="10" id="tGm-wu-EyA"/>
+                                </constraints>
+                            </customView>
+                            <browser verticalHuggingPriority="750" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="100" minColumnWidth="100" allowsTypeSelect="YES" columnResizingType="auto" translatesAutoresizingMaskIntoConstraints="NO" id="hmn-3u-MZC">
+                                <rect key="frame" x="0.0" y="100" width="450" height="150"/>
+                                <connections>
+                                    <outlet property="delegate" destination="zDT-my-Gmj" id="q1U-pB-9d9"/>
+                                </connections>
+                            </browser>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Q1C-kV-6Sb" userLabel="header">
+                                <rect key="frame" x="0.0" y="250" width="450" height="50"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i1y-Bf-Rlj">
+                                        <rect key="frame" x="-2" y="2" width="93" height="48"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Story" id="FcV-MA-KFI">
+                                            <font key="font" metaFont="system" size="40"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="LfG-Aa-Jjo"/>
+                                    <constraint firstItem="i1y-Bf-Rlj" firstAttribute="top" secondItem="Q1C-kV-6Sb" secondAttribute="top" id="Q8V-PK-R4L"/>
+                                    <constraint firstItem="i1y-Bf-Rlj" firstAttribute="leading" secondItem="Q1C-kV-6Sb" secondAttribute="leading" id="RWJ-Za-uPz"/>
+                                </constraints>
+                            </customView>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hmn-3u-MZC" secondAttribute="trailing" id="2g3-mC-5oc"/>
+                            <constraint firstAttribute="trailing" secondItem="Q1C-kV-6Sb" secondAttribute="trailing" id="5fT-B5-483"/>
+                            <constraint firstItem="HPV-4E-778" firstAttribute="leading" secondItem="hcB-Z1-atX" secondAttribute="leading" id="7Nu-dS-hjq"/>
+                            <constraint firstItem="hmn-3u-MZC" firstAttribute="leading" secondItem="hcB-Z1-atX" secondAttribute="leading" id="7X9-Es-Irg"/>
+                            <constraint firstItem="Q1C-kV-6Sb" firstAttribute="top" secondItem="hcB-Z1-atX" secondAttribute="top" id="ass-HP-LDW"/>
+                            <constraint firstItem="Q1C-kV-6Sb" firstAttribute="leading" secondItem="hcB-Z1-atX" secondAttribute="leading" id="f1k-oc-WCs"/>
+                            <constraint firstItem="hmn-3u-MZC" firstAttribute="top" secondItem="Q1C-kV-6Sb" secondAttribute="bottom" id="mPe-OA-31U"/>
+                            <constraint firstAttribute="trailing" secondItem="HPV-4E-778" secondAttribute="trailing" id="nrO-7v-93G"/>
+                            <constraint firstAttribute="bottom" secondItem="HPV-4E-778" secondAttribute="bottom" id="ozt-c7-14g"/>
+                            <constraint firstItem="HPV-4E-778" firstAttribute="top" secondItem="hmn-3u-MZC" secondAttribute="bottom" id="ujp-qL-zDH"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="browser" destination="hmn-3u-MZC" id="HEM-6M-Acn"/>
+                        <outlet property="statusLabel" destination="g1b-hX-Fb9" id="xaF-fD-jw2"/>
+                    </connections>
                 </viewController>
                 <customObject id="Wnw-8r-oUh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

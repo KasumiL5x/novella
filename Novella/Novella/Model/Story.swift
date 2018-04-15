@@ -13,6 +13,9 @@ class Story {
 	init() {
 		self._rootFolder = Folder(name: "story")
 		self._graphs = []
+		
+		// add first graph
+		let _ = try! makeGraph(name: "main")
 	}
 	
 	func setup() throws {
