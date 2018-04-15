@@ -176,17 +176,6 @@ class Folder {
 	}
 }
 
-
-// MARK: Equatable
-extension Folder: Equatable {
-	static func == (lhs: Folder, rhs: Folder) -> Bool {
-		// if they have the same name and same parent, they are equal.
-		// may change this to an absolute path later.
-		return (lhs._parent == rhs._parent) && (lhs._name == rhs._name)
-	}
-}
-
-
 // MARK: Pathable
 extension Folder: Pathable {
 	func localPath() -> String {
@@ -195,5 +184,12 @@ extension Folder: Pathable {
 	
 	func parentPath() -> Pathable? {
 		return _parent
+	}
+}
+
+// MARK: Equatable
+extension Folder: Equatable {
+	static func == (lhs: Folder, rhs: Folder) -> Bool {
+		return Path.fullPathTo(object: lhs) == Path.fullPathTo(object: rhs)
 	}
 }
