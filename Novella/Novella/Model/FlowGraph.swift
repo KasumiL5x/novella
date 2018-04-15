@@ -28,3 +28,22 @@ class FlowGraph {
 	// MARK:  Getters
 	var Name: String {get{ return _name }}
 }
+
+// MARK - Pathable
+extension FlowGraph: Pathable {
+	func localPath() -> String {
+		return _name
+	}
+	
+	func parentPath() -> Pathable? {
+		// cna have two parents
+		return _parentStory != nil ? _parentStory : _parentGraph
+	}
+}
+
+// MARK - Equatable
+extension FlowGraph: Equatable {
+	static func == (lhs: FlowGraph, rhs: FlowGraph) -> Bool {
+		return Path.fullPathTo(object: lhs) == Path.fullPathTo(object: rhs)
+	}
+}

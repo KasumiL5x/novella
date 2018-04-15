@@ -32,3 +32,14 @@ class Story {
 		
 	}
 }
+
+// MARK - Pathable
+extension Story: Pathable {
+	func localPath() -> String {
+		return "story"
+	}
+	
+	func parentPath() -> Pathable? {
+		return nil // highest level object
+	}
+}
