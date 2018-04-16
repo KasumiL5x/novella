@@ -346,7 +346,7 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <action selector="onNameEdited:" target="zDT-my-Gmj" id="yhF-JF-Vpf"/>
+                                                                        <outlet property="delegate" destination="zDT-my-Gmj" id="ncX-rl-ui2"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>

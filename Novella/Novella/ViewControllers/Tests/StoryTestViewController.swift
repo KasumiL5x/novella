@@ -74,31 +74,31 @@ class StoryTestViewController: NSViewController {
 			print(Path.fullPathTo(object: path))
 		}
 	}
-	
-	@IBAction func onNameEdited(_ sender: NSTextField) {
-		let idx = outline.selectedRow
-		if -1 == idx {
-			return
-		}
+}
 
-		let newName = sender.stringValue
-		let item = outline.item(atRow: idx)
-		
-		
-		if let graph = item as? FlowGraph {
-			if newName == graph.Name {
-				return
-			}
-			do { try graph.setName(name: newName) } catch {
-				statusLabel.stringValue = "Could not rename FG (\(graph.Name)->\(newName))!"
-				sender.stringValue = graph.Name
-			}
+extension StoryTestViewController: NSTextFieldDelegate {
+	func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
+		let item = outline.item(atRow: outline.selectedRow)
+		if let _ = item as? Variable {
+			return false
 		}
-		else {
-			print("SHOULD NOT RENAME")
+		if let _ = item as? Folder {
+			return false
 		}
+		return true
 	}
 	
+	func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
+		let item = outline.item(atRow: outline.selectedRow)
+		
+		if let graph = item as? FlowGraph {
+			do{ try graph.setName(name: fieldEditor.string) } catch {
+				statusLabel.stringValue = "Could not rename FG (\(graph.Name)->\(fieldEditor.string))!"
+			}
+		}
+		
+		return true
+	}
 }
 
 extension StoryTestViewController: NSOutlineViewDataSource {
