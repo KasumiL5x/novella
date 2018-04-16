@@ -73,4 +73,23 @@ class Story {
 		try add(graph: fg)
 		return fg
 	}
+	
+	// MARK: Links
+	func add(link: BaseLink) {
+		_links.append(link)
+	}
+	func remove(link: BaseLink) throws {
+		guard let idx = _links.index(of: link) else {
+			throw Errors.invalid("Tried to remove BaseLink from Story but it was not a child.")
+		}
+		_links.remove(at: idx)
+	}
+	
+	// MARK: Link Convenience Functions
+	func makeLink(origin: Linkable, destination: Linkable?) {
+		let link = Link()
+		link.origin = origin
+		link.transfer.destination = destination
+		add(link: link)
+	}
 }

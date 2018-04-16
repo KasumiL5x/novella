@@ -6,10 +6,16 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-class BaseLink {
+class BaseLink: Identifiable {
 	var origin: Linkable?
 	
-	init() {
+	override init() {
 		self.origin = nil
+	}
+}
+
+extension BaseLink: Equatable {
+	static func == (lhs: BaseLink, rhs: BaseLink) -> Bool {
+		return lhs._uniqueID == rhs._uniqueID
 	}
 }
