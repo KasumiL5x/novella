@@ -7,17 +7,25 @@
 //
 
 class Story {
-	var _rootFolder: Folder
+	var _mainFolder: Folder
 	var _graphs: [FlowGraph]
 	
+	// primary graph // TODO: Make this non-deletable
+	var _mainGraph: FlowGraph? = nil
+	
 	init() {
-		self._rootFolder = Folder(name: "story")
+		self._mainFolder = Folder(name: "story")
 		self._graphs = []
 		
 		// add first graph
-		let _ = try! makeGraph(name: "main")
+		self._mainGraph = try! makeGraph(name: "main")
 	}
 	
+	// MARK: Getters
+	var MainGraph: FlowGraph {get{ return _mainGraph! }}
+	var MainFolder: Folder {get{ return _mainFolder }}
+	
+	// MARK: Setup
 	func setup() throws {
 		throw Errors.notImplemented("Story::setup()")
 	}

@@ -18,7 +18,24 @@ class StoryTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let _ = try! _story.makeGraph(name: "side")
+		// set up some story graph and variable content
+		let mq1 = try! _story.MainGraph.makeGraph(name: "quest1")
+			let _ = try! mq1.makeGraph(name: "objective1")
+		let mq2 = try! _story.MainGraph.makeGraph(name: "quest2")
+			let _ = try! mq2.makeGraph(name: "objective1")
+			let _ = try! mq2.makeGraph(name: "objective2")
+		//
+		let side = try! _story.makeGraph(name: "side")
+		let _ = try! side.makeGraph(name: "quest1")
+		let _ = try! side.makeGraph(name: "quest2")
+		//
+		let chars = try! _story.MainFolder.mkdir(name: "characters")
+			let player = try! chars.mkdir(name: "player")
+				let _ = try! player.mkvar(name: "health", type: .integer)
+		let decs = try! _story.MainFolder.mkdir(name: "choices")
+			let _ = try! decs.mkvar(name: "talked_to_dave", type: .boolean)
+			let _ = try! decs.mkvar(name: "completed_task", type: .boolean)
+		
 		outline.reloadData()
 	}
 	
@@ -133,7 +150,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 		if index < _story._graphs.count {
 			return _story._graphs[index]
 		}
-		return _story._rootFolder
+		return _story._mainFolder
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
