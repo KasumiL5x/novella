@@ -7,4 +7,13 @@
 //
 
 class Switch : BaseLink {
+	var variable: Variable?
+	var defaultTransfer: Transfer
+	var values: [AnyHashable:Transfer]
+	
+	override init() {
+		self.variable = nil
+		self.defaultTransfer = Transfer()
+		self.values = [:]
+	}
 }
