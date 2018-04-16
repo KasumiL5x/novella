@@ -8,10 +8,6 @@
 
 import Foundation
 
-class Identifiable {
-	let _uniqueID: String
-	
-	init() {
-		_uniqueID = NSUUID().uuidString
-	}
+protocol Identifiable {
+	var UUID: NSUUID { get }
 }

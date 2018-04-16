@@ -6,16 +6,26 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-class BaseLink: Identifiable {
+import Foundation
+
+class BaseLink {
+	let _uuid: NSUUID
 	var origin: Linkable?
 	
-	override init() {
+	init() {
+		self._uuid = NSUUID()
 		self.origin = nil
+	}
+}
+
+extension BaseLink: Identifiable {
+	var UUID: NSUUID {
+		return _uuid
 	}
 }
 
 extension BaseLink: Equatable {
 	static func == (lhs: BaseLink, rhs: BaseLink) -> Bool {
-		return lhs._uniqueID == rhs._uniqueID
+		return lhs.UUID == rhs.UUID
 	}
 }
