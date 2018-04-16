@@ -9,7 +9,7 @@
 import Foundation
 
 class Identifiable {
-	var _uniqueID: String
+	let _uniqueID: String
 	
 	init() {
 		_uniqueID = NSUUID().uuidString
