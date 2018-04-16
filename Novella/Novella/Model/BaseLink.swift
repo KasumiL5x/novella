@@ -7,9 +7,9 @@
 //
 
 class BaseLink {
-	var origin: String
+	var origin: Linkable?
 	
 	init() {
-		self.origin = ""
+		self.origin = nil
 	}
 }

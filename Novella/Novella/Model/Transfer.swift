@@ -7,11 +7,11 @@
 //
 
 class Transfer {
-	var destination: String
+	var destination: Linkable?
 	var function: Function
 	
 	init() {
-		self.destination = ""
+		self.destination = nil
 		self.function = Function()
 	}
 }
