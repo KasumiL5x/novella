@@ -18,12 +18,14 @@ class BaseLink {
 	}
 }
 
+// MARK: Identifiable
 extension BaseLink: Identifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
+// MARK: Equatable
 extension BaseLink: Equatable {
 	static func == (lhs: BaseLink, rhs: BaseLink) -> Bool {
 		return lhs.UUID == rhs.UUID
