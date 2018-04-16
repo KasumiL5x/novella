@@ -9,6 +9,7 @@
 class Story {
 	var _mainFolder: Folder
 	var _graphs: [FlowGraph]
+	var _links: [BaseLink]
 	
 	// primary graph
 	// TODO: Make this non-deletable
@@ -17,6 +18,7 @@ class Story {
 	init() {
 		self._mainFolder = Folder(name: "story")
 		self._graphs = []
+		self._links = []
 		
 		// add first graph
 		self._mainGraph = try! makeGraph(name: "main")
