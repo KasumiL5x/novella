@@ -10,7 +10,8 @@ class Story {
 	var _mainFolder: Folder
 	var _graphs: [FlowGraph]
 	
-	// primary graph // TODO: Make this non-deletable
+	// primary graph
+	// TODO: Make this non-deletable
 	var _mainGraph: FlowGraph? = nil
 	
 	init() {

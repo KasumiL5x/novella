@@ -231,6 +231,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 658C7CCE207E7E6600E2B46B /* Build configuration list for PBXNativeTarget "Novella" */;
 			buildPhases = (
+				650455B32084A8B8004B30D0 /* ShellScript */,
 				658C7CA4207E7E6500E2B46B /* Sources */,
 				658C7CA5207E7E6500E2B46B /* Frameworks */,
 				658C7CA6207E7E6500E2B46B /* Resources */,
@@ -349,6 +350,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		650455B32084A8B8004B30D0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nfind \"${SRCROOT}/\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		658C7CA4207E7E6500E2B46B /* Sources */ = {
