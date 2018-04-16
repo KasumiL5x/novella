@@ -6,7 +6,10 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class Folder {
+	var _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
 	var _folders: [Folder]
@@ -14,6 +17,7 @@ class Folder {
 	var _parent: Folder?
 	
 	init(name: String) {
+		self._uuid = NSUUID()
 		self._name = name
 		self._synopsis = ""
 		self._folders = []
@@ -187,9 +191,16 @@ extension Folder: Pathable {
 	}
 }
 
+// MARK: Identifiable
+extension Folder: Identifiable {
+	var UUID: NSUUID {
+		return _uuid
+	}
+}
+
 // MARK: Equatable
 extension Folder: Equatable {
 	static func == (lhs: Folder, rhs: Folder) -> Bool {
-		return Path.fullPathTo(object: lhs) == Path.fullPathTo(object: rhs)
+		return lhs.UUID == rhs.UUID
 	}
 }
