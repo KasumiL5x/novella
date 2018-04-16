@@ -69,8 +69,9 @@ class StoryTestViewController: NSViewController {
 		}
 		
 		let item = outline.item(atRow: idx)
-		if let graph = item as? FlowGraph {
-			print(Path.fullPathTo(object: graph))
+		
+		if let path = item as? Pathable {
+			print(Path.fullPathTo(object: path))
 		}
 	}
 	
@@ -82,6 +83,8 @@ class StoryTestViewController: NSViewController {
 
 		let newName = sender.stringValue
 		let item = outline.item(atRow: idx)
+		
+		
 		if let graph = item as? FlowGraph {
 			if newName == graph.Name {
 				return
@@ -91,30 +94,62 @@ class StoryTestViewController: NSViewController {
 				sender.stringValue = graph.Name
 			}
 		}
+		else {
+			print("SHOULD NOT RENAME")
+		}
 	}
 	
 }
 
 extension StoryTestViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		if let _ = item as? Variable {
+			return 0
+		}
+		
+		if let folder = item as? Folder {
+			return folder._folders.count + folder._variables.count
+		}
+		
 		if let graph = item as? FlowGraph {
 			return graph._graphs.count
 		}
-		return _story._graphs.count
+		
+		return _story._graphs.count + 1 // root folder
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		if let folder = item as? Folder {
+			if index < folder._folders.count {
+				return folder._folders[index]
+			}
+			return folder._variables[index - folder._folders.count]
+		}
+		
 		if let graph = item as? FlowGraph {
 			return graph._graphs[index]
 		}
-		return _story._graphs[index]
+		
+		if index < _story._graphs.count {
+			return _story._graphs[index]
+		}
+		return _story._rootFolder
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		if let _ = item as? Variable {
+			return false
+		}
+		
+		if let folder = item as? Folder {
+			return (folder._folders.count + folder._variables.count) > 0
+		}
+		
 		if let graph = item as? FlowGraph {
 			return graph._graphs.count > 0
 		}
-		return _story._graphs.count > 0
+		
+		return (_story._graphs.count + 1) > 0 // root folder
 	}
 }
 
@@ -124,6 +159,14 @@ extension StoryTestViewController: NSOutlineViewDelegate {
 		
 		var name = ""
 		var type = ""
+		if let variable = item as? Variable {
+			name = variable.Name
+			type = "Variable"
+		}
+		if let folder = item as? Folder {
+			name = folder.Name
+			type = "Folder"
+		}
 		if let graph = item as? FlowGraph {
 			name = graph._name
 			type = "FlowGraph"
