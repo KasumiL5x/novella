@@ -6,25 +6,31 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class FlowGraph {
+	var _uuid: NSUUID
 	var _name: String
 	var _graphs: [FlowGraph]
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
 	var _listeners: [Listener]
 	var _exits: [ExitNode]
+	var _entry: Linkable?
 	
 	// parent flow graph is valid unless as a direct child of the story
 	var _parent: FlowGraph?
 	var _story: Story?
 	
 	init(name: String, story: Story) {
+		self._uuid = NSUUID()
 		self._name = name
 		self._graphs = []
 		self._nodes = []
 		self._links = []
 		self._listeners = []
 		self._exits = []
+		self._entry = nil
 		self._parent = nil
 		self._story = story
 	}
@@ -36,6 +42,7 @@ class FlowGraph {
 	var Links:     [BaseLink]  {get{ return _links }}
 	var Listeners: [Listener]  {get{ return _listeners }}
 	var Exits:     [ExitNode]  {get{ return _exits }}
+	var Entry:     Linkable?   {get{ return _entry }}
 	
 	// MARK: Setters
 	func setName(name: String) throws {
@@ -60,6 +67,21 @@ class FlowGraph {
 		}
 		
 		throw Errors.invalid("Oh dear.")
+	}
+	
+	func setEntry(entry: Linkable) throws {
+		if let fg = entry as? FlowGraph {
+			if !contains(graph: fg) {
+				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+			}
+		}
+		// TODO: Enable this at some point.
+//		if let fn = entry as? FlowNode {
+//			if !contains(node: fn) {
+//				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+//			}
+//		}
+		_entry = entry
 	}
 	
 	// MARK: Sub-FlowGraphs
@@ -162,9 +184,20 @@ extension FlowGraph: Pathable {
 	}
 }
 
+// MARK: Identifiable
+extension FlowGraph: Identifiable {
+	var UUID: NSUUID {
+		return _uuid
+	}
+}
+
+// MARK: Linkable
+extension FlowGraph: Linkable {
+}
+
 // MARK: Equatable
 extension FlowGraph: Equatable {
 	static func == (lhs: FlowGraph, rhs: FlowGraph) -> Bool {
-		return Path.fullPathTo(object: lhs) == Path.fullPathTo(object: rhs)
+		return lhs.UUID == rhs.UUID
 	}
 }
