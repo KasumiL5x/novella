@@ -12,6 +12,7 @@ class FlowGraph {
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
 	var _listeners: [Listener]
+	var _exits: [ExitNode]
 	
 	// parent flow graph is valid unless as a direct child of the story
 	var _parent: FlowGraph?
@@ -23,6 +24,7 @@ class FlowGraph {
 		self._nodes = []
 		self._links = []
 		self._listeners = []
+		self._exits = []
 		self._parent = nil
 		self._story = story
 	}
@@ -33,6 +35,7 @@ class FlowGraph {
 	var Nodes:     [FlowNode]  {get{ return _nodes }}
 	var Links:     [BaseLink]  {get{ return _links }}
 	var Listeners: [Listener]  {get{ return _listeners }}
+	var Exits:     [ExitNode]  {get{ return _exits }}
 	
 	// MARK: Setters
 	func setName(name: String) throws {
@@ -111,6 +114,7 @@ class FlowGraph {
 	func contains(listener: Listener) -> Bool {
 		return _listeners.contains(listener)
 	}
+	
 	func add(listener: Listener) throws {
 		// already a child
 		if contains(listener: listener) {
@@ -124,6 +128,26 @@ class FlowGraph {
 		let l = Listener()
 		try add(listener: l)
 		return l
+	}
+	
+	// MARK: Exit Nodes
+	func contains(exit: ExitNode) -> Bool {
+		return _exits.contains(exit)
+	}
+	
+	func add(exit: ExitNode) throws {
+		// already a child
+		if contains(exit: exit) {
+			throw Errors.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
+		}
+		_exits.append(exit)
+	}
+	
+	// MARK: Exit Node Convenience Functions
+	func makeExit() throws -> ExitNode {
+		let e = ExitNode()
+		try add(exit: e)
+		return e
 	}
 }
 
