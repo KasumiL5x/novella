@@ -145,6 +145,13 @@ class FlowGraph {
 		_listeners.append(listener)
 	}
 	
+	func remove(listener: Listener) throws {
+		guard let idx = _listeners.index(of: listener) else {
+			throw Errors.invalid("Tried to remove Listener from FlowGraph (\(_name)) but it was not a child.")
+		}
+		_listeners.remove(at: idx)
+	}
+	
 	// MARK: Listener Convenience Functions
 	func makeListener() throws -> Listener {
 		let l = Listener()
@@ -163,6 +170,13 @@ class FlowGraph {
 			throw Errors.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
 		}
 		_exits.append(exit)
+	}
+	
+	func remove(exit: ExitNode) throws {
+		guard let idx = _exits.index(of: exit) else {
+			throw Errors.invalid("Tried to remove ExitNode from FlowGraph (\(_name)) but it was not a child.")
+		}
+		_exits.remove(at: idx)
 	}
 	
 	// MARK: Exit Node Convenience Functions
