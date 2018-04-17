@@ -29,3 +29,7 @@ extension FlowNode: Equatable {
 		return lhs.UUID == rhs.UUID
 	}
 }
+
+// MARK: Linkable
+extension FlowNode: Linkable {
+}

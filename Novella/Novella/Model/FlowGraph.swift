@@ -75,12 +75,11 @@ class FlowGraph {
 				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
 			}
 		}
-		// TODO: Enable this at some point.
-//		if let fn = entry as? FlowNode {
-//			if !contains(node: fn) {
-//				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
-//			}
-//		}
+		if let fn = entry as? FlowNode {
+			if !contains(node: fn) {
+				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+			}
+		}
 		_entry = entry
 	}
 	
