@@ -9,9 +9,20 @@
 import Foundation
 
 class Serialize {
-	static func write(story: Story) throws -> NSString {
+	static func write() throws -> NSString {
 		
-		let root: [String:Any] = [:]
+		// create root object
+		var root: [String:Any] = [:]
+		
+		// must create nested entries as separate dictionaries unlike python
+		var story: [String:Any] = [:]
+		// fill in the dictionary again making nested dictionaries if necessary until at leaf data
+		for x in 0...4 {
+			let str = String(x)
+			story[str] = "hi"
+		}
+		// add the elements AFTER filling them fully, or they won't update
+		root["story"] = story
 		
 		
 		if !JSONSerialization.isValidJSONObject(root) {
