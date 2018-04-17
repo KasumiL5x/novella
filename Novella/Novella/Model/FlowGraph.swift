@@ -28,7 +28,11 @@ class FlowGraph {
 	}
 	
 	// MARK:  Getters
-	var Name: String {get{ return _name }}
+	var Name:      String      {get{ return _name }}
+	var Graphs:    [FlowGraph] {get{ return _graphs }}
+	var Nodes:     [FlowNode]  {get{ return _nodes }}
+	var Links:     [BaseLink]  {get{ return _links }}
+	var Listeners: [Listener]  {get{ return _listeners }}
 	
 	// MARK: Setters
 	func setName(name: String) throws {
