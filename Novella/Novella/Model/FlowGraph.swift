@@ -132,6 +132,26 @@ class FlowGraph {
 		return fg
 	}
 	
+	// MARK: FlowNodes
+	func contains(node: FlowNode) -> Bool {
+		return _nodes.contains(node)
+	}
+	
+	func add(node: FlowNode) throws {
+		// already a child
+		if contains(node: node) {
+			throw Errors.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
+		}
+		_nodes.append(node)
+	}
+	
+	func remove(node: FlowNode) throws {
+		guard let idx = _nodes.index(of: node) else {
+			throw Errors.invalid("Tried to remove a FlowNode from (\(_name)) but it was not a child.")
+		}
+		_nodes.remove(at: idx)
+	}
+	
 	// MARK: Listeners
 	func contains(listener: Listener) -> Bool {
 		return _listeners.contains(listener)
