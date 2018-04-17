@@ -6,5 +6,26 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class FlowNode {
+	let _uuid: NSUUID
+	
+	init() {
+		self._uuid = NSUUID()
+	}
+}
+
+// MARK: Identifiable
+extension FlowNode: Identifiable {
+	var UUID: NSUUID {
+		return _uuid
+	}
+}
+
+// MARK: Equatable
+extension FlowNode: Equatable {
+	static func == (lhs: FlowNode, rhs: FlowNode) -> Bool {
+		return lhs.UUID == rhs.UUID
+	}
 }
