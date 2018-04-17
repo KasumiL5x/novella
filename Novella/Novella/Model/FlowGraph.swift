@@ -11,6 +11,7 @@ class FlowGraph {
 	var _graphs: [FlowGraph]
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
+	var _listeners: [Listener]
 	
 	// parent flow graph is valid unless as a direct child of the story
 	var _parent: FlowGraph?
@@ -21,6 +22,7 @@ class FlowGraph {
 		self._graphs = []
 		self._nodes = []
 		self._links = []
+		self._listeners = []
 		self._parent = nil
 		self._story = story
 	}
@@ -99,6 +101,18 @@ class FlowGraph {
 		let fg = FlowGraph(name: name, story: _story!)
 		try add(graph: fg)
 		return fg
+	}
+	
+	// MARK: Listeners
+	func contains(listener: Listener) -> Bool {
+		return _listeners.contains(listener)
+	}
+	func add(listener: Listener) throws {
+		// already a child
+		if contains(listener: listener) {
+			throw Errors.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
+		}
+		_listeners.append(listener)
 	}
 }
 

@@ -10,6 +10,7 @@
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		653CA9B5208538F50052BAB9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* Identifiable.swift */; };
+		655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* Listener.swift */; };
 		65619E922084D711000D5322 /* Linkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* Linkable.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAD207E7E6500E2B46B /* ViewController.swift */; };
@@ -58,6 +59,7 @@
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		653CA9B4208538F50052BAB9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		655CFAEE2085FA2900C04D40 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		65619E912084D711000D5322 /* Linkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkable.swift; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				65C0573E2080A20900C4367E /* Path.swift */,
 				653CA9B4208538F50052BAB9 /* Identifiable.swift */,
 				658C7CDA207E7EB900E2B46B /* Errors.swift */,
+				655CFAEE2085FA2900C04D40 /* Listener.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65F5DF9C207EA0C70041FB0D /* Condition.swift in Sources */,
+				655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */,
 				658C7CDC207E7EB900E2B46B /* Folder.swift in Sources */,
 				65F5DFA0207EA1600041FB0D /* Function.swift in Sources */,
 				65619E922084D711000D5322 /* Linkable.swift in Sources */,
