@@ -119,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6515048B208618AC00D38D07 /* Graphs */ = {
+			isa = PBXGroup;
+			children = (
+				65F5DFA3207EA3DD0041FB0D /* FlowGraph.swift */,
+			);
+			name = Graphs;
+			sourceTree = "<group>";
+		};
 		6519DE5320854AA7009C43E2 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,21 +161,6 @@
 				658C7CD8207E7EB800E2B46B /* Folder.swift */,
 			);
 			name = Variables;
-			sourceTree = "<group>";
-		};
-		653CA9B720854A730052BAB9 /* Links */ = {
-			isa = PBXGroup;
-			children = (
-				65619E912084D711000D5322 /* Linkable.swift */,
-				65F5DF92207EA0910041FB0D /* BaseLink.swift */,
-				65F5DF94207EA09C0041FB0D /* Link.swift */,
-				65F5DF97207EA0AF0041FB0D /* Branch.swift */,
-				65F5DF99207EA0BA0041FB0D /* Switch.swift */,
-				65F5DF9D207EA0D40041FB0D /* Transfer.swift */,
-				65F5DF9B207EA0C70041FB0D /* Condition.swift */,
-				65F5DF9F207EA1600041FB0D /* Function.swift */,
-			);
-			path = Links;
 			sourceTree = "<group>";
 		};
 		658C7C9F207E7E6500E2B46B = {
@@ -227,14 +220,14 @@
 			isa = PBXGroup;
 			children = (
 				653CA9B620854A640052BAB9 /* Variables */,
-				653CA9B720854A730052BAB9 /* Links */,
+				659485962086191E003C7BE4 /* Links */,
+				6515048B208618AC00D38D07 /* Graphs */,
 				6519DE5320854AA7009C43E2 /* Nodes */,
 				65F5DFA1207EA3C00041FB0D /* Story.swift */,
-				65F5DFA3207EA3DD0041FB0D /* FlowGraph.swift */,
+				655CFAEE2085FA2900C04D40 /* Listener.swift */,
 				65C0573E2080A20900C4367E /* Path.swift */,
 				653CA9B4208538F50052BAB9 /* Identifiable.swift */,
-				658C7CDA207E7EB900E2B46B /* Errors.swift */,
-				655CFAEE2085FA2900C04D40 /* Listener.swift */,
+				658C7CDA207E7EB900E2B46B /* Errors.swift */
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -246,6 +239,21 @@
 				658C7CE2207E7EDD00E2B46B /* VariableTests.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		659485962086191E003C7BE4 /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				65619E912084D711000D5322 /* Linkable.swift */,
+				65F5DF92207EA0910041FB0D /* BaseLink.swift */,
+				65F5DF94207EA09C0041FB0D /* Link.swift */,
+				65F5DF97207EA0AF0041FB0D /* Branch.swift */,
+				65F5DF99207EA0BA0041FB0D /* Switch.swift */,
+				65F5DF9D207EA0D40041FB0D /* Transfer.swift */,
+				65F5DF9B207EA0C70041FB0D /* Condition.swift */,
+				65F5DF9F207EA1600041FB0D /* Function.swift */,
+			);
+			name = Links;
 			sourceTree = "<group>";
 		};
 		65F5DFA7207EBD960041FB0D /* ViewControllers */ = {
