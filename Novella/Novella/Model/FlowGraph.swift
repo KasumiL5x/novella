@@ -118,6 +118,13 @@ class FlowGraph {
 		}
 		_listeners.append(listener)
 	}
+	
+	// MARK: Listener Convenience Functions
+	func makeListener() throws -> Listener {
+		let l = Listener()
+		try add(listener: l)
+		return l
+	}
 }
 
 // MARK: Pathable
