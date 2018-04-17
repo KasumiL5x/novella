@@ -9,7 +9,7 @@
 import Foundation
 
 class Folder {
-	var _uuid: NSUUID
+	let _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
 	var _folders: [Folder]
