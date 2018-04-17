@@ -13,6 +13,10 @@
 		655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* Listener.swift */; };
 		65619E922084D711000D5322 /* Linkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* Linkable.swift */; };
 		656F99E920869B2C009366D0 /* ExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99E820869B2C009366D0 /* ExitNode.swift */; };
+		656F99EB2086A5E9009366D0 /* Cutscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EA2086A5E9009366D0 /* Cutscene.swift */; };
+		656F99ED2086A60A009366D0 /* Delivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EC2086A60A009366D0 /* Delivery.swift */; };
+		656F99EF2086A627009366D0 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EE2086A627009366D0 /* Dialog.swift */; };
+		656F99F12086A638009366D0 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99F02086A638009366D0 /* Context.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAD207E7E6500E2B46B /* ViewController.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
@@ -63,6 +67,10 @@
 		655CFAEE2085FA2900C04D40 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		65619E912084D711000D5322 /* Linkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkable.swift; sourceTree = "<group>"; };
 		656F99E820869B2C009366D0 /* ExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitNode.swift; sourceTree = "<group>"; };
+		656F99EA2086A5E9009366D0 /* Cutscene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cutscene.swift; sourceTree = "<group>"; };
+		656F99EC2086A60A009366D0 /* Delivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delivery.swift; sourceTree = "<group>"; };
+		656F99EE2086A627009366D0 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
+		656F99F02086A638009366D0 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		658C7CAD207E7E6500E2B46B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +142,10 @@
 			isa = PBXGroup;
 			children = (
 				65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */,
+				656F99EA2086A5E9009366D0 /* Cutscene.swift */,
+				656F99EC2086A60A009366D0 /* Delivery.swift */,
+				656F99EE2086A627009366D0 /* Dialog.swift */,
+				656F99F02086A638009366D0 /* Context.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -419,6 +431,7 @@
 				656F99E920869B2C009366D0 /* ExitNode.swift in Sources */,
 				65F5DF9C207EA0C70041FB0D /* Condition.swift in Sources */,
 				655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */,
+				656F99EB2086A5E9009366D0 /* Cutscene.swift in Sources */,
 				658C7CDC207E7EB900E2B46B /* Folder.swift in Sources */,
 				65F5DFA0207EA1600041FB0D /* Function.swift in Sources */,
 				65619E922084D711000D5322 /* Linkable.swift in Sources */,
@@ -430,6 +443,7 @@
 				65F5DFA6207EA3FB0041FB0D /* FlowNode.swift in Sources */,
 				65F5DFA2207EA3C00041FB0D /* Story.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
+				656F99F12086A638009366D0 /* Context.swift in Sources */,
 				65F5DFA4207EA3DD0041FB0D /* FlowGraph.swift in Sources */,
 				658C7CDE207E7EB900E2B46B /* Errors.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
@@ -438,7 +452,9 @@
 				658C7CDD207E7EB900E2B46B /* Variable.swift in Sources */,
 				65F5DF9E207EA0D40041FB0D /* Transfer.swift in Sources */,
 				65C0573F2080A20900C4367E /* Path.swift in Sources */,
+				656F99EF2086A627009366D0 /* Dialog.swift in Sources */,
 				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,
+				656F99ED2086A60A009366D0 /* Delivery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
