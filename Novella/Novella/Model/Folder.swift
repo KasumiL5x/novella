@@ -59,7 +59,8 @@ class Folder {
 		return _folders.contains(where: {$0._name == name})
 	}
 	
-	func add(folder: Folder) throws {
+	@discardableResult
+	func add(folder: Folder) throws -> Folder {
 		// cannot add self
 		if folder == self {
 			throw Errors.invalid("Tried to add Folder to self (\(_name)).")
@@ -79,6 +80,8 @@ class Folder {
 		// now add
 		folder._parent = self
 		_folders.append(folder)
+		
+		return folder
 	}
 	
 	func remove(folder: Folder) throws {
@@ -112,7 +115,8 @@ class Folder {
 		return _variables.contains(where: {$0._name == name})
 	}
 	
-	func add(variable: Variable) throws {
+	@discardableResult
+	func add(variable: Variable) throws -> Variable {
 		// already a child
 		if contains(variable: variable) {
 			throw Errors.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
@@ -128,6 +132,8 @@ class Folder {
 		// now add
 		variable._folder = self
 		_variables.append(variable)
+		
+		return variable
 	}
 	
 	func remove(variable: Variable) throws {
