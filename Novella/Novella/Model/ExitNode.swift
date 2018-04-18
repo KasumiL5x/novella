@@ -11,8 +11,8 @@ import Foundation
 class ExitNode {
 	let _uuid: NSUUID
 	
-	init() {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID) {
+		self._uuid = uuid
 	}
 }
 

@@ -183,13 +183,6 @@ class FlowGraph {
 		}
 		_exits.remove(at: idx)
 	}
-	
-	// MARK: Exit Node Convenience Functions
-	func makeExit() throws -> ExitNode {
-		let e = ExitNode()
-		try add(exit: e)
-		return e
-	}
 }
 
 // MARK: Pathable

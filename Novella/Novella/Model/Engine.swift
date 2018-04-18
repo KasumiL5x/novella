@@ -68,4 +68,11 @@ class Engine {
 		_identifiables.append(listener)
 		return listener
 	}
+	
+	// MARK: Exit Nodes
+	func makeExit() -> ExitNode {
+		let exit = ExitNode(uuid: NSUUID())
+		_identifiables.append(exit)
+		return exit
+	}
 }
