@@ -67,8 +67,10 @@ class Story {
 	}
 	
 	// MARK: Links
-	func add(link: BaseLink) {
+	@discardableResult
+	func add(link: BaseLink) -> BaseLink {
 		_links.append(link)
+		return link
 	}
 	func remove(link: BaseLink) throws {
 		guard let idx = _links.index(of: link) else {

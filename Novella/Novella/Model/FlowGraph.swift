@@ -129,12 +129,14 @@ class FlowGraph {
 		return _nodes.contains(node)
 	}
 	
-	func add(node: FlowNode) throws {
+	@discardableResult
+	func add(node: FlowNode) throws -> FlowNode {
 		// already a child
 		if contains(node: node) {
 			throw Errors.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
 		}
 		_nodes.append(node)
+		return node
 	}
 	
 	func remove(node: FlowNode) throws {
@@ -149,12 +151,14 @@ class FlowGraph {
 		return _listeners.contains(listener)
 	}
 	
-	func add(listener: Listener) throws {
+	@discardableResult
+	func add(listener: Listener) throws -> Listener {
 		// already a child
 		if contains(listener: listener) {
 			throw Errors.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
 		}
 		_listeners.append(listener)
+		return listener
 	}
 	
 	func remove(listener: Listener) throws {
@@ -169,12 +173,14 @@ class FlowGraph {
 		return _exits.contains(exit)
 	}
 	
-	func add(exit: ExitNode) throws {
+	@discardableResult
+	func add(exit: ExitNode) throws -> ExitNode {
 		// already a child
 		if contains(exit: exit) {
 			throw Errors.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
 		}
 		_exits.append(exit)
+		return exit
 	}
 	
 	func remove(exit: ExitNode) throws {
