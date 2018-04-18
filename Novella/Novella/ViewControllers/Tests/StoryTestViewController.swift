@@ -18,24 +18,24 @@ class StoryTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		engine.createDefaults()
-		
 		// set up some story graph and variable content
-		let mq1 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest1"))
-			try! mq1?.add(graph: engine.makeFlowGraph(name: "objective1"))
-		let mq2 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest2"))
-			try! mq2?.add(graph: engine.makeFlowGraph(name: "objective1"))
-			try! mq2?.add(graph: engine.makeFlowGraph(name: "objective2"))
+		let mainGraph = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "main"))
+		let mq1 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest1"))
+		try! mq1.add(graph: engine.makeFlowGraph(name: "objective1"))
+		let mq2 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest2"))
+		try! mq2.add(graph: engine.makeFlowGraph(name: "objective1"))
+		try! mq2.add(graph: engine.makeFlowGraph(name: "objective2"))
 		let side = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "side"))
-			try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
-			try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
+		try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
+		try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
 		//
-		let chars = try! engine.TheStory.MainFolder?.add(folder: engine.makeFolder(name: "characters"))
-			let player = try! chars?.add(folder: engine.makeFolder(name: "player"))
-				try! player?.add(variable: engine.makeVariable(name: "health", type: .integer))
-		let decs = try! engine.TheStory.MainFolder?.add(folder: engine.makeFolder(name: "choices"))
-			try! decs?.add(variable: engine.makeVariable(name: "talked_to_dave", type: .boolean))
-		try! decs?.add(variable: engine.makeVariable(name: "completed_task", type: .boolean))
+		let mainFolder = try! engine.TheStory.add(folder: engine.makeFolder(name: "story"))
+		let chars = try! mainFolder.add(folder: engine.makeFolder(name: "characters"))
+		let player = try! chars.add(folder: engine.makeFolder(name: "player"))
+		try! player.add(variable: engine.makeVariable(name: "health", type: .integer))
+		let decs = try! mainFolder.add(folder: engine.makeFolder(name: "choices"))
+		try! decs.add(variable: engine.makeVariable(name: "talked_to_dave", type: .boolean))
+		try! decs.add(variable: engine.makeVariable(name: "completed_task", type: .boolean))
 		
 		outline.reloadData()
 	}
@@ -134,7 +134,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return graph._graphs.count
 		}
 		
-		return engine.TheStory._graphs.count + 1 // root folder
+		return engine.TheStory._graphs.count + engine.TheStory._folders.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
@@ -152,7 +152,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 		if index < engine.TheStory._graphs.count {
 			return engine.TheStory._graphs[index]
 		}
-		return engine.TheStory._mainFolder
+		return engine.TheStory._folders[index - engine.TheStory._graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -168,7 +168,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return graph._graphs.count > 0
 		}
 		
-		return (engine.TheStory._graphs.count + 1) > 0 // root folder
+		return (engine.TheStory._graphs.count + engine.TheStory._folders.count) > 0 // root folder
 	}
 }
 

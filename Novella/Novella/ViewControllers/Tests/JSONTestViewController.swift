@@ -14,23 +14,24 @@ class JSONTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		engine.createDefaults()
 		// set up some story graph and variable content
-		let mq1 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest1"))
-		try! mq1?.add(graph: engine.makeFlowGraph(name: "objective1"))
-		let mq2 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest2"))
-		try! mq2?.add(graph: engine.makeFlowGraph(name: "objective1"))
-		try! mq2?.add(graph: engine.makeFlowGraph(name: "objective2"))
+		let mainGraph = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "main"))
+		let mq1 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest1"))
+		try! mq1.add(graph: engine.makeFlowGraph(name: "objective1"))
+		let mq2 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest2"))
+		try! mq2.add(graph: engine.makeFlowGraph(name: "objective1"))
+		try! mq2.add(graph: engine.makeFlowGraph(name: "objective2"))
 		let side = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "side"))
 		try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
 		try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
 		//
-		let chars = try! engine.TheStory.MainFolder?.add(folder: engine.makeFolder(name: "characters"))
-		let player = try! chars?.add(folder: engine.makeFolder(name: "player"))
-		try! player?.add(variable: engine.makeVariable(name: "health", type: .integer))
-		let decs = try! engine.TheStory.MainFolder?.add(folder: engine.makeFolder(name: "choices"))
-		try! decs?.add(variable: engine.makeVariable(name: "talked_to_dave", type: .boolean))
-		try! decs?.add(variable: engine.makeVariable(name: "completed_task", type: .boolean))
+		let mainFolder = try! engine.TheStory.add(folder: engine.makeFolder(name: "story"))
+		let chars = try! mainFolder.add(folder: engine.makeFolder(name: "characters"))
+		let player = try! chars.add(folder: engine.makeFolder(name: "player"))
+		try! player.add(variable: engine.makeVariable(name: "health", type: .integer))
+		let decs = try! mainFolder.add(folder: engine.makeFolder(name: "choices"))
+		try! decs.add(variable: engine.makeVariable(name: "talked_to_dave", type: .boolean))
+		try! decs.add(variable: engine.makeVariable(name: "completed_task", type: .boolean))
 	}
 	
 	

@@ -7,23 +7,15 @@
 //
 
 class Story {
-	var _mainFolder: Folder?
 	var _graphs: [FlowGraph]
 	var _links: [BaseLink]
-	
-	// primary graph
-	var _mainGraph: FlowGraph?
+	var _folders: [Folder]
 	
 	init() {
-		self._mainFolder = nil
 		self._graphs = []
 		self._links = []
-		self._mainGraph = nil
+		self._folders = []
 	}
-	
-	// MARK: Getters
-	var MainFolder: Folder? {get{ return _mainFolder }}
-	var MainGraph: FlowGraph? {get{ return _mainGraph! }}
 	
 	// MARK: Setup
 	func setup() throws {
@@ -77,5 +69,27 @@ class Story {
 			throw Errors.invalid("Tried to remove BaseLink from Story but it was not a child.")
 		}
 		_links.remove(at: idx)
+	}
+	
+	// MARK: Folders
+	func contains(folder: Folder) -> Bool {
+		return _folders.contains(folder)
+	}
+	func containsFolderName(name: String) -> Bool {
+		return _folders.contains(where: {$0._name == name})
+	}
+	@discardableResult
+	func add(folder: Folder) throws -> Folder {
+		// already a child
+		if contains(folder: folder) {
+			throw Errors.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
+		}
+		// already contains same name
+		if containsFolderName(name: folder._name) {
+			throw Errors.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
+		}
+		// now add
+		_folders.append(folder)
+		return folder
 	}
 }
