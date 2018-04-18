@@ -9,7 +9,7 @@
 import Cocoa
 
 class StoryTestViewController: NSViewController {
-	let engine: Engine = Engine()
+	let _story: Story = Story()
 	
 //	@IBOutlet weak var browser: NSBrowser!
 	@IBOutlet weak var outline: NSOutlineView!
@@ -19,30 +19,30 @@ class StoryTestViewController: NSViewController {
 		super.viewDidLoad()
 		
 		// set up some story graph and variable content
-		let mainGraph = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "main"))
-		let mq1 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest1"))
-		try! mq1.add(graph: engine.makeFlowGraph(name: "objective1"))
-		let mq2 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest2"))
-		try! mq2.add(graph: engine.makeFlowGraph(name: "objective1"))
-		try! mq2.add(graph: engine.makeFlowGraph(name: "objective2"))
-		let side = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "side"))
-		try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
-		try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
+		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
+		let mq1 = try! mainGraph.add(graph: _story.makeGraph(name: "quest1"))
+		try! mq1.add(graph: _story.makeGraph(name: "objective1"))
+		let mq2 = try! mainGraph.add(graph: _story.makeGraph(name: "quest2"))
+		try! mq2.add(graph: _story.makeGraph(name: "objective1"))
+		try! mq2.add(graph: _story.makeGraph(name: "objective2"))
+		let side = try! _story.add(graph: _story.makeGraph(name: "side"))
+		try! side.add(graph: _story.makeGraph(name: "quest1"))
+		try! side.add(graph: _story.makeGraph(name: "quest2"))
 		//
-		let mainFolder = try! engine.TheStory.add(folder: engine.makeFolder(name: "story"))
-		let chars = try! mainFolder.add(folder: engine.makeFolder(name: "characters"))
-		let player = try! chars.add(folder: engine.makeFolder(name: "player"))
-		try! player.add(variable: engine.makeVariable(name: "health", type: .integer))
-		let decs = try! mainFolder.add(folder: engine.makeFolder(name: "choices"))
-		try! decs.add(variable: engine.makeVariable(name: "talked_to_dave", type: .boolean))
-		try! decs.add(variable: engine.makeVariable(name: "completed_task", type: .boolean))
+		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
+		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
+		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
+		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
+		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
+		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
+		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
 		
 		outline.reloadData()
 	}
 	
 	@IBAction func onAddRootgraph(_ sender: NSButton) {
 		let name = NSUUID().uuidString
-		do{ try engine.TheStory.add(graph: engine.makeFlowGraph(name: name)) } catch {
+		do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
 			statusLabel.stringValue = "Could not add FG to Story as name was taken."
 		}
 		outline.reloadData()
@@ -55,7 +55,7 @@ class StoryTestViewController: NSViewController {
 		}
 		if let graph = outline.item(atRow: idx) as? FlowGraph {
 			let name = NSUUID().uuidString
-			do{ try engine.TheStory.add(graph: engine.makeFlowGraph(name: name)) } catch {
+			do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
 				statusLabel.stringValue = "Could not add FG to \(graph.Name) as name was taken."
 			}
 		}
@@ -134,7 +134,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return graph._graphs.count
 		}
 		
-		return engine.TheStory._graphs.count + engine.TheStory._folders.count
+		return _story._graphs.count + _story._folders.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
@@ -149,10 +149,10 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return graph._graphs[index]
 		}
 		
-		if index < engine.TheStory._graphs.count {
-			return engine.TheStory._graphs[index]
+		if index < _story._graphs.count {
+			return _story._graphs[index]
 		}
-		return engine.TheStory._folders[index - engine.TheStory._graphs.count]
+		return _story._folders[index - _story._graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -168,7 +168,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return graph._graphs.count > 0
 		}
 		
-		return (engine.TheStory._graphs.count + engine.TheStory._folders.count) > 0 // root folder
+		return (_story._graphs.count + _story._folders.count) > 0 // root folder
 	}
 }
 

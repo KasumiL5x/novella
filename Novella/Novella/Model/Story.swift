@@ -132,29 +132,33 @@ extension Story {
 		return element
 	}
 	
-	func makeFolder(name: String) -> Folder {
-		let folder = Folder(uuid: NSUUID(), name: name)
+	@discardableResult
+	func makeFolder(name: String, uuid: NSUUID?=nil) -> Folder {
+		let folder = Folder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
 		_allFolders.append(folder)
 		_allIdentifiables.append(folder)
 		return folder
 	}
 	
-	func makeVariable(name: String, type: DataType) -> Variable {
-		let variable = Variable(uuid: NSUUID(), name: name, type: type)
+	@discardableResult
+	func makeVariable(name: String, type: DataType, uuid: NSUUID?=nil) -> Variable {
+		let variable = Variable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
 		_allVariables.append(variable)
 		_allIdentifiables.append(variable)
 		return variable
 	}
 	
-	func makeGraph(name: String) -> FlowGraph {
-		let graph = FlowGraph(uuid: NSUUID(), name: name, story: self)
+	@discardableResult
+	func makeGraph(name: String, uuid: NSUUID?=nil) -> FlowGraph {
+		let graph = FlowGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: self)
 		_allGraphs.append(graph)
 		_allIdentifiables.append(graph)
 		return graph
 	}
 	
-	func makeLink() -> Link {
-		let link = Link(uuid: NSUUID())
+	@discardableResult
+	func makeLink(uuid: NSUUID?=nil) -> Link {
+		let link = Link(uuid: uuid != nil ? uuid! : NSUUID())
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
 		return link

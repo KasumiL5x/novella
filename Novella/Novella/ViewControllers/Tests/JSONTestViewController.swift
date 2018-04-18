@@ -9,29 +9,29 @@
 import Cocoa
 
 class JSONTestViewController: NSViewController {
-	let engine = Engine()
+	let _story: Story = Story()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		// set up some story graph and variable content
-		let mainGraph = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "main"))
-		let mq1 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest1"))
-		try! mq1.add(graph: engine.makeFlowGraph(name: "objective1"))
-		let mq2 = try! mainGraph.add(graph: engine.makeFlowGraph(name: "quest2"))
-		try! mq2.add(graph: engine.makeFlowGraph(name: "objective1"))
-		try! mq2.add(graph: engine.makeFlowGraph(name: "objective2"))
-		let side = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "side"))
-		try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
-		try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
+		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
+		let mq1 = try! mainGraph.add(graph: _story.makeGraph(name: "quest1"))
+		try! mq1.add(graph: _story.makeGraph(name: "objective1"))
+		let mq2 = try! mainGraph.add(graph: _story.makeGraph(name: "quest2"))
+		try! mq2.add(graph: _story.makeGraph(name: "objective1"))
+		try! mq2.add(graph: _story.makeGraph(name: "objective2"))
+		let side = try! _story.add(graph: _story.makeGraph(name: "side"))
+		try! side.add(graph: _story.makeGraph(name: "quest1"))
+		try! side.add(graph: _story.makeGraph(name: "quest2"))
 		//
-		let mainFolder = try! engine.TheStory.add(folder: engine.makeFolder(name: "story"))
-		let chars = try! mainFolder.add(folder: engine.makeFolder(name: "characters"))
-		let player = try! chars.add(folder: engine.makeFolder(name: "player"))
-		try! player.add(variable: engine.makeVariable(name: "health", type: .integer))
-		let decs = try! mainFolder.add(folder: engine.makeFolder(name: "choices"))
-		try! decs.add(variable: engine.makeVariable(name: "talked_to_dave", type: .boolean))
-		try! decs.add(variable: engine.makeVariable(name: "completed_task", type: .boolean))
+		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
+		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
+		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
+		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
+		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
+		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
+		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
 	}
 	
 	
@@ -42,7 +42,7 @@ class JSONTestViewController: NSViewController {
 	
 	@IBAction func onWriteJSON(_ sender: NSButton) {
 		do {
-			let str = try Serialize.write(engine: engine)
+			let str = try Serialize.write(story: _story)
 			print(str)
 		} catch {
 			print("Failed to convert JSON.")

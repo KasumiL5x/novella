@@ -9,7 +9,7 @@
 import Foundation
 
 class Serialize {
-	static func read(jsonStr: String) throws -> Engine {
+	static func read(jsonStr: String) throws -> Story {
 		var json: [String:Any] = [:]
 		if let data = jsonStr.data(using: .utf8) {
 			do {
@@ -20,7 +20,7 @@ class Serialize {
 			}
 		}
 		
-		let engine = Engine()
+		let story = Story()
 		
 		// read all variables
 		if let variables = json["variables"] as? [[String:Any]] {
@@ -28,8 +28,7 @@ class Serialize {
 				let uuid = NSUUID(uuidString: x["uuid"] as! String)
 				let name = x["name"] as! String
 				let type = DataType.fromString(str: x["type"] as! String)
-				let v = Variable(uuid: uuid!, name: name, type: type)
-				engine.addVariable(variable: v)
+				story.makeVariable(name: name, type: type, uuid: uuid)
 			}
 		} else {
 			print("Failed to read variables.")
@@ -40,18 +39,17 @@ class Serialize {
 			for x in folders {
 				let uuid = NSUUID(uuidString: x["uuid"] as! String)
 				let name = x["name"] as! String
-				let f = Folder(uuid: uuid!, name: name)
-				engine.addFolder(folder: f)
+				story.makeFolder(name: name, uuid: uuid)
 			}
 		}
 		
 		// link variables to folders by uuid
 		if let folders = json["folders"] as? [[String:Any]] {
 			for x in folders {
-				let f = try! engine.find(uuid: x["uuid"] as! String) as! Folder
+				let f = try! story.findBy(uuid: NSUUID(uuidString: x["uuid"] as! String)!) as! Folder
 				let vars: [String] = x["variables"] as! [String]
 				for y in vars {
-						let v = try! engine.find(uuid: y) as! Variable
+						let v = try! story.findBy(uuid: NSUUID(uuidString: y)!) as! Variable
 						try! f.add(variable: v)
 				}
 			}
@@ -59,10 +57,10 @@ class Serialize {
 		// link folders to folders by uuid
 		if let folders = json["folders"] as? [[String:Any]] {
 			for x in folders {
-				let f = try! engine.find(uuid: x["uuid"] as! String) as! Folder
+				let f = try! story.findBy(uuid: NSUUID(uuidString: x["uuid"] as! String)!) as! Folder
 				let fols: [String] = x["subfolders"] as! [String]
 				for y in fols {
-					let v = try! engine.find(uuid: y) as! Folder
+					let v = try! story.findBy(uuid: NSUUID(uuidString: y)!) as! Folder
 					try! f.add(folder: v)
 				}
 			}
@@ -74,17 +72,17 @@ class Serialize {
 		
 		print(json)
 		
-		return engine
+		return story
 	}
 	
-	static func write(engine: Engine) throws -> NSString {
+	static func write(story: Story) throws -> NSString {
 		
 		// create root object
 		var root: [String:Any] = [:]
 		
 		// all Folders
 		var allFolders: [[String:Any]] = []
-		for currFolder in engine._folders {
+		for currFolder in story._allFolders {
 			var entry: [String:Any] = [:]
 			entry["name"] = currFolder.Name
 			entry["uuid"] = currFolder.UUID.uuidString
@@ -96,7 +94,7 @@ class Serialize {
 		
 		// all Variables
 		var allVariables: [[String: Any]] = []
-		for currVar in engine._variables {
+		for currVar in story._allVariables {
 			var entry: [String:Any] = [:]
 			entry["name"] = currVar.Name
 			entry["uuid"] = currVar.UUID.uuidString

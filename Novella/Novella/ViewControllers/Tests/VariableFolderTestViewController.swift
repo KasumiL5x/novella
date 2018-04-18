@@ -12,7 +12,7 @@ class VariableFolderTestViewController: NSViewController {
 	@IBOutlet weak var outlineView: NSOutlineView!
 	@IBOutlet weak var statusLabel: NSTextField!
 	
-	var engine = Engine()
+	var _story: Story = Story()
 	
 //	let root = Folder(name: "root")
 	var root: Folder?
@@ -22,19 +22,19 @@ class VariableFolderTestViewController: NSViewController {
 		super.viewDidLoad()
 		
 		// dummy folder structure
-		root = engine.makeFolder(name: "root")
-		let characters = try! root!.add(folder: engine.makeFolder(name: "characters"))
-			let player = try! characters.add(folder: engine.makeFolder(name: "player"))
-				try! player.add(variable: engine.makeVariable(name: "health", type: .integer))
-				try! player.add(variable: engine.makeVariable(name: "strength", type: .integer))
-		let locations = try! root!.add(folder: engine.makeFolder(name: "locations"))
-			let cabin = try! locations.add(folder: engine.makeFolder(name: "cabin"))
-				try! cabin.add(variable: engine.makeVariable(name: "found_secret", type: .boolean))
-		let decisions = try! root!.add(folder: engine.makeFolder(name: "decisions"))
-			let major = try! decisions.add(folder: engine.makeFolder(name: "major"))
-				try! major.add(variable: engine.makeVariable(name: "solved_crime", type: .boolean))
-			let minor = try! decisions.add(folder: engine.makeFolder(name: "minor"))
-				try! minor.add(variable: engine.makeVariable(name: "picked_flowers", type: .boolean))
+		root = _story.makeFolder(name: "root")
+		let characters = try! root!.add(folder: _story.makeFolder(name: "characters"))
+			let player = try! characters.add(folder: _story.makeFolder(name: "player"))
+				try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
+				try! player.add(variable: _story.makeVariable(name: "strength", type: .integer))
+		let locations = try! root!.add(folder: _story.makeFolder(name: "locations"))
+			let cabin = try! locations.add(folder: _story.makeFolder(name: "cabin"))
+				try! cabin.add(variable: _story.makeVariable(name: "found_secret", type: .boolean))
+		let decisions = try! root!.add(folder: _story.makeFolder(name: "decisions"))
+			let major = try! decisions.add(folder: _story.makeFolder(name: "major"))
+				try! major.add(variable: _story.makeVariable(name: "solved_crime", type: .boolean))
+			let minor = try! decisions.add(folder: _story.makeFolder(name: "minor"))
+				try! minor.add(variable: _story.makeVariable(name: "picked_flowers", type: .boolean))
 		
 		outlineView.expandItem(root, expandChildren: true)
 		outlineView.sizeToFit()
@@ -71,7 +71,7 @@ class VariableFolderTestViewController: NSViewController {
 		if let folder = outlineView.item(atRow: idx) as? Folder {
 			do{
 				let name = NSUUID().uuidString
-				try folder.add(folder: engine.makeFolder(name: name))
+				try folder.add(folder: _story.makeFolder(name: name))
 			} catch {
 				statusLabel.stringValue = "Could not add Folder to \(folder.Name) as name was taken."
 			}
@@ -86,7 +86,7 @@ class VariableFolderTestViewController: NSViewController {
 		if let folder = outlineView.item(atRow: idx) as? Folder {
 			do{
 				let name = NSUUID().uuidString
-				try folder.add(variable: engine.makeVariable(name: name, type: .boolean))
+				try folder.add(variable: _story.makeVariable(name: name, type: .boolean))
 			} catch {
 				statusLabel.stringValue = "Could not add Variable to \(folder.Name) as name was taken."
 			}
