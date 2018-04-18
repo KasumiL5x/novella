@@ -18,6 +18,7 @@
 		656F99EF2086A627009366D0 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EE2086A627009366D0 /* Dialog.swift */; };
 		656F99F12086A638009366D0 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99F02086A638009366D0 /* Context.swift */; };
 		656F99F32086A723009366D0 /* Serialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99F22086A723009366D0 /* Serialize.swift */; };
+		65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65711AD120873A23005E44AF /* JSONTestViewController.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAD207E7E6500E2B46B /* ViewController.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		656F99EE2086A627009366D0 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
 		656F99F02086A638009366D0 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		656F99F22086A723009366D0 /* Serialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serialize.swift; sourceTree = "<group>"; };
+		65711AD120873A23005E44AF /* JSONTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTestViewController.swift; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		658C7CAD207E7E6500E2B46B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			children = (
 				65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */,
 				652102512083BD390028212B /* StoryTestViewController.swift */,
+				65711AD120873A23005E44AF /* JSONTestViewController.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				658C7CDE207E7EB900E2B46B /* Errors.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
+				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				658C7CDD207E7EB900E2B46B /* Variable.swift in Sources */,
 				656F99F32086A723009366D0 /* Serialize.swift in Sources */,

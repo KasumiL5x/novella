@@ -9,20 +9,42 @@
 import Foundation
 
 class Serialize {
-	static func write() throws -> NSString {
+	
+	static func getFolderDictionary(folder: Folder) -> [String:Any] {
+		var dict: [String:Any] = [:]
+		
+		
+		
+		return dict
+	}
+	
+	static func write(story: Story) throws -> NSString {
 		
 		// create root object
 		var root: [String:Any] = [:]
 		
-		// must create nested entries as separate dictionaries unlike python
-		var story: [String:Any] = [:]
-		// fill in the dictionary again making nested dictionaries if necessary until at leaf data
-		for x in 0...4 {
-			let str = String(x)
-			story[str] = "hi"
-		}
-		// add the elements AFTER filling them fully, or they won't update
-		root["story"] = story
+		// MARK: Story object
+		var storyDict: [String:Any] = [:]
+		
+		// MARK: Folders/Variabls
+		var folders: [String:Any] = getFolderDictionary(folder: story.MainFolder)
+		
+		
+		storyDict["folders"] = folders
+		root["story"] = storyDict
+		
+		// MARK: Folders/Variables
+		
+		
+//		// must create nested entries as separate dictionaries unlike python
+//		var story: [String:Any] = [:]
+//		// fill in the dictionary again making nested dictionaries if necessary until at leaf data
+//		for x in 0...4 {
+//			let str = String(x)
+//			story[str] = "hi"
+//		}
+//		// add the elements AFTER filling them fully, or they won't update
+//		root["story"] = story
 		
 		
 		if !JSONSerialization.isValidJSONObject(root) {

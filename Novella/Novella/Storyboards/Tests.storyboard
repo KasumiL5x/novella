@@ -433,5 +433,31 @@
             </objects>
             <point key="canvasLocation" x="607" y="1168"/>
         </scene>
+        <!--JSONTest-->
+        <scene sceneID="hvr-ue-hAz">
+            <objects>
+                <viewController storyboardIdentifier="JSONTest" id="JMH-8B-KVj" userLabel="JSONTest" customClass="JSONTestViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="pzm-jh-eAY">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6cU-82-7PR">
+                                <rect key="frame" x="185" y="132" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4bA-Xv-Ky4">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onWriteJSON:" target="JMH-8B-KVj" id="9if-mP-KH7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="cgQ-iK-8c0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1154" y="1168"/>
+        </scene>
     </scenes>
 </document>
