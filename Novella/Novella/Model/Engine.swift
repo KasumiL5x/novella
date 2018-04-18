@@ -61,4 +61,11 @@ class Engine {
 		_identifiables.append(link)
 		return link
 	}
+	
+	// MARK: Listener
+	func makeListener() -> Listener {
+		let listener = Listener(uuid: NSUUID())
+		_identifiables.append(listener)
+		return listener
+	}
 }

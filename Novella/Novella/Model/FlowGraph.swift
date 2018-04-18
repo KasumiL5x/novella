@@ -164,13 +164,6 @@ class FlowGraph {
 		_listeners.remove(at: idx)
 	}
 	
-	// MARK: Listener Convenience Functions
-	func makeListener() throws -> Listener {
-		let l = Listener()
-		try add(listener: l)
-		return l
-	}
-	
 	// MARK: Exit Nodes
 	func contains(exit: ExitNode) -> Bool {
 		return _exits.contains(exit)
