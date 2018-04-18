@@ -6,14 +6,18 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class Branch : BaseLink {
 	var condition: Condition
 	var trueTransfer: Transfer
 	var falseTransfer: Transfer
 	
-	override init() {
+	override init(uuid: NSUUID) {
 		self.condition = Condition()
 		self.trueTransfer = Transfer()
 		self.falseTransfer = Transfer()
+		
+		super.init(uuid: uuid)
 	}
 }

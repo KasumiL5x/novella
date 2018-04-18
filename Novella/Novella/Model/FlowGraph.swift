@@ -22,8 +22,8 @@ class FlowGraph {
 	var _parent: FlowGraph?
 	var _story: Story?
 	
-	init(name: String, story: Story) {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID, name: String, story: Story) {
+		self._uuid = uuid
 		self._name = name
 		self._graphs = []
 		self._nodes = []
@@ -92,7 +92,8 @@ class FlowGraph {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
-	func add(graph: FlowGraph) throws {
+	@discardableResult
+	func add(graph: FlowGraph) throws -> FlowGraph {
 		// cannot add self
 		if graph == self {
 			throw Errors.invalid("Tried to add a FlowGraph to self (\(_name)).")
@@ -112,6 +113,7 @@ class FlowGraph {
 		// now add
 		graph._parent = self
 		_graphs.append(graph)
+		return graph
 	}
 	
 	func remove(graph: FlowGraph) throws {
@@ -122,26 +124,19 @@ class FlowGraph {
 		_graphs.remove(at: idx)
 	}
 	
-	// MARK: Sub-FlowGraph Convenience Functions
-	func makeGraph(name: String) throws -> FlowGraph {
-		assert(_story != nil, "FlowGraph::setName - _story is nil.")
-		
-		let fg = FlowGraph(name: name, story: _story!)
-		try add(graph: fg)
-		return fg
-	}
-	
 	// MARK: FlowNodes
 	func contains(node: FlowNode) -> Bool {
 		return _nodes.contains(node)
 	}
 	
-	func add(node: FlowNode) throws {
+	@discardableResult
+	func add(node: FlowNode) throws -> FlowNode {
 		// already a child
 		if contains(node: node) {
 			throw Errors.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
 		}
 		_nodes.append(node)
+		return node
 	}
 	
 	func remove(node: FlowNode) throws {
@@ -156,12 +151,14 @@ class FlowGraph {
 		return _listeners.contains(listener)
 	}
 	
-	func add(listener: Listener) throws {
+	@discardableResult
+	func add(listener: Listener) throws -> Listener {
 		// already a child
 		if contains(listener: listener) {
 			throw Errors.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
 		}
 		_listeners.append(listener)
+		return listener
 	}
 	
 	func remove(listener: Listener) throws {
@@ -171,24 +168,19 @@ class FlowGraph {
 		_listeners.remove(at: idx)
 	}
 	
-	// MARK: Listener Convenience Functions
-	func makeListener() throws -> Listener {
-		let l = Listener()
-		try add(listener: l)
-		return l
-	}
-	
 	// MARK: Exit Nodes
 	func contains(exit: ExitNode) -> Bool {
 		return _exits.contains(exit)
 	}
 	
-	func add(exit: ExitNode) throws {
+	@discardableResult
+	func add(exit: ExitNode) throws -> ExitNode {
 		// already a child
 		if contains(exit: exit) {
 			throw Errors.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
 		}
 		_exits.append(exit)
+		return exit
 	}
 	
 	func remove(exit: ExitNode) throws {
@@ -196,13 +188,6 @@ class FlowGraph {
 			throw Errors.invalid("Tried to remove ExitNode from FlowGraph (\(_name)) but it was not a child.")
 		}
 		_exits.remove(at: idx)
-	}
-	
-	// MARK: Exit Node Convenience Functions
-	func makeExit() throws -> ExitNode {
-		let e = ExitNode()
-		try add(exit: e)
-		return e
 	}
 }
 

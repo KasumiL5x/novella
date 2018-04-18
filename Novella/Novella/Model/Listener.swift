@@ -13,8 +13,8 @@ class Listener {
 	let _condition: Condition
 	let _transfer: Transfer
 	
-	init() {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID) {
+		self._uuid = uuid
 		self._condition = Condition()
 		self._transfer = Transfer()
 	}

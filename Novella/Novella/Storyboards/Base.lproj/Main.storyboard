@@ -712,7 +712,7 @@
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="t5V-ki-yZp" userLabel="TestEmbedView">
                                 <rect key="frame" x="20" y="20" width="440" height="230"/>
                                 <connections>
-                                    <segue destination="jV0-lu-Scv" kind="embed" id="KNo-z4-CrS"/>
+                                    <segue destination="jV0-lu-Scv" kind="embed" id="0Kc-l9-H2c"/>
                                 </connections>
                             </containerView>
                         </subviews>

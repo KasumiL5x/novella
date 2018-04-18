@@ -7,26 +7,23 @@
 //
 
 class Story {
-	var _mainFolder: Folder
+	var _mainFolder: Folder?
 	var _graphs: [FlowGraph]
 	var _links: [BaseLink]
 	
 	// primary graph
-	// TODO: Make this non-deletable
-	var _mainGraph: FlowGraph? = nil
+	var _mainGraph: FlowGraph?
 	
 	init() {
-		self._mainFolder = Folder(name: "story")
+		self._mainFolder = nil
 		self._graphs = []
 		self._links = []
-		
-		// add first graph
-		self._mainGraph = try! makeGraph(name: "main")
+		self._mainGraph = nil
 	}
 	
 	// MARK: Getters
-	var MainGraph: FlowGraph {get{ return _mainGraph! }}
-	var MainFolder: Folder {get{ return _mainFolder }}
+	var MainFolder: Folder? {get{ return _mainFolder }}
+	var MainGraph: FlowGraph? {get{ return _mainGraph! }}
 	
 	// MARK: Setup
 	func setup() throws {
@@ -42,7 +39,8 @@ class Story {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
-	func add(graph: FlowGraph) throws {
+	@discardableResult
+	func add(graph: FlowGraph) throws -> FlowGraph {
 		// already a child
 		if contains(graph: graph) {
 			throw Errors.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to story).")
@@ -58,6 +56,7 @@ class Story {
 		// now add
 		graph._parent = nil
 		_graphs.append(graph)
+		return graph
 	}
 	
 	func remove(graph: FlowGraph) throws {
@@ -67,29 +66,16 @@ class Story {
 		_graphs.remove(at: idx)
 	}
 	
-	// MARK: FlowGraph Convenience Functions
-	func makeGraph(name: String) throws -> FlowGraph {
-		let fg = FlowGraph(name: name, story: self)
-		try add(graph: fg)
-		return fg
-	}
-	
 	// MARK: Links
-	func add(link: BaseLink) {
+	@discardableResult
+	func add(link: BaseLink) -> BaseLink {
 		_links.append(link)
+		return link
 	}
 	func remove(link: BaseLink) throws {
 		guard let idx = _links.index(of: link) else {
 			throw Errors.invalid("Tried to remove BaseLink from Story but it was not a child.")
 		}
 		_links.remove(at: idx)
-	}
-	
-	// MARK: Link Convenience Functions
-	func makeLink(origin: Linkable, destination: Linkable?) {
-		let link = Link()
-		link.origin = origin
-		link.transfer.destination = destination
-		add(link: link)
 	}
 }

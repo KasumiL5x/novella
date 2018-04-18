@@ -16,8 +16,8 @@ class Folder {
 	var _variables: [Variable]
 	var _parent: Folder?
 	
-	init(name: String) {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID, name: String) {
+		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
 		self._folders = []
@@ -59,7 +59,8 @@ class Folder {
 		return _folders.contains(where: {$0._name == name})
 	}
 	
-	func add(folder: Folder) throws {
+	@discardableResult
+	func add(folder: Folder) throws -> Folder {
 		// cannot add self
 		if folder == self {
 			throw Errors.invalid("Tried to add Folder to self (\(_name)).")
@@ -79,6 +80,8 @@ class Folder {
 		// now add
 		folder._parent = self
 		_folders.append(folder)
+		
+		return folder
 	}
 	
 	func remove(folder: Folder) throws {
@@ -103,13 +106,6 @@ class Folder {
 		return false
 	}
 	
-	// MARK: Folder Convenience Functions
-	func mkdir(name: String) throws -> Folder {
-		let newFolder = Folder(name: name)
-		try add(folder: newFolder)
-		return newFolder
-	}
-	
 	// MARK: Variables
 	func contains(variable: Variable) -> Bool {
 		return _variables.contains(variable)
@@ -119,7 +115,8 @@ class Folder {
 		return _variables.contains(where: {$0._name == name})
 	}
 	
-	func add(variable: Variable) throws {
+	@discardableResult
+	func add(variable: Variable) throws -> Variable {
 		// already a child
 		if contains(variable: variable) {
 			throw Errors.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
@@ -135,6 +132,8 @@ class Folder {
 		// now add
 		variable._folder = self
 		_variables.append(variable)
+		
+		return variable
 	}
 	
 	func remove(variable: Variable) throws {
@@ -143,13 +142,6 @@ class Folder {
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
-	}
-	
-	// MARK: Variable Convenience Functions
-	func mkvar(name: String, type: DataType) throws -> Variable {
-		let newVar = Variable(name: name, type: type)
-		try add(variable: newVar)
-		return newVar
 	}
 	
 	

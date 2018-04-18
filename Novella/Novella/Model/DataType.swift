@@ -23,4 +23,20 @@ enum DataType {
 		case .integer: return value is Int
 		}
 	}
+	
+	var stringValue: String {
+		switch self {
+		case .boolean: return "boolean"
+		case .integer: return "integer"
+		}
+	}
+	
+	static func fromString(str: String) -> DataType {
+		switch str {
+		case "boolean": return .boolean
+		case "integer": return .integer
+		default:
+			fatalError("Forgot to handle DataType string conversion!")
+		}
+	}
 }
