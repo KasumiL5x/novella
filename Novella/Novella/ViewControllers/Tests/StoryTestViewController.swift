@@ -9,6 +9,7 @@
 import Cocoa
 
 class StoryTestViewController: NSViewController {
+	let engine: Engine = Engine()
 	var _story: Story = Story()
 	
 //	@IBOutlet weak var browser: NSBrowser!
@@ -29,12 +30,13 @@ class StoryTestViewController: NSViewController {
 		let _ = try! side.makeGraph(name: "quest1")
 		let _ = try! side.makeGraph(name: "quest2")
 		//
-		let chars = try! _story.MainFolder.mkdir(name: "characters")
-			let player = try! chars.mkdir(name: "player")
-				let _ = try! player.mkvar(name: "health", type: .integer)
-		let decs = try! _story.MainFolder.mkdir(name: "choices")
-			let _ = try! decs.mkvar(name: "talked_to_dave", type: .boolean)
-			let _ = try! decs.mkvar(name: "completed_task", type: .boolean)
+		// TODO: Once I fix up the main folder system in Story, add this back.
+//		let chars = try! _story.MainFolder.mkdir(name: "characters")
+//			let player = try! chars.mkdir(name: "player")
+//				let _ = try! player.mkvar(name: "health", type: .integer)
+//		let decs = try! _story.MainFolder.mkdir(name: "choices")
+//			let _ = try! decs.mkvar(name: "talked_to_dave", type: .boolean)
+//			let _ = try! decs.mkvar(name: "completed_task", type: .boolean)
 		
 		outline.reloadData()
 	}

@@ -19,6 +19,9 @@ class Engine {
 		self._identifiables = []
 	}
 	
+	// MARK: Getters
+	var TheStory: Story {get{ return _story }}
+	
 	// MARK: Identifiables
 	func find(uuid: String) throws -> Identifiable {
 		let uuidObj = NSUUID(uuidString: uuid)

@@ -76,8 +76,10 @@ class VariableFolderTestViewController: NSViewController {
 			return
 		}
 		if let folder = outlineView.item(atRow: idx) as? Folder {
-			let name = NSUUID().uuidString
-			do{ let _ = try folder.mkdir(name: name) } catch {
+			do{
+				let name = NSUUID().uuidString
+				try folder.add(folder: engine.makeFolder(name: name))
+			} catch {
 				statusLabel.stringValue = "Could not add Folder to \(folder.Name) as name was taken."
 			}
 		}
@@ -89,8 +91,10 @@ class VariableFolderTestViewController: NSViewController {
 			return
 		}
 		if let folder = outlineView.item(atRow: idx) as? Folder {
-			let name = NSUUID().uuidString
-			do{ let _ = try folder.mkvar(name: name, type: .boolean) } catch {
+			do{
+				let name = NSUUID().uuidString
+				try folder.add(variable: engine.makeVariable(name: name, type: .boolean))
+			} catch {
 				statusLabel.stringValue = "Could not add Variable to \(folder.Name) as name was taken."
 			}
 		}

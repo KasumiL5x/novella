@@ -103,13 +103,6 @@ class Folder {
 		return false
 	}
 	
-	// MARK: Folder Convenience Functions
-	func mkdir(name: String) throws -> Folder {
-		let newFolder = Folder(name: name)
-		try add(folder: newFolder)
-		return newFolder
-	}
-	
 	// MARK: Variables
 	func contains(variable: Variable) -> Bool {
 		return _variables.contains(variable)
@@ -143,13 +136,6 @@ class Folder {
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
-	}
-	
-	// MARK: Variable Convenience Functions
-	func mkvar(name: String, type: DataType) throws -> Variable {
-		let newVar = Variable(name: name, type: type)
-		try add(variable: newVar)
-		return newVar
 	}
 	
 	
