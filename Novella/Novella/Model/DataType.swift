@@ -31,7 +31,7 @@ enum DataType {
 		}
 	}
 	
-	func fromString(str: String) -> DataType {
+	static func fromString(str: String) -> DataType {
 		switch str {
 		case "boolean": return .boolean
 		case "integer": return .integer

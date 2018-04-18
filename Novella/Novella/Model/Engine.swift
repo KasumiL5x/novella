@@ -47,6 +47,10 @@ class Engine {
 		_identifiables.append(folder)
 		return folder
 	}
+	func addFolder(folder: Folder) {
+		_folders.append(folder)
+		_identifiables.append(folder)
+	}
 	
 	// MARK: Variables
 	func makeVariable(name: String, type: DataType) -> Variable {
@@ -54,6 +58,10 @@ class Engine {
 		_variables.append(variable)
 		_identifiables.append(variable)
 		return variable
+	}
+	func addVariable(variable: Variable) {
+		_variables.append(variable)
+		_identifiables.append(variable)
 	}
 	
 	// MARK: FlowGraphs

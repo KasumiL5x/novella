@@ -22,6 +22,53 @@ class Serialize {
 		
 		var engine = Engine()
 		
+		// read all variables
+		if let variables = json["variables"] as? [[String:Any]] {
+			for x in variables {
+				let uuid = NSUUID(uuidString: x["uuid"] as! String)
+				let name = x["name"] as! String
+				let type = DataType.fromString(str: x["type"] as! String)
+				let v = Variable(uuid: uuid!, name: name, type: type)
+				engine.addVariable(variable: v)
+			}
+		} else {
+			print("Failed to read variables.")
+		}
+		
+		// read all folders
+		if let folders = json["folders"] as? [[String:Any]] {
+			for x in folders {
+				let uuid = NSUUID(uuidString: x["uuid"] as! String)
+				let name = x["name"] as! String
+				let f = Folder(uuid: uuid!, name: name)
+				engine.addFolder(folder: f)
+			}
+		}
+		
+		// link variables to folders by uuid
+		if let folders = json["folders"] as? [[String:Any]] {
+			for x in folders {
+				let f = try! engine.find(uuid: x["uuid"] as! String) as! Folder
+				let vars: [String] = x["variables"] as! [String]
+				for y in vars {
+						let v = try! engine.find(uuid: y) as! Variable
+						try! f.add(variable: v)
+				}
+			}
+		}
+		// link folders to folders by uuid
+		if let folders = json["folders"] as? [[String:Any]] {
+			for x in folders {
+				let f = try! engine.find(uuid: x["uuid"] as! String) as! Folder
+				let fols: [String] = x["subfolders"] as! [String]
+				for y in fols {
+					let v = try! engine.find(uuid: y) as! Folder
+					try! f.add(folder: v)
+				}
+			}
+		}
+
+		
 		// Always read all data first, THEN link everything.
 		// For instance, read all varibles and folders, THEN set up the parenting via UUID lookup.
 		
