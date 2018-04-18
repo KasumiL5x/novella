@@ -7,7 +7,7 @@
 //
 
 class Story {
-	var _mainFolder: Folder
+	var _mainFolder: Folder?
 	var _graphs: [FlowGraph]
 	var _links: [BaseLink]
 	
@@ -16,7 +16,7 @@ class Story {
 	var _mainGraph: FlowGraph? = nil
 	
 	init() {
-		self._mainFolder = Folder(name: "story")
+		self._mainFolder = nil
 		self._graphs = []
 		self._links = []
 		
@@ -26,7 +26,7 @@ class Story {
 	
 	// MARK: Getters
 	var MainGraph: FlowGraph {get{ return _mainGraph! }}
-	var MainFolder: Folder {get{ return _mainFolder }}
+	var MainFolder: Folder? {get{ return _mainFolder }}
 	
 	// MARK: Setup
 	func setup() throws {

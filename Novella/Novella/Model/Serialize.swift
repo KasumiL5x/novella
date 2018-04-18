@@ -45,10 +45,10 @@ class Serialize {
 		var storyDict: [String:Any] = [:]
 		
 		// MARK: Folders/Variabls
-		var folders: [String:Any] = getFolderDictionary(folder: story.MainFolder)
+//		var folders: [String:Any] = getFolderDictionary(folder: story.MainFolder)
 		
 		
-		storyDict["folders"] = folders
+//		storyDict["folders"] = folders
 		root["story"] = storyDict
 		
 		// MARK: Folders/Variables

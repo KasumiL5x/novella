@@ -17,6 +17,8 @@ class Engine {
 	init() {
 		self._story = Story()
 		self._identifiables = []
+		
+		self._story._mainFolder = makeFolder(name: "story")
 	}
 	
 	// MARK: Getters
