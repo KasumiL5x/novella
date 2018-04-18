@@ -27,15 +27,6 @@ class StoryTestViewController: NSViewController {
 		let side = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "side"))
 			try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
 			try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
-//		let mq1 = try! engine.TheStory.MainGraph.makeGraph(name: "quest1")
-//			let _ = try! mq1.makeGraph(name: "objective1")
-//		let mq2 = try! engine.TheStory.MainGraph.makeGraph(name: "quest2")
-//			let _ = try! mq2.makeGraph(name: "objective1")
-//			let _ = try! mq2.makeGraph(name: "objective2")
-		//
-//		let side = try! engine.TheStory.makeGraph(name: "side")
-//		let _ = try! side.makeGraph(name: "quest1")
-//		let _ = try! side.makeGraph(name: "quest2")
 		//
 		let chars = try! engine.TheStory.MainFolder?.add(folder: engine.makeFolder(name: "characters"))
 			let player = try! chars?.add(folder: engine.makeFolder(name: "player"))
@@ -119,6 +110,7 @@ extension StoryTestViewController: NSTextFieldDelegate {
 		if let graph = item as? FlowGraph {
 			do{ try graph.setName(name: fieldEditor.string) } catch {
 				statusLabel.stringValue = "Could not rename FG (\(graph.Name)->\(fieldEditor.string))!"
+				control.stringValue = graph.Name
 			}
 		}
 		
