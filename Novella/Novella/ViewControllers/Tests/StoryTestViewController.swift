@@ -19,15 +19,23 @@ class StoryTestViewController: NSViewController {
 		super.viewDidLoad()
 		
 		// set up some story graph and variable content
-		let mq1 = try! engine.TheStory.MainGraph.makeGraph(name: "quest1")
-			let _ = try! mq1.makeGraph(name: "objective1")
-		let mq2 = try! engine.TheStory.MainGraph.makeGraph(name: "quest2")
-			let _ = try! mq2.makeGraph(name: "objective1")
-			let _ = try! mq2.makeGraph(name: "objective2")
+		let mq1 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest1"))
+			try! mq1?.add(graph: engine.makeFlowGraph(name: "objective1"))
+		let mq2 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest2"))
+			try! mq2?.add(graph: engine.makeFlowGraph(name: "objective1"))
+			try! mq2?.add(graph: engine.makeFlowGraph(name: "objective2"))
+		let side = try! engine.TheStory.add(graph: engine.makeFlowGraph(name: "side"))
+			try! side.add(graph: engine.makeFlowGraph(name: "quest1"))
+			try! side.add(graph: engine.makeFlowGraph(name: "quest2"))
+//		let mq1 = try! engine.TheStory.MainGraph.makeGraph(name: "quest1")
+//			let _ = try! mq1.makeGraph(name: "objective1")
+//		let mq2 = try! engine.TheStory.MainGraph.makeGraph(name: "quest2")
+//			let _ = try! mq2.makeGraph(name: "objective1")
+//			let _ = try! mq2.makeGraph(name: "objective2")
 		//
-		let side = try! engine.TheStory.makeGraph(name: "side")
-		let _ = try! side.makeGraph(name: "quest1")
-		let _ = try! side.makeGraph(name: "quest2")
+//		let side = try! engine.TheStory.makeGraph(name: "side")
+//		let _ = try! side.makeGraph(name: "quest1")
+//		let _ = try! side.makeGraph(name: "quest2")
 		//
 		let chars = try! engine.TheStory.MainFolder?.add(folder: engine.makeFolder(name: "characters"))
 			let player = try! chars?.add(folder: engine.makeFolder(name: "player"))
@@ -41,7 +49,7 @@ class StoryTestViewController: NSViewController {
 	
 	@IBAction func onAddRootgraph(_ sender: NSButton) {
 		let name = NSUUID().uuidString
-		do{ let _ = try engine.TheStory.makeGraph(name: name) } catch {
+		do{ try engine.TheStory.add(graph: engine.makeFlowGraph(name: name)) } catch {
 			statusLabel.stringValue = "Could not add FG to Story as name was taken."
 		}
 		outline.reloadData()
@@ -54,7 +62,7 @@ class StoryTestViewController: NSViewController {
 		}
 		if let graph = outline.item(atRow: idx) as? FlowGraph {
 			let name = NSUUID().uuidString
-			do{ let _ = try graph.makeGraph(name: name) } catch {
+			do{ try engine.TheStory.add(graph: engine.makeFlowGraph(name: name)) } catch {
 				statusLabel.stringValue = "Could not add FG to \(graph.Name) as name was taken."
 			}
 		}

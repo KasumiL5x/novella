@@ -19,6 +19,7 @@ class Engine {
 		self._identifiables = []
 		
 		self._story._mainFolder = makeFolder(name: "story")
+		self._story._mainGraph = try! self._story.add(graph: makeFlowGraph(name: "main"))
 	}
 	
 	// MARK: Getters
@@ -45,5 +46,12 @@ class Engine {
 		let variable = Variable(uuid: NSUUID(), name: name, type: type)
 		_identifiables.append(variable)
 		return variable
+	}
+	
+	// MARK: FlowGraphs
+	func makeFlowGraph(name: String) -> FlowGraph {
+		let graph = FlowGraph(name: name, story: _story)
+		_identifiables.append(graph)
+		return graph
 	}
 }

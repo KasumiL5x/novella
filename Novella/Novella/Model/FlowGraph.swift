@@ -92,7 +92,8 @@ class FlowGraph {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
-	func add(graph: FlowGraph) throws {
+	@discardableResult
+	func add(graph: FlowGraph) throws -> FlowGraph {
 		// cannot add self
 		if graph == self {
 			throw Errors.invalid("Tried to add a FlowGraph to self (\(_name)).")
@@ -112,6 +113,7 @@ class FlowGraph {
 		// now add
 		graph._parent = self
 		_graphs.append(graph)
+		return graph
 	}
 	
 	func remove(graph: FlowGraph) throws {
@@ -120,15 +122,6 @@ class FlowGraph {
 		}
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
-	}
-	
-	// MARK: Sub-FlowGraph Convenience Functions
-	func makeGraph(name: String) throws -> FlowGraph {
-		assert(_story != nil, "FlowGraph::setName - _story is nil.")
-		
-		let fg = FlowGraph(name: name, story: _story!)
-		try add(graph: fg)
-		return fg
 	}
 	
 	// MARK: FlowNodes

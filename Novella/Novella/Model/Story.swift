@@ -12,21 +12,18 @@ class Story {
 	var _links: [BaseLink]
 	
 	// primary graph
-	// TODO: Make this non-deletable
-	var _mainGraph: FlowGraph? = nil
+	var _mainGraph: FlowGraph?
 	
 	init() {
 		self._mainFolder = nil
 		self._graphs = []
 		self._links = []
-		
-		// add first graph
-		self._mainGraph = try! makeGraph(name: "main")
+		self._mainGraph = nil
 	}
 	
 	// MARK: Getters
-	var MainGraph: FlowGraph {get{ return _mainGraph! }}
 	var MainFolder: Folder? {get{ return _mainFolder }}
+	var MainGraph: FlowGraph? {get{ return _mainGraph! }}
 	
 	// MARK: Setup
 	func setup() throws {
@@ -42,7 +39,8 @@ class Story {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
-	func add(graph: FlowGraph) throws {
+	@discardableResult
+	func add(graph: FlowGraph) throws -> FlowGraph {
 		// already a child
 		if contains(graph: graph) {
 			throw Errors.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to story).")
@@ -58,6 +56,7 @@ class Story {
 		// now add
 		graph._parent = nil
 		_graphs.append(graph)
+		return graph
 	}
 	
 	func remove(graph: FlowGraph) throws {
@@ -65,13 +64,6 @@ class Story {
 			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
 		}
 		_graphs.remove(at: idx)
-	}
-	
-	// MARK: FlowGraph Convenience Functions
-	func makeGraph(name: String) throws -> FlowGraph {
-		let fg = FlowGraph(name: name, story: self)
-		try add(graph: fg)
-		return fg
 	}
 	
 	// MARK: Links
