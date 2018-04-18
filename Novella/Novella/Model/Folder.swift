@@ -26,8 +26,10 @@ class Folder {
 	}
 	
 	// MARK: Getters
-	var Name:     String {get{ return _name }}
-	var Synopsis: String {get{ return _synopsis }}
+	var Name:      String     {get{ return _name }}
+	var Synopsis:  String     {get{ return _synopsis }}
+	var Variables: [Variable] {get{ return _variables }}
+	var Folders:   [Folder]   {get{ return _folders }}
 	
 	// MARK: Setters
 	func setName(name: String) throws {

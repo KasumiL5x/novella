@@ -13,8 +13,26 @@ class Serialize {
 	static func getFolderDictionary(folder: Folder) -> [String:Any] {
 		var dict: [String:Any] = [:]
 		
+		var thisDict: [String:Any] = [:]
+		
+		// variables
+		for curr in folder.Variables {
+			var v: [String:Any] = [
+				"name": curr.Name
+			]
+			thisDict[curr.Name] = v
+		}
+		
+		// folders
+		for curr in folder.Folders {
+			var f: [String:Any] = [
+				"name": curr.Name
+			]
+			thisDict[curr.Name] = f
+		}
 		
 		
+		dict[folder.Name] = thisDict
 		return dict
 	}
 	
