@@ -50,7 +50,7 @@ class Engine {
 	
 	// MARK: FlowGraphs
 	func makeFlowGraph(name: String) -> FlowGraph {
-		let graph = FlowGraph(name: name, story: _story)
+		let graph = FlowGraph(uuid: NSUUID(), name: name, story: _story)
 		_identifiables.append(graph)
 		return graph
 	}

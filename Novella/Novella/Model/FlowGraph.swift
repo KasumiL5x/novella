@@ -22,8 +22,8 @@ class FlowGraph {
 	var _parent: FlowGraph?
 	var _story: Story?
 	
-	init(name: String, story: Story) {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID, name: String, story: Story) {
+		self._uuid = uuid
 		self._name = name
 		self._graphs = []
 		self._nodes = []
