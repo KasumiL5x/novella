@@ -18,8 +18,8 @@ class Variable {
 	var _constant: Bool
 	var _folder: Folder?
 	
-	init(name: String, type: DataType) {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID, name: String, type: DataType) {
+		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
 		self._type = type

@@ -35,14 +35,14 @@ class Engine {
 	
 	// MARK: Folders
 	func makeFolder(name: String) -> Folder {
-		let folder = Folder(name: name)
+		let folder = Folder(uuid: NSUUID(), name: name)
 		_identifiables.append(folder)
 		return folder
 	}
 	
 	// MARK: Variables
 	func makeVariable(name: String, type: DataType) -> Variable {
-		let variable = Variable(name: name, type: type)
+		let variable = Variable(uuid: NSUUID(), name: name, type: type)
 		_identifiables.append(variable)
 		return variable
 	}

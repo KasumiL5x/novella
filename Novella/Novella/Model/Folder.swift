@@ -16,8 +16,8 @@ class Folder {
 	var _variables: [Variable]
 	var _parent: Folder?
 	
-	init(name: String) {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID, name: String) {
+		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
 		self._folders = []
