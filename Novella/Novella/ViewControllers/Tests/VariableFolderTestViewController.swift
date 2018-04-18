@@ -11,25 +11,37 @@ import Cocoa
 class VariableFolderTestViewController: NSViewController {
 	@IBOutlet weak var outlineView: NSOutlineView!
 	@IBOutlet weak var statusLabel: NSTextField!
-	let root = Folder(name: "root")
+	
+	var engine = Engine()
+	
+//	let root = Folder(name: "root")
+	var root: Folder?
 	var draggedItem: Any? = nil
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		// dummy folder structure
-		let characters = try! root.mkdir(name: "Characters")
-			let player = try! characters.mkdir(name: "Player")
-				let _ = try! player.mkvar(name: "health", type: .integer)
-				let _ = try! player.mkvar(name: "strength", type: .integer)
-		let locations = try! characters.mkdir(name: "Locations")
-			let cabin = try! locations.mkdir(name: "Cabin")
-				let _ = try! cabin.mkvar(name: "FoundSecret", type: .boolean)
-		let decisions = try! root.mkdir(name: "Decisions")
-			let major = try! decisions.mkdir(name: "Major")
-				let _ = try! major.mkvar(name: "SolvedCrime", type: .boolean)
-			let minor = try! decisions.mkdir(name: "Minor")
-				let _ = try! _ = minor.mkvar(name: "PickedFlowers", type: .boolean)
+		root = engine.makeFolder(name: "root")
+			let characters = engine.makeFolder(name: "characters")
+			try! root!.add(folder: characters)
+				let player = engine.makeFolder(name: "player")
+				try! characters.add(folder: player)
+					try! player.add(variable: engine.makeVariable(name: "health", type: .integer))
+					try! player.add(variable: engine.makeVariable(name: "strength", type: .integer))
+			let locations = engine.makeFolder(name: "locations")
+			try! root!.add(folder: locations)
+				let cabin = engine.makeFolder(name: "cabin")
+				try! locations.add(folder: cabin)
+					try! cabin.add(variable: engine.makeVariable(name: "found_secret", type: .boolean))
+			let decisions = engine.makeFolder(name: "decisions")
+			try! root!.add(folder: decisions)
+				let major = engine.makeFolder(name: "major")
+				try! decisions.add(folder: major)
+					try! major.add(variable: engine.makeVariable(name: "solved_crime", type: .boolean))
+				let minor = engine.makeFolder(name: "minor")
+				try! decisions.add(folder: minor)
+					try! minor.add(variable: engine.makeVariable(name: "picked_flowers", type: .boolean))
 		
 		outlineView.expandItem(root, expandChildren: true)
 		outlineView.sizeToFit()
@@ -154,7 +166,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 			}
 			return folder._variables[index - folder._folders.count]
 		}
-		return root
+		return root!
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -164,7 +176,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 		if let folder = item as? Folder {
 			return (folder._folders.count + folder._variables.count) > 0
 		}
-		return (root._folders.count + root._variables.count) > 0
+		return (root!._folders.count + root!._variables.count) > 0
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {

@@ -27,4 +27,18 @@ class Engine {
 		}
 		return element
 	}
+	
+	// MARK: Folders
+	func makeFolder(name: String) -> Folder {
+		let folder = Folder(name: name)
+		_identifiables.append(folder)
+		return folder
+	}
+	
+	// MARK: Variables
+	func makeVariable(name: String, type: DataType) -> Variable {
+		let variable = Variable(name: name, type: type)
+		_identifiables.append(variable)
+		return variable
+	}
 }
