@@ -13,10 +13,16 @@ class Engine {
 	
 	// All objects that are Identifiable. Can be searched.
 	var _identifiables: [Identifiable]
+	// All Folders.
+	var _folders: [Folder]
+	// All Variables.
+	var _variables: [Variable]
 	
 	init() {
 		self._story = Story()
 		self._identifiables = []
+		self._folders = []
+		self._variables = []
 		
 		self._story._mainFolder = makeFolder(name: "story")
 		self._story._mainGraph = try! self._story.add(graph: makeFlowGraph(name: "main"))
@@ -37,6 +43,7 @@ class Engine {
 	// MARK: Folders
 	func makeFolder(name: String) -> Folder {
 		let folder = Folder(uuid: NSUUID(), name: name)
+		_folders.append(folder)
 		_identifiables.append(folder)
 		return folder
 	}
@@ -44,6 +51,7 @@ class Engine {
 	// MARK: Variables
 	func makeVariable(name: String, type: DataType) -> Variable {
 		let variable = Variable(uuid: NSUUID(), name: name, type: type)
+		_variables.append(variable)
 		_identifiables.append(variable)
 		return variable
 	}
