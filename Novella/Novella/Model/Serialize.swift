@@ -20,7 +20,7 @@ class Serialize {
 			}
 		}
 		
-		var engine = Engine()
+		let engine = Engine()
 		
 		// read all variables
 		if let variables = json["variables"] as? [[String:Any]] {
