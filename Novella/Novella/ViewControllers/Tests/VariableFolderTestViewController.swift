@@ -21,6 +21,8 @@ class VariableFolderTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		engine.createDefaults()
+		
 		// dummy folder structure
 		root = engine.makeFolder(name: "root")
 		let characters = try! root!.add(folder: engine.makeFolder(name: "characters"))

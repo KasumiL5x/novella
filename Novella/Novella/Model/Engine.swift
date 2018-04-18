@@ -23,7 +23,9 @@ class Engine {
 		self._identifiables = []
 		self._folders = []
 		self._variables = []
-		
+	}
+	
+	func createDefaults() {
 		self._story._mainFolder = makeFolder(name: "story")
 		self._story._mainGraph = try! self._story.add(graph: makeFlowGraph(name: "main"))
 	}

@@ -18,6 +18,8 @@ class StoryTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		engine.createDefaults()
+		
 		// set up some story graph and variable content
 		let mq1 = try! engine.TheStory.MainGraph?.add(graph: engine.makeFlowGraph(name: "quest1"))
 			try! mq1?.add(graph: engine.makeFlowGraph(name: "objective1"))
