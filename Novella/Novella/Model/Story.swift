@@ -6,20 +6,70 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class Story {
+	// MARK: Storywide Collections
+	var _allIdentifiables: [Identifiable]
+	var _allFolders: [Folder]
+	var _allVariables: [Variable]
+	var _allGraphs: [FlowGraph]
+	var _allLinks: [Link]
+	
+	// MARK: Local Collections
+	var _folders: [Folder]
 	var _graphs: [FlowGraph]
 	var _links: [BaseLink]
-	var _folders: [Folder]
 	
 	init() {
+		self._allIdentifiables = []
+		self._allFolders = []
+		self._allVariables = []
+		self._allGraphs = []
+		self._allLinks = []
+		
+		self._folders = []
 		self._graphs = []
 		self._links = []
-		self._folders = []
 	}
 	
 	// MARK: Setup
 	func setup() throws {
 		throw Errors.notImplemented("Story::setup()")
+	}
+}
+
+// MARK: Local Collection Functions
+extension Story {
+	// MARK: Folders
+	func contains(folder: Folder) -> Bool {
+		return _folders.contains(folder)
+	}
+	
+	func containsFolderName(name: String) -> Bool {
+		return _folders.contains(where: {$0._name == name})
+	}
+	
+	@discardableResult
+	func add(folder: Folder) throws -> Folder {
+		// already a child
+		if contains(folder: folder) {
+			throw Errors.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
+		}
+		// already contains same name
+		if containsFolderName(name: folder._name) {
+			throw Errors.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
+		}
+		// now add
+		_folders.append(folder)
+		return folder
+	}
+	
+	func remove(folder: Folder) throws {
+		guard let idx = _folders.index(of: folder) else {
+			throw Errors.invalid("Tried to remove Folder (\(folder._name)) from story but it was not a child.")
+		}
+		_folders.remove(at: idx)
 	}
 	
 	// MARK: FlowGraphs
@@ -64,32 +114,49 @@ class Story {
 		_links.append(link)
 		return link
 	}
+	
 	func remove(link: BaseLink) throws {
 		guard let idx = _links.index(of: link) else {
 			throw Errors.invalid("Tried to remove BaseLink from Story but it was not a child.")
 		}
 		_links.remove(at: idx)
 	}
+}
+
+// MARK: Storywide Functions
+extension Story {
+	func findBy(uuid: NSUUID) throws -> Identifiable {
+		guard let element = _allIdentifiables.first(where: {$0.UUID == uuid}) else {
+			throw Errors.invalid("Tried to find Identifiable by UUID but no match was found (\(uuid.uuidString)).")
+		}
+		return element
+	}
 	
-	// MARK: Folders
-	func contains(folder: Folder) -> Bool {
-		return _folders.contains(folder)
-	}
-	func containsFolderName(name: String) -> Bool {
-		return _folders.contains(where: {$0._name == name})
-	}
-	@discardableResult
-	func add(folder: Folder) throws -> Folder {
-		// already a child
-		if contains(folder: folder) {
-			throw Errors.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
-		}
-		// already contains same name
-		if containsFolderName(name: folder._name) {
-			throw Errors.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
-		}
-		// now add
-		_folders.append(folder)
+	func makeFolder(name: String) -> Folder {
+		let folder = Folder(uuid: NSUUID(), name: name)
+		_allFolders.append(folder)
+		_allIdentifiables.append(folder)
 		return folder
+	}
+	
+	func makeVariable(name: String, type: DataType) -> Variable {
+		let variable = Variable(uuid: NSUUID(), name: name, type: type)
+		_allVariables.append(variable)
+		_allIdentifiables.append(variable)
+		return variable
+	}
+	
+	func makeGraph(name: String) -> FlowGraph {
+		let graph = FlowGraph(uuid: NSUUID(), name: name, story: self)
+		_allGraphs.append(graph)
+		_allIdentifiables.append(graph)
+		return graph
+	}
+	
+	func makeLink() -> Link {
+		let link = Link(uuid: NSUUID())
+		_allLinks.append(link)
+		_allIdentifiables.append(link)
+		return link
 	}
 }
