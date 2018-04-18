@@ -452,6 +452,17 @@
                                     <action selector="onWriteJSON:" target="JMH-8B-KVj" id="9if-mP-KH7"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nv7-nA-8Fq">
+                                <rect key="frame" x="185" y="174" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ada-Fy-TAc">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onReadJSON:" target="JMH-8B-KVj" id="GWi-Nb-RgJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                 </viewController>

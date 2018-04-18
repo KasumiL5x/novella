@@ -9,6 +9,27 @@
 import Foundation
 
 class Serialize {
+	static func read(jsonStr: String) throws -> Engine {
+		var json: [String:Any] = [:]
+		if let data = jsonStr.data(using: .utf8) {
+			do {
+				json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
+			} catch {
+				print(error.localizedDescription)
+				throw Errors.invalid("Failed to parse JSON string.")
+			}
+		}
+		
+		var engine = Engine()
+		
+		// Always read all data first, THEN link everything.
+		// For instance, read all varibles and folders, THEN set up the parenting via UUID lookup.
+		
+		print(json)
+		
+		return engine
+	}
+	
 	static func write(engine: Engine) throws -> NSString {
 		
 		// create root object
