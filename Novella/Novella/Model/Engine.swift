@@ -54,4 +54,11 @@ class Engine {
 		_identifiables.append(graph)
 		return graph
 	}
+	
+	// MARK: Links
+	func makeLink() -> Link {
+		let link = Link(uuid: NSUUID())
+		_identifiables.append(link)
+		return link
+	}
 }

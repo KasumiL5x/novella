@@ -12,8 +12,8 @@ class BaseLink {
 	let _uuid: NSUUID
 	var origin: Linkable?
 	
-	init() {
-		self._uuid = NSUUID()
+	init(uuid: NSUUID) {
+		self._uuid = uuid
 		self.origin = nil
 	}
 }

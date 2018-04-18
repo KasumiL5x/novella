@@ -76,12 +76,4 @@ class Story {
 		}
 		_links.remove(at: idx)
 	}
-	
-	// MARK: Link Convenience Functions
-	func makeLink(origin: Linkable, destination: Linkable?) {
-		let link = Link()
-		link.origin = origin
-		link.transfer.destination = destination
-		add(link: link)
-	}
 }

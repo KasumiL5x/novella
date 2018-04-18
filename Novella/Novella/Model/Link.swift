@@ -6,12 +6,16 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class Link : BaseLink {
 	var condition: Condition
 	var transfer: Transfer
 	
-	override init() {
+	override init(uuid: NSUUID) {
 		self.condition = Condition()
 		self.transfer = Transfer()
+		
+		super.init(uuid: uuid)
 	}
 }
