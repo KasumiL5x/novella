@@ -53,4 +53,26 @@ extension Story {
 			return ""
 		}
 	}
+	
+	static func fromJSON(str: String) throws -> Story {
+		// get Data from string
+		guard let data = str.data(using: .utf8)  else {
+			throw Errors.invalid("Failed to get Data from JSON string.")
+		}
+		
+		// convert to json object
+		var root: JSONDict = [:]
+		do {
+			root = try JSONSerialization.jsonObject(with: data, options: []) as! JSONDict
+		} catch {
+			throw Errors.invalid("Failed to parse JSON.")
+		}
+		
+		let story = Story()
+		
+		// read all variables
+		print(root["doesntexist"])
+		
+		return story
+	}
 }
