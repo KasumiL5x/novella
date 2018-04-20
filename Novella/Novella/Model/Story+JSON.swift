@@ -108,6 +108,34 @@ extension Story {
 			story.makeFolder(name: name, uuid: uuid)
 		}
 		
+		// link variables to folders by uuid
+		for currFolder in folders {
+			let folder = story.findBy(uuid: currFolder["uuid"] as! String) as! Folder // this is fine as we've processed it earlier
+			guard let vars = currFolder["variables"] as? [String] else {
+				throw Errors.invalid("Failed to read Folder's variables.")
+			}
+			for currVar in vars {
+				guard let v = story.findBy(uuid: currVar) as? Variable else {
+					throw Errors.invalid("Failed to find Folder's containing variable by UUID.")
+				}
+				try! folder.add(variable: v)
+			}
+		}
+		
+		// link folders to folders by uuid
+		for currFolder in folders {
+			let folder = story.findBy(uuid: currFolder["uuid"] as! String) as! Folder // this is fine as we've processed it earlier
+			guard let subs = currFolder["subfolders"] as? [String] else {
+				throw Errors.invalid("Failed to read Folder's subfolders.")
+			}
+			for currSub in subs {
+				guard let f = story.findBy(uuid: currSub) as? Folder else {
+					throw Errors.invalid("Failed to find Folder's containing folder by UUID.")
+				}
+				try! folder.add(folder: f)
+			}
+		}
+		
 		return story
 	}
 }

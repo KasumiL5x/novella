@@ -125,11 +125,8 @@ extension Story {
 
 // MARK: Storywide Functions
 extension Story {
-	func findBy(uuid: NSUUID) throws -> Identifiable {
-		guard let element = _allIdentifiables.first(where: {$0.UUID == uuid}) else {
-			throw Errors.invalid("Tried to find Identifiable by UUID but no match was found (\(uuid.uuidString)).")
-		}
-		return element
+	func findBy(uuid: String) -> Identifiable? {
+		return _allIdentifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
 	
 	@discardableResult
