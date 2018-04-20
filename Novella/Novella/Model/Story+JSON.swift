@@ -47,8 +47,8 @@ extension Story {
 		}
 		
 		do {
-			let jsonDaat = try JSONSerialization.data(withJSONObject: root, options: .prettyPrinted)
-			return String(data: jsonDaat, encoding: String.Encoding.utf8)!
+			let jsonData = try JSONSerialization.data(withJSONObject: root, options: .prettyPrinted)
+			return String(data: jsonData, encoding: String.Encoding.utf8)!
 		} catch {
 			return ""
 		}
