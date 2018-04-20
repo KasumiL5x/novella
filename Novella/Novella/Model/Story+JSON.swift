@@ -71,7 +71,42 @@ extension Story {
 		let story = Story()
 		
 		// read all variables
-		print(root["doesntexist"])
+		guard let variables = root["variables"] as? [JSONDict] else {
+			throw Errors.invalid("Failed to find 'variables' entry.")
+		}
+		for curr in variables {
+			guard let uuidStr = curr["uuid"] as? String else {
+				throw Errors.invalid("Failed to parse variable's UUID string.")
+			}
+			guard let uuid = NSUUID(uuidString: uuidStr) else {
+				throw Errors.invalid("Failed to create Variable NSUUID.")
+			}
+			guard let name = curr["name"] as? String else {
+				throw Errors.invalid("Failed to read Variable name.")
+			}
+			guard let typeStr = curr["type"] as? String else {
+				throw Errors.invalid("Failed to read Variable's type.")
+			}
+			let type = DataType.fromString(str: typeStr) // TODO: Make this throw rather than fatalError.
+			story.makeVariable(name: name, type: type, uuid: uuid)
+		}
+		
+		// read all folders
+		guard let folders = root["folders"] as? [JSONDict] else {
+			throw Errors.invalid("Failed to find 'folders' entry.")
+		}
+		for curr in folders {
+			guard let uuidStr = curr["uuid"] as? String else {
+				throw Errors.invalid("Failed to parse Folder's UUID string.")
+			}
+			guard let uuid = NSUUID(uuidString: uuidStr) else {
+				throw Errors.invalid("Failed to create Folder's NSUUID.")
+			}
+			guard let name = curr["name"] as? String else {
+				throw Errors.invalid("Failed to read Folder's name.")
+			}
+			story.makeFolder(name: name, uuid: uuid)
+		}
 		
 		return story
 	}
