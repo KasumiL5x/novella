@@ -98,14 +98,23 @@ extension Story {
 			entry["synopsis"] = curr._synopsis
 			entry["type"] = curr._type.stringValue
 			entry["constant"] = curr._constant
-			entry["initialValue"] = curr._initialValue // TODO: Convert this to string somehow, as it may kill it if it's not POD.
-			entry["value"] = curr._value // TODO: Convert this to string somehow, as it may kill it if it's not POD.
+			entry["initialValue"] = curr._initialValue
+			entry["value"] = curr._value
 			variables.append(entry)
 		}
 		root["variables"] = variables
 		
-		// check json object validity
+		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
+			return ""
+		}
+		
+		// test against schema
+		let schema = Schema(Story.JSON_SCHEMA)
+		let validated = schema.validate(root)
+		if !validated.valid {
+			print("Failed to validate JSON against Schema.")
+			validated.errors?.forEach({print($0)})
 			return ""
 		}
 		
