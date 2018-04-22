@@ -13,6 +13,7 @@
 		653CA9B5208538F50052BAB9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* Identifiable.swift */; };
 		655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* Listener.swift */; };
 		65619E922084D711000D5322 /* Linkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* Linkable.swift */; };
+		656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
 		656F99E920869B2C009366D0 /* ExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99E820869B2C009366D0 /* ExitNode.swift */; };
 		656F99EB2086A5E9009366D0 /* Cutscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EA2086A5E9009366D0 /* Cutscene.swift */; };
 		656F99ED2086A60A009366D0 /* Delivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EC2086A60A009366D0 /* Delivery.swift */; };
@@ -32,6 +33,7 @@
 		658C7CE3207E7EDD00E2B46B /* FolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CE1207E7EDD00E2B46B /* FolderTests.swift */; };
 		658C7CE4207E7EDD00E2B46B /* VariableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CE2207E7EDD00E2B46B /* VariableTests.swift */; };
 		65C0573F2080A20900C4367E /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0573E2080A20900C4367E /* Path.swift */; };
+		65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */; };
 		65F5DF93207EA0910041FB0D /* BaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF92207EA0910041FB0D /* BaseLink.swift */; };
 		65F5DF95207EA09C0041FB0D /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF94207EA09C0041FB0D /* Link.swift */; };
 		65F5DF98207EA0AF0041FB0D /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF97207EA0AF0041FB0D /* Branch.swift */; };
@@ -69,6 +71,7 @@
 		653CA9B4208538F50052BAB9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		655CFAEE2085FA2900C04D40 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		65619E912084D711000D5322 /* Linkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkable.swift; sourceTree = "<group>"; };
+		656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		656F99E820869B2C009366D0 /* ExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitNode.swift; sourceTree = "<group>"; };
 		656F99EA2086A5E9009366D0 /* Cutscene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cutscene.swift; sourceTree = "<group>"; };
 		656F99EC2086A60A009366D0 /* Delivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delivery.swift; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		658C7CDB207E7EB900E2B46B /* DataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataType.swift; sourceTree = "<group>"; };
 		658C7CE1207E7EDD00E2B46B /* FolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderTests.swift; sourceTree = "<group>"; };
 		658C7CE2207E7EDD00E2B46B /* VariableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTests.swift; sourceTree = "<group>"; };
+		65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65C0573E2080A20900C4367E /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		65F5DF92207EA0910041FB0D /* BaseLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLink.swift; sourceTree = "<group>"; };
 		65F5DF94207EA09C0041FB0D /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */,
+				65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +189,15 @@
 			name = Variables;
 			sourceTree = "<group>";
 		};
+		656AFB28208BEEC6007E6426 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */,
+				656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		658C7C9F207E7E6500E2B46B = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +205,7 @@
 				658C7CBD207E7E6600E2B46B /* NovellaTests */,
 				658C7CC8207E7E6600E2B46B /* NovellaUITests */,
 				658C7CA9207E7E6500E2B46B /* Products */,
+				656AFB28208BEEC6007E6426 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -297,6 +313,7 @@
 				658C7CA4207E7E6500E2B46B /* Sources */,
 				658C7CA5207E7E6500E2B46B /* Frameworks */,
 				658C7CA6207E7E6500E2B46B /* Resources */,
+				656AFB2B208BEEEE007E6426 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -426,6 +443,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}/\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"";
+		};
+		656AFB2B208BEEEE007E6426 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/Mac/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/JSONSchema.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -632,6 +664,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Novella/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -651,6 +687,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Novella/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
