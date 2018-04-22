@@ -47,7 +47,6 @@ class JSONTestViewController: NSViewController {
 	
 	@IBAction func onWriteJSON(_ sender: NSButton) {
 		do {
-//			let str = try Serialize.write(story: _story)
 			let str = try _story.toJSON()
 			print(str)
 		} catch {

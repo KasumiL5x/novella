@@ -8,6 +8,7 @@
 
 import Foundation
 import JSONSchema
+import SwiftyJSON
 
 typealias JSONDict = [String:Any]
 
@@ -118,12 +119,12 @@ extension Story {
 			throw Errors.invalid("JSON did not validate against schema.")
 		}
 		
-		do {
-			let jsonData = try JSONSerialization.data(withJSONObject: root, options: .prettyPrinted)
-			return String(data: jsonData, encoding: String.Encoding.utf8)!
-		} catch {
+		// get a JSON string
+		let json = JSON(root)
+		guard let str = json.rawString(.utf8, options: .prettyPrinted) else {
 			throw Errors.invalid("Failed to serialize into JSON data.")
 		}
+		return str
 	}
 	
 	static func fromJSON(str: String) throws -> Story {
