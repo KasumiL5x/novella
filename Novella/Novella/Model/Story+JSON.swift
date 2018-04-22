@@ -74,7 +74,7 @@ extension Story {
 		]
 	]
 	
-	func toJSON() -> String {
+	func toJSON() throws -> String {
 		var root: JSONDict = [:]
 		
 		// add all folders
@@ -106,7 +106,7 @@ extension Story {
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
-			return ""
+			throw Errors.invalid("Root object cannot form valid JSON.")
 		}
 		
 		// test against schema
@@ -115,14 +115,14 @@ extension Story {
 		if !validated.valid {
 			print("Failed to validate JSON against Schema.")
 			validated.errors?.forEach({print($0)})
-			return ""
+			throw Errors.invalid("JSON did not validate against schema.")
 		}
 		
 		do {
 			let jsonData = try JSONSerialization.data(withJSONObject: root, options: .prettyPrinted)
 			return String(data: jsonData, encoding: String.Encoding.utf8)!
 		} catch {
-			return ""
+			throw Errors.invalid("Failed to serialize into JSON data.")
 		}
 	}
 	
