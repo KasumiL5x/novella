@@ -1,2 +1,9 @@
 # Xcode user settings
+#
 xcuserdata/
+
+# Carthage
+#
+Novella/Carthage/Build
+# comment out this line to commit downloaded libraries
+Novella/Carthage/Checkouts
