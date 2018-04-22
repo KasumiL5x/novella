@@ -140,78 +140,14 @@ extension Story {
 			throw Errors.invalid("Failed to parse JSON.")
 		}
 		
-		// TEST JSON SCHEMA
-		//		print(root)
+		// test against schema
 		let schema = Schema(Story.JSON_SCHEMA)
-		print(schema.validate(root))
-		// END
-		
-		
-		// DEBUG JSON SCHEMA TEST
-		// Notes:
-		//   1. Doesn't support format's "date-time", "email", or "hostname"
-		//   2. "dependencies" rhv must be as an array even with one entry ["value"]
-		//   3. 'null' type support seems sketchy
-		//   4. If using 'minimum' or 'maximum', they and the value MUST be floats/numbers.
-		//   4.1 UPDATE: I have "fixed" this bug, I think. Uses NSNumber.doubleValue now.
-		//   5. Does NOT support remote $ref at all, but regular $ref is fine.
-		//   6. Invalid refs don't throw errors unless they are used in the JSON document.
-		//   7. It seems that if an entry in 'properties' has an empty array, all above is ignored.
-		//		let schema = Schema([
-		//			"$schema": "http://json-schema.org/draft-04/schema#",
-		//			"definitions": [
-		//				"address": [
-		//					"type": "object",
-		//					"properties": [
-		//						"street_address": ["type": "string"],
-		//						"city":           ["type": "string"],
-		//						"state":          ["type": "string"]
-		//					],
-		//					"required": ["street_address", "city", "state"]
-		//				]
-		//			],
-		//			"type": "object",
-		//			"properties": [
-		//				"billing_address": ["$ref": "#/definitions/address"],
-		//				"shipping_address": [
-		//					"allOf": [
-		//						["$ref": "#/definitions/address"],
-		//						[
-		//							"properties": [
-		//								"type": ["enum": ["residential", "business"]]
-		//							],
-		//							"required": ["type"]
-		//						]
-		//					]
-		//				]
-		//			]
-		//		])
-		//		print(schema.validate(
-		//			[
-		//				"shipping_address": [
-		//					"street_address": "1600 Pennsylvania Avenue NW",
-		//					"city": "Washington",
-		//					"state": "DC",
-		//					"type": "business"
-		//				]
-		//			]
-		//		))
-		//		print(schema.validate(
-		//			[
-		//				"shipping_address": [
-		//					"street_address": "1600 Pennsylvania Avenue NW",
-		//					"city": "Washington",
-		//					"state": "DC"
-		//				],
-		//				"billing_address": [
-		//					"street_address": "1st Street SE",
-		//					"city": "Washington",
-		//					"state": "DC"
-		//				]
-		//			]
-		//		))
-		// END
-		
+		let validated = schema.validate(root)
+		if !validated.valid {
+			print("Failed to validate JSON against Schema.")
+			validated.errors?.forEach({print($0)})
+			throw Errors.invalid("JSON did not validate against schema.")
+		}
 		
 		let story = Story()
 		
