@@ -39,8 +39,8 @@ extension Story {
 			"value": [
 				"anyOf": [
 					["type": "number"],
-					["type": "boolean"],
-					["type": "string"]
+					["type": "boolean"]
+//					["type": "string"]
 				]
 			],
 			// variable
@@ -54,7 +54,30 @@ extension Story {
 					"value": ["$ref": "#/definitions/value"],
 					"initialValue": ["$ref": "#/definitions/value"],
 				],
-				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"]
+				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
+
+				"dependencies": [
+					// validate datatype matches given initial/value
+					"datatype": [
+						"oneOf": [
+							[ // boolean
+								"properties": [
+									"datatype": ["enum": ["boolean"]], // from the above enum
+									"value": ["type": "boolean"],
+									"initialValue": ["type": "boolean"]
+								]
+							],
+							[ // integer
+								"properties": [
+									"datatype": ["enum": ["integer"]], // from the above enum
+									"value": ["type": "integer"],
+									"initialValue": ["type": "integer"]
+								]
+							],
+						]
+					]
+				]
+				
 			],
 			// folder
 			"folder": [
