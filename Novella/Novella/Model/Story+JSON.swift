@@ -49,7 +49,7 @@ extension Story {
 					"name": ["type": "string"],
 					"uuid": ["$ref": "#/definitions/uuid"],
 					"synopsis": ["type": "string"],
-					"datatype": ["type": "string", "enum": ["boolean", "integer"]], // This is mapped to DataType.stringValue
+					"datatype": ["type": "string", "enum": ["boolean", "integer"]], // This is mapped to DataType.stringValue; TODO: Can I auto-map this?
 					"constant": ["type": "boolean"],
 					"value": ["$ref": "#/definitions/value"],
 					"initialValue": ["$ref": "#/definitions/value"],
