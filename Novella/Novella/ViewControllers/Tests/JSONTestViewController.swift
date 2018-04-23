@@ -25,13 +25,19 @@ class JSONTestViewController: NSViewController {
 		try! side.add(graph: _story.makeGraph(name: "quest1"))
 		try! side.add(graph: _story.makeGraph(name: "quest2"))
 		//
-		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
-		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
-		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
-		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
-		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
-		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
-		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
+//		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
+//		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
+//		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
+//		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
+//		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
+//		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
+//		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
+		
+		// add variables (and folders) to test data types
+		let typeFolder = try! _story.add(folder: _story.makeFolder(name: "types"))
+		try! typeFolder.add(variable: _story.makeVariable(name: "booleanTest", type: .boolean))
+		try! typeFolder.add(variable: _story.makeVariable(name: "integerTest", type: .integer))
+		try! typeFolder.add(variable: _story.makeVariable(name: "doubleTest", type: .double))
 	}
 	
 	
@@ -40,6 +46,7 @@ class JSONTestViewController: NSViewController {
 		let story: Story
 		do {
 			story = try Story.fromJSON(str: json_str)
+//			try Story.fromJSON(str: "{\"variables\":[{\"synopsis\":\"\",\"name\":\"booleanTest\",\"value\":false,\"constant\":false,\"uuid\":\"1492B0A1-9FDB-4830-A3A4-02DEF78E511B\",\"datatype\":\"boolean\",\"initialValue\":false},{\"synopsis\":\"\",\"name\":\"integerTest\",\"value\":0,\"constant\":false,\"uuid\":\"1F54F787-5282-4D14-B25D-7EBBE25067BC\",\"datatype\":\"integer\",\"initialValue\":0},{\"synopsis\":\"\",\"name\":\"doubleTest\",\"value\":0,\"constant\":false,\"uuid\":\"A9FDB76F-2E0D-4689-8EF4-6F14F94F2971\",\"datatype\":\"double\",\"initialValue\":0}],\"folders\":[{\"name\":\"types\",\"variables\":[\"1492B0A1-9FDB-4830-A3A4-02DEF78E511B\",\"1F54F787-5282-4D14-B25D-7EBBE25067BC\",\"A9FDB76F-2E0D-4689-8EF4-6F14F94F2971\"],\"uuid\":\"EC7C5DA7-9A6F-4495-8AE6-D0A1D7F495F6\",\"subfolders\":[]}]}")
 //			try Story.fromJSON(str: "{\"variables\":[{\"synopsis\":\"\",\"name\":\"health\",\"value\":false,\"constant\":false,\"uuid\":\"CFADD9A1-A575-4A7B-B709-D3AFFB164D0D\",\"datatype\":\"integer\",\"initialValue\":0},{\"synopsis\":\"\",\"name\":\"talked_to_dave\",\"value\":false,\"constant\":false,\"uuid\":\"B0FAE94F-BF3F-4CF7-BBF8-D0D2DC429782\",\"datatype\":\"boolean\",\"initialValue\":false},{\"synopsis\":\"\",\"name\":\"completed_task\",\"value\":false,\"constant\":false,\"uuid\":\"13256834-353D-418A-96AB-3B4276E535A4\",\"datatype\":\"boolean\",\"initialValue\":false}],\"folders\":[{\"name\":\"story\",\"variables\":[],\"uuid\":\"CF6B507C-EED5-4420-A81F-5E8C91AE9AF6\",\"subfolders\":[\"E70CD8E0-3477-4D10-91D8-2FC81A24E3C2\",\"FEF1DEC5-7BCE-4693-B865-F989D81F57F4\"]},{\"name\":\"characters\",\"variables\":[],\"uuid\":\"E70CD8E0-3477-4D10-91D8-2FC81A24E3C2\",\"subfolders\":[\"5CF91582-212B-4AD5-BE44-AE66B7DDAEE9\"]},{\"name\":\"player\",\"variables\":[\"CFADD9A1-A575-4A7B-B709-D3AFFB164D0D\"],\"uuid\":\"5CF91582-212B-4AD5-BE44-AE66B7DDAEE9\",\"subfolders\":[]},{\"name\":\"choices\",\"variables\":[\"B0FAE94F-BF3F-4CF7-BBF8-D0D2DC429782\",\"13256834-353D-418A-96AB-3B4276E535A4\"],\"uuid\":\"FEF1DEC5-7BCE-4693-B865-F989D81F57F4\",\"subfolders\":[]}]}")
 		} catch {
 			print("oh shit")
