@@ -49,7 +49,7 @@ extension Story {
 					"name": ["type": "string"],
 					"uuid": ["$ref": "#/definitions/uuid"],
 					"synopsis": ["type": "string"],
-					"type": ["type": "string"], // TODO: Make it an enum of allowed types (defined in DataType string function).
+					"type": ["type": "string", "enum": ["boolean", "integer"]], // This is mapped to DataType.stringValue
 					"constant": ["type": "boolean"],
 					"value": ["$ref": "#/definitions/value"],
 					"initialValue": ["$ref": "#/definitions/value"],
