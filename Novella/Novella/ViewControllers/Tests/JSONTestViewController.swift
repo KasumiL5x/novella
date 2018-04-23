@@ -40,6 +40,7 @@ class JSONTestViewController: NSViewController {
 		let story: Story
 		do {
 			story = try Story.fromJSON(str: json_str)
+//			let _ = try Story.fromJSON(str: "{\"variables\":[{\"synopsis\":\"\",\"name\":\"health\",\"value\":0,\"constant\":false,\"uuid\":\"495CF612-FB2D-4AD5-8C24-B21548C40F7C\",\"type\":\"integer\",\"initialValue\":0},{\"synopsis\":\"\",\"name\":\"talked_to_dave\",\"value\":false,\"constant\":false,\"uuid\":\"B5305AB9-8D78-4B4B-BED9-AE91ED6E1961\",\"type\":\"boolean\",\"initialValue\":false},{\"synopsis\":\"\",\"name\":\"completed_task\",\"value\":false,\"constant\":false,\"uuid\":\"ED847768-5E2A-4608-B932-64CD9F1D393D\",\"type\":\"boolean\",\"initialValue\":false}]}")
 		} catch {
 			print("oh shit")
 		}

@@ -49,7 +49,7 @@ extension Story {
 					"name": ["type": "string"],
 					"uuid": ["$ref": "#/definitions/uuid"],
 					"synopsis": ["type": "string"],
-					"type": ["type": "string"],
+					"type": ["type": "string"], // TODO: Make it an enum of allowed types (defined in DataType string function).
 					"constant": ["type": "boolean"],
 					"value": ["$ref": "#/definitions/value"],
 					"initialValue": ["$ref": "#/definitions/value"],
@@ -128,22 +128,24 @@ extension Story {
 	}
 	
 	static func fromJSON(str: String) throws -> Story {
+		// TODO: Should I handle name clashes of UUID internally just in case another UUID is copypasted by a user?
+		
 		// get Data from string
 		guard let data = str.data(using: .utf8)  else {
 			throw Errors.invalid("Failed to get Data from JSON string.")
 		}
 		
-		// convert to json object
-		var root: JSONDict = [:]
+		// parse using SwiftyJSON
+		let json: JSON
 		do {
-			root = try JSONSerialization.jsonObject(with: data, options: []) as! JSONDict
+			json = try JSON(data: data)
 		} catch {
 			throw Errors.invalid("Failed to parse JSON.")
 		}
 		
 		// test against schema
 		let schema = Schema(Story.JSON_SCHEMA)
-		let validated = schema.validate(root)
+		let validated = schema.validate(json.object) // json.object is the root object
 		if !validated.valid {
 			print("Failed to validate JSON against Schema.")
 			validated.errors?.forEach({print($0)})
@@ -153,70 +155,57 @@ extension Story {
 		let story = Story()
 		
 		// read all variables
-		guard let variables = root["variables"] as? [JSONDict] else {
-			throw Errors.invalid("Failed to find 'variables' entry.")
-		}
-		for curr in variables {
-			guard let uuidStr = curr["uuid"] as? String else {
-				throw Errors.invalid("Failed to parse variable's UUID string.")
-			}
-			guard let uuid = NSUUID(uuidString: uuidStr) else {
-				throw Errors.invalid("Failed to create Variable NSUUID.")
-			}
-			guard let name = curr["name"] as? String else {
-				throw Errors.invalid("Failed to read Variable name.")
-			}
-			guard let typeStr = curr["type"] as? String else {
-				throw Errors.invalid("Failed to read Variable's type.")
-			}
-			let type = DataType.fromString(str: typeStr) // TODO: Make this throw rather than fatalError.
-			story.makeVariable(name: name, type: type, uuid: uuid)
+		for curr in json["variables"].arrayValue {
+			let name = curr["name"].stringValue
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let synopsis = curr["synopsis"].stringValue
+			let type = DataType.fromString(str: curr["type"].stringValue)
+			let constant = curr["constant"].boolValue
+			// TODO: Figure out how to handle initial/Value. Probably just need to switch case and let based on its type? Technically user could change it. May need to validate matching types. Possibly do this in schema with the conditionals?
+			let v = story.makeVariable(name: name, type: type, uuid: uuid)
+			v.setSynopsis(synopsis: synopsis)
+			v.setConstant(const: constant) // remember to set initial/value before this
+//			print("Name: \(name)")
+//			print("UUID: \(uuid)")
+//			print("Synopsis: \(synopsis)")
+//			print("Type: \(type)")
+//			print("Constant: \(constant)")
+//			print()
 		}
 		
 		// read all folders
-		guard let folders = root["folders"] as? [JSONDict] else {
-			throw Errors.invalid("Failed to find 'folders' entry.")
-		}
+		let folders = json["folders"].arrayValue
 		for curr in folders {
-			guard let uuidStr = curr["uuid"] as? String else {
-				throw Errors.invalid("Failed to parse Folder's UUID string.")
-			}
-			guard let uuid = NSUUID(uuidString: uuidStr) else {
-				throw Errors.invalid("Failed to create Folder's NSUUID.")
-			}
-			guard let name = curr["name"] as? String else {
-				throw Errors.invalid("Failed to read Folder's name.")
-			}
-			story.makeFolder(name: name, uuid: uuid)
+			let name = curr["name"].stringValue
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let _ = story.makeFolder(name: name, uuid: uuid)
 		}
 		
 		// link variables to folders by uuid
-		for currFolder in folders {
-			let folder = story.findBy(uuid: currFolder["uuid"] as! String) as! Folder // this is fine as we've processed it earlier
-			guard let vars = currFolder["variables"] as? [String] else {
-				throw Errors.invalid("Failed to read Folder's variables.")
-			}
-			for currVar in vars {
-				guard let v = story.findBy(uuid: currVar) as? Variable else {
-					throw Errors.invalid("Failed to find Folder's containing variable by UUID.")
+		for curr in folders {
+			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder // we know this is right
+			for currVar in curr["variables"].arrayValue {
+				guard let variable = story.findBy(uuid: currVar.stringValue) as? Variable else {
+					throw Errors.invalid("Failed to find Folder's containing Variable by UUID.")
 				}
-				try! folder.add(variable: v)
+				try! folder.add(variable: variable)
 			}
 		}
 		
 		// link folders to folders by uuid
-		for currFolder in folders {
-			let folder = story.findBy(uuid: currFolder["uuid"] as! String) as! Folder // this is fine as we've processed it earlier
-			guard let subs = currFolder["subfolders"] as? [String] else {
-				throw Errors.invalid("Failed to read Folder's subfolders.")
-			}
-			for currSub in subs {
-				guard let f = story.findBy(uuid: currSub) as? Folder else {
-					throw Errors.invalid("Failed to find Folder's containing folder by UUID.")
+		for curr in folders {
+			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder // we know this is right
+			for currSub in curr["subfolders"].arrayValue {
+				guard let sub = story.findBy(uuid: currSub.stringValue) as? Folder else {
+					throw Errors.invalid("Failed to find Folder's containing Folder by UUID.")
 				}
-				try! folder.add(folder: f)
+				try! folder.add(folder: sub)
 			}
 		}
+		
+		
+		
+		
 		
 		return story
 	}
