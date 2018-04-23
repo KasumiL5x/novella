@@ -36,7 +36,7 @@ enum DataType {
 		case "boolean": return .boolean
 		case "integer": return .integer
 		default:
-			fatalError("Forgot to handle DataType string conversion!")
+			fatalError("Forgot to handle DataType string conversion!") // TODO: Switch to throws? IDK.
 		}
 	}
 }
