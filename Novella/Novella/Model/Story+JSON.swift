@@ -38,9 +38,9 @@ extension Story {
 			// value
 			"value": [
 				"anyOf": [
-					["type": "number"],
-					["type": "boolean"]
-//					["type": "string"]
+					["type": "integer"],
+					["type": "boolean"],
+					["type": "number"] // technically handles integers, but is for floats
 				]
 			],
 			// variable
@@ -49,7 +49,7 @@ extension Story {
 					"name": ["type": "string"],
 					"uuid": ["$ref": "#/definitions/uuid"],
 					"synopsis": ["type": "string"],
-					"datatype": ["type": "string", "enum": ["boolean", "integer"]], // This is mapped to DataType.stringValue; TODO: Can I auto-map this?
+					"datatype": ["type": "string", "enum": ["boolean", "integer", "double"]], // This is mapped to DataType.stringValue; TODO: Can I auto-map this?
 					"constant": ["type": "boolean"],
 					"value": ["$ref": "#/definitions/value"],
 					"initialValue": ["$ref": "#/definitions/value"],
@@ -60,6 +60,13 @@ extension Story {
 					// validate datatype matches given initial/value
 					"datatype": [
 						"oneOf": [
+							[ // integer
+								"properties": [
+									"datatype": ["enum": ["integer"]], // from the above enum
+									"value": ["type": "integer"],
+									"initialValue": ["type": "integer"]
+								]
+							],
 							[ // boolean
 								"properties": [
 									"datatype": ["enum": ["boolean"]], // from the above enum
@@ -67,11 +74,11 @@ extension Story {
 									"initialValue": ["type": "boolean"]
 								]
 							],
-							[ // integer
+							[ // double
 								"properties": [
-									"datatype": ["enum": ["integer"]], // from the above enum
-									"value": ["type": "integer"],
-									"initialValue": ["type": "integer"]
+									"datatype": ["enum": ["double"]], // from the above enum
+									"value": ["type": "number"],
+									"initialValue": ["type": "number"]
 								]
 							],
 						]
