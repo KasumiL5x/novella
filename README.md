@@ -1,6 +1,6 @@
-<h1 align="center"> Novella </h1>
+# Novella
 
-
+![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 ## Table of Contents
 
@@ -8,8 +8,6 @@
 - [Building](#building)
 
 ## Introduction
-
-![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 Novella is a framework for authoring of interactive narrative for in video games, consisting of a narrative model, a reading tool, and a writing tool.
 
