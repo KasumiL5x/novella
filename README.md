@@ -1,6 +1,7 @@
 # Novella
 
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
+---
 
 ## Table of Contents
 
