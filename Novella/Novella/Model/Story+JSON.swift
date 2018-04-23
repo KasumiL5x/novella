@@ -197,16 +197,15 @@ extension Story {
 				initialValue = curr["initialValue"].intValue
 			}
 			
-			// TODO: Figure out how to handle initial/Value. Probably just need to switch case and let based on its type? Technically user could change it. May need to validate matching types. Possibly do this in schema with the conditionals?
 			let v = story.makeVariable(name: name, type: type, uuid: uuid)
 			v.setSynopsis(synopsis: synopsis)
-			v.setConstant(const: constant) // remember to set initial/value before this
 			do {
 				try v.setValue(val: value)
 				try v.setInitialValue(val: value)
 			} catch {
 				print("Tried to set value and initialValue but there was a datatype mismatch.")
 			}
+			v.setConstant(const: constant) // remember to set initial/value before this
 			print("Name: \(name)")
 			print("UUID: \(uuid)")
 			print("Synopsis: \(synopsis)")
