@@ -195,6 +195,9 @@ extension Story {
 			case .integer:
 				value = curr["value"].intValue
 				initialValue = curr["initialValue"].intValue
+			case .double:
+				value = curr["value"].doubleValue
+				initialValue = curr["initialValue"].doubleValue
 			}
 			
 			let v = story.makeVariable(name: name, type: type, uuid: uuid)

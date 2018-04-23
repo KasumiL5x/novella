@@ -9,11 +9,13 @@
 enum DataType {
 	case boolean
 	case integer
+	case double
 	
 	var defaultValue: Any {
 		switch self {
 		case .boolean: return false
 		case .integer: return 0
+		case .double: return 0.0
 		}
 	}
 	
@@ -21,6 +23,7 @@ enum DataType {
 		switch self {
 		case .boolean: return value is Bool
 		case .integer: return value is Int
+		case .double: return value is Double
 		}
 	}
 	
@@ -28,6 +31,7 @@ enum DataType {
 		switch self {
 		case .boolean: return "boolean"
 		case .integer: return "integer"
+		case .double: return "double"
 		}
 	}
 	
@@ -35,6 +39,7 @@ enum DataType {
 		switch str {
 		case "boolean": return .boolean
 		case "integer": return .integer
+		case "double": return .double
 		default:
 			fatalError("Forgot to handle DataType string conversion!") // TODO: Switch to throws? IDK.
 		}

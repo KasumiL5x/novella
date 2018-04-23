@@ -263,12 +263,7 @@ extension VariableFolderTestViewController: NSOutlineViewDelegate {
 		var type = "default"
 		if let variable = item as? Variable {
 			name = variable.Name
-			switch variable.DataType {
-			case .boolean:
-				type = "boolean"
-			case .integer:
-				type = "integer"
-			}
+			type = variable.DataType.stringValue
 		}
 		if let folder = item as? Folder {
 			name = folder.Name
