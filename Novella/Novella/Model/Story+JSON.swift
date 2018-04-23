@@ -49,12 +49,12 @@ extension Story {
 					"name": ["type": "string"],
 					"uuid": ["$ref": "#/definitions/uuid"],
 					"synopsis": ["type": "string"],
-					"type": ["type": "string", "enum": ["boolean", "integer"]], // This is mapped to DataType.stringValue
+					"datatype": ["type": "string", "enum": ["boolean", "integer"]], // This is mapped to DataType.stringValue
 					"constant": ["type": "boolean"],
 					"value": ["$ref": "#/definitions/value"],
 					"initialValue": ["$ref": "#/definitions/value"],
 				],
-				"required": ["name", "uuid", "synopsis", "type", "constant", "value", "initialValue"]
+				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"]
 			],
 			// folder
 			"folder": [
@@ -97,7 +97,7 @@ extension Story {
 			entry["name"] = curr._name
 			entry["uuid"] = curr._uuid.uuidString
 			entry["synopsis"] = curr._synopsis
-			entry["type"] = curr._type.stringValue
+			entry["datatype"] = curr._type.stringValue
 			entry["constant"] = curr._constant
 			entry["initialValue"] = curr._initialValue
 			entry["value"] = curr._value
@@ -159,7 +159,7 @@ extension Story {
 			let name = curr["name"].stringValue
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let synopsis = curr["synopsis"].stringValue
-			let type = DataType.fromString(str: curr["type"].stringValue)
+			let type = DataType.fromString(str: curr["datatype"].stringValue)
 			let constant = curr["constant"].boolValue
 			// TODO: Figure out how to handle initial/Value. Probably just need to switch case and let based on its type? Technically user could change it. May need to validate matching types. Possibly do this in schema with the conditionals?
 			let v = story.makeVariable(name: name, type: type, uuid: uuid)
