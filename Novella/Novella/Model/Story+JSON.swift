@@ -24,9 +24,13 @@ extension Story {
 			"folders": [
 				"type": "array",
 				"items": ["$ref": "#/definitions/folder"]
+			],
+			"graphs": [
+				"type": "array",
+				"items": ["$ref": "#/definitions/graph"]
 			]
 		],
-		"required": ["variables", "folders"],
+		"required": ["variables", "folders", "graphs"],
 		
 		// DEFINITIONS
 		"definitions": [
@@ -101,6 +105,14 @@ extension Story {
 					]
 				],
 				"required": ["name", "uuid", "subfolders", "variables"]
+			],
+			// graph
+			"graph": [
+				"properties": [
+					"name": ["type": "string"],
+					"uuid": ["$ref": "#/definitions/uuid"]
+				],
+				"required": ["name", "uuid"]
 			]
 		]
 	]
@@ -134,6 +146,16 @@ extension Story {
 			variables.append(entry)
 		}
 		root["variables"] = variables
+		
+		// add all flowgraphs
+		var graphs: [JSONDict] = []
+		for curr in _allGraphs {
+			var entry: JSONDict = [:]
+			entry["name"] = curr._name
+			entry["uuid"] = curr._uuid.uuidString
+			graphs.append(entry)
+		}
+		root["graphs"] = graphs
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
@@ -216,6 +238,7 @@ extension Story {
 				print("Tried to set value and initialValue but there was a datatype mismatch.")
 			}
 			v.setConstant(const: constant) // remember to set initial/value before this
+			print("Variable")
 			print("Name: \(name)")
 			print("UUID: \(uuid)")
 			print("Synopsis: \(synopsis)")
@@ -232,6 +255,11 @@ extension Story {
 			let name = curr["name"].stringValue
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let _ = story.makeFolder(name: name, uuid: uuid)
+			
+			print("Folder")
+			print("Name: \(name)")
+			print("UUID: \(uuid)")
+			print()
 		}
 		
 		// link variables to folders by uuid
@@ -256,9 +284,18 @@ extension Story {
 			}
 		}
 		
-		
-		
-		
+		// read all graphs
+		let graphs = json["graphs"].arrayValue
+		for curr in graphs {
+			let name = curr["name"].stringValue
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let _ = story.makeGraph(name: name, uuid: uuid)
+			
+			print("Graph")
+			print("Name: \(name)")
+			print("UUID: \(uuid)")
+			print()
+		}
 		
 		return story
 	}
