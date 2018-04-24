@@ -10,11 +10,15 @@ import Foundation
 
 class BaseLink {
 	let _uuid: NSUUID
-	var origin: Linkable?
+	var _origin: Linkable?
 	
 	init(uuid: NSUUID) {
 		self._uuid = uuid
-		self.origin = nil
+		self._origin = nil
+	}
+	
+	func setOrigin(origin: Linkable?) {
+		self._origin = origin
 	}
 }
 

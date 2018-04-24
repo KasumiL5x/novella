@@ -10,14 +10,14 @@ import Foundation
 
 
 class Switch : BaseLink {
-	var variable: Variable?
-	var defaultTransfer: Transfer
-	var values: [AnyHashable:Transfer]
+	var _variable: Variable?
+	var _defaultTransfer: Transfer
+	var _values: [AnyHashable:Transfer]
 	
 	override init(uuid: NSUUID) {
-		self.variable = nil
-		self.defaultTransfer = Transfer()
-		self.values = [:]
+		self._variable = nil
+		self._defaultTransfer = Transfer()
+		self._values = [:]
 		
 		super.init(uuid: uuid)
 	}

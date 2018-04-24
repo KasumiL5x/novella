@@ -9,14 +9,14 @@
 import Foundation
 
 class Branch : BaseLink {
-	var condition: Condition
-	var trueTransfer: Transfer
-	var falseTransfer: Transfer
+	var _condition: Condition
+	var _trueTransfer: Transfer
+	var _falseTransfer: Transfer
 	
 	override init(uuid: NSUUID) {
-		self.condition = Condition()
-		self.trueTransfer = Transfer()
-		self.falseTransfer = Transfer()
+		self._condition = Condition()
+		self._trueTransfer = Transfer()
+		self._falseTransfer = Transfer()
 		
 		super.init(uuid: uuid)
 	}

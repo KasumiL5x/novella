@@ -7,11 +7,15 @@
 //
 
 class Transfer {
-	var destination: Linkable?
-	var function: Function
+	var _destination: Linkable?
+	var _function: Function
 	
 	init() {
-		self.destination = nil
-		self.function = Function()
+		self._destination = nil
+		self._function = Function()
+	}
+	
+	func setDestination(dest: Linkable?) {
+		self._destination = dest
 	}
 }

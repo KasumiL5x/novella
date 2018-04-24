@@ -9,12 +9,12 @@
 import Foundation
 
 class Link : BaseLink {
-	var condition: Condition
-	var transfer: Transfer
+	var _condition: Condition
+	var _transfer: Transfer
 	
 	override init(uuid: NSUUID) {
-		self.condition = Condition()
-		self.transfer = Transfer()
+		self._condition = Condition()
+		self._transfer = Transfer()
 		
 		super.init(uuid: uuid)
 	}
