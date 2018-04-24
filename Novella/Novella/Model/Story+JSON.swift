@@ -110,9 +110,29 @@ extension Story {
 			"graph": [
 				"properties": [
 					"name": ["type": "string"],
-					"uuid": ["$ref": "#/definitions/uuid"]
+					"uuid": ["$ref": "#/definitions/uuid"],
+					"subgraphs": [
+						"type": "array",
+						"items": ["$ref": "#/definitions/uuid"],
+					],
+					"nodes": [
+						"type": "array",
+						"items": ["$ref": "#/definitions/uuid"],
+					],
+					"links": [
+						"type": "array",
+						"items": ["$ref": "#/definitions/uuid"],
+					],
+					"listeners": [
+						"type": "array",
+						"items": ["$ref": "#/definitions/uuid"],
+					],
+					"exits": [
+						"type": "array",
+						"items": ["$ref": "#/definitions/uuid"],
+					]
 				],
-				"required": ["name", "uuid"]
+				"required": ["name", "uuid", "subgraphs", "nodes", "links", "listeners", "exits"]
 			]
 		]
 	]
@@ -153,6 +173,11 @@ extension Story {
 			var entry: JSONDict = [:]
 			entry["name"] = curr._name
 			entry["uuid"] = curr._uuid.uuidString
+			entry["subgraphs"] = curr._graphs.map({$0._uuid.uuidString})
+			entry["nodes"] = curr._nodes.map({$0._uuid.uuidString})
+			entry["links"] = curr._links.map({$0._uuid.uuidString})
+			entry["listeners"] = curr._listeners.map({$0._uuid.uuidString})
+			entry["exits"] = curr._exits.map({$0._uuid.uuidString})
 			graphs.append(entry)
 		}
 		root["graphs"] = graphs
