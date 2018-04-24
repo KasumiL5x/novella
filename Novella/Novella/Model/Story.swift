@@ -19,7 +19,6 @@ class Story {
 	// MARK: Local Collections
 	var _folders: [Folder]
 	var _graphs: [FlowGraph]
-	var _links: [BaseLink]
 	
 	init() {
 		self._allIdentifiables = []
@@ -30,7 +29,6 @@ class Story {
 		
 		self._folders = []
 		self._graphs = []
-		self._links = []
 	}
 	
 	// MARK: Setup
@@ -106,20 +104,6 @@ extension Story {
 			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
 		}
 		_graphs.remove(at: idx)
-	}
-	
-	// MARK: Links
-	@discardableResult
-	func add(link: BaseLink) -> BaseLink {
-		_links.append(link)
-		return link
-	}
-	
-	func remove(link: BaseLink) throws {
-		guard let idx = _links.index(of: link) else {
-			throw Errors.invalid("Tried to remove BaseLink from Story but it was not a child.")
-		}
-		_links.remove(at: idx)
 	}
 }
 
