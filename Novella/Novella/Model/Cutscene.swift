@@ -6,7 +6,10 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class Cutscene: FlowNode {
-	override init() {
+	override init(uuid: NSUUID) {
+		super.init(uuid: uuid)
 	}
 }

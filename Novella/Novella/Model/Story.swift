@@ -15,6 +15,7 @@ class Story {
 	var _allVariables: [Variable]
 	var _allGraphs: [FlowGraph]
 	var _allLinks: [BaseLink]
+	var _allNodes: [FlowNode]
 	
 	// MARK: Local Collections
 	var _folders: [Folder]
@@ -26,6 +27,7 @@ class Story {
 		self._allVariables = []
 		self._allGraphs = []
 		self._allLinks = []
+		self._allNodes = []
 		
 		self._folders = []
 		self._graphs = []
@@ -157,5 +159,13 @@ extension Story {
 		_allLinks.append(swtch)
 		_allIdentifiables.append(swtch)
 		return swtch
+	}
+	
+	@discardableResult
+	func makeDialog(uuid: NSUUID?=nil) -> Dialog {
+		let dialog = Dialog(uuid: uuid != nil ? uuid! : NSUUID())
+		_allNodes.append(dialog)
+		_allIdentifiables.append(dialog)
+		return dialog
 	}
 }

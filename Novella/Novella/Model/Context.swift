@@ -6,7 +6,10 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import Foundation
+
 class Context: FlowNode {
-	override init() {
+	override init(uuid: NSUUID) {
+		super.init(uuid: uuid)
 	}
 }
