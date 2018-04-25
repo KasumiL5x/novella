@@ -17,7 +17,7 @@ extension Story {
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"description": "Schema for Novella Story.",
 		
-		// BEGIN top-level
+		// MARK: top-level
 		"type": "object",
 		"properties": [
 			"variables": [
@@ -40,15 +40,15 @@ extension Story {
 		"required": ["variables", "folders", "graphs", "links"],
 		// END top-level
 		
-		// BEGIN definitions
+		// MARK: definitions
 		"definitions": [
-			// BEGIN name
+			// MARK: name
 			"name": [
 				"type": "string"
 			],
 			// END name
 			
-			// BEGIN uuid
+			// MARK: uuid
 			"uuid": [
 				"type": "string",
 				// Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
@@ -56,7 +56,7 @@ extension Story {
 			],
 			// END uuid
 			
-			// BEGIN value
+			// MARK: value
 			"value": [
 				"anyOf": [
 					[ "type": "integer" ],
@@ -67,7 +67,7 @@ extension Story {
 			],
 			// END value
 			
-			// BEGIN variable
+			// MARK: variable
 			"variable": [
 				"properties": [
 					"name": [ "$ref": "#/definitions/name" ],
@@ -83,7 +83,7 @@ extension Story {
 					"initialValue": [ "$ref": "#/definitions/value" ]
 				],
 				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
-				// BEGIN variable-dependencies
+				// MARK: variable-dependencies
 				"dependencies": [
 					// validate initialValue/value type matches datatype
 					"datatype": [
@@ -119,7 +119,7 @@ extension Story {
 			],
 			// END variable
 			
-			// BEGIN folder
+			// MARK: folder
 			"folder": [
 				"properties": [
 					"name": [ "$ref": "#/definitions/name" ],
@@ -137,7 +137,7 @@ extension Story {
 			],
 			// END folder
 			
-			// BEGIN graph
+			// MARK: graph
 			"graph": [
 				"properties": [
 					"name": [ "$ref": "#/definitions/name" ],
@@ -167,7 +167,7 @@ extension Story {
 			],
 			// END graph
 			
-			// BEGIN link
+			// MARK: link
 			"link": [
 				"properties": [
 					"uuid": [ "$ref": "#/definitions/uuid" ],
@@ -178,7 +178,7 @@ extension Story {
 					]
 				],
 				"required": ["uuid", "linktype"],
-				// BEGIN link-dependencies
+				// MARK: link-dependencies
 				"dependencies": [
 					// handle each concrete link's schema based on linktype
 					"linktype": [
@@ -207,7 +207,7 @@ extension Story {
 			],
 			// END link
 			
-			// BEGIN transfer
+			// MARK: transfer
 			"transfer": [
 				"type": "object"
 			]
