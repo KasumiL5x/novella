@@ -14,169 +14,208 @@ typealias JSONDict = [String:Any]
 
 extension Story {
 	static let JSON_SCHEMA: JSONDict = [
+		"$schema": "http://json-schema.org/draft-04/schema#",
 		"description": "Schema for Novella Story.",
+		
+		// BEGIN top-level
 		"type": "object",
 		"properties": [
 			"variables": [
 				"type": "array",
-				"items": ["$ref": "#/definitions/variable"]
+				"items": [ "$ref": "#/definitions/variable" ]
 			],
 			"folders": [
 				"type": "array",
-				"items": ["$ref": "#/definitions/folder"]
+				"items": [ "$ref": "#/definitions/folder" ]
 			],
 			"graphs": [
 				"type": "array",
-				"items": ["$ref": "#/definitions/graph"]
+				"items": [ "$ref": "#/definitions/graph" ]
 			],
 			"links": [
 				"type": "array",
-				"items": ["$ref": "#/definitions/link"]
+				"items": [ "$ref": "#/definitions/link" ]
 			]
 		],
 		"required": ["variables", "folders", "graphs", "links"],
+		// END top-level
 		
-		// DEFINITIONS
+		// BEGIN definitions
 		"definitions": [
-			// uuid
+			// BEGIN name
+			"name": [
+				"type": "string"
+			],
+			// END name
+			
+			// BEGIN uuid
 			"uuid": [
 				"type": "string",
-				"pattern": "[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}" // Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
+				// Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
+				"pattern": "[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}"
 			],
-			// value
+			// END uuid
+			
+			// BEGIN value
 			"value": [
 				"anyOf": [
-					["type": "integer"],
-					["type": "boolean"],
-					["type": "number"] // technically handles integers, but is for floats
+					[ "type": "integer" ],
+					[ "type": "boolean" ],
+					// technically handles integers, but is for floats
+					[ "type": "number" ]
 				]
 			],
-			// variable
+			// END value
+			
+			// BEGIN variable
 			"variable": [
 				"properties": [
-					"name": ["type": "string"],
-					"uuid": ["$ref": "#/definitions/uuid"],
-					"synopsis": ["type": "string"],
-					"datatype": ["type": "string", "enum": ["boolean", "integer", "double"]], // This is mapped to DataType.stringValue; TODO: Can I auto-map this?
-					"constant": ["type": "boolean"],
-					"value": ["$ref": "#/definitions/value"],
-					"initialValue": ["$ref": "#/definitions/value"],
+					"name": [ "$ref": "#/definitions/name" ],
+					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"synopsis": [ "type": "string" ],
+					// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
+					"datatype": [
+						"type": "string",
+						"enum": ["boolean", "integer", "double"]
+					],
+					"constant": [ "type": "boolean" ],
+					"value": [ "$ref": "#/definitions/value" ],
+					"initialValue": [ "$ref": "#/definitions/value" ]
 				],
 				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
-
+				// BEGIN variable-dependencies
 				"dependencies": [
-					// validate datatype matches given initial/value
+					// validate initialValue/value type matches datatype
 					"datatype": [
 						"oneOf": [
-							[ // integer
+							// integer
+							[
 								"properties": [
-									"datatype": ["enum": ["integer"]], // from the above enum
-									"value": ["type": "integer"],
-									"initialValue": ["type": "integer"]
+									"datatype": [ "enum": ["integer"] ],
+									"value": [ "type": "integer" ],
+									"initialValue": [ "type": "integer" ]
 								]
 							],
-							[ // boolean
+							// boolean
+							[
 								"properties": [
-									"datatype": ["enum": ["boolean"]], // from the above enum
-									"value": ["type": "boolean"],
-									"initialValue": ["type": "boolean"]
+									"datatype": [ "enum": ["boolean"] ],
+									"value": [ "type": "boolean" ],
+									"initialValue": [ "type": "boolean" ]
 								]
 							],
-							[ // double
+							// double
+							[
 								"properties": [
-									"datatype": ["enum": ["double"]], // from the above enum
-									"value": ["type": "number"],
-									"initialValue": ["type": "number"]
+									"datatype": [ "enum": ["double"] ],
+									"value": [ "type": "number" ],
+									"initialValue": [ "type": "number"]
 								]
-							],
+							]
 						]
 					]
 				]
-				
+				// END variable-dependencies
 			],
-			// folder
+			// END variable
+			
+			// BEGIN folder
 			"folder": [
 				"properties": [
-					"name": ["type": "string"],
-					"uuid": ["$ref": "#/definitions/uuid"],
+					"name": [ "$ref": "#/definitions/name" ],
+					"uuid": [ "$ref": "#/definitions/uuid" ],
 					"subfolders": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					],
 					"variables": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
 				"required": ["name", "uuid", "subfolders", "variables"]
 			],
-			// graph
+			// END folder
+			
+			// BEGIN graph
 			"graph": [
 				"properties": [
-					"name": ["type": "string"],
-					"uuid": ["$ref": "#/definitions/uuid"],
+					"name": [ "$ref": "#/definitions/name" ],
+					"uuid": [ "$ref": "#/definitions/uuid" ],
 					"subgraphs": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					],
 					"nodes": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					],
 					"links": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					],
 					"listeners": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					],
 					"exits": [
 						"type": "array",
-						"items": ["$ref": "#/definitions/uuid"],
+						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
 				"required": ["name", "uuid", "subgraphs", "nodes", "links", "listeners", "exits"]
 			],
-			// link
+			// END graph
+			
+			// BEGIN link
 			"link": [
 				"properties": [
-					"uuid": ["$ref": "#/definitions/uuid"],
-					"linktype": ["type": "string", "enum": ["link", "branch", "switch"]], // One for each concrete Link.
+					"uuid": [ "$ref": "#/definitions/uuid" ],
+					// One for each concrete Link.
+					"linktype": [
+						"type": "string",
+						"enum": ["link", "branch", "switch"]
+					]
 				],
 				"required": ["uuid", "linktype"],
+				// BEGIN link-dependencies
 				"dependencies": [
+					// handle each concrete link's schema based on linktype
 					"linktype": [
 						"oneOf": [
-
-							[ // link
+							// link
+							[
 								"properties": [
-									"linktype": ["enum": ["link"]], // from the above enum
-									"transfer": ["$ref": "#/definitions/transfer"]
+									"linktype": [ "enum": ["link"] ],
+									"transfer": [ "$ref": "#/definitions/transfer" ]
 								],
 								"required": ["transfer"]
 							],
-							[ // branch
+							// branch
+							[
 								"properties": [
-									"linktype": ["enum": ["branch"]], // from the above enum
-									"ttransfer": ["$ref": "#/definitions/transfer"],
-									"ftransfer": ["$ref": "#/definitions/transfer"]
+									"linktype": [ "enum": ["branch"] ],
+									"ttransfer": [ "$ref": "#/definitions/transfer" ],
+									"ftransfer": [ "$ref": "#/definitions/transfer" ]
 								],
 								"required": ["ttransfer", "ftransfer"]
-							],
-							
+							]
 						]
 					]
 				]
+				// END link-dependencies
 			],
-			// transfer
+			// END link
+			
+			// BEGIN transfer
 			"transfer": [
-				"type": "object",
-				"properties": [
-				]
+				"type": "object"
 			]
+			// END transfer
 		]
+		// END definitions
 	]
+
 	
 	func toJSON() throws -> String {
 		var root: JSONDict = [:]
