@@ -28,9 +28,13 @@ extension Story {
 			"graphs": [
 				"type": "array",
 				"items": ["$ref": "#/definitions/graph"]
+			],
+			"links": [
+				"type": "array",
+				"items": ["$ref": "#/definitions/link"]
 			]
 		],
-		"required": ["variables", "folders", "graphs"],
+		"required": ["variables", "folders", "graphs", "links"],
 		
 		// DEFINITIONS
 		"definitions": [
@@ -133,6 +137,14 @@ extension Story {
 					]
 				],
 				"required": ["name", "uuid", "subgraphs", "nodes", "links", "listeners", "exits"]
+			],
+			// link
+			"link": [
+				"properties": [
+					"uuid": ["$ref": "#/definitions/uuid"],
+					"linktype": ["type": "string", "enum": ["link", "branch", "switch"]], // One for each concrete Link.
+				],
+				"required": ["uuid", "linktype"]
 			]
 		]
 	]
@@ -181,6 +193,38 @@ extension Story {
 			graphs.append(entry)
 		}
 		root["graphs"] = graphs
+		
+		// add all links
+		var links: [JSONDict] = []
+		for curr in _allLinks {
+			var entry: JSONDict = [:]
+			entry["uuid"] = curr._uuid.uuidString
+			
+			if curr is Link {
+				entry["linktype"] = "link"
+				// TODO: Condition.
+				// TODO: Transfer.
+				
+			}
+			else if curr is Branch {
+				entry["linktype"] = "branch"
+				// TODO: Condition.
+				// TODO: True Transfer.
+				// TODO: False Transfer.
+			}
+			else if curr is Switch {
+				entry["linktype"] = "switch"
+				// TODO: Variable (UUID?)
+				// TODO: Default Transfer.
+				// TODO: [value:Transfer].
+			}
+			else {
+				throw Errors.invalid("Should not have a BaseLink at all.")
+			}
+
+			links.append(entry)
+		}
+		root["links"] = links
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
@@ -319,6 +363,18 @@ extension Story {
 			print("Graph")
 			print("Name: \(name)")
 			print("UUID: \(uuid)")
+			print()
+		}
+		
+		// read all links
+		let links = json["links"].arrayValue
+		for curr in links {
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let linktype = curr["linktype"].stringValue
+			
+			print("Link")
+			print("UUID: \(uuid)")
+			print("Type: \(linktype)")
 			print()
 		}
 		

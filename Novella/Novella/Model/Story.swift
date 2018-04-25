@@ -14,7 +14,7 @@ class Story {
 	var _allFolders: [Folder]
 	var _allVariables: [Variable]
 	var _allGraphs: [FlowGraph]
-	var _allLinks: [Link]
+	var _allLinks: [BaseLink]
 	
 	// MARK: Local Collections
 	var _folders: [Folder]
@@ -143,5 +143,19 @@ extension Story {
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
 		return link
+	}
+	@discardableResult
+	func makeBranch(uuid: NSUUID?=nil) -> Branch {
+		let branch = Branch(uuid: uuid != nil ? uuid! : NSUUID())
+		_allLinks.append(branch)
+		_allIdentifiables.append(branch)
+		return branch
+	}
+	@discardableResult
+	func makeSwitch(uuid: NSUUID?=nil) -> Switch {
+		let swtch = Switch(uuid: uuid != nil ? uuid! : NSUUID())
+		_allLinks.append(swtch)
+		_allIdentifiables.append(swtch)
+		return swtch
 	}
 }
