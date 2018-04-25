@@ -175,7 +175,8 @@ extension Story {
 					"linktype": [
 						"type": "string",
 						"enum": ["link", "branch", "switch"]
-					]
+					],
+					"origin": [ "$ref": "#/definitions/uuid" ]
 				],
 				"required": ["uuid", "linktype"],
 				// MARK: link-dependencies
@@ -209,7 +210,10 @@ extension Story {
 			
 			// MARK: transfer
 			"transfer": [
-				"type": "object"
+				"type": "object",
+				"properties": [
+					"destination": [ "$ref": "#/definitions/uuid" ]
+				]
 			]
 			// END transfer
 		]
@@ -267,23 +271,27 @@ extension Story {
 		for curr in _allLinks {
 			var entry: JSONDict = [:]
 			entry["uuid"] = curr._uuid.uuidString
+			entry["origin"] = curr._origin?.UUID.uuidString ?? ""
 			
-			if curr is Link {
+			if let asLink = curr as? Link {
 				entry["linktype"] = "link"
 				// TODO: Condition.
-				let transfer: JSONDict = [:]
+				var transfer: JSONDict = [:]
+				transfer["destination"] = asLink._transfer._destination?.UUID.uuidString ?? ""
 				entry["transfer"] = transfer
 				// TODO: Transfer.
 				
 			}
-			else if curr is Branch {
+			else if let asBranch = curr as? Branch {
 				entry["linktype"] = "branch"
 				// TODO: Condition.
 				// TODO: True Transfer.
-				let ttransfer: JSONDict = [:]
+				var ttransfer: JSONDict = [:]
+				ttransfer["destination"] = asBranch._trueTransfer._destination?.UUID.uuidString ?? ""
 				entry["ttransfer"] = ttransfer
 				// TODO: False Transfer.
-				let ftransfer: JSONDict = [:]
+				var ftransfer: JSONDict = [:]
+				ftransfer["destination"] = asBranch._falseTransfer._destination?.UUID.uuidString ?? ""
 				entry["ftransfer"] = ftransfer
 			}
 			else if curr is Switch {

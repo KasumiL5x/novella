@@ -160,7 +160,8 @@
 				"linktype": {
 					"type": "string",
 					"enum": ["link", "branch", "switch"]
-				}
+				},
+				"origin": { "$ref": "#/definitions/uuid" }
 			},
 			"required": ["uuid", "linktype"],
 			// MARK: link-dependencies
@@ -194,7 +195,10 @@
 
 		// MARK: transfer
 		"transfer": {
-			"type": "object"
+			"type": "object",
+			"properties": {
+				"destination": { "$ref": "#/definitions/uuid" }
+			}
 		}
 		// END transfer
 	}
