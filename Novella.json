@@ -20,9 +20,13 @@
 		"links": {
 			"type": "array",
 			"items": { "$ref": "#/definitions/link" }
+		},
+		"nodes": {
+			"type": "array",
+			"items": { "$ref": "#/definitions/node" }
 		}
 	},
-	"required": ["variables", "folders", "graphs", "links"],
+	"required": ["variables", "folders", "graphs", "links", "nodes"],
 	// END top-level
 
 	// MARK: definitions
@@ -200,8 +204,64 @@
 				"destination": { "$ref": "#/definitions/uuid" }
 			},
 			"required": ["destination"]
-		}
+		},
 		// END transfer
+
+		// MARK: node
+		"node": {
+			"type": "object",
+			"properties": {
+				"uuid": { "$ref": "#/definitions/uuid" },
+				// one for each concrete type
+				"nodetype": {
+					"type": "string",
+					"enum": ["dialog", "delivery", "cutscene", "context"]
+				}
+			},
+			"required": ["uuid"],
+			// MARK: node-dependencies
+			"dependencies": {
+				// handle each node type based on the nodetype
+				"nodetype": {
+					"oneOf": [
+						// dialog
+						{
+							"properties": {
+								"nodetype": { "enum": ["dialog"] }
+								// TODO: dialog properties
+							},
+							"required": []
+						},
+						// delivery
+						{
+							"properties": {
+								"nodetype": { "enum": ["delivery"] }
+								// TODO: delivery properties
+							},
+							"required": []
+						},
+						// cutscene
+						{
+							"properties": {
+								"nodetype": { "enum": ["cutscene"] }
+								// TODO: cutscene properties
+							},
+							"required": []
+						},
+						// context
+						{
+							"properties": {
+								"nodetype": { "enum": ["context"] }
+								// TODO: context properties
+							},
+							"required": []
+						}
+					]
+				}
+			}
+			// END node-dependencies
+		}
+		// END node
 	}
 	// END definitions
 }

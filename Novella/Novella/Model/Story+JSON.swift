@@ -35,9 +35,13 @@ extension Story {
 			"links": [
 				"type": "array",
 				"items": [ "$ref": "#/definitions/link" ]
+			],
+			"nodes": [
+				"type": "array",
+				"items": [ "$ref": "#/definitions/node" ]
 			]
 		],
-		"required": ["variables", "folders", "graphs", "links"],
+		"required": ["variables", "folders", "graphs", "links", "nodes"],
 		// END top-level
 		
 		// MARK: definitions
@@ -201,7 +205,6 @@ extension Story {
 								],
 								"required": ["ttransfer", "ftransfer"]
 							]
-							// TODO: switch
 						]
 					]
 				]
@@ -216,8 +219,64 @@ extension Story {
 					"destination": [ "$ref": "#/definitions/uuid" ]
 				],
 				"required": ["destination"]
-			]
+			],
 			// END transfer
+			
+			// MARK: node
+			"node": [
+				"type": "object",
+				"properties": [
+					"uuid": [ "$ref": "#/definitions/uuid" ],
+					// one for each concrete type
+					"nodetype": [
+						"type": "string",
+						"enum": ["dialog", "delivery", "cutscene", "context"]
+					]
+				],
+				"required": ["uuid"],
+				// MARK: node-dependencies
+				"dependencies": [
+					// handle each node type based on the nodetype
+					"nodetype": [
+						"oneOf": [
+							// dialog
+							[
+								"properties": [
+									"nodetype": [ "enum": ["dialog"] ]
+									// TODO: dialog properties
+								],
+								"required": []
+							],
+							// delivery
+							[
+								"properties": [
+									"nodetype": [ "enum": ["delivery"] ]
+									// TODO: delivery properties
+								],
+								"required": []
+							],
+							// cutscene
+							[
+								"properties": [
+									"nodetype": [ "enum": ["cutscene"] ]
+									// TODO: cutscene properties
+								],
+								"required": []
+							],
+							// context
+							[
+								"properties": [
+									"nodetype": [ "enum": ["context"] ]
+									// TODO: context properties
+								],
+								"required": []
+							]
+						]
+					]
+				]
+				// END node-dependencies
+			]
+			// END node
 		]
 		// END definitions
 	]
@@ -308,6 +367,14 @@ extension Story {
 			links.append(entry)
 		}
 		root["links"] = links
+		
+		// add all nodes
+		var nodes: [JSONDict] = []
+		for curr in _allNodes {
+			var entry: JSONDict = [:]
+			nodes.append(entry)
+		}
+		root["nodes"] = nodes
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
@@ -476,6 +543,12 @@ extension Story {
 			print("Type: \(linktype)")
 			print("Origin: \(origin)")
 			print()
+		}
+		
+		// read all nodes
+		let nodes = json["nodes"].arrayValue
+		for curr in nodes {
+			print("node")
 		}
 		
 		return story
