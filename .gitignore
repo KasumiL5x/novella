@@ -1,6 +1,7 @@
-# Xcode user settings
+# Xcode settings
 #
 xcuserdata/
+*.xcworkspacedata
 
 # Carthage
 #
