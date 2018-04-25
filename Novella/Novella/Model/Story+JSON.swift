@@ -144,7 +144,36 @@ extension Story {
 					"uuid": ["$ref": "#/definitions/uuid"],
 					"linktype": ["type": "string", "enum": ["link", "branch", "switch"]], // One for each concrete Link.
 				],
-				"required": ["uuid", "linktype"]
+				"required": ["uuid", "linktype"],
+				"dependencies": [
+					"linktype": [
+						"oneOf": [
+
+							[ // link
+								"properties": [
+									"linktype": ["enum": ["link"]], // from the above enum
+									"transfer": ["$ref": "#/definitions/transfer"]
+								],
+								"required": ["transfer"]
+							],
+							[ // branch
+								"properties": [
+									"linktype": ["enum": ["branch"]], // from the above enum
+									"ttransfer": ["$ref": "#/definitions/transfer"],
+									"ftransfer": ["$ref": "#/definitions/transfer"]
+								],
+								"required": ["ttransfer", "ftransfer"]
+							],
+							
+						]
+					]
+				]
+			],
+			// transfer
+			"transfer": [
+				"type": "object",
+				"properties": [
+				]
 			]
 		]
 	]
@@ -203,6 +232,8 @@ extension Story {
 			if curr is Link {
 				entry["linktype"] = "link"
 				// TODO: Condition.
+				let transfer: JSONDict = [:]
+				entry["transfer"] = transfer
 				// TODO: Transfer.
 				
 			}
@@ -210,7 +241,11 @@ extension Story {
 				entry["linktype"] = "branch"
 				// TODO: Condition.
 				// TODO: True Transfer.
+				let ttransfer: JSONDict = [:]
+				entry["ttransfer"] = ttransfer
 				// TODO: False Transfer.
+				let ftransfer: JSONDict = [:]
+				entry["ftransfer"] = ftransfer
 			}
 			else if curr is Switch {
 				entry["linktype"] = "switch"
