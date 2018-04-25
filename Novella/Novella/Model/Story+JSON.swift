@@ -178,7 +178,7 @@ extension Story {
 					],
 					"origin": [ "$ref": "#/definitions/uuid" ]
 				],
-				"required": ["uuid", "linktype"],
+				"required": ["uuid", "linktype", "origin"],
 				// MARK: link-dependencies
 				"dependencies": [
 					// handle each concrete link's schema based on linktype
@@ -213,7 +213,8 @@ extension Story {
 				"type": "object",
 				"properties": [
 					"destination": [ "$ref": "#/definitions/uuid" ]
-				]
+				],
+				"required": ["destination"]
 			]
 			// END transfer
 		]
