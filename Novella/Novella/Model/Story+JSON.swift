@@ -201,6 +201,7 @@ extension Story {
 								],
 								"required": ["ttransfer", "ftransfer"]
 							]
+							// TODO: switch
 						]
 					]
 				]
@@ -277,11 +278,10 @@ extension Story {
 			if let asLink = curr as? Link {
 				entry["linktype"] = "link"
 				// TODO: Condition.
+				// TODO: Transfer.
 				var transfer: JSONDict = [:]
 				transfer["destination"] = asLink._transfer._destination?.UUID.uuidString ?? ""
 				entry["transfer"] = transfer
-				// TODO: Transfer.
-				
 			}
 			else if let asBranch = curr as? Branch {
 				entry["linktype"] = "branch"
@@ -454,10 +454,27 @@ extension Story {
 		for curr in links {
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let linktype = curr["linktype"].stringValue
+			let origin = curr["origin"].stringValue
+			
+			switch linktype {
+			case "link":
+				let transfer = curr["transfer"].dictionaryValue
+				let destination = transfer["destination"]!.stringValue
+				break
+			case "branch":
+				let ttransfer = curr["ttransfer"].dictionaryValue
+				let ftransfer = curr["ftransfer"].dictionaryValue
+				break
+			case "switch":
+				break
+			default:
+				throw Errors.invalid("Invalid link type provided (\(linktype)).")
+			}
 			
 			print("Link")
 			print("UUID: \(uuid)")
 			print("Type: \(linktype)")
+			print("Origin: \(origin)")
 			print()
 		}
 		
