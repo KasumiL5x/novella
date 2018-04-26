@@ -406,7 +406,7 @@ extension Story {
 		
 		// get a JSON string
 		let json = JSON(root)
-		guard let str = json.rawString(.utf8, options: []) else {
+		guard let str = json.rawString(.utf8, options: .prettyPrinted) else {
 			throw Errors.invalid("Failed to serialize into JSON data.")
 		}
 		return str
