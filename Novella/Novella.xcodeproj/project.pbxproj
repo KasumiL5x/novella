@@ -11,6 +11,8 @@
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		653CA9B5208538F50052BAB9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* Identifiable.swift */; };
+		6553C95E2092723A00E6737B /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95D2092723A00E6737B /* Reader.storyboard */; };
+		6553C9602092726500E6737B /* Writer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95F2092726500E6737B /* Writer.storyboard */; };
 		655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* Listener.swift */; };
 		65619E922084D711000D5322 /* Linkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* Linkable.swift */; };
 		656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
@@ -69,6 +71,8 @@
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		653CA9B4208538F50052BAB9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		6553C95D2092723A00E6737B /* Reader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reader.storyboard; sourceTree = "<group>"; };
+		6553C95F2092726500E6737B /* Writer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Writer.storyboard; sourceTree = "<group>"; };
 		655CFAEE2085FA2900C04D40 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		65619E912084D711000D5322 /* Linkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkable.swift; sourceTree = "<group>"; };
 		656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 			children = (
 				658C7CB1207E7E6600E2B46B /* Main.storyboard */,
 				6522C5AF2083906300F76DC8 /* Tests.storyboard */,
+				6553C95D2092723A00E6737B /* Reader.storyboard */,
+				6553C95F2092726500E6737B /* Writer.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -411,6 +417,8 @@
 				6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */,
 				658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */,
 				658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */,
+				6553C9602092726500E6737B /* Writer.storyboard in Resources */,
+				6553C95E2092723A00E6737B /* Reader.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
