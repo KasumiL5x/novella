@@ -218,7 +218,7 @@
 					"enum": ["dialog", "delivery", "cutscene", "context"]
 				}
 			},
-			"required": ["uuid"],
+			"required": ["uuid", "nodetype"],
 			// MARK: node-dependencies
 			"dependencies": {
 				// handle each node type based on the nodetype

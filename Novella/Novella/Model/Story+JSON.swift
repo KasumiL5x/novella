@@ -233,7 +233,7 @@ extension Story {
 						"enum": ["dialog", "delivery", "cutscene", "context"]
 					]
 				],
-				"required": ["uuid"],
+				"required": ["uuid", "nodetype"],
 				// MARK: node-dependencies
 				"dependencies": [
 					// handle each node type based on the nodetype
@@ -376,6 +376,16 @@ extension Story {
 		for curr in _allNodes {
 			var entry: JSONDict = [:]
 			entry["uuid"] = curr._uuid.uuidString
+			
+			if let asDialog = curr as? Dialog {
+				entry["nodetype"] = "dialog"
+				
+				// TODO: Missing out the below (so it doesn't validate oneOf) doesn't print the path in the jsonschema, why?
+				entry["content"] = asDialog._content
+				entry["preview"] = asDialog._preview
+				entry["directions"] = asDialog._directions
+			}
+			
 			nodes.append(entry)
 		}
 		root["nodes"] = nodes
