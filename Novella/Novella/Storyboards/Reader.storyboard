@@ -8,7 +8,7 @@
         <!--Reader-->
         <scene sceneID="8FM-ms-qp9">
             <objects>
-                <viewController id="KBg-Xp-9gt" userLabel="Reader" sceneMemberID="viewController">
+                <viewController title="Reader" storyboardIdentifier="Reader" id="KBg-Xp-9gt" userLabel="Reader" sceneMemberID="viewController">
                     <view key="view" id="JzP-md-hqW">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
