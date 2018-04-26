@@ -406,7 +406,7 @@ extension Story {
 		
 		// get a JSON string
 		let json = JSON(root)
-		guard let str = json.rawString(.utf8, options: .prettyPrinted) else {
+		guard let str = json.rawString(.utf8, options: []) else {
 			throw Errors.invalid("Failed to serialize into JSON data.")
 		}
 		return str
@@ -562,7 +562,32 @@ extension Story {
 		// read all nodes
 		let nodes = json["nodes"].arrayValue
 		for curr in nodes {
-			print("node")
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let nodetype = curr["nodetype"].stringValue
+			
+			print("Node:")
+			print("UUID: \(uuid)")
+			print("Type: \(nodetype)")
+			
+			switch nodetype {
+			case "dialog":
+				let content = curr["content"].stringValue
+				let preview = curr["preview"].stringValue
+				let directions = curr["directions"].stringValue
+				
+				print("Content: \(content)")
+				print("Preview: \(preview)")
+				print("Directions: \(directions)")
+				break
+			case "delivery":
+				break
+			case "cutscene":
+				break
+			case "context":
+				break
+			default:
+				throw Errors.invalid("Invalid node type provided (\(nodetype))")
+			}
 		}
 		
 		return story
