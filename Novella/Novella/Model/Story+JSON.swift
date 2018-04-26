@@ -242,10 +242,13 @@ extension Story {
 							// dialog
 							[
 								"properties": [
-									"nodetype": [ "enum": ["dialog"] ]
+									"nodetype": [ "enum": ["dialog"] ],
+									"content": [ "type": "string" ],
+									"preview": [ "type": "string" ],
+									"directions": [ "type": "string" ]
 									// TODO: dialog properties
 								],
-								"required": []
+								"required": ["content", "preview", "directions"]
 							],
 							// delivery
 							[

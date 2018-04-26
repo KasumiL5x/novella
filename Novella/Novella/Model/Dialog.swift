@@ -9,7 +9,16 @@
 import Foundation
 
 class Dialog: FlowNode {
+	var _content: String
+	var _preview: String
+	var _directions: String
+	
+	
 	override init(uuid: NSUUID) {
+		self._content = ""
+		self._preview = ""
+		self._directions = ""
+		
 		super.init(uuid: uuid)
 	}
 }

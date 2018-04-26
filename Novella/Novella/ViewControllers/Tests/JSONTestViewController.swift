@@ -14,40 +14,48 @@ class JSONTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		// set up some story graph and variable content
+		// MARK: Simple story with one graph and one dialog node
 		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
-		let mq1 = try! mainGraph.add(graph: _story.makeGraph(name: "quest1"))
-		try! mq1.add(graph: _story.makeGraph(name: "objective1"))
-		let mq2 = try! mainGraph.add(graph: _story.makeGraph(name: "quest2"))
-		try! mq2.add(graph: _story.makeGraph(name: "objective1"))
-		try! mq2.add(graph: _story.makeGraph(name: "objective2"))
-		let side = try! _story.add(graph: _story.makeGraph(name: "side"))
-		try! side.add(graph: _story.makeGraph(name: "quest1"))
-		try! side.add(graph: _story.makeGraph(name: "quest2"))
-		//
-//		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
-//		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
-//		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
-//		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
-//		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
-//		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
-//		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
+		let dlgNode = try! mainGraph.add(node: _story.makeDialog()) as! Dialog
+		dlgNode._content = "Hello, this is the content."
+		dlgNode._preview = "This is preview."
+		dlgNode._directions = "Softly"
+		try! mainGraph.setEntry(entry: dlgNode)
 		
-		// add variables (and folders) to test data types
-		let typeFolder = try! _story.add(folder: _story.makeFolder(name: "types"))
-		try! typeFolder.add(variable: _story.makeVariable(name: "booleanTest", type: .boolean))
-		try! typeFolder.add(variable: _story.makeVariable(name: "integerTest", type: .integer))
-		try! typeFolder.add(variable: _story.makeVariable(name: "doubleTest", type: .double))
-		
-		// set up some dummy links
-		let linkA = _story.makeLink()
-		linkA.setOrigin(origin: mq1)
-		linkA._transfer.setDestination(dest: mq2)
-		
-		let linkB = _story.makeBranch()
-		linkB.setOrigin(origin: mq1)
-		linkB._trueTransfer.setDestination(dest: mq2)
-		linkB._falseTransfer.setDestination(dest: side)
+//		// set up some story graph and variable content
+//		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
+//		let mq1 = try! mainGraph.add(graph: _story.makeGraph(name: "quest1"))
+//		try! mq1.add(graph: _story.makeGraph(name: "objective1"))
+//		let mq2 = try! mainGraph.add(graph: _story.makeGraph(name: "quest2"))
+//		try! mq2.add(graph: _story.makeGraph(name: "objective1"))
+//		try! mq2.add(graph: _story.makeGraph(name: "objective2"))
+//		let side = try! _story.add(graph: _story.makeGraph(name: "side"))
+//		try! side.add(graph: _story.makeGraph(name: "quest1"))
+//		try! side.add(graph: _story.makeGraph(name: "quest2"))
+//		//
+////		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
+////		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
+////		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
+////		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
+////		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
+////		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
+////		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
+//
+//		// add variables (and folders) to test data types
+//		let typeFolder = try! _story.add(folder: _story.makeFolder(name: "types"))
+//		try! typeFolder.add(variable: _story.makeVariable(name: "booleanTest", type: .boolean))
+//		try! typeFolder.add(variable: _story.makeVariable(name: "integerTest", type: .integer))
+//		try! typeFolder.add(variable: _story.makeVariable(name: "doubleTest", type: .double))
+//
+//		// set up some dummy links
+//		let linkA = _story.makeLink()
+//		linkA.setOrigin(origin: mq1)
+//		linkA._transfer.setDestination(dest: mq2)
+//
+//		let linkB = _story.makeBranch()
+//		linkB.setOrigin(origin: mq1)
+//		linkB._trueTransfer.setDestination(dest: mq2)
+//		linkB._falseTransfer.setDestination(dest: side)
 	}
 	
 	
