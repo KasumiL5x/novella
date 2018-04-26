@@ -375,6 +375,7 @@ extension Story {
 		var nodes: [JSONDict] = []
 		for curr in _allNodes {
 			var entry: JSONDict = [:]
+			entry["uuid"] = curr._uuid.uuidString
 			nodes.append(entry)
 		}
 		root["nodes"] = nodes
