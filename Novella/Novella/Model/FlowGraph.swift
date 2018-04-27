@@ -146,6 +146,28 @@ class FlowGraph {
 		_nodes.remove(at: idx)
 	}
 	
+	// MARK: Links
+	func contains(link: BaseLink) -> Bool {
+		return _links.contains(link)
+	}
+	
+	@discardableResult
+	func add(link: BaseLink) throws -> BaseLink {
+		// already a child
+		if contains(link: link) {
+			throw Errors.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
+		}
+		_links.append(link)
+		return link
+	}
+	
+	func remove(link: BaseLink) throws {
+		guard let idx = _links.index(of: link) else {
+			throw Errors.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
+		}
+		_links.remove(at: idx)
+	}
+	
 	// MARK: Listeners
 	func contains(listener: Listener) -> Bool {
 		return _listeners.contains(listener)
