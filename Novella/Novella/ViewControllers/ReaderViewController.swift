@@ -45,5 +45,7 @@ class ReaderViewController: NSViewController {
 			print("Failed to parse JSON.")
 			return
 		}
+		
+		_story?.debugPrint(global: true)
 	}
 }

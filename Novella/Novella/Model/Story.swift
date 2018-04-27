@@ -169,3 +169,15 @@ extension Story {
 		return dialog
 	}
 }
+
+// MARK: Debug
+extension Story {
+	func debugPrint(global: Bool) {
+		if global {
+			print("Folders:")
+			_allFolders.forEach({
+				print("\t Name: \($0._name)")
+			})
+		}
+	}
+}

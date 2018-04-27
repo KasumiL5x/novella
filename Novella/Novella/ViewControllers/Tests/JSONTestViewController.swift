@@ -14,13 +14,80 @@ class JSONTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		// MARK: Simple story with one graph and one dialog node
+		// MARK: First test story
+		// folders and variables
+		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "main"))
+		let decisionVariable = try! mainFolder.add(variable: _story.makeVariable(name: "decision", type: .boolean))
+		//graphs
 		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
-		let dlgNode = try! mainGraph.add(node: _story.makeDialog()) as! Dialog
-		dlgNode._content = "Hello, this is the content."
-		dlgNode._preview = "This is preview."
-		dlgNode._directions = "Softly"
-		try! mainGraph.setEntry(entry: dlgNode)
+		// nodes
+		let dlgA = _story.makeDialog()
+		let dlgB = _story.makeDialog()
+		let dlgC = _story.makeDialog()
+		let dlgD = _story.makeDialog()
+		let dlgE = _story.makeDialog()
+		let dlgF = _story.makeDialog()
+		let dlgG = _story.makeDialog()
+		// links
+		let aToB = _story.makeLink()
+		let aToC = _story.makeLink()
+		let bToD = _story.makeLink()
+		let cToD = _story.makeLink()
+		let dBranch = _story.makeBranch() // to E and F
+		let eToG = _story.makeLink()
+		let fToG = _story.makeLink()
+		// set up links
+		aToB.setOrigin(origin: dlgA)
+		aToB._transfer.setDestination(dest: dlgB)
+		aToC.setOrigin(origin: dlgA)
+		aToC._transfer.setDestination(dest: dlgC)
+		bToD.setOrigin(origin: dlgB)
+		bToD._transfer.setDestination(dest: dlgD)
+		cToD.setOrigin(origin: dlgC)
+		cToD._transfer.setDestination(dest: dlgD)
+		dBranch.setOrigin(origin: dlgD)
+		dBranch._trueTransfer.setDestination(dest: dlgE)
+		dBranch._falseTransfer.setDestination(dest: dlgF)
+		eToG.setOrigin(origin: dlgE)
+		eToG._transfer.setDestination(dest: dlgG)
+		fToG.setOrigin(origin: dlgF)
+		fToG._transfer.setDestination(dest: dlgG)
+		// add nodes to graph
+		try! mainGraph.add(node: dlgA)
+		try! mainGraph.add(node: dlgB)
+		try! mainGraph.add(node: dlgC)
+		try! mainGraph.add(node: dlgD)
+		try! mainGraph.add(node: dlgE)
+		try! mainGraph.add(node: dlgF)
+		try! mainGraph.add(node: dlgG)
+		// add links to graph
+		try! mainGraph.add(link: aToB)
+		try! mainGraph.add(link: aToC)
+		try! mainGraph.add(link: bToD)
+		try! mainGraph.add(link: cToD)
+		try! mainGraph.add(link: dBranch)
+		try! mainGraph.add(link: eToG)
+		try! mainGraph.add(link: fToG)
+		// set entry point of graph
+		try! mainGraph.setEntry(entry: dlgA)
+		// set content of dialog nodes
+		dlgA._content = "This node has two parallel choices of equal value."
+		dlgB._content = "This was choice 1."
+		dlgC._content = "This was choice 2."
+		dlgD._content = "This node resolves from B and C regardless of choice.  There is a branch here based on some condition."
+		dlgE._content = "This is the true result."
+		dlgF._content = "This is the false result."
+		dlgG._content = "This is the final resolve from E and F regardless of chioce."
+		
+		
+		
+		// MARK: Simple story with one graph and one dialog node
+//		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
+//		let dlgNode = try! mainGraph.add(node: _story.makeDialog()) as! Dialog
+//		dlgNode._content = "Hello, this is the content."
+//		dlgNode._preview = "This is preview."
+//		dlgNode._directions = "Softly"
+//		try! mainGraph.setEntry(entry: dlgNode)
 		
 //		// set up some story graph and variable content
 //		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
