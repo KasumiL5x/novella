@@ -7,4 +7,7 @@
 //
 
 class Function {
+	func execute() {
+		// TODO: Execute some kind of user-provided code etc.
+	}
 }
