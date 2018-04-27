@@ -174,10 +174,93 @@ extension Story {
 extension Story {
 	func debugPrint(global: Bool) {
 		if global {
-			print("Folders:")
+			// folders
+			print("Folders (\(_allFolders.count)):")
 			_allFolders.forEach({
-				print("\t Name: \($0._name)")
+				print("\tName: \($0._name)")
+				print("\tUUID: \($0._uuid.uuidString)")
+				print("\tSynopsis: \($0._synopsis)")
+				print("\tParent: \($0._parent?._name ?? "none")")
+				print("\tVariables (\($0._variables.count)):")
+				$0._variables.forEach({print("\t\t\($0._uuid.uuidString)")})
+				print("\tFolders (\($0._folders.count)):")
+				$0._folders.forEach({print("\t\t\($0._uuid.uuidString)")})
 			})
+			
+			// variables
+			print("\nVariables (\(_allVariables.count)):")
+			_allVariables.forEach({
+				print("\tName: \($0._name)")
+				print("\tUUID: \($0._uuid.uuidString)")
+				print("\tSynopsis: \($0._synopsis)")
+				print("\tConstant: \($0._constant)")
+				print("\tFolder: \($0._folder?._name ?? "none")")
+				print("\tData Type: \($0.DataType)")
+				print("\tValue: \($0._value)")
+				print("\tInitial Value: \($0._initialValue)")
+			})
+			
+			// graphs
+			print("\nGraphs (\(_allGraphs.count)):")
+			_allGraphs.forEach({
+				print("\tName: \($0._name)")
+				print("\tUUID: \($0._uuid.uuidString)")
+				print("\tGraphs (\($0._graphs.count)):")
+				$0._graphs.forEach({print("\t\t\($0._name + "(" + $0._uuid.uuidString + ")")")})
+				print("\tNodes (\($0._nodes.count))")
+				$0._nodes.forEach({print("\t\t\($0._uuid.uuidString)")})
+				print("\tLinks (\($0._links.count))")
+				$0._links.forEach({print("\t\t\($0._uuid.uuidString)")})
+				print("\tListeners (\($0._listeners.count))")
+				$0._listeners.forEach({print("\t\t\($0._uuid.uuidString)")})
+				print("\tExits (\($0._exits.count))")
+				$0._exits.forEach({print("\t\t\($0._uuid.uuidString)")})
+				print("\tEntry: \($0._entry?.UUID.uuidString ?? "none")")
+			})
+			
+			// nodes
+			print("\nNodes (\(_allNodes.count)):")
+			_allNodes.forEach({
+				print("\tUUID: \($0._uuid.uuidString)")
+				if let dlg = $0 as? Dialog {
+					print("\tType: Dialog")
+					print("\tContent: \(dlg._content)")
+					print("\tPreview: \(dlg._preview)")
+					print("\tDirections: \(dlg._directions)")
+				} else if let _ = $0 as? Delivery {
+					print("\tType: Delivery")
+				} else if let _ = $0 as? Cutscene {
+					print("\tType: Cutscene")
+				} else if let _ = $0 as? Context {
+					print("\tType: Context")
+				}
+			})
+			
+			// links
+			print("\nLinks (\(_allLinks.count)):")
+			_allLinks.forEach({
+				print("\tUUID: \($0._uuid.uuidString)")
+				print("Origin: \($0._origin?.UUID.uuidString ?? "none")")
+				if let link = $0 as? Link {
+					print("\tType: Link")
+					print("\tDestination: \(link._transfer._destination?.UUID.uuidString ?? "none")")
+				} else if let branch = $0 as? Branch {
+					print("\tType: Branch")
+					print("\tTrue Destination: \(branch._trueTransfer._destination?.UUID.uuidString ?? "none")")
+					print("\tFalse Destination: \(branch._falseTransfer._destination?.UUID.uuidString ?? "none")")
+				} else if let swtch = $0 as? Switch {
+					print("\tType: Switch")
+					print("\tVariable: \(swtch._variable?._uuid.uuidString ?? "none")")
+					print("\(swtch._defaultTransfer._destination?.UUID.uuidString ?? "none")")
+					print("\tValues (\(swtch._values.count)):")
+					swtch._values.forEach({ (key: AnyHashable, value: Transfer) in
+						print("\t\t\(key) -> \(value._destination?.UUID.uuidString ?? "none")")
+					})
+				}
+			})
+			
+			// ERROR: Run this and see above that links and nodes are not parsed nor are the actual UUIDs resolved and set up (i.e. connected/added). Do this in Story+JSON.swift.
+			
 		}
 	}
 }

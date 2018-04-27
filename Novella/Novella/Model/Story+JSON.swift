@@ -471,15 +471,15 @@ extension Story {
 				print("Tried to set value and initialValue but there was a datatype mismatch.")
 			}
 			v.setConstant(const: constant) // remember to set initial/value before this
-			print("Variable")
-			print("Name: \(name)")
-			print("UUID: \(uuid)")
-			print("Synopsis: \(synopsis)")
-			print("Type: \(type)")
-			print("Constant: \(constant)")
-			print("Value: \(value)")
-			print("Initial: \(initialValue)")
-			print()
+//			print("Variable")
+//			print("Name: \(name)")
+//			print("UUID: \(uuid)")
+//			print("Synopsis: \(synopsis)")
+//			print("Type: \(type)")
+//			print("Constant: \(constant)")
+//			print("Value: \(value)")
+//			print("Initial: \(initialValue)")
+//			print()
 		}
 		
 		// read all folders
@@ -489,10 +489,10 @@ extension Story {
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let _ = story.makeFolder(name: name, uuid: uuid)
 			
-			print("Folder")
-			print("Name: \(name)")
-			print("UUID: \(uuid)")
-			print()
+//			print("Folder")
+//			print("Name: \(name)")
+//			print("UUID: \(uuid)")
+//			print()
 		}
 		
 		// link variables to folders by uuid
@@ -524,10 +524,10 @@ extension Story {
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let _ = story.makeGraph(name: name, uuid: uuid)
 			
-			print("Graph")
-			print("Name: \(name)")
-			print("UUID: \(uuid)")
-			print()
+//			print("Graph")
+//			print("Name: \(name)")
+//			print("UUID: \(uuid)")
+//			print()
 		}
 		
 		// read all links
@@ -552,11 +552,11 @@ extension Story {
 				throw Errors.invalid("Invalid link type provided (\(linktype)).")
 			}
 			
-			print("Link")
-			print("UUID: \(uuid)")
-			print("Type: \(linktype)")
-			print("Origin: \(origin)")
-			print()
+//			print("Link")
+//			print("UUID: \(uuid)")
+//			print("Type: \(linktype)")
+//			print("Origin: \(origin)")
+//			print()
 		}
 		
 		// read all nodes
@@ -565,9 +565,9 @@ extension Story {
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let nodetype = curr["nodetype"].stringValue
 			
-			print("Node:")
-			print("UUID: \(uuid)")
-			print("Type: \(nodetype)")
+//			print("Node:")
+//			print("UUID: \(uuid)")
+//			print("Type: \(nodetype)")
 			
 			switch nodetype {
 			case "dialog":
@@ -575,9 +575,9 @@ extension Story {
 				let preview = curr["preview"].stringValue
 				let directions = curr["directions"].stringValue
 				
-				print("Content: \(content)")
-				print("Preview: \(preview)")
-				print("Directions: \(directions)")
+//				print("Content: \(content)")
+//				print("Preview: \(preview)")
+//				print("Directions: \(directions)")
 				break
 			case "delivery":
 				break
