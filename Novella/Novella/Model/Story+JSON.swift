@@ -579,16 +579,21 @@ extension Story {
 				let content = curr["content"].stringValue
 				let preview = curr["preview"].stringValue
 				let directions = curr["directions"].stringValue
+				let _ = try! story.makeDialog(uuid: uuid)
+				// TODO: Finish dialog setup.
 				
 //				print("Content: \(content)")
 //				print("Preview: \(preview)")
 //				print("Directions: \(directions)")
 				break
 			case "delivery":
+				fatalError("I haven't implemented this yet.")
 				break
 			case "cutscene":
+				fatalError("I haven't implemented this yet.")
 				break
 			case "context":
+				fatalError("I haven't implemented this yet.")
 				break
 			default:
 				throw Errors.invalid("Invalid node type provided (\(nodetype))")
