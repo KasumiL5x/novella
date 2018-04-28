@@ -146,6 +146,7 @@ extension Story {
 				"properties": [
 					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"entry": [ "$ref": "#/definitions/uuid" ],
 					"subgraphs": [
 						"type": "array",
 						"items": [ "$ref": "#/definitions/uuid" ]
@@ -167,7 +168,7 @@ extension Story {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["name", "uuid", "subgraphs", "nodes", "links", "listeners", "exits"]
+				"required": ["name", "uuid", "entry", "subgraphs", "nodes", "links", "listeners", "exits"]
 			],
 			// END graph
 			
@@ -321,6 +322,7 @@ extension Story {
 			var entry: JSONDict = [:]
 			entry["name"] = curr._name
 			entry["uuid"] = curr._uuid.uuidString
+			entry["entry"] = curr._entry?.UUID.uuidString ?? ""
 			entry["subgraphs"] = curr._graphs.map({$0._uuid.uuidString})
 			entry["nodes"] = curr._nodes.map({$0._uuid.uuidString})
 			entry["links"] = curr._links.map({$0._uuid.uuidString})
@@ -537,10 +539,16 @@ extension Story {
 				try! graph.add(node: node)
 			}
 			
-			// 6.2 link all listeners by UUID
+			// 6.2 link entry by uuid
+			guard let entryLinkable = story.findBy(uuid: curr["entry"].stringValue) as? Linkable else {
+				throw Errors.invalid("Failed to find Linkable by UUID.")
+			}
+			try! graph.setEntry(entry: entryLinkable)
+			
+			// 6.3 link all listeners by UUID
 			// TODO: Once listeners are parsed.
 			
-			// 6.3 link all exits by UUID
+			// 6.4 link all exits by UUID
 			// TODO: Once exits are parsed.
 			
 			// TODO: ENTRY POINT.
