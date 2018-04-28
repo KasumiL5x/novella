@@ -439,133 +439,150 @@ extension Story {
 		
 		let story = Story()
 		
-		// read all variables
+		// 1. read all variables
 		for curr in json["variables"].arrayValue {
 			let name = curr["name"].stringValue
+			let dataType = DataType.fromString(str: curr["datatype"].stringValue)
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let synopsis = curr["synopsis"].stringValue
-			let type = DataType.fromString(str: curr["datatype"].stringValue)
-			let constant = curr["constant"].boolValue
-			
-			// value and initialValue
-			let value: Any
-			let initialValue: Any
-			switch type {
+			let variable = story.makeVariable(name: name, type: dataType, uuid: uuid)
+			variable.setSynopsis(synopsis: curr["synopsis"].stringValue)
+			variable.setConstant(const: curr["constant"].boolValue)
+			switch variable._type {
 			case .boolean:
-				value = curr["value"].boolValue
-				initialValue = curr["initialValue"].boolValue
+				try! variable.setValue(val: curr["value"].boolValue)
+				try! variable.setInitialValue(val: curr["value"].boolValue)
+				break
 			case .integer:
-				value = curr["value"].intValue
-				initialValue = curr["initialValue"].intValue
+				try! variable.setValue(val: curr["value"].intValue)
+				try! variable.setInitialValue(val: curr["value"].intValue)
+				break
 			case .double:
-				value = curr["value"].doubleValue
-				initialValue = curr["initialValue"].doubleValue
+				try! variable.setValue(val: curr["value"].doubleValue)
+				try! variable.setInitialValue(val: curr["value"].doubleValue)
+				break
 			}
-			
-			let v = story.makeVariable(name: name, type: type, uuid: uuid)
-			v.setSynopsis(synopsis: synopsis)
-			do {
-				try v.setValue(val: value)
-				try v.setInitialValue(val: initialValue)
-			} catch {
-				print("Tried to set value and initialValue but there was a datatype mismatch.")
-			}
-			v.setConstant(const: constant) // remember to set initial/value before this
 		}
 		
-		// read all folders
-		let folders = json["folders"].arrayValue
-		for curr in folders {
+		// 2. read all folders
+		for curr in json["folders"].arrayValue {
 			let name = curr["name"].stringValue
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let _ = story.makeFolder(name: name, uuid: uuid)
+			let folder = story.makeFolder(name: name, uuid: uuid)
+			folder.setSynopsis(synopsis: curr["synopsis"].stringValue)
 		}
 		
-		// link variables to folders by uuid
-		for curr in folders {
-			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder // we know this is right
-			for currVar in curr["variables"].arrayValue {
-				guard let variable = story.findBy(uuid: currVar.stringValue) as? Variable else {
-					throw Errors.invalid("Failed to find Folder's containing Variable by UUID.")
+		// 2.1 link variables to folders by uuid
+		for curr in json["folders"].arrayValue {
+			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder
+			for child in curr["variables"].arrayValue {
+				guard let variable = story.findBy(uuid: child.stringValue) as? Variable else {
+					throw Errors.invalid("Failed to find Variable by UUID.")
 				}
 				try! folder.add(variable: variable)
 			}
 		}
 		
-		// link folders to folders by uuid
-		for curr in folders {
-			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder // we know this is right
-			for currSub in curr["subfolders"].arrayValue {
-				guard let sub = story.findBy(uuid: currSub.stringValue) as? Folder else {
-					throw Errors.invalid("Failed to find Folder's containing Folder by UUID.")
+		// 2.2 link subfolders to folders by uuid
+		for curr in json["folders"].arrayValue {
+			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder
+			for child in curr["subfolders"].arrayValue {
+				guard let subfolder = story.findBy(uuid: child.stringValue) as? Folder else {
+					throw Errors.invalid("Failed to find Folder by UUID.")
 				}
-				try! folder.add(folder: sub)
+				try! folder.add(folder: subfolder)
 			}
 		}
 		
-		// read all graphs
-		let graphs = json["graphs"].arrayValue
-		for curr in graphs {
-			let name = curr["name"].stringValue
+		// 3. read all nodes
+		for curr in json["nodes"].arrayValue {
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let _ = story.makeGraph(name: name, uuid: uuid)
-		}
-		
-		// read all links
-		let links = json["links"].arrayValue
-		for curr in links {
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let linktype = curr["linktype"].stringValue
-			let origin = curr["origin"].stringValue
-			
-			switch linktype {
-			case "link":
-				let transfer = curr["transfer"].dictionaryValue
-				let destination = transfer["destination"]!.stringValue
-				let _ = story.makeLink(uuid: uuid)
-				// TODO: Finish link setup.
-				break
-			case "branch":
-				let ttransfer = curr["ttransfer"].dictionaryValue
-				let ftransfer = curr["ftransfer"].dictionaryValue
-				let _ = story.makeBranch(uuid: uuid)
-				// TODO: Finish branch setup.
-				break
-			case "switch":
-				fatalError("I haven't implemented this yet.")
-				break
-			default:
-				throw Errors.invalid("Invalid link type provided (\(linktype)).")
-			}
-		}
-		
-		// read all nodes
-		let nodes = json["nodes"].arrayValue
-		for curr in nodes {
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let nodetype = curr["nodetype"].stringValue
-			
-			switch nodetype {
+			switch curr["nodetype"].stringValue {
 			case "dialog":
-				let content = curr["content"].stringValue
-				let preview = curr["preview"].stringValue
-				let directions = curr["directions"].stringValue
 				let dialog = story.makeDialog(uuid: uuid)
-				dialog.setContent(content: content)
-				dialog.setPreview(preview: preview)
-				dialog.setDirections(directions: directions)
+				dialog.setContent(content: curr["content"].stringValue)
+				dialog.setPreview(preview: curr["preview"].stringValue)
+				dialog.setDirections(directions: curr["directions"].stringValue)
 				break
 			case "delivery":
-				fatalError("I haven't implemented this yet.")
+				fatalError("Not yet implemented.")
 				break
 			case "cutscene":
-				fatalError("I haven't implemented this yet.")
+				fatalError("Not yet implemented.")
 				break
 			case "context":
-				fatalError("I haven't implemented this yet.")
+				fatalError("Not yet implemented.")
 				break
 			default:
-				throw Errors.invalid("Invalid node type provided (\(nodetype))")
+				throw Errors.invalid("Invalid node type.")
+			}
+		}
+		
+		// 4. read all listeners
+		// TODO: Not yet implemented.
+		
+		// 5. read all exits
+		// TODO: Not yet implemented.
+		
+		// 6. read all graphs
+		for curr in json["graphs"].arrayValue {
+			let name = curr["name"].stringValue
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let graph = story.makeGraph(name: name, uuid: uuid)
+			
+			// 6.1 link all nodes by uuid
+			for child in curr["nodes"].arrayValue {
+				guard let node = story.findBy(uuid: child.stringValue) as? FlowNode else {
+					throw Errors.invalid("Failed to find FlowNode by UUID.")
+				}
+				try! graph.add(node: node)
+			}
+			
+			// 6.2 link all listeners by UUID
+			// TODO: Once listeners are parsed.
+			
+			// 6.3 link all exits by UUID
+			// TODO: Once exits are parsed.
+			
+			// TODO: ENTRY POINT.
+		}
+		
+		// 7. read all links
+		for curr in json["links"].arrayValue {
+			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
+			let origin = curr["origin"].stringValue
+			guard let originLinkable = story.findBy(uuid: origin) as? Linkable else {
+				throw Errors.invalid("ailed to find Linkable by UUID.")
+			}
+			
+			switch curr["linktype"].stringValue {
+			case "link":
+				let link = story.makeLink(uuid: uuid)
+				link.setOrigin(origin: originLinkable)
+				let transfer = curr["transfer"].dictionaryValue
+				let dest = transfer["destination"]!.stringValue
+				guard let destLinkable = story.findBy(uuid: dest) as? Linkable else {
+					throw Errors.invalid("Failed to find Linkable by UUID.")
+				}
+				link._transfer.setDestination(dest: destLinkable)
+				break
+			case "branch":
+				let branch = story.makeBranch(uuid: uuid)
+				branch.setOrigin(origin: originLinkable)
+				let truetransfer = curr["ttransfer"].dictionaryValue
+				let falsetransfer = curr["ftransfer"].dictionaryValue
+				let trueDest = truetransfer["destination"]!.stringValue
+				let falseDest = falsetransfer["destination"]!.stringValue
+				guard let trueLinkable = story.findBy(uuid: trueDest) as? Linkable, let falseLinkable = story.findBy(uuid: falseDest) as? Linkable else {
+					throw Errors.invalid("Failed to find Linkable by UUID.")
+				}
+				branch._trueTransfer.setDestination(dest: trueLinkable)
+				branch._falseTransfer.setDestination(dest: falseLinkable)
+				break
+			case "switch":
+				fatalError("Not yet implemented.")
+				break
+			default:
+				throw Errors.invalid("Invalid link type.")
 			}
 		}
 		
