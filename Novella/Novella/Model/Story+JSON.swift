@@ -541,12 +541,17 @@ extension Story {
 			case "link":
 				let transfer = curr["transfer"].dictionaryValue
 				let destination = transfer["destination"]!.stringValue
+				let _ = try! story.makeLink(uuid: uuid)
+				// TODO: Finish link setup.
 				break
 			case "branch":
 				let ttransfer = curr["ttransfer"].dictionaryValue
 				let ftransfer = curr["ftransfer"].dictionaryValue
+				let _ = try! story.makeBranch(uuid: uuid)
+				// TODO: Finish branch setup.
 				break
 			case "switch":
+				fatalError("I haven't implemented this yet.")
 				break
 			default:
 				throw Errors.invalid("Invalid link type provided (\(linktype)).")

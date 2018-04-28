@@ -185,6 +185,8 @@ extension Story {
 				$0._variables.forEach({print("\t\t\($0._uuid.uuidString)")})
 				print("\tFolders (\($0._folders.count)):")
 				$0._folders.forEach({print("\t\t\($0._uuid.uuidString)")})
+				
+				print("")
 			})
 			
 			// variables
@@ -198,6 +200,8 @@ extension Story {
 				print("\tData Type: \($0.DataType)")
 				print("\tValue: \($0._value)")
 				print("\tInitial Value: \($0._initialValue)")
+				
+				print("")
 			})
 			
 			// graphs
@@ -216,6 +220,8 @@ extension Story {
 				print("\tExits (\($0._exits.count))")
 				$0._exits.forEach({print("\t\t\($0._uuid.uuidString)")})
 				print("\tEntry: \($0._entry?.UUID.uuidString ?? "none")")
+				
+				print("")
 			})
 			
 			// nodes
@@ -234,13 +240,15 @@ extension Story {
 				} else if let _ = $0 as? Context {
 					print("\tType: Context")
 				}
+				
+				print("")
 			})
 			
 			// links
 			print("\nLinks (\(_allLinks.count)):")
 			_allLinks.forEach({
 				print("\tUUID: \($0._uuid.uuidString)")
-				print("Origin: \($0._origin?.UUID.uuidString ?? "none")")
+				print("\tOrigin: \($0._origin?.UUID.uuidString ?? "none")")
 				if let link = $0 as? Link {
 					print("\tType: Link")
 					print("\tDestination: \(link._transfer._destination?.UUID.uuidString ?? "none")")
@@ -257,9 +265,10 @@ extension Story {
 						print("\t\t\(key) -> \(value._destination?.UUID.uuidString ?? "none")")
 					})
 				}
+				print("")
 			})
 			
-			// ERROR: Run this and see above that links and nodes are not parsed nor are the actual UUIDs resolved and set up (i.e. connected/added). Do this in Story+JSON.swift.
+			// TODO: Fix parsing until the abov is nicely displayed
 			
 		}
 	}
