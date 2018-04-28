@@ -541,13 +541,13 @@ extension Story {
 			case "link":
 				let transfer = curr["transfer"].dictionaryValue
 				let destination = transfer["destination"]!.stringValue
-				let _ = try! story.makeLink(uuid: uuid)
+				let _ = story.makeLink(uuid: uuid)
 				// TODO: Finish link setup.
 				break
 			case "branch":
 				let ttransfer = curr["ttransfer"].dictionaryValue
 				let ftransfer = curr["ftransfer"].dictionaryValue
-				let _ = try! story.makeBranch(uuid: uuid)
+				let _ = story.makeBranch(uuid: uuid)
 				// TODO: Finish branch setup.
 				break
 			case "switch":
@@ -579,12 +579,10 @@ extension Story {
 				let content = curr["content"].stringValue
 				let preview = curr["preview"].stringValue
 				let directions = curr["directions"].stringValue
-				let _ = try! story.makeDialog(uuid: uuid)
-				// TODO: Finish dialog setup.
-				
-//				print("Content: \(content)")
-//				print("Preview: \(preview)")
-//				print("Directions: \(directions)")
+				let dialog = story.makeDialog(uuid: uuid)
+				dialog.setContent(content: content)
+				dialog.setPreview(preview: preview)
+				dialog.setDirections(directions: directions)
 				break
 			case "delivery":
 				fatalError("I haven't implemented this yet.")
