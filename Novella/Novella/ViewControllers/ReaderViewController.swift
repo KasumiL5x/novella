@@ -9,6 +9,9 @@
 import Cocoa
 
 class ReaderViewController: NSViewController {
+	// MARK: Storyboard references
+	@IBOutlet weak var outlineView: NSOutlineView!
+	
 	var _story: Story?
 	
 	override func viewDidLoad() {
@@ -47,5 +50,41 @@ class ReaderViewController: NSViewController {
 		}
 		
 		_story?.debugPrint(global: true)
+		
+		outlineView.reloadData()
+	}
+}
+
+extension ReaderViewController: NSOutlineViewDataSource {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		if _story == nil {
+			return 0
+		}
+		
+		return _story!._folders.count + _story!._graphs.count
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		return ""
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		return false
+	}
+}
+extension ReaderViewController: NSOutlineViewDelegate {
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+		var view: NSTableCellView? = nil
+		
+		var name = "ERROR"
+		
+		if tableColumn?.identifier.rawValue == "NameCell" {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+			if let textField = view?.textField {
+				textField.stringValue = name
+			}
+		}
+		
+		return view
 	}
 }
