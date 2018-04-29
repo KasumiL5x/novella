@@ -11,6 +11,7 @@ import Cocoa
 class ReaderViewController: NSViewController {
 	// MARK: Storyboard references
 	@IBOutlet weak var outlineView: NSOutlineView!
+	@IBOutlet weak var infoLabel: NSTextField!
 	
 	var _story: Story?
 	
@@ -175,5 +176,35 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		}
 		
 		return view
+	}
+	
+	func outlineViewSelectionDidChange(_ notification: Notification) {
+		if outlineView.selectedRow == -1 {
+			return
+		}
+		let item = outlineView.item(atRow: outlineView.selectedRow)
+
+		var text = "Unhandled!"
+
+		if let variable = item as? Variable {
+			text = "A <b>variable</b> named \(variable._name) storing a \(variable._type.stringValue)."
+		}
+		if let folder = item as? Folder {
+			text = "A <b>folder</b> named \(folder._name) with \(folder._folders.count) subfolders and \(folder._variables.count) variables."
+		}
+		if let graph = item as? FlowGraph {
+			text = "A <b>graph</b> named \(graph._name)."
+		}
+
+		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
+		guard let data = html.data(using: .utf8, allowLossyConversion: false) else {
+			print("Couldn't get text data.")
+			return
+		}
+		guard let attrString = try? NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
+			print("Could not initialize attributed string.")
+			return
+		}
+		infoLabel.attributedStringValue = attrString
 	}
 }
