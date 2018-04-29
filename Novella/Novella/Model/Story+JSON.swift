@@ -550,8 +550,6 @@ extension Story {
 			
 			// 6.4 link all exits by UUID
 			// TODO: Once exits are parsed.
-			
-			// TODO: ENTRY POINT.
 		}
 		
 		// 7. read all links
@@ -593,6 +591,21 @@ extension Story {
 				throw Errors.invalid("Invalid link type.")
 			}
 		}
+		
+		// 8. add links to graphs by uuid
+		for curr in json["graphs"].arrayValue {
+			let graph = story.findBy(uuid: curr["uuid"].stringValue) as! FlowGraph
+			
+			for child in curr["links"].arrayValue {
+				guard let link = story.findBy(uuid: child.stringValue) as? BaseLink else {
+					throw Errors.invalid("Failed to find BaseLink by UUID.")
+				}
+				try! graph.add(link: link)
+			}
+		}
+		
+		// ERROR1: Investigate making almost everything except core properties optional and handling in code
+		// ERROR1: Remove throws (except for fatal errors) and instead build a list of string errors and print/return them all at the end
 		
 		return story
 	}
