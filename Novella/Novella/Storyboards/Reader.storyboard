@@ -31,14 +31,14 @@
                                     <rect key="frame" x="1" y="23" width="243" height="111"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="bd7-gI-USH" viewBased="YES" indentationPerLevel="16" outlineTableColumn="rtb-Ee-OZ9" id="2y8-uf-bGa">
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="bd7-gI-USH" viewBased="YES" indentationPerLevel="16" outlineTableColumn="rtb-Ee-OZ9" id="2y8-uf-bGa">
                                             <rect key="frame" x="0.0" y="0.0" width="243" height="111"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="" width="240" minWidth="40" maxWidth="1000" id="rtb-Ee-OZ9">
+                                                <tableColumn identifier="StoryCell" width="240" minWidth="40" maxWidth="1000" id="rtb-Ee-OZ9" userLabel="StoryColumn">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Story">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -51,7 +51,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="NameCell" id="3Vn-Qd-SYo">
+                                                        <tableCellView id="3Vn-Qd-SYo">
                                                             <rect key="frame" x="1" y="1" width="240" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>

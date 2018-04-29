@@ -65,7 +65,14 @@ extension ReaderViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		return ""
+		if _story == nil {
+			return ""
+		}
+		
+		if index < _story!._graphs.count {
+			return _story!._graphs[index]
+		}
+		return _story!._folders[index - _story!._graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -78,8 +85,12 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		
 		var name = "ERROR"
 		
-		if tableColumn?.identifier.rawValue == "NameCell" {
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+		// ERROR: get names of folders and graphs, then start adding variables and subgraphs etc.
+		
+		print(item)
+		
+		if tableColumn?.identifier.rawValue == "StoryCell" {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "StoryCell"), owner: self) as? NSTableCellView
 			if let textField = view?.textField {
 				textField.stringValue = name
 			}
