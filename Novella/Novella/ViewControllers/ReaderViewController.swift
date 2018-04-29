@@ -61,12 +61,53 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return 0
 		}
 		
+		if let folder = item as? Folder {
+			return folder._folders.count + folder._variables.count
+		}
+		
+		if let graph = item as? FlowGraph {
+			return (
+				graph._graphs.count +
+					graph._nodes.count +
+					graph._links.count +
+					graph._listeners.count +
+					graph._exits.count
+					+ 1 // entry
+				)
+		}
+		
 		return _story!._folders.count + _story!._graphs.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if _story == nil {
 			return ""
+		}
+		
+		if let folder = item as? Folder {
+			if index < folder._folders.count {
+				return folder._folders[index]
+			}
+			return folder._variables[index - folder._folders.count]
+		}
+		
+		if let graph = item as? FlowGraph {
+			if index < graph._graphs.count { return graph._graphs[index] }
+			var offset = graph._graphs.count
+			
+			if index < offset + graph._nodes.count { return graph._nodes[index - offset] }
+			offset += graph._nodes.count
+			
+			if index < offset + graph._links.count { return graph._links[index - offset] }
+			offset += graph._links.count
+			
+			if index < offset + graph._listeners.count { return graph._listeners[index - offset] }
+			offset += graph._listeners.count
+			
+			if index < offset + graph._exits.count { return graph._exits[index - offset] }
+			offset += graph._exits.count
+			
+			return graph._entry
 		}
 		
 		if index < _story!._graphs.count {
@@ -76,6 +117,25 @@ extension ReaderViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		if let _ = item as? Variable {
+			return false
+		}
+		
+		if let folder = item as? Folder {
+			return (folder._folders.count + folder._variables.count) > 0
+		}
+		
+		if let graph = item as? FlowGraph {
+			return (
+				graph._graphs.count +
+				graph._nodes.count +
+				graph._links.count +
+				graph._listeners.count +
+				graph._exits.count
+				+ 1 // entry
+			) > 0
+		}
+		
 		return false
 	}
 }
@@ -85,11 +145,26 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		
 		var name = "ERROR"
 		
+		if let variable = item as? Variable {
+			name = "Variable: " + variable._name
+		}
 		if let folder = item as? Folder {
-			name = folder._name + " (Folder)"
+			name = "Folder: " + folder._name
 		}
 		if let graph = item as? FlowGraph {
-			name = graph._name + " (Graph)"
+			name = "FlowGraph: " + graph._name
+		}
+		if let node = item as? FlowNode {
+			name = "FlowNode: " + node._uuid.uuidString
+		}
+		if let link = item as? BaseLink {
+			name = "BaseLink: " + link._uuid.uuidString
+		}
+		if let listener = item as? Listener {
+			name = "Listener: " + listener._uuid.uuidString
+		}
+		if let exit = item as? ExitNode {
+			name = "ExitNode: " + exit._uuid.uuidString
 		}
 		
 		if tableColumn?.identifier.rawValue == "StoryCell" {
