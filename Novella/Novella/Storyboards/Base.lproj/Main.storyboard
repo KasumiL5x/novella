@@ -684,7 +684,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" userLabel="Main Window Controller" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Novella" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -706,11 +706,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" userLabel="Main View Controller" customClass="ViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="t5V-ki-yZp" userLabel="TestEmbedView">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                                 <connections>
                                     <segue destination="I9m-U4-JPY" kind="embed" id="rO1-H2-6uE"/>
                                 </connections>
@@ -726,7 +726,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="907"/>
         </scene>
         <!--Reader-->
         <scene sceneID="EQE-hI-YQv">
@@ -734,7 +734,7 @@
                 <controllerPlaceholder storyboardName="Reader" referencedIdentifier="Reader" id="ebd-5j-XWq" sceneMemberID="viewController"/>
                 <customObject id="Vug-Ct-fQC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="739"/>
+            <point key="canvasLocation" x="1301" y="991"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="EcT-TQ-Dq0">
@@ -760,7 +760,7 @@
                 </tabViewController>
                 <customObject id="apB-jo-vdr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="707" y="655"/>
+            <point key="canvasLocation" x="924" y="907"/>
         </scene>
         <!--VariableFolderTest-->
         <scene sceneID="BcC-zH-bTK">
@@ -768,7 +768,7 @@
                 <controllerPlaceholder storyboardName="Tests" referencedIdentifier="VariableFolderTest" id="0tw-xp-Qoj" sceneMemberID="viewController"/>
                 <customObject id="1cF-I6-lIL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-36" y="872"/>
+            <point key="canvasLocation" x="822" y="1126"/>
         </scene>
         <!--StoryTest-->
         <scene sceneID="Ju4-wI-4dI">
@@ -776,7 +776,7 @@
                 <controllerPlaceholder storyboardName="Tests" referencedIdentifier="StoryTest" id="Cz0-Jb-cuJ" sceneMemberID="viewController"/>
                 <customObject id="V6y-eF-ICz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="107" y="872"/>
+            <point key="canvasLocation" x="965" y="1126"/>
         </scene>
         <!--JSONTest-->
         <scene sceneID="Ns1-H0-7cH">
@@ -784,7 +784,7 @@
                 <controllerPlaceholder storyboardName="Tests" referencedIdentifier="JSONTest" id="jV0-lu-Scv" sceneMemberID="viewController"/>
                 <customObject id="9i2-8g-cFg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="211" y="872"/>
+            <point key="canvasLocation" x="1069" y="1126"/>
         </scene>
         <!--Writer-->
         <scene sceneID="P5c-K4-ksX">
@@ -792,7 +792,7 @@
                 <controllerPlaceholder storyboardName="Writer" referencedIdentifier="Writer" id="RQk-0B-LUE" sceneMemberID="viewController"/>
                 <customObject id="MSe-8S-ayR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="571"/>
+            <point key="canvasLocation" x="1301" y="823"/>
         </scene>
     </scenes>
 </document>
