@@ -85,9 +85,12 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		
 		var name = "ERROR"
 		
-		// ERROR: get names of folders and graphs, then start adding variables and subgraphs etc.
-		
-		print(item)
+		if let folder = item as? Folder {
+			name = folder._name + " (Folder)"
+		}
+		if let graph = item as? FlowGraph {
+			name = graph._name + " (Graph)"
+		}
 		
 		if tableColumn?.identifier.rawValue == "StoryCell" {
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "StoryCell"), owner: self) as? NSTableCellView
