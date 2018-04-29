@@ -1,0 +1,171 @@
+{
+  "folders" : [
+    {
+      "name" : "main",
+      "variables" : [
+        "4589CB77-875C-453D-8A18-2A092E683FA6"
+      ],
+      "uuid" : "12E7DA44-B1B4-4CA0-858C-34CDA28592DA",
+      "subfolders" : [
+
+      ]
+    }
+  ],
+  "variables" : [
+    {
+      "synopsis" : "",
+      "name" : "decision",
+      "value" : false,
+      "constant" : false,
+      "uuid" : "4589CB77-875C-453D-8A18-2A092E683FA6",
+      "datatype" : "boolean",
+      "initialValue" : false
+    }
+  ],
+  "links" : [
+    {
+      "linktype" : "link",
+      "origin" : "110FB16B-F63B-48C8-9FFB-779D9D63FA6D",
+      "uuid" : "1F4C7426-EAD3-4109-ABD7-D7B5CB31A6C3",
+      "transfer" : {
+        "destination" : "273D19F3-2C97-4A06-A3A0-A40A5FDF5AB6"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "110FB16B-F63B-48C8-9FFB-779D9D63FA6D",
+      "uuid" : "E37892F1-3F12-48CE-BC29-942F050FE5AA",
+      "transfer" : {
+        "destination" : "BAD7DF36-1B8E-4A8A-BB5E-5471A66313F6"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "273D19F3-2C97-4A06-A3A0-A40A5FDF5AB6",
+      "uuid" : "E2024D74-6FAF-4272-8931-8DC902FA17F0",
+      "transfer" : {
+        "destination" : "025BC381-FE47-45AC-BD47-10B6FB2C07E1"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "BAD7DF36-1B8E-4A8A-BB5E-5471A66313F6",
+      "uuid" : "67D0DCCD-CC17-4BDF-8E8D-0F519ED2077C",
+      "transfer" : {
+        "destination" : "025BC381-FE47-45AC-BD47-10B6FB2C07E1"
+      }
+    },
+    {
+      "linktype" : "branch",
+      "origin" : "025BC381-FE47-45AC-BD47-10B6FB2C07E1",
+      "uuid" : "482062D0-6F46-4673-A1CD-0E1B57B05C0E",
+      "ftransfer" : {
+        "destination" : "765A87BF-84B3-488C-B985-C7D7E015B437"
+      },
+      "ttransfer" : {
+        "destination" : "545DD18C-5ECA-41B9-BB9C-0D6DDDB8B73E"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "545DD18C-5ECA-41B9-BB9C-0D6DDDB8B73E",
+      "uuid" : "6A7A9888-7623-408C-80A5-EE3E6E3E1D69",
+      "transfer" : {
+        "destination" : "B4F3B31E-D2C3-4BDB-A8B3-C6369ADF3739"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "765A87BF-84B3-488C-B985-C7D7E015B437",
+      "uuid" : "55E5768D-EECC-4589-A648-4F1D8070DB3E",
+      "transfer" : {
+        "destination" : "B4F3B31E-D2C3-4BDB-A8B3-C6369ADF3739"
+      }
+    }
+  ],
+  "nodes" : [
+    {
+      "content" : "This node has two parallel choices of equal value.",
+      "uuid" : "110FB16B-F63B-48C8-9FFB-779D9D63FA6D",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    },
+    {
+      "content" : "This was choice 1.",
+      "uuid" : "273D19F3-2C97-4A06-A3A0-A40A5FDF5AB6",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    },
+    {
+      "content" : "This was choice 2.",
+      "uuid" : "BAD7DF36-1B8E-4A8A-BB5E-5471A66313F6",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    },
+    {
+      "content" : "This node resolves from B and C regardless of choice.  There is a branch here based on some condition.",
+      "uuid" : "025BC381-FE47-45AC-BD47-10B6FB2C07E1",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    },
+    {
+      "content" : "This is the true result.",
+      "uuid" : "545DD18C-5ECA-41B9-BB9C-0D6DDDB8B73E",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    },
+    {
+      "content" : "This is the false result.",
+      "uuid" : "765A87BF-84B3-488C-B985-C7D7E015B437",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    },
+    {
+      "content" : "This is the final resolve from E and F regardless of chioce.",
+      "uuid" : "B4F3B31E-D2C3-4BDB-A8B3-C6369ADF3739",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : ""
+    }
+  ],
+  "graphs" : [
+    {
+      "name" : "main",
+      "nodes" : [
+        "110FB16B-F63B-48C8-9FFB-779D9D63FA6D",
+        "273D19F3-2C97-4A06-A3A0-A40A5FDF5AB6",
+        "BAD7DF36-1B8E-4A8A-BB5E-5471A66313F6",
+        "025BC381-FE47-45AC-BD47-10B6FB2C07E1",
+        "545DD18C-5ECA-41B9-BB9C-0D6DDDB8B73E",
+        "765A87BF-84B3-488C-B985-C7D7E015B437",
+        "B4F3B31E-D2C3-4BDB-A8B3-C6369ADF3739"
+      ],
+      "links" : [
+        "1F4C7426-EAD3-4109-ABD7-D7B5CB31A6C3",
+        "E37892F1-3F12-48CE-BC29-942F050FE5AA",
+        "E2024D74-6FAF-4272-8931-8DC902FA17F0",
+        "67D0DCCD-CC17-4BDF-8E8D-0F519ED2077C",
+        "482062D0-6F46-4673-A1CD-0E1B57B05C0E",
+        "6A7A9888-7623-408C-80A5-EE3E6E3E1D69",
+        "55E5768D-EECC-4589-A648-4F1D8070DB3E"
+      ],
+      "entry" : "110FB16B-F63B-48C8-9FFB-779D9D63FA6D",
+      "uuid" : "D6609F5F-5E8D-4E7C-B052-B871848E60B0",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ]
+}
