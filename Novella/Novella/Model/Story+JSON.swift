@@ -39,9 +39,12 @@ extension Story {
 			"nodes": [
 				"type": "array",
 				"items": [ "$ref": "#/definitions/node" ]
+			],
+			"story": [
+				"$ref": "#/definitions/story"
 			]
 		],
-		"required": ["variables", "folders", "graphs", "links", "nodes"],
+		"required": ["variables", "folders", "graphs", "links", "nodes", "story"],
 		// END top-level
 		
 		// MARK: definitions
@@ -279,8 +282,25 @@ extension Story {
 					]
 				]
 				// END node-dependencies
-			]
+			],
 			// END node
+			
+			// MARK: story
+			"story": [
+				"type": "object",
+				"properties": [
+					"folders": [
+						"type": "array",
+						"items": [ "$ref": "#/definitions/uuid" ]
+					],
+					"graphs": [
+						"type": "array",
+						"items": [ "$ref": "#/definitions/uuid" ]
+					]
+				],
+				"required": ["folders", "graphs"]
+			]
+			// END story
 		]
 		// END definitions
 	]
@@ -391,6 +411,13 @@ extension Story {
 			nodes.append(entry)
 		}
 		root["nodes"] = nodes
+		
+		// add folders and graphs (uuid) for story
+		var storyEntry: JSONDict = [:]
+		storyEntry["folders"] = _folders.map({$0._uuid.uuidString})
+		storyEntry["graphs"] = _graphs.map({$0._uuid.uuidString})
+		root["story"] = storyEntry
+		
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
@@ -602,6 +629,20 @@ extension Story {
 				}
 				try! graph.add(link: link)
 			}
+		}
+		
+		// 9. assign folders and graphs to story's local stuff
+		for curr in json["story"]["folders"].arrayValue {
+			guard let folder = story.findBy(uuid: curr.stringValue) as? Folder else {
+				throw Errors.invalid("Failed to find Folder by UUID.")
+			}
+			try! story.add(folder: folder)
+		}
+		for curr in json["story"]["graphs"].arrayValue {
+			guard let graph = story.findBy(uuid: curr.stringValue) as? FlowGraph else {
+				throw Errors.invalid("Failed to find FlowGraph by UUID.")
+			}
+			try! story.add(graph: graph)
 		}
 		
 		// ERROR1: Investigate making almost everything except core properties optional and handling in code

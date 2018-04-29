@@ -268,7 +268,19 @@ extension Story {
 				print("")
 			})
 			
-			// TODO: Fix parsing until the abov is nicely displayed
+			// story local folders and graphs
+			print("\nLocal Folders (\(_folders.count)):")
+			_folders.forEach({
+				print("\tUUID: \($0._uuid.uuidString)")
+				print("")
+			})
+			print("\nLocal Graphs (\(_graphs.count)):")
+			_graphs.forEach({
+				print("\tUUID: \($0._uuid.uuidString)")
+				print("")
+			})
+			
+			// TODO: Fix parsing until the above is nicely displayed
 			
 		}
 	}

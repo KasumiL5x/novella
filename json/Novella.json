@@ -24,9 +24,12 @@
 		"nodes": {
 			"type": "array",
 			"items": { "$ref": "#/definitions/node" }
+		},
+		"story": {
+			"$ref": "#/definitions/story"
 		}
 	},
-	"required": ["variables", "folders", "graphs", "links", "nodes"],
+	"required": ["variables", "folders", "graphs", "links", "nodes", "story"],
 	// END top-level
 
 	// MARK: definitions
@@ -264,8 +267,25 @@
 				}
 			}
 			// END node-dependencies
-		}
+		},
 		// END node
+
+		// MARK: story
+		"story": {
+			"type": "object",
+			"properties": {
+				"folders": {
+					"type": "array",
+					"items": { "$ref": "#/definitions/uuid" }
+				},
+				"graphs": {
+					"type": "array",
+					"items": { "$ref": "#/definitions/uuid" }
+				}
+			},
+			"required": ["folders", "graphs"]
+		}
+		// END story
 	}
 	// END definitions
 }
