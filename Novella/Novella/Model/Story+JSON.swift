@@ -140,7 +140,7 @@ extension Story {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["name", "uuid", "subfolders", "variables"]
+				"required": ["name", "uuid"]
 			],
 			// END folder
 			
@@ -442,7 +442,9 @@ extension Story {
 		return str
 	}
 	
-	static func fromJSON(str: String) throws -> Story {
+	static func fromJSON(str: String) throws -> (story: Story, errors: [String]) {
+		var errors: [String] = []
+		
 		// TODO: Should I handle name clashes of UUID internally just in case another UUID is copypasted by a user?
 		
 		// get Data from string
@@ -517,20 +519,21 @@ extension Story {
 		
 		// 2. read all folders
 		for curr in json["folders"].arrayValue {
-			let name = curr["name"].stringValue
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let folder = story.makeFolder(name: name, uuid: uuid)
-			folder.setSynopsis(synopsis: curr["synopsis"].stringValue)
-		}
-		
-		// 2.1 link variables to folders by uuid
-		for curr in json["folders"].arrayValue {
-			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			let folder = story.makeFolder(name: curr["name"].string!, uuid: uuid)
+			
+			let synopsis = curr["synopsis"]
+			if synopsis != JSON.null && synopsis.string != nil {
+				folder.setSynopsis(synopsis: synopsis.string!)
+			}
+			
+			// 2.1 link variables to folders by uuid
 			for child in curr["variables"].arrayValue {
-				guard let variable = story.findBy(uuid: child.stringValue) as? Variable else {
-					throw Errors.invalid("Failed to find Variable by UUID.")
+				if let variable = story.findBy(uuid: child.string!) as? Variable {
+					try! folder.add(variable: variable)
+				} else {
+					errors.append("Unable to find Variable by UUID (\(child.string!) when dding to Folder (\(uuid.uuidString)).")
 				}
-				try! folder.add(variable: variable)
 			}
 		}
 		
@@ -671,6 +674,6 @@ extension Story {
 		// ERROR1: Investigate making almost everything except core properties optional and handling in code
 		// ERROR1: Remove throws (except for fatal errors) and instead build a list of string errors and print/return them all at the end
 		
-		return story
+		return (story, errors)
 	}
 }

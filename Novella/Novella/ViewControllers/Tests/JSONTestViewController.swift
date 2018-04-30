@@ -131,7 +131,7 @@ class JSONTestViewController: NSViewController {
 		let json_str = "{\"folders\":[],\"variables\":[],\"links\":[],\"nodes\":[{\"content\":\"Hello, this is the content.\",\"uuid\":\"71CE6B3E-C2C3-4981-828E-8AB4B9DCE66E\",\"directions\":\"Softly\",\"nodetype\":\"dialog\",\"preview\":\"This is preview.\"}],\"graphs\":[{\"name\":\"main\",\"nodes\":[\"71CE6B3E-C2C3-4981-828E-8AB4B9DCE66E\"],\"links\":[],\"uuid\":\"BBA325A4-249F-48E2-A1A9-4F65E785B691\",\"subgraphs\":[],\"listeners\":[],\"exits\":[]}]}"
 		let story: Story
 		do {
-			story = try Story.fromJSON(str: json_str)
+			story = try Story.fromJSON(str: json_str).story
 		} catch {
 			print("oh shit")
 		}

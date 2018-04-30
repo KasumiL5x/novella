@@ -2,12 +2,9 @@
   "folders" : [
     {
       "name" : "main",
+			"uuid" : "CD692335-1A27-4F72-88F4-926AC5196DA6",
       "variables" : [
         "536EF62E-F0B0-47F6-83E3-1657959790F7"
-      ],
-      "uuid" : "CD692335-1A27-4F72-88F4-926AC5196DA6",
-      "subfolders" : [
-
       ]
     }
   ],

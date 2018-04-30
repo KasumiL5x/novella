@@ -51,7 +51,7 @@ class ReaderViewController: NSViewController {
 		
 		// parse contents into a Story
 		do {
-			_story = try Story.fromJSON(str: contents)
+			_story = try Story.fromJSON(str: contents).story
 		} catch {
 			print("Failed to parse JSON.")
 			return

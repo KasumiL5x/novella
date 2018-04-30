@@ -125,7 +125,7 @@
 					"items": { "$ref": "#/definitions/uuid" }
 				}
 			},
-			"required": ["name", "uuid", "subfolders", "variables"]
+			"required": ["name", "uuid"]
 		},
 		// END folder
 
