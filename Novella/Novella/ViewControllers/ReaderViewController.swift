@@ -12,11 +12,18 @@ class ReaderViewController: NSViewController {
 	// MARK: Storyboard references
 	@IBOutlet weak var outlineView: NSOutlineView!
 	@IBOutlet weak var infoLabel: NSTextField!
+	@IBOutlet weak var currentNodeInfo: NSTextField!
+	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
 	var _story: Story?
+	var _simulator: Simulator?
+	
+	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		_currNodeLinksCallback.setView(view: currNodeOutlineView)
 	}
 	
 	@IBAction func onOpen(_ sender: NSButton) {
@@ -50,9 +57,66 @@ class ReaderViewController: NSViewController {
 			return
 		}
 		
+		// open the simulator
+		_simulator = Simulator(story: _story!, controller: self)
+		
 		_story?.debugPrint(global: true)
 		
 		outlineView.reloadData()
+	}
+	
+	@IBAction func onSimulate(_ sender: NSButton) {
+		if outlineView.selectedRow == -1 {
+			return
+		}
+		let item = outlineView.item(atRow: outlineView.selectedRow)
+		guard let graph = item as? FlowGraph else {
+			print("Please select a FlowGraph.")
+			return
+		}
+		
+		if !_simulator!.start(graph: graph) {
+			print("Graph is not configured for simulation.")
+			return
+		}
+		print("Simulation started...")
+	}
+	
+	@IBAction func onFollowSelected(_ sender: NSButton) {
+		if currNodeOutlineView.selectedRow == -1 {
+			return
+		}
+		let link = currNodeOutlineView.item(atRow: currNodeOutlineView.selectedRow) as! BaseLink
+		do {
+			try _simulator?.proceed(link: link)
+		} catch {
+			print("Failed to proceed in Simulator.")
+		}
+	}
+}
+
+extension ReaderViewController: SimulatorController {
+	func currentNode(node: FlowNode, outputs: [BaseLink]) {
+		_currNodeLinksCallback.setLinks(links: outputs)
+		currNodeOutlineView.reloadData()
+		
+		var text = "<b>UUID:</b><br/>\(node._uuid.uuidString)<br/><br/>"
+		if let dialog = node as? Dialog {
+			text += "<b>Preview:</b><br/>\(dialog._preview.isEmpty ? "none" : dialog._preview)<br/><br/>"
+			text += "<b>Content:</b><br/>\(dialog._content.isEmpty ? "none" : dialog._content)<br/><br/>"
+			text += "<b>Directions:</b><br/>\(dialog._directions.isEmpty ? "none" : dialog._directions)"
+		}
+		
+		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
+		guard let data = html.data(using: .utf8, allowLossyConversion: false) else {
+			print("Couldn't get text data.")
+			return
+		}
+		guard let attrString = try? NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
+			print("Could not initialize attributed string.")
+			return
+		}
+		currentNodeInfo.attributedStringValue = attrString
 	}
 }
 
@@ -206,5 +270,60 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			return
 		}
 		infoLabel.attributedStringValue = attrString
+	}
+}
+
+// MARK: currentNodeList callbacks
+class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
+	var _view: NSOutlineView?
+	var _links: [BaseLink] = []
+	
+	override init() {
+	}
+	
+	func setView(view: NSOutlineView) {
+		_view = view
+		_view!.delegate = self
+		_view!.dataSource = self
+	}
+	
+	func setLinks(links: [BaseLink]) {
+		self._links = links
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		return _links.count
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		return _links[index]
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		return false
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+		var view: NSTableCellView? = nil
+		
+		var text = "error"
+		
+		if let _ = item as? Link {
+			text = "Link"
+		}
+		if let _ = item as? Branch {
+			text = "Branch"
+		}
+		if let _ = item as? Switch {
+			text = "Switch"
+		}
+		
+		if tableColumn?.identifier.rawValue == "LinkCell" {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "LinkCell"), owner: self) as? NSTableCellView
+			if let textField = view?.textField {
+				textField.stringValue = text
+			}
+		}
+		return view
 	}
 }

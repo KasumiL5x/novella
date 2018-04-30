@@ -211,6 +211,11 @@ class FlowGraph {
 		}
 		_exits.remove(at: idx)
 	}
+	
+	// MARK: Simulation
+	func canSimulate() -> Bool {
+		return _nodes.count > 0 && _entry != nil
+	}
 }
 
 // MARK: Pathable
