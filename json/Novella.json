@@ -171,7 +171,7 @@
 				},
 				"origin": { "$ref": "#/definitions/uuid" }
 			},
-			"required": ["uuid", "linktype", "origin"],
+			"required": ["uuid", "linktype"],
 			// MARK: link-dependencies
 			"dependencies": {
 				// handle each concrete link's schema based on linktype
@@ -182,8 +182,7 @@
 							"properties": {
 								"linktype": { "enum": ["link"] },
 								"transfer": { "$ref": "#/definitions/transfer" }
-							},
-							"required": ["transfer"]
+							}
 						},
 						// branch
 						{
@@ -191,8 +190,7 @@
 								"linktype": { "enum": ["branch"] },
 								"ttransfer": { "$ref": "#/definitions/transfer" },
 								"ftransfer": { "$ref": "#/definitions/transfer" }
-							},
-							"required": ["ttransfer", "ftransfer"]
+							}
 						}
 					]
 				}

@@ -186,7 +186,7 @@ extension Story {
 					],
 					"origin": [ "$ref": "#/definitions/uuid" ]
 				],
-				"required": ["uuid", "linktype", "origin"],
+				"required": ["uuid", "linktype"],
 				// MARK: link-dependencies
 				"dependencies": [
 					// handle each concrete link's schema based on linktype
@@ -197,8 +197,7 @@ extension Story {
 								"properties": [
 									"linktype": [ "enum": ["link"] ],
 									"transfer": [ "$ref": "#/definitions/transfer" ]
-								],
-								"required": ["transfer"]
+								]
 							],
 							// branch
 							[
@@ -206,8 +205,7 @@ extension Story {
 									"linktype": [ "enum": ["branch"] ],
 									"ttransfer": [ "$ref": "#/definitions/transfer" ],
 									"ftransfer": [ "$ref": "#/definitions/transfer" ]
-								],
-								"required": ["ttransfer", "ftransfer"]
+								]
 							]
 						]
 					]
@@ -632,35 +630,50 @@ extension Story {
 		
 		// 7. read all links
 		for curr in json["links"].arrayValue {
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let origin = curr["origin"].stringValue
-			guard let originLinkable = story.findBy(uuid: origin) as? Linkable else {
-				throw Errors.invalid("ailed to find Linkable by UUID.")
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			
+			var origin: Linkable? = nil
+			if let originID = curr["origin"].string {
+				origin = story.findBy(uuid: originID) as? Linkable
+				if origin == nil {
+					errors.append("Unable to find Linkable by UUID (\(originID)) when setting the origin of a BaseLink (\(uuid.uuidString)).")
+				}
 			}
 			
-			switch curr["linktype"].stringValue {
+			switch curr["linktype"].string! {
 			case "link":
 				let link = story.makeLink(uuid: uuid)
-				link.setOrigin(origin: originLinkable)
-				let transfer = curr["transfer"].dictionaryValue
-				let dest = transfer["destination"]!.stringValue
-				guard let destLinkable = story.findBy(uuid: dest) as? Linkable else {
-					throw Errors.invalid("Failed to find Linkable by UUID.")
+				
+				link.setOrigin(origin: origin)
+				
+				if let transfer = curr["transfer"].dictionary {
+					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? Linkable {
+						link._transfer.setDestination(dest: destination)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
+					}
 				}
-				link._transfer.setDestination(dest: destLinkable)
 				break
 			case "branch":
 				let branch = story.makeBranch(uuid: uuid)
-				branch.setOrigin(origin: originLinkable)
-				let truetransfer = curr["ttransfer"].dictionaryValue
-				let falsetransfer = curr["ftransfer"].dictionaryValue
-				let trueDest = truetransfer["destination"]!.stringValue
-				let falseDest = falsetransfer["destination"]!.stringValue
-				guard let trueLinkable = story.findBy(uuid: trueDest) as? Linkable, let falseLinkable = story.findBy(uuid: falseDest) as? Linkable else {
-					throw Errors.invalid("Failed to find Linkable by UUID.")
+				
+				branch.setOrigin(origin: origin)
+				
+				if let trueTransfer = curr["ttransfer"].dictionary {
+					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? Linkable {
+						branch._trueTransfer.setDestination(dest: destination)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
+					}
 				}
-				branch._trueTransfer.setDestination(dest: trueLinkable)
-				branch._falseTransfer.setDestination(dest: falseLinkable)
+				
+				if let falseTransfer = curr["ftransfer"].dictionary {
+					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? Linkable {
+						branch._falseTransfer.setDestination(dest: destination)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
+					}
+				}
 				break
 			case "switch":
 				fatalError("Not yet implemented.")
@@ -685,13 +698,13 @@ extension Story {
 		
 		// 9. assign folders and graphs to story's local stuff
 		for curr in json["story"]["folders"].arrayValue {
-			guard let folder = story.findBy(uuid: curr.stringValue) as? Folder else {
+			guard let folder = story.findBy(uuid: curr.string!) as? Folder else {
 				throw Errors.invalid("Failed to find Folder by UUID.")
 			}
 			try! story.add(folder: folder)
 		}
 		for curr in json["story"]["graphs"].arrayValue {
-			guard let graph = story.findBy(uuid: curr.stringValue) as? FlowGraph else {
+			guard let graph = story.findBy(uuid: curr.string!) as? FlowGraph else {
 				throw Errors.invalid("Failed to find FlowGraph by UUID.")
 			}
 			try! story.add(graph: graph)
