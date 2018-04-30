@@ -62,19 +62,19 @@
 		// MARK: variable
 		"variable": {
 			"properties": {
-				"name": { "$ref": "#/definitions/name" },
 				"uuid": { "$ref": "#/definitions/uuid" },
-				"synopsis": { "type": "string" },
+				"name": { "$ref": "#/definitions/name" },
 				// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
 				"datatype": {
 					"type": "string",
 					"enum": ["boolean", "integer", "double"]
 				},
-				"constant": { "type": "boolean" },
 				"value": { "$ref": "#/definitions/value" },
-				"initialValue": { "$ref": "#/definitions/value" }
+				"initialValue": { "$ref": "#/definitions/value" },
+				"constant": { "type": "boolean" },
+				"synopsis": { "type": "string" }
 			},
-			"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
+			"required": ["uuid", "name", "datatype"],
 			// MARK: variable-dependencies
 			"dependencies": {
 				// validate initialValue/value type matches datatype

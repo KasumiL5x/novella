@@ -77,19 +77,19 @@ extension Story {
 			// MARK: variable
 			"variable": [
 				"properties": [
-					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
-					"synopsis": [ "type": "string" ],
+					"name": [ "$ref": "#/definitions/name" ],
 					// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
 					"datatype": [
 						"type": "string",
 						"enum": ["boolean", "integer", "double"]
 					],
-					"constant": [ "type": "boolean" ],
 					"value": [ "$ref": "#/definitions/value" ],
-					"initialValue": [ "$ref": "#/definitions/value" ]
+					"initialValue": [ "$ref": "#/definitions/value" ],
+					"constant": [ "type": "boolean" ],
+					"synopsis": [ "type": "string" ]
 				],
-				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
+				"required": ["uuid", "name", "datatype"],
 				// MARK: variable-dependencies
 				"dependencies": [
 					// validate initialValue/value type matches datatype
@@ -305,6 +305,7 @@ extension Story {
 		// END definitions
 	]
 
+
 	
 	func toJSON() throws -> String {
 		var root: JSONDict = [:]
@@ -470,24 +471,46 @@ extension Story {
 		
 		// 1. read all variables
 		for curr in json["variables"].arrayValue {
-			let name = curr["name"].stringValue
-			let dataType = DataType.fromString(str: curr["datatype"].stringValue)
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let variable = story.makeVariable(name: name, type: dataType, uuid: uuid)
-			variable.setSynopsis(synopsis: curr["synopsis"].stringValue)
-			variable.setConstant(const: curr["constant"].boolValue)
+			let dataType = DataType.fromString(str: curr["datatype"].string!)
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
+			
+			let synopsis = curr["synopsis"]
+			if synopsis != JSON.null && synopsis.string != nil {
+				variable.setSynopsis(synopsis: synopsis.string!)
+			}
+			
+			let constant = curr["constant"]
+			if constant != JSON.null && constant.bool != nil {
+				variable.setConstant(const: constant.bool!)
+			}
+			
+			let value = curr["value"]
+			let initialValue = curr["initialValue"]
 			switch variable._type {
 			case .boolean:
-				try! variable.setValue(val: curr["value"].boolValue)
-				try! variable.setInitialValue(val: curr["value"].boolValue)
+				if value != JSON.null && value.bool != nil {
+					try! variable.setValue(val: value.bool!)
+				}
+				if initialValue != JSON.null && initialValue.bool != nil {
+					try! variable.setInitialValue(val: initialValue.bool!)
+				}
 				break
 			case .integer:
-				try! variable.setValue(val: curr["value"].intValue)
-				try! variable.setInitialValue(val: curr["value"].intValue)
+				if value != JSON.null && value.int != nil {
+					try! variable.setValue(val: value.int!)
+				}
+				if initialValue != JSON.null && initialValue.int != nil {
+					try! variable.setInitialValue(val: initialValue.int!)
+				}
 				break
 			case .double:
-				try! variable.setValue(val: curr["value"].doubleValue)
-				try! variable.setInitialValue(val: curr["value"].doubleValue)
+				if value != JSON.null && value.double != nil {
+					try! variable.setValue(val: value.double!)
+				}
+				if initialValue != JSON.null && initialValue.double != nil {
+					try! variable.setInitialValue(val: initialValue.double!)
+				}
 				break
 			}
 		}
