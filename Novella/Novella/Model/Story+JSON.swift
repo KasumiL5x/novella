@@ -476,40 +476,38 @@ extension Story {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
 			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
 			
-			let synopsis = curr["synopsis"]
-			if synopsis != JSON.null && synopsis.string != nil {
-				variable.setSynopsis(synopsis: synopsis.string!)
+			if let synopsis = curr["synopsis"].string {
+				variable.setSynopsis(synopsis: synopsis)
 			}
 			
-			let constant = curr["constant"]
-			if constant != JSON.null && constant.bool != nil {
-				variable.setConstant(const: constant.bool!)
+			if let constant = curr["constant"].bool {
+				variable.setConstant(const: constant)
 			}
 			
 			let value = curr["value"]
 			let initialValue = curr["initialValue"]
 			switch variable._type {
 			case .boolean:
-				if value != JSON.null && value.bool != nil {
+				if value != JSON.null {
 					try! variable.setValue(val: value.bool!)
 				}
-				if initialValue != JSON.null && initialValue.bool != nil {
+				if initialValue != JSON.null {
 					try! variable.setInitialValue(val: initialValue.bool!)
 				}
 				break
 			case .integer:
-				if value != JSON.null && value.int != nil {
+				if value != JSON.null {
 					try! variable.setValue(val: value.int!)
 				}
-				if initialValue != JSON.null && initialValue.int != nil {
+				if initialValue != JSON.null {
 					try! variable.setInitialValue(val: initialValue.int!)
 				}
 				break
 			case .double:
-				if value != JSON.null && value.double != nil {
+				if value != JSON.null {
 					try! variable.setValue(val: value.double!)
 				}
-				if initialValue != JSON.null && initialValue.double != nil {
+				if initialValue != JSON.null {
 					try! variable.setInitialValue(val: initialValue.double!)
 				}
 				break
@@ -521,9 +519,8 @@ extension Story {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
 			let folder = story.makeFolder(name: curr["name"].string!, uuid: uuid)
 			
-			let synopsis = curr["synopsis"]
-			if synopsis != JSON.null && synopsis.string != nil {
-				folder.setSynopsis(synopsis: synopsis.string!)
+			if let synopsis = curr["synopsis"].string {
+				folder.setSynopsis(synopsis: synopsis)
 			}
 			
 			// 2.1 link variables to folders by uuid
@@ -556,19 +553,16 @@ extension Story {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
 				
-				let content = curr["content"]
-				if content != JSON.null && content.string != nil {
-					dialog.setContent(content: content.string!)
+				if let content = curr["content"].string {
+					dialog.setContent(content: content)
 				}
 				
-				let preview = curr["preview"]
-				if preview != JSON.null && preview.string != nil {
-					dialog.setPreview(preview: preview.string!)
+				if let preview = curr["preview"].string {
+					dialog.setPreview(preview: preview)
 				}
 				
-				let directions = curr["directions"]
-				if directions != JSON.null && preview.string != nil {
-					dialog.setDirections(directions: directions.string!)
+				if let directions = curr["directions"].string {
+					dialog.setDirections(directions: directions)
 				}
 				break
 			case "delivery":
