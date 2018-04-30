@@ -236,8 +236,7 @@
 								"preview": { "type": "string" },
 								"directions": { "type": "string" }
 								// TODO: dialog properties
-							},
-							"required": ["content", "preview", "directions"]
+							}
 						},
 						// delivery
 						{

@@ -251,8 +251,7 @@ extension Story {
 									"preview": [ "type": "string" ],
 									"directions": [ "type": "string" ]
 									// TODO: dialog properties
-								],
-								"required": ["content", "preview", "directions"]
+								]
 							],
 							// delivery
 							[
@@ -552,13 +551,25 @@ extension Story {
 		
 		// 3. read all nodes
 		for curr in json["nodes"].arrayValue {
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			switch curr["nodetype"].stringValue {
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
-				dialog.setContent(content: curr["content"].stringValue)
-				dialog.setPreview(preview: curr["preview"].stringValue)
-				dialog.setDirections(directions: curr["directions"].stringValue)
+				
+				let content = curr["content"]
+				if content != JSON.null && content.string != nil {
+					dialog.setContent(content: content.string!)
+				}
+				
+				let preview = curr["preview"]
+				if preview != JSON.null && preview.string != nil {
+					dialog.setPreview(preview: preview.string!)
+				}
+				
+				let directions = curr["directions"]
+				if directions != JSON.null && preview.string != nil {
+					dialog.setDirections(directions: directions.string!)
+				}
 				break
 			case "delivery":
 				fatalError("Not yet implemented.")
