@@ -218,7 +218,8 @@
 				"nodetype": {
 					"type": "string",
 					"enum": ["dialog", "delivery", "cutscene", "context"]
-				}
+				},
+				"name": { "$ref": "#/definitions/name" }
 			},
 			"required": ["uuid", "nodetype"],
 			// MARK: node-dependencies

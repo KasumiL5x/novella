@@ -233,7 +233,8 @@ extension Story {
 					"nodetype": [
 						"type": "string",
 						"enum": ["dialog", "delivery", "cutscene", "context"]
-					]
+					],
+					"name": [ "$ref": "#/definitions/name" ]
 				],
 				"required": ["uuid", "nodetype"],
 				// MARK: node-dependencies
@@ -396,6 +397,7 @@ extension Story {
 		for curr in _allNodes {
 			var entry: JSONDict = [:]
 			entry["uuid"] = curr._uuid.uuidString
+			entry["name"] = curr._name
 			
 			if let asDialog = curr as? Dialog {
 				entry["nodetype"] = "dialog"
@@ -547,9 +549,16 @@ extension Story {
 		// 3. read all nodes
 		for curr in json["nodes"].arrayValue {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			
+			let name = curr["name"].string
+			
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
+				
+				if name != nil {
+					dialog.Name = name!
+				}
 				
 				if let content = curr["content"].string {
 					dialog.setContent(content: content)

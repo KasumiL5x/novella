@@ -313,11 +313,31 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		
 		var text = "error"
 		
-		if let _ = item as? Link {
-			text = "Link"
+		let origin = (item as! BaseLink)._origin
+		var originName = "none"
+		if let graph = origin as? FlowGraph { originName = graph._name }
+		if let node = origin as? FlowNode {	originName = node._name }
+		
+		
+		if let asLink = item as? Link {
+			let dest = asLink._transfer._destination
+			var destName = "none"
+			if let graph = dest as? FlowGraph { destName = graph._name }
+			if let node = dest as? FlowNode { destName = node._name }
+			
+			text = "Link (\(originName)->\(destName))"
 		}
-		if let _ = item as? Branch {
-			text = "Branch"
+		if let asBranch = item as? Branch {
+			let tDest = asBranch._trueTransfer._destination
+			var tDestName = "none"
+			if let graph = tDest as? FlowGraph { tDestName = graph._name }
+			if let node = tDest as? FlowNode { tDestName = node._name }
+			let fDest = asBranch._falseTransfer._destination
+			var fDestName = "none"
+			if let graph = fDest as? FlowGraph { fDestName = graph._name }
+			if let node = fDest as? FlowNode { fDestName = node._name }
+			
+			text = "Branch (\(originName)->T(\(tDestName)); F(\(fDestName)))"
 		}
 		if let _ = item as? Switch {
 			text = "Switch"
