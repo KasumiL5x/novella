@@ -168,6 +168,10 @@ extension Story {
 		_allIdentifiables.append(dialog)
 		return dialog
 	}
+	
+	func getLinksFrom(linkable: Linkable) -> [BaseLink] {
+		return _allLinks.filter({$0._origin?.UUID == linkable.UUID})
+	}
 }
 
 // MARK: Debug
