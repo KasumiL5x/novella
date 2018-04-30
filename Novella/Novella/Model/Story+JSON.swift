@@ -698,16 +698,19 @@ extension Story {
 		
 		// 9. assign folders and graphs to story's local stuff
 		for curr in json["story"]["folders"].arrayValue {
-			guard let folder = story.findBy(uuid: curr.string!) as? Folder else {
-				throw Errors.invalid("Failed to find Folder by UUID.")
+			if let folder = story.findBy(uuid: curr.string!) as? Folder {
+				try! story.add(folder: folder)
+			} else {
+				errors.append("Unable to find Folder by UUID (\(curr.string!)) when adding to Story.")
 			}
-			try! story.add(folder: folder)
+			
 		}
 		for curr in json["story"]["graphs"].arrayValue {
-			guard let graph = story.findBy(uuid: curr.string!) as? FlowGraph else {
-				throw Errors.invalid("Failed to find FlowGraph by UUID.")
+			if let graph = story.findBy(uuid: curr.string!) as? FlowGraph {
+				try! story.add(graph: graph)
+			} else {
+				errors.append("Unable to find FlowGraph by UUID (\(curr.string!)) when adding to Story.")
 			}
-			try! story.add(graph: graph)
 		}
 		
 		// ERROR1: Investigate making almost everything except core properties optional and handling in code
