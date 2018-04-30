@@ -33,8 +33,7 @@ class Simulator {
 			return false
 		}
 		
-		// TODO: Technically the entry point can be another graph, but i should somehow add a constraint to resolve it to a node eventually?
-		_currentNode = graph._entry as! FlowNode
+		_currentNode = resolveLinkable(node: graph._entry)
 		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(linkable: _currentNode!))
 		
 		return true
@@ -57,11 +56,39 @@ class Simulator {
 		}
 		
 		guard let destNode = _story?.findBy(uuid: destinationUUID ?? "") as? FlowNode else {
-			// TODO: Again, handle graphs (by taking their entry point; see above)
 			throw Errors.invalid("Destination node was not found or was not a FlowNode.")
 		}
 		
-		_currentNode = destNode
+		_currentNode = resolveLinkable(node: destNode)
 		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(linkable: _currentNode!))
+	}
+	
+	// keeps traversing flow graph entry points until the first flow node is found
+	func resolveLinkable(node: Linkable?) -> FlowNode {
+		if node == nil {
+			fatalError("Tried to resolve a nil Linkable.")
+		}
+		
+		// return self if it's already a flow node - the most common case
+		if let flowNode = node as? FlowNode {
+			return flowNode
+		}
+		
+		// for the cases where an entry point is also a graph, we need to resolve the entry until we get a node
+		if let flowGraph = node as? FlowGraph {
+			// entry is a node - return it
+			if let entry = flowGraph._entry as? FlowNode {
+				return entry
+			}
+			
+			if flowGraph._entry == nil {
+				fatalError("Traversing FlowGraphs' entry points resulted in a graph; it must end in a FlowNode.")
+			}
+			
+			// otherwise keep processing
+			return resolveLinkable(node: flowGraph._entry!)
+		}
+		
+		fatalError("Could not resolve Linkable.")
 	}
 }
