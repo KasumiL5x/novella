@@ -129,8 +129,8 @@ extension Story {
 			// MARK: folder
 			"folder": [
 				"properties": [
-					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"name": [ "$ref": "#/definitions/name" ],
 					"subfolders": [
 						"type": "array",
 						"items": [ "$ref": "#/definitions/uuid" ]
@@ -140,7 +140,7 @@ extension Story {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["name", "uuid"]
+				"required": ["uuid", "name"]
 			],
 			// END folder
 			
