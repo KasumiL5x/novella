@@ -384,7 +384,7 @@ extension Story {
 				// TODO: [value:Transfer].
 			}
 			else {
-				throw Errors.invalid("Should not have a BaseLink at all.")
+				fatalError("Should never encounter a BaseLink.")
 			}
 
 			links.append(entry)
@@ -573,7 +573,7 @@ extension Story {
 				fatalError("Not yet implemented.")
 				break
 			default:
-				throw Errors.invalid("Invalid node type.")
+				fatalError("Invalid node type.")
 			}
 		}
 		
@@ -679,7 +679,7 @@ extension Story {
 				fatalError("Not yet implemented.")
 				break
 			default:
-				throw Errors.invalid("Invalid link type.")
+				fatalError("Invalid link type.")
 			}
 		}
 		
@@ -712,9 +712,6 @@ extension Story {
 				errors.append("Unable to find FlowGraph by UUID (\(curr.string!)) when adding to Story.")
 			}
 		}
-		
-		// ERROR1: Investigate making almost everything except core properties optional and handling in code
-		// ERROR1: Remove throws (except for fatal errors) and instead build a list of string errors and print/return them all at the end
 		
 		return (story, errors)
 	}

@@ -51,17 +51,22 @@ class ReaderViewController: NSViewController {
 		
 		// parse contents into a Story
 		do {
-			_story = try Story.fromJSON(str: contents).story
+			let (story, errors) = try Story.fromJSON(str: contents)
+			_story = story
+			
+			for e in errors {
+				print(e)
+			}
+			
+			_story?.debugPrint(global: true)
 		} catch {
 			print("Failed to parse JSON.")
 			return
 		}
 		
+		
 		// open the simulator
 		_simulator = Simulator(story: _story!, controller: self)
-		
-		_story?.debugPrint(global: true)
-		
 		outlineView.reloadData()
 	}
 	
