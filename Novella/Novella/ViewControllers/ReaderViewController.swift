@@ -249,6 +249,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 	
 	func outlineViewSelectionDidChange(_ notification: Notification) {
 		if outlineView.selectedRow == -1 {
+			infoLabel.stringValue = ""
 			return
 		}
 		let item = outlineView.item(atRow: outlineView.selectedRow)
@@ -256,13 +257,58 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		var text = "Unhandled!"
 
 		if let variable = item as? Variable {
-			text = "A <b>variable</b> named \(variable._name) storing a \(variable._type.stringValue)."
+			text = "<b>VARIABLE</b><br/>"
+			text += "<b>UUID: </b>\(variable._uuid.uuidString)</br>"
+			text += "<b>Name: </b>\(variable._name)<br/>"
+			text += "<b>Synopsis: </b>\(variable._synopsis)<br/>"
+			text += "<b>Type: </b>\(variable._type.stringValue)<br/>"
+			text += "<b>Value: </b>\(variable._value)<br/>"
+			text += "<b>Initial Value: </b>\(variable._initialValue)<br/>"
+			text += "<b>Constant: </b>\(variable._constant)<br/>"
+			text += "<b>Folder: </b>\(variable._folder?._name ?? "none")<br/>"
 		}
 		if let folder = item as? Folder {
-			text = "A <b>folder</b> named \(folder._name) with \(folder._folders.count) subfolders and \(folder._variables.count) variables."
+			text = "<b>FOLDER</b><br/>"
+			text += "<b>UUID: </b>\(folder._uuid.uuidString)<br/>"
+			text += "<b>Name: </b>\(folder._name)<br/>"
+			text += "<b>Parent: </b>\(folder._parent?._name ?? "none")<br/>"
+			text += "<b>Subfolders: </b>\(folder._folders.count)<br/>"
+			text += "<b>Variables: </b>\(folder._variables.count)<br/>"
 		}
 		if let graph = item as? FlowGraph {
-			text = "A <b>graph</b> named \(graph._name)."
+			text = "<b>FLOWGRAPH</b><br/>"
+			text += "<b>UUID: </b>\(graph._uuid.uuidString)<br/>"
+			text += "<b>Name: </b>\(graph._name)<br/>"
+			text += "<b>Subgraphs: </b>\(graph._graphs.count)<br/>"
+			text += "<b>Nodes: </b>\(graph._nodes.count)<br/>"
+			text += "<b>Links: </b>\(graph._links.count)<br/>"
+			text += "<b>Listeners: </b>\(graph._listeners.count)<br/>"
+			text += "<b>Exits: </b>\(graph._exits.count)<br/>"
+			text += "<b>Entry: </b>\(graph._entry?.UUID.uuidString ?? "none")<br/>"
+		}
+		if let node = item as? FlowNode {
+			text = "<b>FLOWNODE</b><br/>"
+			text += "<b>UUID: </b>\(node._uuid.uuidString)<br/>"
+			text += "<b>Name: </b>\(node._name)<br/>"
+			if let dlg = node as? Dialog {
+				text += "<b>Type: </b>Dialog<br/>"
+				text += "<b>Preview: </b>\(dlg._preview)<br/>"
+				text += "<b>Content: </b>\(dlg._content)<br/>"
+				text += "<b>Directions: </b>\(dlg._directions)<br/>"
+			}
+		}
+		if let link = item as? Link {
+			text = "<b>LINK</b><br/>"
+			text += "<b>UUID: </b>\(link._uuid.uuidString)<br/>"
+			text += "<b>Origin: </b>\(link._origin?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>Destination: </b>\(link._transfer._destination?.UUID.uuidString ?? "none")<br/>"
+		}
+		if let branch = item as? Branch {
+			text = "<b>BRANCH</b><br/>"
+			text += "<b>UUID: </b>\(branch._uuid.uuidString)<br/>"
+			text += "<b>Origin: </b>\(branch._origin?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>True Destination: </b>\(branch._trueTransfer._destination?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>False Destination: </b>\(branch._falseTransfer._destination?.UUID.uuidString ?? "none")<br/>"
 		}
 
 		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
