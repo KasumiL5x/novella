@@ -147,8 +147,8 @@ extension Story {
 			// MARK: graph
 			"graph": [
 				"properties": [
-					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"name": [ "$ref": "#/definitions/name" ],
 					"entry": [ "$ref": "#/definitions/uuid" ],
 					"subgraphs": [
 						"type": "array",
@@ -171,7 +171,7 @@ extension Story {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["name", "uuid", "entry", "subgraphs", "nodes", "links", "listeners", "exits"]
+				"required": ["uuid", "name"]
 			],
 			// END graph
 			
@@ -587,29 +587,47 @@ extension Story {
 		
 		// 6. read all graphs
 		for curr in json["graphs"].arrayValue {
-			let name = curr["name"].stringValue
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let graph = story.makeGraph(name: name, uuid: uuid)
+			let graph = story.makeGraph(name: curr["name"].string!, uuid: uuid)
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {
-				guard let node = story.findBy(uuid: child.stringValue) as? FlowNode else {
-					throw Errors.invalid("Failed to find FlowNode by UUID.")
+				if let node = story.findBy(uuid: child.string!) as? FlowNode {
+					try! graph.add(node: node)
+				} else {
+					errors.append("Unable to find FlowNode by UUID (\(child.string!) when adding to FlowGraph (\(uuid.uuidString)).")
 				}
-				try! graph.add(node: node)
 			}
 			
-			// 6.2 link entry by uuid
-			guard let entryLinkable = story.findBy(uuid: curr["entry"].stringValue) as? Linkable else {
-				throw Errors.invalid("Failed to find Linkable by UUID.")
-			}
-			try! graph.setEntry(entry: entryLinkable)
-			
-			// 6.3 link all listeners by UUID
+			// 6.2 link all listeners by UUID
 			// TODO: Once listeners are parsed.
 			
-			// 6.4 link all exits by UUID
+			// 6.3 link all exits by UUID
 			// TODO: Once exits are parsed.
+		}
+		
+		// 6.4 link all subgraphs by uuid
+		for curr in json["graphs"].arrayValue {
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			for child in curr["subgraphs"].arrayValue {
+				if let subgraph = story.findBy(uuid: child.string!) as? FlowGraph {
+					try! graph.add(graph: subgraph)
+				} else {
+					errors.append("Unable to find FlowGraph by UUID (\(child.string!)) when adding to FlowGraph (\(curr["uuid"].string!)).")
+				}
+			}
+		}
+		
+		// 6.5 link all entry points by uuid (done after as an entry could be a subgraph)
+		for curr in json["graphs"].arrayValue {
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			if let entry = curr["entry"].string {
+				if let linkable = story.findBy(uuid: entry) as? Linkable {
+					try! graph.setEntry(entry: linkable)
+				} else {
+					errors.append("Unable to find Linkable by UUID (\(entry)) when setting FlowGraph's entry (\(graph._uuid.uuidString)).")
+				}
+			}
 		}
 		
 		// 7. read all links
@@ -654,13 +672,14 @@ extension Story {
 		
 		// 8. add links to graphs by uuid
 		for curr in json["graphs"].arrayValue {
-			let graph = story.findBy(uuid: curr["uuid"].stringValue) as! FlowGraph
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
 			
 			for child in curr["links"].arrayValue {
-				guard let link = story.findBy(uuid: child.stringValue) as? BaseLink else {
-					throw Errors.invalid("Failed to find BaseLink by UUID.")
+				if let link = story.findBy(uuid: child.string!) as? BaseLink {
+					try! graph.add(link: link)
+				} else {
+					errors.append("Unable to find BaseLink by UUID (\(child.string!)) when adding to FlowGraph (\(graph._uuid.uuidString)).")
 				}
-				try! graph.add(link: link)
 			}
 		}
 		

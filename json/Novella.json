@@ -132,8 +132,8 @@
 		// MARK: graph
 		"graph": {
 			"properties": {
-				"name": { "$ref": "#/definitions/name" },
 				"uuid": { "$ref": "#/definitions/uuid" },
+				"name": { "$ref": "#/definitions/name" },
 				"entry": { "$ref": "#/definitions/uuid" },
 				"subgraphs": {
 					"type": "array",
@@ -156,7 +156,7 @@
 					"items": { "$ref": "#/definitions/uuid" }
 				}
 			},
-			"required": ["name", "uuid", "entry", "subgraphs", "nodes", "links", "listeners", "exits"]
+			"required": ["uuid", "name"]
 		},
 		// END graph
 
