@@ -532,19 +532,21 @@ extension Story {
 				if let variable = story.findBy(uuid: child.string!) as? Variable {
 					try! folder.add(variable: variable)
 				} else {
-					errors.append("Unable to find Variable by UUID (\(child.string!) when dding to Folder (\(uuid.uuidString)).")
+					errors.append("Unable to find Variable by UUID (\(child.string!) when adding to Folder (\(uuid.uuidString)).")
 				}
 			}
 		}
 		
 		// 2.2 link subfolders to folders by uuid
 		for curr in json["folders"].arrayValue {
-			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder
+			let folder = story.findBy(uuid: curr["uuid"].string!) as! Folder
 			for child in curr["subfolders"].arrayValue {
-				guard let subfolder = story.findBy(uuid: child.stringValue) as? Folder else {
-					throw Errors.invalid("Failed to find Folder by UUID.")
+				if let subfolder = story.findBy(uuid: child.string!) as? Folder {
+					try! folder.add(folder: subfolder)
+				} else {
+					errors.append("Unable to find Folder by UUID (\(child.string!)) when adding to Folder (\(curr["uuid"].string!)).")
 				}
-				try! folder.add(folder: subfolder)
+				
 			}
 		}
 		
