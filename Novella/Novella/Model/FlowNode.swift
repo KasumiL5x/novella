@@ -10,10 +10,15 @@ import Foundation
 
 class FlowNode {
 	let _uuid: NSUUID
+	var _name: String
 	
 	init(uuid: NSUUID) {
 		self._uuid = uuid
+		self._name = ""
 	}
+	
+	// MARK: Properties
+	var Name: String {get{ return _name } set{ _name = newValue }}
 }
 
 // MARK: Identifiable

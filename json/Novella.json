@@ -62,19 +62,19 @@
 		// MARK: variable
 		"variable": {
 			"properties": {
-				"name": { "$ref": "#/definitions/name" },
 				"uuid": { "$ref": "#/definitions/uuid" },
-				"synopsis": { "type": "string" },
+				"name": { "$ref": "#/definitions/name" },
 				// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
 				"datatype": {
 					"type": "string",
 					"enum": ["boolean", "integer", "double"]
 				},
-				"constant": { "type": "boolean" },
 				"value": { "$ref": "#/definitions/value" },
-				"initialValue": { "$ref": "#/definitions/value" }
+				"initialValue": { "$ref": "#/definitions/value" },
+				"constant": { "type": "boolean" },
+				"synopsis": { "type": "string" }
 			},
-			"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
+			"required": ["uuid", "name", "datatype"],
 			// MARK: variable-dependencies
 			"dependencies": {
 				// validate initialValue/value type matches datatype
@@ -114,8 +114,8 @@
 		// MARK: folder
 		"folder": {
 			"properties": {
-				"name": { "$ref": "#/definitions/name" },
 				"uuid": { "$ref": "#/definitions/uuid" },
+				"name": { "$ref": "#/definitions/name" },
 				"subfolders": {
 					"type": "array",
 					"items": { "$ref": "#/definitions/uuid" }
@@ -125,15 +125,15 @@
 					"items": { "$ref": "#/definitions/uuid" }
 				}
 			},
-			"required": ["name", "uuid", "subfolders", "variables"]
+			"required": ["uuid", "name"]
 		},
 		// END folder
 
 		// MARK: graph
 		"graph": {
 			"properties": {
-				"name": { "$ref": "#/definitions/name" },
 				"uuid": { "$ref": "#/definitions/uuid" },
+				"name": { "$ref": "#/definitions/name" },
 				"entry": { "$ref": "#/definitions/uuid" },
 				"subgraphs": {
 					"type": "array",
@@ -156,7 +156,7 @@
 					"items": { "$ref": "#/definitions/uuid" }
 				}
 			},
-			"required": ["name", "uuid", "entry", "subgraphs", "nodes", "links", "listeners", "exits"]
+			"required": ["uuid", "name"]
 		},
 		// END graph
 
@@ -171,7 +171,7 @@
 				},
 				"origin": { "$ref": "#/definitions/uuid" }
 			},
-			"required": ["uuid", "linktype", "origin"],
+			"required": ["uuid", "linktype"],
 			// MARK: link-dependencies
 			"dependencies": {
 				// handle each concrete link's schema based on linktype
@@ -182,8 +182,7 @@
 							"properties": {
 								"linktype": { "enum": ["link"] },
 								"transfer": { "$ref": "#/definitions/transfer" }
-							},
-							"required": ["transfer"]
+							}
 						},
 						// branch
 						{
@@ -191,8 +190,7 @@
 								"linktype": { "enum": ["branch"] },
 								"ttransfer": { "$ref": "#/definitions/transfer" },
 								"ftransfer": { "$ref": "#/definitions/transfer" }
-							},
-							"required": ["ttransfer", "ftransfer"]
+							}
 						}
 					]
 				}
@@ -220,7 +218,8 @@
 				"nodetype": {
 					"type": "string",
 					"enum": ["dialog", "delivery", "cutscene", "context"]
-				}
+				},
+				"name": { "$ref": "#/definitions/name" }
 			},
 			"required": ["uuid", "nodetype"],
 			// MARK: node-dependencies
@@ -236,8 +235,7 @@
 								"preview": { "type": "string" },
 								"directions": { "type": "string" }
 								// TODO: dialog properties
-							},
-							"required": ["content", "preview", "directions"]
+							}
 						},
 						// delivery
 						{

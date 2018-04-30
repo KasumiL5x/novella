@@ -77,19 +77,19 @@ extension Story {
 			// MARK: variable
 			"variable": [
 				"properties": [
-					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
-					"synopsis": [ "type": "string" ],
+					"name": [ "$ref": "#/definitions/name" ],
 					// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
 					"datatype": [
 						"type": "string",
 						"enum": ["boolean", "integer", "double"]
 					],
-					"constant": [ "type": "boolean" ],
 					"value": [ "$ref": "#/definitions/value" ],
-					"initialValue": [ "$ref": "#/definitions/value" ]
+					"initialValue": [ "$ref": "#/definitions/value" ],
+					"constant": [ "type": "boolean" ],
+					"synopsis": [ "type": "string" ]
 				],
-				"required": ["name", "uuid", "synopsis", "datatype", "constant", "value", "initialValue"],
+				"required": ["uuid", "name", "datatype"],
 				// MARK: variable-dependencies
 				"dependencies": [
 					// validate initialValue/value type matches datatype
@@ -129,8 +129,8 @@ extension Story {
 			// MARK: folder
 			"folder": [
 				"properties": [
-					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"name": [ "$ref": "#/definitions/name" ],
 					"subfolders": [
 						"type": "array",
 						"items": [ "$ref": "#/definitions/uuid" ]
@@ -140,15 +140,15 @@ extension Story {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["name", "uuid", "subfolders", "variables"]
+				"required": ["uuid", "name"]
 			],
 			// END folder
 			
 			// MARK: graph
 			"graph": [
 				"properties": [
-					"name": [ "$ref": "#/definitions/name" ],
 					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"name": [ "$ref": "#/definitions/name" ],
 					"entry": [ "$ref": "#/definitions/uuid" ],
 					"subgraphs": [
 						"type": "array",
@@ -171,7 +171,7 @@ extension Story {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["name", "uuid", "entry", "subgraphs", "nodes", "links", "listeners", "exits"]
+				"required": ["uuid", "name"]
 			],
 			// END graph
 			
@@ -186,7 +186,7 @@ extension Story {
 					],
 					"origin": [ "$ref": "#/definitions/uuid" ]
 				],
-				"required": ["uuid", "linktype", "origin"],
+				"required": ["uuid", "linktype"],
 				// MARK: link-dependencies
 				"dependencies": [
 					// handle each concrete link's schema based on linktype
@@ -197,8 +197,7 @@ extension Story {
 								"properties": [
 									"linktype": [ "enum": ["link"] ],
 									"transfer": [ "$ref": "#/definitions/transfer" ]
-								],
-								"required": ["transfer"]
+								]
 							],
 							// branch
 							[
@@ -206,8 +205,7 @@ extension Story {
 									"linktype": [ "enum": ["branch"] ],
 									"ttransfer": [ "$ref": "#/definitions/transfer" ],
 									"ftransfer": [ "$ref": "#/definitions/transfer" ]
-								],
-								"required": ["ttransfer", "ftransfer"]
+								]
 							]
 						]
 					]
@@ -235,7 +233,8 @@ extension Story {
 					"nodetype": [
 						"type": "string",
 						"enum": ["dialog", "delivery", "cutscene", "context"]
-					]
+					],
+					"name": [ "$ref": "#/definitions/name" ]
 				],
 				"required": ["uuid", "nodetype"],
 				// MARK: node-dependencies
@@ -251,8 +250,7 @@ extension Story {
 									"preview": [ "type": "string" ],
 									"directions": [ "type": "string" ]
 									// TODO: dialog properties
-								],
-								"required": ["content", "preview", "directions"]
+								]
 							],
 							// delivery
 							[
@@ -304,6 +302,7 @@ extension Story {
 		]
 		// END definitions
 	]
+
 
 	
 	func toJSON() throws -> String {
@@ -386,7 +385,7 @@ extension Story {
 				// TODO: [value:Transfer].
 			}
 			else {
-				throw Errors.invalid("Should not have a BaseLink at all.")
+				fatalError("Should never encounter a BaseLink.")
 			}
 
 			links.append(entry)
@@ -398,6 +397,7 @@ extension Story {
 		for curr in _allNodes {
 			var entry: JSONDict = [:]
 			entry["uuid"] = curr._uuid.uuidString
+			entry["name"] = curr._name
 			
 			if let asDialog = curr as? Dialog {
 				entry["nodetype"] = "dialog"
@@ -441,7 +441,9 @@ extension Story {
 		return str
 	}
 	
-	static func fromJSON(str: String) throws -> Story {
+	static func fromJSON(str: String) throws -> (story: Story, errors: [String]) {
+		var errors: [String] = []
+		
 		// TODO: Should I handle name clashes of UUID internally just in case another UUID is copypasted by a user?
 		
 		// get Data from string
@@ -470,67 +472,105 @@ extension Story {
 		
 		// 1. read all variables
 		for curr in json["variables"].arrayValue {
-			let name = curr["name"].stringValue
-			let dataType = DataType.fromString(str: curr["datatype"].stringValue)
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let variable = story.makeVariable(name: name, type: dataType, uuid: uuid)
-			variable.setSynopsis(synopsis: curr["synopsis"].stringValue)
-			variable.setConstant(const: curr["constant"].boolValue)
+			let dataType = DataType.fromString(str: curr["datatype"].string!)
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
+			
+			if let synopsis = curr["synopsis"].string {
+				variable.setSynopsis(synopsis: synopsis)
+			}
+			
+			if let constant = curr["constant"].bool {
+				variable.setConstant(const: constant)
+			}
+			
+			let value = curr["value"]
+			let initialValue = curr["initialValue"]
 			switch variable._type {
 			case .boolean:
-				try! variable.setValue(val: curr["value"].boolValue)
-				try! variable.setInitialValue(val: curr["value"].boolValue)
+				if value != JSON.null {
+					try! variable.setValue(val: value.bool!)
+				}
+				if initialValue != JSON.null {
+					try! variable.setInitialValue(val: initialValue.bool!)
+				}
 				break
 			case .integer:
-				try! variable.setValue(val: curr["value"].intValue)
-				try! variable.setInitialValue(val: curr["value"].intValue)
+				if value != JSON.null {
+					try! variable.setValue(val: value.int!)
+				}
+				if initialValue != JSON.null {
+					try! variable.setInitialValue(val: initialValue.int!)
+				}
 				break
 			case .double:
-				try! variable.setValue(val: curr["value"].doubleValue)
-				try! variable.setInitialValue(val: curr["value"].doubleValue)
+				if value != JSON.null {
+					try! variable.setValue(val: value.double!)
+				}
+				if initialValue != JSON.null {
+					try! variable.setInitialValue(val: initialValue.double!)
+				}
 				break
 			}
 		}
 		
 		// 2. read all folders
 		for curr in json["folders"].arrayValue {
-			let name = curr["name"].stringValue
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let folder = story.makeFolder(name: name, uuid: uuid)
-			folder.setSynopsis(synopsis: curr["synopsis"].stringValue)
-		}
-		
-		// 2.1 link variables to folders by uuid
-		for curr in json["folders"].arrayValue {
-			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			let folder = story.makeFolder(name: curr["name"].string!, uuid: uuid)
+			
+			if let synopsis = curr["synopsis"].string {
+				folder.setSynopsis(synopsis: synopsis)
+			}
+			
+			// 2.1 link variables to folders by uuid
 			for child in curr["variables"].arrayValue {
-				guard let variable = story.findBy(uuid: child.stringValue) as? Variable else {
-					throw Errors.invalid("Failed to find Variable by UUID.")
+				if let variable = story.findBy(uuid: child.string!) as? Variable {
+					try! folder.add(variable: variable)
+				} else {
+					errors.append("Unable to find Variable by UUID (\(child.string!) when adding to Folder (\(uuid.uuidString)).")
 				}
-				try! folder.add(variable: variable)
 			}
 		}
 		
 		// 2.2 link subfolders to folders by uuid
 		for curr in json["folders"].arrayValue {
-			let folder = story.findBy(uuid: curr["uuid"].stringValue) as! Folder
+			let folder = story.findBy(uuid: curr["uuid"].string!) as! Folder
 			for child in curr["subfolders"].arrayValue {
-				guard let subfolder = story.findBy(uuid: child.stringValue) as? Folder else {
-					throw Errors.invalid("Failed to find Folder by UUID.")
+				if let subfolder = story.findBy(uuid: child.string!) as? Folder {
+					try! folder.add(folder: subfolder)
+				} else {
+					errors.append("Unable to find Folder by UUID (\(child.string!)) when adding to Folder (\(curr["uuid"].string!)).")
 				}
-				try! folder.add(folder: subfolder)
+				
 			}
 		}
 		
 		// 3. read all nodes
 		for curr in json["nodes"].arrayValue {
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			switch curr["nodetype"].stringValue {
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			
+			let name = curr["name"].string
+			
+			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
-				dialog.setContent(content: curr["content"].stringValue)
-				dialog.setPreview(preview: curr["preview"].stringValue)
-				dialog.setDirections(directions: curr["directions"].stringValue)
+				
+				if name != nil {
+					dialog.Name = name!
+				}
+				
+				if let content = curr["content"].string {
+					dialog.setContent(content: content)
+				}
+				
+				if let preview = curr["preview"].string {
+					dialog.setPreview(preview: preview)
+				}
+				
+				if let directions = curr["directions"].string {
+					dialog.setDirections(directions: directions)
+				}
 				break
 			case "delivery":
 				fatalError("Not yet implemented.")
@@ -542,7 +582,7 @@ extension Story {
 				fatalError("Not yet implemented.")
 				break
 			default:
-				throw Errors.invalid("Invalid node type.")
+				fatalError("Invalid node type.")
 			}
 		}
 		
@@ -554,100 +594,134 @@ extension Story {
 		
 		// 6. read all graphs
 		for curr in json["graphs"].arrayValue {
-			let name = curr["name"].stringValue
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let graph = story.makeGraph(name: name, uuid: uuid)
+			let graph = story.makeGraph(name: curr["name"].string!, uuid: uuid)
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {
-				guard let node = story.findBy(uuid: child.stringValue) as? FlowNode else {
-					throw Errors.invalid("Failed to find FlowNode by UUID.")
+				if let node = story.findBy(uuid: child.string!) as? FlowNode {
+					try! graph.add(node: node)
+				} else {
+					errors.append("Unable to find FlowNode by UUID (\(child.string!) when adding to FlowGraph (\(uuid.uuidString)).")
 				}
-				try! graph.add(node: node)
 			}
 			
-			// 6.2 link entry by uuid
-			guard let entryLinkable = story.findBy(uuid: curr["entry"].stringValue) as? Linkable else {
-				throw Errors.invalid("Failed to find Linkable by UUID.")
-			}
-			try! graph.setEntry(entry: entryLinkable)
-			
-			// 6.3 link all listeners by UUID
+			// 6.2 link all listeners by UUID
 			// TODO: Once listeners are parsed.
 			
-			// 6.4 link all exits by UUID
+			// 6.3 link all exits by UUID
 			// TODO: Once exits are parsed.
+		}
+		
+		// 6.4 link all subgraphs by uuid
+		for curr in json["graphs"].arrayValue {
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			for child in curr["subgraphs"].arrayValue {
+				if let subgraph = story.findBy(uuid: child.string!) as? FlowGraph {
+					try! graph.add(graph: subgraph)
+				} else {
+					errors.append("Unable to find FlowGraph by UUID (\(child.string!)) when adding to FlowGraph (\(curr["uuid"].string!)).")
+				}
+			}
+		}
+		
+		// 6.5 link all entry points by uuid (done after as an entry could be a subgraph)
+		for curr in json["graphs"].arrayValue {
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			if let entry = curr["entry"].string {
+				if let linkable = story.findBy(uuid: entry) as? Linkable {
+					try! graph.setEntry(entry: linkable)
+				} else {
+					errors.append("Unable to find Linkable by UUID (\(entry)) when setting FlowGraph's entry (\(graph._uuid.uuidString)).")
+				}
+			}
 		}
 		
 		// 7. read all links
 		for curr in json["links"].arrayValue {
-			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
-			let origin = curr["origin"].stringValue
-			guard let originLinkable = story.findBy(uuid: origin) as? Linkable else {
-				throw Errors.invalid("ailed to find Linkable by UUID.")
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			
+			var origin: Linkable? = nil
+			if let originID = curr["origin"].string {
+				origin = story.findBy(uuid: originID) as? Linkable
+				if origin == nil {
+					errors.append("Unable to find Linkable by UUID (\(originID)) when setting the origin of a BaseLink (\(uuid.uuidString)).")
+				}
 			}
 			
-			switch curr["linktype"].stringValue {
+			switch curr["linktype"].string! {
 			case "link":
 				let link = story.makeLink(uuid: uuid)
-				link.setOrigin(origin: originLinkable)
-				let transfer = curr["transfer"].dictionaryValue
-				let dest = transfer["destination"]!.stringValue
-				guard let destLinkable = story.findBy(uuid: dest) as? Linkable else {
-					throw Errors.invalid("Failed to find Linkable by UUID.")
+				
+				link.setOrigin(origin: origin)
+				
+				if let transfer = curr["transfer"].dictionary {
+					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? Linkable {
+						link._transfer.setDestination(dest: destination)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
+					}
 				}
-				link._transfer.setDestination(dest: destLinkable)
 				break
 			case "branch":
 				let branch = story.makeBranch(uuid: uuid)
-				branch.setOrigin(origin: originLinkable)
-				let truetransfer = curr["ttransfer"].dictionaryValue
-				let falsetransfer = curr["ftransfer"].dictionaryValue
-				let trueDest = truetransfer["destination"]!.stringValue
-				let falseDest = falsetransfer["destination"]!.stringValue
-				guard let trueLinkable = story.findBy(uuid: trueDest) as? Linkable, let falseLinkable = story.findBy(uuid: falseDest) as? Linkable else {
-					throw Errors.invalid("Failed to find Linkable by UUID.")
+				
+				branch.setOrigin(origin: origin)
+				
+				if let trueTransfer = curr["ttransfer"].dictionary {
+					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? Linkable {
+						branch._trueTransfer.setDestination(dest: destination)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
+					}
 				}
-				branch._trueTransfer.setDestination(dest: trueLinkable)
-				branch._falseTransfer.setDestination(dest: falseLinkable)
+				
+				if let falseTransfer = curr["ftransfer"].dictionary {
+					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? Linkable {
+						branch._falseTransfer.setDestination(dest: destination)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
+					}
+				}
 				break
 			case "switch":
 				fatalError("Not yet implemented.")
 				break
 			default:
-				throw Errors.invalid("Invalid link type.")
+				fatalError("Invalid link type.")
 			}
 		}
 		
 		// 8. add links to graphs by uuid
 		for curr in json["graphs"].arrayValue {
-			let graph = story.findBy(uuid: curr["uuid"].stringValue) as! FlowGraph
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
 			
 			for child in curr["links"].arrayValue {
-				guard let link = story.findBy(uuid: child.stringValue) as? BaseLink else {
-					throw Errors.invalid("Failed to find BaseLink by UUID.")
+				if let link = story.findBy(uuid: child.string!) as? BaseLink {
+					try! graph.add(link: link)
+				} else {
+					errors.append("Unable to find BaseLink by UUID (\(child.string!)) when adding to FlowGraph (\(graph._uuid.uuidString)).")
 				}
-				try! graph.add(link: link)
 			}
 		}
 		
 		// 9. assign folders and graphs to story's local stuff
 		for curr in json["story"]["folders"].arrayValue {
-			guard let folder = story.findBy(uuid: curr.stringValue) as? Folder else {
-				throw Errors.invalid("Failed to find Folder by UUID.")
+			if let folder = story.findBy(uuid: curr.string!) as? Folder {
+				try! story.add(folder: folder)
+			} else {
+				errors.append("Unable to find Folder by UUID (\(curr.string!)) when adding to Story.")
 			}
-			try! story.add(folder: folder)
+			
 		}
 		for curr in json["story"]["graphs"].arrayValue {
-			guard let graph = story.findBy(uuid: curr.stringValue) as? FlowGraph else {
-				throw Errors.invalid("Failed to find FlowGraph by UUID.")
+			if let graph = story.findBy(uuid: curr.string!) as? FlowGraph {
+				try! story.add(graph: graph)
+			} else {
+				errors.append("Unable to find FlowGraph by UUID (\(curr.string!)) when adding to Story.")
 			}
-			try! story.add(graph: graph)
 		}
 		
-		// ERROR1: Investigate making almost everything except core properties optional and handling in code
-		// ERROR1: Remove throws (except for fatal errors) and instead build a list of string errors and print/return them all at the end
-		
-		return story
+		return (story, errors)
 	}
 }
