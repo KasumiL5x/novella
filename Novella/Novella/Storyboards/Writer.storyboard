@@ -21,7 +21,7 @@
                                     <constraint firstAttribute="height" constant="100" id="W0X-MW-YFZ"/>
                                 </constraints>
                             </customView>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8o-UZ-Sl2">
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8o-UZ-Sl2">
                                 <rect key="frame" x="0.0" y="0.0" width="1000" height="600"/>
                                 <clipView key="contentView" id="s5L-Gf-9mF">
                                     <rect key="frame" x="1" y="1" width="998" height="598"/>
