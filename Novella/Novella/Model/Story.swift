@@ -21,6 +21,8 @@ class Story {
 	var _folders: [Folder]
 	var _graphs: [FlowGraph]
 	
+	var _name: String
+	
 	init() {
 		self._allIdentifiables = []
 		self._allFolders = []
@@ -31,6 +33,8 @@ class Story {
 		
 		self._folders = []
 		self._graphs = []
+		
+		self._name = ""
 	}
 	
 	// MARK: Setup
@@ -178,6 +182,8 @@ extension Story {
 extension Story {
 	func debugPrint(global: Bool) {
 		if global {
+			print("\nStory (\(_name)):")
+			
 			// folders
 			print("Folders (\(_allFolders.count)):")
 			_allFolders.forEach({

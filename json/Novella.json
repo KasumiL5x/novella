@@ -279,7 +279,8 @@
 				"graphs": {
 					"type": "array",
 					"items": { "$ref": "#/definitions/uuid" }
-				}
+				},
+				"name": { "$ref": "#/definitions/name" }
 			},
 			"required": ["folders", "graphs"]
 		}

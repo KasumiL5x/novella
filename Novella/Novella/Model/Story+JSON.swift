@@ -294,7 +294,8 @@ extension Story {
 					"graphs": [
 						"type": "array",
 						"items": [ "$ref": "#/definitions/uuid" ]
-					]
+					],
+					"name": [ "$ref": "#/definitions/name" ]
 				],
 				"required": ["folders", "graphs"]
 			]
@@ -416,6 +417,7 @@ extension Story {
 		var storyEntry: JSONDict = [:]
 		storyEntry["folders"] = _folders.map({$0._uuid.uuidString})
 		storyEntry["graphs"] = _graphs.map({$0._uuid.uuidString})
+		storyEntry["name"] = _name
 		root["story"] = storyEntry
 		
 		
@@ -720,6 +722,11 @@ extension Story {
 			} else {
 				errors.append("Unable to find FlowGraph by UUID (\(curr.string!)) when adding to Story.")
 			}
+		}
+		
+		// 10. read story's name
+		if let storyName = json["story"]["name"].string {
+			story._name = storyName
 		}
 		
 		return (story, errors)
