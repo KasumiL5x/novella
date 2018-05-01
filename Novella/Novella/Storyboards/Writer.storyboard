@@ -10,8 +10,46 @@
             <objects>
                 <viewController title="Writer" storyboardIdentifier="Writer" id="3Zk-O9-Vwd" userLabel="Writer" customClass="WriterViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="USq-rO-jM3">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="LN2-dc-lgj" userLabel="toolbar">
+                                <rect key="frame" x="0.0" y="600" width="1000" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="W0X-MW-YFZ"/>
+                                </constraints>
+                            </customView>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8o-UZ-Sl2">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="600"/>
+                                <clipView key="contentView" id="s5L-Gf-9mF">
+                                    <rect key="frame" x="1" y="1" width="998" height="598"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ko-BV-Fei">
+                                            <rect key="frame" x="0.0" y="0.0" width="983" height="583"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="oKt-FH-wbf">
+                                    <rect key="frame" x="1" y="583" width="998" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1di-bv-P5M">
+                                    <rect key="frame" x="983" y="1" width="16" height="598"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="LN2-dc-lgj" secondAttribute="trailing" id="Hds-zV-KqI"/>
+                            <constraint firstAttribute="trailing" secondItem="C8o-UZ-Sl2" secondAttribute="trailing" id="IWa-tl-glQ"/>
+                            <constraint firstItem="LN2-dc-lgj" firstAttribute="top" secondItem="USq-rO-jM3" secondAttribute="top" id="T9V-me-xsv"/>
+                            <constraint firstItem="LN2-dc-lgj" firstAttribute="leading" secondItem="USq-rO-jM3" secondAttribute="leading" id="cLB-nb-bGD"/>
+                            <constraint firstAttribute="bottom" secondItem="C8o-UZ-Sl2" secondAttribute="bottom" id="iCo-MR-Bp8"/>
+                            <constraint firstItem="C8o-UZ-Sl2" firstAttribute="leading" secondItem="USq-rO-jM3" secondAttribute="leading" id="sMw-CX-8jz"/>
+                            <constraint firstItem="C8o-UZ-Sl2" firstAttribute="top" secondItem="LN2-dc-lgj" secondAttribute="bottom" id="zst-sd-beg"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="PO1-7E-6sL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
