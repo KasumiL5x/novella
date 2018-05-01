@@ -26,6 +26,17 @@ class ReaderViewController: NSViewController {
 		_currNodeLinksCallback.setView(view: currNodeOutlineView)
 	}
 	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		
+		// https://stackoverflow.com/questions/42342231/how-to-show-touch-bar-in-a-viewcontroller
+		self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
+		self.view.window?.bind(NSBindingName(rawValue: #keyPath(touchBar)), to: self, withKeyPath: #keyPath(touchBar), options: nil)
+	}
+	deinit {
+		self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
+	}
+	
 	@IBAction func onOpen(_ sender: NSButton) {
 		// open file
 		let ofd = NSOpenPanel()
