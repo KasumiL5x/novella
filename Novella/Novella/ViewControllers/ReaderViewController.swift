@@ -225,7 +225,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			name = "FlowGraph: " + graph._name
 		}
 		if let node = item as? FlowNode {
-			name = "FlowNode: " + node._uuid.uuidString
+			name = "FlowNode: " + node._name
 		}
 		if let link = item as? BaseLink {
 			name = "BaseLink: " + link._uuid.uuidString
