@@ -10,6 +10,7 @@ import Cocoa
 
 class WriterViewController: NSViewController {
 	@IBOutlet weak var scrollView: NSScrollView!
+	@IBOutlet weak var storyName: NSTextField!
 	var _canvas: Canvas?
 	var _story: Story?
 	
@@ -69,6 +70,8 @@ class WriterViewController: NSViewController {
 			print("Failed to parse JSON.")
 			return
 		}
+		
+		storyName.stringValue = _story!._name.isEmpty ? "unnamed" : _story!._name
 		
 		_story?.debugPrint(global: true)
 	}

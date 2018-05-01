@@ -4,6 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="14019"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
         <capability name="the Touch Bar" minToolsVersion="8.1" minSystemVersion="10.12.2" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
     <scenes>
@@ -29,6 +30,15 @@
                                             <action selector="onOpenStory:" target="3Zk-O9-Vwd" id="qti-8t-Dq6"/>
                                         </connections>
                                     </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3E-vl-4RR">
+                                        <rect key="frame" x="18" y="20" width="117" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="no story open" id="cd7-qH-aPg">
+                                            <font key="font" metaFont="systemThin" size="20"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="W0X-MW-YFZ"/>
@@ -86,6 +96,7 @@
                     </touchBar>
                     <connections>
                         <outlet property="scrollView" destination="C8o-UZ-Sl2" id="3Wb-St-bd4"/>
+                        <outlet property="storyName" destination="e3E-vl-4RR" id="Ub5-hd-YtK"/>
                     </connections>
                 </viewController>
                 <customObject id="PO1-7E-6sL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
