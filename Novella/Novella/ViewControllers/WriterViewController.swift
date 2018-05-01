@@ -31,10 +31,10 @@ extension WriterViewController {
 	override func makeTouchBar() -> NSTouchBar? {
 		let touchBar = NSTouchBar()
 		touchBar.delegate = self
-		touchBar.customizationIdentifier = TouchBarIdentifiers.Test
-		touchBar.defaultItemIdentifiers = [TouchBarIdentifiers.InfoLabelItem]
-		touchBar.customizationAllowedItemIdentifiers = [TouchBarIdentifiers.InfoLabelItem]
-		touchBar.principalItemIdentifier = TouchBarIdentifiers.InfoLabelItem
+		touchBar.customizationIdentifier = TouchBarID.Identifiers.Writer
+		touchBar.defaultItemIdentifiers = [TouchBarID.Items.Writer.CreateNode]
+		touchBar.customizationAllowedItemIdentifiers = [TouchBarID.Items.Writer.CreateNode]
+		touchBar.principalItemIdentifier = TouchBarID.Items.Writer.CreateNode
 		return touchBar
 	}
 }
@@ -42,7 +42,7 @@ extension WriterViewController {
 extension WriterViewController: NSTouchBarDelegate {
 	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
 		switch identifier {
-		case TouchBarIdentifiers.InfoLabelItem:
+		case TouchBarID.Items.Writer.CreateNode:
 			return NSColorPickerTouchBarItem.colorPicker(withIdentifier: identifier)
 		default:
 			return nil

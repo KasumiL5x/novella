@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6518B6EA20894E2600FF6BB8 /* Story+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B6E920894E2600FF6BB8 /* Story+JSON.swift */; };
-		651B3DB7209892DF00D37848 /* TouchBarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651B3DB6209892DF00D37848 /* TouchBarIdentifiers.swift */; };
+		651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651B3DB6209892DF00D37848 /* TouchBarID.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		653CA9B5208538F50052BAB9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* Identifiable.swift */; };
@@ -70,7 +70,7 @@
 
 /* Begin PBXFileReference section */
 		6518B6E920894E2600FF6BB8 /* Story+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Story+JSON.swift"; sourceTree = "<group>"; };
-		651B3DB6209892DF00D37848 /* TouchBarIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarIdentifiers.swift; sourceTree = "<group>"; };
+		651B3DB6209892DF00D37848 /* TouchBarID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarID.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		653CA9B4208538F50052BAB9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
 				658C7CD7207E7E9B00E2B46B /* Model */,
 				658C7CAB207E7E6500E2B46B /* AppDelegate.swift */,
-				651B3DB6209892DF00D37848 /* TouchBarIdentifiers.swift */,
+				651B3DB6209892DF00D37848 /* TouchBarID.swift */,
 				658C7CAF207E7E6600E2B46B /* Assets.xcassets */,
 				658C7CB4207E7E6600E2B46B /* Info.plist */,
 				658C7CB5207E7E6600E2B46B /* Novella.entitlements */,
@@ -503,7 +503,7 @@
 				65C0573F2080A20900C4367E /* Path.swift in Sources */,
 				656F99EF2086A627009366D0 /* Dialog.swift in Sources */,
 				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,
-				651B3DB7209892DF00D37848 /* TouchBarIdentifiers.swift in Sources */,
+				651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */,
 				656F99ED2086A60A009366D0 /* Delivery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
