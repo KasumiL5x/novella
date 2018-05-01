@@ -75,6 +75,11 @@ class WriterViewController: NSViewController {
 		
 		_story?.debugPrint(global: true)
 	}
+	
+	@IBAction func onCloseStory(_ sender: NSButton) {
+		_story = Story()
+		storyName.stringValue = ""
+	}
 }
 
 // MARK: TouchBar
