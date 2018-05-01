@@ -70,6 +70,9 @@
                             </touchBarItem>
                         </touchBarItems>
                     </touchBar>
+                    <connections>
+                        <outlet property="scrollView" destination="C8o-UZ-Sl2" id="3Wb-St-bd4"/>
+                    </connections>
                 </viewController>
                 <customObject id="PO1-7E-6sL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

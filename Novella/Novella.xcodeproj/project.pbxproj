@@ -16,6 +16,7 @@
 		6553C9602092726500E6737B /* Writer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95F2092726500E6737B /* Writer.storyboard */; };
 		6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96120927D6E00E6737B /* ReaderViewController.swift */; };
 		6553C96420927D9B00E6737B /* WriterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96320927D9B00E6737B /* WriterViewController.swift */; };
+		655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B0B8E2098B4C000741ACA /* Canvas.swift */; };
 		655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* Listener.swift */; };
 		65619E922084D711000D5322 /* Linkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* Linkable.swift */; };
 		656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
@@ -78,6 +79,7 @@
 		6553C95F2092726500E6737B /* Writer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Writer.storyboard; sourceTree = "<group>"; };
 		6553C96120927D6E00E6737B /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		6553C96320927D9B00E6737B /* WriterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterViewController.swift; sourceTree = "<group>"; };
+		655B0B8E2098B4C000741ACA /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		655CFAEE2085FA2900C04D40 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		65619E912084D711000D5322 /* Linkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkable.swift; sourceTree = "<group>"; };
 		656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -199,6 +201,14 @@
 			name = Variables;
 			sourceTree = "<group>";
 		};
+		655B0B8D2098B48300741ACA /* NodeGraph */ = {
+			isa = PBXGroup;
+			children = (
+				655B0B8E2098B4C000741ACA /* Canvas.swift */,
+			);
+			path = NodeGraph;
+			sourceTree = "<group>";
+		};
 		656AFB28208BEEC6007E6426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +242,7 @@
 		658C7CAA207E7E6500E2B46B /* Novella */ = {
 			isa = PBXGroup;
 			children = (
+				655B0B8D2098B48300741ACA /* NodeGraph */,
 				6522C5AE2083903900F76DC8 /* Storyboards */,
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
 				658C7CD7207E7E9B00E2B46B /* Model */,
@@ -473,6 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				656F99E920869B2C009366D0 /* ExitNode.swift in Sources */,
+				655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */,
 				65F5DF9C207EA0C70041FB0D /* Condition.swift in Sources */,
 				655CFAEF2085FA2900C04D40 /* Listener.swift in Sources */,
 				656F99EB2086A5E9009366D0 /* Cutscene.swift in Sources */,

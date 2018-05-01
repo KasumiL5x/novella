@@ -9,8 +9,16 @@
 import Cocoa
 
 class WriterViewController: NSViewController {
+	@IBOutlet weak var scrollView: NSScrollView!
+	var _canvas: Canvas?
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		_canvas = Canvas(frame: NSRect(x: 0, y: 0, width: 2000, height: 2000))
+		scrollView.documentView = _canvas
+		scrollView.hasVerticalRuler = true
+		scrollView.hasHorizontalRuler = true
 	}
 	
 	override func viewDidAppear() {
