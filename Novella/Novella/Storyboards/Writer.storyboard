@@ -25,6 +25,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="onOpenStory:" target="3Zk-O9-Vwd" id="qti-8t-Dq6"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

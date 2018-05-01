@@ -11,6 +11,7 @@ import Cocoa
 class WriterViewController: NSViewController {
 	@IBOutlet weak var scrollView: NSScrollView!
 	var _canvas: Canvas?
+	var _story: Story?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -19,6 +20,8 @@ class WriterViewController: NSViewController {
 		scrollView.documentView = _canvas
 		scrollView.hasVerticalRuler = true
 		scrollView.hasHorizontalRuler = true
+		
+		_story = Story()
 	}
 	
 	override func viewDidAppear() {
@@ -30,6 +33,44 @@ class WriterViewController: NSViewController {
 	}
 	deinit {
 		self.view.window?.unbind(NSBindingName(rawValue: #keyPath(touchBar)))
+	}
+	
+	@IBAction func onOpenStory(_ sender: NSButton) {
+		// open file
+		let ofd = NSOpenPanel()
+		ofd.title = "Select Novella JSON."
+		ofd.canChooseDirectories = false
+		ofd.canChooseFiles = true
+		ofd.allowsMultipleSelection = false
+		ofd.allowedFileTypes = ["json"]
+		if ofd.runModal() != NSApplication.ModalResponse.OK {
+			print("User cancelled open.")
+			return
+		}
+		
+		// read file contents
+		let contents: String
+		do {
+			contents = try String(contentsOf: ofd.url!)
+		}
+		catch {
+			print("Failed to read file.")
+			return
+		}
+		
+		do {
+			let (story, errors) = try Story.fromJSON(str: contents)
+			if errors.count != 0 {
+				let _ = errors.map({print($0)})
+				return
+			}
+			_story = story
+		} catch {
+			print("Failed to parse JSON.")
+			return
+		}
+		
+		_story?.debugPrint(global: true)
 	}
 }
 
