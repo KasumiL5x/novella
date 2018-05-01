@@ -21,16 +21,15 @@ class Canvas: NSView {
 	
 	func drawGrid(context: CGContext, dirtyRect: NSRect) {
 		// solid fill
-		//let bgColor = NSColor.init(srgbRed: 25/255.0, green: 31/255.0, blue: 33/255.0, alpha: 1.0)
-		let bgColor = NSColor.init(srgbRed: 42/255.0, green: 42/255.0, blue: 42/255.0, alpha: 1.0)
+		let bgColor = NSColor.init(srgbRed: 54/255.0, green: 54/255.0, blue: 61/255.0, alpha: 1.0)
 		bgColor.setFill()
 		context.fill(dirtyRect)
 		
 		// line variables
-		let lineColor = NSColor.init(srgbRed: 55/255.0, green: 55/255.0, blue: 55/255.0, alpha: 1.0)
-		let majorOpacity = CGFloat(1.0)
-		let minorOpacity = CGFloat(0.9)
-		let defaultOpacity = CGFloat(0.5)
+		let lineColor = NSColor.init(srgbRed: 120/255.0, green: 120/255.0, blue: 120/255.0, alpha: 1.0)
+		let majorOpacity = CGFloat(0.5)
+		let minorOpacity = CGFloat(0.4)
+		let defaultOpacity = CGFloat(0.2)
 		let majorThickness = CGFloat(2.0)
 		let minorThickness = CGFloat(1.5)
 		let defaultThickness = CGFloat(1.0)
