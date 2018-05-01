@@ -67,8 +67,8 @@
                         <touchBarItems>
                             <touchBarItem id="CrL-Ew-5gJ">
                                 <viewController key="viewController" id="zq6-9N-bDX">
-                                    <textField key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                    <textField key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">
+                                        <rect key="frame" x="0.0" y="0.0" width="236" height="24"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" borderStyle="bezel" alignment="left" title="Don't let your memes be dreams." drawsBackground="YES" id="7kX-HX-TC8">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -77,7 +77,7 @@
                                         </textFieldCell>
                                     </textField>
                                 </viewController>
-                                <size key="designTimeSize" width="230" height="43"/>
+                                <size key="designTimeSize" width="236" height="24"/>
                             </touchBarItem>
                         </touchBarItems>
                     </touchBar>
