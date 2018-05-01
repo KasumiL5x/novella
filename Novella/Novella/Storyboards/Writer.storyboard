@@ -17,6 +17,16 @@
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="LN2-dc-lgj" userLabel="toolbar">
                                 <rect key="frame" x="0.0" y="600" width="1000" height="100"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k1z-a5-00a">
+                                        <rect key="frame" x="14" y="52" width="109" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Open Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nOi-us-C76">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="W0X-MW-YFZ"/>
                                 </constraints>
@@ -55,18 +65,19 @@
                     </view>
                     <touchBar key="touchBar" id="l5w-1j-a0U">
                         <touchBarItems>
-                            <touchBarItem id="LMe-aY-kLB">
-                                <viewController key="viewController" id="Wbq-EM-Bwe">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="05D-Ks-iIK">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Create Node" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a6k-VT-aga">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <touchBarItem id="CrL-Ew-5gJ">
+                                <viewController key="viewController" id="zq6-9N-bDX">
+                                    <textField key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" borderStyle="bezel" alignment="left" title="Don't let your memes be dreams." drawsBackground="YES" id="7kX-HX-TC8">
                                             <font key="font" usesAppearanceFont="YES"/>
-                                        </buttonCell>
-                                    </button>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </viewController>
-                                <size key="designTimeSize" width="108" height="30"/>
+                                <size key="designTimeSize" width="230" height="43"/>
                             </touchBarItem>
                         </touchBarItems>
                     </touchBar>
