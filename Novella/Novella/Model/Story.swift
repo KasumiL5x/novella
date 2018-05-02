@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import JavaScriptCore
 
 class Story {
+	// MARK: Javascript stuff
+	let _jsContext: JSContext
+	
 	// MARK: Storywide Collections
 	var _allIdentifiables: [Identifiable]
 	var _allFolders: [Folder]
@@ -24,6 +28,16 @@ class Story {
 	var _name: String
 	
 	init() {
+		self._jsContext = JSContext()
+		self._jsContext.exceptionHandler = { context, exception in
+			if let ex = exception {
+				print("JS Exception: \(ex.toString())")
+			}
+		}
+		let consoleLogObject = unsafeBitCast(self.consoleLog, to: AnyObject.self)
+		self._jsContext.setObject(consoleLogObject, forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol))
+//		_ = self._jsContext.evaluateScript("consoleLog(nil);")
+		
 		self._allIdentifiables = []
 		self._allFolders = []
 		self._allVariables = []
@@ -35,6 +49,12 @@ class Story {
 		self._graphs = []
 		
 		self._name = ""
+	}
+	
+	// MARK: Javascript stuff
+	// TODO: Get/Set variables in JS
+	let consoleLog: @convention(block) (String) -> Void = { logMessage in
+		print("\nJS Console: \(logMessage)")
 	}
 	
 	// MARK: Setup
