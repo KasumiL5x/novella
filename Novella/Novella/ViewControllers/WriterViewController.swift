@@ -74,6 +74,7 @@ class WriterViewController: NSViewController {
 		storyName.stringValue = _story!._name.isEmpty ? "unnamed" : _story!._name
 		
 		// TODO: RESET CANVAS.
+		_canvas!.reset()
 		
 		// create canvas nodes for each dialog node
 		for curr in _story!._allNodes {
@@ -88,6 +89,7 @@ class WriterViewController: NSViewController {
 	}
 	
 	@IBAction func onCloseStory(_ sender: NSButton) {
+		_canvas!.reset()
 		_story = Story()
 		storyName.stringValue = ""
 	}

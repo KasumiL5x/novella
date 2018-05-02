@@ -28,6 +28,10 @@ class Canvas: NSView {
 		fatalError("Canvas::init(coder) not implemented.")
 	}
 	
+	func reset() {
+		_nodesView.subviews.removeAll()
+	}
+	
 	func makeDialogWidget(novellaDialog: Dialog) {
 		let widget = DialogWidget(node: novellaDialog)
 		_canvasWidgets.append(widget)
