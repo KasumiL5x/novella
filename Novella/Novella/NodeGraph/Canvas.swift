@@ -9,6 +9,31 @@
 import Cocoa
 
 class Canvas: NSView {
+	var _nodesView: NSView
+	var _canvasWidgets: [CanvasWidget]
+	
+	override init(frame frameRect: NSRect) {
+		_nodesView = NSView(frame: frameRect)
+		_canvasWidgets = []
+		
+		super.init(frame: frameRect)
+		
+		// layers for subviews
+		wantsLayer = true
+		
+		// add nodes view
+		self.addSubview(_nodesView)
+	}
+	required init?(coder decoder: NSCoder) {
+		fatalError("Canvas::init(coder) not implemented.")
+	}
+	
+	func makeDialogWidget(novellaDialog: Dialog) {
+		let widget = DialogWidget(node: novellaDialog)
+		_canvasWidgets.append(widget)
+		_nodesView.addSubview(widget)
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		

@@ -80,6 +80,17 @@ class WriterViewController: NSViewController {
 		_story = Story()
 		storyName.stringValue = ""
 	}
+	
+	@IBAction func onCreateDialog(_ sender: NSButton) {
+		if _story == nil {
+			return
+		}
+		
+		let dialog = _story!.makeDialog()
+		// hack just to test different names
+		dialog._name = "dlg-\(_story!._allNodes.count-1)"
+		_canvas?.makeDialogWidget(novellaDialog: dialog)
+	}
 }
 
 // MARK: TouchBar
