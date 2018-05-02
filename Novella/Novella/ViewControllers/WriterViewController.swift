@@ -73,6 +73,17 @@ class WriterViewController: NSViewController {
 		
 		storyName.stringValue = _story!._name.isEmpty ? "unnamed" : _story!._name
 		
+		// TODO: RESET CANVAS.
+		
+		// create canvas nodes for each dialog node
+		for curr in _story!._allNodes {
+			if let dlg = curr as? Dialog {
+				_canvas!.makeDialogWidget(novellaDialog: dlg)
+			} else {
+				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
+			}
+		}
+		
 		_story?.debugPrint(global: true)
 	}
 	

@@ -24,10 +24,9 @@ class DialogWidget: CanvasWidget {
 		
 		self._novellaDialog = node
 		
-		// TODO: Position and size are faked for now.
-		let x = Int(arc4random() % 1000)
-		let y = Int(arc4random() % 1000)
-		super.init(frame: NSRect(x: x, y: y, width: 64, height: 64))
+
+		// TODO: Don't use fixed size.
+		super.init(frame: NSRect(x: Int(node._editorPos.x), y: Int(node._editorPos.y), width: 64, height: 64))
 		
 		self._nameLabel.sizeToFit()
 		self._nameLabel.frame.origin = CGPoint(x: self.frame.width/2 - self._nameLabel.frame.width/2, y: self.frame.height/2)

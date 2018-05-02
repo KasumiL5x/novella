@@ -34,6 +34,17 @@
 
 	// MARK: definitions
 	"definitions": {
+		// MARK: position
+		"position": {
+			"type": "object",
+			"properties": {
+				"x": { "type": "integer" },
+				"y": { "type": "integer" }
+			},
+			"required": ["x", "y"]
+		},
+		// END position
+
 		// MARK: name
 		"name": {
 			"type": "string"
@@ -219,9 +230,10 @@
 					"type": "string",
 					"enum": ["dialog", "delivery", "cutscene", "context"]
 				},
+				"position": { "$ref": "#/definitions/position" },
 				"name": { "$ref": "#/definitions/name" }
 			},
-			"required": ["uuid", "nodetype"],
+			"required": ["uuid", "nodetype", "position"],
 			// MARK: node-dependencies
 			"dependencies": {
 				// handle each node type based on the nodetype

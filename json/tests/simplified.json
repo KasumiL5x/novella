@@ -91,42 +91,70 @@
       "content" : "This node has two parallel choices of equal value.",
       "uuid" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
       "nodetype" : "dialog",
+			"position": {
+				"x": 100,
+				"y": 250
+			},
 			"name": "A"
     },
     {
       "content" : "This was choice 1.",
       "uuid" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6",
       "nodetype" : "dialog",
+			"position": {
+				"x": 250,
+				"y": 350
+			},
 			"name": "B"
     },
     {
       "content" : "This was choice 2.",
       "uuid" : "B6973964-053C-46B5-81A9-C91EED867D47",
       "nodetype" : "dialog",
+			"position": {
+				"x": 250,
+				"y": 150
+			},
 			"name": "C"
     },
     {
       "content" : "This node resolves from B and C regardless of choice.  There is a branch here based on some condition.",
       "uuid" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89",
       "nodetype" : "dialog",
+			"position": {
+				"x": 400,
+				"y": 250
+			},
 			"name": "D"
     },
     {
       "content" : "This is the true result.",
       "uuid" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0",
       "nodetype" : "dialog",
+			"position": {
+				"x": 550,
+				"y": 350
+			},
 			"name": "E"
     },
     {
       "content" : "This is the false result.",
       "uuid" : "40F0E0B2-8398-4FCD-A890-5AC85519E618",
       "nodetype" : "dialog",
+			"position": {
+				"x": 550,
+				"y": 150
+			},
 			"name": "F"
     },
     {
       "content" : "This is the final resolve from E and F regardless of chioce.",
       "uuid" : "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0",
       "nodetype" : "dialog",
+			"position": {
+				"x": 700,
+				"y": 250
+			},
 			"name": "G"
     }
   ],

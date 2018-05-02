@@ -49,6 +49,17 @@ extension Story {
 		
 		// MARK: definitions
 		"definitions": [
+			// MARK: position
+			"position": [
+				"type": "object",
+				"properties": [
+					"x": [ "type": "integer" ],
+					"y": [ "type": "integer" ]
+				],
+				"required": ["x", "y"]
+			],
+			// END position
+			
 			// MARK: name
 			"name": [
 				"type": "string"
@@ -234,9 +245,10 @@ extension Story {
 						"type": "string",
 						"enum": ["dialog", "delivery", "cutscene", "context"]
 					],
+					"position": [ "$ref": "#/definitions/position" ],
 					"name": [ "$ref": "#/definitions/name" ]
 				],
-				"required": ["uuid", "nodetype"],
+				"required": ["uuid", "nodetype", "position"],
 				// MARK: node-dependencies
 				"dependencies": [
 					// handle each node type based on the nodetype
@@ -400,6 +412,11 @@ extension Story {
 			entry["uuid"] = curr._uuid.uuidString
 			entry["name"] = curr._name
 			
+			entry["position"] = [
+				"x": Int(curr._editorPos.x),
+				"y": Int(curr._editorPos.y)
+			]
+			
 			if let asDialog = curr as? Dialog {
 				entry["nodetype"] = "dialog"
 				
@@ -554,9 +571,13 @@ extension Story {
 			
 			let name = curr["name"].string
 			
+			let posX = curr["position"]["x"].int!
+			let posY = curr["position"]["y"].int!
+			
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
+				dialog._editorPos = NSPoint(x: posX, y: posY)
 				
 				if name != nil {
 					dialog.Name = name!
