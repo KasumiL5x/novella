@@ -283,6 +283,7 @@
 		658C7CD7207E7E9B00E2B46B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6591405B209A2F3100D6273D /* Simulation */,
 				658C7CDA207E7EB900E2B46B /* Errors.swift */,
 				653CA9B4208538F50052BAB9 /* Identifiable.swift */,
 				65C0573E2080A20900C4367E /* Path.swift */,
@@ -292,9 +293,16 @@
 				659485962086191E003C7BE4 /* Links */,
 				6519DE5320854AA7009C43E2 /* Nodes */,
 				653CA9B620854A640052BAB9 /* Variables */,
-				65C2F02220963AA1003D5025 /* Simulator.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6591405B209A2F3100D6273D /* Simulation */ = {
+			isa = PBXGroup;
+			children = (
+				65C2F02220963AA1003D5025 /* Simulator.swift */,
+			);
+			name = Simulation;
 			sourceTree = "<group>";
 		};
 		659485962086191E003C7BE4 /* Links */ = {
