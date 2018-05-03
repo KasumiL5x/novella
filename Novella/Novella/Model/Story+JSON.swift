@@ -207,6 +207,7 @@ extension Story {
 							[
 								"properties": [
 									"linktype": [ "enum": ["link"] ],
+									"condition": [ "$ref": "#/definitions/condition" ],
 									"transfer": [ "$ref": "#/definitions/transfer" ]
 								]
 							],
@@ -214,6 +215,7 @@ extension Story {
 							[
 								"properties": [
 									"linktype": [ "enum": ["branch"] ],
+									"condition": [ "$ref": "#/definitions/condition" ],
 									"ttransfer": [ "$ref": "#/definitions/transfer" ],
 									"ftransfer": [ "$ref": "#/definitions/transfer" ]
 								]
@@ -234,6 +236,16 @@ extension Story {
 				"required": ["destination"]
 			],
 			// END transfer
+			
+			// MARK: condition
+			"condition": [
+				"type": "object",
+				"properties": [
+					"jscode": [ "type": "string" ]
+				],
+				"required": ["jscode"]
+			],
+			// END condition
 			
 			// MARK: node
 			"node": [
@@ -373,26 +385,33 @@ extension Story {
 			
 			if let asLink = curr as? Link {
 				entry["linktype"] = "link"
-				// TODO: Condition.
-				// TODO: Transfer.
+				
+				var condition: JSONDict = [:]
+				condition["jscode"] = asLink._condition._javascript
+				entry["condition"] = condition
+				
 				var transfer: JSONDict = [:]
 				transfer["destination"] = asLink._transfer._destination?.UUID.uuidString ?? ""
 				entry["transfer"] = transfer
 			}
 			else if let asBranch = curr as? Branch {
 				entry["linktype"] = "branch"
-				// TODO: Condition.
-				// TODO: True Transfer.
+				
+				var condition: JSONDict = [:]
+				condition["jscode"] = asBranch._condition._javascript
+				entry["condition"] = condition
+				
 				var ttransfer: JSONDict = [:]
 				ttransfer["destination"] = asBranch._trueTransfer._destination?.UUID.uuidString ?? ""
 				entry["ttransfer"] = ttransfer
-				// TODO: False Transfer.
+				
 				var ftransfer: JSONDict = [:]
 				ftransfer["destination"] = asBranch._falseTransfer._destination?.UUID.uuidString ?? ""
 				entry["ftransfer"] = ftransfer
 			}
 			else if curr is Switch {
 				entry["linktype"] = "switch"
+				fatalError("Haven't implemented switch yet.")
 				// TODO: Variable (UUID?)
 				// TODO: Default Transfer.
 				// TODO: [value:Transfer].
@@ -678,6 +697,10 @@ extension Story {
 				
 				link.setOrigin(origin: origin)
 				
+				if let condition = curr["condition"].dictionary {
+					link._condition._javascript = condition["jscode"]!.string!
+				}
+				
 				if let transfer = curr["transfer"].dictionary {
 					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? Linkable {
 						link._transfer.setDestination(dest: destination)
@@ -690,6 +713,10 @@ extension Story {
 				let branch = story.makeBranch(uuid: uuid)
 				
 				branch.setOrigin(origin: origin)
+				
+				if let condition = curr["condition"].dictionary {
+					branch._condition._javascript = condition["jscode"]!.string!
+				}
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
 					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? Linkable {

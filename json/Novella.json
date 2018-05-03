@@ -192,6 +192,7 @@
 						{
 							"properties": {
 								"linktype": { "enum": ["link"] },
+								"condition": { "$ref": "#/definitions/condition" },
 								"transfer": { "$ref": "#/definitions/transfer" }
 							}
 						},
@@ -199,6 +200,7 @@
 						{
 							"properties": {
 								"linktype": { "enum": ["branch"] },
+								"condition": { "$ref": "#/definitions/condition" },
 								"ttransfer": { "$ref": "#/definitions/transfer" },
 								"ftransfer": { "$ref": "#/definitions/transfer" }
 							}
@@ -219,6 +221,16 @@
 			"required": ["destination"]
 		},
 		// END transfer
+
+		// MARK: condition
+		"condition": {
+			"type": "object",
+			"properties": {
+				"jscode": { "type": "string" }
+			},
+			"required": ["jscode"]
+		},
+		// END condition
 
 		// MARK: node
 		"node": {

@@ -13,11 +13,11 @@ class Branch : BaseLink {
 	var _trueTransfer: Transfer
 	var _falseTransfer: Transfer
 	
-	override init(uuid: NSUUID) {
-		self._condition = Condition()
+	override init(uuid: NSUUID, story: Story) {
+		self._condition = Condition(story: story)
 		self._trueTransfer = Transfer()
 		self._falseTransfer = Transfer()
 		
-		super.init(uuid: uuid)
+		super.init(uuid: uuid, story: story)
 	}
 }

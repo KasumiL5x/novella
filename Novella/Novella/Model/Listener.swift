@@ -13,9 +13,9 @@ class Listener {
 	let _condition: Condition
 	let _transfer: Transfer
 	
-	init(uuid: NSUUID) {
+	init(uuid: NSUUID, story: Story) {
 		self._uuid = uuid
-		self._condition = Condition()
+		self._condition = Condition(story: story)
 		self._transfer = Transfer()
 	}
 }

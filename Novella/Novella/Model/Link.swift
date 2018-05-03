@@ -12,10 +12,10 @@ class Link : BaseLink {
 	var _condition: Condition
 	var _transfer: Transfer
 	
-	override init(uuid: NSUUID) {
-		self._condition = Condition()
+	override init(uuid: NSUUID, story: Story) {
+		self._condition = Condition(story: story)
 		self._transfer = Transfer()
 		
-		super.init(uuid: uuid)
+		super.init(uuid: uuid, story: story)
 	}
 }

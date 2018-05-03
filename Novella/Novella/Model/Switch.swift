@@ -14,11 +14,11 @@ class Switch : BaseLink {
 	var _defaultTransfer: Transfer
 	var _values: [AnyHashable:Transfer]
 	
-	override init(uuid: NSUUID) {
+	override init(uuid: NSUUID, story: Story) {
 		self._variable = nil
 		self._defaultTransfer = Transfer()
 		self._values = [:]
 		
-		super.init(uuid: uuid)
+		super.init(uuid: uuid, story: story)
 	}
 }

@@ -165,21 +165,21 @@ extension Story {
 	
 	@discardableResult
 	func makeLink(uuid: NSUUID?=nil) -> Link {
-		let link = Link(uuid: uuid != nil ? uuid! : NSUUID())
+		let link = Link(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
 		return link
 	}
 	@discardableResult
 	func makeBranch(uuid: NSUUID?=nil) -> Branch {
-		let branch = Branch(uuid: uuid != nil ? uuid! : NSUUID())
+		let branch = Branch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
 		_allLinks.append(branch)
 		_allIdentifiables.append(branch)
 		return branch
 	}
 	@discardableResult
 	func makeSwitch(uuid: NSUUID?=nil) -> Switch {
-		let swtch = Switch(uuid: uuid != nil ? uuid! : NSUUID())
+		let swtch = Switch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
 		_allLinks.append(swtch)
 		_allIdentifiables.append(swtch)
 		return swtch

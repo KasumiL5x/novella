@@ -12,7 +12,7 @@ class BaseLink {
 	let _uuid: NSUUID
 	var _origin: Linkable?
 	
-	init(uuid: NSUUID) {
+	init(uuid: NSUUID, story: Story) {
 		self._uuid = uuid
 		self._origin = nil
 	}
