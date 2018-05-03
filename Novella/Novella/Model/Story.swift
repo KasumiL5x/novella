@@ -309,9 +309,6 @@ extension Story {
 				print("\tUUID: \($0._uuid.uuidString)")
 				print("")
 			})
-			
-			// TODO: Fix parsing until the above is nicely displayed
-			
 		}
 	}
 }
