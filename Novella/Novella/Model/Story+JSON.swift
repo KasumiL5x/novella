@@ -53,8 +53,8 @@ extension Story {
 			"position": [
 				"type": "object",
 				"properties": [
-					"x": [ "type": "integer" ],
-					"y": [ "type": "integer" ]
+					"x": [ "type": "number" ],
+					"y": [ "type": "number" ]
 				],
 				"required": ["x", "y"]
 			],
@@ -432,8 +432,8 @@ extension Story {
 			entry["name"] = curr._name
 			
 			entry["position"] = [
-				"x": Int(curr._editorPos.x),
-				"y": Int(curr._editorPos.y)
+				"x": curr._editorPos.x,
+				"y": curr._editorPos.y
 			]
 			
 			if let asDialog = curr as? Dialog {

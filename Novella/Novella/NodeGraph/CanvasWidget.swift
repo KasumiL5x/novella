@@ -22,6 +22,11 @@ class CanvasWidget: NSView {
 		fatalError("CanvasWidget::init(coder) not implemented.")
 	}
 	
+	// MARK: Functions for derived classes to override.
+	func onMove() {
+		print("CanvasWidget::onMove() should be overridden.")
+	}
+	
 	override func mouseDown(with event: NSEvent) {
 		_isPanning = true
 		_prevPanPoint = event.locationInWindow
@@ -34,7 +39,7 @@ class CanvasWidget: NSView {
 			frame.origin = pos
 			_prevPanPoint = event.locationInWindow
 			
-			print(pos)
+			onMove()
 		}
 	}
 	override func mouseUp(with event: NSEvent) {

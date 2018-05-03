@@ -38,8 +38,8 @@
 		"position": {
 			"type": "object",
 			"properties": {
-				"x": { "type": "integer" },
-				"y": { "type": "integer" }
+				"x": { "type": "number" },
+				"y": { "type": "number" }
 			},
 			"required": ["x", "y"]
 		},

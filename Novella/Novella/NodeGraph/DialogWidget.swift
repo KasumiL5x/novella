@@ -26,7 +26,7 @@ class DialogWidget: CanvasWidget {
 		
 
 		// TODO: Don't use fixed size.
-		super.init(frame: NSRect(x: Int(node._editorPos.x), y: Int(node._editorPos.y), width: 64, height: 64))
+		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 64.0, height: 64.0))
 		
 		self._nameLabel.sizeToFit()
 		self._nameLabel.frame.origin = CGPoint(x: self.frame.width/2 - self._nameLabel.frame.width/2, y: self.frame.height/2)
@@ -34,6 +34,10 @@ class DialogWidget: CanvasWidget {
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("DialogWidget::init(coder) not implemented.")
+	}
+	
+	override func onMove() {
+		_novellaDialog?._editorPos = frame.origin
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

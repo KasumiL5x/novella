@@ -12,12 +12,12 @@ class FlowNode {
 	let _uuid: NSUUID
 	var _name: String
 	
-	var _editorPos: NSPoint
+	var _editorPos: CGPoint
 	
 	init(uuid: NSUUID) {
 		self._uuid = uuid
 		self._name = ""
-		self._editorPos = NSPoint.zero
+		self._editorPos = CGPoint.zero
 	}
 	
 	// MARK: Properties
