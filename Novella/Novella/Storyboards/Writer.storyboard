@@ -31,7 +31,7 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3E-vl-4RR">
-                                        <rect key="frame" x="123" y="58" width="117" height="24"/>
+                                        <rect key="frame" x="10" y="20" width="117" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="no story open" id="cd7-qH-aPg">
                                             <font key="font" metaFont="systemThin" size="20"/>
@@ -40,7 +40,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQj-X2-lNJ">
-                                        <rect key="frame" x="14" y="19" width="110" height="32"/>
+                                        <rect key="frame" x="123" y="52" width="110" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Close Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xFU-Z6-2g2">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -48,6 +48,17 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="onCloseStory:" target="3Zk-O9-Vwd" id="224-zv-4hs"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEu-9Y-01K">
+                                        <rect key="frame" x="233" y="52" width="105" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Save Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q1y-zL-wOd">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onSaveStory:" target="3Zk-O9-Vwd" id="so3-ON-9EF"/>
                                         </connections>
                                     </button>
                                 </subviews>

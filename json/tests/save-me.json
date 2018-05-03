@@ -1,0 +1,236 @@
+{
+  "folders" : [
+    {
+      "name" : "main",
+      "variables" : [
+        "536EF62E-F0B0-47F6-83E3-1657959790F7"
+      ],
+      "uuid" : "CD692335-1A27-4F72-88F4-926AC5196DA6",
+      "subfolders" : [
+
+      ]
+    }
+  ],
+  "variables" : [
+    {
+      "synopsis" : "",
+      "name" : "decision",
+      "value" : false,
+      "constant" : false,
+      "uuid" : "536EF62E-F0B0-47F6-83E3-1657959790F7",
+      "datatype" : "boolean",
+      "initialValue" : false
+    }
+  ],
+  "links" : [
+    {
+      "linktype" : "link",
+      "origin" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
+      "uuid" : "A9FD146F-37BA-4B06-9085-9451E4AB0A56",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
+      "uuid" : "00A05984-12EC-4ED4-A4D3-3EF5DE99FE0C",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "B6973964-053C-46B5-81A9-C91EED867D47"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6",
+      "uuid" : "64F701E0-CB1C-443B-ABFA-9AC4482C1BF1",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "B6973964-053C-46B5-81A9-C91EED867D47",
+      "uuid" : "370A5F9D-D75F-4993-911E-EDD43BF3A861",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89"
+      }
+    },
+    {
+      "linktype" : "branch",
+      "origin" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89",
+      "uuid" : "4E40FF3A-F789-48B1-8EAB-2B6DFB6A0A0B",
+      "condition" : {
+        "jscode" : "return true;"
+      },
+      "ftransfer" : {
+        "destination" : "40F0E0B2-8398-4FCD-A890-5AC85519E618"
+      },
+      "ttransfer" : {
+        "destination" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0",
+      "uuid" : "4CD607E7-EBE7-4660-BDED-39B45E3F483B",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "40F0E0B2-8398-4FCD-A890-5AC85519E618",
+      "uuid" : "83EC5F03-8970-460F-A748-5D936C38F0E2",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
+      }
+    }
+  ],
+  "story" : {
+    "graphs" : [
+      "8E885248-DD43-4E95-B1B1-2CECD4520C6E"
+    ],
+    "name" : "Simplified",
+    "folders" : [
+      "CD692335-1A27-4F72-88F4-926AC5196DA6"
+    ]
+  },
+  "nodes" : [
+    {
+      "position" : {
+        "y" : 333.1796875,
+        "x" : 49.375
+      },
+      "name" : "A",
+      "content" : "This node has two parallel choices of equal value.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "989D8C7E-39FC-4300-8745-7919EF364C4C"
+    },
+    {
+      "position" : {
+        "y" : 350,
+        "x" : 250
+      },
+      "name" : "B",
+      "content" : "This was choice 1.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6"
+    },
+    {
+      "position" : {
+        "y" : 150,
+        "x" : 250
+      },
+      "name" : "C",
+      "content" : "This was choice 2.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "B6973964-053C-46B5-81A9-C91EED867D47"
+    },
+    {
+      "position" : {
+        "y" : 250,
+        "x" : 400
+      },
+      "name" : "D",
+      "content" : "This node resolves from B and C regardless of choice.  There is a branch here based on some condition.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89"
+    },
+    {
+      "position" : {
+        "y" : 350,
+        "x" : 550
+      },
+      "name" : "E",
+      "content" : "This is the true result.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0"
+    },
+    {
+      "position" : {
+        "y" : 150,
+        "x" : 550
+      },
+      "name" : "F",
+      "content" : "This is the false result.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "40F0E0B2-8398-4FCD-A890-5AC85519E618"
+    },
+    {
+      "position" : {
+        "y" : 250,
+        "x" : 700
+      },
+      "name" : "G",
+      "content" : "This is the final resolve from E and F regardless of chioce.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
+    }
+  ],
+  "graphs" : [
+    {
+      "name" : "main",
+      "nodes" : [
+        "989D8C7E-39FC-4300-8745-7919EF364C4C",
+        "F126CC61-F4CD-4357-91F8-C6B88BFA67D6",
+        "B6973964-053C-46B5-81A9-C91EED867D47",
+        "95CA958A-BB8A-4B05-893E-FD4B93CFFE89",
+        "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0",
+        "40F0E0B2-8398-4FCD-A890-5AC85519E618",
+        "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
+      ],
+      "links" : [
+        "A9FD146F-37BA-4B06-9085-9451E4AB0A56",
+        "00A05984-12EC-4ED4-A4D3-3EF5DE99FE0C",
+        "64F701E0-CB1C-443B-ABFA-9AC4482C1BF1",
+        "370A5F9D-D75F-4993-911E-EDD43BF3A861",
+        "4E40FF3A-F789-48B1-8EAB-2B6DFB6A0A0B",
+        "4CD607E7-EBE7-4660-BDED-39B45E3F483B",
+        "83EC5F03-8970-460F-A748-5D936C38F0E2"
+      ],
+      "entry" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
+      "uuid" : "8E885248-DD43-4E95-B1B1-2CECD4520C6E",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ]
+}

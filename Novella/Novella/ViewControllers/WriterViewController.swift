@@ -94,6 +94,41 @@ class WriterViewController: NSViewController {
 		storyName.stringValue = ""
 	}
 	
+	@IBAction func onSaveStory(_ sender: NSButton) {
+		let sfd = NSSavePanel()
+		sfd.title = "Save Novella JSON."
+		sfd.canCreateDirectories = true
+		sfd.showsHiddenFiles = true
+		sfd.isExtensionHidden = false
+		sfd.allowedFileTypes = ["json"]
+		sfd.allowsOtherFileTypes = false
+		sfd.showsTagField = false
+		if sfd.runModal() != .OK {
+			print("User cancelled save.")
+			return
+		}
+		
+		// convert the story to JSON
+		let json: String
+		do {
+			json = try _story!.toJSON()
+		} catch {
+			print("Failed to convert Story to JSON.")
+			return
+		}
+		
+		// write json to file
+		do {
+			try json.write(to: sfd.url!, atomically: true, encoding: .utf8)
+		} catch {
+			print("Failed to write JSON to file.")
+			return
+		}
+		
+		print("Successfully written JSON to file.")
+	}
+	
+	
 	@IBAction func onCreateDialog(_ sender: NSButton) {
 		if _story == nil {
 			return
