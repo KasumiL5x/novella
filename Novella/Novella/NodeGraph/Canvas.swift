@@ -77,6 +77,12 @@ class Canvas: NSView {
 		return widget
 	}
 	
+	func updateCurves() {
+		for child in _curvesView.subviews {
+			child.layer?.setNeedsDisplay()
+		}
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		

@@ -71,6 +71,8 @@ class CanvasWidget: NSView {
 			_prevPanPoint = event.locationInWindow
 			
 			onMove()
+			
+			_canvas.updateCurves()
 		}
 	}
 	override func mouseUp(with event: NSEvent) {
@@ -79,6 +81,8 @@ class CanvasWidget: NSView {
 		_canvas._commandList.execute(cmd: _moveCommand!)
 		
 		_isPanning = false
+		
+		_canvas.updateCurves()
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
