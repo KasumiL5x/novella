@@ -139,6 +139,10 @@ class WriterViewController: NSViewController {
 		dialog._name = "dlg-\(_story!._allNodes.count-1)"
 		_canvas?.makeDialogWidget(novellaDialog: dialog)
 	}
+	
+	@IBAction func onUndo(_ sender: NSButton) {
+		_canvas!.undo()
+	}
 }
 
 // MARK: TouchBar

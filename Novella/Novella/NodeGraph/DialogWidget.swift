@@ -12,7 +12,7 @@ class DialogWidget: CanvasWidget {
 	var _novellaDialog: Dialog?
 	var _nameLabel: NSTextField
 	
-	init(node: Dialog) {
+	init(node: Dialog, canvas: Canvas) {
 		self._nameLabel = NSTextField()
 		self._nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		self._nameLabel.isBezeled = false
@@ -26,7 +26,7 @@ class DialogWidget: CanvasWidget {
 		
 
 		// TODO: Don't use fixed size.
-		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 64.0, height: 64.0))
+		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 64.0, height: 64.0), canvas: canvas)
 		
 		self._nameLabel.sizeToFit()
 		self._nameLabel.frame.origin = CGPoint(x: self.frame.width/2 - self._nameLabel.frame.width/2, y: self.frame.height/2)

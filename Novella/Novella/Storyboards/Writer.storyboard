@@ -116,6 +116,22 @@
                                 </viewController>
                                 <size key="designTimeSize" width="126" height="30"/>
                             </touchBarItem>
+                            <touchBarItem id="75C-jD-OaB">
+                                <viewController key="viewController" id="g7F-Ad-xgP">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7KV-3D-JsA">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Undo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="u56-8M-vkb">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onUndo:" target="3Zk-O9-Vwd" id="Dc6-Fm-Vpc"/>
+                                        </connections>
+                                    </button>
+                                </viewController>
+                                <size key="designTimeSize" width="72" height="30"/>
+                            </touchBarItem>
                             <touchBarItem id="CrL-Ew-5gJ">
                                 <viewController key="viewController" id="zq6-9N-bDX">
                                     <textField key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">
