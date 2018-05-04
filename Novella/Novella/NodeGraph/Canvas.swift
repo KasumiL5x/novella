@@ -12,11 +12,17 @@ class Canvas: NSView {
 	var _nodesView: NSView
 	var _canvasWidgets: [CanvasWidget]
 	
+	var _curvesView: NSView
+	var _curveWidgets: [CurveWidget]
+	
 	let _commandList: CommandList
 	
 	override init(frame frameRect: NSRect) {
 		_nodesView = NSView(frame: frameRect)
 		_canvasWidgets = []
+		
+		_curvesView = NSView(frame: frameRect)
+		_curveWidgets = []
 		
 		_commandList = CommandList()
 		
@@ -27,6 +33,9 @@ class Canvas: NSView {
 		
 		// add nodes view
 		self.addSubview(_nodesView)
+		
+		// add curves view
+		self.addSubview(_curvesView)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
@@ -38,12 +47,20 @@ class Canvas: NSView {
 	
 	func reset() {
 		_nodesView.subviews.removeAll()
+		_curvesView.subviews.removeAll()
 	}
 	
 	func makeDialogWidget(novellaDialog: Dialog) {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_canvasWidgets.append(widget)
 		_nodesView.addSubview(widget)
+	}
+	
+	func makeLinkWidget(novellaLink: Link) {
+		let widget = LinkWidget(link: novellaLink)
+		_curveWidgets.append(widget)
+//		_curvesView.addSubview(widget)
+		self.addSubview(widget)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

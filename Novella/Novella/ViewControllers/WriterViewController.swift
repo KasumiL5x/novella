@@ -84,6 +84,14 @@ class WriterViewController: NSViewController {
 				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
 			}
 		}
+		// create canvas links for each link
+		for curr in _story!._allLinks {
+			if let asLink = curr as? Link {
+				_canvas!.makeLinkWidget(novellaLink: asLink)
+			} else {
+				print("Encountered link type that's not handled in Canvs yet (\(type(of:curr)).")
+			}
+		}
 		
 		_story?.debugPrint(global: true)
 	}
