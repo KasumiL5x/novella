@@ -57,10 +57,9 @@ class Canvas: NSView {
 	}
 	
 	func makeLinkWidget(novellaLink: Link) {
-		let widget = LinkWidget(link: novellaLink)
+		let widget = LinkWidget(link: novellaLink, canvas: self)
 		_curveWidgets.append(widget)
-//		_curvesView.addSubview(widget)
-		self.addSubview(widget)
+		_curvesView.addSubview(widget)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

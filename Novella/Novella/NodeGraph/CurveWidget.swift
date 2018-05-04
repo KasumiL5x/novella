@@ -9,7 +9,11 @@
 import AppKit
 
 class CurveWidget: NSView {
-	override init(frame frameRect: NSRect) {
+	let _canvas: Canvas
+	
+	init(frame frameRect: NSRect, canvas: Canvas) {
+		self._canvas = canvas
+		
 		super.init(frame: frameRect)
 		
 		wantsLayer = true

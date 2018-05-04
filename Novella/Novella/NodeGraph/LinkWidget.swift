@@ -14,13 +14,13 @@ class LinkWidget: CurveWidget {
 	var _curveBezier: NSBezierPath
 	var _curveShape: CAShapeLayer
 	
-	init(link: Link) {
+	init(link: Link, canvas: Canvas) {
 		self._novellaLink = link
 		
 		self._curveBezier = NSBezierPath()
 		self._curveShape = CAShapeLayer()
 		
-		super.init(frame: NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0))
+		super.init(frame: NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0), canvas: canvas)
 		
 		_curveShape.path = _curveBezier.cgPath
 		layer!.addSublayer(_curveShape)
@@ -32,14 +32,20 @@ class LinkWidget: CurveWidget {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
+		// configure bezier path settings
 		_curveBezier.removeAllPoints()
 		_curveBezier.lineWidth = 4.0
-		NSColor.green.set()
 		_curveBezier.setLineDash(nil, count: 0, phase: 0.0)
+		
+		// draw actual line into bezier
 		let start = CGPoint(x: 100.0, y: 100.0)
 		let end = CGPoint(x: 200.0, y: 200.0)
+		
+		
+		
 		CurveHelper.line(start: start, end: end, path: _curveBezier)
 		
+		// copy bezier path into shape layer's cgpath
 		_curveShape.path = _curveBezier.cgPath
 		_curveShape.fillColor = NSColor.green.cgColor
 		_curveShape.fillRule = kCAFillRuleNonZero
