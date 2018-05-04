@@ -51,11 +51,11 @@ class LinkWidget: CurveWidget {
 			end = destWidget!.frame.origin
 		}
 		
-		CurveHelper.line(start: start, end: end, path: _curveBezier)
+		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
 		// copy bezier path into shape layer's cgpath
 		_curveShape.path = _curveBezier.cgPath
-		_curveShape.fillColor = NSColor.green.cgColor
+		_curveShape.fillColor = nil
 		_curveShape.fillRule = kCAFillRuleNonZero
 		_curveShape.lineCap = kCALineCapButt
 		_curveShape.lineDashPattern = nil
