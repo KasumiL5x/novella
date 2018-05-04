@@ -38,10 +38,18 @@ class LinkWidget: CurveWidget {
 		_curveBezier.setLineDash(nil, count: 0, phase: 0.0)
 		
 		// draw actual line into bezier
-		let start = CGPoint(x: 100.0, y: 100.0)
-		let end = CGPoint(x: 200.0, y: 200.0)
+		var start = CGPoint.zero
+		var end = CGPoint.zero
 		
+		let originWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaLink._origin)
+		let destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaLink._transfer._destination)
 		
+		if originWidget != nil {
+			start = originWidget!.frame.origin
+		}
+		if destWidget != nil {
+			end = destWidget!.frame.origin
+		}
 		
 		CurveHelper.line(start: start, end: end, path: _curveBezier)
 		

@@ -62,6 +62,21 @@ class Canvas: NSView {
 		_curvesView.addSubview(widget)
 	}
 	
+	func getCanvasWidgetFrom(linkable: Linkable?) -> CanvasWidget? {
+		if linkable == nil {
+			return nil
+		}
+		
+		let widget = _canvasWidgets.first(where: {
+			if let dlgWidget = $0 as? DialogWidget {
+				return linkable?.UUID == dlgWidget._novellaDialog!.UUID
+			}
+			return false
+		})
+		
+		return widget
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
