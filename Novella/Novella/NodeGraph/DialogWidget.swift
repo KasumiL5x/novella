@@ -62,8 +62,8 @@ class DialogWidget: CanvasWidget {
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
 //			let bgStartColor = NSColor(deviceRed: 25/255.0, green: 25/255.0, blue: 25/255.0, alpha: 0.6)
 //			let bgEndColor = NSColor(deviceRed: 25/255.0, green: 25/255.0, blue: 25/255.0, alpha: 0.8)
-			let bgStartColor = NSColor.fromHex("#434343")
-			let bgEndColor = NSColor.fromHex("#222222")
+			let bgStartColor = NSColor.fromHex("#434343").withAlphaComponent(1.0)
+			let bgEndColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
 			let bgColors = [bgStartColor.cgColor, bgEndColor.cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: bounds.height)
@@ -74,9 +74,9 @@ class DialogWidget: CanvasWidget {
 			let inset = CGFloat(1.0)
 			let selectedRect = bounds.insetBy(dx: inset, dy: inset)
 			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
-			NSColor.fromHex("#8A8A8A").setStroke()
+			NSColor.fromHex("#FAFAF6").withAlphaComponent(0.7).setStroke()
 			context.resetClip()
-			path.lineWidth = 2.0
+			path.lineWidth = 1.5
 			path.stroke()
 			
 //			let path = NSBezierPath(roundedRect: bounds, xRadius: 2.0, yRadius: 2.0)
