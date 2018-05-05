@@ -45,13 +45,15 @@ extension Stack: Sequence {
 }
 
 
-// MARK: Command
+// MARK: Undoable/Command
 protocol Command {
 	func execute()
 }
 protocol UndoableCommand: Command {
 	func unexecute()
 }
+
+// MARK: CommandList
 class CommandList {
 	var _undoableCommands: Stack<UndoableCommand>
 	
@@ -72,3 +74,41 @@ class CommandList {
 		}
 	}
 }
+
+// MARK: UndoRedo
+class UndoRedo {
+	var _undoCommands: Stack<UndoableCommand>
+	var _redoCommands: Stack<UndoableCommand>
+	
+	init() {
+		self._undoCommands = Stack<UndoableCommand>()
+		self._redoCommands = Stack<UndoableCommand>()
+	}
+	
+	func undo(levels: Int) {
+		for _ in 1...levels {
+			if let cmd = _undoCommands.pop() {
+				cmd.unexecute()
+				_redoCommands.push(cmd)
+			}
+		}
+	}
+	
+	func redo(levels: Int) {
+		for _ in 1...levels {
+			if let cmd = _redoCommands.pop() {
+				cmd.execute()
+				_undoCommands.push(cmd)
+			}
+		}
+	}
+	
+	func execute(cmd: UndoableCommand) {
+		cmd.execute()
+		_undoCommands.push(cmd)
+		_redoCommands.clear()
+	}
+	
+	
+}
+
