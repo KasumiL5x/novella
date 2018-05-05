@@ -78,7 +78,7 @@ class CanvasWidget: NSView {
 	override func mouseUp(with event: NSEvent) {
 		// set the end to the current point and run the command
 		_moveCommand!._new = frame.origin
-		_canvas._commandList.execute(cmd: _moveCommand!)
+		_canvas._undoRedo.execute(cmd: _moveCommand!)
 		
 		_isPanning = false
 		

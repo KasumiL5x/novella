@@ -132,6 +132,21 @@
                                 </viewController>
                                 <size key="designTimeSize" width="72" height="30"/>
                             </touchBarItem>
+                            <touchBarItem id="j7t-C7-nlV">
+                                <viewController key="viewController" id="nHP-ob-dwz">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3st-WA-8kH">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Redo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="P3z-VE-cYa">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <connections>
+                                                <action selector="onRedo:" target="3Zk-O9-Vwd" id="PjB-nl-3I4"/>
+                                            </connections>
+                                        </buttonCell>
+                                    </button>
+                                </viewController>
+                            </touchBarItem>
                             <touchBarItem id="CrL-Ew-5gJ">
                                 <viewController key="viewController" id="zq6-9N-bDX">
                                     <textField key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">

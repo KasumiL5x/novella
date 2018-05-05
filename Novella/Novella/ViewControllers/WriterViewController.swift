@@ -151,6 +151,10 @@ class WriterViewController: NSViewController {
 	@IBAction func onUndo(_ sender: NSButton) {
 		_canvas!.undo()
 	}
+	
+	@IBAction func onRedo(_ sender: NSButtonCell) {
+		_canvas!.redo()
+	}
 }
 
 // MARK: TouchBar

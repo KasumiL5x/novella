@@ -15,7 +15,7 @@ class Canvas: NSView {
 	var _curvesView: NSView
 	var _curveWidgets: [CurveWidget]
 	
-	let _commandList: CommandList
+	let _undoRedo: UndoRedo
 	
 	override init(frame frameRect: NSRect) {
 		_nodesView = NSView(frame: frameRect)
@@ -24,7 +24,7 @@ class Canvas: NSView {
 		_curvesView = NSView(frame: frameRect)
 		_curveWidgets = []
 		
-		_commandList = CommandList()
+		_undoRedo = UndoRedo()
 		
 		super.init(frame: frameRect)
 		
@@ -42,7 +42,10 @@ class Canvas: NSView {
 	}
 	
 	func undo() {
-		_commandList.undo()
+		_undoRedo.undo(levels: 1)
+	}
+	func redo() {
+		_undoRedo.redo(levels: 1)
 	}
 	
 	func reset() {
