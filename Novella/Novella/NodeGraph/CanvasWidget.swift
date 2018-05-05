@@ -21,11 +21,11 @@ class MoveWidgetCommand: UndoableCommand {
 	}
 	
 	func execute() {
-		_widget.frame.origin = _new
+		_widget.move(to: _new)
 	}
 	
 	func unexecute() {
-		_widget.frame.origin = _prev
+		_widget.move(to: _prev)
 	}
 }
 
@@ -54,6 +54,12 @@ class CanvasWidget: NSView {
 		print("CanvasWidget::onMove() should be overridden.")
 	}
 	
+	func move(to: CGPoint) {
+		frame.origin = to
+		onMove()
+		_canvas.updateCurves()
+	}
+	
 	override func mouseDown(with event: NSEvent) {
 		_isPanning = true
 		_prevPanPoint = event.locationInWindow
@@ -67,12 +73,8 @@ class CanvasWidget: NSView {
 			let dx = (event.locationInWindow.x - _prevPanPoint.x)
 			let dy = (event.locationInWindow.y - _prevPanPoint.y)
 			let pos = NSMakePoint(frame.origin.x + dx, frame.origin.y + dy)
-			frame.origin = pos
+			move(to: pos)
 			_prevPanPoint = event.locationInWindow
-			
-			onMove()
-			
-			_canvas.updateCurves()
 		}
 	}
 	override func mouseUp(with event: NSEvent) {
@@ -81,8 +83,6 @@ class CanvasWidget: NSView {
 		_canvas._undoRedo.execute(cmd: _moveCommand!)
 		
 		_isPanning = false
-		
-		_canvas.updateCurves()
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
