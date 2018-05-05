@@ -88,7 +88,10 @@ class WriterViewController: NSViewController {
 		for curr in _story!._allLinks {
 			if let asLink = curr as? Link {
 				_canvas!.makeLinkWidget(novellaLink: asLink)
-			} else {
+			} else if let asBranch = curr as? Branch {
+				_canvas!.makeBranchWidget(novellaBranch: asBranch)
+			}
+			else {
 				print("Encountered link type that's not handled in Canvs yet (\(type(of:curr)).")
 			}
 		}

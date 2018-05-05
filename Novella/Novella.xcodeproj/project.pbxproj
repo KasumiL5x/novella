@@ -59,6 +59,7 @@
 		65F5DFA6207EA3FB0041FB0D /* FlowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */; };
 		65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */; };
 		65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F85486209E61850067A95C /* NSColor+Hex.swift */; };
+		65F85489209E68FF0067A95C /* BranchWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F85488209E68FF0067A95C /* BranchWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +139,7 @@
 		65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowNode.swift; sourceTree = "<group>"; };
 		65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableFolderTestViewController.swift; sourceTree = "<group>"; };
 		65F85486209E61850067A95C /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
+		65F85488209E68FF0067A95C /* BranchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 				659140592099D62900D6273D /* DialogWidget.swift */,
 				65588385209C856F004C412F /* CurveWidget.swift */,
 				65588387209C8838004C412F /* LinkWidget.swift */,
+				65F85488209E68FF0067A95C /* BranchWidget.swift */,
 				65588389209C8C19004C412F /* CurveHelper.swift */,
 				6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */,
 			);
@@ -566,6 +569,7 @@
 				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,
 				651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */,
 				656F99ED2086A60A009366D0 /* Delivery.swift in Sources */,
+				65F85489209E68FF0067A95C /* BranchWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

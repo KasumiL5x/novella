@@ -1,21 +1,21 @@
 //
-//  LinkWidget.swift
+//  BranchWidget.swift
 //  Novella
 //
-//  Created by Daniel Green on 04/05/2018.
+//  Created by Daniel Green on 05/05/2018.
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import AppKit
 
-class LinkWidget: CurveWidget {
-	var _novellaLink: Link
+class BranchWidget: CurveWidget {
+	var _novellaBranch: Branch
 	
 	var _curveBezier: NSBezierPath
 	var _curveShape: CAShapeLayer
 	
-	init(link: Link, canvas: Canvas) {
-		self._novellaLink = link
+	init(branch: Branch, canvas: Canvas) {
+		self._novellaBranch = branch
 		
 		self._curveBezier = NSBezierPath()
 		self._curveShape = CAShapeLayer()
@@ -41,8 +41,8 @@ class LinkWidget: CurveWidget {
 		var start = CGPoint.zero
 		var end = CGPoint.zero
 		
-		let originWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaLink._origin)
-		let destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaLink._transfer._destination)
+		let originWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaBranch._origin)
+		var destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaBranch._trueTransfer._destination)
 		
 		if originWidget != nil {
 			start = originWidget!.frame.origin
@@ -54,7 +54,14 @@ class LinkWidget: CurveWidget {
 			end.x += originWidget!.frame.width * 0.5
 			end.y += originWidget!.frame.height * 0.5
 		}
+		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
+		destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaBranch._falseTransfer._destination)
+		if destWidget != nil {
+			end = destWidget!.frame.origin
+			end.x += originWidget!.frame.width * 0.5
+			end.y += originWidget!.frame.height * 0.5
+		}
 		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
 		// copy bezier path into shape layer's cgpath
@@ -66,6 +73,6 @@ class LinkWidget: CurveWidget {
 		_curveShape.lineJoin = kCALineJoinMiter
 		_curveShape.lineWidth = 2.0
 		_curveShape.miterLimit = 10.0
-		_curveShape.strokeColor = NSColor.fromHex("#B3F865").cgColor
+		_curveShape.strokeColor = NSColor.fromHex("#EA772F").cgColor
 	}
 }

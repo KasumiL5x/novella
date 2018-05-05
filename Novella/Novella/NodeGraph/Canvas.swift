@@ -70,6 +70,12 @@ class Canvas: NSView {
 		_curvesView.addSubview(widget)
 	}
 	
+	func makeBranchWidget(novellaBranch: Branch) {
+		let widget = BranchWidget(branch: novellaBranch, canvas: self)
+		_curveWidgets.append(widget)
+		_curvesView.addSubview(widget)
+	}
+	
 	func getCanvasWidgetFrom(linkable: Linkable?) -> CanvasWidget? {
 		if linkable == nil {
 			return nil
