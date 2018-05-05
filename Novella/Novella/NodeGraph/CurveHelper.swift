@@ -9,18 +9,18 @@
 import AppKit
 
 class CurveHelper {
-	static func smooth(start: NSPoint, end: NSPoint, path: NSBezierPath) {
-		let a = start
-		let d = end
-		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.x)
-		let c = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: d.y)
-		path.move(to: a)
-		path.curve(to: d, controlPoint1: b, controlPoint2: c)
-	}
-	
 	static func line(start: NSPoint, end: NSPoint, path: NSBezierPath) {
 		path.move(to: start)
 		path.line(to: end)
+	}
+	
+	static func smooth(start: NSPoint, end: NSPoint, path: NSBezierPath) {
+		let a = start
+		let d = end
+		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.y)
+		let c = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: d.y)
+		path.move(to: a)
+		path.curve(to: d, controlPoint1: b, controlPoint2: c)
 	}
 	
 	static func curve(start: NSPoint, end: NSPoint, path: NSBezierPath) {
@@ -34,7 +34,7 @@ class CurveHelper {
 	static func square(start: NSPoint, end: NSPoint, path: NSBezierPath) {
 		let a = start
 		let d = end
-		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.x)
+		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.y)
 		let c = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: d.y)
 		path.move(to: a)
 		path.line(to: b)
