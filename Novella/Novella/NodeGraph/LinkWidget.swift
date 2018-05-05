@@ -64,8 +64,8 @@ class LinkWidget: CurveWidget {
 		_curveShape.lineCap = kCALineCapButt
 		_curveShape.lineDashPattern = nil
 		_curveShape.lineJoin = kCALineJoinMiter
-		_curveShape.lineWidth = 4.0
+		_curveShape.lineWidth = 2.0
 		_curveShape.miterLimit = 10.0
-		_curveShape.strokeColor = NSColor.green.cgColor
+		_curveShape.strokeColor = NSColor.fromHex("#A4DB63").cgColor
 	}
 }
