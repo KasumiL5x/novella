@@ -24,9 +24,9 @@ class CurveHelper {
 	}
 	
 	static func curve(start: NSPoint, end: NSPoint, path: NSBezierPath) {
-		let offset = abs(start.x - end.x) / 3.0
-		let cp1 = NSPoint(x: end.x + offset, y: start.y)
-		let cp2 = NSPoint(x: start.x - offset, y: end.y)
+		let offset = abs(start.x - end.x)  * 0.75
+		let cp1 = NSPoint(x: end.x - offset, y: start.y)
+		let cp2 = NSPoint(x: start.x + offset, y: end.y)
 		path.move(to: start)
 		path.curve(to: end, controlPoint1: cp1, controlPoint2: cp2)
 	}
