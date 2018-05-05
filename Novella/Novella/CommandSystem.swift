@@ -109,6 +109,9 @@ class UndoRedo {
 		_redoCommands.clear()
 	}
 	
-	
+	func clear() {
+		_undoCommands.clear()
+		_redoCommands.clear()
+	}
 }
 

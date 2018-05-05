@@ -50,7 +50,12 @@ class Canvas: NSView {
 	
 	func reset() {
 		_nodesView.subviews.removeAll()
+		_canvasWidgets = []
+		
 		_curvesView.subviews.removeAll()
+		_curveWidgets = []
+		
+		_undoRedo.clear()
 	}
 	
 	func makeDialogWidget(novellaDialog: Dialog) {
