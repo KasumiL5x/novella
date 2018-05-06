@@ -9,12 +9,15 @@
 import Cocoa
 
 class Canvas: NSView {
+	// where nodes are stored
 	var _nodesView: NSView
 	var _canvasWidgets: [CanvasWidget]
 	
+	// where curves are stored
 	var _curvesView: NSView
 	var _curveWidgets: [CurveWidget]
 	
+	// canvas-wide undo/redo
 	let _undoRedo: UndoRedo
 	
 	override init(frame frameRect: NSRect) {
@@ -30,10 +33,8 @@ class Canvas: NSView {
 		
 		// layers for subviews
 		wantsLayer = true
-		
 		// add nodes view
 		self.addSubview(_nodesView)
-		
 		// add curves view
 		self.addSubview(_curvesView)
 	}
@@ -41,23 +42,30 @@ class Canvas: NSView {
 		fatalError("Canvas::init(coder) not implemented.")
 	}
 	
+	// MARK: Undo/Redo
 	func undo() {
 		_undoRedo.undo(levels: 1)
 	}
+	
 	func redo() {
 		_undoRedo.redo(levels: 1)
 	}
 	
+	// MARK: Reset
 	func reset() {
+		// remove all nodes
 		_nodesView.subviews.removeAll()
 		_canvasWidgets = []
 		
+		// remove all curves
 		_curvesView.subviews.removeAll()
 		_curveWidgets = []
 		
+		// clear undo/redo
 		_undoRedo.clear()
 	}
 	
+	// MARK: Canvas Widget Creation
 	func makeDialogWidget(novellaDialog: Dialog) {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_canvasWidgets.append(widget)
@@ -76,6 +84,7 @@ class Canvas: NSView {
 		_curvesView.addSubview(widget)
 	}
 	
+	// MARK: Convert Novella to Canvas
 	func getCanvasWidgetFrom(linkable: Linkable?) -> CanvasWidget? {
 		if linkable == nil {
 			return nil
@@ -91,7 +100,9 @@ class Canvas: NSView {
 		return widget
 	}
 	
+	// MARK: Curves
 	func updateCurves() {
+		// updates every curve - not very efficient
 		for child in _curvesView.subviews {
 			child.layer?.setNeedsDisplay()
 		}

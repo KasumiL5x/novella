@@ -92,7 +92,7 @@ class WriterViewController: NSViewController {
 				_canvas!.makeBranchWidget(novellaBranch: asBranch)
 			}
 			else {
-				print("Encountered link type that's not handled in Canvs yet (\(type(of:curr)).")
+				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
 			}
 		}
 		
