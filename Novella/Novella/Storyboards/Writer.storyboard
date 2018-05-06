@@ -100,35 +100,36 @@
                     </view>
                     <touchBar key="touchBar" id="l5w-1j-a0U">
                         <touchBarItems>
-                            <touchBarItem id="JRt-Hx-eFz">
-                                <viewController key="viewController" id="Abp-7o-ohP">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4W-F5-cm3">
-                                        <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
+                            <touchBarItem id="75C-jD-OaB">
+                                <viewController key="viewController" id="g7F-Ad-xgP">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7KV-3D-JsA">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Create Dialog" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d0q-Lf-22a">
+                                        <buttonCell key="cell" type="push" title="Undo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="u56-8M-vkb">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onCreateDialog:" target="3Zk-O9-Vwd" id="Sz5-IA-tyG"/>
+                                            <action selector="onUndo:" target="3Zk-O9-Vwd" id="Dc6-Fm-Vpc"/>
                                         </connections>
                                     </button>
                                 </viewController>
-                                <size key="designTimeSize" width="126" height="30"/>
+                                <size key="designTimeSize" width="72" height="30"/>
                             </touchBarItem>
-                            <touchBarItem id="CrL-Ew-5gJ">
-                                <viewController key="viewController" id="zq6-9N-bDX">
-                                    <textField key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">
-                                        <rect key="frame" x="0.0" y="0.0" width="236" height="24"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" borderStyle="bezel" alignment="left" title="Don't let your memes be dreams." drawsBackground="YES" id="7kX-HX-TC8">
+                            <touchBarItem id="j7t-C7-nlV">
+                                <viewController key="viewController" id="nHP-ob-dwz">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3st-WA-8kH">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Redo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="P3z-VE-cYa">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
+                                            <connections>
+                                                <action selector="onRedo:" target="3Zk-O9-Vwd" id="PjB-nl-3I4"/>
+                                            </connections>
+                                        </buttonCell>
+                                    </button>
                                 </viewController>
-                                <size key="designTimeSize" width="236" height="24"/>
                             </touchBarItem>
                         </touchBarItems>
                     </touchBar>

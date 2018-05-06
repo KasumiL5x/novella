@@ -9,98 +9,109 @@
 import Cocoa
 
 class Canvas: NSView {
+	// background grid
+	var _grid: GridView
+	
+	// where nodes are stored
 	var _nodesView: NSView
 	var _canvasWidgets: [CanvasWidget]
 	
+	// where curves are stored
+	var _curvesView: NSView
+	var _curveWidgets: [CurveWidget]
+	
+	// canvas-wide undo/redo
+	let _undoRedo: UndoRedo
+	
 	override init(frame frameRect: NSRect) {
+		_grid = GridView(frame: frameRect)
+		
 		_nodesView = NSView(frame: frameRect)
 		_canvasWidgets = []
+		
+		_curvesView = NSView(frame: frameRect)
+		_curveWidgets = []
+		
+		_undoRedo = UndoRedo()
 		
 		super.init(frame: frameRect)
 		
 		// layers for subviews
 		wantsLayer = true
-		
+		// add background grid
+		self.addSubview(_grid)
 		// add nodes view
 		self.addSubview(_nodesView)
+		// add curves view
+		self.addSubview(_curvesView)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
 	}
 	
-	func reset() {
-		_nodesView.subviews.removeAll()
+	// MARK: Undo/Redo
+	func undo() {
+		_undoRedo.undo(levels: 1)
 	}
 	
+	func redo() {
+		_undoRedo.redo(levels: 1)
+	}
+	
+	// MARK: Reset
+	func reset() {
+		// remove all nodes
+		_nodesView.subviews.removeAll()
+		_canvasWidgets = []
+		
+		// remove all curves
+		_curvesView.subviews.removeAll()
+		_curveWidgets = []
+		
+		// clear undo/redo
+		_undoRedo.clear()
+	}
+	
+	// MARK: Canvas Widget Creation
 	func makeDialogWidget(novellaDialog: Dialog) {
-		let widget = DialogWidget(node: novellaDialog)
+		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_canvasWidgets.append(widget)
 		_nodesView.addSubview(widget)
 	}
 	
-	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-		
-		if let context = NSGraphicsContext.current?.cgContext {
-			context.saveGState()
-			drawGrid(context: context, dirtyRect: dirtyRect)
-			context.restoreGState()
-		}
+	func makeLinkWidget(novellaLink: Link) {
+		let widget = LinkWidget(link: novellaLink, canvas: self)
+		_curveWidgets.append(widget)
+		_curvesView.addSubview(widget)
 	}
 	
-	func drawGrid(context: CGContext, dirtyRect: NSRect) {
-		// solid fill
-		let bgColor = NSColor.init(srgbRed: 54/255.0, green: 54/255.0, blue: 61/255.0, alpha: 1.0)
-		bgColor.setFill()
-		context.fill(dirtyRect)
-		
-		// line variables
-		let lineColor = NSColor.init(srgbRed: 120/255.0, green: 120/255.0, blue: 120/255.0, alpha: 1.0)
-		let majorOpacity = CGFloat(0.5)
-		let minorOpacity = CGFloat(0.4)
-		let defaultOpacity = CGFloat(0.2)
-		let majorThickness = CGFloat(2.0)
-		let minorThickness = CGFloat(1.5)
-		let defaultThickness = CGFloat(1.0)
-		let linePath = NSBezierPath()
-		let majorDivisor = 10
-		let minorDivisor = 5
-		let depth = CGFloat(10.0)
-		
-		// horizontal lines
-		for i in 1..<Int(bounds.size.height / depth) {
-			if i % majorDivisor == 0 {
-				lineColor.withAlphaComponent(majorOpacity).set()
-				linePath.lineWidth = majorThickness
-			} else if i % minorDivisor == 0 {
-				lineColor.withAlphaComponent(minorOpacity).set()
-				linePath.lineWidth = minorThickness
-			} else {
-				lineColor.withAlphaComponent(defaultOpacity).set()
-				linePath.lineWidth = defaultThickness
-			}
-			linePath.removeAllPoints()
-			linePath.move(to: NSPoint(x: 0, y: CGFloat(i) * depth - 0.5))
-			linePath.line(to: NSPoint(x: bounds.size.width, y: CGFloat(i) * depth - 0.5))
-			linePath.stroke()
+	func makeBranchWidget(novellaBranch: Branch) {
+		let widget = BranchWidget(branch: novellaBranch, canvas: self)
+		_curveWidgets.append(widget)
+		_curvesView.addSubview(widget)
+	}
+	
+	// MARK: Convert Novella to Canvas
+	func getCanvasWidgetFrom(linkable: Linkable?) -> CanvasWidget? {
+		if linkable == nil {
+			return nil
 		}
 		
-		// vertical lines
-		for i in 1..<Int(bounds.size.height / depth) {
-			if i % majorDivisor == 0 {
-				lineColor.withAlphaComponent(majorOpacity).set()
-				linePath.lineWidth = majorThickness
-			} else if i % minorDivisor == 0 {
-				lineColor.withAlphaComponent(minorOpacity).set()
-				linePath.lineWidth = minorThickness
-			} else {
-				lineColor.withAlphaComponent(defaultOpacity).set()
-				linePath.lineWidth = defaultThickness
+		let widget = _canvasWidgets.first(where: {
+			if let dlgWidget = $0 as? DialogWidget {
+				return linkable?.UUID == dlgWidget._novellaDialog!.UUID
 			}
-			linePath.removeAllPoints()
-			linePath.move(to: NSPoint(x: CGFloat(i) * depth - 0.5, y: 0))
-			linePath.line(to: NSPoint(x: CGFloat(i) * depth - 0.5, y: bounds.size.height))
-			linePath.stroke()
+			return false
+		})
+		
+		return widget
+	}
+	
+	// MARK: Curves
+	func updateCurves() {
+		// updates every curve - not very efficient
+		for child in _curvesView.subviews {
+			child.layer?.setNeedsDisplay()
 		}
 	}
 }

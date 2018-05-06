@@ -84,6 +84,17 @@ class WriterViewController: NSViewController {
 				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
 			}
 		}
+		// create canvas links for each link
+		for curr in _story!._allLinks {
+			if let asLink = curr as? Link {
+				_canvas!.makeLinkWidget(novellaLink: asLink)
+			} else if let asBranch = curr as? Branch {
+				_canvas!.makeBranchWidget(novellaBranch: asBranch)
+			}
+			else {
+				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
+			}
+		}
 		
 		_story?.debugPrint(global: true)
 	}
@@ -128,16 +139,12 @@ class WriterViewController: NSViewController {
 		print("Successfully written JSON to file.")
 	}
 	
+	@IBAction func onUndo(_ sender: NSButton) {
+		_canvas!.undo()
+	}
 	
-	@IBAction func onCreateDialog(_ sender: NSButton) {
-		if _story == nil {
-			return
-		}
-		
-		let dialog = _story!.makeDialog()
-		// hack just to test different names
-		dialog._name = "dlg-\(_story!._allNodes.count-1)"
-		_canvas?.makeDialogWidget(novellaDialog: dialog)
+	@IBAction func onRedo(_ sender: NSButtonCell) {
+		_canvas!.redo()
 	}
 }
 
