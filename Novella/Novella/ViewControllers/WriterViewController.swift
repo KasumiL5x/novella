@@ -139,18 +139,6 @@ class WriterViewController: NSViewController {
 		print("Successfully written JSON to file.")
 	}
 	
-	
-	@IBAction func onCreateDialog(_ sender: NSButton) {
-		if _story == nil {
-			return
-		}
-		
-		let dialog = _story!.makeDialog()
-		// hack just to test different names
-		dialog._name = "dlg-\(_story!._allNodes.count-1)"
-		_canvas?.makeDialogWidget(novellaDialog: dialog)
-	}
-	
 	@IBAction func onUndo(_ sender: NSButton) {
 		_canvas!.undo()
 	}

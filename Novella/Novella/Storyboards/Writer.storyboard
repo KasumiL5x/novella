@@ -100,22 +100,6 @@
                     </view>
                     <touchBar key="touchBar" id="l5w-1j-a0U">
                         <touchBarItems>
-                            <touchBarItem id="JRt-Hx-eFz">
-                                <viewController key="viewController" id="Abp-7o-ohP">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4W-F5-cm3">
-                                        <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Create Dialog" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d0q-Lf-22a">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onCreateDialog:" target="3Zk-O9-Vwd" id="Sz5-IA-tyG"/>
-                                        </connections>
-                                    </button>
-                                </viewController>
-                                <size key="designTimeSize" width="126" height="30"/>
-                            </touchBarItem>
                             <touchBarItem id="75C-jD-OaB">
                                 <viewController key="viewController" id="g7F-Ad-xgP">
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7KV-3D-JsA">
@@ -146,20 +130,6 @@
                                         </buttonCell>
                                     </button>
                                 </viewController>
-                            </touchBarItem>
-                            <touchBarItem id="CrL-Ew-5gJ">
-                                <viewController key="viewController" id="zq6-9N-bDX">
-                                    <textField key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aOJ-hz-xYY">
-                                        <rect key="frame" x="0.0" y="0.0" width="236" height="24"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" borderStyle="bezel" alignment="left" title="Don't let your memes be dreams." drawsBackground="YES" id="7kX-HX-TC8">
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </viewController>
-                                <size key="designTimeSize" width="236" height="24"/>
                             </touchBarItem>
                         </touchBarItems>
                     </touchBar>

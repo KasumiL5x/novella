@@ -24,7 +24,7 @@ class GridView: NSView {
 	var MajorDivisor: Int
 	var MinorDivisor: Int
 	// depth
-	var Depth: CGFloat
+	var Density: CGFloat
 	
 	
 	override init(frame frameRect: NSRect) {
@@ -42,7 +42,7 @@ class GridView: NSView {
 		self.MajorDivisor = 10
 		self.MinorDivisor = 5
 		//
-		self.Depth = CGFloat(10.0)
+		self.Density = CGFloat(10.0)
 		
 		super.init(frame: frameRect)
 	}
@@ -63,7 +63,7 @@ class GridView: NSView {
 			let linePath = NSBezierPath()
 			
 			// horizontal lines
-			for i in 1..<Int(bounds.size.height / Depth) {
+			for i in 1..<Int(bounds.size.height / Density) {
 				if i % MajorDivisor == 0 {
 					LineColor.withAlphaComponent(MajorOpacity).set()
 					linePath.lineWidth = MajorThickness
@@ -75,13 +75,13 @@ class GridView: NSView {
 					linePath.lineWidth = Thickness
 				}
 				linePath.removeAllPoints()
-				linePath.move(to: NSPoint(x: 0, y: CGFloat(i) * Depth - 0.5))
-				linePath.line(to: NSPoint(x: bounds.size.width, y: CGFloat(i) * Depth - 0.5))
+				linePath.move(to: NSPoint(x: 0, y: CGFloat(i) * Density - 0.5))
+				linePath.line(to: NSPoint(x: bounds.size.width, y: CGFloat(i) * Density - 0.5))
 				linePath.stroke()
 			}
 			
 			// vertical lines
-			for i in 1..<Int(bounds.size.height / Depth) {
+			for i in 1..<Int(bounds.size.height / Density) {
 				if i % MajorDivisor == 0 {
 					LineColor.withAlphaComponent(MajorOpacity).set()
 					linePath.lineWidth = MajorThickness
@@ -93,8 +93,8 @@ class GridView: NSView {
 					linePath.lineWidth = Thickness
 				}
 				linePath.removeAllPoints()
-				linePath.move(to: NSPoint(x: CGFloat(i) * Depth - 0.5, y: 0))
-				linePath.line(to: NSPoint(x: CGFloat(i) * Depth - 0.5, y: bounds.size.height))
+				linePath.move(to: NSPoint(x: CGFloat(i) * Density - 0.5, y: 0))
+				linePath.line(to: NSPoint(x: CGFloat(i) * Density - 0.5, y: bounds.size.height))
 				linePath.stroke()
 			}
 			
