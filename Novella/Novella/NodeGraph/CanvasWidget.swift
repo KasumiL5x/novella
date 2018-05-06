@@ -8,42 +8,19 @@
 
 import Cocoa
 
-// test
-class MoveWidgetCommand: UndoableCommand {
-	let _widget: CanvasWidget
-	var _prev: CGPoint
-	var _new: CGPoint
-	
-	init(widget: CanvasWidget, new: CGPoint) {
-		self._widget = widget
-		self._prev = widget.frame.origin
-		self._new = new
-	}
-	
-	func execute() {
-		_widget.move(to: _new)
-	}
-	
-	func unexecute() {
-		_widget.move(to: _prev)
-	}
-}
-
 class CanvasWidget: NSView {
 	let _canvas: Canvas
 	var _prevPanPoint: CGPoint
 	var _isPanning: Bool
-	
-	var _moveCommand: MoveWidgetCommand?
+	var _lastOrigin: CGPoint
 	
 	init(frame frameRect: NSRect, canvas: Canvas) {
 		self._canvas = canvas
 		self._prevPanPoint = CGPoint.zero
 		self._isPanning = false
+		self._lastOrigin = CGPoint.zero
 		
 		super.init(frame: frameRect)
-		
-		self._moveCommand = nil
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("CanvasWidget::init(coder) not implemented.")
@@ -54,6 +31,7 @@ class CanvasWidget: NSView {
 		print("CanvasWidget::onMove() should be overridden.")
 	}
 	
+	// private - only use within commands
 	func move(to: CGPoint) {
 		frame.origin = to
 		onMove()
@@ -64,23 +42,23 @@ class CanvasWidget: NSView {
 		_isPanning = true
 		_prevPanPoint = event.locationInWindow
 		
-		// make new move command (stores the current origin)
-		// when redone, the original reference is left foating, but on mouse up we add it to the command list anywaye
-		_moveCommand = MoveWidgetCommand(widget: self, new: CGPoint.zero)
+		_canvas._undoRedo.beginCompound(executeOnAdd: true)
+		_lastOrigin = frame.origin
 	}
 	override func mouseDragged(with event: NSEvent) {
 		if _isPanning {
 			let dx = (event.locationInWindow.x - _prevPanPoint.x)
 			let dy = (event.locationInWindow.y - _prevPanPoint.y)
 			let pos = NSMakePoint(frame.origin.x + dx, frame.origin.y + dy)
-			move(to: pos)
+			
+			_canvas.moveCanvasWidget(widget: self, from: _lastOrigin, to: pos)
+			_lastOrigin = pos
 			_prevPanPoint = event.locationInWindow
 		}
 	}
 	override func mouseUp(with event: NSEvent) {
-		// set the end to the current point and run the command
-		_moveCommand!._new = frame.origin
-		_canvas._undoRedo.execute(cmd: _moveCommand!)
+		_canvas.moveCanvasWidget(widget: self, from: _lastOrigin, to: frame.origin)
+		_canvas._undoRedo.endCompound()
 		
 		_isPanning = false
 	}

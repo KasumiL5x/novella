@@ -46,6 +46,7 @@
 		6591405D209A36F600D6273D /* Simulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591405C209A36F600D6273D /* Simulation.swift */; };
 		65C0573F2080A20900C4367E /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0573E2080A20900C4367E /* Path.swift */; };
 		65C2F02320963AA1003D5025 /* Simulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C2F02220963AA1003D5025 /* Simulator.swift */; };
+		65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */; };
 		65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */; };
 		65F5DF93207EA0910041FB0D /* BaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF92207EA0910041FB0D /* BaseLink.swift */; };
 		65F5DF95207EA09C0041FB0D /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF94207EA09C0041FB0D /* Link.swift */; };
@@ -128,6 +129,7 @@
 		65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65C0573E2080A20900C4367E /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		65C2F02220963AA1003D5025 /* Simulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulator.swift; sourceTree = "<group>"; };
+		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65F5DF92207EA0910041FB0D /* BaseLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLink.swift; sourceTree = "<group>"; };
 		65F5DF94207EA09C0041FB0D /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		65F5DF97207EA0AF0041FB0D /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				65588389209C8C19004C412F /* CurveHelper.swift */,
 				6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */,
 				65F8548A209EF2D50067A95C /* GridView.swift */,
+				65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */,
 			);
 			path = NodeGraph;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				658C7CDD207E7EB900E2B46B /* Variable.swift in Sources */,
 				65F5DF9E207EA0D40041FB0D /* Transfer.swift in Sources */,
+				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
 				65C0573F2080A20900C4367E /* Path.swift in Sources */,
 				656F99EF2086A627009366D0 /* Dialog.swift in Sources */,
 				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,

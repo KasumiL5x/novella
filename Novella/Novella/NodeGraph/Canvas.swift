@@ -91,6 +91,11 @@ class Canvas: NSView {
 		_curvesView.addSubview(widget)
 	}
 	
+	// MARK: Canvas-wide functions
+	func moveCanvasWidget(widget: CanvasWidget, from: CGPoint, to: CGPoint) {
+		_undoRedo.execute(cmd: MoveCanvasWidgetCmd(widget: widget, from: from, to: to))
+	}
+	
 	// MARK: Convert Novella to Canvas
 	func getCanvasWidgetFrom(linkable: Linkable?) -> CanvasWidget? {
 		if linkable == nil {

@@ -53,6 +53,41 @@ protocol UndoableCommand: Command {
 	func unexecute()
 }
 
+// MARK: CompoundCommand
+class CompoundCommand: UndoableCommand {
+	var _commands: [UndoableCommand]
+	var _executeOnAdd: Bool
+	
+	init(executeOnAdd: Bool) {
+		self._commands = []
+		self._executeOnAdd = executeOnAdd
+	}
+	
+	func add(cmd: UndoableCommand) {
+		if _executeOnAdd {
+			cmd.execute()
+		}
+		
+		_commands.append(cmd)
+	}
+	
+	func execute() {
+		if !_executeOnAdd {
+			return
+		}
+		
+		for cmd in _commands {
+			cmd.execute()
+		}
+	}
+	
+	func unexecute() {
+		for cmd in _commands.reversed() {
+			cmd.unexecute()
+		}
+	}
+}
+
 // MARK: CommandList
 class CommandList {
 	var _undoableCommands: Stack<UndoableCommand>
@@ -79,10 +114,12 @@ class CommandList {
 class UndoRedo {
 	var _undoCommands: Stack<UndoableCommand>
 	var _redoCommands: Stack<UndoableCommand>
+	var _compoundUndo: CompoundCommand?
 	
 	init() {
 		self._undoCommands = Stack<UndoableCommand>()
 		self._redoCommands = Stack<UndoableCommand>()
+		self._compoundUndo = nil
 	}
 	
 	func undo(levels: Int) {
@@ -104,14 +141,36 @@ class UndoRedo {
 	}
 	
 	func execute(cmd: UndoableCommand) {
-		cmd.execute()
-		_undoCommands.push(cmd)
-		_redoCommands.clear()
+		// if a compound undo is in progress, add to it
+		// but ignore adding compounds as we execute them upon closing compounds
+		if _compoundUndo != nil && !(cmd is CompoundCommand) {
+			_compoundUndo?.add(cmd: cmd)
+		} else {
+			cmd.execute()
+			_undoCommands.push(cmd)
+			_redoCommands.clear()
+		}
 	}
 	
 	func clear() {
 		_undoCommands.clear()
 		_redoCommands.clear()
+	}
+	
+	func beginCompound(executeOnAdd: Bool) {
+		if _compoundUndo != nil {
+			fatalError("Attempted to begin a compound command without closing the previous one.")
+		}
+		
+		_compoundUndo = CompoundCommand(executeOnAdd: executeOnAdd)
+	}
+	
+	func endCompound() {
+		if _compoundUndo == nil {
+			fatalError("Attempted to end a compound command without starting it first.")
+		}
+		execute(cmd: _compoundUndo!)
+		_compoundUndo = nil // warning: creates dangling CompoundCommand existing only in the stacks
 	}
 }
 
