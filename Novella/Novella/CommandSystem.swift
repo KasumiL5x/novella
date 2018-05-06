@@ -88,28 +88,6 @@ class CompoundCommand: UndoableCommand {
 	}
 }
 
-// MARK: CommandList
-class CommandList {
-	var _undoableCommands: Stack<UndoableCommand>
-	
-	init() {
-		self._undoableCommands = Stack<UndoableCommand>()
-	}
-	
-	func execute(cmd: Command) {
-		cmd.execute()
-		if let undoable = cmd as? UndoableCommand {
-			_undoableCommands.push(undoable)
-		}
-	}
-	
-	func undo() {
-		if let top = _undoableCommands.pop() {
-			top.unexecute()
-		}
-	}
-}
-
 // MARK: UndoRedo
 class UndoRedo {
 	var _undoCommands: Stack<UndoableCommand>
