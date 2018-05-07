@@ -20,6 +20,9 @@ class Canvas: NSView {
 	var _curvesView: NSView
 	var _curveWidgets: [CurveWidget]
 	
+	// selection rectangle
+	var _selectionRect: SelectionView
+	
 	// canvas-wide undo/redo
 	let _undoRedo: UndoRedo
 	
@@ -31,6 +34,8 @@ class Canvas: NSView {
 		
 		_curvesView = NSView(frame: frameRect)
 		_curveWidgets = []
+		
+		_selectionRect = SelectionView(frame: frameRect)
 		
 		_undoRedo = UndoRedo()
 		
@@ -44,6 +49,8 @@ class Canvas: NSView {
 		self.addSubview(_nodesView)
 		// add curves view
 		self.addSubview(_curvesView)
+		// add marquee view (THIS MUST BE LAST)
+		self.addSubview(_selectionRect)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
@@ -118,5 +125,26 @@ class Canvas: NSView {
 		for child in _curvesView.subviews {
 			child.layer?.setNeedsDisplay()
 		}
+	}
+	
+	// MARK: Mouse Events
+	override func mouseDown(with event: NSEvent) {
+		_selectionRect._inMarquee = true
+		_selectionRect._origin = self.convert(event.locationInWindow, from: nil)
+	}
+	override func mouseDragged(with event: NSEvent) {
+		let curr = self.convert(event.locationInWindow, from: nil)
+		
+		_selectionRect._marquee = NSMakeRect(fmin(_selectionRect._origin.x, curr.x), fmin(_selectionRect._origin.y, curr.y), fabs(curr.x - _selectionRect._origin.x), fabs(curr.y - _selectionRect._origin.y))
+		_selectionRect.setNeedsDisplay(_selectionRect.bounds)
+	}
+	override func mouseUp(with event: NSEvent) {
+		_selectionRect._marquee = NSRect.zero
+		_selectionRect.setNeedsDisplay(_selectionRect.bounds)
+		_selectionRect._inMarquee = false
+	}
+	
+	// MARK: Drawing
+	override func draw(_ dirtyRect: NSRect) {
 	}
 }
