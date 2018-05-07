@@ -129,19 +129,14 @@ class Canvas: NSView {
 	
 	// MARK: Mouse Events
 	override func mouseDown(with event: NSEvent) {
-		_selectionRect._inMarquee = true
-		_selectionRect._origin = self.convert(event.locationInWindow, from: nil)
+		_selectionRect.Origin = self.convert(event.locationInWindow, from: nil)
 	}
 	override func mouseDragged(with event: NSEvent) {
 		let curr = self.convert(event.locationInWindow, from: nil)
-		
-		_selectionRect._marquee = NSMakeRect(fmin(_selectionRect._origin.x, curr.x), fmin(_selectionRect._origin.y, curr.y), fabs(curr.x - _selectionRect._origin.x), fabs(curr.y - _selectionRect._origin.y))
-		_selectionRect.setNeedsDisplay(_selectionRect.bounds)
+		_selectionRect.Marquee = NSMakeRect(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y), fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
 	}
 	override func mouseUp(with event: NSEvent) {
-		_selectionRect._marquee = NSRect.zero
-		_selectionRect.setNeedsDisplay(_selectionRect.bounds)
-		_selectionRect._inMarquee = false
+		_selectionRect.Marquee = NSRect.zero
 	}
 	
 	// MARK: Drawing
