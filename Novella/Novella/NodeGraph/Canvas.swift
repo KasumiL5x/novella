@@ -138,8 +138,4 @@ class Canvas: NSView {
 	override func mouseUp(with event: NSEvent) {
 		_selectionRect.Marquee = NSRect.zero
 	}
-	
-	// MARK: Drawing
-	override func draw(_ dirtyRect: NSRect) {
-	}
 }
