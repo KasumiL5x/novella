@@ -71,13 +71,23 @@ class DialogWidget: CanvasWidget {
 			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
 			
 			// draw outline (inset)
-			let inset = CGFloat(1.0)
-			let selectedRect = bounds.insetBy(dx: inset, dy: inset)
+			let outlineInset = CGFloat(1.0)
+			let selectedRect = bounds.insetBy(dx: outlineInset, dy: outlineInset)
 			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
 			NSColor.fromHex("#FAFAF6").withAlphaComponent(0.7).setStroke()
 			context.resetClip()
 			path.lineWidth = 1.5
 			path.stroke()
+			
+			// draw selection indicator
+			if _isSelected {
+				let selectedInset = CGFloat(1.0)
+				let insetRect = bounds.insetBy(dx: selectedInset, dy: selectedInset)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path.lineWidth = 3.0
+				NSColor.green.setStroke()
+				path.stroke()
+			}
 			
 //			let path = NSBezierPath(roundedRect: bounds, xRadius: 2.0, yRadius: 2.0)
 //			NSColor.white.setFill()

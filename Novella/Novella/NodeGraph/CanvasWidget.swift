@@ -13,12 +13,14 @@ class CanvasWidget: NSView {
 	var _prevPanPoint: CGPoint
 	var _isPanning: Bool
 	var _lastOrigin: CGPoint
+	var _isSelected: Bool
 	
 	init(frame frameRect: NSRect, canvas: Canvas) {
 		self._canvas = canvas
 		self._prevPanPoint = CGPoint.zero
 		self._isPanning = false
 		self._lastOrigin = CGPoint.zero
+		self._isSelected = false
 		
 		super.init(frame: frameRect)
 	}

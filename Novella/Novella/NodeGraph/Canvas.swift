@@ -22,6 +22,8 @@ class Canvas: NSView {
 	
 	// selection rectangle
 	var _selectionRect: SelectionView
+	// selected nodes
+	var _selectedNodes: [CanvasWidget]
 	
 	// canvas-wide undo/redo
 	let _undoRedo: UndoRedo
@@ -36,6 +38,7 @@ class Canvas: NSView {
 		_curveWidgets = []
 		
 		_selectionRect = SelectionView(frame: frameRect)
+		_selectedNodes = []
 		
 		_undoRedo = UndoRedo()
 		
@@ -136,7 +139,16 @@ class Canvas: NSView {
 		_selectionRect.Marquee = NSMakeRect(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y), fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
 	}
 	override func mouseUp(with event: NSEvent) {
-		_ = allNodesIn(rect: _selectionRect.Marquee)
+		_selectedNodes.forEach({
+			$0._isSelected = false
+			$0.setNeedsDisplay($0.bounds)
+		}) // deselect existing
+		_selectedNodes = allNodesIn(rect: _selectionRect.Marquee) // get new selection
+		_selectedNodes.forEach({
+			$0._isSelected = true
+			$0.setNeedsDisplay($0.bounds)
+		}) // select new
+		
 		_selectionRect.Marquee = NSRect.zero
 	}
 	
@@ -150,7 +162,6 @@ class Canvas: NSView {
 				selected.append(curr)
 			}
 		}
-		print(selected)
 		return selected
 	}
 }
