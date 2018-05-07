@@ -22,4 +22,8 @@ class CurveWidget: NSView {
 	required init?(coder decoder: NSCoder) {
 		fatalError("CurveWidget::init(coder) not implemented.")
 	}
+	
+	override func hitTest(_ point: NSPoint) -> NSView? {
+		return nil
+	}
 }

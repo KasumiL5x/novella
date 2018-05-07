@@ -11,10 +11,12 @@ import AppKit
 class SelectionView: NSView {
 	private var _origin: NSPoint
 	private var _marquee: NSRect
+	private var _inMarquee: Bool
 	
 	override init(frame frameRect: NSRect) {
 		self._origin = NSPoint.zero
 		self._marquee = NSRect.zero
+		self._inMarquee = false
 		
 		super.init(frame: frameRect)
 	}
@@ -36,6 +38,15 @@ class SelectionView: NSView {
 			_marquee = newValue
 			setNeedsDisplay(bounds)
 		}
+	}
+	
+	var InMarquee: Bool {
+		get{ return _inMarquee }
+		set{ _inMarquee = newValue }
+	}
+	
+	override func hitTest(_ point: NSPoint) -> NSView? {
+		return nil
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

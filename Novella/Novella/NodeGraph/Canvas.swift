@@ -13,50 +13,62 @@ class Canvas: NSView {
 	var _grid: GridView
 	
 	// where nodes are stored
-	var _nodesView: NSView
 	var _canvasWidgets: [CanvasWidget]
-	
 	// where curves are stored
-	var _curvesView: NSView
 	var _curveWidgets: [CurveWidget]
-	
 	// selection rectangle
 	var _selectionRect: SelectionView
 	// selected nodes
 	var _selectedNodes: [CanvasWidget]
 	
+	// dragging stuff
+	var _prevMousePos: NSPoint
+	
 	// canvas-wide undo/redo
 	let _undoRedo: UndoRedo
+	
+	// custom tracking area
+	var _trackingArea: NSTrackingArea?
 	
 	override init(frame frameRect: NSRect) {
 		_grid = GridView(frame: frameRect)
 		
-		_nodesView = NSView(frame: frameRect)
 		_canvasWidgets = []
 		
-		_curvesView = NSView(frame: frameRect)
 		_curveWidgets = []
 		
 		_selectionRect = SelectionView(frame: frameRect)
 		_selectedNodes = []
 		
+		_prevMousePos = NSPoint.zero
+		
 		_undoRedo = UndoRedo()
+		
+		_trackingArea = nil
 		
 		super.init(frame: frameRect)
 		
 		// layers for subviews
 		wantsLayer = true
-		// add background grid
-		self.addSubview(_grid)
-		// add nodes view
-		self.addSubview(_nodesView)
-		// add curves view
-		self.addSubview(_curvesView)
-		// add marquee view (THIS MUST BE LAST)
-		self.addSubview(_selectionRect)
+		
+		// initial state of canvas
+		reset()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
+	}
+	
+	override func updateTrackingAreas() {
+		if _trackingArea != nil {
+			self.removeTrackingArea(_trackingArea!)
+		}
+		
+		let options: NSTrackingArea.Options = [
+			NSTrackingArea.Options.activeInKeyWindow,
+			NSTrackingArea.Options.mouseMoved
+		]
+		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+		self.addTrackingArea(_trackingArea!)
 	}
 	
 	// MARK: Undo/Redo
@@ -70,35 +82,69 @@ class Canvas: NSView {
 	
 	// MARK: Reset
 	func reset() {
+		// remove all subviews
+		self.subviews.removeAll()
+		
+		// add background grid
+		self.addSubview(_grid)
+		// add marquee view (THIS MUST BE LAST)
+		self.addSubview(_selectionRect)
+		
 		// remove all nodes
-		_nodesView.subviews.removeAll()
 		_canvasWidgets = []
 		
 		// remove all curves
-		_curvesView.subviews.removeAll()
 		_curveWidgets = []
 		
 		// clear undo/redo
 		_undoRedo.clear()
 	}
 	
+	// MARK: WIP
+	func onMouseDownCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+		// update last position of cursor
+		_prevMousePos = event.locationInWindow
+		
+		// if in selection, we may be wanting to move, so just ignore any selects.
+		// this means that to deselect, you MUST select another unselected node or the canvas BG.
+		if !_selectedNodes.contains(widget) {
+			let appendSelection = event.modifierFlags.contains(.shift)
+			select([widget], append: appendSelection)
+		}
+	}
+	func onMouseUpCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+
+	}
+	func onMouseDraggedCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+		let currMousePos = event.locationInWindow // may need tweaking
+		let dx = (currMousePos.x - _prevMousePos.x)
+		let dy = (currMousePos.y - _prevMousePos.y)
+		_selectedNodes.forEach({
+			let newOrigin = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
+			moveCanvasWidget(widget: $0, from: $0.frame.origin, to: newOrigin)
+		})
+		
+		// update last position of cursor
+		_prevMousePos = currMousePos
+	}
+	
 	// MARK: Canvas Widget Creation
 	func makeDialogWidget(novellaDialog: Dialog) {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_canvasWidgets.append(widget)
-		_nodesView.addSubview(widget)
+		self.addSubview(widget)
 	}
 	
 	func makeLinkWidget(novellaLink: Link) {
 		let widget = LinkWidget(link: novellaLink, canvas: self)
 		_curveWidgets.append(widget)
-		_curvesView.addSubview(widget)
+		self.addSubview(widget)
 	}
 	
 	func makeBranchWidget(novellaBranch: Branch) {
 		let widget = BranchWidget(branch: novellaBranch, canvas: self)
 		_curveWidgets.append(widget)
-		_curvesView.addSubview(widget)
+		self.addSubview(widget)
 	}
 	
 	// MARK: Canvas-wide functions
@@ -125,34 +171,45 @@ class Canvas: NSView {
 	// MARK: Curves
 	func updateCurves() {
 		// updates every curve - not very efficient
-		for child in _curvesView.subviews {
+		for child in _curveWidgets {
 			child.layer?.setNeedsDisplay()
 		}
 	}
 	
 	// MARK: Mouse Events
 	override func mouseDown(with event: NSEvent) {
+		// begin marquee mode
 		_selectionRect.Origin = self.convert(event.locationInWindow, from: nil)
+		_selectionRect.InMarquee = true
 	}
 	override func mouseDragged(with event: NSEvent) {
-		let curr = self.convert(event.locationInWindow, from: nil)
-		_selectionRect.Marquee = NSMakeRect(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y), fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
+		// update marquee
+		if _selectionRect.InMarquee {
+			let curr = self.convert(event.locationInWindow, from: nil)
+			_selectionRect.Marquee = NSMakeRect(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y), fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
+			return
+		}
 	}
 	override func mouseUp(with event: NSEvent) {
-		_selectedNodes.forEach({
-			$0._isSelected = false
-			$0.setNeedsDisplay($0.bounds)
-		}) // deselect existing
-		_selectedNodes = allNodesIn(rect: _selectionRect.Marquee) // get new selection
-		_selectedNodes.forEach({
-			$0._isSelected = true
-			$0.setNeedsDisplay($0.bounds)
-		}) // select new
-		
-		_selectionRect.Marquee = NSRect.zero
+		// handle marquee selection region
+		if _selectionRect.InMarquee {
+			let appendSelection = event.modifierFlags.contains(.shift)
+			select(allNodesIn(rect: _selectionRect.Marquee), append: appendSelection)
+			_selectionRect.Marquee = NSRect.zero
+			_selectionRect.InMarquee = false
+		}	else {
+			// we just clicked, so remove selection
+			select([], append: false)
+		}
 	}
 	
 	// MARK: Selection
+	func select(_ nodes: [CanvasWidget], append: Bool) {
+		_selectedNodes.forEach({$0.deselect()})
+		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
+		_selectedNodes.forEach({$0.select()})
+	}
+	
 	func allNodesIn(rect: NSRect) -> [CanvasWidget] {
 		var selected: [CanvasWidget] = []
 		for curr in _canvasWidgets {

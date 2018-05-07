@@ -50,6 +50,10 @@ class GridView: NSView {
 		fatalError("GridView::init(coder) not implemented.")
 	}
 	
+	override func hitTest(_ point: NSPoint) -> NSView? {
+		return nil
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		

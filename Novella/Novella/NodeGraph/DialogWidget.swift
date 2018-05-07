@@ -26,6 +26,7 @@ class DialogWidget: CanvasWidget {
 
 		// TODO: Don't use fixed size.
 		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 64.0, height: 64.0), canvas: canvas)
+		self.bounds = NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0)
 		
 		self._nameLabel.sizeToFit()
 		self._nameLabel.frame.origin = CGPoint(x: self.frame.width/2 - self._nameLabel.frame.width/2, y: self.frame.height/2)
@@ -76,6 +77,16 @@ class DialogWidget: CanvasWidget {
 			context.resetClip()
 			path.lineWidth = 1.5
 			path.stroke()
+			
+			// draw primed indicator
+			if _isPrimedForSelection {
+				let selectedInset = CGFloat(1.0)
+				let insetRect = bounds.insetBy(dx: selectedInset, dy: selectedInset)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path.lineWidth = 1.0
+				NSColor.red.setStroke()
+				path.stroke()
+			}
 			
 			// draw selection indicator
 			if _isSelected {
