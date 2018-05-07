@@ -240,7 +240,6 @@
 				65588387209C8838004C412F /* LinkWidget.swift */,
 				65F85488209E68FF0067A95C /* BranchWidget.swift */,
 				65588389209C8C19004C412F /* CurveHelper.swift */,
-				6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */,
 				65F8548A209EF2D50067A95C /* GridView.swift */,
 				65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */,
 				65CEA210209F7086008C49AE /* SelectionView.swift */,
@@ -255,6 +254,15 @@
 				656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6581AF5E20A1099300BE71A4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				65F85486209E61850067A95C /* NSColor+Hex.swift */,
+				6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		658C7C9F207E7E6500E2B46B = {
@@ -281,18 +289,18 @@
 		658C7CAA207E7E6500E2B46B /* Novella */ = {
 			isa = PBXGroup;
 			children = (
-				655B0B8D2098B48300741ACA /* NodeGraph */,
-				6522C5AE2083903900F76DC8 /* Storyboards */,
-				65F5DFA7207EBD960041FB0D /* ViewControllers */,
-				658C7CD7207E7E9B00E2B46B /* Model */,
 				658C7CAB207E7E6500E2B46B /* AppDelegate.swift */,
+				65CEA212209FB412008C49AE /* MainWindowController.swift */,
+				65588383209C6295004C412F /* CommandSystem.swift */,
 				651B3DB6209892DF00D37848 /* TouchBarID.swift */,
 				658C7CAF207E7E6600E2B46B /* Assets.xcassets */,
 				658C7CB4207E7E6600E2B46B /* Info.plist */,
 				658C7CB5207E7E6600E2B46B /* Novella.entitlements */,
-				65588383209C6295004C412F /* CommandSystem.swift */,
-				65F85486209E61850067A95C /* NSColor+Hex.swift */,
-				65CEA212209FB412008C49AE /* MainWindowController.swift */,
+				6581AF5E20A1099300BE71A4 /* Extensions */,
+				658C7CD7207E7E9B00E2B46B /* Model */,
+				655B0B8D2098B48300741ACA /* NodeGraph */,
+				6522C5AE2083903900F76DC8 /* Storyboards */,
+				65F5DFA7207EBD960041FB0D /* ViewControllers */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
