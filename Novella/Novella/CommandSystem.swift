@@ -150,5 +150,9 @@ class UndoRedo {
 		execute(cmd: _compoundUndo!)
 		_compoundUndo = nil // warning: creates dangling CompoundCommand existing only in the stacks
 	}
+	
+	func inCompound() -> Bool {
+		return _compoundUndo != nil
+	}
 }
 

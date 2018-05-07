@@ -112,10 +112,12 @@ class Canvas: NSView {
 			select([widget], append: appendSelection)
 		}
 	}
-	func onMouseUpCanvasWidget(widget: CanvasWidget, event: NSEvent) {
-
-	}
 	func onMouseDraggedCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+		// if no compound undo exists, make one now
+		if !_undoRedo.inCompound() {
+			_undoRedo.beginCompound(executeOnAdd: true)
+		}
+		
 		let currMousePos = event.locationInWindow // may need tweaking
 		let dx = (currMousePos.x - _prevMousePos.x)
 		let dy = (currMousePos.y - _prevMousePos.y)
@@ -126,6 +128,12 @@ class Canvas: NSView {
 		
 		// update last position of cursor
 		_prevMousePos = currMousePos
+	}
+	func onMouseUpCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+		// end compound undo if one started
+		if _undoRedo.inCompound() {
+			_undoRedo.endCompound()
+		}
 	}
 	
 	// MARK: Canvas Widget Creation
