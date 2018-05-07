@@ -60,8 +60,6 @@ class DialogWidget: CanvasWidget {
 			var path = NSBezierPath(roundedRect: bounds, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-//			let bgStartColor = NSColor(deviceRed: 25/255.0, green: 25/255.0, blue: 25/255.0, alpha: 0.6)
-//			let bgEndColor = NSColor(deviceRed: 25/255.0, green: 25/255.0, blue: 25/255.0, alpha: 0.8)
 			let bgStartColor = NSColor.fromHex("#434343").withAlphaComponent(1.0)
 			let bgEndColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
 			let bgColors = [bgStartColor.cgColor, bgEndColor.cgColor]
@@ -88,10 +86,6 @@ class DialogWidget: CanvasWidget {
 				NSColor.green.setStroke()
 				path.stroke()
 			}
-			
-//			let path = NSBezierPath(roundedRect: bounds, xRadius: 2.0, yRadius: 2.0)
-//			NSColor.white.setFill()
-//			path.fill()
 			
 			context.restoreGState()
 		}
