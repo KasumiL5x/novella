@@ -136,6 +136,21 @@ class Canvas: NSView {
 		_selectionRect.Marquee = NSMakeRect(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y), fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
 	}
 	override func mouseUp(with event: NSEvent) {
+		_ = allNodesIn(rect: _selectionRect.Marquee)
 		_selectionRect.Marquee = NSRect.zero
+	}
+	
+	// MARK: Selection
+	func allNodesIn(rect: NSRect) -> [CanvasWidget] {
+		var selected: [CanvasWidget] = []
+		for curr in _canvasWidgets {
+			// note: bounds is relative to own coordinate system (0,0) and frame is relative to superview (_canvasWidgets).
+			//       The frame and selection rect need to be in the same space (i.e. canvas size/space).
+			if NSIntersectsRect(curr.frame, rect) {
+				selected.append(curr)
+			}
+		}
+		print(selected)
+		return selected
 	}
 }
