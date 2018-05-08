@@ -170,36 +170,16 @@ class Canvas: NSView {
 	}
 }
 
-// MARK: Creation
+// MARK: LinkableWidget Stuff
 extension Canvas {
+	// MARK: Creation
 	func makeDialogWidget(novellaDialog: NVDialog) {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_linkableWidgets.append(widget)
 		self.addSubview(widget)
 	}
 	
-	func makeLinkWidget(novellaLink: NVLink) {
-		let widget = LinkWidget(link: novellaLink, canvas: self)
-		_curveWidgets.append(widget)
-		self.addSubview(widget)
-	}
-	
-	func makeBranchWidget(novellaBranch: NVBranch) {
-		let widget = BranchWidget(branch: novellaBranch, canvas: self)
-		_curveWidgets.append(widget)
-		self.addSubview(widget)
-	}
-}
-
-// MARK: Command Calling Functions
-extension Canvas {
-	func moveLinkableWidget(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
-		_undoRedo.execute(cmd: MoveLinkableWidgetCmd(widget: widget, from: from, to: to))
-	}
-}
-
-// MARK: Functions Called From Nodes
-extension Canvas {
+	// MARK: Mouse Events
 	func onMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// update last position of cursor
 		_prevMousePos = event.locationInWindow
@@ -240,11 +220,30 @@ extension Canvas {
 	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		NSMenu.popUpContextMenu(_nodeContextMenu, with: event, for: widget)
 	}
-}
-
-// MARK: Context Menus
-extension Canvas {
+	
+	// MARK: Command Functions
+	func moveLinkableWidget(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
+		_undoRedo.execute(cmd: MoveLinkableWidgetCmd(widget: widget, from: from, to: to))
+	}
+	
+	// MARK: Context Menus
 	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
 		print("hello from \(sender)")
+	}
+}
+
+// MARK: Links Stuff
+extension Canvas {
+	// MARK: Creation
+	func makeLinkWidget(novellaLink: NVLink) {
+		let widget = LinkWidget(link: novellaLink, canvas: self)
+		_curveWidgets.append(widget)
+		self.addSubview(widget)
+	}
+	
+	func makeBranchWidget(novellaBranch: NVBranch) {
+		let widget = BranchWidget(branch: novellaBranch, canvas: self)
+		_curveWidgets.append(widget)
+		self.addSubview(widget)
 	}
 }
