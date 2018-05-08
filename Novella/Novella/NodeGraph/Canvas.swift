@@ -9,52 +9,41 @@
 import Cocoa
 
 class Canvas: NSView {
-	// background grid
 	var _grid: GridView
-	
-	// where nodes are stored
+
 	var _linkableWidgets: [LinkableWidget]
-	// where curves are stored
 	var _curveWidgets: [BaseLinkWidget]
-	// selection rectangle
+	
 	var _selectionRect: SelectionView
-	// selected nodes
 	var _selectedNodes: [LinkableWidget]
 	
-	// dragging stuff
-	var _prevMousePos: NSPoint
+	var _trackingArea: NSTrackingArea?
+	var _prevMousePos: NSPoint // used for dragging
 	
-	// canvas-wide undo/redo
 	let _undoRedo: UndoRedo
 	
-	// custom tracking area
-	var _trackingArea: NSTrackingArea?
-	
-	// right click menu for nodes
-	var _nodeContextMenu: NSMenu
+	var _nodeContextMenu: NSMenu // context menu for nodes
 	
 	override init(frame frameRect: NSRect) {
-		_grid = GridView(frame: frameRect)
+		self._grid = GridView(frame: frameRect)
 		
-		_linkableWidgets = []
+		self._linkableWidgets = []
+		self._curveWidgets = []
 		
-		_curveWidgets = []
+		self._selectionRect = SelectionView(frame: frameRect)
+		self._selectedNodes = []
 		
-		_selectionRect = SelectionView(frame: frameRect)
-		_selectedNodes = []
+		self._trackingArea = nil
+		self._prevMousePos = NSPoint.zero
 		
-		_prevMousePos = NSPoint.zero
+		self._undoRedo = UndoRedo()
 		
-		_undoRedo = UndoRedo()
-		
-		_trackingArea = nil
-		
-		_nodeContextMenu = NSMenu(title: "Node Context Menu")
+		self._nodeContextMenu = NSMenu(title: "Node Context Menu")
 		
 		super.init(frame: frameRect)
 		
 		// layers for subviews
-		wantsLayer = true
+		wantsLayer = true // TODO: Is this needed now?
 		
 		// set up node context menu
 		_nodeContextMenu.addItem(withTitle: "Link to...", action: #selector(Canvas.onNodeContextLinkTo), keyEquivalent: "")
@@ -66,6 +55,7 @@ class Canvas: NSView {
 		fatalError("Canvas::init(coder) not implemented.")
 	}
 	
+	// configures the tracking area
 	override func updateTrackingAreas() {
 		if _trackingArea != nil {
 			self.removeTrackingArea(_trackingArea!)
@@ -100,78 +90,11 @@ class Canvas: NSView {
 		
 		// remove all nodes
 		_linkableWidgets = []
-		
 		// remove all curves
 		_curveWidgets = []
 		
 		// clear undo/redo
 		_undoRedo.clear()
-	}
-	
-	// MARK: WIP
-	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
-		print("hello from \(sender)")
-	}
-	func onMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
-		// update last position of cursor
-		_prevMousePos = event.locationInWindow
-		
-		// if in selection, we may be wanting to move, so just ignore any selects.
-		// this means that to deselect, you MUST select another unselected node or the canvas BG.
-		if !_selectedNodes.contains(widget) {
-			let appendSelection = event.modifierFlags.contains(.shift)
-			select([widget], append: appendSelection)
-		}
-	}
-	func onMouseDraggedLinkableWidget(widget: LinkableWidget, event: NSEvent) {
-		// if no compound undo exists, make one now
-		if !_undoRedo.inCompound() {
-			_undoRedo.beginCompound(executeOnAdd: true)
-		}
-		
-		let currMousePos = event.locationInWindow // may need tweaking
-		let dx = (currMousePos.x - _prevMousePos.x)
-		let dy = (currMousePos.y - _prevMousePos.y)
-		_selectedNodes.forEach({
-			let newOrigin = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
-			moveLinkableWidget(widget: $0, from: $0.frame.origin, to: newOrigin)
-		})
-		
-		// update last position of cursor
-		_prevMousePos = currMousePos
-	}
-	func onMouseUpLinkableWidget(widget: LinkableWidget, event: NSEvent) {
-		// end compound undo if one started
-		if _undoRedo.inCompound() {
-			_undoRedo.endCompound()
-		}
-	}
-	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
-		NSMenu.popUpContextMenu(_nodeContextMenu, with: event, for: widget)
-	}
-	
-	// MARK: Canvas Widget Creation
-	func makeDialogWidget(novellaDialog: NVDialog) {
-		let widget = DialogWidget(node: novellaDialog, canvas: self)
-		_linkableWidgets.append(widget)
-		self.addSubview(widget)
-	}
-	
-	func makeLinkWidget(novellaLink: NVLink) {
-		let widget = LinkWidget(link: novellaLink, canvas: self)
-		_curveWidgets.append(widget)
-		self.addSubview(widget)
-	}
-	
-	func makeBranchWidget(novellaBranch: NVBranch) {
-		let widget = BranchWidget(branch: novellaBranch, canvas: self)
-		_curveWidgets.append(widget)
-		self.addSubview(widget)
-	}
-	
-	// MARK: Canvas-wide functions
-	func moveLinkableWidget(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
-		_undoRedo.execute(cmd: MoveLinkableWidgetCmd(widget: widget, from: from, to: to))
 	}
 	
 	// MARK: Convert Novella to Canvas
@@ -204,6 +127,7 @@ class Canvas: NSView {
 		_selectionRect.Origin = self.convert(event.locationInWindow, from: nil)
 		_selectionRect.InMarquee = true
 	}
+	
 	override func mouseDragged(with event: NSEvent) {
 		// update marquee
 		if _selectionRect.InMarquee {
@@ -212,6 +136,7 @@ class Canvas: NSView {
 			return
 		}
 	}
+	
 	override func mouseUp(with event: NSEvent) {
 		// handle marquee selection region
 		if _selectionRect.InMarquee {
@@ -242,5 +167,84 @@ class Canvas: NSView {
 			}
 		}
 		return selected
+	}
+}
+
+// MARK: Creation
+extension Canvas {
+	func makeDialogWidget(novellaDialog: NVDialog) {
+		let widget = DialogWidget(node: novellaDialog, canvas: self)
+		_linkableWidgets.append(widget)
+		self.addSubview(widget)
+	}
+	
+	func makeLinkWidget(novellaLink: NVLink) {
+		let widget = LinkWidget(link: novellaLink, canvas: self)
+		_curveWidgets.append(widget)
+		self.addSubview(widget)
+	}
+	
+	func makeBranchWidget(novellaBranch: NVBranch) {
+		let widget = BranchWidget(branch: novellaBranch, canvas: self)
+		_curveWidgets.append(widget)
+		self.addSubview(widget)
+	}
+}
+
+// MARK: Command Calling Functions
+extension Canvas {
+	func moveLinkableWidget(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
+		_undoRedo.execute(cmd: MoveLinkableWidgetCmd(widget: widget, from: from, to: to))
+	}
+}
+
+// MARK: Functions Called From Nodes
+extension Canvas {
+	func onMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
+		// update last position of cursor
+		_prevMousePos = event.locationInWindow
+		
+		// if in selection, we may be wanting to move, so just ignore any selects.
+		// this means that to deselect, you MUST select another unselected node or the canvas BG.
+		if !_selectedNodes.contains(widget) {
+			let appendSelection = event.modifierFlags.contains(.shift)
+			select([widget], append: appendSelection)
+		}
+	}
+	
+	func onMouseDraggedLinkableWidget(widget: LinkableWidget, event: NSEvent) {
+		// if no compound undo exists, make one now
+		if !_undoRedo.inCompound() {
+			_undoRedo.beginCompound(executeOnAdd: true)
+		}
+		
+		let currMousePos = event.locationInWindow // may need tweaking
+		let dx = (currMousePos.x - _prevMousePos.x)
+		let dy = (currMousePos.y - _prevMousePos.y)
+		_selectedNodes.forEach({
+			let newOrigin = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
+			moveLinkableWidget(widget: $0, from: $0.frame.origin, to: newOrigin)
+		})
+		
+		// update last position of cursor
+		_prevMousePos = currMousePos
+	}
+	
+	func onMouseUpLinkableWidget(widget: LinkableWidget, event: NSEvent) {
+		// end compound undo if one started
+		if _undoRedo.inCompound() {
+			_undoRedo.endCompound()
+		}
+	}
+	
+	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
+		NSMenu.popUpContextMenu(_nodeContextMenu, with: event, for: widget)
+	}
+}
+
+// MARK: Context Menus
+extension Canvas {
+	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
+		print("hello from \(sender)")
 	}
 }
