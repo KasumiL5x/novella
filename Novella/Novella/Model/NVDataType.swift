@@ -1,5 +1,5 @@
 //
-//  DataType.swift
+//  NVDataType.swift
 //  novella
 //
 //  Created by Daniel Green on 03/04/2018.

@@ -1,5 +1,5 @@
 //
-//  FlowNode.swift
+//  NVNode.swift
 //  Novella
 //
 //  Created by Daniel Green on 11/04/2018.

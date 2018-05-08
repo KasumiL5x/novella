@@ -1,5 +1,5 @@
 //
-//  Identifiable.swift
+//  NVIdentifiable.swift
 //  Novella
 //
 //  Created by Daniel Green on 16/04/2018.

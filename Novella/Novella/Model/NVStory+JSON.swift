@@ -1,5 +1,5 @@
 //
-//  Story+JSON.swift
+//  NVStory+JSON.swift
 //  Novella
 //
 //  Created by Daniel Green on 19/04/2018.

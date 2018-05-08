@@ -1,5 +1,5 @@
 //
-//  Simulation.swift
+//  NVSimulation.swift
 //  Novella
 //
 //  Created by Daniel Green on 02/05/2018.
