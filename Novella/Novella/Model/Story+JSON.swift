@@ -573,9 +573,9 @@ extension Story {
 		
 		// 2.2 link subfolders to folders by uuid
 		for curr in json["folders"].arrayValue {
-			let folder = story.findBy(uuid: curr["uuid"].string!) as! Folder
+			let folder = story.findBy(uuid: curr["uuid"].string!) as! NVFolder
 			for child in curr["subfolders"].arrayValue {
-				if let subfolder = story.findBy(uuid: child.string!) as? Folder {
+				if let subfolder = story.findBy(uuid: child.string!) as? NVFolder {
 					try! folder.add(folder: subfolder)
 				} else {
 					errors.append("Unable to find Folder by UUID (\(child.string!)) when adding to Folder (\(curr["uuid"].string!)).")
@@ -757,7 +757,7 @@ extension Story {
 		
 		// 9. assign folders and graphs to story's local stuff
 		for curr in json["story"]["folders"].arrayValue {
-			if let folder = story.findBy(uuid: curr.string!) as? Folder {
+			if let folder = story.findBy(uuid: curr.string!) as? NVFolder {
 				try! story.add(folder: folder)
 			} else {
 				errors.append("Unable to find Folder by UUID (\(curr.string!)) when adding to Story.")

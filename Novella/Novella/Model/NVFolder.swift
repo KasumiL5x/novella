@@ -8,13 +8,13 @@
 
 import Foundation
 
-class Folder {
+class NVFolder {
 	let _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
-	var _folders: [Folder]
+	var _folders: [NVFolder]
 	var _variables: [NVVariable]
-	var _parent: Folder?
+	var _parent: NVFolder?
 	
 	init(uuid: NSUUID, name: String) {
 		self._uuid = uuid
@@ -29,7 +29,7 @@ class Folder {
 	var Name:      String     {get{ return _name }}
 	var Synopsis:  String     {get{ return _synopsis }}
 	var Variables: [NVVariable] {get{ return _variables }}
-	var Folders:   [Folder]   {get{ return _folders }}
+	var Folders:   [NVFolder]   {get{ return _folders }}
 	
 	// MARK: Setters
 	func setName(name: String) throws {
@@ -51,7 +51,7 @@ class Folder {
 	}
 	
 	// MARK: Folders
-	func contains(folder: Folder) -> Bool {
+	func contains(folder: NVFolder) -> Bool {
 		return _folders.contains(folder)
 	}
 	
@@ -60,7 +60,7 @@ class Folder {
 	}
 	
 	@discardableResult
-	func add(folder: Folder) throws -> Folder {
+	func add(folder: NVFolder) throws -> NVFolder {
 		// cannot add self
 		if folder == self {
 			throw Errors.invalid("Tried to add Folder to self (\(_name)).")
@@ -84,7 +84,7 @@ class Folder {
 		return folder
 	}
 	
-	func remove(folder: Folder) throws {
+	func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
 			throw Errors.invalid("Tried to remove Folder (\(folder._name)) from (\(_name)) but it was not a child.")
 		}
@@ -92,7 +92,7 @@ class Folder {
 		_folders.remove(at: idx)
 	}
 	
-	func hasDescendantFolder(folder: Folder) -> Bool {
+	func hasDescendantFolder(folder: NVFolder) -> Bool {
 		// check this folder
 		if self.contains(folder: folder) {
 			return true
@@ -175,7 +175,7 @@ class Folder {
 }
 
 // MARK: Pathable
-extension Folder: Pathable {
+extension NVFolder: Pathable {
 	func localPath() -> String {
 		return _name
 	}
@@ -186,15 +186,15 @@ extension Folder: Pathable {
 }
 
 // MARK: Identifiable
-extension Folder: Identifiable {
+extension NVFolder: Identifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Equatable
-extension Folder: Equatable {
-	static func == (lhs: Folder, rhs: Folder) -> Bool {
+extension NVFolder: Equatable {
+	static func == (lhs: NVFolder, rhs: NVFolder) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

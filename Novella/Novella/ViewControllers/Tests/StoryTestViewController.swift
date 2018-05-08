@@ -100,7 +100,7 @@ extension StoryTestViewController: NSTextFieldDelegate {
 		if let _ = item as? NVVariable {
 			return false
 		}
-		if let _ = item as? Folder {
+		if let _ = item as? NVFolder {
 			return false
 		}
 		return true
@@ -126,7 +126,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return 0
 		}
 		
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			return folder._folders.count + folder._variables.count
 		}
 		
@@ -138,7 +138,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			if index < folder._folders.count {
 				return folder._folders[index]
 			}
@@ -160,7 +160,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return false
 		}
 		
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			return (folder._folders.count + folder._variables.count) > 0
 		}
 		
@@ -182,7 +182,7 @@ extension StoryTestViewController: NSOutlineViewDelegate {
 			name = variable.Name
 			type = "Variable"
 		}
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			name = folder.Name
 			type = "Folder"
 		}

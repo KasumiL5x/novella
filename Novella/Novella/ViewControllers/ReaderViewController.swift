@@ -142,7 +142,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return 0
 		}
 		
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			return folder._folders.count + folder._variables.count
 		}
 		
@@ -165,7 +165,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return ""
 		}
 		
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			if index < folder._folders.count {
 				return folder._folders[index]
 			}
@@ -202,7 +202,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return false
 		}
 		
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			return (folder._folders.count + folder._variables.count) > 0
 		}
 		
@@ -229,7 +229,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		if let variable = item as? NVVariable {
 			name = "Variable: " + variable._name
 		}
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			name = "Folder: " + folder._name
 		}
 		if let graph = item as? NVGraph {
@@ -278,7 +278,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			text += "<b>Constant: </b>\(variable._constant)<br/>"
 			text += "<b>Folder: </b>\(variable._folder?._name ?? "none")<br/>"
 		}
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			text = "<b>FOLDER</b><br/>"
 			text += "<b>UUID: </b>\(folder._uuid.uuidString)<br/>"
 			text += "<b>Name: </b>\(folder._name)<br/>"

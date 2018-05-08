@@ -15,7 +15,7 @@ class VariableFolderTestViewController: NSViewController {
 	var _story: Story = Story()
 	
 //	let root = Folder(name: "root")
-	var root: Folder?
+	var root: NVFolder?
 	var draggedItem: Any? = nil
 	
 	override func viewDidLoad() {
@@ -47,7 +47,7 @@ class VariableFolderTestViewController: NSViewController {
 			return
 		}
 		let item = outlineView.item(atRow: idx)
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			folder.debugPrint(indent: 0)
 		}
 	}
@@ -68,7 +68,7 @@ class VariableFolderTestViewController: NSViewController {
 		if -1 == idx {
 			return
 		}
-		if let folder = outlineView.item(atRow: idx) as? Folder {
+		if let folder = outlineView.item(atRow: idx) as? NVFolder {
 			do{
 				let name = NSUUID().uuidString
 				try folder.add(folder: _story.makeFolder(name: name))
@@ -83,7 +83,7 @@ class VariableFolderTestViewController: NSViewController {
 		if -1 == idx {
 			return
 		}
-		if let folder = outlineView.item(atRow: idx) as? Folder {
+		if let folder = outlineView.item(atRow: idx) as? NVFolder {
 			do{
 				let name = NSUUID().uuidString
 				try folder.add(variable: _story.makeVariable(name: name, type: .boolean))
@@ -101,7 +101,7 @@ class VariableFolderTestViewController: NSViewController {
 		}
 		
 		let item = outlineView.item(atRow: idx)
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			if folder._parent != nil {
 				try! folder._parent!.remove(folder: folder)
 			}
@@ -123,7 +123,7 @@ class VariableFolderTestViewController: NSViewController {
 		
 		let newName = sender.stringValue
 		let item = outlineView.item(atRow: idx)
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			if newName == folder.Name {
 				return
 			}
@@ -150,14 +150,14 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 		if let _ = item as? NVVariable {
 			return 0
 		}
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			return folder._folders.count + folder._variables.count
 		}
 		return 1 // root
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			if index < folder._folders.count {
 				return folder._folders[index]
 			}
@@ -170,7 +170,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 		if let _ = item as? NVVariable {
 			return false
 		}
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			return (folder._folders.count + folder._variables.count) > 0
 		}
 		return (root!._folders.count + root!._variables.count) > 0
@@ -180,7 +180,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 		let pb = NSPasteboardItem()
 		
 		var id = ""
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			id = folder.Name
 		}
 		if let variable = item as? NVVariable {
@@ -196,12 +196,12 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 	
 	func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
 		// if dragging a folder
-		if let sourceFolder = draggedItem as? Folder {
+		if let sourceFolder = draggedItem as? NVFolder {
 			if let _ = item as? NVVariable {
 //				print("no variables allowed")
 				return []
 			}
-			if let targetFolder = item as? Folder {
+			if let targetFolder = item as? NVFolder {
 				if targetFolder == sourceFolder || targetFolder == sourceFolder._parent {
 //					print("not same folder or parent please")
 					return []
@@ -221,7 +221,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 //				print("no variables allowed")
 				return []
 			}
-			if let targetFolder = item as? Folder {
+			if let targetFolder = item as? NVFolder {
 				if targetFolder == sourceVariable._folder {
 //					print("not same folder please")
 					return []
@@ -237,8 +237,8 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 	
 	func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
 		
-		if let targetFolder = item as? Folder {
-			if let sourceFolder = draggedItem as? Folder {
+		if let targetFolder = item as? NVFolder {
+			if let sourceFolder = draggedItem as? NVFolder {
 				do{ try targetFolder.add(folder: sourceFolder) } catch {
 					statusLabel.stringValue = "Tried to move folder but name was taken (\(sourceFolder.Name)->\(targetFolder.Name))!"
 				}
@@ -265,7 +265,7 @@ extension VariableFolderTestViewController: NSOutlineViewDelegate {
 			name = variable.Name
 			type = variable.DataType.stringValue
 		}
-		if let folder = item as? Folder {
+		if let folder = item as? NVFolder {
 			name = folder.Name
 			type = "folder"
 		}

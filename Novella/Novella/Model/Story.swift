@@ -15,14 +15,14 @@ class Story {
 	
 	// MARK: Storywide Collections
 	var _allIdentifiables: [Identifiable]
-	var _allFolders: [Folder]
+	var _allFolders: [NVFolder]
 	var _allVariables: [NVVariable]
 	var _allGraphs: [NVGraph]
 	var _allLinks: [BaseLink]
 	var _allNodes: [NVNode]
 	
 	// MARK: Local Collections
-	var _folders: [Folder]
+	var _folders: [NVFolder]
 	var _graphs: [NVGraph]
 	
 	var _name: String
@@ -66,7 +66,7 @@ class Story {
 // MARK: Local Collection Functions
 extension Story {
 	// MARK: Folders
-	func contains(folder: Folder) -> Bool {
+	func contains(folder: NVFolder) -> Bool {
 		return _folders.contains(folder)
 	}
 	
@@ -75,7 +75,7 @@ extension Story {
 	}
 	
 	@discardableResult
-	func add(folder: Folder) throws -> Folder {
+	func add(folder: NVFolder) throws -> NVFolder {
 		// already a child
 		if contains(folder: folder) {
 			throw Errors.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
@@ -89,7 +89,7 @@ extension Story {
 		return folder
 	}
 	
-	func remove(folder: Folder) throws {
+	func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
 			throw Errors.invalid("Tried to remove Folder (\(folder._name)) from story but it was not a child.")
 		}
@@ -140,8 +140,8 @@ extension Story {
 	}
 	
 	@discardableResult
-	func makeFolder(name: String, uuid: NSUUID?=nil) -> Folder {
-		let folder = Folder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
+	func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
+		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
 		_allFolders.append(folder)
 		_allIdentifiables.append(folder)
 		return folder

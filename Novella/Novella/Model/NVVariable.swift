@@ -16,7 +16,7 @@ class NVVariable {
 	var _value: Any
 	var _initialValue: Any
 	var _constant: Bool
-	var _folder: Folder?
+	var _folder: NVFolder?
 	
 	init(uuid: NSUUID, name: String, type: NVDataType) {
 		self._uuid = uuid
