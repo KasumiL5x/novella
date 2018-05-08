@@ -10,7 +10,7 @@ import Foundation
 
 protocol SimulatorController {
 	// gives the controller the current available node and a list of links it can follow
-	func currentNode(node: NVNode, outputs: [BaseLink])
+	func currentNode(node: NVNode, outputs: [NVBaseLink])
 }
 
 class Simulator {
@@ -40,18 +40,18 @@ class Simulator {
 	}
 	
 	// controller should call this to proceed from the current node
-	func proceed(link: BaseLink) throws {
+	func proceed(link: NVBaseLink) throws {
 		if !_story!.getLinksFrom(linkable: _currentNode!).contains(link) {
 			throw NVError.invalid("Tried to progress along a link that didn't belong to the current node.")
 		}
 		
 		var destinationUUID: String?
 		
-		if let asLink = link as? Link {
+		if let asLink = link as? NVLink {
 			destinationUUID = asLink._transfer._destination?.UUID.uuidString
-		} else if let asBranch = link as? Branch {
+		} else if let asBranch = link as? NVBranch {
 			destinationUUID = asBranch._condition.execute() ? asBranch._trueTransfer._destination?.UUID.uuidString : asBranch._falseTransfer._destination?.UUID.uuidString
-		} else if let asSwitch = link as? Switch {
+		} else if let asSwitch = link as? NVSwitch {
 			fatalError("Not yet implemented.")
 		}
 		

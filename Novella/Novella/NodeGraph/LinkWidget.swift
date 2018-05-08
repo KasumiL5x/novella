@@ -9,12 +9,12 @@
 import AppKit
 
 class LinkWidget: CurveWidget {
-	var _novellaLink: Link
+	var _novellaLink: NVLink
 	
 	var _curveBezier: NSBezierPath
 	var _curveShape: CAShapeLayer
 	
-	init(link: Link, canvas: Canvas) {
+	init(link: NVLink, canvas: Canvas) {
 		self._novellaLink = link
 		
 		self._curveBezier = NSBezierPath()

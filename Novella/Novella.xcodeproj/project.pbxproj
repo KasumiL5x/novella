@@ -50,10 +50,10 @@
 		65CEA211209F7086008C49AE /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA210209F7086008C49AE /* SelectionView.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
 		65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */; };
-		65F5DF93207EA0910041FB0D /* BaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF92207EA0910041FB0D /* BaseLink.swift */; };
-		65F5DF95207EA09C0041FB0D /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF94207EA09C0041FB0D /* Link.swift */; };
-		65F5DF98207EA0AF0041FB0D /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF97207EA0AF0041FB0D /* Branch.swift */; };
-		65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF99207EA0BA0041FB0D /* Switch.swift */; };
+		65F5DF93207EA0910041FB0D /* NVBaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF92207EA0910041FB0D /* NVBaseLink.swift */; };
+		65F5DF95207EA09C0041FB0D /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF94207EA09C0041FB0D /* NVLink.swift */; };
+		65F5DF98207EA0AF0041FB0D /* NVBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF97207EA0AF0041FB0D /* NVBranch.swift */; };
+		65F5DF9A207EA0BA0041FB0D /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF99207EA0BA0041FB0D /* NVSwitch.swift */; };
 		65F5DF9C207EA0C70041FB0D /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9B207EA0C70041FB0D /* Condition.swift */; };
 		65F5DF9E207EA0D40041FB0D /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9D207EA0D40041FB0D /* Transfer.swift */; };
 		65F5DFA0207EA1600041FB0D /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9F207EA1600041FB0D /* Function.swift */; };
@@ -134,10 +134,10 @@
 		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65CEA210209F7086008C49AE /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
-		65F5DF92207EA0910041FB0D /* BaseLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLink.swift; sourceTree = "<group>"; };
-		65F5DF94207EA09C0041FB0D /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		65F5DF97207EA0AF0041FB0D /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
-		65F5DF99207EA0BA0041FB0D /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		65F5DF92207EA0910041FB0D /* NVBaseLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVBaseLink.swift; sourceTree = "<group>"; };
+		65F5DF94207EA09C0041FB0D /* NVLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
+		65F5DF97207EA0AF0041FB0D /* NVBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVBranch.swift; sourceTree = "<group>"; };
+		65F5DF99207EA0BA0041FB0D /* NVSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
 		65F5DF9B207EA0C70041FB0D /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
 		65F5DF9D207EA0D40041FB0D /* Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
 		65F5DF9F207EA1600041FB0D /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
@@ -353,10 +353,10 @@
 			isa = PBXGroup;
 			children = (
 				65619E912084D711000D5322 /* NVLinkable.swift */,
-				65F5DF92207EA0910041FB0D /* BaseLink.swift */,
-				65F5DF94207EA09C0041FB0D /* Link.swift */,
-				65F5DF97207EA0AF0041FB0D /* Branch.swift */,
-				65F5DF99207EA0BA0041FB0D /* Switch.swift */,
+				65F5DF92207EA0910041FB0D /* NVBaseLink.swift */,
+				65F5DF94207EA09C0041FB0D /* NVLink.swift */,
+				65F5DF97207EA0AF0041FB0D /* NVBranch.swift */,
+				65F5DF99207EA0BA0041FB0D /* NVSwitch.swift */,
 				65F5DF9D207EA0D40041FB0D /* Transfer.swift */,
 				65F5DF9B207EA0C70041FB0D /* Condition.swift */,
 				65F5DF9F207EA1600041FB0D /* Function.swift */,
@@ -564,12 +564,12 @@
 				65588388209C8838004C412F /* LinkWidget.swift in Sources */,
 				653CA9B5208538F50052BAB9 /* NVIdentifiable.swift in Sources */,
 				65C2F02320963AA1003D5025 /* Simulator.swift in Sources */,
-				65F5DF98207EA0AF0041FB0D /* Branch.swift in Sources */,
+				65F5DF98207EA0AF0041FB0D /* NVBranch.swift in Sources */,
 				6518B6EA20894E2600FF6BB8 /* Story+JSON.swift in Sources */,
-				65F5DF93207EA0910041FB0D /* BaseLink.swift in Sources */,
+				65F5DF93207EA0910041FB0D /* NVBaseLink.swift in Sources */,
 				658C7CDF207E7EB900E2B46B /* NVDataType.swift in Sources */,
 				6591405A2099D62900D6273D /* DialogWidget.swift in Sources */,
-				65F5DF95207EA09C0041FB0D /* Link.swift in Sources */,
+				65F5DF95207EA09C0041FB0D /* NVLink.swift in Sources */,
 				65F5DFA6207EA3FB0041FB0D /* NVNode.swift in Sources */,
 				65F5DFA2207EA3C00041FB0D /* Story.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
@@ -589,7 +589,7 @@
 				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
 				65C0573F2080A20900C4367E /* NVPath.swift in Sources */,
 				656F99EF2086A627009366D0 /* NVDialog.swift in Sources */,
-				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,
+				65F5DF9A207EA0BA0041FB0D /* NVSwitch.swift in Sources */,
 				651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */,
 				656F99ED2086A60A009366D0 /* NVDelivery.swift in Sources */,
 				65F8548B209EF2D50067A95C /* GridView.swift in Sources */,

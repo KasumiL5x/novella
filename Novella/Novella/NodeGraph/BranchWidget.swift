@@ -9,12 +9,12 @@
 import AppKit
 
 class BranchWidget: CurveWidget {
-	var _novellaBranch: Branch
+	var _novellaBranch: NVBranch
 	
 	var _curveBezier: NSBezierPath
 	var _curveShape: CAShapeLayer
 	
-	init(branch: Branch, canvas: Canvas) {
+	init(branch: NVBranch, canvas: Canvas) {
 		self._novellaBranch = branch
 		
 		self._curveBezier = NSBezierPath()

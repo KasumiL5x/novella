@@ -383,7 +383,7 @@ extension Story {
 			entry["uuid"] = curr._uuid.uuidString
 			entry["origin"] = curr._origin?.UUID.uuidString ?? ""
 			
-			if let asLink = curr as? Link {
+			if let asLink = curr as? NVLink {
 				entry["linktype"] = "link"
 				
 				var condition: JSONDict = [:]
@@ -394,7 +394,7 @@ extension Story {
 				transfer["destination"] = asLink._transfer._destination?.UUID.uuidString ?? ""
 				entry["transfer"] = transfer
 			}
-			else if let asBranch = curr as? Branch {
+			else if let asBranch = curr as? NVBranch {
 				entry["linktype"] = "branch"
 				
 				var condition: JSONDict = [:]
@@ -409,7 +409,7 @@ extension Story {
 				ftransfer["destination"] = asBranch._falseTransfer._destination?.UUID.uuidString ?? ""
 				entry["ftransfer"] = ftransfer
 			}
-			else if curr is Switch {
+			else if curr is NVSwitch {
 				entry["linktype"] = "switch"
 				fatalError("Haven't implemented switch yet.")
 				// TODO: Variable (UUID?)
@@ -747,7 +747,7 @@ extension Story {
 			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			
 			for child in curr["links"].arrayValue {
-				if let link = story.findBy(uuid: child.string!) as? BaseLink {
+				if let link = story.findBy(uuid: child.string!) as? NVBaseLink {
 					try! graph.add(link: link)
 				} else {
 					errors.append("Unable to find BaseLink by UUID (\(child.string!)) when adding to FlowGraph (\(graph._uuid.uuidString)).")

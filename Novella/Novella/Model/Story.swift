@@ -18,7 +18,7 @@ class Story {
 	var _allFolders: [NVFolder]
 	var _allVariables: [NVVariable]
 	var _allGraphs: [NVGraph]
-	var _allLinks: [BaseLink]
+	var _allLinks: [NVBaseLink]
 	var _allNodes: [NVNode]
 	
 	// MARK: Local Collections
@@ -164,22 +164,22 @@ extension Story {
 	}
 	
 	@discardableResult
-	func makeLink(uuid: NSUUID?=nil) -> Link {
-		let link = Link(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
+	func makeLink(uuid: NSUUID?=nil) -> NVLink {
+		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
 		return link
 	}
 	@discardableResult
-	func makeBranch(uuid: NSUUID?=nil) -> Branch {
-		let branch = Branch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
+	func makeBranch(uuid: NSUUID?=nil) -> NVBranch {
+		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
 		_allLinks.append(branch)
 		_allIdentifiables.append(branch)
 		return branch
 	}
 	@discardableResult
-	func makeSwitch(uuid: NSUUID?=nil) -> Switch {
-		let swtch = Switch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
+	func makeSwitch(uuid: NSUUID?=nil) -> NVSwitch {
+		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
 		_allLinks.append(swtch)
 		_allIdentifiables.append(swtch)
 		return swtch
@@ -193,7 +193,7 @@ extension Story {
 		return dialog
 	}
 	
-	func getLinksFrom(linkable: NVLinkable) -> [BaseLink] {
+	func getLinksFrom(linkable: NVLinkable) -> [NVBaseLink] {
 		return _allLinks.filter({$0._origin?.UUID == linkable.UUID})
 	}
 }
@@ -279,14 +279,14 @@ extension Story {
 			_allLinks.forEach({
 				print("\tUUID: \($0._uuid.uuidString)")
 				print("\tOrigin: \($0._origin?.UUID.uuidString ?? "none")")
-				if let link = $0 as? Link {
+				if let link = $0 as? NVLink {
 					print("\tType: Link")
 					print("\tDestination: \(link._transfer._destination?.UUID.uuidString ?? "none")")
-				} else if let branch = $0 as? Branch {
+				} else if let branch = $0 as? NVBranch {
 					print("\tType: Branch")
 					print("\tTrue Destination: \(branch._trueTransfer._destination?.UUID.uuidString ?? "none")")
 					print("\tFalse Destination: \(branch._falseTransfer._destination?.UUID.uuidString ?? "none")")
-				} else if let swtch = $0 as? Switch {
+				} else if let swtch = $0 as? NVSwitch {
 					print("\tType: Switch")
 					print("\tVariable: \(swtch._variable?._uuid.uuidString ?? "none")")
 					print("\(swtch._defaultTransfer._destination?.UUID.uuidString ?? "none")")

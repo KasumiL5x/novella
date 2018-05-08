@@ -143,13 +143,13 @@ class Canvas: NSView {
 		self.addSubview(widget)
 	}
 	
-	func makeLinkWidget(novellaLink: Link) {
+	func makeLinkWidget(novellaLink: NVLink) {
 		let widget = LinkWidget(link: novellaLink, canvas: self)
 		_curveWidgets.append(widget)
 		self.addSubview(widget)
 	}
 	
-	func makeBranchWidget(novellaBranch: Branch) {
+	func makeBranchWidget(novellaBranch: NVBranch) {
 		let widget = BranchWidget(branch: novellaBranch, canvas: self)
 		_curveWidgets.append(widget)
 		self.addSubview(widget)

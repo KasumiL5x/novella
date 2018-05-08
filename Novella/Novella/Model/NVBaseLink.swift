@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BaseLink {
+class NVBaseLink {
 	let _uuid: NSUUID
 	var _origin: NVLinkable?
 	
@@ -23,15 +23,15 @@ class BaseLink {
 }
 
 // MARK: Identifiable
-extension BaseLink: NVIdentifiable {
+extension NVBaseLink: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Equatable
-extension BaseLink: Equatable {
-	static func == (lhs: BaseLink, rhs: BaseLink) -> Bool {
+extension NVBaseLink: Equatable {
+	static func == (lhs: NVBaseLink, rhs: NVBaseLink) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

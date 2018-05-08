@@ -102,7 +102,7 @@ class ReaderViewController: NSViewController {
 		if currNodeOutlineView.selectedRow == -1 {
 			return
 		}
-		let link = currNodeOutlineView.item(atRow: currNodeOutlineView.selectedRow) as! BaseLink
+		let link = currNodeOutlineView.item(atRow: currNodeOutlineView.selectedRow) as! NVBaseLink
 		do {
 			try _simulator?.proceed(link: link)
 		} catch {
@@ -112,7 +112,7 @@ class ReaderViewController: NSViewController {
 }
 
 extension ReaderViewController: SimulatorController {
-	func currentNode(node: NVNode, outputs: [BaseLink]) {
+	func currentNode(node: NVNode, outputs: [NVBaseLink]) {
 		_currNodeLinksCallback.setLinks(links: outputs)
 		currNodeOutlineView.reloadData()
 		
@@ -238,7 +238,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		if let node = item as? NVNode {
 			name = "FlowNode: " + node._name
 		}
-		if let link = item as? BaseLink {
+		if let link = item as? NVBaseLink {
 			name = "BaseLink: " + link._uuid.uuidString
 		}
 		if let listener = item as? NVListener {
@@ -308,13 +308,13 @@ extension ReaderViewController: NSOutlineViewDelegate {
 				text += "<b>Directions: </b>\(dlg._directions)<br/>"
 			}
 		}
-		if let link = item as? Link {
+		if let link = item as? NVLink {
 			text = "<b>LINK</b><br/>"
 			text += "<b>UUID: </b>\(link._uuid.uuidString)<br/>"
 			text += "<b>Origin: </b>\(link._origin?.UUID.uuidString ?? "none")<br/>"
 			text += "<b>Destination: </b>\(link._transfer._destination?.UUID.uuidString ?? "none")<br/>"
 		}
-		if let branch = item as? Branch {
+		if let branch = item as? NVBranch {
 			text = "<b>BRANCH</b><br/>"
 			text += "<b>UUID: </b>\(branch._uuid.uuidString)<br/>"
 			text += "<b>Origin: </b>\(branch._origin?.UUID.uuidString ?? "none")<br/>"
@@ -338,7 +338,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 // MARK: currentNodeList callbacks
 class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewDataSource {
 	var _view: NSOutlineView?
-	var _links: [BaseLink] = []
+	var _links: [NVBaseLink] = []
 	
 	override init() {
 	}
@@ -349,7 +349,7 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		_view!.dataSource = self
 	}
 	
-	func setLinks(links: [BaseLink]) {
+	func setLinks(links: [NVBaseLink]) {
 		self._links = links
 	}
 	
@@ -370,13 +370,13 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		
 		var text = "error"
 		
-		let origin = (item as! BaseLink)._origin
+		let origin = (item as! NVBaseLink)._origin
 		var originName = "none"
 		if let graph = origin as? NVGraph { originName = graph._name }
 		if let node = origin as? NVNode {	originName = node._name }
 		
 		
-		if let asLink = item as? Link {
+		if let asLink = item as? NVLink {
 			let dest = asLink._transfer._destination
 			var destName = "none"
 			if let graph = dest as? NVGraph { destName = graph._name }
@@ -384,7 +384,7 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 			
 			text = "Link (\(originName)->\(destName))"
 		}
-		if let asBranch = item as? Branch {
+		if let asBranch = item as? NVBranch {
 			let tDest = asBranch._trueTransfer._destination
 			var tDestName = "none"
 			if let graph = tDest as? NVGraph { tDestName = graph._name }
@@ -396,7 +396,7 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 			
 			text = "Branch (\(originName)->T(\(tDestName)); F(\(fDestName)))"
 		}
-		if let _ = item as? Switch {
+		if let _ = item as? NVSwitch {
 			text = "Switch"
 		}
 		

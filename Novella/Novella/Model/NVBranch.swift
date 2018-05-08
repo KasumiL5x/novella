@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Branch : BaseLink {
+class NVBranch : NVBaseLink {
 	var _condition: Condition
 	var _trueTransfer: Transfer
 	var _falseTransfer: Transfer

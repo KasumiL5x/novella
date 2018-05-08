@@ -86,9 +86,9 @@ class WriterViewController: NSViewController {
 		}
 		// create canvas links for each link
 		for curr in _story!._allLinks {
-			if let asLink = curr as? Link {
+			if let asLink = curr as? NVLink {
 				_canvas!.makeLinkWidget(novellaLink: asLink)
-			} else if let asBranch = curr as? Branch {
+			} else if let asBranch = curr as? NVBranch {
 				_canvas!.makeBranchWidget(novellaBranch: asBranch)
 			}
 			else {

@@ -13,7 +13,7 @@ class NVGraph {
 	var _name: String
 	var _graphs: [NVGraph]
 	var _nodes: [NVNode]
-	var _links: [BaseLink]
+	var _links: [NVBaseLink]
 	var _listeners: [NVListener]
 	var _exits: [NVExitNode]
 	var _entry: NVLinkable?
@@ -39,7 +39,7 @@ class NVGraph {
 	var Name:      String      {get{ return _name }}
 	var Graphs:    [NVGraph] {get{ return _graphs }}
 	var Nodes:     [NVNode]  {get{ return _nodes }}
-	var Links:     [BaseLink]  {get{ return _links }}
+	var Links:     [NVBaseLink]  {get{ return _links }}
 	var Listeners: [NVListener]  {get{ return _listeners }}
 	var Exits:     [NVExitNode]  {get{ return _exits }}
 	var Entry:     NVLinkable?   {get{ return _entry }}
@@ -147,12 +147,12 @@ class NVGraph {
 	}
 	
 	// MARK: Links
-	func contains(link: BaseLink) -> Bool {
+	func contains(link: NVBaseLink) -> Bool {
 		return _links.contains(link)
 	}
 	
 	@discardableResult
-	func add(link: BaseLink) throws -> BaseLink {
+	func add(link: NVBaseLink) throws -> NVBaseLink {
 		// already a child
 		if contains(link: link) {
 			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
@@ -161,7 +161,7 @@ class NVGraph {
 		return link
 	}
 	
-	func remove(link: BaseLink) throws {
+	func remove(link: NVBaseLink) throws {
 		guard let idx = _links.index(of: link) else {
 			throw NVError.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
 		}
