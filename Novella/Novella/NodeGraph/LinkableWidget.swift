@@ -10,7 +10,7 @@ import Cocoa
 
 class LinkableWidget: NSView {
 	let _canvas: Canvas
-	var _novellaLinkable: NVLinkable?
+	var _nvLinkable: NVLinkable?
 	var _isPrimedForSelection: Bool
 	var _isSelected: Bool
 	
@@ -18,7 +18,7 @@ class LinkableWidget: NSView {
 	
 	init(frame frameRect: NSRect, novellaLinkable: NVLinkable, canvas: Canvas) {
 		self._canvas = canvas
-		self._novellaLinkable = novellaLinkable
+		self._nvLinkable = novellaLinkable
 		self._isPrimedForSelection = false
 		self._isSelected = false
 		

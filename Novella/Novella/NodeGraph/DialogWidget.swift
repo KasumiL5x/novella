@@ -44,7 +44,7 @@ class DialogWidget: LinkableWidget {
 	}
 	
 	override func onMove() {
-		(_novellaLinkable as? NVDialog)?._editorPos = frame.origin
+		(_nvLinkable as? NVDialog)?._editorPos = frame.origin
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
