@@ -558,7 +558,7 @@ extension NVStory {
 			let folder = story.makeFolder(name: curr["name"].string!, uuid: uuid)
 			
 			if let synopsis = curr["synopsis"].string {
-				folder.setSynopsis(synopsis: synopsis)
+				folder.setSynopsis(synopsis)
 			}
 			
 			// 2.1 link variables to folders by uuid

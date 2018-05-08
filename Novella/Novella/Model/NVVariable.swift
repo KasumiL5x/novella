@@ -45,7 +45,7 @@ class NVVariable {
 			return
 		}
 		// containing folder can't contain the requested name already
-		if _folder!.containsVariableName(name: name) {
+		if _folder!.containsVariableName(name) {
 			throw NVError.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but its Folder (\(_folder!._name) already contains that.")
 		}
 		_name = name

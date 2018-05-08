@@ -127,7 +127,7 @@ class VariableFolderTestViewController: NSViewController {
 			if newName == folder.Name {
 				return
 			}
-			do { try folder.setName(name: newName) } catch {
+			do { try folder.setName(newName) } catch {
 				statusLabel.stringValue = "Could not rename Folder (\(folder.Name)->\(newName))!"
 				sender.stringValue = folder.Name
 			}
@@ -206,7 +206,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 //					print("not same folder or parent please")
 					return []
 				}
-				if sourceFolder.hasDescendantFolder(folder: targetFolder) {
+				if sourceFolder.hasDescendant(folder: targetFolder) {
 //					print("cannot be a child")
 					return []
 				}
