@@ -17,7 +17,7 @@
 		6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96120927D6E00E6737B /* ReaderViewController.swift */; };
 		6553C96420927D9B00E6737B /* WriterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96320927D9B00E6737B /* WriterViewController.swift */; };
 		65588384209C6295004C412F /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588383209C6295004C412F /* CommandSystem.swift */; };
-		65588386209C856F004C412F /* CurveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588385209C856F004C412F /* CurveWidget.swift */; };
+		65588386209C856F004C412F /* BaseLinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588385209C856F004C412F /* BaseLinkWidget.swift */; };
 		65588388209C8838004C412F /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588387209C8838004C412F /* LinkWidget.swift */; };
 		6558838A209C8C19004C412F /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588389209C8C19004C412F /* CurveHelper.swift */; };
 		6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */; };
@@ -94,7 +94,7 @@
 		6553C96120927D6E00E6737B /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		6553C96320927D9B00E6737B /* WriterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterViewController.swift; sourceTree = "<group>"; };
 		65588383209C6295004C412F /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
-		65588385209C856F004C412F /* CurveWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveWidget.swift; sourceTree = "<group>"; };
+		65588385209C856F004C412F /* BaseLinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLinkWidget.swift; sourceTree = "<group>"; };
 		65588387209C8838004C412F /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
 		65588389209C8C19004C412F /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				655B0B8E2098B4C000741ACA /* Canvas.swift */,
 				659140572099D60B00D6273D /* LinkableWidget.swift */,
 				659140592099D62900D6273D /* DialogWidget.swift */,
-				65588385209C856F004C412F /* CurveWidget.swift */,
+				65588385209C856F004C412F /* BaseLinkWidget.swift */,
 				65588387209C8838004C412F /* LinkWidget.swift */,
 				65F85488209E68FF0067A95C /* BranchWidget.swift */,
 				65588389209C8C19004C412F /* CurveHelper.swift */,
@@ -547,7 +547,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				656F99E920869B2C009366D0 /* NVExitNode.swift in Sources */,
-				65588386209C856F004C412F /* CurveWidget.swift in Sources */,
+				65588386209C856F004C412F /* BaseLinkWidget.swift in Sources */,
 				655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */,
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
 				65F5DF9C207EA0C70041FB0D /* NVCondition.swift in Sources */,

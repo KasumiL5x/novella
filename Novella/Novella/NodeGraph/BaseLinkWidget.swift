@@ -8,11 +8,13 @@
 
 import AppKit
 
-class CurveWidget: NSView {
+class BaseLinkWidget: NSView {
 	let _canvas: Canvas
+	var _nvBaseLink: NVBaseLink?
 	
-	init(frame frameRect: NSRect, canvas: Canvas) {
+	init(frame frameRect: NSRect, nvBaseLink: NVBaseLink, canvas: Canvas) {
 		self._canvas = canvas
+		self._nvBaseLink = nvBaseLink
 		
 		super.init(frame: frameRect)
 		

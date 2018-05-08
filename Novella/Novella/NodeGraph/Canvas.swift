@@ -15,7 +15,7 @@ class Canvas: NSView {
 	// where nodes are stored
 	var _linkableWidgets: [LinkableWidget]
 	// where curves are stored
-	var _curveWidgets: [CurveWidget]
+	var _curveWidgets: [BaseLinkWidget]
 	// selection rectangle
 	var _selectionRect: SelectionView
 	// selected nodes

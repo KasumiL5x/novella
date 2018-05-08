@@ -8,19 +8,15 @@
 
 import AppKit
 
-class BranchWidget: CurveWidget {
-	var _novellaBranch: NVBranch
-	
+class BranchWidget: BaseLinkWidget {
 	var _curveBezier: NSBezierPath
 	var _curveShape: CAShapeLayer
 	
 	init(branch: NVBranch, canvas: Canvas) {
-		self._novellaBranch = branch
-		
 		self._curveBezier = NSBezierPath()
 		self._curveShape = CAShapeLayer()
 		
-		super.init(frame: NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0), canvas: canvas)
+		super.init(frame: NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0), nvBaseLink: branch, canvas: canvas)
 		
 		_curveShape.path = _curveBezier.cgPath
 		layer!.addSublayer(_curveShape)
@@ -45,8 +41,10 @@ class BranchWidget: CurveWidget {
 		var start = CGPoint.zero
 		var end = CGPoint.zero
 		
-		let originWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._origin)
-		var destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._trueTransfer._destination)
+		let asBranch = _nvBaseLink as! NVBranch
+		
+		let originWidget = _canvas.getLinkableWidgetFrom(linkable: asBranch._origin)
+		var destWidget = _canvas.getLinkableWidgetFrom(linkable: asBranch._trueTransfer._destination)
 		
 		if originWidget != nil {
 			start = originWidget!.frame.origin
@@ -64,7 +62,7 @@ class BranchWidget: CurveWidget {
 		}
 		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
-		destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._falseTransfer._destination)
+		destWidget = _canvas.getLinkableWidgetFrom(linkable: asBranch._falseTransfer._destination)
 		if destWidget != nil {
 			end = destWidget!.frame.origin
 			end.x += destWidget!.frame.width * 0.5

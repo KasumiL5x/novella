@@ -8,19 +8,15 @@
 
 import AppKit
 
-class LinkWidget: CurveWidget {
-	var _novellaLink: NVLink
-	
+class LinkWidget: BaseLinkWidget {
 	var _curveBezier: NSBezierPath
 	var _curveShape: CAShapeLayer
 	
 	init(link: NVLink, canvas: Canvas) {
-		self._novellaLink = link
-		
 		self._curveBezier = NSBezierPath()
 		self._curveShape = CAShapeLayer()
 		
-		super.init(frame: NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0), canvas: canvas)
+		super.init(frame: NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0), nvBaseLink: link, canvas: canvas)
 		
 		_curveShape.path = _curveBezier.cgPath
 		layer!.addSublayer(_curveShape)
@@ -45,8 +41,10 @@ class LinkWidget: CurveWidget {
 		var start = CGPoint.zero
 		var end = CGPoint.zero
 		
-		let originWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaLink._origin)
-		let destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaLink._transfer._destination)
+		let asLink = _nvBaseLink as! NVLink
+		
+		let originWidget = _canvas.getLinkableWidgetFrom(linkable: asLink._origin)
+		let destWidget = _canvas.getLinkableWidgetFrom(linkable: asLink._transfer._destination)
 		
 		if originWidget != nil {
 			start = originWidget!.frame.origin
