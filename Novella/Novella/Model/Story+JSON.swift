@@ -436,7 +436,7 @@ extension Story {
 				"y": curr._editorPos.y
 			]
 			
-			if let asDialog = curr as? Dialog {
+			if let asDialog = curr as? NVDialog {
 				entry["nodetype"] = "dialog"
 				
 				// TODO: Missing out the below (so it doesn't validate oneOf) doesn't print the path in the jsonschema, why?

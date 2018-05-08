@@ -137,7 +137,7 @@ class Canvas: NSView {
 	}
 	
 	// MARK: Canvas Widget Creation
-	func makeDialogWidget(novellaDialog: Dialog) {
+	func makeDialogWidget(novellaDialog: NVDialog) {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_linkableWidgets.append(widget)
 		self.addSubview(widget)

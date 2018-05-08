@@ -78,7 +78,7 @@ class WriterViewController: NSViewController {
 		
 		// create canvas nodes for each dialog node
 		for curr in _story!._allNodes {
-			if let dlg = curr as? Dialog {
+			if let dlg = curr as? NVDialog {
 				_canvas!.makeDialogWidget(novellaDialog: dlg)
 			} else {
 				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Dialog: NVNode {
+class NVDialog: NVNode {
 	var _content: String
 	var _preview: String
 	var _directions: String

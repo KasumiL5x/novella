@@ -11,7 +11,7 @@ import Cocoa
 class DialogWidget: LinkableWidget {
 	var _nameLabel: NSTextField
 	
-	init(node: Dialog, canvas: Canvas) {
+	init(node: NVDialog, canvas: Canvas) {
 		self._nameLabel = NSTextField()
 		self._nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		self._nameLabel.isBezeled = false
@@ -44,7 +44,7 @@ class DialogWidget: LinkableWidget {
 	}
 	
 	override func onMove() {
-		(_novellaLinkable as? Dialog)?._editorPos = frame.origin
+		(_novellaLinkable as? NVDialog)?._editorPos = frame.origin
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

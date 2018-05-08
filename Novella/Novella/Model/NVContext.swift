@@ -1,5 +1,5 @@
 //
-//  Cutscene.swift
+//  Context.swift
 //  Novella
 //
 //  Created by Daniel Green on 17/04/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Cutscene: NVNode {
+class NVContext: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}

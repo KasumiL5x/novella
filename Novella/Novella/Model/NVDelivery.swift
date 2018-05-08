@@ -1,5 +1,5 @@
 //
-//  Context.swift
+//  Delivery.swift
 //  Novella
 //
 //  Created by Daniel Green on 17/04/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Context: NVNode {
+class NVDelivery: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}

@@ -186,8 +186,8 @@ extension Story {
 	}
 	
 	@discardableResult
-	func makeDialog(uuid: NSUUID?=nil) -> Dialog {
-		let dialog = Dialog(uuid: uuid != nil ? uuid! : NSUUID())
+	func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
+		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID())
 		_allNodes.append(dialog)
 		_allIdentifiables.append(dialog)
 		return dialog
@@ -258,16 +258,16 @@ extension Story {
 			print("\nNodes (\(_allNodes.count)):")
 			_allNodes.forEach({
 				print("\tUUID: \($0._uuid.uuidString)")
-				if let dlg = $0 as? Dialog {
+				if let dlg = $0 as? NVDialog {
 					print("\tType: Dialog")
 					print("\tContent: \(dlg._content)")
 					print("\tPreview: \(dlg._preview)")
 					print("\tDirections: \(dlg._directions)")
-				} else if let _ = $0 as? Delivery {
+				} else if let _ = $0 as? NVDelivery {
 					print("\tType: Delivery")
-				} else if let _ = $0 as? Cutscene {
+				} else if let _ = $0 as? NVCutscene {
 					print("\tType: Cutscene")
-				} else if let _ = $0 as? Context {
+				} else if let _ = $0 as? NVContext {
 					print("\tType: Context")
 				}
 				

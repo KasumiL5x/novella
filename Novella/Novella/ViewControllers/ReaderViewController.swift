@@ -117,7 +117,7 @@ extension ReaderViewController: SimulatorController {
 		currNodeOutlineView.reloadData()
 		
 		var text = "<b>UUID:</b><br/>\(node._uuid.uuidString)<br/><br/>"
-		if let dialog = node as? Dialog {
+		if let dialog = node as? NVDialog {
 			text += "<b>Preview:</b><br/>\(dialog._preview.isEmpty ? "none" : dialog._preview)<br/><br/>"
 			text += "<b>Content:</b><br/>\(dialog._content.isEmpty ? "none" : dialog._content)<br/><br/>"
 			text += "<b>Directions:</b><br/>\(dialog._directions.isEmpty ? "none" : dialog._directions)"
@@ -301,7 +301,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			text = "<b>FLOWNODE</b><br/>"
 			text += "<b>UUID: </b>\(node._uuid.uuidString)<br/>"
 			text += "<b>Name: </b>\(node._name)<br/>"
-			if let dlg = node as? Dialog {
+			if let dlg = node as? NVDialog {
 				text += "<b>Type: </b>Dialog<br/>"
 				text += "<b>Preview: </b>\(dlg._preview)<br/>"
 				text += "<b>Content: </b>\(dlg._content)<br/>"
