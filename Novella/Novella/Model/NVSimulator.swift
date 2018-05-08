@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol SimulatorController {
+protocol NVSimulatorController {
 	// gives the controller the current available node and a list of links it can follow
 	func currentNode(node: NVNode, outputs: [NVBaseLink])
 }
 
-class Simulator {
+class NVSimulator {
 	var _story: NVStory?
-	var _controller: SimulatorController?
+	var _controller: NVSimulatorController?
 	var _currentNode: NVNode?
 	
-	init(story: NVStory, controller: SimulatorController) {
+	init(story: NVStory, controller: NVSimulatorController) {
 		self._story = story
 		self._controller = controller
 		self._currentNode = nil

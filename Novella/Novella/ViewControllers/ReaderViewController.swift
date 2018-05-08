@@ -16,7 +16,7 @@ class ReaderViewController: NSViewController {
 	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
 	var _story: NVStory?
-	var _simulator: Simulator?
+	var _simulator: NVSimulator?
 	
 	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
 	
@@ -77,7 +77,7 @@ class ReaderViewController: NSViewController {
 		
 		
 		// open the simulator
-		_simulator = Simulator(story: _story!, controller: self)
+		_simulator = NVSimulator(story: _story!, controller: self)
 		outlineView.reloadData()
 	}
 	
@@ -111,7 +111,7 @@ class ReaderViewController: NSViewController {
 	}
 }
 
-extension ReaderViewController: SimulatorController {
+extension ReaderViewController: NVSimulatorController {
 	func currentNode(node: NVNode, outputs: [NVBaseLink]) {
 		_currNodeLinksCallback.setLinks(links: outputs)
 		currNodeOutlineView.reloadData()

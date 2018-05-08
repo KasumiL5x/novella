@@ -8,6 +8,6 @@
 
 import Foundation
 
-class Simulation {
+class NVSimulation {
 	
 }
