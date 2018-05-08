@@ -24,7 +24,7 @@ class NVSimulator {
 		self._currentNode = nil
 	}
 	
-	func start(graph: NVGraph) -> Bool {
+	func start(_ graph: NVGraph) -> Bool {
 		if _controller == nil {
 			return false
 		}
@@ -33,14 +33,14 @@ class NVSimulator {
 			return false
 		}
 		
-		_currentNode = resolveLinkable(node: graph._entry)
+		_currentNode = resolveLinkable(graph._entry)
 		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(_currentNode!))
 		
 		return true
 	}
 	
 	// controller should call this to proceed from the current node
-	func proceed(link: NVBaseLink) throws {
+	func proceed(_ link: NVBaseLink) throws {
 		if !_story!.getLinksFrom(_currentNode!).contains(link) {
 			throw NVError.invalid("Tried to progress along a link that didn't belong to the current node.")
 		}
@@ -56,37 +56,37 @@ class NVSimulator {
 		}
 		
 		guard let destNode = _story?.findBy(uuid: destinationUUID ?? "") as? NVNode else {
-			throw NVError.invalid("Destination node was not found or was not a FlowNode.")
+			throw NVError.invalid("Destination node was not found or was not a Node.")
 		}
 		
-		_currentNode = resolveLinkable(node: destNode)
+		_currentNode = resolveLinkable(destNode)
 		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(_currentNode!))
 	}
 	
-	// keeps traversing flow graph entry points until the first flow node is found
-	func resolveLinkable(node: NVLinkable?) -> NVNode {
-		if node == nil {
+	// keeps traversing graph entry points until the first node is found
+	func resolveLinkable(_ linkable: NVLinkable?) -> NVNode {
+		if linkable == nil {
 			fatalError("Tried to resolve a nil Linkable.")
 		}
 		
-		// return self if it's already a flow node - the most common case
-		if let flowNode = node as? NVNode {
-			return flowNode
+		// return self if it's already a node - the most common case
+		if let asNode = linkable as? NVNode {
+			return asNode
 		}
 		
 		// for the cases where an entry point is also a graph, we need to resolve the entry until we get a node
-		if let flowGraph = node as? NVGraph {
+		if let asGraph = linkable as? NVGraph {
 			// entry is a node - return it
-			if let entry = flowGraph._entry as? NVNode {
+			if let entry = asGraph._entry as? NVNode {
 				return entry
 			}
 			
-			if flowGraph._entry == nil {
-				fatalError("Traversing FlowGraphs' entry points resulted in a graph; it must end in a FlowNode.")
+			if asGraph._entry == nil {
+				fatalError("Traversing Graphs' entry points resulted in a graph; it must end in a Node.")
 			}
 			
 			// otherwise keep processing
-			return resolveLinkable(node: flowGraph._entry!)
+			return resolveLinkable(asGraph._entry!)
 		}
 		
 		fatalError("Could not resolve Linkable.")

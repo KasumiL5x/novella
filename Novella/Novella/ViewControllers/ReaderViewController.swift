@@ -91,7 +91,7 @@ class ReaderViewController: NSViewController {
 			return
 		}
 		
-		if !_simulator!.start(graph: graph) {
+		if !_simulator!.start(graph) {
 			print("Graph is not configured for simulation.")
 			return
 		}
@@ -104,7 +104,7 @@ class ReaderViewController: NSViewController {
 		}
 		let link = currNodeOutlineView.item(atRow: currNodeOutlineView.selectedRow) as! NVBaseLink
 		do {
-			try _simulator?.proceed(link: link)
+			try _simulator?.proceed(link)
 		} catch {
 			print("Failed to proceed in Simulator.")
 		}
