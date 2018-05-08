@@ -188,7 +188,7 @@ extension StoryTestViewController: NSOutlineViewDelegate {
 		}
 		if let graph = item as? NVGraph {
 			name = graph._name
-			type = "FlowGraph"
+			type = "Graph"
 		}
 		
 		if tableColumn?.identifier.rawValue == "NameCell" {

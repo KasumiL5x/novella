@@ -87,7 +87,7 @@ class ReaderViewController: NSViewController {
 		}
 		let item = outlineView.item(atRow: outlineView.selectedRow)
 		guard let graph = item as? NVGraph else {
-			print("Please select a FlowGraph.")
+			print("Please select a Graph.")
 			return
 		}
 		
@@ -233,10 +233,10 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			name = "Folder: " + folder._name
 		}
 		if let graph = item as? NVGraph {
-			name = "FlowGraph: " + graph._name
+			name = "Graph: " + graph._name
 		}
 		if let node = item as? NVNode {
-			name = "FlowNode: " + node._name
+			name = "Node: " + node._name
 		}
 		if let link = item as? NVBaseLink {
 			name = "BaseLink: " + link._uuid.uuidString
@@ -287,7 +287,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			text += "<b>Variables: </b>\(folder._variables.count)<br/>"
 		}
 		if let graph = item as? NVGraph {
-			text = "<b>FLOWGRAPH</b><br/>"
+			text = "<b>GRAPH</b><br/>"
 			text += "<b>UUID: </b>\(graph._uuid.uuidString)<br/>"
 			text += "<b>Name: </b>\(graph._name)<br/>"
 			text += "<b>Subgraphs: </b>\(graph._graphs.count)<br/>"
@@ -298,7 +298,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			text += "<b>Entry: </b>\(graph._entry?.UUID.uuidString ?? "none")<br/>"
 		}
 		if let node = item as? NVNode {
-			text = "<b>FLOWNODE</b><br/>"
+			text = "<b>NODE</b><br/>"
 			text += "<b>UUID: </b>\(node._uuid.uuidString)<br/>"
 			text += "<b>Name: </b>\(node._name)<br/>"
 			if let dlg = node as? NVDialog {
