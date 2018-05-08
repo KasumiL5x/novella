@@ -22,15 +22,15 @@ class NVDialog: NVNode {
 	}
 	
 	// MARK: Setters
-	func setContent(content: String) {
+	func setContent(_ content: String) {
 		self._content = content
 	}
 	
-	func setPreview(preview: String) {
+	func setPreview(_ preview: String) {
 		self._preview = preview
 	}
 	
-	func setDirections(directions: String) {
+	func setDirections(_ directions: String) {
 		self._directions = directions
 	}
 }
