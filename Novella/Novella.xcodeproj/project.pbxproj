@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6518B6EA20894E2600FF6BB8 /* NVStory+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */; };
-		651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651B3DB6209892DF00D37848 /* TouchBarID.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		653CA9B5208538F50052BAB9 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */; };
@@ -85,7 +84,6 @@
 
 /* Begin PBXFileReference section */
 		6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVStory+JSON.swift"; sourceTree = "<group>"; };
-		651B3DB6209892DF00D37848 /* TouchBarID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarID.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 				658C7CAB207E7E6500E2B46B /* AppDelegate.swift */,
 				65CEA212209FB412008C49AE /* MainWindowController.swift */,
 				65588383209C6295004C412F /* CommandSystem.swift */,
-				651B3DB6209892DF00D37848 /* TouchBarID.swift */,
 				658C7CAF207E7E6600E2B46B /* Assets.xcassets */,
 				658C7CB4207E7E6600E2B46B /* Info.plist */,
 				658C7CB5207E7E6600E2B46B /* Novella.entitlements */,
@@ -590,7 +587,6 @@
 				65C0573F2080A20900C4367E /* NVPath.swift in Sources */,
 				656F99EF2086A627009366D0 /* NVDialog.swift in Sources */,
 				65F5DF9A207EA0BA0041FB0D /* NVSwitch.swift in Sources */,
-				651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */,
 				656F99ED2086A60A009366D0 /* NVDelivery.swift in Sources */,
 				65F8548B209EF2D50067A95C /* GridView.swift in Sources */,
 				65F85489209E68FF0067A95C /* BranchWidget.swift in Sources */,

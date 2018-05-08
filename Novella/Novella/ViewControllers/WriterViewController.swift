@@ -147,28 +147,3 @@ class WriterViewController: NSViewController {
 		_canvas!.redo()
 	}
 }
-
-// MARK: TouchBar
-extension WriterViewController {
-	
-//	override func makeTouchBar() -> NSTouchBar? {
-//		let touchBar = NSTouchBar()
-//		touchBar.delegate = self
-//		touchBar.customizationIdentifier = TouchBarID.Identifiers.Writer
-//		touchBar.defaultItemIdentifiers = [TouchBarID.Items.Writer.CreateNode]
-//		touchBar.customizationAllowedItemIdentifiers = [TouchBarID.Items.Writer.CreateNode]
-//		touchBar.principalItemIdentifier = TouchBarID.Items.Writer.CreateNode
-//		return touchBar
-//	}
-}
-
-extension WriterViewController: NSTouchBarDelegate {
-//	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
-//		switch identifier {
-//		case TouchBarID.Items.Writer.CreateNode:
-//			return NSColorPickerTouchBarItem.colorPicker(withIdentifier: identifier)
-//		default:
-//			return nil
-//		}
-//	}
-}
