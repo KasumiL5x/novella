@@ -17,18 +17,18 @@ protocol NVPathable {
 class NVPath {
 	static let DELIMITER = "."
 	
-	static func fullPathTo(object: NVPathable) -> String {
+	static func fullPathTo(_ pathable: NVPathable) -> String {
 		var str = ""
 		
 		// add parent paths with delimiter
-		var currParent = object.parentPath()
+		var currParent = pathable.parentPath()
 		while currParent != nil {
 			str = (currParent!.localPath() + NVPath.DELIMITER) + str // add reverse order b/c we're going bottom up
 			currParent = currParent!.parentPath()
 		}
 		
 		// add local path
-		str += object.localPath()
+		str += pathable.localPath()
 		
 		return str
 	}

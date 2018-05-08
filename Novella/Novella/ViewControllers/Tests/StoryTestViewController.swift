@@ -89,7 +89,7 @@ class StoryTestViewController: NSViewController {
 		let item = outline.item(atRow: idx)
 		
 		if let path = item as? NVPathable {
-			print(NVPath.fullPathTo(object: path))
+			print(NVPath.fullPathTo(path))
 		}
 	}
 }
