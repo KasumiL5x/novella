@@ -25,7 +25,7 @@
 		655CFAEF2085FA2900C04D40 /* NVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* NVListener.swift */; };
 		65619E922084D711000D5322 /* Linkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* Linkable.swift */; };
 		656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
-		656F99E920869B2C009366D0 /* ExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99E820869B2C009366D0 /* ExitNode.swift */; };
+		656F99E920869B2C009366D0 /* NVExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99E820869B2C009366D0 /* NVExitNode.swift */; };
 		656F99EB2086A5E9009366D0 /* Cutscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EA2086A5E9009366D0 /* Cutscene.swift */; };
 		656F99ED2086A60A009366D0 /* Delivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EC2086A60A009366D0 /* Delivery.swift */; };
 		656F99EF2086A627009366D0 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EE2086A627009366D0 /* Dialog.swift */; };
@@ -102,7 +102,7 @@
 		655CFAEE2085FA2900C04D40 /* NVListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVListener.swift; sourceTree = "<group>"; };
 		65619E912084D711000D5322 /* Linkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkable.swift; sourceTree = "<group>"; };
 		656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
-		656F99E820869B2C009366D0 /* ExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitNode.swift; sourceTree = "<group>"; };
+		656F99E820869B2C009366D0 /* NVExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVExitNode.swift; sourceTree = "<group>"; };
 		656F99EA2086A5E9009366D0 /* Cutscene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cutscene.swift; sourceTree = "<group>"; };
 		656F99EC2086A60A009366D0 /* Delivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delivery.swift; sourceTree = "<group>"; };
 		656F99EE2086A627009366D0 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
@@ -182,7 +182,7 @@
 			children = (
 				655CFAEE2085FA2900C04D40 /* NVListener.swift */,
 				65F5DFA3207EA3DD0041FB0D /* NVGraph.swift */,
-				656F99E820869B2C009366D0 /* ExitNode.swift */,
+				656F99E820869B2C009366D0 /* NVExitNode.swift */,
 			);
 			name = Graphs;
 			sourceTree = "<group>";
@@ -546,7 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				656F99E920869B2C009366D0 /* ExitNode.swift in Sources */,
+				656F99E920869B2C009366D0 /* NVExitNode.swift in Sources */,
 				65588386209C856F004C412F /* CurveWidget.swift in Sources */,
 				655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */,
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,

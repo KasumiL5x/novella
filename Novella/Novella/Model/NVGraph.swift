@@ -15,7 +15,7 @@ class NVGraph {
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
 	var _listeners: [NVListener]
-	var _exits: [ExitNode]
+	var _exits: [NVExitNode]
 	var _entry: Linkable?
 	
 	// parent flow graph is valid unless as a direct child of the story
@@ -41,7 +41,7 @@ class NVGraph {
 	var Nodes:     [FlowNode]  {get{ return _nodes }}
 	var Links:     [BaseLink]  {get{ return _links }}
 	var Listeners: [NVListener]  {get{ return _listeners }}
-	var Exits:     [ExitNode]  {get{ return _exits }}
+	var Exits:     [NVExitNode]  {get{ return _exits }}
 	var Entry:     Linkable?   {get{ return _entry }}
 	
 	// MARK: Setters
@@ -191,12 +191,12 @@ class NVGraph {
 	}
 	
 	// MARK: Exit Nodes
-	func contains(exit: ExitNode) -> Bool {
+	func contains(exit: NVExitNode) -> Bool {
 		return _exits.contains(exit)
 	}
 	
 	@discardableResult
-	func add(exit: ExitNode) throws -> ExitNode {
+	func add(exit: NVExitNode) throws -> NVExitNode {
 		// already a child
 		if contains(exit: exit) {
 			throw Errors.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
@@ -205,7 +205,7 @@ class NVGraph {
 		return exit
 	}
 	
-	func remove(exit: ExitNode) throws {
+	func remove(exit: NVExitNode) throws {
 		guard let idx = _exits.index(of: exit) else {
 			throw Errors.invalid("Tried to remove ExitNode from FlowGraph (\(_name)) but it was not a child.")
 		}

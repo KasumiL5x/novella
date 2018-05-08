@@ -244,7 +244,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		if let listener = item as? NVListener {
 			name = "Listener: " + listener._uuid.uuidString
 		}
-		if let exit = item as? ExitNode {
+		if let exit = item as? NVExitNode {
 			name = "ExitNode: " + exit._uuid.uuidString
 		}
 		
