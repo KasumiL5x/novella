@@ -10,7 +10,7 @@ import Foundation
 
 
 class Switch : BaseLink {
-	var _variable: Variable?
+	var _variable: NVVariable?
 	var _defaultTransfer: Transfer
 	var _values: [AnyHashable:Transfer]
 	

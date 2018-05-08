@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Variable {
+class NVVariable {
 	let _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
@@ -88,7 +88,7 @@ class Variable {
 }
 
 // MARK: Pathable
-extension Variable: Pathable {
+extension NVVariable: Pathable {
 	func localPath() -> String {
 		return _name
 	}
@@ -99,15 +99,15 @@ extension Variable: Pathable {
 }
 
 // MARK: Identifiable
-extension Variable: Identifiable {
+extension NVVariable: Identifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Equatable
-extension Variable: Equatable {
-	static func == (lhs: Variable, rhs: Variable) -> Bool {
+extension NVVariable: Equatable {
+	static func == (lhs: NVVariable, rhs: NVVariable) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

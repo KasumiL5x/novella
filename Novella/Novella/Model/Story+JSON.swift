@@ -563,7 +563,7 @@ extension Story {
 			
 			// 2.1 link variables to folders by uuid
 			for child in curr["variables"].arrayValue {
-				if let variable = story.findBy(uuid: child.string!) as? Variable {
+				if let variable = story.findBy(uuid: child.string!) as? NVVariable {
 					try! folder.add(variable: variable)
 				} else {
 					errors.append("Unable to find Variable by UUID (\(child.string!) when adding to Folder (\(uuid.uuidString)).")

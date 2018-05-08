@@ -13,7 +13,7 @@ class Folder {
 	var _name: String
 	var _synopsis: String
 	var _folders: [Folder]
-	var _variables: [Variable]
+	var _variables: [NVVariable]
 	var _parent: Folder?
 	
 	init(uuid: NSUUID, name: String) {
@@ -28,7 +28,7 @@ class Folder {
 	// MARK: Getters
 	var Name:      String     {get{ return _name }}
 	var Synopsis:  String     {get{ return _synopsis }}
-	var Variables: [Variable] {get{ return _variables }}
+	var Variables: [NVVariable] {get{ return _variables }}
 	var Folders:   [Folder]   {get{ return _folders }}
 	
 	// MARK: Setters
@@ -107,7 +107,7 @@ class Folder {
 	}
 	
 	// MARK: Variables
-	func contains(variable: Variable) -> Bool {
+	func contains(variable: NVVariable) -> Bool {
 		return _variables.contains(variable)
 	}
 	
@@ -116,7 +116,7 @@ class Folder {
 	}
 	
 	@discardableResult
-	func add(variable: Variable) throws -> Variable {
+	func add(variable: NVVariable) throws -> NVVariable {
 		// already a child
 		if contains(variable: variable) {
 			throw Errors.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
@@ -136,7 +136,7 @@ class Folder {
 		return variable
 	}
 	
-	func remove(variable: Variable) throws {
+	func remove(variable: NVVariable) throws {
 		guard let idx = _variables.index(of: variable) else {
 			throw Errors.invalid("Tried to remove Variable (\(variable._name)) from (\(_name)) but it was not a child.")
 		}

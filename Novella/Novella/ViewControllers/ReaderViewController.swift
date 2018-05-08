@@ -198,7 +198,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		if let _ = item as? Variable {
+		if let _ = item as? NVVariable {
 			return false
 		}
 		
@@ -226,7 +226,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		
 		var name = "ERROR"
 		
-		if let variable = item as? Variable {
+		if let variable = item as? NVVariable {
 			name = "Variable: " + variable._name
 		}
 		if let folder = item as? Folder {
@@ -267,7 +267,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 
 		var text = "Unhandled!"
 
-		if let variable = item as? Variable {
+		if let variable = item as? NVVariable {
 			text = "<b>VARIABLE</b><br/>"
 			text += "<b>UUID: </b>\(variable._uuid.uuidString)</br>"
 			text += "<b>Name: </b>\(variable._name)<br/>"

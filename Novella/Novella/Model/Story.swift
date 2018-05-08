@@ -16,7 +16,7 @@ class Story {
 	// MARK: Storywide Collections
 	var _allIdentifiables: [Identifiable]
 	var _allFolders: [Folder]
-	var _allVariables: [Variable]
+	var _allVariables: [NVVariable]
 	var _allGraphs: [NVGraph]
 	var _allLinks: [BaseLink]
 	var _allNodes: [NVNode]
@@ -148,8 +148,8 @@ extension Story {
 	}
 	
 	@discardableResult
-	func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> Variable {
-		let variable = Variable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
+	func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
+		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
 		_allVariables.append(variable)
 		_allIdentifiables.append(variable)
 		return variable

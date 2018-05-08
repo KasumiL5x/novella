@@ -97,7 +97,7 @@ class StoryTestViewController: NSViewController {
 extension StoryTestViewController: NSTextFieldDelegate {
 	func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
 		let item = outline.item(atRow: outline.selectedRow)
-		if let _ = item as? Variable {
+		if let _ = item as? NVVariable {
 			return false
 		}
 		if let _ = item as? Folder {
@@ -122,7 +122,7 @@ extension StoryTestViewController: NSTextFieldDelegate {
 
 extension StoryTestViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if let _ = item as? Variable {
+		if let _ = item as? NVVariable {
 			return 0
 		}
 		
@@ -156,7 +156,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		if let _ = item as? Variable {
+		if let _ = item as? NVVariable {
 			return false
 		}
 		
@@ -178,7 +178,7 @@ extension StoryTestViewController: NSOutlineViewDelegate {
 		
 		var name = ""
 		var type = ""
-		if let variable = item as? Variable {
+		if let variable = item as? NVVariable {
 			name = variable.Name
 			type = "Variable"
 		}
