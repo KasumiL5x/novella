@@ -50,7 +50,7 @@ class NVGraph {
 		
 		// if there's no parent graph, check siblings of the story for name clashes
 		if nil == _parent {
-			if _story!.containsGraphName(name: name) {
+			if _story!.containsGraphName(name) {
 				throw NVError.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the Story already contains that name.")
 			}
 			_name = name

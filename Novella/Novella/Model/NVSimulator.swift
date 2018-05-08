@@ -34,14 +34,14 @@ class NVSimulator {
 		}
 		
 		_currentNode = resolveLinkable(node: graph._entry)
-		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(linkable: _currentNode!))
+		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(_currentNode!))
 		
 		return true
 	}
 	
 	// controller should call this to proceed from the current node
 	func proceed(link: NVBaseLink) throws {
-		if !_story!.getLinksFrom(linkable: _currentNode!).contains(link) {
+		if !_story!.getLinksFrom(_currentNode!).contains(link) {
 			throw NVError.invalid("Tried to progress along a link that didn't belong to the current node.")
 		}
 		
@@ -60,7 +60,7 @@ class NVSimulator {
 		}
 		
 		_currentNode = resolveLinkable(node: destNode)
-		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(linkable: _currentNode!))
+		_controller?.currentNode(node: _currentNode!, outputs: _story!.getLinksFrom(_currentNode!))
 	}
 	
 	// keeps traversing flow graph entry points until the first flow node is found

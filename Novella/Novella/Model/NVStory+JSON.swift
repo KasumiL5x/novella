@@ -360,7 +360,7 @@ extension NVStory {
 		}
 		root["variables"] = variables
 		
-		// add all flowgraphs
+		// add all graphs
 		var graphs: [JSONDict] = []
 		for curr in _allGraphs {
 			var entry: JSONDict = [:]
@@ -644,7 +644,7 @@ extension NVStory {
 				if let node = story.findBy(uuid: child.string!) as? NVNode {
 					try! graph.add(node: node)
 				} else {
-					errors.append("Unable to find FlowNode by UUID (\(child.string!) when adding to FlowGraph (\(uuid.uuidString)).")
+					errors.append("Unable to find Node by UUID (\(child.string!) when adding to Graph (\(uuid.uuidString)).")
 				}
 			}
 			
@@ -662,7 +662,7 @@ extension NVStory {
 				if let subgraph = story.findBy(uuid: child.string!) as? NVGraph {
 					try! graph.add(graph: subgraph)
 				} else {
-					errors.append("Unable to find FlowGraph by UUID (\(child.string!)) when adding to FlowGraph (\(curr["uuid"].string!)).")
+					errors.append("Unable to find Graph by UUID (\(child.string!)) when adding to Graph (\(curr["uuid"].string!)).")
 				}
 			}
 		}
@@ -674,7 +674,7 @@ extension NVStory {
 				if let linkable = story.findBy(uuid: entry) as? NVLinkable {
 					try! graph.setEntry(entry: linkable)
 				} else {
-					errors.append("Unable to find Linkable by UUID (\(entry)) when setting FlowGraph's entry (\(graph._uuid.uuidString)).")
+					errors.append("Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph._uuid.uuidString)).")
 				}
 			}
 		}
@@ -750,7 +750,7 @@ extension NVStory {
 				if let link = story.findBy(uuid: child.string!) as? NVBaseLink {
 					try! graph.add(link: link)
 				} else {
-					errors.append("Unable to find BaseLink by UUID (\(child.string!)) when adding to FlowGraph (\(graph._uuid.uuidString)).")
+					errors.append("Unable to find BaseLink by UUID (\(child.string!)) when adding to Graph (\(graph._uuid.uuidString)).")
 				}
 			}
 		}
@@ -768,7 +768,7 @@ extension NVStory {
 			if let graph = story.findBy(uuid: curr.string!) as? NVGraph {
 				try! story.add(graph: graph)
 			} else {
-				errors.append("Unable to find FlowGraph by UUID (\(curr.string!)) when adding to Story.")
+				errors.append("Unable to find Graph by UUID (\(curr.string!)) when adding to Story.")
 			}
 		}
 		

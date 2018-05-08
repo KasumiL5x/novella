@@ -70,7 +70,7 @@ extension NVStory {
 		return _folders.contains(folder)
 	}
 	
-	func containsFolderName(name: String) -> Bool {
+	func containsFolderName(_ name: String) -> Bool {
 		return _folders.contains(where: {$0._name == name})
 	}
 	
@@ -81,7 +81,7 @@ extension NVStory {
 			throw NVError.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
 		}
 		// already contains same name
-		if containsFolderName(name: folder._name) {
+		if containsFolderName(folder._name) {
 			throw NVError.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
 		}
 		// now add
@@ -96,12 +96,12 @@ extension NVStory {
 		_folders.remove(at: idx)
 	}
 	
-	// MARK: FlowGraphs
+	// MARK: Graphs
 	func contains(graph: NVGraph) -> Bool {
 		return _graphs.contains(graph)
 	}
 	
-	func containsGraphName(name: String) -> Bool {
+	func containsGraphName(_ name: String) -> Bool {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
@@ -109,11 +109,11 @@ extension NVStory {
 	func add(graph: NVGraph) throws -> NVGraph {
 		// already a child
 		if contains(graph: graph) {
-			throw NVError.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to story).")
+			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph._name) to story).")
 		}
 		// already contains same name
-		if containsGraphName(name: graph._name) {
-			throw NVError.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to story).")
+		if containsGraphName(graph._name) {
+			throw NVError.nameTaken("Tried to add a Graph but its name was already in use (\(graph._name) to story).")
 		}
 		// unparent first
 		if graph._parent != nil {
@@ -127,7 +127,7 @@ extension NVStory {
 	
 	func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
-			throw NVError.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
+			throw NVError.invalid("Tried to remove Graph (\(graph._name)) from story but it was not a child.")
 		}
 		_graphs.remove(at: idx)
 	}
@@ -193,7 +193,7 @@ extension NVStory {
 		return dialog
 	}
 	
-	func getLinksFrom(linkable: NVLinkable) -> [NVBaseLink] {
+	func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
 		return _allLinks.filter({$0._origin?.UUID == linkable.UUID})
 	}
 }
