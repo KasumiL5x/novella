@@ -9,7 +9,7 @@
 import Cocoa
 
 class StoryTestViewController: NSViewController {
-	let _story: Story = Story()
+	let _story: NVStory = NVStory()
 	
 //	@IBOutlet weak var browser: NSBrowser!
 	@IBOutlet weak var outline: NSOutlineView!

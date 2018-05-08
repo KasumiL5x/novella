@@ -12,7 +12,7 @@ class NVBaseLink {
 	let _uuid: NSUUID
 	var _origin: NVLinkable?
 	
-	init(uuid: NSUUID, story: Story) {
+	init(uuid: NSUUID, story: NVStory) {
 		self._uuid = uuid
 		self._origin = nil
 	}

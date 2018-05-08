@@ -12,7 +12,7 @@ import SwiftyJSON
 
 typealias JSONDict = [String:Any]
 
-extension Story {
+extension NVStory {
 	static let JSON_SCHEMA: JSONDict = [
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"description": "Schema for Novella Story.",
@@ -463,7 +463,7 @@ extension Story {
 		}
 		
 		// test against schema
-		let schema = Schema(Story.JSON_SCHEMA)
+		let schema = Schema(NVStory.JSON_SCHEMA)
 		let validated = schema.validate(root)
 		if !validated.valid {
 			print("Failed to validate JSON against Schema.")
@@ -479,7 +479,7 @@ extension Story {
 		return str
 	}
 	
-	static func fromJSON(str: String) throws -> (story: Story, errors: [String]) {
+	static func fromJSON(str: String) throws -> (story: NVStory, errors: [String]) {
 		var errors: [String] = []
 		
 		// TODO: Should I handle name clashes of UUID internally just in case another UUID is copypasted by a user?
@@ -498,7 +498,7 @@ extension Story {
 		}
 		
 		// test against schema
-		let schema = Schema(Story.JSON_SCHEMA)
+		let schema = Schema(NVStory.JSON_SCHEMA)
 		let validated = schema.validate(json.object) // json.object is the root object
 		if !validated.valid {
 			print("Failed to validate JSON against Schema.")
@@ -506,7 +506,7 @@ extension Story {
 			throw NVError.invalid("JSON did not validate against schema.")
 		}
 		
-		let story = Story()
+		let story = NVStory()
 		
 		// 1. read all variables
 		for curr in json["variables"].arrayValue {

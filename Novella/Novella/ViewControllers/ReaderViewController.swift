@@ -15,7 +15,7 @@ class ReaderViewController: NSViewController {
 	@IBOutlet weak var currentNodeInfo: NSTextField!
 	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
-	var _story: Story?
+	var _story: NVStory?
 	var _simulator: Simulator?
 	
 	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
@@ -62,7 +62,7 @@ class ReaderViewController: NSViewController {
 		
 		// parse contents into a Story
 		do {
-			let (story, errors) = try Story.fromJSON(str: contents)
+			let (story, errors) = try NVStory.fromJSON(str: contents)
 			_story = story
 			
 			for e in errors {

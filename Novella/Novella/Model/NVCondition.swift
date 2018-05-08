@@ -9,10 +9,10 @@
 import JavaScriptCore
 
 class NVCondition {
-	var _story: Story
+	var _story: NVStory
 	var _javascript: String
 	
-	init(story: Story) {
+	init(story: NVStory) {
 		self._story = story
 		_javascript = ""
 	}

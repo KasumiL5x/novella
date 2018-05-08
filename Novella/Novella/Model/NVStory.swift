@@ -9,7 +9,7 @@
 import Foundation
 import JavaScriptCore
 
-class Story {
+class NVStory {
 	// MARK: Javascript stuff
 	let _jsContext: JSContext
 	
@@ -64,7 +64,7 @@ class Story {
 }
 
 // MARK: Local Collection Functions
-extension Story {
+extension NVStory {
 	// MARK: Folders
 	func contains(folder: NVFolder) -> Bool {
 		return _folders.contains(folder)
@@ -134,7 +134,7 @@ extension Story {
 }
 
 // MARK: Storywide Functions
-extension Story {
+extension NVStory {
 	func findBy(uuid: String) -> NVIdentifiable? {
 		return _allIdentifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
@@ -199,7 +199,7 @@ extension Story {
 }
 
 // MARK: Debug
-extension Story {
+extension NVStory {
 	func debugPrint(global: Bool) {
 		if global {
 			print("\nStory (\(_name)):")

@@ -12,7 +12,7 @@ class VariableFolderTestViewController: NSViewController {
 	@IBOutlet weak var outlineView: NSOutlineView!
 	@IBOutlet weak var statusLabel: NSTextField!
 	
-	var _story: Story = Story()
+	var _story: NVStory = NVStory()
 	
 //	let root = Folder(name: "root")
 	var root: NVFolder?

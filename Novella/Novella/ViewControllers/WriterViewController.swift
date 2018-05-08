@@ -12,7 +12,7 @@ class WriterViewController: NSViewController {
 	@IBOutlet weak var scrollView: NSScrollView!
 	@IBOutlet weak var storyName: NSTextField!
 	var _canvas: Canvas?
-	var _story: Story?
+	var _story: NVStory?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -22,7 +22,7 @@ class WriterViewController: NSViewController {
 		scrollView.hasVerticalRuler = true
 		scrollView.hasHorizontalRuler = true
 		
-		_story = Story()
+		_story = NVStory()
 	}
 	
 	override func viewDidAppear() {
@@ -60,7 +60,7 @@ class WriterViewController: NSViewController {
 		}
 		
 		do {
-			let (story, errors) = try Story.fromJSON(str: contents)
+			let (story, errors) = try NVStory.fromJSON(str: contents)
 			if errors.count != 0 {
 				let _ = errors.map({print($0)})
 				return
@@ -101,7 +101,7 @@ class WriterViewController: NSViewController {
 	
 	@IBAction func onCloseStory(_ sender: NSButton) {
 		_canvas!.reset()
-		_story = Story()
+		_story = NVStory()
 		storyName.stringValue = ""
 	}
 	

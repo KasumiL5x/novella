@@ -14,11 +14,11 @@ protocol SimulatorController {
 }
 
 class Simulator {
-	var _story: Story?
+	var _story: NVStory?
 	var _controller: SimulatorController?
 	var _currentNode: NVNode?
 	
-	init(story: Story, controller: SimulatorController) {
+	init(story: NVStory, controller: SimulatorController) {
 		self._story = story
 		self._controller = controller
 		self._currentNode = nil

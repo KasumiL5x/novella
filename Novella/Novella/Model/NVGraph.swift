@@ -20,9 +20,9 @@ class NVGraph {
 	
 	// parent flow graph is valid unless as a direct child of the story
 	var _parent: NVGraph?
-	var _story: Story?
+	var _story: NVStory?
 	
-	init(uuid: NSUUID, name: String, story: Story) {
+	init(uuid: NSUUID, name: String, story: NVStory) {
 		self._uuid = uuid
 		self._name = name
 		self._graphs = []
