@@ -24,11 +24,15 @@ class NVNode {
 	var Name: String {get{ return _name } set{ _name = newValue }}
 }
 
-// MARK: Identifiable
+// MARK: NVIdentifiable
 extension NVNode: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
+}
+
+// MARK: NVLinkable
+extension NVNode: NVLinkable {
 }
 
 // MARK: Equatable
@@ -36,8 +40,4 @@ extension NVNode: Equatable {
 	static func == (lhs: NVNode, rhs: NVNode) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
-}
-
-// MARK: Linkable
-extension NVNode: NVLinkable {
 }
