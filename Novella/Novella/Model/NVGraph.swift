@@ -230,7 +230,7 @@ extension NVGraph: Pathable {
 }
 
 // MARK: Identifiable
-extension NVGraph: Identifiable {
+extension NVGraph: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

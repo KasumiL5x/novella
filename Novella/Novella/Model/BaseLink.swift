@@ -23,7 +23,7 @@ class BaseLink {
 }
 
 // MARK: Identifiable
-extension BaseLink: Identifiable {
+extension BaseLink: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

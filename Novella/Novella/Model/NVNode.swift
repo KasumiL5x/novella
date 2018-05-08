@@ -25,7 +25,7 @@ class NVNode {
 }
 
 // MARK: Identifiable
-extension NVNode: Identifiable {
+extension NVNode: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

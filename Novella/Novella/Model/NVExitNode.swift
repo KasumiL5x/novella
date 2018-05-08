@@ -17,7 +17,7 @@ class NVExitNode {
 }
 
 // MARK: Identifiable
-extension NVExitNode: Identifiable {
+extension NVExitNode: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

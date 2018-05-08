@@ -6,5 +6,5 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-protocol Linkable: Identifiable {
+protocol Linkable: NVIdentifiable {
 }

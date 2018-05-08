@@ -186,7 +186,7 @@ extension NVFolder: Pathable {
 }
 
 // MARK: Identifiable
-extension NVFolder: Identifiable {
+extension NVFolder: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

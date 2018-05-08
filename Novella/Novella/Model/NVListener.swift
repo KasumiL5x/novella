@@ -21,7 +21,7 @@ class NVListener {
 }
 
 // MARK: Identifiable
-extension NVListener: Identifiable {
+extension NVListener: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

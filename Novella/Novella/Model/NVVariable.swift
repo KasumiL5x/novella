@@ -99,7 +99,7 @@ extension NVVariable: Pathable {
 }
 
 // MARK: Identifiable
-extension NVVariable: Identifiable {
+extension NVVariable: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}

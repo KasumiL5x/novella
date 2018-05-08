@@ -14,7 +14,7 @@ class Story {
 	let _jsContext: JSContext
 	
 	// MARK: Storywide Collections
-	var _allIdentifiables: [Identifiable]
+	var _allIdentifiables: [NVIdentifiable]
 	var _allFolders: [NVFolder]
 	var _allVariables: [NVVariable]
 	var _allGraphs: [NVGraph]
@@ -135,7 +135,7 @@ extension Story {
 
 // MARK: Storywide Functions
 extension Story {
-	func findBy(uuid: String) -> Identifiable? {
+	func findBy(uuid: String) -> NVIdentifiable? {
 		return _allIdentifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
 	

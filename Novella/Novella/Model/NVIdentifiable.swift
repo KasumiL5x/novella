@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Identifiable {
+protocol NVIdentifiable {
 	var UUID: NSUUID { get }
 }
