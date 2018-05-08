@@ -161,7 +161,7 @@ class Canvas: NSView {
 	}
 	
 	// MARK: Convert Novella to Canvas
-	func getLinkableWidgetFrom(linkable: Linkable?) -> LinkableWidget? {
+	func getLinkableWidgetFrom(linkable: NVLinkable?) -> LinkableWidget? {
 		if linkable == nil {
 			return nil
 		}

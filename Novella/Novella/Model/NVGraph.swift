@@ -16,7 +16,7 @@ class NVGraph {
 	var _links: [BaseLink]
 	var _listeners: [NVListener]
 	var _exits: [NVExitNode]
-	var _entry: Linkable?
+	var _entry: NVLinkable?
 	
 	// parent flow graph is valid unless as a direct child of the story
 	var _parent: NVGraph?
@@ -42,7 +42,7 @@ class NVGraph {
 	var Links:     [BaseLink]  {get{ return _links }}
 	var Listeners: [NVListener]  {get{ return _listeners }}
 	var Exits:     [NVExitNode]  {get{ return _exits }}
-	var Entry:     Linkable?   {get{ return _entry }}
+	var Entry:     NVLinkable?   {get{ return _entry }}
 	
 	// MARK: Setters
 	func setName(name: String) throws {
@@ -69,7 +69,7 @@ class NVGraph {
 		throw NVError.invalid("Oh dear.")
 	}
 	
-	func setEntry(entry: Linkable) throws {
+	func setEntry(entry: NVLinkable) throws {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
 				throw NVError.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
@@ -237,7 +237,7 @@ extension NVGraph: NVIdentifiable {
 }
 
 // MARK: Linkable
-extension NVGraph: Linkable {
+extension NVGraph: NVLinkable {
 }
 
 // MARK: Equatable

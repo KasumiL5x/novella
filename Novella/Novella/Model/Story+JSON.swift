@@ -671,7 +671,7 @@ extension Story {
 		for curr in json["graphs"].arrayValue {
 			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			if let entry = curr["entry"].string {
-				if let linkable = story.findBy(uuid: entry) as? Linkable {
+				if let linkable = story.findBy(uuid: entry) as? NVLinkable {
 					try! graph.setEntry(entry: linkable)
 				} else {
 					errors.append("Unable to find Linkable by UUID (\(entry)) when setting FlowGraph's entry (\(graph._uuid.uuidString)).")
@@ -683,9 +683,9 @@ extension Story {
 		for curr in json["links"].arrayValue {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
 			
-			var origin: Linkable? = nil
+			var origin: NVLinkable? = nil
 			if let originID = curr["origin"].string {
-				origin = story.findBy(uuid: originID) as? Linkable
+				origin = story.findBy(uuid: originID) as? NVLinkable
 				if origin == nil {
 					errors.append("Unable to find Linkable by UUID (\(originID)) when setting the origin of a BaseLink (\(uuid.uuidString)).")
 				}
@@ -702,7 +702,7 @@ extension Story {
 				}
 				
 				if let transfer = curr["transfer"].dictionary {
-					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? Linkable {
+					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? NVLinkable {
 						link._transfer.setDestination(dest: destination)
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
@@ -719,7 +719,7 @@ extension Story {
 				}
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
-					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? Linkable {
+					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? NVLinkable {
 						branch._trueTransfer.setDestination(dest: destination)
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
@@ -727,7 +727,7 @@ extension Story {
 				}
 				
 				if let falseTransfer = curr["ftransfer"].dictionary {
-					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? Linkable {
+					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? NVLinkable {
 						branch._falseTransfer.setDestination(dest: destination)
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")

@@ -24,7 +24,7 @@ extension NVExitNode: NVIdentifiable {
 }
 
 // MARK: Linkable
-extension NVExitNode: Linkable {
+extension NVExitNode: NVLinkable {
 }
 
 // MARK: Equatable

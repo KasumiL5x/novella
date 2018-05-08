@@ -7,7 +7,7 @@
 //
 
 class Transfer {
-	var _destination: Linkable?
+	var _destination: NVLinkable?
 	var _function: Function
 	
 	init() {
@@ -15,7 +15,7 @@ class Transfer {
 		self._function = Function()
 	}
 	
-	func setDestination(dest: Linkable?) {
+	func setDestination(dest: NVLinkable?) {
 		self._destination = dest
 	}
 }

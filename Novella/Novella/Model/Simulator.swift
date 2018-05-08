@@ -64,7 +64,7 @@ class Simulator {
 	}
 	
 	// keeps traversing flow graph entry points until the first flow node is found
-	func resolveLinkable(node: Linkable?) -> NVNode {
+	func resolveLinkable(node: NVLinkable?) -> NVNode {
 		if node == nil {
 			fatalError("Tried to resolve a nil Linkable.")
 		}

@@ -193,7 +193,7 @@ extension Story {
 		return dialog
 	}
 	
-	func getLinksFrom(linkable: Linkable) -> [BaseLink] {
+	func getLinksFrom(linkable: NVLinkable) -> [BaseLink] {
 		return _allLinks.filter({$0._origin?.UUID == linkable.UUID})
 	}
 }

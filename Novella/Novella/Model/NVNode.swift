@@ -39,5 +39,5 @@ extension NVNode: Equatable {
 }
 
 // MARK: Linkable
-extension NVNode: Linkable {
+extension NVNode: NVLinkable {
 }
