@@ -10,13 +10,15 @@ import Cocoa
 
 class LinkableWidget: NSView {
 	let _canvas: Canvas
+	var _novellaLinkable: Linkable?
 	var _isPrimedForSelection: Bool
 	var _isSelected: Bool
 	
 	var _trackingArea: NSTrackingArea?
 	
-	init(frame frameRect: NSRect, canvas: Canvas) {
+	init(frame frameRect: NSRect, novellaLinkable: Linkable, canvas: Canvas) {
 		self._canvas = canvas
+		self._novellaLinkable = novellaLinkable
 		self._isPrimedForSelection = false
 		self._isSelected = false
 		

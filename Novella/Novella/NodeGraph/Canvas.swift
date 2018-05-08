@@ -168,7 +168,7 @@ class Canvas: NSView {
 		
 		let widget = _linkableWidgets.first(where: {
 			if let dlgWidget = $0 as? DialogWidget {
-				return linkable?.UUID == dlgWidget._novellaDialog!.UUID
+				return linkable?.UUID == dlgWidget._novellaLinkable!.UUID
 			}
 			return false
 		})

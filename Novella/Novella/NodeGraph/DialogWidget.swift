@@ -9,7 +9,6 @@
 import Cocoa
 
 class DialogWidget: LinkableWidget {
-	var _novellaDialog: Dialog?
 	var _nameLabel: NSTextField
 	
 	init(node: Dialog, canvas: Canvas) {
@@ -21,11 +20,9 @@ class DialogWidget: LinkableWidget {
 		self._nameLabel.isSelectable = false
 		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
 		self._nameLabel.stringValue = node.Name.isEmpty ? "unnamed" : node.Name
-		
-		self._novellaDialog = node
 
 		// TODO: Don't use fixed size.
-		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 64.0, height: 64.0), canvas: canvas)
+		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 64.0, height: 64.0), novellaLinkable: node, canvas: canvas)
 		self.bounds = NSRect(x: 0.0, y: 0.0, width: 64.0, height: 64.0)
 		
 		self._nameLabel.sizeToFit()
@@ -47,7 +44,7 @@ class DialogWidget: LinkableWidget {
 	}
 	
 	override func onMove() {
-		_novellaDialog?._editorPos = frame.origin
+		(_novellaLinkable as? Dialog)?._editorPos = frame.origin
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
