@@ -14,7 +14,7 @@ class FlowGraph {
 	var _graphs: [FlowGraph]
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
-	var _listeners: [Listener]
+	var _listeners: [NVListener]
 	var _exits: [ExitNode]
 	var _entry: Linkable?
 	
@@ -40,7 +40,7 @@ class FlowGraph {
 	var Graphs:    [FlowGraph] {get{ return _graphs }}
 	var Nodes:     [FlowNode]  {get{ return _nodes }}
 	var Links:     [BaseLink]  {get{ return _links }}
-	var Listeners: [Listener]  {get{ return _listeners }}
+	var Listeners: [NVListener]  {get{ return _listeners }}
 	var Exits:     [ExitNode]  {get{ return _exits }}
 	var Entry:     Linkable?   {get{ return _entry }}
 	
@@ -169,12 +169,12 @@ class FlowGraph {
 	}
 	
 	// MARK: Listeners
-	func contains(listener: Listener) -> Bool {
+	func contains(listener: NVListener) -> Bool {
 		return _listeners.contains(listener)
 	}
 	
 	@discardableResult
-	func add(listener: Listener) throws -> Listener {
+	func add(listener: NVListener) throws -> NVListener {
 		// already a child
 		if contains(listener: listener) {
 			throw Errors.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
@@ -183,7 +183,7 @@ class FlowGraph {
 		return listener
 	}
 	
-	func remove(listener: Listener) throws {
+	func remove(listener: NVListener) throws {
 		guard let idx = _listeners.index(of: listener) else {
 			throw Errors.invalid("Tried to remove Listener from FlowGraph (\(_name)) but it was not a child.")
 		}

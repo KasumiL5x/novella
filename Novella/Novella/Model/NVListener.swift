@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Listener {
+class NVListener {
 	let _uuid: NSUUID
 	let _condition: Condition
 	let _transfer: Transfer
@@ -21,15 +21,15 @@ class Listener {
 }
 
 // MARK: Identifiable
-extension Listener: Identifiable {
+extension NVListener: Identifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Equatable
-extension Listener: Equatable {
-	static func == (lhs: Listener, rhs: Listener) -> Bool {
+extension NVListener: Equatable {
+	static func == (lhs: NVListener, rhs: NVListener) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }
