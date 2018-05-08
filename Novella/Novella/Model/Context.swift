@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Context: FlowNode {
+class Context: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}

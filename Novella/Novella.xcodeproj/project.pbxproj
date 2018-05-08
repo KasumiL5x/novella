@@ -59,7 +59,7 @@
 		65F5DFA0207EA1600041FB0D /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9F207EA1600041FB0D /* Function.swift */; };
 		65F5DFA2207EA3C00041FB0D /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA1207EA3C00041FB0D /* Story.swift */; };
 		65F5DFA4207EA3DD0041FB0D /* NVGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA3207EA3DD0041FB0D /* NVGraph.swift */; };
-		65F5DFA6207EA3FB0041FB0D /* FlowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */; };
+		65F5DFA6207EA3FB0041FB0D /* NVNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA5207EA3FB0041FB0D /* NVNode.swift */; };
 		65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */; };
 		65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F85486209E61850067A95C /* NSColor+Hex.swift */; };
 		65F85489209E68FF0067A95C /* BranchWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F85488209E68FF0067A95C /* BranchWidget.swift */; };
@@ -143,7 +143,7 @@
 		65F5DF9F207EA1600041FB0D /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		65F5DFA1207EA3C00041FB0D /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		65F5DFA3207EA3DD0041FB0D /* NVGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVGraph.swift; sourceTree = "<group>"; };
-		65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowNode.swift; sourceTree = "<group>"; };
+		65F5DFA5207EA3FB0041FB0D /* NVNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVNode.swift; sourceTree = "<group>"; };
 		65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableFolderTestViewController.swift; sourceTree = "<group>"; };
 		65F85486209E61850067A95C /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		65F85488209E68FF0067A95C /* BranchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchWidget.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 		6519DE5320854AA7009C43E2 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				65F5DFA5207EA3FB0041FB0D /* FlowNode.swift */,
+				65F5DFA5207EA3FB0041FB0D /* NVNode.swift */,
 				656F99EA2086A5E9009366D0 /* Cutscene.swift */,
 				656F99EC2086A60A009366D0 /* Delivery.swift */,
 				656F99EE2086A627009366D0 /* Dialog.swift */,
@@ -570,7 +570,7 @@
 				658C7CDF207E7EB900E2B46B /* DataType.swift in Sources */,
 				6591405A2099D62900D6273D /* DialogWidget.swift in Sources */,
 				65F5DF95207EA09C0041FB0D /* Link.swift in Sources */,
-				65F5DFA6207EA3FB0041FB0D /* FlowNode.swift in Sources */,
+				65F5DFA6207EA3FB0041FB0D /* NVNode.swift in Sources */,
 				65F5DFA2207EA3C00041FB0D /* Story.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				656F99F12086A638009366D0 /* Context.swift in Sources */,

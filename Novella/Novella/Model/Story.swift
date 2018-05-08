@@ -19,7 +19,7 @@ class Story {
 	var _allVariables: [Variable]
 	var _allGraphs: [NVGraph]
 	var _allLinks: [BaseLink]
-	var _allNodes: [FlowNode]
+	var _allNodes: [NVNode]
 	
 	// MARK: Local Collections
 	var _folders: [Folder]

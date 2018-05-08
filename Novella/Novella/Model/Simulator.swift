@@ -10,13 +10,13 @@ import Foundation
 
 protocol SimulatorController {
 	// gives the controller the current available node and a list of links it can follow
-	func currentNode(node: FlowNode, outputs: [BaseLink])
+	func currentNode(node: NVNode, outputs: [BaseLink])
 }
 
 class Simulator {
 	var _story: Story?
 	var _controller: SimulatorController?
-	var _currentNode: FlowNode?
+	var _currentNode: NVNode?
 	
 	init(story: Story, controller: SimulatorController) {
 		self._story = story
@@ -55,7 +55,7 @@ class Simulator {
 			fatalError("Not yet implemented.")
 		}
 		
-		guard let destNode = _story?.findBy(uuid: destinationUUID ?? "") as? FlowNode else {
+		guard let destNode = _story?.findBy(uuid: destinationUUID ?? "") as? NVNode else {
 			throw Errors.invalid("Destination node was not found or was not a FlowNode.")
 		}
 		
@@ -64,20 +64,20 @@ class Simulator {
 	}
 	
 	// keeps traversing flow graph entry points until the first flow node is found
-	func resolveLinkable(node: Linkable?) -> FlowNode {
+	func resolveLinkable(node: Linkable?) -> NVNode {
 		if node == nil {
 			fatalError("Tried to resolve a nil Linkable.")
 		}
 		
 		// return self if it's already a flow node - the most common case
-		if let flowNode = node as? FlowNode {
+		if let flowNode = node as? NVNode {
 			return flowNode
 		}
 		
 		// for the cases where an entry point is also a graph, we need to resolve the entry until we get a node
 		if let flowGraph = node as? NVGraph {
 			// entry is a node - return it
-			if let entry = flowGraph._entry as? FlowNode {
+			if let entry = flowGraph._entry as? NVNode {
 				return entry
 			}
 			

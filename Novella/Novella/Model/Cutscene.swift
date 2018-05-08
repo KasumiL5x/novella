@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Cutscene: FlowNode {
+class Cutscene: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}

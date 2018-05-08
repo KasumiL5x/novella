@@ -112,7 +112,7 @@ class ReaderViewController: NSViewController {
 }
 
 extension ReaderViewController: SimulatorController {
-	func currentNode(node: FlowNode, outputs: [BaseLink]) {
+	func currentNode(node: NVNode, outputs: [BaseLink]) {
 		_currNodeLinksCallback.setLinks(links: outputs)
 		currNodeOutlineView.reloadData()
 		
@@ -235,7 +235,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		if let graph = item as? NVGraph {
 			name = "FlowGraph: " + graph._name
 		}
-		if let node = item as? FlowNode {
+		if let node = item as? NVNode {
 			name = "FlowNode: " + node._name
 		}
 		if let link = item as? BaseLink {
@@ -297,7 +297,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			text += "<b>Exits: </b>\(graph._exits.count)<br/>"
 			text += "<b>Entry: </b>\(graph._entry?.UUID.uuidString ?? "none")<br/>"
 		}
-		if let node = item as? FlowNode {
+		if let node = item as? NVNode {
 			text = "<b>FLOWNODE</b><br/>"
 			text += "<b>UUID: </b>\(node._uuid.uuidString)<br/>"
 			text += "<b>Name: </b>\(node._name)<br/>"
@@ -373,14 +373,14 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		let origin = (item as! BaseLink)._origin
 		var originName = "none"
 		if let graph = origin as? NVGraph { originName = graph._name }
-		if let node = origin as? FlowNode {	originName = node._name }
+		if let node = origin as? NVNode {	originName = node._name }
 		
 		
 		if let asLink = item as? Link {
 			let dest = asLink._transfer._destination
 			var destName = "none"
 			if let graph = dest as? NVGraph { destName = graph._name }
-			if let node = dest as? FlowNode { destName = node._name }
+			if let node = dest as? NVNode { destName = node._name }
 			
 			text = "Link (\(originName)->\(destName))"
 		}
@@ -388,11 +388,11 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 			let tDest = asBranch._trueTransfer._destination
 			var tDestName = "none"
 			if let graph = tDest as? NVGraph { tDestName = graph._name }
-			if let node = tDest as? FlowNode { tDestName = node._name }
+			if let node = tDest as? NVNode { tDestName = node._name }
 			let fDest = asBranch._falseTransfer._destination
 			var fDestName = "none"
 			if let graph = fDest as? NVGraph { fDestName = graph._name }
-			if let node = fDest as? FlowNode { fDestName = node._name }
+			if let node = fDest as? NVNode { fDestName = node._name }
 			
 			text = "Branch (\(originName)->T(\(tDestName)); F(\(fDestName)))"
 		}

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Delivery: FlowNode {
+class Delivery: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}

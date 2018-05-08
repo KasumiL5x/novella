@@ -641,7 +641,7 @@ extension Story {
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {
-				if let node = story.findBy(uuid: child.string!) as? FlowNode {
+				if let node = story.findBy(uuid: child.string!) as? NVNode {
 					try! graph.add(node: node)
 				} else {
 					errors.append("Unable to find FlowNode by UUID (\(child.string!) when adding to FlowGraph (\(uuid.uuidString)).")

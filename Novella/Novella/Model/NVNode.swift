@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FlowNode {
+class NVNode {
 	let _uuid: NSUUID
 	var _name: String
 	
@@ -25,19 +25,19 @@ class FlowNode {
 }
 
 // MARK: Identifiable
-extension FlowNode: Identifiable {
+extension NVNode: Identifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Equatable
-extension FlowNode: Equatable {
-	static func == (lhs: FlowNode, rhs: FlowNode) -> Bool {
+extension NVNode: Equatable {
+	static func == (lhs: NVNode, rhs: NVNode) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }
 
 // MARK: Linkable
-extension FlowNode: Linkable {
+extension NVNode: Linkable {
 }

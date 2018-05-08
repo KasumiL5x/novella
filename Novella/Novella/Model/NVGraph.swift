@@ -12,7 +12,7 @@ class NVGraph {
 	var _uuid: NSUUID
 	var _name: String
 	var _graphs: [NVGraph]
-	var _nodes: [FlowNode]
+	var _nodes: [NVNode]
 	var _links: [BaseLink]
 	var _listeners: [NVListener]
 	var _exits: [NVExitNode]
@@ -38,7 +38,7 @@ class NVGraph {
 	// MARK:  Getters
 	var Name:      String      {get{ return _name }}
 	var Graphs:    [NVGraph] {get{ return _graphs }}
-	var Nodes:     [FlowNode]  {get{ return _nodes }}
+	var Nodes:     [NVNode]  {get{ return _nodes }}
 	var Links:     [BaseLink]  {get{ return _links }}
 	var Listeners: [NVListener]  {get{ return _listeners }}
 	var Exits:     [NVExitNode]  {get{ return _exits }}
@@ -75,7 +75,7 @@ class NVGraph {
 				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
 			}
 		}
-		if let fn = entry as? FlowNode {
+		if let fn = entry as? NVNode {
 			if !contains(node: fn) {
 				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
 			}
@@ -125,12 +125,12 @@ class NVGraph {
 	}
 	
 	// MARK: FlowNodes
-	func contains(node: FlowNode) -> Bool {
+	func contains(node: NVNode) -> Bool {
 		return _nodes.contains(node)
 	}
 	
 	@discardableResult
-	func add(node: FlowNode) throws -> FlowNode {
+	func add(node: NVNode) throws -> NVNode {
 		// already a child
 		if contains(node: node) {
 			throw Errors.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
@@ -139,7 +139,7 @@ class NVGraph {
 		return node
 	}
 	
-	func remove(node: FlowNode) throws {
+	func remove(node: NVNode) throws {
 		guard let idx = _nodes.index(of: node) else {
 			throw Errors.invalid("Tried to remove a FlowNode from (\(_name)) but it was not a child.")
 		}
