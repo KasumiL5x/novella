@@ -703,7 +703,7 @@ extension NVStory {
 				
 				if let transfer = curr["transfer"].dictionary {
 					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? NVLinkable {
-						link._transfer.setDestination(dest: destination)
+						link._transfer.setDestination(destination)
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
 					}
@@ -720,7 +720,7 @@ extension NVStory {
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
 					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? NVLinkable {
-						branch._trueTransfer.setDestination(dest: destination)
+						branch._trueTransfer.setDestination(destination)
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
 					}
@@ -728,7 +728,7 @@ extension NVStory {
 				
 				if let falseTransfer = curr["ftransfer"].dictionary {
 					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? NVLinkable {
-						branch._falseTransfer.setDestination(dest: destination)
+						branch._falseTransfer.setDestination(destination)
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
 					}

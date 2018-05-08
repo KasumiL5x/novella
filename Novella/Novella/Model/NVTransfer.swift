@@ -15,7 +15,7 @@ class NVTransfer {
 		self._function = NVFunction()
 	}
 	
-	func setDestination(dest: NVLinkable?) {
+	func setDestination(_ dest: NVLinkable?) {
 		self._destination = dest
 	}
 }
