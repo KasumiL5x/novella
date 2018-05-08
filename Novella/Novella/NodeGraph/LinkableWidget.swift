@@ -94,6 +94,9 @@ class LinkableWidget: NSView {
 	override func mouseUp(with event: NSEvent) {
 		_canvas.onMouseUpLinkableWidget(widget: self, event: event)
 	}
+	override func rightMouseDown(with event: NSEvent) {
+		_canvas.onRightMouseDownLinkableWidget(widget: self, event: event)
+	}
 	
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)

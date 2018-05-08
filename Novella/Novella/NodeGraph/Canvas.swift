@@ -30,6 +30,9 @@ class Canvas: NSView {
 	// custom tracking area
 	var _trackingArea: NSTrackingArea?
 	
+	// right click menu for nodes
+	var _nodeContextMenu: NSMenu
+	
 	override init(frame frameRect: NSRect) {
 		_grid = GridView(frame: frameRect)
 		
@@ -46,10 +49,15 @@ class Canvas: NSView {
 		
 		_trackingArea = nil
 		
+		_nodeContextMenu = NSMenu(title: "Node Context Menu")
+		
 		super.init(frame: frameRect)
 		
 		// layers for subviews
 		wantsLayer = true
+		
+		// set up node context menu
+		_nodeContextMenu.addItem(withTitle: "Link to...", action: #selector(Canvas.onNodeContextLinkTo), keyEquivalent: "")
 		
 		// initial state of canvas
 		reset()
@@ -101,6 +109,9 @@ class Canvas: NSView {
 	}
 	
 	// MARK: WIP
+	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
+		print("hello from \(sender)")
+	}
 	func onMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// update last position of cursor
 		_prevMousePos = event.locationInWindow
@@ -134,6 +145,9 @@ class Canvas: NSView {
 		if _undoRedo.inCompound() {
 			_undoRedo.endCompound()
 		}
+	}
+	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
+		NSMenu.popUpContextMenu(_nodeContextMenu, with: event, for: widget)
 	}
 	
 	// MARK: Canvas Widget Creation
