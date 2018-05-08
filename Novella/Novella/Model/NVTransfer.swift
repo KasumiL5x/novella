@@ -6,13 +6,13 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-class Transfer {
+class NVTransfer {
 	var _destination: NVLinkable?
-	var _function: Function
+	var _function: NVFunction
 	
 	init() {
 		self._destination = nil
-		self._function = Function()
+		self._function = NVFunction()
 	}
 	
 	func setDestination(dest: NVLinkable?) {

@@ -10,13 +10,13 @@ import Foundation
 
 class NVListener {
 	let _uuid: NSUUID
-	let _condition: Condition
-	let _transfer: Transfer
+	let _condition: NVCondition
+	let _transfer: NVTransfer
 	
 	init(uuid: NSUUID, story: Story) {
 		self._uuid = uuid
-		self._condition = Condition(story: story)
-		self._transfer = Transfer()
+		self._condition = NVCondition(story: story)
+		self._transfer = NVTransfer()
 	}
 }
 

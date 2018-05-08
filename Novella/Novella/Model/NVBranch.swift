@@ -9,14 +9,14 @@
 import Foundation
 
 class NVBranch : NVBaseLink {
-	var _condition: Condition
-	var _trueTransfer: Transfer
-	var _falseTransfer: Transfer
+	var _condition: NVCondition
+	var _trueTransfer: NVTransfer
+	var _falseTransfer: NVTransfer
 	
 	override init(uuid: NSUUID, story: Story) {
-		self._condition = Condition(story: story)
-		self._trueTransfer = Transfer()
-		self._falseTransfer = Transfer()
+		self._condition = NVCondition(story: story)
+		self._trueTransfer = NVTransfer()
+		self._falseTransfer = NVTransfer()
 		
 		super.init(uuid: uuid, story: story)
 	}

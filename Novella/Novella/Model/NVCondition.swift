@@ -8,7 +8,7 @@
 
 import JavaScriptCore
 
-class Condition {
+class NVCondition {
 	var _story: Story
 	var _javascript: String
 	

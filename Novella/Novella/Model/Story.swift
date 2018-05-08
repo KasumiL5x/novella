@@ -291,7 +291,7 @@ extension Story {
 					print("\tVariable: \(swtch._variable?._uuid.uuidString ?? "none")")
 					print("\(swtch._defaultTransfer._destination?.UUID.uuidString ?? "none")")
 					print("\tValues (\(swtch._values.count)):")
-					swtch._values.forEach({ (key: AnyHashable, value: Transfer) in
+					swtch._values.forEach({ (key: AnyHashable, value: NVTransfer) in
 						print("\t\t\(key) -> \(value._destination?.UUID.uuidString ?? "none")")
 					})
 				}

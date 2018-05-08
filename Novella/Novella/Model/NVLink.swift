@@ -9,12 +9,12 @@
 import Foundation
 
 class NVLink : NVBaseLink {
-	var _condition: Condition
-	var _transfer: Transfer
+	var _condition: NVCondition
+	var _transfer: NVTransfer
 	
 	override init(uuid: NSUUID, story: Story) {
-		self._condition = Condition(story: story)
-		self._transfer = Transfer()
+		self._condition = NVCondition(story: story)
+		self._transfer = NVTransfer()
 		
 		super.init(uuid: uuid, story: story)
 	}

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-class Function {
+class NVFunction {
 	func execute() {
 		// TODO: Execute some kind of user-provided code etc.
 	}
