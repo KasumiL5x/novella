@@ -16,14 +16,14 @@ class NVExitNode {
 	}
 }
 
-// MARK: Identifiable
+// MARK: NVIdentifiable
 extension NVExitNode: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
-// MARK: Linkable
+// MARK: NVLinkable
 extension NVExitNode: NVLinkable {
 }
 
