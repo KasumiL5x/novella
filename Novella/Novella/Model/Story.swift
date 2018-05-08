@@ -17,13 +17,13 @@ class Story {
 	var _allIdentifiables: [Identifiable]
 	var _allFolders: [Folder]
 	var _allVariables: [Variable]
-	var _allGraphs: [FlowGraph]
+	var _allGraphs: [NVGraph]
 	var _allLinks: [BaseLink]
 	var _allNodes: [FlowNode]
 	
 	// MARK: Local Collections
 	var _folders: [Folder]
-	var _graphs: [FlowGraph]
+	var _graphs: [NVGraph]
 	
 	var _name: String
 	
@@ -97,7 +97,7 @@ extension Story {
 	}
 	
 	// MARK: FlowGraphs
-	func contains(graph: FlowGraph) -> Bool {
+	func contains(graph: NVGraph) -> Bool {
 		return _graphs.contains(graph)
 	}
 	
@@ -106,7 +106,7 @@ extension Story {
 	}
 	
 	@discardableResult
-	func add(graph: FlowGraph) throws -> FlowGraph {
+	func add(graph: NVGraph) throws -> NVGraph {
 		// already a child
 		if contains(graph: graph) {
 			throw Errors.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to story).")
@@ -125,7 +125,7 @@ extension Story {
 		return graph
 	}
 	
-	func remove(graph: FlowGraph) throws {
+	func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
 			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
 		}
@@ -156,8 +156,8 @@ extension Story {
 	}
 	
 	@discardableResult
-	func makeGraph(name: String, uuid: NSUUID?=nil) -> FlowGraph {
-		let graph = FlowGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: self)
+	func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
+		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: self)
 		_allGraphs.append(graph)
 		_allIdentifiables.append(graph)
 		return graph

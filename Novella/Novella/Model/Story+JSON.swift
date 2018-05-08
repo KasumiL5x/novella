@@ -657,9 +657,9 @@ extension Story {
 		
 		// 6.4 link all subgraphs by uuid
 		for curr in json["graphs"].arrayValue {
-			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			for child in curr["subgraphs"].arrayValue {
-				if let subgraph = story.findBy(uuid: child.string!) as? FlowGraph {
+				if let subgraph = story.findBy(uuid: child.string!) as? NVGraph {
 					try! graph.add(graph: subgraph)
 				} else {
 					errors.append("Unable to find FlowGraph by UUID (\(child.string!)) when adding to FlowGraph (\(curr["uuid"].string!)).")
@@ -669,7 +669,7 @@ extension Story {
 		
 		// 6.5 link all entry points by uuid (done after as an entry could be a subgraph)
 		for curr in json["graphs"].arrayValue {
-			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			if let entry = curr["entry"].string {
 				if let linkable = story.findBy(uuid: entry) as? Linkable {
 					try! graph.setEntry(entry: linkable)
@@ -744,7 +744,7 @@ extension Story {
 		
 		// 8. add links to graphs by uuid
 		for curr in json["graphs"].arrayValue {
-			let graph = story.findBy(uuid: curr["uuid"].string!) as! FlowGraph
+			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			
 			for child in curr["links"].arrayValue {
 				if let link = story.findBy(uuid: child.string!) as? BaseLink {
@@ -765,7 +765,7 @@ extension Story {
 			
 		}
 		for curr in json["story"]["graphs"].arrayValue {
-			if let graph = story.findBy(uuid: curr.string!) as? FlowGraph {
+			if let graph = story.findBy(uuid: curr.string!) as? NVGraph {
 				try! story.add(graph: graph)
 			} else {
 				errors.append("Unable to find FlowGraph by UUID (\(curr.string!)) when adding to Story.")

@@ -86,7 +86,7 @@ class ReaderViewController: NSViewController {
 			return
 		}
 		let item = outlineView.item(atRow: outlineView.selectedRow)
-		guard let graph = item as? FlowGraph else {
+		guard let graph = item as? NVGraph else {
 			print("Please select a FlowGraph.")
 			return
 		}
@@ -146,7 +146,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return folder._folders.count + folder._variables.count
 		}
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			return (
 				graph._graphs.count +
 					graph._nodes.count +
@@ -172,7 +172,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return folder._variables[index - folder._folders.count]
 		}
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			if index < graph._graphs.count { return graph._graphs[index] }
 			var offset = graph._graphs.count
 			
@@ -206,7 +206,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return (folder._folders.count + folder._variables.count) > 0
 		}
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			return (
 				graph._graphs.count +
 				graph._nodes.count +
@@ -232,7 +232,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		if let folder = item as? Folder {
 			name = "Folder: " + folder._name
 		}
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			name = "FlowGraph: " + graph._name
 		}
 		if let node = item as? FlowNode {
@@ -286,7 +286,7 @@ extension ReaderViewController: NSOutlineViewDelegate {
 			text += "<b>Subfolders: </b>\(folder._folders.count)<br/>"
 			text += "<b>Variables: </b>\(folder._variables.count)<br/>"
 		}
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			text = "<b>FLOWGRAPH</b><br/>"
 			text += "<b>UUID: </b>\(graph._uuid.uuidString)<br/>"
 			text += "<b>Name: </b>\(graph._name)<br/>"
@@ -372,14 +372,14 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		
 		let origin = (item as! BaseLink)._origin
 		var originName = "none"
-		if let graph = origin as? FlowGraph { originName = graph._name }
+		if let graph = origin as? NVGraph { originName = graph._name }
 		if let node = origin as? FlowNode {	originName = node._name }
 		
 		
 		if let asLink = item as? Link {
 			let dest = asLink._transfer._destination
 			var destName = "none"
-			if let graph = dest as? FlowGraph { destName = graph._name }
+			if let graph = dest as? NVGraph { destName = graph._name }
 			if let node = dest as? FlowNode { destName = node._name }
 			
 			text = "Link (\(originName)->\(destName))"
@@ -387,11 +387,11 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		if let asBranch = item as? Branch {
 			let tDest = asBranch._trueTransfer._destination
 			var tDestName = "none"
-			if let graph = tDest as? FlowGraph { tDestName = graph._name }
+			if let graph = tDest as? NVGraph { tDestName = graph._name }
 			if let node = tDest as? FlowNode { tDestName = node._name }
 			let fDest = asBranch._falseTransfer._destination
 			var fDestName = "none"
-			if let graph = fDest as? FlowGraph { fDestName = graph._name }
+			if let graph = fDest as? NVGraph { fDestName = graph._name }
 			if let node = fDest as? FlowNode { fDestName = node._name }
 			
 			text = "Branch (\(originName)->T(\(tDestName)); F(\(fDestName)))"

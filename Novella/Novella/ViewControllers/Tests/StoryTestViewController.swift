@@ -53,7 +53,7 @@ class StoryTestViewController: NSViewController {
 		if -1 == idx {
 			return
 		}
-		if let graph = outline.item(atRow: idx) as? FlowGraph {
+		if let graph = outline.item(atRow: idx) as? NVGraph {
 			let name = NSUUID().uuidString
 			do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
 				statusLabel.stringValue = "Could not add FG to \(graph.Name) as name was taken."
@@ -69,7 +69,7 @@ class StoryTestViewController: NSViewController {
 		}
 		
 		let item = outline.item(atRow: idx)
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			if graph._parent != nil {
 				try! graph._parent?.remove(graph: graph)
 			} else {
@@ -109,7 +109,7 @@ extension StoryTestViewController: NSTextFieldDelegate {
 	func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
 		let item = outline.item(atRow: outline.selectedRow)
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			do{ try graph.setName(name: fieldEditor.string) } catch {
 				statusLabel.stringValue = "Could not rename FG (\(graph.Name)->\(fieldEditor.string))!"
 				control.stringValue = graph.Name
@@ -130,7 +130,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return folder._folders.count + folder._variables.count
 		}
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			return graph._graphs.count
 		}
 		
@@ -145,7 +145,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return folder._variables[index - folder._folders.count]
 		}
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			return graph._graphs[index]
 		}
 		
@@ -164,7 +164,7 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 			return (folder._folders.count + folder._variables.count) > 0
 		}
 		
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			return graph._graphs.count > 0
 		}
 		
@@ -186,7 +186,7 @@ extension StoryTestViewController: NSOutlineViewDelegate {
 			name = folder.Name
 			type = "Folder"
 		}
-		if let graph = item as? FlowGraph {
+		if let graph = item as? NVGraph {
 			name = graph._name
 			type = "FlowGraph"
 		}

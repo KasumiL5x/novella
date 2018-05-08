@@ -24,7 +24,7 @@ class Simulator {
 		self._currentNode = nil
 	}
 	
-	func start(graph: FlowGraph) -> Bool {
+	func start(graph: NVGraph) -> Bool {
 		if _controller == nil {
 			return false
 		}
@@ -75,7 +75,7 @@ class Simulator {
 		}
 		
 		// for the cases where an entry point is also a graph, we need to resolve the entry until we get a node
-		if let flowGraph = node as? FlowGraph {
+		if let flowGraph = node as? NVGraph {
 			// entry is a node - return it
 			if let entry = flowGraph._entry as? FlowNode {
 				return entry

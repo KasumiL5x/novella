@@ -8,10 +8,10 @@
 
 import Foundation
 
-class FlowGraph {
+class NVGraph {
 	var _uuid: NSUUID
 	var _name: String
-	var _graphs: [FlowGraph]
+	var _graphs: [NVGraph]
 	var _nodes: [FlowNode]
 	var _links: [BaseLink]
 	var _listeners: [NVListener]
@@ -19,7 +19,7 @@ class FlowGraph {
 	var _entry: Linkable?
 	
 	// parent flow graph is valid unless as a direct child of the story
-	var _parent: FlowGraph?
+	var _parent: NVGraph?
 	var _story: Story?
 	
 	init(uuid: NSUUID, name: String, story: Story) {
@@ -37,7 +37,7 @@ class FlowGraph {
 	
 	// MARK:  Getters
 	var Name:      String      {get{ return _name }}
-	var Graphs:    [FlowGraph] {get{ return _graphs }}
+	var Graphs:    [NVGraph] {get{ return _graphs }}
 	var Nodes:     [FlowNode]  {get{ return _nodes }}
 	var Links:     [BaseLink]  {get{ return _links }}
 	var Listeners: [NVListener]  {get{ return _listeners }}
@@ -70,7 +70,7 @@ class FlowGraph {
 	}
 	
 	func setEntry(entry: Linkable) throws {
-		if let fg = entry as? FlowGraph {
+		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
 				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
 			}
@@ -84,7 +84,7 @@ class FlowGraph {
 	}
 	
 	// MARK: Sub-FlowGraphs
-	func contains(graph: FlowGraph) -> Bool {
+	func contains(graph: NVGraph) -> Bool {
 		return _graphs.contains(graph)
 	}
 	
@@ -93,7 +93,7 @@ class FlowGraph {
 	}
 	
 	@discardableResult
-	func add(graph: FlowGraph) throws -> FlowGraph {
+	func add(graph: NVGraph) throws -> NVGraph {
 		// cannot add self
 		if graph == self {
 			throw Errors.invalid("Tried to add a FlowGraph to self (\(_name)).")
@@ -116,7 +116,7 @@ class FlowGraph {
 		return graph
 	}
 	
-	func remove(graph: FlowGraph) throws {
+	func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
 			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from (\(_name)) but it was not a child.")
 		}
@@ -219,7 +219,7 @@ class FlowGraph {
 }
 
 // MARK: Pathable
-extension FlowGraph: Pathable {
+extension NVGraph: Pathable {
 	func localPath() -> String {
 		return _name
 	}
@@ -230,19 +230,19 @@ extension FlowGraph: Pathable {
 }
 
 // MARK: Identifiable
-extension FlowGraph: Identifiable {
+extension NVGraph: Identifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Linkable
-extension FlowGraph: Linkable {
+extension NVGraph: Linkable {
 }
 
 // MARK: Equatable
-extension FlowGraph: Equatable {
-	static func == (lhs: FlowGraph, rhs: FlowGraph) -> Bool {
+extension NVGraph: Equatable {
+	static func == (lhs: NVGraph, rhs: NVGraph) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }
