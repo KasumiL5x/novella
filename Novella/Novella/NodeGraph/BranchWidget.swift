@@ -52,19 +52,25 @@ class BranchWidget: CurveWidget {
 			start = originWidget!.frame.origin
 			start.x += originWidget!.frame.width * 0.5
 			start.y += originWidget!.frame.height * 0.5
+			
+			start.x += originWidget!.frame.width * 0.5 // move to right side
 		}
 		if destWidget != nil {
 			end = destWidget!.frame.origin
-			end.x += originWidget!.frame.width * 0.5
-			end.y += originWidget!.frame.height * 0.5
+			end.x += destWidget!.frame.width * 0.5
+			end.y += destWidget!.frame.height * 0.5
+			
+			end.x -= destWidget!.frame.width * 0.5 // move to left side
 		}
 		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
 		destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._falseTransfer._destination)
 		if destWidget != nil {
 			end = destWidget!.frame.origin
-			end.x += originWidget!.frame.width * 0.5
-			end.y += originWidget!.frame.height * 0.5
+			end.x += destWidget!.frame.width * 0.5
+			end.y += destWidget!.frame.height * 0.5
+			
+			end.x -= destWidget!.frame.width * 0.5 // move to left side
 		}
 		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
