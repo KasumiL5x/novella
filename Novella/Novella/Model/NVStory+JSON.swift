@@ -672,7 +672,7 @@ extension NVStory {
 			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			if let entry = curr["entry"].string {
 				if let linkable = story.findBy(uuid: entry) as? NVLinkable {
-					try! graph.setEntry(entry: linkable)
+					try! graph.setEntry(linkable)
 				} else {
 					errors.append("Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph._uuid.uuidString)).")
 				}

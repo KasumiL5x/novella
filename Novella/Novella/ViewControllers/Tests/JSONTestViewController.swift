@@ -69,7 +69,7 @@ class JSONTestViewController: NSViewController {
 		try! mainGraph.add(link: eToG)
 		try! mainGraph.add(link: fToG)
 		// set entry point of graph
-		try! mainGraph.setEntry(entry: dlgA)
+		try! mainGraph.setEntry(dlgA)
 		// set content of dialog nodes
 		dlgA._content = "This node has two parallel choices of equal value."
 		dlgB._content = "This was choice 1."

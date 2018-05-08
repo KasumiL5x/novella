@@ -18,7 +18,7 @@ class NVGraph {
 	var _exits: [NVExitNode]
 	var _entry: NVLinkable?
 	
-	// parent flow graph is valid unless as a direct child of the story
+	// parent graph is valid unless as a direct child of the story
 	var _parent: NVGraph?
 	var _story: NVStory?
 	
@@ -45,13 +45,13 @@ class NVGraph {
 	var Entry:     NVLinkable?   {get{ return _entry }}
 	
 	// MARK: Setters
-	func setName(name: String) throws {
-		assert(_story != nil, "FlowGraph::setName - _story is nil.")
+	func setName(_ name: String) throws {
+		assert(_story != nil, "Graph::setName - _story is nil.")
 		
 		// if there's no parent graph, check siblings of the story for name clashes
 		if nil == _parent {
 			if _story!.containsGraphName(name) {
-				throw NVError.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the Story already contains that name.")
+				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the Story already contains that name.")
 			}
 			_name = name
 			return
@@ -59,8 +59,8 @@ class NVGraph {
 		
 		// parent graph can't contain same name
 		if _parent != nil {
-			if _parent!.containsGraphName(name: name) {
-				throw NVError.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the parent FlowGraph (\(_parent!._name)) already contains that name.")
+			if _parent!.containsGraphName(name) {
+				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the parent Graph (\(_parent!._name)) already contains that name.")
 			}
 			_name = name
 			return
@@ -69,26 +69,26 @@ class NVGraph {
 		throw NVError.invalid("Oh dear.")
 	}
 	
-	func setEntry(entry: NVLinkable) throws {
+	func setEntry(_ entry: NVLinkable) throws {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
-				throw NVError.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(_name)).")
 			}
 		}
 		if let fn = entry as? NVNode {
 			if !contains(node: fn) {
-				throw NVError.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(_name)).")
 			}
 		}
 		_entry = entry
 	}
 	
-	// MARK: Sub-FlowGraphs
+	// MARK: Subgraphs
 	func contains(graph: NVGraph) -> Bool {
 		return _graphs.contains(graph)
 	}
 	
-	func containsGraphName(name: String) -> Bool {
+	func containsGraphName(_ name: String) -> Bool {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
@@ -96,15 +96,15 @@ class NVGraph {
 	func add(graph: NVGraph) throws -> NVGraph {
 		// cannot add self
 		if graph == self {
-			throw NVError.invalid("Tried to add a FlowGraph to self (\(_name)).")
+			throw NVError.invalid("Tried to add a Graph to self (\(_name)).")
 		}
 		// already a child
 		if contains(graph: graph) {
-			throw NVError.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to \(_name)).")
+			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph._name) to \(_name)).")
 		}
 		// already contains same name
-		if containsGraphName(name: graph._name) {
-			throw NVError.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to \(_name)).")
+		if containsGraphName(graph._name) {
+			throw NVError.nameTaken("Tried to add a Graph but its name was already in use (\(graph._name) to \(_name)).")
 		}
 		// unparent first
 		if graph._parent != nil {
@@ -118,13 +118,13 @@ class NVGraph {
 	
 	func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
-			throw NVError.invalid("Tried to remove FlowGraph (\(graph._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Graph (\(graph._name)) from (\(_name)) but it was not a child.")
 		}
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
 	}
 	
-	// MARK: FlowNodes
+	// MARK: Nodes
 	func contains(node: NVNode) -> Bool {
 		return _nodes.contains(node)
 	}
@@ -133,7 +133,7 @@ class NVGraph {
 	func add(node: NVNode) throws -> NVNode {
 		// already a child
 		if contains(node: node) {
-			throw NVError.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
+			throw NVError.invalid("Tried to add a Node but it already exists (to \(_name)).")
 		}
 		_nodes.append(node)
 		return node
@@ -141,7 +141,7 @@ class NVGraph {
 	
 	func remove(node: NVNode) throws {
 		guard let idx = _nodes.index(of: node) else {
-			throw NVError.invalid("Tried to remove a FlowNode from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove a Node from (\(_name)) but it was not a child.")
 		}
 		_nodes.remove(at: idx)
 	}
@@ -177,7 +177,7 @@ class NVGraph {
 	func add(listener: NVListener) throws -> NVListener {
 		// already a child
 		if contains(listener: listener) {
-			throw NVError.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
+			throw NVError.invalid("Tried to add a Listener but it already exists (to Graph \(_name)).")
 		}
 		_listeners.append(listener)
 		return listener
@@ -185,7 +185,7 @@ class NVGraph {
 	
 	func remove(listener: NVListener) throws {
 		guard let idx = _listeners.index(of: listener) else {
-			throw NVError.invalid("Tried to remove Listener from FlowGraph (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Listener from Graph (\(_name)) but it was not a child.")
 		}
 		_listeners.remove(at: idx)
 	}
@@ -199,7 +199,7 @@ class NVGraph {
 	func add(exit: NVExitNode) throws -> NVExitNode {
 		// already a child
 		if contains(exit: exit) {
-			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
+			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to Graph \(_name)).")
 		}
 		_exits.append(exit)
 		return exit
@@ -207,7 +207,7 @@ class NVGraph {
 	
 	func remove(exit: NVExitNode) throws {
 		guard let idx = _exits.index(of: exit) else {
-			throw NVError.invalid("Tried to remove ExitNode from FlowGraph (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove ExitNode from Graph (\(_name)) but it was not a child.")
 		}
 		_exits.remove(at: idx)
 	}
@@ -218,7 +218,7 @@ class NVGraph {
 	}
 }
 
-// MARK: Pathable
+// MARK: NVPathable
 extension NVGraph: NVPathable {
 	func localPath() -> String {
 		return _name
@@ -229,14 +229,14 @@ extension NVGraph: NVPathable {
 	}
 }
 
-// MARK: Identifiable
+// MARK: NVIdentifiable
 extension NVGraph: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid
 	}
 }
 
-// MARK: Linkable
+// MARK: NVLinkable
 extension NVGraph: NVLinkable {
 }
 
