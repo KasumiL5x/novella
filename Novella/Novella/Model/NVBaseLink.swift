@@ -17,12 +17,12 @@ class NVBaseLink {
 		self._origin = nil
 	}
 	
-	func setOrigin(origin: NVLinkable?) {
+	func setOrigin(_ origin: NVLinkable?) {
 		self._origin = origin
 	}
 }
 
-// MARK: Identifiable
+// MARK: NVIdentifiable
 extension NVBaseLink: NVIdentifiable {
 	var UUID: NSUUID {
 		return _uuid

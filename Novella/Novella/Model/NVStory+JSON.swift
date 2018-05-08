@@ -695,7 +695,7 @@ extension NVStory {
 			case "link":
 				let link = story.makeLink(uuid: uuid)
 				
-				link.setOrigin(origin: origin)
+				link.setOrigin(origin)
 				
 				if let condition = curr["condition"].dictionary {
 					link._condition._javascript = condition["jscode"]!.string!
@@ -712,7 +712,7 @@ extension NVStory {
 			case "branch":
 				let branch = story.makeBranch(uuid: uuid)
 				
-				branch.setOrigin(origin: origin)
+				branch.setOrigin(origin)
 				
 				if let condition = curr["condition"].dictionary {
 					branch._condition._javascript = condition["jscode"]!.string!
