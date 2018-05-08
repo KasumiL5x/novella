@@ -58,8 +58,8 @@ class VariableFolderTestViewController: NSViewController {
 			return
 		}
 		let item = outlineView.item(atRow: idx)
-		if let pathable = item as? Pathable {
-			print(Path.fullPathTo(object: pathable))
+		if let pathable = item as? NVPathable {
+			print(NVPath.fullPathTo(object: pathable))
 		}
 	}
 	

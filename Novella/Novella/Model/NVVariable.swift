@@ -88,12 +88,12 @@ class NVVariable {
 }
 
 // MARK: Pathable
-extension NVVariable: Pathable {
+extension NVVariable: NVPathable {
 	func localPath() -> String {
 		return _name
 	}
 	
-	func parentPath() -> Pathable? {
+	func parentPath() -> NVPathable? {
 		return _folder
 	}
 }

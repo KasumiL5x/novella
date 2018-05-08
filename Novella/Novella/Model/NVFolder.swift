@@ -175,12 +175,12 @@ class NVFolder {
 }
 
 // MARK: Pathable
-extension NVFolder: Pathable {
+extension NVFolder: NVPathable {
 	func localPath() -> String {
 		return _name
 	}
 	
-	func parentPath() -> Pathable? {
+	func parentPath() -> NVPathable? {
 		return _parent
 	}
 }

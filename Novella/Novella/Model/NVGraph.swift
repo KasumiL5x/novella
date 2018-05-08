@@ -219,12 +219,12 @@ class NVGraph {
 }
 
 // MARK: Pathable
-extension NVGraph: Pathable {
+extension NVGraph: NVPathable {
 	func localPath() -> String {
 		return _name
 	}
 	
-	func parentPath() -> Pathable? {
+	func parentPath() -> NVPathable? {
 		return _parent
 	}
 }

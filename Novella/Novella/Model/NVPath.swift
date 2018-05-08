@@ -6,24 +6,24 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-protocol Pathable {
+protocol NVPathable {
 	// the name/id of the current path
 	func localPath() -> String
 	
 	// the parenting path to the current path; nil indicates no parent
-	func parentPath() -> Pathable?
+	func parentPath() -> NVPathable?
 }
 
-class Path {
+class NVPath {
 	static let DELIMITER = "."
 	
-	static func fullPathTo(object: Pathable) -> String {
+	static func fullPathTo(object: NVPathable) -> String {
 		var str = ""
 		
 		// add parent paths with delimiter
 		var currParent = object.parentPath()
 		while currParent != nil {
-			str = (currParent!.localPath() + Path.DELIMITER) + str // add reverse order b/c we're going bottom up
+			str = (currParent!.localPath() + NVPath.DELIMITER) + str // add reverse order b/c we're going bottom up
 			currParent = currParent!.parentPath()
 		}
 		

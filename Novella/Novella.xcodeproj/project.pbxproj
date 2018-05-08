@@ -44,7 +44,7 @@
 		659140582099D60B00D6273D /* LinkableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140572099D60B00D6273D /* LinkableWidget.swift */; };
 		6591405A2099D62900D6273D /* DialogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140592099D62900D6273D /* DialogWidget.swift */; };
 		6591405D209A36F600D6273D /* Simulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591405C209A36F600D6273D /* Simulation.swift */; };
-		65C0573F2080A20900C4367E /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0573E2080A20900C4367E /* Path.swift */; };
+		65C0573F2080A20900C4367E /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0573E2080A20900C4367E /* NVPath.swift */; };
 		65C2F02320963AA1003D5025 /* Simulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C2F02220963AA1003D5025 /* Simulator.swift */; };
 		65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */; };
 		65CEA211209F7086008C49AE /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA210209F7086008C49AE /* SelectionView.swift */; };
@@ -129,7 +129,7 @@
 		659140592099D62900D6273D /* DialogWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWidget.swift; sourceTree = "<group>"; };
 		6591405C209A36F600D6273D /* Simulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulation.swift; sourceTree = "<group>"; };
 		65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
-		65C0573E2080A20900C4367E /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		65C0573E2080A20900C4367E /* NVPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
 		65C2F02220963AA1003D5025 /* Simulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulator.swift; sourceTree = "<group>"; };
 		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65CEA210209F7086008C49AE /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
@@ -329,7 +329,7 @@
 				6591405B209A2F3100D6273D /* Simulation */,
 				658C7CDA207E7EB900E2B46B /* NVError.swift */,
 				653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */,
-				65C0573E2080A20900C4367E /* Path.swift */,
+				65C0573E2080A20900C4367E /* NVPath.swift */,
 				65F5DFA1207EA3C00041FB0D /* Story.swift */,
 				6518B6E920894E2600FF6BB8 /* Story+JSON.swift */,
 				6515048B208618AC00D38D07 /* Graphs */,
@@ -587,7 +587,7 @@
 				65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */,
 				65F5DF9E207EA0D40041FB0D /* Transfer.swift in Sources */,
 				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
-				65C0573F2080A20900C4367E /* Path.swift in Sources */,
+				65C0573F2080A20900C4367E /* NVPath.swift in Sources */,
 				656F99EF2086A627009366D0 /* NVDialog.swift in Sources */,
 				65F5DF9A207EA0BA0041FB0D /* Switch.swift in Sources */,
 				651B3DB7209892DF00D37848 /* TouchBarID.swift in Sources */,
