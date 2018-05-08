@@ -148,7 +148,7 @@ extension Story {
 	}
 	
 	@discardableResult
-	func makeVariable(name: String, type: DataType, uuid: NSUUID?=nil) -> Variable {
+	func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> Variable {
 		let variable = Variable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
 		_allVariables.append(variable)
 		_allIdentifiables.append(variable)

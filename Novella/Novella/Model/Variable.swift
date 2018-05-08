@@ -12,13 +12,13 @@ class Variable {
 	let _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
-	var _type: DataType
+	var _type: NVDataType
 	var _value: Any
 	var _initialValue: Any
 	var _constant: Bool
 	var _folder: Folder?
 	
-	init(uuid: NSUUID, name: String, type: DataType) {
+	init(uuid: NSUUID, name: String, type: NVDataType) {
 		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
@@ -32,7 +32,7 @@ class Variable {
 	// MARK:  Getters
 	var Name:         String   {get{ return _name }}
 	var Synopsis:     String   {get{ return _synopsis }}
-	var DataType:     DataType {get{ return _type }}
+	var DataType:     NVDataType {get{ return _type }}
 	var Value:        Any      {get{ return _value }}
 	var InitialValue: Any      {get{ return _initialValue }}
 	var IsConstant:   Bool     {get{ return _constant }}
@@ -55,7 +55,7 @@ class Variable {
 		self._synopsis = synopsis
 	}
 	
-	func setType(type: DataType) {
+	func setType(type: NVDataType) {
 		_type = type
 		_value = type.defaultValue
 		_initialValue = type.defaultValue

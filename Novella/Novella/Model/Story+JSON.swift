@@ -510,7 +510,7 @@ extension Story {
 		
 		// 1. read all variables
 		for curr in json["variables"].arrayValue {
-			let dataType = DataType.fromString(str: curr["datatype"].string!)
+			let dataType = NVDataType.fromString(str: curr["datatype"].string!)
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
 			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
 			

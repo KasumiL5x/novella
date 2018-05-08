@@ -6,7 +6,7 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-enum DataType {
+enum NVDataType {
 	case boolean
 	case integer
 	case double
@@ -35,7 +35,7 @@ enum DataType {
 		}
 	}
 	
-	static func fromString(str: String) -> DataType {
+	static func fromString(str: String) -> NVDataType {
 		switch str {
 		case "boolean": return .boolean
 		case "integer": return .integer
