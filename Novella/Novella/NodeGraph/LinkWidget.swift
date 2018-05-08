@@ -45,8 +45,8 @@ class LinkWidget: CurveWidget {
 		var start = CGPoint.zero
 		var end = CGPoint.zero
 		
-		let originWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaLink._origin)
-		let destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaLink._transfer._destination)
+		let originWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaLink._origin)
+		let destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaLink._transfer._destination)
 		
 		if originWidget != nil {
 			start = originWidget!.frame.origin

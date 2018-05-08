@@ -13,13 +13,13 @@ class Canvas: NSView {
 	var _grid: GridView
 	
 	// where nodes are stored
-	var _canvasWidgets: [CanvasWidget]
+	var _linkableWidgets: [LinkableWidget]
 	// where curves are stored
 	var _curveWidgets: [CurveWidget]
 	// selection rectangle
 	var _selectionRect: SelectionView
 	// selected nodes
-	var _selectedNodes: [CanvasWidget]
+	var _selectedNodes: [LinkableWidget]
 	
 	// dragging stuff
 	var _prevMousePos: NSPoint
@@ -33,7 +33,7 @@ class Canvas: NSView {
 	override init(frame frameRect: NSRect) {
 		_grid = GridView(frame: frameRect)
 		
-		_canvasWidgets = []
+		_linkableWidgets = []
 		
 		_curveWidgets = []
 		
@@ -91,7 +91,7 @@ class Canvas: NSView {
 		self.addSubview(_selectionRect)
 		
 		// remove all nodes
-		_canvasWidgets = []
+		_linkableWidgets = []
 		
 		// remove all curves
 		_curveWidgets = []
@@ -101,7 +101,7 @@ class Canvas: NSView {
 	}
 	
 	// MARK: WIP
-	func onMouseDownCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+	func onMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// update last position of cursor
 		_prevMousePos = event.locationInWindow
 		
@@ -112,7 +112,7 @@ class Canvas: NSView {
 			select([widget], append: appendSelection)
 		}
 	}
-	func onMouseDraggedCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+	func onMouseDraggedLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// if no compound undo exists, make one now
 		if !_undoRedo.inCompound() {
 			_undoRedo.beginCompound(executeOnAdd: true)
@@ -123,13 +123,13 @@ class Canvas: NSView {
 		let dy = (currMousePos.y - _prevMousePos.y)
 		_selectedNodes.forEach({
 			let newOrigin = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
-			moveCanvasWidget(widget: $0, from: $0.frame.origin, to: newOrigin)
+			moveLinkableWidget(widget: $0, from: $0.frame.origin, to: newOrigin)
 		})
 		
 		// update last position of cursor
 		_prevMousePos = currMousePos
 	}
-	func onMouseUpCanvasWidget(widget: CanvasWidget, event: NSEvent) {
+	func onMouseUpLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// end compound undo if one started
 		if _undoRedo.inCompound() {
 			_undoRedo.endCompound()
@@ -139,7 +139,7 @@ class Canvas: NSView {
 	// MARK: Canvas Widget Creation
 	func makeDialogWidget(novellaDialog: Dialog) {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
-		_canvasWidgets.append(widget)
+		_linkableWidgets.append(widget)
 		self.addSubview(widget)
 	}
 	
@@ -156,17 +156,17 @@ class Canvas: NSView {
 	}
 	
 	// MARK: Canvas-wide functions
-	func moveCanvasWidget(widget: CanvasWidget, from: CGPoint, to: CGPoint) {
-		_undoRedo.execute(cmd: MoveCanvasWidgetCmd(widget: widget, from: from, to: to))
+	func moveLinkableWidget(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
+		_undoRedo.execute(cmd: MoveLinkableWidgetCmd(widget: widget, from: from, to: to))
 	}
 	
 	// MARK: Convert Novella to Canvas
-	func getCanvasWidgetFrom(linkable: Linkable?) -> CanvasWidget? {
+	func getLinkableWidgetFrom(linkable: Linkable?) -> LinkableWidget? {
 		if linkable == nil {
 			return nil
 		}
 		
-		let widget = _canvasWidgets.first(where: {
+		let widget = _linkableWidgets.first(where: {
 			if let dlgWidget = $0 as? DialogWidget {
 				return linkable?.UUID == dlgWidget._novellaDialog!.UUID
 			}
@@ -212,16 +212,16 @@ class Canvas: NSView {
 	}
 	
 	// MARK: Selection
-	func select(_ nodes: [CanvasWidget], append: Bool) {
+	func select(_ nodes: [LinkableWidget], append: Bool) {
 		_selectedNodes.forEach({$0.deselect()})
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
 	}
 	
-	func allNodesIn(rect: NSRect) -> [CanvasWidget] {
-		var selected: [CanvasWidget] = []
-		for curr in _canvasWidgets {
-			// note: bounds is relative to own coordinate system (0,0) and frame is relative to superview (_canvasWidgets).
+	func allNodesIn(rect: NSRect) -> [LinkableWidget] {
+		var selected: [LinkableWidget] = []
+		for curr in _linkableWidgets {
+			// note: bounds is relative to own coordinate system (0,0) and frame is relative to superview (_linkableWidgets).
 			//       The frame and selection rect need to be in the same space (i.e. canvas size/space).
 			if NSIntersectsRect(curr.frame, rect) {
 				selected.append(curr)

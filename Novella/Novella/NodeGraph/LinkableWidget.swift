@@ -1,5 +1,5 @@
 //
-//  CanvasWidget.swift
+//  LinkableWidget.swift
 //  Novella
 //
 //  Created by Daniel Green on 02/05/2018.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CanvasWidget: NSView {
+class LinkableWidget: NSView {
 	let _canvas: Canvas
 	var _isPrimedForSelection: Bool
 	var _isSelected: Bool
@@ -23,7 +23,7 @@ class CanvasWidget: NSView {
 		super.init(frame: frameRect)
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("CanvasWidget::init(coder) not implemented.")
+		fatalError("LinkableWidget::init(coder) not implemented.")
 	}
 	
 	override func updateTrackingAreas() {
@@ -41,7 +41,7 @@ class CanvasWidget: NSView {
 	
 	// MARK: Functions for derived classes to override.
 	func onMove() {
-		print("CanvasWidget::onMove() should be overridden.")
+		print("LinkableWidget::onMove() should be overridden.")
 	}
 	
 	// MARK: Selection
@@ -82,15 +82,15 @@ class CanvasWidget: NSView {
 	}
 	
 	override func mouseDown(with event: NSEvent) {
-		_canvas.onMouseDownCanvasWidget(widget: self, event: event)
+		_canvas.onMouseDownLinkableWidget(widget: self, event: event)
 	}
 	
 	override func mouseDragged(with event: NSEvent) {
-		_canvas.onMouseDraggedCanvasWidget(widget: self, event: event)
+		_canvas.onMouseDraggedLinkableWidget(widget: self, event: event)
 	}
 	
 	override func mouseUp(with event: NSEvent) {
-		_canvas.onMouseUpCanvasWidget(widget: self, event: event)
+		_canvas.onMouseUpLinkableWidget(widget: self, event: event)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

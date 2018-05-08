@@ -45,8 +45,8 @@ class BranchWidget: CurveWidget {
 		var start = CGPoint.zero
 		var end = CGPoint.zero
 		
-		let originWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaBranch._origin)
-		var destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaBranch._trueTransfer._destination)
+		let originWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._origin)
+		var destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._trueTransfer._destination)
 		
 		if originWidget != nil {
 			start = originWidget!.frame.origin
@@ -60,7 +60,7 @@ class BranchWidget: CurveWidget {
 		}
 		CurveHelper.smooth(start: start, end: end, path: _curveBezier)
 		
-		destWidget = _canvas.getCanvasWidgetFrom(linkable: _novellaBranch._falseTransfer._destination)
+		destWidget = _canvas.getLinkableWidgetFrom(linkable: _novellaBranch._falseTransfer._destination)
 		if destWidget != nil {
 			end = destWidget!.frame.origin
 			end.x += originWidget!.frame.width * 0.5

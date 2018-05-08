@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class DialogWidget: CanvasWidget {
+class DialogWidget: LinkableWidget {
 	var _novellaDialog: Dialog?
 	var _nameLabel: NSTextField
 	

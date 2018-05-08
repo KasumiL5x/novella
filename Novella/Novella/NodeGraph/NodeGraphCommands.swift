@@ -8,12 +8,12 @@
 
 import Foundation
 
-class MoveCanvasWidgetCmd: UndoableCommand {
-	let _widget: CanvasWidget
+class MoveLinkableWidgetCmd: UndoableCommand {
+	let _widget: LinkableWidget
 	let _from: CGPoint
 	let _to: CGPoint
 	
-	init(widget: CanvasWidget, from: CGPoint, to: CGPoint) {
+	init(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
 		self._widget = widget
 		self._from = from
 		self._to = to
