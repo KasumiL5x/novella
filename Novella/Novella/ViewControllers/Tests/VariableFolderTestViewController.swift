@@ -136,7 +136,7 @@ class VariableFolderTestViewController: NSViewController {
 			if newName == variable.Name {
 				return
 			}
-			do { try variable.setName(name: newName) } catch {
+			do { try variable.setName(newName) } catch {
 				statusLabel.stringValue = "Could not rename Variable (\(variable.Name)->\(newName))!"
 				sender.stringValue = variable.Name
 			}

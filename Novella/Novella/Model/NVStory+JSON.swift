@@ -515,11 +515,11 @@ extension NVStory {
 			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
 			
 			if let synopsis = curr["synopsis"].string {
-				variable.setSynopsis(synopsis: synopsis)
+				variable.setSynopsis(synopsis)
 			}
 			
 			if let constant = curr["constant"].bool {
-				variable.setConstant(const: constant)
+				variable.setConstant(constant)
 			}
 			
 			let value = curr["value"]
@@ -527,26 +527,26 @@ extension NVStory {
 			switch variable._type {
 			case .boolean:
 				if value != JSON.null {
-					try! variable.setValue(val: value.bool!)
+					try! variable.setValue(value.bool!)
 				}
 				if initialValue != JSON.null {
-					try! variable.setInitialValue(val: initialValue.bool!)
+					try! variable.setInitialValue(initialValue.bool!)
 				}
 				break
 			case .integer:
 				if value != JSON.null {
-					try! variable.setValue(val: value.int!)
+					try! variable.setValue(value.int!)
 				}
 				if initialValue != JSON.null {
-					try! variable.setInitialValue(val: initialValue.int!)
+					try! variable.setInitialValue(initialValue.int!)
 				}
 				break
 			case .double:
 				if value != JSON.null {
-					try! variable.setValue(val: value.double!)
+					try! variable.setValue(value.double!)
 				}
 				if initialValue != JSON.null {
-					try! variable.setInitialValue(val: initialValue.double!)
+					try! variable.setInitialValue(initialValue.double!)
 				}
 				break
 			}

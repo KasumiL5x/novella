@@ -38,7 +38,7 @@ class NVVariable {
 	var IsConstant:   Bool     {get{ return _constant }}
 	
 	// MARK: Setters
-	func setName(name: String) throws {
+	func setName(_ name: String) throws {
 		// if not in a folder, name conflict doesn't matter
 		if nil == _folder {
 			_name = name
@@ -46,23 +46,23 @@ class NVVariable {
 		}
 		// containing folder can't contain the requested name already
 		if _folder!.containsVariableName(name: name) {
-			throw NVError.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but it's folder (\(_folder!._name) already contains that.")
+			throw NVError.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but its Folder (\(_folder!._name) already contains that.")
 		}
 		_name = name
 	}
 	
-	func setSynopsis(synopsis: String) {
+	func setSynopsis(_ synopsis: String) {
 		self._synopsis = synopsis
 	}
 	
-	func setType(type: NVDataType) {
+	func setType(_ type: NVDataType) {
 		_type = type
 		_value = type.defaultValue
 		_initialValue = type.defaultValue
 		// TODO: Can I somehow convert existing data safely or revert to defaults otherwise?
 	}
 
-	func setValue(val: Any) throws {
+	func setValue(_ val: Any) throws {
 		if self._constant {
 			throw NVError.isConstant("")
 		}
@@ -74,7 +74,7 @@ class NVVariable {
 		_value = val
 	}
 	
-	func setInitialValue(val: Any) throws {
+	func setInitialValue(_ val: Any) throws {
 		if !_type.matches(value: val) {
 			throw NVError.dataTypeMismatch("")
 		}
@@ -82,12 +82,19 @@ class NVVariable {
 		_value = val
 	}
 	
-	func setConstant(const: Bool) {
+	func setConstant(_ const: Bool) {
 		self._constant = const
 	}
 }
 
-// MARK: Pathable
+// MARK: NVIdentifiable
+extension NVVariable: NVIdentifiable {
+	var UUID: NSUUID {
+		return _uuid
+	}
+}
+
+// MARK: NVPathable
 extension NVVariable: NVPathable {
 	func localPath() -> String {
 		return _name
@@ -95,13 +102,6 @@ extension NVVariable: NVPathable {
 	
 	func parentPath() -> NVPathable? {
 		return _folder
-	}
-}
-
-// MARK: Identifiable
-extension NVVariable: NVIdentifiable {
-	var UUID: NSUUID {
-		return _uuid
 	}
 }
 
