@@ -51,7 +51,7 @@ class NVGraph {
 		// if there's no parent graph, check siblings of the story for name clashes
 		if nil == _parent {
 			if _story!.containsGraphName(name: name) {
-				throw Errors.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the Story already contains that name.")
+				throw NVError.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the Story already contains that name.")
 			}
 			_name = name
 			return
@@ -60,24 +60,24 @@ class NVGraph {
 		// parent graph can't contain same name
 		if _parent != nil {
 			if _parent!.containsGraphName(name: name) {
-				throw Errors.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the parent FlowGraph (\(_parent!._name)) already contains that name.")
+				throw NVError.nameAlreadyTaken("Tried to change FlowGraph \(_name) to \(name), but the parent FlowGraph (\(_parent!._name)) already contains that name.")
 			}
 			_name = name
 			return
 		}
 		
-		throw Errors.invalid("Oh dear.")
+		throw NVError.invalid("Oh dear.")
 	}
 	
 	func setEntry(entry: Linkable) throws {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
-				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+				throw NVError.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
 			}
 		}
 		if let fn = entry as? NVNode {
 			if !contains(node: fn) {
-				throw Errors.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
+				throw NVError.invalid("Tried to set FlowGraph's entry but it wasn't a child (\(_name)).")
 			}
 		}
 		_entry = entry
@@ -96,15 +96,15 @@ class NVGraph {
 	func add(graph: NVGraph) throws -> NVGraph {
 		// cannot add self
 		if graph == self {
-			throw Errors.invalid("Tried to add a FlowGraph to self (\(_name)).")
+			throw NVError.invalid("Tried to add a FlowGraph to self (\(_name)).")
 		}
 		// already a child
 		if contains(graph: graph) {
-			throw Errors.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to \(_name)).")
+			throw NVError.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to \(_name)).")
 		}
 		// already contains same name
 		if containsGraphName(name: graph._name) {
-			throw Errors.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to \(_name)).")
+			throw NVError.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to \(_name)).")
 		}
 		// unparent first
 		if graph._parent != nil {
@@ -118,7 +118,7 @@ class NVGraph {
 	
 	func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
-			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove FlowGraph (\(graph._name)) from (\(_name)) but it was not a child.")
 		}
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
@@ -133,7 +133,7 @@ class NVGraph {
 	func add(node: NVNode) throws -> NVNode {
 		// already a child
 		if contains(node: node) {
-			throw Errors.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
+			throw NVError.invalid("Tried to add a FlowNode but it already exists (to \(_name)).")
 		}
 		_nodes.append(node)
 		return node
@@ -141,7 +141,7 @@ class NVGraph {
 	
 	func remove(node: NVNode) throws {
 		guard let idx = _nodes.index(of: node) else {
-			throw Errors.invalid("Tried to remove a FlowNode from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove a FlowNode from (\(_name)) but it was not a child.")
 		}
 		_nodes.remove(at: idx)
 	}
@@ -155,7 +155,7 @@ class NVGraph {
 	func add(link: BaseLink) throws -> BaseLink {
 		// already a child
 		if contains(link: link) {
-			throw Errors.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
+			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
 		}
 		_links.append(link)
 		return link
@@ -163,7 +163,7 @@ class NVGraph {
 	
 	func remove(link: BaseLink) throws {
 		guard let idx = _links.index(of: link) else {
-			throw Errors.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
 		}
 		_links.remove(at: idx)
 	}
@@ -177,7 +177,7 @@ class NVGraph {
 	func add(listener: NVListener) throws -> NVListener {
 		// already a child
 		if contains(listener: listener) {
-			throw Errors.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
+			throw NVError.invalid("Tried to add a Listener but it already exists (to FlowGraph \(_name)).")
 		}
 		_listeners.append(listener)
 		return listener
@@ -185,7 +185,7 @@ class NVGraph {
 	
 	func remove(listener: NVListener) throws {
 		guard let idx = _listeners.index(of: listener) else {
-			throw Errors.invalid("Tried to remove Listener from FlowGraph (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Listener from FlowGraph (\(_name)) but it was not a child.")
 		}
 		_listeners.remove(at: idx)
 	}
@@ -199,7 +199,7 @@ class NVGraph {
 	func add(exit: NVExitNode) throws -> NVExitNode {
 		// already a child
 		if contains(exit: exit) {
-			throw Errors.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
+			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to FlowGraph \(_name)).")
 		}
 		_exits.append(exit)
 		return exit
@@ -207,7 +207,7 @@ class NVGraph {
 	
 	func remove(exit: NVExitNode) throws {
 		guard let idx = _exits.index(of: exit) else {
-			throw Errors.invalid("Tried to remove ExitNode from FlowGraph (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove ExitNode from FlowGraph (\(_name)) but it was not a child.")
 		}
 		_exits.remove(at: idx)
 	}

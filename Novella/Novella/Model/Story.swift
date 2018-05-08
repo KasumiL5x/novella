@@ -59,7 +59,7 @@ class Story {
 	
 	// MARK: Setup
 	func setup() throws {
-		throw Errors.notImplemented("Story::setup()")
+		throw NVError.notImplemented("Story::setup()")
 	}
 }
 
@@ -78,11 +78,11 @@ extension Story {
 	func add(folder: NVFolder) throws -> NVFolder {
 		// already a child
 		if contains(folder: folder) {
-			throw Errors.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
+			throw NVError.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
 		}
 		// already contains same name
 		if containsFolderName(name: folder._name) {
-			throw Errors.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
+			throw NVError.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
 		}
 		// now add
 		_folders.append(folder)
@@ -91,7 +91,7 @@ extension Story {
 	
 	func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
-			throw Errors.invalid("Tried to remove Folder (\(folder._name)) from story but it was not a child.")
+			throw NVError.invalid("Tried to remove Folder (\(folder._name)) from story but it was not a child.")
 		}
 		_folders.remove(at: idx)
 	}
@@ -109,11 +109,11 @@ extension Story {
 	func add(graph: NVGraph) throws -> NVGraph {
 		// already a child
 		if contains(graph: graph) {
-			throw Errors.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to story).")
+			throw NVError.invalid("Tried to add a FlowGraph but it already exists (\(graph._name) to story).")
 		}
 		// already contains same name
 		if containsGraphName(name: graph._name) {
-			throw Errors.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to story).")
+			throw NVError.nameTaken("Tried to add a FlowGraph but its name was already in use (\(graph._name) to story).")
 		}
 		// unparent first
 		if graph._parent != nil {
@@ -127,7 +127,7 @@ extension Story {
 	
 	func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
-			throw Errors.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
+			throw NVError.invalid("Tried to remove FlowGraph (\(graph._name)) from story but it was not a child.")
 		}
 		_graphs.remove(at: idx)
 	}

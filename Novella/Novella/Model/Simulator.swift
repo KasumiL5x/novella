@@ -42,7 +42,7 @@ class Simulator {
 	// controller should call this to proceed from the current node
 	func proceed(link: BaseLink) throws {
 		if !_story!.getLinksFrom(linkable: _currentNode!).contains(link) {
-			throw Errors.invalid("Tried to progress along a link that didn't belong to the current node.")
+			throw NVError.invalid("Tried to progress along a link that didn't belong to the current node.")
 		}
 		
 		var destinationUUID: String?
@@ -56,7 +56,7 @@ class Simulator {
 		}
 		
 		guard let destNode = _story?.findBy(uuid: destinationUUID ?? "") as? NVNode else {
-			throw Errors.invalid("Destination node was not found or was not a FlowNode.")
+			throw NVError.invalid("Destination node was not found or was not a FlowNode.")
 		}
 		
 		_currentNode = resolveLinkable(node: destNode)

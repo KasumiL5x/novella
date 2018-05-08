@@ -41,7 +41,7 @@ class NVFolder {
 		
 		// parent folder can't contain the requested name already
 		if _parent!.containsFolderName(name: name) {
-			throw Errors.nameAlreadyTaken("Tried to change VariableSet \(_name) to \(name), but its parent folder (\(_parent!.Name) already contains that name.")
+			throw NVError.nameAlreadyTaken("Tried to change VariableSet \(_name) to \(name), but its parent folder (\(_parent!.Name) already contains that name.")
 		}
 		_name = name
 	}
@@ -63,15 +63,15 @@ class NVFolder {
 	func add(folder: NVFolder) throws -> NVFolder {
 		// cannot add self
 		if folder == self {
-			throw Errors.invalid("Tried to add Folder to self (\(_name)).")
+			throw NVError.invalid("Tried to add Folder to self (\(_name)).")
 		}
 		// already a child
 		if contains(folder: folder) {
-			throw Errors.invalid("Tried to add Folder but it already exists (\(folder._name) to \(_name)).")
+			throw NVError.invalid("Tried to add Folder but it already exists (\(folder._name) to \(_name)).")
 		}
 		// already contains same name
 		if containsFolderName(name: folder._name) {
-			throw Errors.nameTaken("Tried to add Folder but its name was already in use (\(folder._name) to \(_name)).")
+			throw NVError.nameTaken("Tried to add Folder but its name was already in use (\(folder._name) to \(_name)).")
 		}
 		// unparent first
 		if folder._parent != nil {
@@ -86,7 +86,7 @@ class NVFolder {
 	
 	func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
-			throw Errors.invalid("Tried to remove Folder (\(folder._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Folder (\(folder._name)) from (\(_name)) but it was not a child.")
 		}
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
@@ -119,11 +119,11 @@ class NVFolder {
 	func add(variable: NVVariable) throws -> NVVariable {
 		// already a child
 		if contains(variable: variable) {
-			throw Errors.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
+			throw NVError.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
 		}
 		// already contains same name
 		if containsVariableName(name: variable._name) {
-			throw Errors.nameTaken("Tried to add Variable but its name was already in use (\(variable._name) to \(_name)).")
+			throw NVError.nameTaken("Tried to add Variable but its name was already in use (\(variable._name) to \(_name)).")
 		}
 		// unparent first
 		if variable._folder != nil {
@@ -138,7 +138,7 @@ class NVFolder {
 	
 	func remove(variable: NVVariable) throws {
 		guard let idx = _variables.index(of: variable) else {
-			throw Errors.invalid("Tried to remove Variable (\(variable._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Variable (\(variable._name)) from (\(_name)) but it was not a child.")
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)

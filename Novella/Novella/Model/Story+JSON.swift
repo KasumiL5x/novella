@@ -459,7 +459,7 @@ extension Story {
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
-			throw Errors.invalid("Root object cannot form valid JSON.")
+			throw NVError.invalid("Root object cannot form valid JSON.")
 		}
 		
 		// test against schema
@@ -468,13 +468,13 @@ extension Story {
 		if !validated.valid {
 			print("Failed to validate JSON against Schema.")
 			validated.errors?.forEach({print($0)})
-			throw Errors.invalid("JSON did not validate against schema.")
+			throw NVError.invalid("JSON did not validate against schema.")
 		}
 		
 		// get a JSON string
 		let json = JSON(root)
 		guard let str = json.rawString(.utf8, options: .prettyPrinted) else {
-			throw Errors.invalid("Failed to serialize into JSON data.")
+			throw NVError.invalid("Failed to serialize into JSON data.")
 		}
 		return str
 	}
@@ -486,7 +486,7 @@ extension Story {
 		
 		// get Data from string
 		guard let data = str.data(using: .utf8)  else {
-			throw Errors.invalid("Failed to get Data from JSON string.")
+			throw NVError.invalid("Failed to get Data from JSON string.")
 		}
 		
 		// parse using SwiftyJSON
@@ -494,7 +494,7 @@ extension Story {
 		do {
 			json = try JSON(data: data)
 		} catch {
-			throw Errors.invalid("Failed to parse JSON.")
+			throw NVError.invalid("Failed to parse JSON.")
 		}
 		
 		// test against schema
@@ -503,7 +503,7 @@ extension Story {
 		if !validated.valid {
 			print("Failed to validate JSON against Schema.")
 			validated.errors?.forEach({print($0)})
-			throw Errors.invalid("JSON did not validate against schema.")
+			throw NVError.invalid("JSON did not validate against schema.")
 		}
 		
 		let story = Story()

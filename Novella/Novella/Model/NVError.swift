@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Errors: Error {
+enum NVError: Error {
 	// new errors
 	case invalid(String)
 	case nameTaken(String)

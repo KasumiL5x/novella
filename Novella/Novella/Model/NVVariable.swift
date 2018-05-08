@@ -46,7 +46,7 @@ class NVVariable {
 		}
 		// containing folder can't contain the requested name already
 		if _folder!.containsVariableName(name: name) {
-			throw Errors.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but it's folder (\(_folder!._name) already contains that.")
+			throw NVError.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but it's folder (\(_folder!._name) already contains that.")
 		}
 		_name = name
 	}
@@ -64,11 +64,11 @@ class NVVariable {
 
 	func setValue(val: Any) throws {
 		if self._constant {
-			throw Errors.isConstant("")
+			throw NVError.isConstant("")
 		}
 		
 		if !_type.matches(value: val) {
-			throw Errors.dataTypeMismatch("")
+			throw NVError.dataTypeMismatch("")
 		}
 		
 		_value = val
@@ -76,7 +76,7 @@ class NVVariable {
 	
 	func setInitialValue(val: Any) throws {
 		if !_type.matches(value: val) {
-			throw Errors.dataTypeMismatch("")
+			throw NVError.dataTypeMismatch("")
 		}
 		_initialValue = val
 		_value = val
