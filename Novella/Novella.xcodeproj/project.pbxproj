@@ -230,11 +230,11 @@
 				655B0B8E2098B4C000741ACA /* Canvas.swift */,
 				659140572099D60B00D6273D /* LinkableWidget.swift */,
 				659140592099D62900D6273D /* DialogWidget.swift */,
+				6535CB6420A2F95500E857A0 /* LinkPinView.swift */,
 				65588389209C8C19004C412F /* CurveHelper.swift */,
 				65F8548A209EF2D50067A95C /* GridView.swift */,
 				65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */,
 				65CEA210209F7086008C49AE /* SelectionView.swift */,
-				6535CB6420A2F95500E857A0 /* LinkPinView.swift */,
 			);
 			path = NodeGraph;
 			sourceTree = "<group>";

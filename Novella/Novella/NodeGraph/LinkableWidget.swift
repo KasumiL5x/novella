@@ -39,9 +39,10 @@ class LinkableWidget: NSView {
 		
 		let options: NSTrackingArea.Options = [
 			NSTrackingArea.Options.activeInKeyWindow,
-			NSTrackingArea.Options.mouseEnteredAndExited
+			NSTrackingArea.Options.mouseEnteredAndExited,
+			NSTrackingArea.Options.mouseMoved
 		]
-		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+		_trackingArea = NSTrackingArea(rect: widgetRect(), options: options, owner: self, userInfo: nil)
 		self.addTrackingArea(_trackingArea!)
 	}
 	
@@ -55,31 +56,55 @@ class LinkableWidget: NSView {
 			pos.x = self.frame.width - (pin!.frame.width * 0.5)
 			pos.y = self.frame.height - (pin!.frame.height * 2.0)
 			pos.y -= CGFloat(_outputs.count) * (pin!.frame.height * 1.5)
+			
 			pin!.frame.origin = pos
 			
 			_outputs.append(pin!)
 			self.addSubview(pin!)
+			
+			// subviews can't be interacted with if they are beyond the bounds of the superview
+			sizeToFitSubviews()
 		}
 	}
 	
-//	func addOutputPin() {
-//		let pin = OutputPin(owner: self)
-//
-//		var pos = CGPoint.zero
-//		pos.x = self.frame.width - (pin.frame.width * 0.5)
-//		pos.y = self.frame.height - (pin.frame.height * 2.0)
-//		pos.y -= CGFloat(_outputs.count) * (pin.frame.height * 1.5)
-//		pin.frame.origin = pos
-//
-//		_outputs.append(pin)
-//		self.addSubview(pin)
-//
-//		// TODO: Resize bounds of this area or something?
-//	}
+	func sizeToFitSubviews() {
+		var w: CGFloat = frame.width
+		var h: CGFloat = frame.height
+		
+		for sub in subviews {
+			let sw = sub.frame.origin.x + sub.frame.width
+			let sh = sub.frame.origin.y + sub.frame.height
+			w = max(w, sw)
+			h = max(h, sh)
+		}
+		
+		self.frame.size = NSMakeSize(w, h)
+	}
+	
+	override func hitTest(_ point: NSPoint) -> NSView? {
+		// manually check each subview's bounds (if i want to do something similar i'd need to override their hittest and call it here)
+		for sub in subviews {
+			if NSPointInRect(_canvas.convert(point, to: sub), sub.bounds) {
+				return sub
+			}
+		}
+		
+		// check out local widget's bounds for a mouse click
+		if NSPointInRect(_canvas.convert(point, to: self), widgetRect()) {
+			return self
+		}
+		
+		// nuttin'
+		return nil
+	}
 	
 	// MARK: Functions for derived classes to override.
 	func onMove() {
 		print("LinkableWidget::onMove() should be overridden.")
+	}
+	func widgetRect() -> NSRect {
+		print("LinkableWidget::widgetRect() should be overridden.")
+		return NSRect.zero
 	}
 	
 	// MARK: Selection
@@ -107,16 +132,30 @@ class LinkableWidget: NSView {
 		_canvas.updateCurves()
 	}
 	
-	override func mouseEntered(with event: NSEvent) {
-		if !_isSelected {
-			primeForSelect()
+	override func mouseMoved(with event: NSEvent) {
+		// bit of a hack, but ignores this window if the mouse isn't directly over it (https://gist.github.com/eonist/537ae53b86d5fc332fd3)
+		let mouseOnThisView = self == window!.contentView!.hitTest(window!.mouseLocationOutsideOfEventStream)
+		
+		// manually handle equivalent to mouseEntered/mouseExited as we have subviews overlapping this view, which means if
+		// the mouse enters through a subview, it won't trigger correctly, and simlar for exit.  This isn't efficient, but it works.
+		if mouseOnThisView {
+			// handle "enter" condition here as we could move from an overlapping subview which technically means we're already entered and thus won't work
+			if !_isSelected {
+				primeForSelect()
+			}
+		} else {
+			if _isPrimedForSelection {
+				unprimeForSelect()
+			}
 		}
+		
+	}
+	
+	override func mouseEntered(with event: NSEvent) {
 	}
 	
 	override func mouseExited(with event: NSEvent) {
-		if _isPrimedForSelection {
-			unprimeForSelect()
-		}
+
 	}
 	
 	override func mouseDown(with event: NSEvent) {

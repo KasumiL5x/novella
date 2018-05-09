@@ -16,6 +16,8 @@ class LinkPinView: NSView {
 	var _curveLayer: CAShapeLayer
 	var _curvePath: NSBezierPath
 	
+	var _trackingArea: NSTrackingArea?
+	
 	init(link: NVBaseLink, canvas: Canvas) {
 		self._nvBaseLink = link
 		self._canvas = canvas
@@ -23,7 +25,7 @@ class LinkPinView: NSView {
 		self._curveLayer = CAShapeLayer()
 		self._curvePath = NSBezierPath()
 		
-		super.init(frame: NSMakeRect(0.0, 0.0, 10.0, 10.0))
+		super.init(frame: NSMakeRect(0.0, 0.0, 15.0, 15.0))
 		
 		wantsLayer = true
 		layer!.masksToBounds = false
@@ -34,8 +36,33 @@ class LinkPinView: NSView {
 		fatalError("LinkPinView::init(coder) not implemented.")
 	}
 	
-	override func hitTest(_ point: NSPoint) -> NSView? {
-		return nil
+	override func updateTrackingAreas() {
+		if _trackingArea != nil {
+			self.removeTrackingArea(_trackingArea!)
+		}
+		
+		let options: NSTrackingArea.Options = [
+			NSTrackingArea.Options.activeInKeyWindow,
+			NSTrackingArea.Options.mouseEnteredAndExited
+		]
+		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+		self.addTrackingArea(_trackingArea!)
+	}
+	
+	override func mouseEntered(with event: NSEvent) {
+		print("enter")
+	}
+	override func mouseExited(with event: NSEvent) {
+		print("exit")
+	}
+	override func mouseDown(with event: NSEvent) {
+		print("clicked a pin")
+	}
+	override func mouseDragged(with event: NSEvent) {
+		print("dragged a pin")
+	}
+	override func mouseUp(with event: NSEvent) {
+		print("upped a pin")
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
