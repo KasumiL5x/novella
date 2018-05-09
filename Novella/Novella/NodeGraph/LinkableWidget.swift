@@ -52,9 +52,10 @@ class LinkableWidget: NSView {
 		} else {
 			
 			// auto-position pin
+			let wrect = widgetRect()
 			var pos = CGPoint.zero
-			pos.x = self.frame.width - (pin!.frame.width * 0.5)
-			pos.y = self.frame.height - (pin!.frame.height * 2.0)
+			pos.x = wrect.width - (pin!.frame.width * 0.5)
+			pos.y = wrect.height - (pin!.frame.height * 2.0)
 			pos.y -= CGFloat(_outputs.count) * (pin!.frame.height * 1.5)
 			
 			pin!.frame.origin = pos
