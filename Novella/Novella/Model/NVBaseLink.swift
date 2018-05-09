@@ -10,14 +10,10 @@ import Foundation
 
 class NVBaseLink {
 	let _uuid: NSUUID
-	var _origin: NVLinkable?
+	var _origin: NVLinkable
 	
-	init(uuid: NSUUID, story: NVStory) {
+	init(uuid: NSUUID, story: NVStory, origin: NVLinkable) {
 		self._uuid = uuid
-		self._origin = nil
-	}
-	
-	func setOrigin(_ origin: NVLinkable?) {
 		self._origin = origin
 	}
 }

@@ -164,22 +164,22 @@ extension NVStory {
 	}
 	
 	@discardableResult
-	func makeLink(uuid: NSUUID?=nil) -> NVLink {
-		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
+	func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
+		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
 		return link
 	}
 	@discardableResult
-	func makeBranch(uuid: NSUUID?=nil) -> NVBranch {
-		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
+	func makeBranch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVBranch {
+		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(branch)
 		_allIdentifiables.append(branch)
 		return branch
 	}
 	@discardableResult
-	func makeSwitch(uuid: NSUUID?=nil) -> NVSwitch {
-		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), story: self)
+	func makeSwitch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVSwitch {
+		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(swtch)
 		_allIdentifiables.append(swtch)
 		return swtch
@@ -194,7 +194,7 @@ extension NVStory {
 	}
 	
 	func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
-		return _allLinks.filter({$0._origin?.UUID == linkable.UUID})
+		return _allLinks.filter({$0._origin.UUID == linkable.UUID})
 	}
 }
 
@@ -278,7 +278,7 @@ extension NVStory {
 			print("\nLinks (\(_allLinks.count)):")
 			_allLinks.forEach({
 				print("\tUUID: \($0._uuid.uuidString)")
-				print("\tOrigin: \($0._origin?.UUID.uuidString ?? "none")")
+				print("\tOrigin: \($0._origin.UUID.uuidString)")
 				if let link = $0 as? NVLink {
 					print("\tType: Link")
 					print("\tDestination: \(link._transfer._destination?.UUID.uuidString ?? "none")")

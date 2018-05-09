@@ -197,7 +197,7 @@ extension NVStory {
 					],
 					"origin": [ "$ref": "#/definitions/uuid" ]
 				],
-				"required": ["uuid", "linktype"],
+				"required": ["uuid", "linktype", "origin"],
 				// MARK: link-dependencies
 				"dependencies": [
 					// handle each concrete link's schema based on linktype
@@ -381,7 +381,7 @@ extension NVStory {
 		for curr in _allLinks {
 			var entry: JSONDict = [:]
 			entry["uuid"] = curr._uuid.uuidString
-			entry["origin"] = curr._origin?.UUID.uuidString ?? ""
+			entry["origin"] = curr._origin.UUID.uuidString
 			
 			if let asLink = curr as? NVLink {
 				entry["linktype"] = "link"
@@ -683,19 +683,15 @@ extension NVStory {
 		for curr in json["links"].arrayValue {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
 			
-			var origin: NVLinkable? = nil
-			if let originID = curr["origin"].string {
-				origin = story.findBy(uuid: originID) as? NVLinkable
-				if origin == nil {
-					errors.append("Unable to find Linkable by UUID (\(originID)) when setting the origin of a BaseLink (\(uuid.uuidString)).")
-				}
+			let originID = curr["origin"].string!
+			guard let origin = story.findBy(uuid: originID) as? NVLinkable else {
+				errors.append("Unable to find Linkable by UUID (\(originID)) when creating BaseLink (\(uuid.uuidString)).  Link will NOT be created.")
+				continue // skips the link entirely if this error occurs
 			}
 			
 			switch curr["linktype"].string! {
 			case "link":
-				let link = story.makeLink(uuid: uuid)
-				
-				link.setOrigin(origin)
+				let link = story.makeLink(origin: origin, uuid: uuid)
 				
 				if let condition = curr["condition"].dictionary {
 					link._condition._javascript = condition["jscode"]!.string!
@@ -710,9 +706,7 @@ extension NVStory {
 				}
 				break
 			case "branch":
-				let branch = story.makeBranch(uuid: uuid)
-				
-				branch.setOrigin(origin)
+				let branch = story.makeBranch(origin: origin, uuid: uuid)
 				
 				if let condition = curr["condition"].dictionary {
 					branch._condition._javascript = condition["jscode"]!.string!

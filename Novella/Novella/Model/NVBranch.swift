@@ -13,11 +13,11 @@ class NVBranch : NVBaseLink {
 	var _trueTransfer: NVTransfer
 	var _falseTransfer: NVTransfer
 	
-	override init(uuid: NSUUID, story: NVStory) {
+	override init(uuid: NSUUID, story: NVStory, origin: NVLinkable) {
 		self._condition = NVCondition(story: story)
 		self._trueTransfer = NVTransfer()
 		self._falseTransfer = NVTransfer()
 		
-		super.init(uuid: uuid, story: story)
+		super.init(uuid: uuid, story: story, origin: origin)
 	}
 }

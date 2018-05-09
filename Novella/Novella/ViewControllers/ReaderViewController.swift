@@ -311,13 +311,13 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		if let link = item as? NVLink {
 			text = "<b>LINK</b><br/>"
 			text += "<b>UUID: </b>\(link._uuid.uuidString)<br/>"
-			text += "<b>Origin: </b>\(link._origin?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>Origin: </b>\(link._origin.UUID.uuidString)<br/>"
 			text += "<b>Destination: </b>\(link._transfer._destination?.UUID.uuidString ?? "none")<br/>"
 		}
 		if let branch = item as? NVBranch {
 			text = "<b>BRANCH</b><br/>"
 			text += "<b>UUID: </b>\(branch._uuid.uuidString)<br/>"
-			text += "<b>Origin: </b>\(branch._origin?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>Origin: </b>\(branch._origin.UUID.uuidString)<br/>"
 			text += "<b>True Destination: </b>\(branch._trueTransfer._destination?.UUID.uuidString ?? "none")<br/>"
 			text += "<b>False Destination: </b>\(branch._falseTransfer._destination?.UUID.uuidString ?? "none")<br/>"
 		}

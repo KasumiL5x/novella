@@ -116,8 +116,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : 241.9921875,
-        "x" : 55.9140625
+        "y" : 253.76171875,
+        "x" : 53.51953125
       },
       "name" : "A",
       "content" : "This node has two parallel choices of equal value.",
