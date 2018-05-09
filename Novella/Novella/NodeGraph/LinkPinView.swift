@@ -28,6 +28,7 @@ class LinkPinView: NSView {
 		wantsLayer = true
 		layer!.masksToBounds = false
 		layer!.addSublayer(_curveLayer)
+		layer!.addSublayer(_pinLayer)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("LinkPinView::init(coder) not implemented.")
@@ -49,11 +50,9 @@ class LinkPinView: NSView {
 				fatalError("Error: LinkPinView's NVBaseLink has NO origin.  This should never happen")
 			}
 			
-			// TODO: Put pin in a layer so that it draws above the other layer
 			// draw pin
-			let pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
-			NSColor.white.setFill()
-			pinPath.fill()
+			_pinLayer.path = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5).cgPath
+			_pinLayer.fillColor = NSColor.white.cgColor
 			
 			// clear points before drawing
 			_curvePath.removeAllPoints()
