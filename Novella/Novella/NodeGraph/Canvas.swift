@@ -14,7 +14,6 @@ class Canvas: NSView {
 	var _grid: GridView
 
 	var _linkableWidgets: [LinkableWidget]
-	var _curveWidgets: [BaseLinkWidget]
 	var _linkPinViews: [LinkPinView]
 	
 	var _selectionRect: SelectionView
@@ -33,7 +32,6 @@ class Canvas: NSView {
 		self._grid = GridView(frame: frameRect)
 		
 		self._linkableWidgets = []
-		self._curveWidgets = []
 		self._linkPinViews = []
 		
 		self._selectionRect = SelectionView(frame: frameRect)
@@ -128,8 +126,8 @@ class Canvas: NSView {
 		
 		// remove all nodes
 		_linkableWidgets = []
-		// remove all curves
-		_curveWidgets = []
+		// remove all link pins
+		_linkPinViews = []
 		
 		// clear undo/redo
 		_undoRedo.clear()
@@ -156,10 +154,6 @@ class Canvas: NSView {
 		// updates every curve - not very efficient
 		for child in _linkPinViews {
 			child.setNeedsDisplay(child.bounds)
-		}
-		
-		for child in _curveWidgets {
-			child.layer?.setNeedsDisplay()
 		}
 	}
 	
@@ -273,11 +267,6 @@ extension Canvas {
 	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
 		print("hello from \(sender)")
 	}
-	
-	// MARK: Other
-	func getNVLinksFrom(_ widget: LinkableWidget) -> [BaseLinkWidget] {
-		return _curveWidgets.filter({$0._nvBaseLink?._origin?.UUID == widget._nvLinkable?.UUID})
-	}
 }
 
 // MARK: Links Stuff
@@ -287,17 +276,5 @@ extension Canvas {
 		let lpv = LinkPinView(link: nvBaseLink, canvas: self)
 		_linkPinViews.append(lpv)
 		return lpv
-	}
-	
-	func makeLinkWidget(novellaLink: NVLink) {
-		let widget = LinkWidget(link: novellaLink, canvas: self)
-		_curveWidgets.append(widget)
-		self.addSubview(widget)
-	}
-	
-	func makeBranchWidget(novellaBranch: NVBranch) {
-		let widget = BranchWidget(branch: novellaBranch, canvas: self)
-		_curveWidgets.append(widget)
-		self.addSubview(widget)
 	}
 }
