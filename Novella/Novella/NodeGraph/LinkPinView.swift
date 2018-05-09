@@ -13,24 +13,59 @@ class LinkPinView: NSView {
 	var _canvas: Canvas
 	
 	var _pinLayer: CAShapeLayer
+	var _pinPath: NSBezierPath
+	
 	var _curveLayer: CAShapeLayer
 	var _curvePath: NSBezierPath
+	
+	var _isDragging: Bool
+	var _dragPosition: CGPoint
+	var _dragLayer: CAShapeLayer
+	var _dragPath: NSBezierPath
 	
 	var _trackingArea: NSTrackingArea?
 	
 	init(link: NVBaseLink, canvas: Canvas) {
 		self._nvBaseLink = link
 		self._canvas = canvas
+		
 		self._pinLayer = CAShapeLayer()
+		self._pinPath = NSBezierPath()
+		
 		self._curveLayer = CAShapeLayer()
 		self._curvePath = NSBezierPath()
+		
+		self._isDragging = false
+		self._dragPosition = CGPoint.zero
+		self._dragLayer = CAShapeLayer()
+		self._dragPath = NSBezierPath()
 		
 		super.init(frame: NSMakeRect(0.0, 0.0, 15.0, 15.0))
 		
 		wantsLayer = true
 		layer!.masksToBounds = false
 		layer!.addSublayer(_curveLayer)
+		layer!.addSublayer(_dragLayer)
 		layer!.addSublayer(_pinLayer)
+		
+		// configure curve layer
+		_curveLayer.fillColor = nil
+		_curveLayer.fillRule = kCAFillRuleNonZero
+		_curveLayer.lineCap = kCALineCapRound
+		_curveLayer.lineDashPattern = nil
+		_curveLayer.lineJoin = kCALineJoinMiter
+		_curveLayer.lineWidth = 2.0
+		_curveLayer.miterLimit = 10.0
+		
+		// configure drag layer
+		_dragLayer.fillColor = nil
+		_dragLayer.fillRule = kCAFillRuleNonZero
+		_dragLayer.lineCap = kCALineCapRound
+		_dragLayer.lineDashPattern = nil
+		_dragLayer.lineJoin = kCALineJoinMiter
+		_dragLayer.lineWidth = 2.0
+		_dragLayer.miterLimit = 10.0
+		_dragLayer.strokeColor = NSColor.red.cgColor
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("LinkPinView::init(coder) not implemented.")
@@ -50,19 +85,26 @@ class LinkPinView: NSView {
 	}
 	
 	override func mouseEntered(with event: NSEvent) {
-		print("enter")
+//		print("enter")
 	}
 	override func mouseExited(with event: NSEvent) {
-		print("exit")
+//		print("exit")
 	}
 	override func mouseDown(with event: NSEvent) {
-		print("clicked a pin")
+//		print("clicked a pin")
 	}
 	override func mouseDragged(with event: NSEvent) {
-		print("dragged a pin")
+//		print("dragged a pin")
+		_isDragging = true
+		_dragPosition = self.convert(event.locationInWindow, from: nil) // maybe convert space?
+		
+		setNeedsDisplay(bounds)
 	}
 	override func mouseUp(with event: NSEvent) {
-		print("upped a pin")
+//		print("upped a pin")
+		_isDragging = false
+		
+		setNeedsDisplay(bounds)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
@@ -71,21 +113,16 @@ class LinkPinView: NSView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
-			// error checking (this shouldn't be in draw but for now it will do)
-			// TODO: Move this to a sensible place.
-			if _nvBaseLink._origin == nil {
-				fatalError("Error: LinkPinView's NVBaseLink has NO origin.  This should never happen")
-			}
-			
 			// draw pin
-			_pinLayer.path = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5).cgPath
+			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
+			_pinLayer.path = _pinPath.cgPath
 			_pinLayer.fillColor = NSColor.white.cgColor
 			
 			// clear points before drawing
 			_curvePath.removeAllPoints()
 			
 			// origin and end points
-			let origin = NSMakePoint(0.0, frame.height * 0.5)
+			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
 			var end = CGPoint.zero
 			
 			// draw link curve
@@ -93,7 +130,6 @@ class LinkPinView: NSView {
 				if let destination = _canvas.getLinkableWidgetFrom(linkable: asLink._transfer._destination) {
 					// convert local from destination into local of self
 					end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
-					
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
 				}
 				
@@ -101,7 +137,6 @@ class LinkPinView: NSView {
 				_curveLayer.lineWidth = 2.0
 				_curveLayer.strokeColor = NSColor.fromHex("#B3F865").cgColor
 			}
-			
 			// draw branch curve
 			if let asBranch = _nvBaseLink as? NVBranch {
 				if let trueDest = _canvas.getLinkableWidgetFrom(linkable: asBranch._trueTransfer._destination) {
@@ -115,19 +150,22 @@ class LinkPinView: NSView {
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
 				}
 				
+				// TODO: Don't set path (or set to nil) if the destination isn't valid.
 				_curveLayer.lineWidth = 2.0
 				_curveLayer.strokeColor = NSColor.fromHex("#EA772F").cgColor
 			}
-			
-			// set up curve layer parameters for drawing
 			_curveLayer.path = _curvePath.cgPath
-			_curveLayer.fillColor = nil
-			_curveLayer.fillRule = kCAFillRuleNonZero
-			_curveLayer.lineCap = kCALineCapButt
-			_curveLayer.lineDashPattern = nil
-			_curveLayer.lineJoin = kCALineJoinMiter
-			_curveLayer.lineWidth = 2.0
-			_curveLayer.miterLimit = 10.0
+			
+			
+			// handle drag curve
+			if _isDragging {
+				_dragPath.removeAllPoints()
+				end = _dragPosition
+				CurveHelper.smooth(start: origin, end: end, path: _dragPath)
+				_dragLayer.path = _dragPath.cgPath
+			} else {
+				_dragLayer.path = nil
+			}
 			
 			context.restoreGState()
 		}
