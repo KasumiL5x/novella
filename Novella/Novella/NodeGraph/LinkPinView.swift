@@ -61,7 +61,7 @@ class LinkPinView: NSView {
 		_dragLayer.fillColor = nil
 		_dragLayer.fillRule = kCAFillRuleNonZero
 		_dragLayer.lineCap = kCALineCapRound
-		_dragLayer.lineDashPattern = nil
+		_dragLayer.lineDashPattern = [5, 5]
 		_dragLayer.lineJoin = kCALineJoinMiter
 		_dragLayer.lineWidth = 2.0
 		_dragLayer.miterLimit = 10.0
