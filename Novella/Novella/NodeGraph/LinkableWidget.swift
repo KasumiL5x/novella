@@ -156,7 +156,10 @@ class LinkableWidget: NSView {
 	}
 	
 	override func mouseExited(with event: NSEvent) {
-
+		// although this is handled in mouseMoved for when we move onto subviews, it doesn't work for literal exits, so do that here
+		if _isPrimedForSelection {
+			unprimeForSelect()
+		}
 	}
 	
 	override func mouseDown(with event: NSEvent) {
