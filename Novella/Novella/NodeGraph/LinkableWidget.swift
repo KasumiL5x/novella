@@ -16,7 +16,7 @@ class LinkableWidget: NSView {
 	
 	var _trackingArea: NSTrackingArea?
 	
-	var _outputs: [OutputPin]
+	var _outputs: [LinkPinView]
 	
 	init(frame frameRect: NSRect, novellaLinkable: NVLinkable, canvas: Canvas) {
 		self._canvas = canvas
@@ -27,11 +27,6 @@ class LinkableWidget: NSView {
 		self._outputs = []
 		
 		super.init(frame: frameRect)
-		
-		// TODO: Remove this test eventually.
-		addOutputPin()
-		addOutputPin()
-		addOutputPin()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("LinkableWidget::init(coder) not implemented.")
@@ -50,20 +45,37 @@ class LinkableWidget: NSView {
 		self.addTrackingArea(_trackingArea!)
 	}
 	
-	func addOutputPin() {
-		let pin = OutputPin(owner: self)
-		
-		var pos = CGPoint.zero
-		pos.x = self.frame.width - (pin.frame.width * 0.5)
-		pos.y = self.frame.height - (pin.frame.height * 2.0)
-		pos.y -= CGFloat(_outputs.count) * (pin.frame.height * 1.5)
-		pin.frame.origin = pos
-		
-		_outputs.append(pin)
-		self.addSubview(pin)
-		
-		// TODO: Resize bounds of this area or something?
+	func addOutput(pin: LinkPinView?=nil) {
+		if pin == nil {
+			// TODO: add new one and link from this to nothing (or cursor etc.)
+		} else {
+			
+			// auto-position pin
+			var pos = CGPoint.zero
+			pos.x = self.frame.width - (pin!.frame.width * 0.5)
+			pos.y = self.frame.height - (pin!.frame.height * 2.0)
+			pos.y -= CGFloat(_outputs.count) * (pin!.frame.height * 1.5)
+			pin!.frame.origin = pos
+			
+			_outputs.append(pin!)
+			self.addSubview(pin!)
+		}
 	}
+	
+//	func addOutputPin() {
+//		let pin = OutputPin(owner: self)
+//
+//		var pos = CGPoint.zero
+//		pos.x = self.frame.width - (pin.frame.width * 0.5)
+//		pos.y = self.frame.height - (pin.frame.height * 2.0)
+//		pos.y -= CGFloat(_outputs.count) * (pin.frame.height * 1.5)
+//		pin.frame.origin = pos
+//
+//		_outputs.append(pin)
+//		self.addSubview(pin)
+//
+//		// TODO: Resize bounds of this area or something?
+//	}
 	
 	// MARK: Functions for derived classes to override.
 	func onMove() {

@@ -15,6 +15,7 @@ class Canvas: NSView {
 
 	var _linkableWidgets: [LinkableWidget]
 	var _curveWidgets: [BaseLinkWidget]
+	var _linkPinViews: [LinkPinView]
 	
 	var _selectionRect: SelectionView
 	var _selectedNodes: [LinkableWidget]
@@ -33,6 +34,7 @@ class Canvas: NSView {
 		
 		self._linkableWidgets = []
 		self._curveWidgets = []
+		self._linkPinViews = []
 		
 		self._selectionRect = SelectionView(frame: frameRect)
 		self._selectedNodes = []
@@ -78,7 +80,7 @@ class Canvas: NSView {
 		// add all nodes
 		for curr in story._allNodes {
 			if let asDialog = curr as? NVDialog {
-				makeDialogWidget(novellaDialog: asDialog)
+				let _ = makeDialogWidget(novellaDialog: asDialog)
 			} else {
 				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
 			}
@@ -86,13 +88,20 @@ class Canvas: NSView {
 		
 		// create all links
 		for curr in story._allLinks {
-			if let asLink = curr as? NVLink {
-				makeLinkWidget(novellaLink: asLink)
-			} else if let asBranch = curr as? NVBranch {
-				makeBranchWidget(novellaBranch: asBranch)
+			
+			if let node = getLinkableWidgetFrom(linkable: curr._origin) {
+				node.addOutput(pin: makeLinkPin(nvBaseLink: curr))
 			} else {
-				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
+				fatalError("Recived a link without an origin!")
 			}
+			
+//			if let asLink = curr as? NVLink {
+////				makeLinkWidget(novellaLink: asLink)
+//			} else if let asBranch = curr as? NVBranch {
+////				makeBranchWidget(novellaBranch: asBranch)
+//			} else {
+//				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
+//			}
 		}
 		
 		print("Loaded story!")
@@ -145,6 +154,10 @@ class Canvas: NSView {
 	// MARK: Curves
 	func updateCurves() {
 		// updates every curve - not very efficient
+		for child in _linkPinViews {
+			child.setNeedsDisplay(child.bounds)
+		}
+		
 		for child in _curveWidgets {
 			child.layer?.setNeedsDisplay()
 		}
@@ -202,10 +215,11 @@ class Canvas: NSView {
 // MARK: LinkableWidget Stuff
 extension Canvas {
 	// MARK: Creation
-	func makeDialogWidget(novellaDialog: NVDialog) {
+	func makeDialogWidget(novellaDialog: NVDialog) -> DialogWidget {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_linkableWidgets.append(widget)
 		self.addSubview(widget)
+		return widget
 	}
 	
 	// MARK: Mouse Events
@@ -269,6 +283,12 @@ extension Canvas {
 // MARK: Links Stuff
 extension Canvas {
 	// MARK: Creation
+	func makeLinkPin(nvBaseLink: NVBaseLink) -> LinkPinView {
+		let lpv = LinkPinView(link: nvBaseLink, canvas: self)
+		_linkPinViews.append(lpv)
+		return lpv
+	}
+	
 	func makeLinkWidget(novellaLink: NVLink) {
 		let widget = LinkWidget(link: novellaLink, canvas: self)
 		_curveWidgets.append(widget)

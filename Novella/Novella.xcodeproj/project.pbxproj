@@ -10,7 +10,7 @@
 		6518B6EA20894E2600FF6BB8 /* NVStory+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
-		6535CB6120A2ED6300E857A0 /* OutputPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535CB6020A2ED6300E857A0 /* OutputPin.swift */; };
+		6535CB6520A2F95500E857A0 /* LinkPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535CB6420A2F95500E857A0 /* LinkPinView.swift */; };
 		653CA9B5208538F50052BAB9 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */; };
 		6553C95E2092723A00E6737B /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95D2092723A00E6737B /* Reader.storyboard */; };
 		6553C9602092726500E6737B /* Writer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95F2092726500E6737B /* Writer.storyboard */; };
@@ -87,7 +87,7 @@
 		6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVStory+JSON.swift"; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
-		6535CB6020A2ED6300E857A0 /* OutputPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputPin.swift; sourceTree = "<group>"; };
+		6535CB6420A2F95500E857A0 /* LinkPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPinView.swift; sourceTree = "<group>"; };
 		653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
 		6553C95D2092723A00E6737B /* Reader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reader.storyboard; sourceTree = "<group>"; };
 		6553C95F2092726500E6737B /* Writer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Writer.storyboard; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 				65F8548A209EF2D50067A95C /* GridView.swift */,
 				65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */,
 				65CEA210209F7086008C49AE /* SelectionView.swift */,
-				6535CB6020A2ED6300E857A0 /* OutputPin.swift */,
+				6535CB6420A2F95500E857A0 /* LinkPinView.swift */,
 			);
 			path = NodeGraph;
 			sourceTree = "<group>";
@@ -548,11 +548,11 @@
 			files = (
 				656F99E920869B2C009366D0 /* NVExitNode.swift in Sources */,
 				65588386209C856F004C412F /* BaseLinkWidget.swift in Sources */,
-				6535CB6120A2ED6300E857A0 /* OutputPin.swift in Sources */,
 				655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */,
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
 				65F5DF9C207EA0C70041FB0D /* NVCondition.swift in Sources */,
 				655CFAEF2085FA2900C04D40 /* NVListener.swift in Sources */,
+				6535CB6520A2F95500E857A0 /* LinkPinView.swift in Sources */,
 				656F99EB2086A5E9009366D0 /* NVCutscene.swift in Sources */,
 				658C7CDC207E7EB900E2B46B /* NVFolder.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
