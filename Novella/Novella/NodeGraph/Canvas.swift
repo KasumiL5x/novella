@@ -9,6 +9,8 @@
 import Cocoa
 
 class Canvas: NSView {
+	var _nvStory: NVStory?
+	
 	var _grid: GridView
 
 	var _linkableWidgets: [LinkableWidget]
@@ -25,6 +27,8 @@ class Canvas: NSView {
 	var _nodeContextMenu: NSMenu // context menu for nodes
 	
 	override init(frame frameRect: NSRect) {
+		self._nvStory = nil
+		
 		self._grid = GridView(frame: frameRect)
 		
 		self._linkableWidgets = []
@@ -64,6 +68,34 @@ class Canvas: NSView {
 		]
 		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
 		self.addTrackingArea(_trackingArea!)
+	}
+	
+	// MARK: Story
+	func loadFrom(story: NVStory) {
+		reset()
+		self._nvStory = story
+		
+		// add all nodes
+		for curr in story._allNodes {
+			if let asDialog = curr as? NVDialog {
+				makeDialogWidget(novellaDialog: asDialog)
+			} else {
+				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
+			}
+		}
+		
+		// create all links
+		for curr in story._allLinks {
+			if let asLink = curr as? NVLink {
+				makeLinkWidget(novellaLink: asLink)
+			} else if let asBranch = curr as? NVBranch {
+				makeBranchWidget(novellaBranch: asBranch)
+			} else {
+				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
+			}
+		}
+		
+		print("Loaded story!")
 	}
 	
 	// MARK: Undo/Redo

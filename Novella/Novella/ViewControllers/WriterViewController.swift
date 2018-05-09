@@ -73,30 +73,7 @@ class WriterViewController: NSViewController {
 		
 		storyName.stringValue = _story!._name.isEmpty ? "unnamed" : _story!._name
 		
-		// reset canvas
-		_canvas!.reset()
-		
-		// create canvas nodes for each dialog node
-		for curr in _story!._allNodes {
-			if let dlg = curr as? NVDialog {
-				_canvas!.makeDialogWidget(novellaDialog: dlg)
-			} else {
-				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
-			}
-		}
-		// create canvas links for each link
-		for curr in _story!._allLinks {
-			if let asLink = curr as? NVLink {
-				_canvas!.makeLinkWidget(novellaLink: asLink)
-			} else if let asBranch = curr as? NVBranch {
-				_canvas!.makeBranchWidget(novellaBranch: asBranch)
-			}
-			else {
-				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
-			}
-		}
-		
-		_story?.debugPrint(global: true)
+		_canvas!.loadFrom(story: _story!)
 	}
 	
 	@IBAction func onCloseStory(_ sender: NSButton) {
