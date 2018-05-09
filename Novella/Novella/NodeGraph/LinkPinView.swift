@@ -53,18 +53,16 @@ class LinkPinView: NSView {
 		_curveLayer.fillRule = kCAFillRuleNonZero
 		_curveLayer.lineCap = kCALineCapRound
 		_curveLayer.lineDashPattern = nil
-		_curveLayer.lineJoin = kCALineJoinMiter
+		_curveLayer.lineJoin = kCALineJoinRound
 		_curveLayer.lineWidth = 2.0
-		_curveLayer.miterLimit = 10.0
 		
 		// configure drag layer
 		_dragLayer.fillColor = nil
 		_dragLayer.fillRule = kCAFillRuleNonZero
 		_dragLayer.lineCap = kCALineCapRound
 		_dragLayer.lineDashPattern = [5, 5]
-		_dragLayer.lineJoin = kCALineJoinMiter
+		_dragLayer.lineJoin = kCALineJoinRound
 		_dragLayer.lineWidth = 2.0
-		_dragLayer.miterLimit = 10.0
 		_dragLayer.strokeColor = NSColor.red.cgColor
 	}
 	required init?(coder decoder: NSCoder) {

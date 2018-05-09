@@ -116,8 +116,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : 253.76171875,
-        "x" : 53.51953125
+        "y" : 253,
+        "x" : 53
       },
       "name" : "A",
       "content" : "This node has two parallel choices of equal value.",
@@ -128,8 +128,8 @@
     },
     {
       "position" : {
-        "y" : 350,
-        "x" : 250
+        "y" : 349.13671875,
+        "x" : 220.51953125
       },
       "name" : "B",
       "content" : "This was choice 1.",
@@ -140,8 +140,8 @@
     },
     {
       "position" : {
-        "y" : 150,
-        "x" : 250
+        "y" : 149.13671875,
+        "x" : 220.51953125
       },
       "name" : "C",
       "content" : "This was choice 2.",
@@ -152,8 +152,8 @@
     },
     {
       "position" : {
-        "y" : 250,
-        "x" : 400
+        "y" : 249.13671875,
+        "x" : 370.51953125
       },
       "name" : "D",
       "content" : "This node resolves from B and C regardless of choice.  There is a branch here based on some condition.",
@@ -164,8 +164,8 @@
     },
     {
       "position" : {
-        "y" : 350,
-        "x" : 550
+        "y" : 349.13671875,
+        "x" : 520.51953125
       },
       "name" : "E",
       "content" : "This is the true result.",
@@ -176,8 +176,8 @@
     },
     {
       "position" : {
-        "y" : 150,
-        "x" : 550
+        "y" : 149.13671875,
+        "x" : 520.51953125
       },
       "name" : "F",
       "content" : "This is the false result.",
@@ -188,8 +188,8 @@
     },
     {
       "position" : {
-        "y" : 250,
-        "x" : 700
+        "y" : 249.13671875,
+        "x" : 670.51953125
       },
       "name" : "G",
       "content" : "This is the final resolve from E and F regardless of chioce.",
