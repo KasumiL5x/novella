@@ -96,7 +96,7 @@ class LinkPinView: NSView {
 	override func mouseDragged(with event: NSEvent) {
 //		print("dragged a pin")
 		_isDragging = true
-		_dragPosition = self.convert(event.locationInWindow, from: nil) // maybe convert space?
+		_dragPosition = self.convert(event.locationInWindow, from: nil)
 		
 		setNeedsDisplay(bounds)
 	}
@@ -113,51 +113,50 @@ class LinkPinView: NSView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
-			// draw pin
-			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
+			// MARK: Pin Drawing
+			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5) // TODO: This could be optimized if the bounds never change.
 			_pinLayer.path = _pinPath.cgPath
 			_pinLayer.fillColor = NSColor.white.cgColor
 			
-			// clear points before drawing
-			_curvePath.removeAllPoints()
-			
-			// origin and end points
+			// MARK: Curve Drawing
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
 			var end = CGPoint.zero
-			
+			_curveLayer.path = nil
+			_curvePath.removeAllPoints()
 			// draw link curve
 			if let asLink = _nvBaseLink as? NVLink {
 				if let destination = _canvas.getLinkableWidgetFrom(linkable: asLink._transfer._destination) {
-					// convert local from destination into local of self
+					// convert local from destination into local of self and make curve
 					end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
+					_curveLayer.strokeColor = NSColor.fromHex("#B3F865").cgColor
+					_curveLayer.path = _curvePath.cgPath
 				}
-				
-				// TODO: Don't set path (or set to nil) if the destination isn't valid.
-				_curveLayer.lineWidth = 2.0
-				_curveLayer.strokeColor = NSColor.fromHex("#B3F865").cgColor
 			}
 			// draw branch curve
 			if let asBranch = _nvBaseLink as? NVBranch {
+				var hadDest = false
 				if let trueDest = _canvas.getLinkableWidgetFrom(linkable: asBranch._trueTransfer._destination) {
-					// convert local from destination into local of self
+					// convert local from destination into local of self and make curve
 					end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
+					hadDest = true
 				}
 				if let falseDest = _canvas.getLinkableWidgetFrom(linkable: asBranch._falseTransfer._destination) {
-					// convert local from destination into local of self
+					// convert local from destination into local of self and make curve
 					end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
+					hadDest = true
 				}
 				
-				// TODO: Don't set path (or set to nil) if the destination isn't valid.
-				_curveLayer.lineWidth = 2.0
-				_curveLayer.strokeColor = NSColor.fromHex("#EA772F").cgColor
+				if hadDest {
+					_curveLayer.path = _curvePath.cgPath
+					_curveLayer.strokeColor = NSColor.fromHex("#EA772F").cgColor
+				}
 			}
-			_curveLayer.path = _curvePath.cgPath
 			
 			
-			// handle drag curve
+			// MARK: Draw Drag Curve
 			if _isDragging {
 				_dragPath.removeAllPoints()
 				end = _dragPosition
