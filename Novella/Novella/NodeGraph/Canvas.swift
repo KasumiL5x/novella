@@ -230,6 +230,11 @@ extension Canvas {
 	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
 		print("hello from \(sender)")
 	}
+	
+	// MARK: Other
+	func getNVLinksFrom(_ widget: LinkableWidget) -> [BaseLinkWidget] {
+		return _curveWidgets.filter({$0._nvBaseLink?._origin?.UUID == widget._nvLinkable?.UUID})
+	}
 }
 
 // MARK: Links Stuff

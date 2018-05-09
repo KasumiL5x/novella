@@ -16,13 +16,22 @@ class LinkableWidget: NSView {
 	
 	var _trackingArea: NSTrackingArea?
 	
+	var _outputs: [OutputPin]
+	
 	init(frame frameRect: NSRect, novellaLinkable: NVLinkable, canvas: Canvas) {
 		self._canvas = canvas
 		self._nvLinkable = novellaLinkable
 		self._isPrimedForSelection = false
 		self._isSelected = false
 		
+		self._outputs = []
+		
 		super.init(frame: frameRect)
+		
+		// TODO: Remove this test eventually.
+		addOutputPin()
+		addOutputPin()
+		addOutputPin()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("LinkableWidget::init(coder) not implemented.")
@@ -39,6 +48,21 @@ class LinkableWidget: NSView {
 		]
 		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
 		self.addTrackingArea(_trackingArea!)
+	}
+	
+	func addOutputPin() {
+		let pin = OutputPin(owner: self)
+		
+		var pos = CGPoint.zero
+		pos.x = self.frame.width - (pin.frame.width * 0.5)
+		pos.y = self.frame.height - (pin.frame.height * 2.0)
+		pos.y -= CGFloat(_outputs.count) * (pin.frame.height * 1.5)
+		pin.frame.origin = pos
+		
+		_outputs.append(pin)
+		self.addSubview(pin)
+		
+		// TODO: Resize bounds of this area or something?
 	}
 	
 	// MARK: Functions for derived classes to override.
