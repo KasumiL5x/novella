@@ -42,9 +42,6 @@ class Canvas: NSView {
 		
 		super.init(frame: frameRect)
 		
-		// layers for subviews
-		wantsLayer = true // TODO: Is this needed now?
-		
 		// set up node context menu
 		_nodeContextMenu.addItem(withTitle: "Link to...", action: #selector(Canvas.onNodeContextLinkTo), keyEquivalent: "")
 		
