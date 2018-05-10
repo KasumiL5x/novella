@@ -97,6 +97,16 @@ class LinkPinView: NSView {
 		_dragPosition = self.convert(event.locationInWindow, from: nil)
 		
 		setNeedsDisplay(bounds)
+		
+		_canvas.onDragPin(pin: self, event: event)
+		
+		// so dragging obviously means that only this object receives mouse events, i.e. dragging over a node doesn't highlight it.
+		// therefore, i'm thinking of passing this event up to the canvas saying a pin has been dragged, which will then somehow check
+		// for elements underneth the mouse via hittest or call some function or whatever to determine the destination.
+		// if this is a link it will replace destination (providing it's valid, and not SELF), and if a branch, it will bring up a new
+		// pop up menu which i haven't made yet stating true or false result.  Still have a lot to figure out here.
+		// I should remember that once the basics work, I should put everything into undoable commands, including assigning destinations.
+		// I guess it would store previous destination and current destination, and then assign accordingly.
 	}
 	override func mouseUp(with event: NSEvent) {
 //		print("upped a pin")

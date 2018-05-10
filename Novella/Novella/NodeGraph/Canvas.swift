@@ -92,14 +92,6 @@ class Canvas: NSView {
 			} else {
 				fatalError("Recived a link without an origin!")
 			}
-			
-//			if let asLink = curr as? NVLink {
-////				makeLinkWidget(novellaLink: asLink)
-//			} else if let asBranch = curr as? NVBranch {
-////				makeBranchWidget(novellaBranch: asBranch)
-//			} else {
-//				print("Encountered link type that's not handled in Canvas yet (\(type(of:curr)).")
-//			}
 		}
 		
 		print("Loaded story!")
@@ -276,5 +268,20 @@ extension Canvas {
 		let lpv = LinkPinView(link: nvBaseLink, canvas: self)
 		_linkPinViews.append(lpv)
 		return lpv
+	}
+	
+	func onDragPin(pin: LinkPinView, event: NSEvent) {
+		// the offset error is that i assumed canvas space when it's window space.
+		// but my linkable hittest is using cavas space... how?
+		
+		var view: NSView? = nil
+		for sub in _linkableWidgets {
+			let pos = self.convert(event.locationInWindow, from: nil) // MUST be in canvas space, as the subviews hitTest relies on the superview (canvas) space
+			let hitView = sub.hitTest(pos)
+			if hitView != nil {
+				print("Hovering (\(pos)): \(sub)")
+			}
+		}
+		
 	}
 }

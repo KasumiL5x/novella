@@ -83,15 +83,16 @@ class LinkableWidget: NSView {
 	}
 	
 	override func hitTest(_ point: NSPoint) -> NSView? {
+		// point is in the superview's coordinate system
 		// manually check each subview's bounds (if i want to do something similar i'd need to override their hittest and call it here)
 		for sub in subviews {
-			if NSPointInRect(_canvas.convert(point, to: sub), sub.bounds) {
+			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
 				return sub
 			}
 		}
 		
 		// check out local widget's bounds for a mouse click
-		if NSPointInRect(_canvas.convert(point, to: self), widgetRect()) {
+		if NSPointInRect(superview!.convert(point, to: self), widgetRect()) {
 			return self
 		}
 		
@@ -133,33 +134,40 @@ class LinkableWidget: NSView {
 		_canvas.updateCurves()
 	}
 	
+	// MARK: Manual Events
+	func mouseEnterView() {
+		if !_isSelected {
+			primeForSelect()
+		}
+	}
+	func mouseExitedView() {
+		if _isPrimedForSelection {
+			unprimeForSelect()
+		}
+	}
+	
+	// MARK: Mouse Events
 	override func mouseMoved(with event: NSEvent) {
 		// bit of a hack, but ignores this window if the mouse isn't directly over it (https://gist.github.com/eonist/537ae53b86d5fc332fd3)
 		let mouseOnThisView = self == window!.contentView!.hitTest(window!.mouseLocationOutsideOfEventStream)
-		
+
 		// manually handle equivalent to mouseEntered/mouseExited as we have subviews overlapping this view, which means if
 		// the mouse enters through a subview, it won't trigger correctly, and simlar for exit.  This isn't efficient, but it works.
 		if mouseOnThisView {
 			// handle "enter" condition here as we could move from an overlapping subview which technically means we're already entered and thus won't work
-			if !_isSelected {
-				primeForSelect()
-			}
+			mouseEnterView()
 		} else {
-			if _isPrimedForSelection {
-				unprimeForSelect()
-			}
+			mouseExitedView()
 		}
-		
 	}
 	
 	override func mouseEntered(with event: NSEvent) {
+		mouseEnterView()
 	}
 	
 	override func mouseExited(with event: NSEvent) {
 		// although this is handled in mouseMoved for when we move onto subviews, it doesn't work for literal exits, so do that here
-		if _isPrimedForSelection {
-			unprimeForSelect()
-		}
+		mouseExitedView()
 	}
 	
 	override func mouseDown(with event: NSEvent) {
@@ -179,5 +187,18 @@ class LinkableWidget: NSView {
 	
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
+		
+		// debug draw bounds and frame for testing
+		if false {
+			if let context = NSGraphicsContext.current?.cgContext {
+				context.saveGState()
+				
+				let outline = NSBezierPath(roundedRect: bounds, xRadius: 0.0, yRadius: 0.0)
+				NSColor.red.setFill()
+				outline.fill()
+				
+				context.restoreGState()
+			}
+		}
 	}
 }
