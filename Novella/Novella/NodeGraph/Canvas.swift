@@ -219,7 +219,7 @@ extension Canvas {
 	func makeDialogWidget(novellaDialog: NVDialog) -> DialogWidget {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_linkableWidgets.append(widget)
-		self.addSubview(widget)
+		self.addSubview(widget, positioned: .below, relativeTo: _selectionRect) // make sure _selectionRect stays on top
 		return widget
 	}
 
