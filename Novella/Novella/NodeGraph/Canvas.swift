@@ -131,6 +131,13 @@ class Canvas: NSView {
 		_linkableWidgets = []
 		// remove all link pins
 		_linkPinViews = []
+		
+		// replace selection with nothing
+		select([], append: false)
+		
+		// pin drop stuff
+		self._pinDropTarget = nil
+		self._pinDropDragged = nil
 
 		// clear undo/redo
 		_undoRedo.clear()
@@ -142,14 +149,12 @@ class Canvas: NSView {
 			return nil
 		}
 
-		let widget = _linkableWidgets.first(where: {
+		return _linkableWidgets.first(where: {
 			if let dlgWidget = $0 as? DialogWidget {
 				return linkable?.UUID == dlgWidget._nvLinkable!.UUID
 			}
 			return false
 		})
-
-		return widget
 	}
 
 	// MARK: Curves
@@ -315,7 +320,7 @@ extension Canvas {
 			_pinDropTarget = nil
 		}
 		// handle case of branches
-		if let asBranch = pin._nvBaseLink as? NVBranch {
+		if let _ = pin._nvBaseLink as? NVBranch {
 			NSMenu.popUpContextMenu(_pinDropMenuBranch, with: event, for: _pinDropTarget!)
 		}
 		// handle case of switches
