@@ -19,8 +19,6 @@ public class NVLink : NVBaseLink {
 		super.init(uuid: uuid, story: story, origin: origin)
 	}
 	
-	// MARK: Getters
-	public var Transfer: NVTransfer {
-		get{ return _transfer }
-	}
+	// MARK: Properties
+	public var Transfer: NVTransfer {get{ return _transfer }}
 }
