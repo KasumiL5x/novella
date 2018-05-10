@@ -20,6 +20,7 @@ class DialogWidget: LinkableWidget {
 		self._nameLabel.isSelectable = false
 		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
 		self._nameLabel.stringValue = node.Name.isEmpty ? "unnamed" : node.Name
+		// TODO: If I decide to keep the label, I will need to subclass NSTextField and override its hitTest() to return nil.
 
 		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 1.0, height: 1.0), novellaLinkable: node, canvas: canvas)
 		self.frame.size = widgetRect().size
