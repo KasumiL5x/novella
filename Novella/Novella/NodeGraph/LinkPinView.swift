@@ -85,6 +85,10 @@ class LinkPinView: NSView {
 		self.addTrackingArea(_trackingArea!)
 	}
 	
+	func redraw() {
+		setNeedsDisplay(bounds)
+	}
+	
 	override func mouseEntered(with event: NSEvent) {
 //		print("enter")
 	}

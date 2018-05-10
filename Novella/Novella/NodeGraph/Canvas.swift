@@ -156,7 +156,7 @@ class Canvas: NSView {
 	func updateCurves() {
 		// updates every curve - not very efficient
 		for child in _linkPinViews {
-			child.setNeedsDisplay(child.bounds)
+			child.redraw()
 		}
 	}
 
