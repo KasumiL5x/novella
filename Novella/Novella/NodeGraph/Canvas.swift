@@ -88,7 +88,7 @@ class Canvas: NSView {
 		// create all links
 		for curr in story.AllLinks {
 			if let node = getLinkableWidgetFrom(linkable: curr.Origin) {
-				node.addOutput(pin: makeLinkPin(nvBaseLink: curr))
+				node.addOutput(pin: makeLinkPin(nvBaseLink: curr, forWidget: node))
 			} else {
 				fatalError("Recived a link without an origin!")
 			}
@@ -264,8 +264,8 @@ extension Canvas {
 // MARK: Links Stuff
 extension Canvas {
 	// MARK: Creation
-	func makeLinkPin(nvBaseLink: NVBaseLink) -> LinkPinView {
-		let lpv = LinkPinView(link: nvBaseLink, canvas: self)
+	func makeLinkPin(nvBaseLink: NVBaseLink, forWidget: LinkableWidget) -> LinkPinView {
+		let lpv = LinkPinView(link: nvBaseLink, canvas: self, owner: forWidget)
 		_linkPinViews.append(lpv)
 		return lpv
 	}
@@ -277,7 +277,7 @@ extension Canvas {
 			let hitView = sub.hitTest(pos)
 			
 			// didn't hit, or hit subview (such as pins)
-			if hitView != sub {
+			if hitView != sub || hitView == pin._owner {
 				sub.mouseExitedView() // bit hacky, but disable priming this way for mouse exit
 				continue
 			}

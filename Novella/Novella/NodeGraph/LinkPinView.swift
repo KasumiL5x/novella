@@ -12,6 +12,7 @@ import NovellaModel
 class LinkPinView: NSView {
 	var _nvBaseLink: NVBaseLink
 	var _canvas: Canvas
+	var _owner: LinkableWidget
 	
 	var _pinLayer: CAShapeLayer
 	var _pinPath: NSBezierPath
@@ -26,9 +27,10 @@ class LinkPinView: NSView {
 	
 	var _trackingArea: NSTrackingArea?
 	
-	init(link: NVBaseLink, canvas: Canvas) {
+	init(link: NVBaseLink, canvas: Canvas, owner: LinkableWidget) {
 		self._nvBaseLink = link
 		self._canvas = canvas
+		self._owner = owner
 		
 		self._pinLayer = CAShapeLayer()
 		self._pinPath = NSBezierPath()
