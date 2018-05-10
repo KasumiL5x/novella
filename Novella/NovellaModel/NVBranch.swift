@@ -21,11 +21,7 @@ public class NVBranch : NVBaseLink {
 		super.init(uuid: uuid, story: story, origin: origin)
 	}
 	
-	// MARK: Getters
-	public var TrueTransfer: NVTransfer {
-		get{ return _trueTransfer }
-	}
-	public var FalseTransfer: NVTransfer {
-		get{ return _falseTransfer }
-	}
+	// MARK: Properties
+	public var TrueTransfer:  NVTransfer {get{ return _trueTransfer }}
+	public var FalseTransfer: NVTransfer {get{ return _falseTransfer }}
 }
