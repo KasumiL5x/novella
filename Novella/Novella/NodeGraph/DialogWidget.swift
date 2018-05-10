@@ -23,7 +23,7 @@ class DialogWidget: LinkableWidget {
 		self._nameLabel.stringValue = node.Name.isEmpty ? "unnamed" : node.Name
 		// TODO: If I decide to keep the label, I will need to subclass NSTextField and override its hitTest() to return nil.
 
-		super.init(frame: NSRect(x: node.EditorPos.x, y: node.EditorPos.y, width: 1.0, height: 1.0), novellaLinkable: node, canvas: canvas)
+		super.init(frame: NSRect(x: node.EditorPosition.x, y: node.EditorPosition.y, width: 1.0, height: 1.0), novellaLinkable: node, canvas: canvas)
 		self.frame.size = widgetRect().size
 		
 		self._nameLabel.sizeToFit()
@@ -43,7 +43,7 @@ class DialogWidget: LinkableWidget {
 	}
 	
 	override func onMove() {
-		(_nvLinkable as? NVDialog)?.EditorPos = frame.origin
+		(_nvLinkable as? NVDialog)?.EditorPosition = frame.origin
 	}
 	
 	override func widgetRect() -> NSRect {

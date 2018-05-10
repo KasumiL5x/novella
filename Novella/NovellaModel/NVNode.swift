@@ -21,11 +21,8 @@ public class NVNode {
 	}
 	
 	// MARK: Properties
-	public var Name: String {get{ return _name } set{ _name = newValue }}
-	public var EditorPos: CGPoint {
-		get{ return _editorPos }
-		set{ _editorPos = newValue }
-	}
+	public var Name:           String  {get{ return _name } set{ _name = newValue }}
+	public var EditorPosition: CGPoint {get{ return _editorPos }	set{ _editorPos = newValue }}
 }
 
 // MARK: NVIdentifiable
