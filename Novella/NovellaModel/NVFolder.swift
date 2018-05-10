@@ -25,9 +25,9 @@ public class NVFolder {
 		self._parent = nil
 	}
 	
-	// MARK: Getters
+	// MARK: Properties
 	public var Name:      String       {get{ return _name }}
-	public var Synopsis:  String       {get{ return _synopsis }}
+	public var Synopsis:  String       {get{ return _synopsis } set{ _synopsis = newValue }}
 	public var Variables: [NVVariable] {get{ return _variables }}
 	public var Folders:   [NVFolder]   {get{ return _folders }}
 	public var Parent:    NVFolder?    {get{ return _parent }}
@@ -45,10 +45,6 @@ public class NVFolder {
 			throw NVError.nameAlreadyTaken("Tried to change Folder \(_name) to \(name), but its parent Folder (\(_parent!.Name) already contains that name.")
 		}
 		_name = name
-	}
-	
-	public func setSynopsis(_ synopsis: String) {
-		self._synopsis = synopsis
 	}
 	
 	// MARK: Folders
