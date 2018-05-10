@@ -20,7 +20,7 @@ public class NVGraph {
 	
 	// parent graph is valid unless as a direct child of the story
 	var _parent: NVGraph?
-	var _story: NVStory?
+	var _story: NVStory
 	
 	init(uuid: NSUUID, name: String, story: NVStory) {
 		self._uuid = uuid
@@ -44,15 +44,13 @@ public class NVGraph {
 	public var Exits:     [NVExitNode] {get{ return _exits }}
 	public var Entry:     NVLinkable?  {get{ return _entry }}
 	public var Parent:    NVGraph?     {get{ return _parent }}
-	public var Story:     NVStory?     {get{ return _story }}
+	public var Story:     NVStory      {get{ return _story }}
 	
 	// MARK: Setters
 	public func setName(_ name: String) throws {
-		assert(_story != nil, "Graph::setName - _story is nil.")
-		
 		// if there's no parent graph, check siblings of the story for name clashes
 		if nil == _parent {
-			if _story!.containsGraphName(name) {
+			if _story.containsGraphName(name) {
 				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the Story already contains that name.")
 			}
 			_name = name

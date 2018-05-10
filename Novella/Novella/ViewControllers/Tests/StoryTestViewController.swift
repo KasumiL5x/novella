@@ -74,7 +74,7 @@ class StoryTestViewController: NSViewController {
 			if graph.Parent != nil {
 				try! graph.Parent?.remove(graph: graph)
 			} else {
-				try! graph.Story?.remove(graph: graph)
+				try! graph.Story.remove(graph: graph)
 			}
 		}
 		
