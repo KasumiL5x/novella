@@ -176,16 +176,15 @@ class Canvas: NSView {
 		// update marquee
 		if _selectionRect.InMarquee {
 			let curr = self.convert(event.locationInWindow, from: nil)
-			_selectionRect.Marquee = NSMakeRect(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y), fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
-			return
+			_selectionRect.Marquee.origin = NSMakePoint(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y))
+			_selectionRect.Marquee.size = NSMakeSize(fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
 		}
 	}
 
 	override func mouseUp(with event: NSEvent) {
 		// handle marquee selection region
 		if _selectionRect.InMarquee {
-			let appendSelection = event.modifierFlags.contains(.shift)
-			select(allNodesIn(rect: _selectionRect.Marquee), append: appendSelection)
+			select(allNodesIn(rect: _selectionRect.Marquee), append: event.modifierFlags.contains(.shift))
 			_selectionRect.Marquee = NSRect.zero
 			_selectionRect.InMarquee = false
 		}	else {
