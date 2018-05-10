@@ -11,7 +11,7 @@ public enum NVDataType {
 	case integer
 	case double
 	
-	public var defaultValue: Any {
+	var defaultValue: Any {
 		switch self {
 		case .boolean: return false
 		case .integer: return 0
@@ -19,7 +19,7 @@ public enum NVDataType {
 		}
 	}
 	
-	public func matches(value: Any) -> Bool {
+	func matches(value: Any) -> Bool {
 		switch self {
 		case .boolean: return value is Bool
 		case .integer: return value is Int
@@ -35,7 +35,7 @@ public enum NVDataType {
 		}
 	}
 	
-	public static func fromString(str: String) -> NVDataType {
+	static func fromString(str: String) -> NVDataType {
 		switch str {
 		case "boolean": return .boolean
 		case "integer": return .integer
