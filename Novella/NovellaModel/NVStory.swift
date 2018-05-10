@@ -9,7 +9,7 @@
 import Foundation
 import JavaScriptCore
 
-class NVStory {
+public class NVStory {
 	// MARK: Javascript stuff
 	let _jsContext: JSContext
 	
@@ -27,7 +27,7 @@ class NVStory {
 	
 	var _name: String
 	
-	init() {
+	public init() {
 		self._jsContext = JSContext()
 		self._jsContext.exceptionHandler = { context, exception in
 			if let ex = exception {
@@ -51,6 +51,23 @@ class NVStory {
 		self._name = ""
 	}
 	
+	// MARK: Getters
+	public var AllNodes: [NVNode] {
+		get{ return _allNodes }
+	}
+	public var AllLinks: [NVBaseLink] {
+		get{ return _allLinks }
+	}
+	public var Folders: [NVFolder] {
+		get{ return _folders }
+	}
+	public var Graphs: [NVGraph] {
+		get{ return _graphs }
+	}
+	public var Name: String {
+		get{ return _name }
+	}
+	
 	// MARK: Javascript stuff
 	// TODO: Get/Set variables in JS
 	let consoleLog: @convention(block) (String) -> Void = { logMessage in
@@ -66,16 +83,16 @@ class NVStory {
 // MARK: Local Collection Functions
 extension NVStory {
 	// MARK: Folders
-	func contains(folder: NVFolder) -> Bool {
+	public func contains(folder: NVFolder) -> Bool {
 		return _folders.contains(folder)
 	}
 	
-	func containsFolderName(_ name: String) -> Bool {
+	public func containsFolderName(_ name: String) -> Bool {
 		return _folders.contains(where: {$0._name == name})
 	}
 	
 	@discardableResult
-	func add(folder: NVFolder) throws -> NVFolder {
+	public func add(folder: NVFolder) throws -> NVFolder {
 		// already a child
 		if contains(folder: folder) {
 			throw NVError.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
@@ -89,7 +106,7 @@ extension NVStory {
 		return folder
 	}
 	
-	func remove(folder: NVFolder) throws {
+	public func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
 			throw NVError.invalid("Tried to remove Folder (\(folder._name)) from story but it was not a child.")
 		}
@@ -97,16 +114,16 @@ extension NVStory {
 	}
 	
 	// MARK: Graphs
-	func contains(graph: NVGraph) -> Bool {
+	public func contains(graph: NVGraph) -> Bool {
 		return _graphs.contains(graph)
 	}
 	
-	func containsGraphName(_ name: String) -> Bool {
+	public func containsGraphName(_ name: String) -> Bool {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
 	@discardableResult
-	func add(graph: NVGraph) throws -> NVGraph {
+	public func add(graph: NVGraph) throws -> NVGraph {
 		// already a child
 		if contains(graph: graph) {
 			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph._name) to story).")
@@ -125,7 +142,7 @@ extension NVStory {
 		return graph
 	}
 	
-	func remove(graph: NVGraph) throws {
+	public func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
 			throw NVError.invalid("Tried to remove Graph (\(graph._name)) from story but it was not a child.")
 		}
@@ -140,7 +157,7 @@ extension NVStory {
 	}
 	
 	@discardableResult
-	func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
+	public func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
 		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
 		_allFolders.append(folder)
 		_allIdentifiables.append(folder)
@@ -148,7 +165,7 @@ extension NVStory {
 	}
 	
 	@discardableResult
-	func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
+	public func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
 		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
 		_allVariables.append(variable)
 		_allIdentifiables.append(variable)
@@ -156,7 +173,7 @@ extension NVStory {
 	}
 	
 	@discardableResult
-	func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
+	public func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
 		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: self)
 		_allGraphs.append(graph)
 		_allIdentifiables.append(graph)
@@ -164,21 +181,21 @@ extension NVStory {
 	}
 	
 	@discardableResult
-	func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
+	public func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
 		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
 		return link
 	}
 	@discardableResult
-	func makeBranch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVBranch {
+	public func makeBranch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVBranch {
 		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(branch)
 		_allIdentifiables.append(branch)
 		return branch
 	}
 	@discardableResult
-	func makeSwitch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVSwitch {
+	public func makeSwitch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVSwitch {
 		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(swtch)
 		_allIdentifiables.append(swtch)
@@ -186,7 +203,7 @@ extension NVStory {
 	}
 	
 	@discardableResult
-	func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
+	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
 		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID())
 		_allNodes.append(dialog)
 		_allIdentifiables.append(dialog)
@@ -200,7 +217,7 @@ extension NVStory {
 
 // MARK: Debug
 extension NVStory {
-	func debugPrint(global: Bool) {
+	public func debugPrint(global: Bool) {
 		if global {
 			print("\nStory (\(_name)):")
 			

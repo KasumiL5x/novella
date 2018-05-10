@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class JSONTestViewController: NSViewController {
 	let _story: NVStory = NVStory()
@@ -37,14 +38,14 @@ class JSONTestViewController: NSViewController {
 		let eToG = _story.makeLink(origin: dlgE)
 		let fToG = _story.makeLink(origin: dlgF)
 		// set up links
-		aToB._transfer.setDestination(dlgB)
-		aToC._transfer.setDestination(dlgC)
-		bToD._transfer.setDestination(dlgD)
-		cToD._transfer.setDestination(dlgD)
-		dBranch._trueTransfer.setDestination(dlgE)
-		dBranch._falseTransfer.setDestination(dlgF)
-		eToG._transfer.setDestination(dlgG)
-		fToG._transfer.setDestination(dlgG)
+		aToB.Transfer.setDestination(dlgB)
+		aToC.Transfer.setDestination(dlgC)
+		bToD.Transfer.setDestination(dlgD)
+		cToD.Transfer.setDestination(dlgD)
+		dBranch.TrueTransfer.setDestination(dlgE)
+		dBranch.FalseTransfer.setDestination(dlgF)
+		eToG.Transfer.setDestination(dlgG)
+		fToG.Transfer.setDestination(dlgG)
 		// add nodes to graph
 		try! mainGraph.add(node: dlgA)
 		try! mainGraph.add(node: dlgB)
@@ -64,13 +65,13 @@ class JSONTestViewController: NSViewController {
 		// set entry point of graph
 		try! mainGraph.setEntry(dlgA)
 		// set content of dialog nodes
-		dlgA._content = "This node has two parallel choices of equal value."
-		dlgB._content = "This was choice 1."
-		dlgC._content = "This was choice 2."
-		dlgD._content = "This node resolves from B and C regardless of choice.  There is a branch here based on some condition."
-		dlgE._content = "This is the true result."
-		dlgF._content = "This is the false result."
-		dlgG._content = "This is the final resolve from E and F regardless of chioce."
+		dlgA.Content = "This node has two parallel choices of equal value."
+		dlgB.Content = "This was choice 1."
+		dlgC.Content = "This was choice 2."
+		dlgD.Content = "This node resolves from B and C regardless of choice.  There is a branch here based on some condition."
+		dlgE.Content = "This is the true result."
+		dlgF.Content = "This is the false result."
+		dlgG.Content = "This is the final resolve from E and F regardless of chioce."
 		
 		
 		

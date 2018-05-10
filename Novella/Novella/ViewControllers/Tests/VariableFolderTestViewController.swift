@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class VariableFolderTestViewController: NSViewController {
 	@IBOutlet weak var outlineView: NSOutlineView!
@@ -102,13 +103,13 @@ class VariableFolderTestViewController: NSViewController {
 		
 		let item = outlineView.item(atRow: idx)
 		if let folder = item as? NVFolder {
-			if folder._parent != nil {
-				try! folder._parent!.remove(folder: folder)
+			if folder.Parent != nil {
+				try! folder.Parent!.remove(folder: folder)
 			}
 		}
 		if let variable = item as? NVVariable {
-			if variable._folder != nil {
-				try! variable._folder?.remove(variable: variable)
+			if variable.Folder != nil {
+				try! variable.Folder?.remove(variable: variable)
 			}
 		}
 		
@@ -151,17 +152,17 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 			return 0
 		}
 		if let folder = item as? NVFolder {
-			return folder._folders.count + folder._variables.count
+			return folder.Folders.count + folder.Variables.count
 		}
 		return 1 // root
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if let folder = item as? NVFolder {
-			if index < folder._folders.count {
-				return folder._folders[index]
+			if index < folder.Folders.count {
+				return folder.Folders[index]
 			}
-			return folder._variables[index - folder._folders.count]
+			return folder.Variables[index - folder.Folders.count]
 		}
 		return root!
 	}
@@ -171,9 +172,9 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 			return false
 		}
 		if let folder = item as? NVFolder {
-			return (folder._folders.count + folder._variables.count) > 0
+			return (folder.Folders.count + folder.Variables.count) > 0
 		}
-		return (root!._folders.count + root!._variables.count) > 0
+		return (root!.Folders.count + root!.Variables.count) > 0
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
@@ -202,7 +203,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 				return []
 			}
 			if let targetFolder = item as? NVFolder {
-				if targetFolder == sourceFolder || targetFolder == sourceFolder._parent {
+				if targetFolder == sourceFolder || targetFolder == sourceFolder.Parent {
 //					print("not same folder or parent please")
 					return []
 				}
@@ -222,7 +223,7 @@ extension VariableFolderTestViewController: NSOutlineViewDataSource {
 				return []
 			}
 			if let targetFolder = item as? NVFolder {
-				if targetFolder == sourceVariable._folder {
+				if targetFolder == sourceVariable.Folder {
 //					print("not same folder please")
 					return []
 				}

@@ -6,12 +6,12 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-enum NVDataType {
+public enum NVDataType {
 	case boolean
 	case integer
 	case double
 	
-	var defaultValue: Any {
+	public var defaultValue: Any {
 		switch self {
 		case .boolean: return false
 		case .integer: return 0
@@ -19,7 +19,7 @@ enum NVDataType {
 		}
 	}
 	
-	func matches(value: Any) -> Bool {
+	public func matches(value: Any) -> Bool {
 		switch self {
 		case .boolean: return value is Bool
 		case .integer: return value is Int
@@ -27,7 +27,7 @@ enum NVDataType {
 		}
 	}
 	
-	var stringValue: String {
+	public var stringValue: String {
 		switch self {
 		case .boolean: return "boolean"
 		case .integer: return "integer"
@@ -35,7 +35,7 @@ enum NVDataType {
 		}
 	}
 	
-	static func fromString(str: String) -> NVDataType {
+	public static func fromString(str: String) -> NVDataType {
 		switch str {
 		case "boolean": return .boolean
 		case "integer": return .integer

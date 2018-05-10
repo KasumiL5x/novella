@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVListener {
+public class NVListener {
 	let _uuid: NSUUID
 	let _condition: NVCondition
 	let _transfer: NVTransfer
@@ -22,14 +22,14 @@ class NVListener {
 
 // MARK: NVIdentifiable
 extension NVListener: NVIdentifiable {
-	var UUID: NSUUID {
+	public var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: Equatable
 extension NVListener: Equatable {
-	static func == (lhs: NVListener, rhs: NVListener) -> Bool {
+	public static func == (lhs: NVListener, rhs: NVListener) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

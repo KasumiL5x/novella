@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class WriterViewController: NSViewController {
 	@IBOutlet weak var scrollView: NSScrollView!
@@ -71,7 +72,7 @@ class WriterViewController: NSViewController {
 			return
 		}
 		
-		storyName.stringValue = _story!._name.isEmpty ? "unnamed" : _story!._name
+		storyName.stringValue = _story!.Name.isEmpty ? "unnamed" : _story!.Name
 		
 		_canvas!.loadFrom(story: _story!)
 	}

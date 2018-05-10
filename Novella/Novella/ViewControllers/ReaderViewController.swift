@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class ReaderViewController: NSViewController {
 	// MARK: Storyboard references
@@ -116,11 +117,11 @@ extension ReaderViewController: NVSimulatorController {
 		_currNodeLinksCallback.setLinks(links: outputs)
 		currNodeOutlineView.reloadData()
 		
-		var text = "<b>UUID:</b><br/>\(node._uuid.uuidString)<br/><br/>"
+		var text = "<b>UUID:</b><br/>\(node.UUID.uuidString)<br/><br/>"
 		if let dialog = node as? NVDialog {
-			text += "<b>Preview:</b><br/>\(dialog._preview.isEmpty ? "none" : dialog._preview)<br/><br/>"
-			text += "<b>Content:</b><br/>\(dialog._content.isEmpty ? "none" : dialog._content)<br/><br/>"
-			text += "<b>Directions:</b><br/>\(dialog._directions.isEmpty ? "none" : dialog._directions)"
+			text += "<b>Preview:</b><br/>\(dialog.Preview.isEmpty ? "none" : dialog.Preview)<br/><br/>"
+			text += "<b>Content:</b><br/>\(dialog.Content.isEmpty ? "none" : dialog.Content)<br/><br/>"
+			text += "<b>Directions:</b><br/>\(dialog.Directions.isEmpty ? "none" : dialog.Directions)"
 		}
 		
 		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
@@ -143,21 +144,21 @@ extension ReaderViewController: NSOutlineViewDataSource {
 		}
 		
 		if let folder = item as? NVFolder {
-			return folder._folders.count + folder._variables.count
+			return folder.Folders.count + folder.Variables.count
 		}
 		
 		if let graph = item as? NVGraph {
 			return (
-				graph._graphs.count +
-					graph._nodes.count +
-					graph._links.count +
-					graph._listeners.count +
-					graph._exits.count
+				graph.Graphs.count +
+					graph.Nodes.count +
+					graph.Links.count +
+					graph.Listeners.count +
+					graph.Exits.count
 					+ 1 // entry
 				)
 		}
 		
-		return _story!._folders.count + _story!._graphs.count
+		return _story!.Folders.count + _story!.Graphs.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
@@ -166,35 +167,35 @@ extension ReaderViewController: NSOutlineViewDataSource {
 		}
 		
 		if let folder = item as? NVFolder {
-			if index < folder._folders.count {
-				return folder._folders[index]
+			if index < folder.Folders.count {
+				return folder.Folders[index]
 			}
-			return folder._variables[index - folder._folders.count]
+			return folder.Variables[index - folder.Folders.count]
 		}
 		
 		if let graph = item as? NVGraph {
-			if index < graph._graphs.count { return graph._graphs[index] }
-			var offset = graph._graphs.count
+			if index < graph.Graphs.count { return graph.Graphs[index] }
+			var offset = graph.Graphs.count
 			
-			if index < offset + graph._nodes.count { return graph._nodes[index - offset] }
-			offset += graph._nodes.count
+			if index < offset + graph.Nodes.count { return graph.Nodes[index - offset] }
+			offset += graph.Nodes.count
 			
-			if index < offset + graph._links.count { return graph._links[index - offset] }
-			offset += graph._links.count
+			if index < offset + graph.Links.count { return graph.Links[index - offset] }
+			offset += graph.Links.count
 			
-			if index < offset + graph._listeners.count { return graph._listeners[index - offset] }
-			offset += graph._listeners.count
+			if index < offset + graph.Listeners.count { return graph.Listeners[index - offset] }
+			offset += graph.Listeners.count
 			
-			if index < offset + graph._exits.count { return graph._exits[index - offset] }
-			offset += graph._exits.count
+			if index < offset + graph.Exits.count { return graph.Exits[index - offset] }
+			offset += graph.Exits.count
 			
-			return graph._entry
+			return graph.Entry
 		}
 		
-		if index < _story!._graphs.count {
-			return _story!._graphs[index]
+		if index < _story!.Graphs.count {
+			return _story!.Graphs[index]
 		}
-		return _story!._folders[index - _story!._graphs.count]
+		return _story!.Folders[index - _story!.Graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -203,16 +204,16 @@ extension ReaderViewController: NSOutlineViewDataSource {
 		}
 		
 		if let folder = item as? NVFolder {
-			return (folder._folders.count + folder._variables.count) > 0
+			return (folder.Folders.count + folder.Variables.count) > 0
 		}
 		
 		if let graph = item as? NVGraph {
 			return (
-				graph._graphs.count +
-				graph._nodes.count +
-				graph._links.count +
-				graph._listeners.count +
-				graph._exits.count
+				graph.Graphs.count +
+				graph.Nodes.count +
+				graph.Links.count +
+				graph.Listeners.count +
+				graph.Exits.count
 				+ 1 // entry
 			) > 0
 		}
@@ -227,25 +228,25 @@ extension ReaderViewController: NSOutlineViewDelegate {
 		var name = "ERROR"
 		
 		if let variable = item as? NVVariable {
-			name = "Variable: " + variable._name
+			name = "Variable: " + variable.Name
 		}
 		if let folder = item as? NVFolder {
-			name = "Folder: " + folder._name
+			name = "Folder: " + folder.Name
 		}
 		if let graph = item as? NVGraph {
-			name = "Graph: " + graph._name
+			name = "Graph: " + graph.Name
 		}
 		if let node = item as? NVNode {
-			name = "Node: " + node._name
+			name = "Node: " + node.Name
 		}
 		if let link = item as? NVBaseLink {
-			name = "BaseLink: " + link._uuid.uuidString
+			name = "BaseLink: " + link.UUID.uuidString
 		}
 		if let listener = item as? NVListener {
-			name = "Listener: " + listener._uuid.uuidString
+			name = "Listener: " + listener.UUID.uuidString
 		}
 		if let exit = item as? NVExitNode {
-			name = "ExitNode: " + exit._uuid.uuidString
+			name = "ExitNode: " + exit.UUID.uuidString
 		}
 		
 		if tableColumn?.identifier.rawValue == "StoryCell" {
@@ -269,57 +270,57 @@ extension ReaderViewController: NSOutlineViewDelegate {
 
 		if let variable = item as? NVVariable {
 			text = "<b>VARIABLE</b><br/>"
-			text += "<b>UUID: </b>\(variable._uuid.uuidString)</br>"
-			text += "<b>Name: </b>\(variable._name)<br/>"
-			text += "<b>Synopsis: </b>\(variable._synopsis)<br/>"
-			text += "<b>Type: </b>\(variable._type.stringValue)<br/>"
-			text += "<b>Value: </b>\(variable._value)<br/>"
-			text += "<b>Initial Value: </b>\(variable._initialValue)<br/>"
-			text += "<b>Constant: </b>\(variable._constant)<br/>"
-			text += "<b>Folder: </b>\(variable._folder?._name ?? "none")<br/>"
+			text += "<b>UUID: </b>\(variable.UUID.uuidString)</br>"
+			text += "<b>Name: </b>\(variable.Name)<br/>"
+			text += "<b>Synopsis: </b>\(variable.Synopsis)<br/>"
+			text += "<b>Type: </b>\(variable.DataType.stringValue)<br/>"
+			text += "<b>Value: </b>\(variable.Value)<br/>"
+			text += "<b>Initial Value: </b>\(variable.InitialValue)<br/>"
+			text += "<b>Constant: </b>\(variable.IsConstant)<br/>"
+			text += "<b>Folder: </b>\(variable.Folder?.Name ?? "none")<br/>"
 		}
 		if let folder = item as? NVFolder {
 			text = "<b>FOLDER</b><br/>"
-			text += "<b>UUID: </b>\(folder._uuid.uuidString)<br/>"
-			text += "<b>Name: </b>\(folder._name)<br/>"
-			text += "<b>Parent: </b>\(folder._parent?._name ?? "none")<br/>"
-			text += "<b>Subfolders: </b>\(folder._folders.count)<br/>"
-			text += "<b>Variables: </b>\(folder._variables.count)<br/>"
+			text += "<b>UUID: </b>\(folder.UUID.uuidString)<br/>"
+			text += "<b>Name: </b>\(folder.Name)<br/>"
+			text += "<b>Parent: </b>\(folder.Parent?.Name ?? "none")<br/>"
+			text += "<b>Subfolders: </b>\(folder.Folders.count)<br/>"
+			text += "<b>Variables: </b>\(folder.Variables.count)<br/>"
 		}
 		if let graph = item as? NVGraph {
 			text = "<b>GRAPH</b><br/>"
-			text += "<b>UUID: </b>\(graph._uuid.uuidString)<br/>"
-			text += "<b>Name: </b>\(graph._name)<br/>"
-			text += "<b>Subgraphs: </b>\(graph._graphs.count)<br/>"
-			text += "<b>Nodes: </b>\(graph._nodes.count)<br/>"
-			text += "<b>Links: </b>\(graph._links.count)<br/>"
-			text += "<b>Listeners: </b>\(graph._listeners.count)<br/>"
-			text += "<b>Exits: </b>\(graph._exits.count)<br/>"
-			text += "<b>Entry: </b>\(graph._entry?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>UUID: </b>\(graph.UUID.uuidString)<br/>"
+			text += "<b>Name: </b>\(graph.Name)<br/>"
+			text += "<b>Subgraphs: </b>\(graph.Graphs.count)<br/>"
+			text += "<b>Nodes: </b>\(graph.Nodes.count)<br/>"
+			text += "<b>Links: </b>\(graph.Links.count)<br/>"
+			text += "<b>Listeners: </b>\(graph.Listeners.count)<br/>"
+			text += "<b>Exits: </b>\(graph.Exits.count)<br/>"
+			text += "<b>Entry: </b>\(graph.Entry?.UUID.uuidString ?? "none")<br/>"
 		}
 		if let node = item as? NVNode {
 			text = "<b>NODE</b><br/>"
-			text += "<b>UUID: </b>\(node._uuid.uuidString)<br/>"
-			text += "<b>Name: </b>\(node._name)<br/>"
+			text += "<b>UUID: </b>\(node.UUID.uuidString)<br/>"
+			text += "<b>Name: </b>\(node.Name)<br/>"
 			if let dlg = node as? NVDialog {
 				text += "<b>Type: </b>Dialog<br/>"
-				text += "<b>Preview: </b>\(dlg._preview)<br/>"
-				text += "<b>Content: </b>\(dlg._content)<br/>"
-				text += "<b>Directions: </b>\(dlg._directions)<br/>"
+				text += "<b>Preview: </b>\(dlg.Preview)<br/>"
+				text += "<b>Content: </b>\(dlg.Content)<br/>"
+				text += "<b>Directions: </b>\(dlg.Directions)<br/>"
 			}
 		}
 		if let link = item as? NVLink {
 			text = "<b>LINK</b><br/>"
-			text += "<b>UUID: </b>\(link._uuid.uuidString)<br/>"
-			text += "<b>Origin: </b>\(link._origin.UUID.uuidString)<br/>"
-			text += "<b>Destination: </b>\(link._transfer._destination?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>UUID: </b>\(link.UUID.uuidString)<br/>"
+			text += "<b>Origin: </b>\(link.Origin.UUID.uuidString)<br/>"
+			text += "<b>Destination: </b>\(link.Transfer.Destination?.UUID.uuidString ?? "none")<br/>"
 		}
 		if let branch = item as? NVBranch {
 			text = "<b>BRANCH</b><br/>"
-			text += "<b>UUID: </b>\(branch._uuid.uuidString)<br/>"
-			text += "<b>Origin: </b>\(branch._origin.UUID.uuidString)<br/>"
-			text += "<b>True Destination: </b>\(branch._trueTransfer._destination?.UUID.uuidString ?? "none")<br/>"
-			text += "<b>False Destination: </b>\(branch._falseTransfer._destination?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>UUID: </b>\(branch.UUID.uuidString)<br/>"
+			text += "<b>Origin: </b>\(branch.Origin.UUID.uuidString)<br/>"
+			text += "<b>True Destination: </b>\(branch.TrueTransfer.Destination?.UUID.uuidString ?? "none")<br/>"
+			text += "<b>False Destination: </b>\(branch.FalseTransfer.Destination?.UUID.uuidString ?? "none")<br/>"
 		}
 
 		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
@@ -370,29 +371,29 @@ class CurrentNodeLinksCallbacks: NSObject, NSOutlineViewDelegate, NSOutlineViewD
 		
 		var text = "error"
 		
-		let origin = (item as! NVBaseLink)._origin
+		let origin = (item as! NVBaseLink).Origin
 		var originName = "none"
-		if let graph = origin as? NVGraph { originName = graph._name }
-		if let node = origin as? NVNode {	originName = node._name }
+		if let graph = origin as? NVGraph { originName = graph.Name }
+		if let node = origin as? NVNode {	originName = node.Name }
 		
 		
 		if let asLink = item as? NVLink {
-			let dest = asLink._transfer._destination
+			let dest = asLink.Transfer.Destination
 			var destName = "none"
-			if let graph = dest as? NVGraph { destName = graph._name }
-			if let node = dest as? NVNode { destName = node._name }
+			if let graph = dest as? NVGraph { destName = graph.Name }
+			if let node = dest as? NVNode { destName = node.Name }
 			
 			text = "Link (\(originName)->\(destName))"
 		}
 		if let asBranch = item as? NVBranch {
-			let tDest = asBranch._trueTransfer._destination
+			let tDest = asBranch.TrueTransfer.Destination
 			var tDestName = "none"
-			if let graph = tDest as? NVGraph { tDestName = graph._name }
-			if let node = tDest as? NVNode { tDestName = node._name }
-			let fDest = asBranch._falseTransfer._destination
+			if let graph = tDest as? NVGraph { tDestName = graph.Name }
+			if let node = tDest as? NVNode { tDestName = node.Name }
+			let fDest = asBranch.FalseTransfer.Destination
 			var fDestName = "none"
-			if let graph = fDest as? NVGraph { fDestName = graph._name }
-			if let node = fDest as? NVNode { fDestName = node._name }
+			if let graph = fDest as? NVGraph { fDestName = graph.Name }
+			if let node = fDest as? NVNode { fDestName = node.Name }
 			
 			text = "Branch (\(originName)->T(\(tDestName)); F(\(fDestName)))"
 		}

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class LinkableWidget: NSView {
 	let _canvas: Canvas

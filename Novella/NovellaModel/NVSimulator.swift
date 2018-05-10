@@ -8,23 +8,23 @@
 
 import Foundation
 
-protocol NVSimulatorController {
+public protocol NVSimulatorController {
 	// gives the controller the current available node and a list of links it can follow
 	func currentNode(node: NVNode, outputs: [NVBaseLink])
 }
 
-class NVSimulator {
+public class NVSimulator {
 	var _story: NVStory?
 	var _controller: NVSimulatorController?
 	var _currentNode: NVNode?
 	
-	init(story: NVStory, controller: NVSimulatorController) {
+	public init(story: NVStory, controller: NVSimulatorController) {
 		self._story = story
 		self._controller = controller
 		self._currentNode = nil
 	}
 	
-	func start(_ graph: NVGraph) -> Bool {
+	public func start(_ graph: NVGraph) -> Bool {
 		if _controller == nil {
 			return false
 		}
@@ -40,7 +40,7 @@ class NVSimulator {
 	}
 	
 	// controller should call this to proceed from the current node
-	func proceed(_ link: NVBaseLink) throws {
+	public func proceed(_ link: NVBaseLink) throws {
 		if !_story!.getLinksFrom(_currentNode!).contains(link) {
 			throw NVError.invalid("Tried to progress along a link that didn't belong to the current node.")
 		}

@@ -330,7 +330,7 @@ extension NVStory {
 
 
 	
-	func toJSON() throws -> String {
+	public func toJSON() throws -> String {
 		var root: JSONDict = [:]
 		
 		// add all folders
@@ -479,7 +479,7 @@ extension NVStory {
 		return str
 	}
 	
-	static func fromJSON(str: String) throws -> (story: NVStory, errors: [String]) {
+	public static func fromJSON(str: String) throws -> (story: NVStory, errors: [String]) {
 		var errors: [String] = []
 		
 		// TODO: Should I handle name clashes of UUID internally just in case another UUID is copypasted by a user?

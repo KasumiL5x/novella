@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVDialog: NVNode {
+public class NVDialog: NVNode {
 	var _content: String
 	var _preview: String
 	var _directions: String
@@ -19,6 +19,18 @@ class NVDialog: NVNode {
 		self._directions = ""
 		
 		super.init(uuid: uuid)
+	}
+	
+	// MARK: Getters/Setter
+	public var Content: String {
+		get{ return _content }
+		set{ _content = newValue }
+	}
+	public var Preview: String {
+		get{ return _preview }
+	}
+	public var Directions: String {
+		get{ return _directions }
 	}
 	
 	// MARK: Setters

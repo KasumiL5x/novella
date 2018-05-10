@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class StoryTestViewController: NSViewController {
 	let _story: NVStory = NVStory()
@@ -70,10 +71,10 @@ class StoryTestViewController: NSViewController {
 		
 		let item = outline.item(atRow: idx)
 		if let graph = item as? NVGraph {
-			if graph._parent != nil {
-				try! graph._parent?.remove(graph: graph)
+			if graph.Parent != nil {
+				try! graph.Parent?.remove(graph: graph)
 			} else {
-				try! graph._story?.remove(graph: graph)
+				try! graph.Story?.remove(graph: graph)
 			}
 		}
 		
@@ -127,32 +128,32 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 		}
 		
 		if let folder = item as? NVFolder {
-			return folder._folders.count + folder._variables.count
+			return folder.Folders.count + folder.Variables.count
 		}
 		
 		if let graph = item as? NVGraph {
-			return graph._graphs.count
+			return graph.Graphs.count
 		}
 		
-		return _story._graphs.count + _story._folders.count
+		return _story.Graphs.count + _story.Folders.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if let folder = item as? NVFolder {
-			if index < folder._folders.count {
-				return folder._folders[index]
+			if index < folder.Folders.count {
+				return folder.Folders[index]
 			}
-			return folder._variables[index - folder._folders.count]
+			return folder.Variables[index - folder.Folders.count]
 		}
 		
 		if let graph = item as? NVGraph {
-			return graph._graphs[index]
+			return graph.Graphs[index]
 		}
 		
-		if index < _story._graphs.count {
-			return _story._graphs[index]
+		if index < _story.Graphs.count {
+			return _story.Graphs[index]
 		}
-		return _story._folders[index - _story._graphs.count]
+		return _story.Folders[index - _story.Graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
@@ -161,14 +162,14 @@ extension StoryTestViewController: NSOutlineViewDataSource {
 		}
 		
 		if let folder = item as? NVFolder {
-			return (folder._folders.count + folder._variables.count) > 0
+			return (folder.Folders.count + folder.Variables.count) > 0
 		}
 		
 		if let graph = item as? NVGraph {
-			return graph._graphs.count > 0
+			return graph.Graphs.count > 0
 		}
 		
-		return (_story._graphs.count + _story._folders.count) > 0 // root folder
+		return (_story.Graphs.count + _story.Folders.count) > 0 // root folder
 	}
 }
 
@@ -187,7 +188,7 @@ extension StoryTestViewController: NSOutlineViewDelegate {
 			type = "Folder"
 		}
 		if let graph = item as? NVGraph {
-			name = graph._name
+			name = graph.Name
 			type = "Graph"
 		}
 		

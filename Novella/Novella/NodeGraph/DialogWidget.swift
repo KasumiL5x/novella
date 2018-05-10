@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class DialogWidget: LinkableWidget {
 	var _nameLabel: NSTextField
@@ -22,7 +23,7 @@ class DialogWidget: LinkableWidget {
 		self._nameLabel.stringValue = node.Name.isEmpty ? "unnamed" : node.Name
 		// TODO: If I decide to keep the label, I will need to subclass NSTextField and override its hitTest() to return nil.
 
-		super.init(frame: NSRect(x: node._editorPos.x, y: node._editorPos.y, width: 1.0, height: 1.0), novellaLinkable: node, canvas: canvas)
+		super.init(frame: NSRect(x: node.EditorPos.x, y: node.EditorPos.y, width: 1.0, height: 1.0), novellaLinkable: node, canvas: canvas)
 		self.frame.size = widgetRect().size
 		
 		self._nameLabel.sizeToFit()
@@ -42,7 +43,7 @@ class DialogWidget: LinkableWidget {
 	}
 	
 	override func onMove() {
-		(_nvLinkable as? NVDialog)?._editorPos = frame.origin
+		(_nvLinkable as? NVDialog)?.EditorPos = frame.origin
 	}
 	
 	override func widgetRect() -> NSRect {

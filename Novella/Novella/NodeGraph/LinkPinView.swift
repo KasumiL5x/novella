@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class LinkPinView: NSView {
 	var _nvBaseLink: NVBaseLink
@@ -133,7 +134,7 @@ class LinkPinView: NSView {
 			_curvePath.removeAllPoints()
 			// draw link curve
 			if let asLink = _nvBaseLink as? NVLink {
-				if let destination = _canvas.getLinkableWidgetFrom(linkable: asLink._transfer._destination) {
+				if let destination = _canvas.getLinkableWidgetFrom(linkable: asLink.Transfer.Destination) {
 					// convert local from destination into local of self and make curve
 					end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
@@ -144,13 +145,13 @@ class LinkPinView: NSView {
 			// draw branch curve
 			if let asBranch = _nvBaseLink as? NVBranch {
 				var hadDest = false
-				if let trueDest = _canvas.getLinkableWidgetFrom(linkable: asBranch._trueTransfer._destination) {
+				if let trueDest = _canvas.getLinkableWidgetFrom(linkable: asBranch.TrueTransfer.Destination) {
 					// convert local from destination into local of self and make curve
 					end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
 					hadDest = true
 				}
-				if let falseDest = _canvas.getLinkableWidgetFrom(linkable: asBranch._falseTransfer._destination) {
+				if let falseDest = _canvas.getLinkableWidgetFrom(linkable: asBranch.FalseTransfer.Destination) {
 					// convert local from destination into local of self and make curve
 					end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
 					CurveHelper.smooth(start: origin, end: end, path: _curvePath)

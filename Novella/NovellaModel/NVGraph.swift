@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVGraph {
+public class NVGraph {
 	var _uuid: NSUUID
 	var _name: String
 	var _graphs: [NVGraph]
@@ -36,16 +36,18 @@ class NVGraph {
 	}
 	
 	// MARK:  Getters
-	var Name:      String      {get{ return _name }}
-	var Graphs:    [NVGraph] {get{ return _graphs }}
-	var Nodes:     [NVNode]  {get{ return _nodes }}
-	var Links:     [NVBaseLink]  {get{ return _links }}
-	var Listeners: [NVListener]  {get{ return _listeners }}
-	var Exits:     [NVExitNode]  {get{ return _exits }}
-	var Entry:     NVLinkable?   {get{ return _entry }}
+	public var Name:      String       {get{ return _name }}
+	public var Graphs:    [NVGraph]    {get{ return _graphs }}
+	public var Nodes:     [NVNode]     {get{ return _nodes }}
+	public var Links:     [NVBaseLink] {get{ return _links }}
+	public var Listeners: [NVListener] {get{ return _listeners }}
+	public var Exits:     [NVExitNode] {get{ return _exits }}
+	public var Entry:     NVLinkable?  {get{ return _entry }}
+	public var Parent:    NVGraph?     {get{ return _parent }}
+	public var Story:     NVStory?     {get{ return _story }}
 	
 	// MARK: Setters
-	func setName(_ name: String) throws {
+	public func setName(_ name: String) throws {
 		assert(_story != nil, "Graph::setName - _story is nil.")
 		
 		// if there's no parent graph, check siblings of the story for name clashes
@@ -69,7 +71,7 @@ class NVGraph {
 		throw NVError.invalid("Oh dear.")
 	}
 	
-	func setEntry(_ entry: NVLinkable) throws {
+	public func setEntry(_ entry: NVLinkable) throws {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
 				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(_name)).")
@@ -84,16 +86,16 @@ class NVGraph {
 	}
 	
 	// MARK: Subgraphs
-	func contains(graph: NVGraph) -> Bool {
+	public func contains(graph: NVGraph) -> Bool {
 		return _graphs.contains(graph)
 	}
 	
-	func containsGraphName(_ name: String) -> Bool {
+	public func containsGraphName(_ name: String) -> Bool {
 		return _graphs.contains(where: {$0._name == name})
 	}
 	
 	@discardableResult
-	func add(graph: NVGraph) throws -> NVGraph {
+	public func add(graph: NVGraph) throws -> NVGraph {
 		// cannot add self
 		if graph == self {
 			throw NVError.invalid("Tried to add a Graph to self (\(_name)).")
@@ -116,7 +118,7 @@ class NVGraph {
 		return graph
 	}
 	
-	func remove(graph: NVGraph) throws {
+	public func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
 			throw NVError.invalid("Tried to remove Graph (\(graph._name)) from (\(_name)) but it was not a child.")
 		}
@@ -125,12 +127,12 @@ class NVGraph {
 	}
 	
 	// MARK: Nodes
-	func contains(node: NVNode) -> Bool {
+	public func contains(node: NVNode) -> Bool {
 		return _nodes.contains(node)
 	}
 	
 	@discardableResult
-	func add(node: NVNode) throws -> NVNode {
+	public func add(node: NVNode) throws -> NVNode {
 		// already a child
 		if contains(node: node) {
 			throw NVError.invalid("Tried to add a Node but it already exists (to \(_name)).")
@@ -139,7 +141,7 @@ class NVGraph {
 		return node
 	}
 	
-	func remove(node: NVNode) throws {
+	public func remove(node: NVNode) throws {
 		guard let idx = _nodes.index(of: node) else {
 			throw NVError.invalid("Tried to remove a Node from (\(_name)) but it was not a child.")
 		}
@@ -147,12 +149,12 @@ class NVGraph {
 	}
 	
 	// MARK: Links
-	func contains(link: NVBaseLink) -> Bool {
+	public func contains(link: NVBaseLink) -> Bool {
 		return _links.contains(link)
 	}
 	
 	@discardableResult
-	func add(link: NVBaseLink) throws -> NVBaseLink {
+	public func add(link: NVBaseLink) throws -> NVBaseLink {
 		// already a child
 		if contains(link: link) {
 			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
@@ -161,7 +163,7 @@ class NVGraph {
 		return link
 	}
 	
-	func remove(link: NVBaseLink) throws {
+	public func remove(link: NVBaseLink) throws {
 		guard let idx = _links.index(of: link) else {
 			throw NVError.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
 		}
@@ -169,12 +171,12 @@ class NVGraph {
 	}
 	
 	// MARK: Listeners
-	func contains(listener: NVListener) -> Bool {
+	public func contains(listener: NVListener) -> Bool {
 		return _listeners.contains(listener)
 	}
 	
 	@discardableResult
-	func add(listener: NVListener) throws -> NVListener {
+	public func add(listener: NVListener) throws -> NVListener {
 		// already a child
 		if contains(listener: listener) {
 			throw NVError.invalid("Tried to add a Listener but it already exists (to Graph \(_name)).")
@@ -183,7 +185,7 @@ class NVGraph {
 		return listener
 	}
 	
-	func remove(listener: NVListener) throws {
+	public func remove(listener: NVListener) throws {
 		guard let idx = _listeners.index(of: listener) else {
 			throw NVError.invalid("Tried to remove Listener from Graph (\(_name)) but it was not a child.")
 		}
@@ -191,12 +193,12 @@ class NVGraph {
 	}
 	
 	// MARK: Exit Nodes
-	func contains(exit: NVExitNode) -> Bool {
+	public func contains(exit: NVExitNode) -> Bool {
 		return _exits.contains(exit)
 	}
 	
 	@discardableResult
-	func add(exit: NVExitNode) throws -> NVExitNode {
+	public func add(exit: NVExitNode) throws -> NVExitNode {
 		// already a child
 		if contains(exit: exit) {
 			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to Graph \(_name)).")
@@ -205,7 +207,7 @@ class NVGraph {
 		return exit
 	}
 	
-	func remove(exit: NVExitNode) throws {
+	public func remove(exit: NVExitNode) throws {
 		guard let idx = _exits.index(of: exit) else {
 			throw NVError.invalid("Tried to remove ExitNode from Graph (\(_name)) but it was not a child.")
 		}
@@ -213,25 +215,25 @@ class NVGraph {
 	}
 	
 	// MARK: Simulation
-	func canSimulate() -> Bool {
+	public func canSimulate() -> Bool {
 		return _nodes.count > 0 && _entry != nil
 	}
 }
 
 // MARK: NVPathable
 extension NVGraph: NVPathable {
-	func localPath() -> String {
+	public func localPath() -> String {
 		return _name
 	}
 	
-	func parentPath() -> NVPathable? {
+	public func parentPath() -> NVPathable? {
 		return _parent
 	}
 }
 
 // MARK: NVIdentifiable
 extension NVGraph: NVIdentifiable {
-	var UUID: NSUUID {
+	public var UUID: NSUUID {
 		return _uuid
 	}
 }
@@ -242,7 +244,7 @@ extension NVGraph: NVLinkable {
 
 // MARK: Equatable
 extension NVGraph: Equatable {
-	static func == (lhs: NVGraph, rhs: NVGraph) -> Bool {
+	public static func == (lhs: NVGraph, rhs: NVGraph) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

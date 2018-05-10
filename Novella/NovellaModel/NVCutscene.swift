@@ -1,5 +1,5 @@
 //
-//  NVDelivery.swift
+//  NVCutscene.swift
 //  Novella
 //
 //  Created by Daniel Green on 17/04/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVDelivery: NVNode {
+public class NVCutscene: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}
