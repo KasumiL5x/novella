@@ -29,13 +29,13 @@ public class NVVariable {
 		self._folder = nil
 	}
 	
-	// MARK:  Getters
+	// MARK:  Properties
 	public var Name:         String     {get{ return _name }}
-	public var Synopsis:     String     {get{ return _synopsis }}
+	public var Synopsis:     String     {get{ return _synopsis } set{ _synopsis = newValue }}
 	public var DataType:     NVDataType {get{ return _type }}
 	public var Value:        Any        {get{ return _value }}
 	public var InitialValue: Any        {get{ return _initialValue }}
-	public var IsConstant:   Bool       {get{ return _constant }}
+	public var IsConstant:   Bool       {get{ return _constant } set{ _constant = newValue }}
 	public var Folder:       NVFolder?  {get{ return _folder }}
 	
 	// MARK: Setters
@@ -50,10 +50,6 @@ public class NVVariable {
 			throw NVError.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but its Folder (\(_folder!._name) already contains that.")
 		}
 		_name = name
-	}
-	
-	public func setSynopsis(_ synopsis: String) {
-		self._synopsis = synopsis
 	}
 	
 	public func setType(_ type: NVDataType) {
@@ -81,10 +77,6 @@ public class NVVariable {
 		}
 		_initialValue = val
 		_value = val
-	}
-	
-	public func setConstant(_ const: Bool) {
-		self._constant = const
 	}
 }
 

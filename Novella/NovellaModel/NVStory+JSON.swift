@@ -515,11 +515,11 @@ extension NVStory {
 			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
 			
 			if let synopsis = curr["synopsis"].string {
-				variable.setSynopsis(synopsis)
+				variable.Synopsis = synopsis
 			}
 			
 			if let constant = curr["constant"].bool {
-				variable.setConstant(constant)
+				variable.IsConstant = constant
 			}
 			
 			let value = curr["value"]
