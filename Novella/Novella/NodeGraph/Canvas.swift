@@ -27,6 +27,8 @@ class Canvas: NSView {
 	
 	var _nodeContextMenu: NSMenu // context menu for nodes
 	
+	var _pinDropTarget: LinkableWidget? // target node when dragging pins
+	
 	override init(frame frameRect: NSRect) {
 		self._nvStory = nil
 		
@@ -44,6 +46,8 @@ class Canvas: NSView {
 		self._undoRedo = UndoRedo()
 		
 		self._nodeContextMenu = NSMenu(title: "Node Context Menu")
+		
+		self._pinDropTarget = nil
 		
 		super.init(frame: frameRect)
 		
@@ -271,6 +275,7 @@ extension Canvas {
 	}
 	
 	func onDragPin(pin: LinkPinView, event: NSEvent) {
+		_pinDropTarget = nil
 		
 		for sub in _linkableWidgets {
 			let pos = self.convert(event.locationInWindow, from: nil) // MUST be in canvas space, as the subviews hitTest relies on the superview (canvas) space
@@ -282,11 +287,34 @@ extension Canvas {
 				continue
 			}
 			
-			// prime
-			// TODO: Prime only if suitable
+			_pinDropTarget = sub
 			sub.mouseEnterView()
-			
 			// note: do not break as we may need to unprime other views?
 		}
+	}
+	
+	func onPinUp(pin: LinkPinView, event: NSEvent) {
+		if _pinDropTarget == nil {
+			print("Dropped pin on empty space.")
+			return
+		}
+		
+		// TODO: Validate target? maybe in here maybe in drag? here is more optimized as drag is currently hacky.
+		
+		// handle case of links
+		if let asLink = pin._nvBaseLink as? NVLink {
+			asLink.Transfer.Destination = _pinDropTarget!._nvLinkable
+			_pinDropTarget = nil
+		}
+		// handle case of branches
+		if let asBranch = pin._nvBaseLink as? NVBranch {
+			// TODO: Show context menu at node asking for either true or false destination
+			fatalError("Don't yet handle branches.")
+		}
+		// handle case of switches
+		if let asSwitch = pin._nvBaseLink as? NVSwitch {
+			fatalError("Switches not yet supported.")
+		}
+		
 	}
 }

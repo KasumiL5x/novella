@@ -116,6 +116,8 @@ class LinkPinView: NSView {
 		_isDragging = false
 		
 		setNeedsDisplay(bounds)
+		
+		_canvas.onPinUp(pin: self, event: event)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
