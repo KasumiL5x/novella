@@ -17,10 +17,8 @@ public class NVBaseLink {
 		self._origin = origin
 	}
 	
-	// MARK: Getters
-	public var Origin: NVLinkable {
-		get{ return _origin }
-	}
+	// MARK: Properties
+	public var Origin: NVLinkable {get{ return _origin }}
 }
 
 // MARK: NVIdentifiable
