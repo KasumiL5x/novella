@@ -10,10 +10,7 @@ import Foundation
 import JavaScriptCore
 
 public class NVStory {
-	// MARK: Javascript stuff
-	let _jsContext: JSContext
-	
-	// MARK: Storywide Collections
+	// MARK: Global
 	var _allIdentifiables: [NVIdentifiable]
 	var _allFolders: [NVFolder]
 	var _allVariables: [NVVariable]
@@ -21,23 +18,13 @@ public class NVStory {
 	var _allLinks: [NVBaseLink]
 	var _allNodes: [NVNode]
 	
-	// MARK: Local Collections
+	// MARK: Story
 	var _folders: [NVFolder]
 	var _graphs: [NVGraph]
-	
 	var _name: String
+	let _jsContext: JSContext
 	
 	public init() {
-		self._jsContext = JSContext()
-		self._jsContext.exceptionHandler = { context, exception in
-			if let ex = exception {
-				print("JS Exception: \(ex.toString())")
-			}
-		}
-		let consoleLogObject = unsafeBitCast(self.consoleLog, to: AnyObject.self)
-		self._jsContext.setObject(consoleLogObject, forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol))
-//		_ = self._jsContext.evaluateScript("consoleLog(nil);")
-		
 		self._allIdentifiables = []
 		self._allFolders = []
 		self._allVariables = []
@@ -47,40 +34,33 @@ public class NVStory {
 		
 		self._folders = []
 		self._graphs = []
-		
 		self._name = ""
+		self._jsContext = JSContext()
+		self._jsContext.exceptionHandler = { context, exception in
+			if let ex = exception {
+				print("JS Exception: \(ex.toString())")
+			}
+		}
+		let consoleLogObject = unsafeBitCast(self.consoleLog, to: AnyObject.self)
+		self._jsContext.setObject(consoleLogObject, forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol))
+//		_ = self._jsContext.evaluateScript("consoleLog(nil);")
 	}
 	
-	// MARK: Getters
-	public var AllNodes: [NVNode] {
-		get{ return _allNodes }
-	}
-	public var AllLinks: [NVBaseLink] {
-		get{ return _allLinks }
-	}
-	public var Folders: [NVFolder] {
-		get{ return _folders }
-	}
-	public var Graphs: [NVGraph] {
-		get{ return _graphs }
-	}
-	public var Name: String {
-		get{ return _name }
-	}
+	// MARK: Properties
+	public var AllNodes: [NVNode]     {get{ return _allNodes }}
+	public var AllLinks: [NVBaseLink] {get{ return _allLinks }}
+	public var Folders:  [NVFolder]   {get{ return _folders }}
+	public var Graphs:   [NVGraph]    {get{ return _graphs }}
+	public var Name:     String       {get{ return _name }}
 	
 	// MARK: Javascript stuff
 	// TODO: Get/Set variables in JS
 	let consoleLog: @convention(block) (String) -> Void = { logMessage in
 		print("\nJS Console: \(logMessage)")
 	}
-	
-	// MARK: Setup
-	func setup() throws {
-		throw NVError.notImplemented("Story::setup()")
-	}
 }
 
-// MARK: Local Collection Functions
+// MARK: Story Functions
 extension NVStory {
 	// MARK: Folders
 	public func contains(folder: NVFolder) -> Bool {
@@ -150,7 +130,7 @@ extension NVStory {
 	}
 }
 
-// MARK: Storywide Functions
+// MARK: Global Functions
 extension NVStory {
 	func findBy(uuid: String) -> NVIdentifiable? {
 		return _allIdentifiables.first(where: {$0.UUID.uuidString == uuid})
@@ -210,7 +190,7 @@ extension NVStory {
 		return dialog
 	}
 	
-	func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
+	public func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
 		return _allLinks.filter({$0._origin.UUID == linkable.UUID})
 	}
 }

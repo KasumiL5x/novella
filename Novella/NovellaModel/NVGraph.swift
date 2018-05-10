@@ -35,7 +35,7 @@ public class NVGraph {
 		self._story = story
 	}
 	
-	// MARK:  Getters
+	// MARK:  Properties
 	public var Name:      String       {get{ return _name }}
 	public var Graphs:    [NVGraph]    {get{ return _graphs }}
 	public var Nodes:     [NVNode]     {get{ return _nodes }}
