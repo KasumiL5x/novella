@@ -28,6 +28,8 @@ class Canvas: NSView {
 	var _nodeContextMenu: NSMenu // context menu for nodes
 	
 	var _pinDropTarget: LinkableWidget? // target node when dragging pins
+	var _pinDropDragged: LinkPinView? // current one being dragged
+	var _pinDropMenuBranch: NSMenu
 	
 	override init(frame frameRect: NSRect) {
 		self._nvStory = nil
@@ -48,11 +50,17 @@ class Canvas: NSView {
 		self._nodeContextMenu = NSMenu(title: "Node Context Menu")
 		
 		self._pinDropTarget = nil
+		self._pinDropDragged = nil
+		self._pinDropMenuBranch = NSMenu(title: "Branch Menu")
 		
 		super.init(frame: frameRect)
 		
 		// set up node context menu
 		_nodeContextMenu.addItem(withTitle: "Link to...", action: #selector(Canvas.onNodeContextLinkTo), keyEquivalent: "")
+		
+		// set up the pin drop branch menu
+		_pinDropMenuBranch.addItem(withTitle: "True", action: #selector(Canvas.onPinDropBranchTrue), keyEquivalent: "")
+		_pinDropMenuBranch.addItem(withTitle: "False", action: #selector(Canvas.onPinDropBranchFalse), keyEquivalent: "")
 		
 		// initial state of canvas
 		reset()
@@ -275,6 +283,7 @@ extension Canvas {
 	}
 	
 	func onDragPin(pin: LinkPinView, event: NSEvent) {
+		_pinDropDragged = pin
 		_pinDropTarget = nil
 		
 		for sub in _linkableWidgets {
@@ -309,12 +318,33 @@ extension Canvas {
 		// handle case of branches
 		if let asBranch = pin._nvBaseLink as? NVBranch {
 			// TODO: Show context menu at node asking for either true or false destination
-			fatalError("Don't yet handle branches.")
+			NSMenu.popUpContextMenu(_pinDropMenuBranch, with: event, for: _pinDropTarget!)
 		}
 		// handle case of switches
 		if let asSwitch = pin._nvBaseLink as? NVSwitch {
 			fatalError("Switches not yet supported.")
 		}
 		
+	}
+	
+	@objc func onPinDropBranchTrue() {
+		if _pinDropDragged == nil {
+			fatalError("Tried to set branch's true destination but _pinDropDragged was nil.")
+		}
+		if _pinDropTarget == nil {
+			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
+		}
+		(_pinDropDragged!._nvBaseLink as! NVBranch).TrueTransfer.Destination = _pinDropTarget?._nvLinkable
+		updateCurves()
+	}
+	@objc func onPinDropBranchFalse() {
+		if _pinDropDragged == nil {
+			fatalError("Tried to set branch's false destination but _pinDropDragged was nil.")
+		}
+		if _pinDropTarget == nil {
+			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
+		}
+		(_pinDropDragged!._nvBaseLink as! NVBranch).FalseTransfer.Destination = _pinDropTarget?._nvLinkable
+		updateCurves()
 	}
 }
