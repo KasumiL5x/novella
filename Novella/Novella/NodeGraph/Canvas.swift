@@ -271,17 +271,22 @@ extension Canvas {
 	}
 	
 	func onDragPin(pin: LinkPinView, event: NSEvent) {
-		// the offset error is that i assumed canvas space when it's window space.
-		// but my linkable hittest is using cavas space... how?
 		
-		var view: NSView? = nil
 		for sub in _linkableWidgets {
 			let pos = self.convert(event.locationInWindow, from: nil) // MUST be in canvas space, as the subviews hitTest relies on the superview (canvas) space
 			let hitView = sub.hitTest(pos)
-			if hitView != nil {
-				print("Hovering (\(pos)): \(sub)")
+			
+			// didn't hit, or hit subview (such as pins)
+			if hitView != sub {
+				sub.mouseExitedView() // bit hacky, but disable priming this way for mouse exit
+				continue
 			}
+			
+			// prime
+			// TODO: Prime only if suitable
+			sub.mouseEnterView()
+			
+			// note: do not break as we may need to unprime other views?
 		}
-		
 	}
 }
