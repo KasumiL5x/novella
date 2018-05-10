@@ -11,70 +11,69 @@ import NovellaModel
 
 class Canvas: NSView {
 	var _nvStory: NVStory?
-	
+
 	var _grid: GridView
 
 	var _linkableWidgets: [LinkableWidget]
 	var _linkPinViews: [LinkPinView]
-	
+
 	var _selectionRect: SelectionView
 	var _selectedNodes: [LinkableWidget]
-	
 	var _trackingArea: NSTrackingArea?
 	var _prevMousePos: NSPoint // used for dragging
-	
+
 	let _undoRedo: UndoRedo
-	
+
 	var _nodeContextMenu: NSMenu // context menu for nodes
-	
+
 	var _pinDropTarget: LinkableWidget? // target node when dragging pins
 	var _pinDropDragged: LinkPinView? // current one being dragged
 	var _pinDropMenuBranch: NSMenu
-	
+
 	override init(frame frameRect: NSRect) {
 		self._nvStory = nil
-		
+
 		self._grid = GridView(frame: frameRect)
-		
+
 		self._linkableWidgets = []
 		self._linkPinViews = []
-		
+
 		self._selectionRect = SelectionView(frame: frameRect)
 		self._selectedNodes = []
-		
+
 		self._trackingArea = nil
 		self._prevMousePos = NSPoint.zero
-		
+
 		self._undoRedo = UndoRedo()
-		
+
 		self._nodeContextMenu = NSMenu(title: "Node Context Menu")
-		
+
 		self._pinDropTarget = nil
 		self._pinDropDragged = nil
 		self._pinDropMenuBranch = NSMenu(title: "Branch Menu")
-		
+
 		super.init(frame: frameRect)
-		
+
 		// set up node context menu
 		_nodeContextMenu.addItem(withTitle: "Link to...", action: #selector(Canvas.onNodeContextLinkTo), keyEquivalent: "")
-		
+
 		// set up the pin drop branch menu
 		_pinDropMenuBranch.addItem(withTitle: "True", action: #selector(Canvas.onPinDropBranchTrue), keyEquivalent: "")
 		_pinDropMenuBranch.addItem(withTitle: "False", action: #selector(Canvas.onPinDropBranchFalse), keyEquivalent: "")
-		
+
 		// initial state of canvas
 		reset()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
 	}
-	
+
 	// configures the tracking area
 	override func updateTrackingAreas() {
 		if _trackingArea != nil {
 			self.removeTrackingArea(_trackingArea!)
 		}
-		
+
 		let options: NSTrackingArea.Options = [
 			NSTrackingArea.Options.activeInKeyWindow,
 			NSTrackingArea.Options.mouseMoved
@@ -82,12 +81,12 @@ class Canvas: NSView {
 		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
 		self.addTrackingArea(_trackingArea!)
 	}
-	
+
 	// MARK: Story
 	func loadFrom(story: NVStory) {
 		reset()
 		self._nvStory = story
-		
+
 		// add all nodes
 		for curr in story.AllNodes {
 			if let asDialog = curr as? NVDialog {
@@ -96,7 +95,7 @@ class Canvas: NSView {
 				print("Encounterd node type that's not handled in Canvas yet (\(type(of:curr))).")
 			}
 		}
-		
+
 		// create all links
 		for curr in story.AllLinks {
 			if let node = getLinkableWidgetFrom(linkable: curr.Origin) {
@@ -105,54 +104,54 @@ class Canvas: NSView {
 				fatalError("Recived a link without an origin!")
 			}
 		}
-		
+
 		print("Loaded story!")
 	}
-	
+
 	// MARK: Undo/Redo
 	func undo() {
 		_undoRedo.undo(levels: 1)
 	}
-	
+
 	func redo() {
 		_undoRedo.redo(levels: 1)
 	}
-	
+
 	// MARK: Reset
 	func reset() {
 		// remove all subviews
 		self.subviews.removeAll()
-		
+
 		// add background grid
 		self.addSubview(_grid)
 		// add marquee view (THIS MUST BE LAST)
 		self.addSubview(_selectionRect)
-		
+
 		// remove all nodes
 		_linkableWidgets = []
 		// remove all link pins
 		_linkPinViews = []
-		
+
 		// clear undo/redo
 		_undoRedo.clear()
 	}
-	
+
 	// MARK: Convert Novella to Canvas
 	func getLinkableWidgetFrom(linkable: NVLinkable?) -> LinkableWidget? {
 		if linkable == nil {
 			return nil
 		}
-		
+
 		let widget = _linkableWidgets.first(where: {
 			if let dlgWidget = $0 as? DialogWidget {
 				return linkable?.UUID == dlgWidget._nvLinkable!.UUID
 			}
 			return false
 		})
-		
+
 		return widget
 	}
-	
+
 	// MARK: Curves
 	func updateCurves() {
 		// updates every curve - not very efficient
@@ -160,14 +159,14 @@ class Canvas: NSView {
 			child.setNeedsDisplay(child.bounds)
 		}
 	}
-	
+
 	// MARK: Mouse Events
 	override func mouseDown(with event: NSEvent) {
 		// begin marquee mode
 		_selectionRect.Origin = self.convert(event.locationInWindow, from: nil)
 		_selectionRect.InMarquee = true
 	}
-	
+
 	override func mouseDragged(with event: NSEvent) {
 		// update marquee
 		if _selectionRect.InMarquee {
@@ -176,7 +175,7 @@ class Canvas: NSView {
 			return
 		}
 	}
-	
+
 	override func mouseUp(with event: NSEvent) {
 		// handle marquee selection region
 		if _selectionRect.InMarquee {
@@ -189,14 +188,14 @@ class Canvas: NSView {
 			select([], append: false)
 		}
 	}
-	
+
 	// MARK: Selection
 	func select(_ nodes: [LinkableWidget], append: Bool) {
 		_selectedNodes.forEach({$0.deselect()})
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
 	}
-	
+
 	func allNodesIn(rect: NSRect) -> [LinkableWidget] {
 		var selected: [LinkableWidget] = []
 		for curr in _linkableWidgets {
@@ -219,12 +218,12 @@ extension Canvas {
 		self.addSubview(widget)
 		return widget
 	}
-	
+
 	// MARK: Mouse Events
 	func onMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// update last position of cursor
 		_prevMousePos = event.locationInWindow
-		
+
 		// if in selection, we may be wanting to move, so just ignore any selects.
 		// this means that to deselect, you MUST select another unselected node or the canvas BG.
 		if !_selectedNodes.contains(widget) {
@@ -232,13 +231,13 @@ extension Canvas {
 			select([widget], append: appendSelection)
 		}
 	}
-	
+
 	func onMouseDraggedLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// if no compound undo exists, make one now
 		if !_undoRedo.inCompound() {
 			_undoRedo.beginCompound(executeOnAdd: true)
 		}
-		
+
 		let currMousePos = event.locationInWindow // may need tweaking
 		let dx = (currMousePos.x - _prevMousePos.x)
 		let dy = (currMousePos.y - _prevMousePos.y)
@@ -246,27 +245,27 @@ extension Canvas {
 			let newOrigin = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
 			moveLinkableWidget(widget: $0, from: $0.frame.origin, to: newOrigin)
 		})
-		
+
 		// update last position of cursor
 		_prevMousePos = currMousePos
 	}
-	
+
 	func onMouseUpLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		// end compound undo if one started
 		if _undoRedo.inCompound() {
 			_undoRedo.endCompound()
 		}
 	}
-	
+
 	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
 		NSMenu.popUpContextMenu(_nodeContextMenu, with: event, for: widget)
 	}
-	
+
 	// MARK: Command Functions
 	func moveLinkableWidget(widget: LinkableWidget, from: CGPoint, to: CGPoint) {
 		_undoRedo.execute(cmd: MoveLinkableWidgetCmd(widget: widget, from: from, to: to))
 	}
-	
+
 	// MARK: Context Menus
 	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
 		print("hello from \(sender)")
@@ -281,35 +280,35 @@ extension Canvas {
 		_linkPinViews.append(lpv)
 		return lpv
 	}
-	
+
 	func onDragPin(pin: LinkPinView, event: NSEvent) {
 		_pinDropDragged = pin
 		_pinDropTarget = nil
-		
+
 		for sub in _linkableWidgets {
 			let pos = self.convert(event.locationInWindow, from: nil) // MUST be in canvas space, as the subviews hitTest relies on the superview (canvas) space
 			let hitView = sub.hitTest(pos)
-			
+
 			// didn't hit, or hit subview (such as pins)
 			if hitView != sub || hitView == pin._owner {
 				sub.mouseExitedView() // bit hacky, but disable priming this way for mouse exit
 				continue
 			}
-			
+
 			_pinDropTarget = sub
 			sub.mouseEnterView()
 			// note: do not break as we may need to unprime other views?
 		}
 	}
-	
+
 	func onPinUp(pin: LinkPinView, event: NSEvent) {
 		if _pinDropTarget == nil {
 			print("Dropped pin on empty space.")
 			return
 		}
-		
+
 		// TODO: Validate target? maybe in here maybe in drag? here is more optimized as drag is currently hacky.
-		
+
 		// handle case of links
 		if let asLink = pin._nvBaseLink as? NVLink {
 			asLink.Transfer.Destination = _pinDropTarget!._nvLinkable
@@ -323,9 +322,9 @@ extension Canvas {
 		if let asSwitch = pin._nvBaseLink as? NVSwitch {
 			fatalError("Switches not yet supported.")
 		}
-		
+
 	}
-	
+
 	@objc func onPinDropBranchTrue() {
 		if _pinDropDragged == nil {
 			fatalError("Tried to set branch's true destination but _pinDropDragged was nil.")
