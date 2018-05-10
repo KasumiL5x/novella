@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVVariable {
+public class NVVariable {
 	let _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
@@ -29,16 +29,17 @@ class NVVariable {
 		self._folder = nil
 	}
 	
-	// MARK:  Getters
-	var Name:         String   {get{ return _name }}
-	var Synopsis:     String   {get{ return _synopsis }}
-	var DataType:     NVDataType {get{ return _type }}
-	var Value:        Any      {get{ return _value }}
-	var InitialValue: Any      {get{ return _initialValue }}
-	var IsConstant:   Bool     {get{ return _constant }}
+	// MARK:  Properties
+	public var Name:         String     {get{ return _name }}
+	public var Synopsis:     String     {get{ return _synopsis } set{ _synopsis = newValue }}
+	public var DataType:     NVDataType {get{ return _type }}
+	public var Value:        Any        {get{ return _value }}
+	public var InitialValue: Any        {get{ return _initialValue }}
+	public var IsConstant:   Bool       {get{ return _constant } set{ _constant = newValue }}
+	public var Folder:       NVFolder?  {get{ return _folder }}
 	
 	// MARK: Setters
-	func setName(_ name: String) throws {
+	public func setName(_ name: String) throws {
 		// if not in a folder, name conflict doesn't matter
 		if nil == _folder {
 			_name = name
@@ -51,18 +52,14 @@ class NVVariable {
 		_name = name
 	}
 	
-	func setSynopsis(_ synopsis: String) {
-		self._synopsis = synopsis
-	}
-	
-	func setType(_ type: NVDataType) {
+	public func setType(_ type: NVDataType) {
 		_type = type
 		_value = type.defaultValue
 		_initialValue = type.defaultValue
 		// TODO: Can I somehow convert existing data safely or revert to defaults otherwise?
 	}
 
-	func setValue(_ val: Any) throws {
+	public func setValue(_ val: Any) throws {
 		if self._constant {
 			throw NVError.isConstant("")
 		}
@@ -74,40 +71,36 @@ class NVVariable {
 		_value = val
 	}
 	
-	func setInitialValue(_ val: Any) throws {
+	public func setInitialValue(_ val: Any) throws {
 		if !_type.matches(value: val) {
 			throw NVError.dataTypeMismatch("")
 		}
 		_initialValue = val
 		_value = val
 	}
-	
-	func setConstant(_ const: Bool) {
-		self._constant = const
-	}
 }
 
 // MARK: NVIdentifiable
 extension NVVariable: NVIdentifiable {
-	var UUID: NSUUID {
+	public var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: NVPathable
 extension NVVariable: NVPathable {
-	func localPath() -> String {
+	public func localPath() -> String {
 		return _name
 	}
 	
-	func parentPath() -> NVPathable? {
+	public func parentPath() -> NVPathable? {
 		return _folder
 	}
 }
 
 // MARK: Equatable
 extension NVVariable: Equatable {
-	static func == (lhs: NVVariable, rhs: NVVariable) -> Bool {
+	public static func == (lhs: NVVariable, rhs: NVVariable) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

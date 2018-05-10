@@ -6,7 +6,7 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-enum NVDataType {
+public enum NVDataType {
 	case boolean
 	case integer
 	case double
@@ -27,7 +27,7 @@ enum NVDataType {
 		}
 	}
 	
-	var stringValue: String {
+	public var stringValue: String {
 		switch self {
 		case .boolean: return "boolean"
 		case .integer: return "integer"

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVNode {
+public class NVNode {
 	let _uuid: NSUUID
 	var _name: String
 	
@@ -21,12 +21,13 @@ class NVNode {
 	}
 	
 	// MARK: Properties
-	var Name: String {get{ return _name } set{ _name = newValue }}
+	public var Name:           String  {get{ return _name } set{ _name = newValue }}
+	public var EditorPosition: CGPoint {get{ return _editorPos }	set{ _editorPos = newValue }}
 }
 
 // MARK: NVIdentifiable
 extension NVNode: NVIdentifiable {
-	var UUID: NSUUID {
+	public var UUID: NSUUID {
 		return _uuid
 	}
 }
@@ -37,7 +38,7 @@ extension NVNode: NVLinkable {
 
 // MARK: Equatable
 extension NVNode: Equatable {
-	static func == (lhs: NVNode, rhs: NVNode) -> Bool {
+	public static func == (lhs: NVNode, rhs: NVNode) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

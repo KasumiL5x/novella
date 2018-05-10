@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVFolder {
+public class NVFolder {
 	let _uuid: NSUUID
 	var _name: String
 	var _synopsis: String
@@ -25,14 +25,15 @@ class NVFolder {
 		self._parent = nil
 	}
 	
-	// MARK: Getters
-	var Name:      String     {get{ return _name }}
-	var Synopsis:  String     {get{ return _synopsis }}
-	var Variables: [NVVariable] {get{ return _variables }}
-	var Folders:   [NVFolder]   {get{ return _folders }}
+	// MARK: Properties
+	public var Name:      String       {get{ return _name }}
+	public var Synopsis:  String       {get{ return _synopsis } set{ _synopsis = newValue }}
+	public var Variables: [NVVariable] {get{ return _variables }}
+	public var Folders:   [NVFolder]   {get{ return _folders }}
+	public var Parent:    NVFolder?    {get{ return _parent }}
 	
 	// MARK: Setters
-	func setName(_ name: String) throws {
+	public func setName(_ name: String) throws {
 		// if not in a parent folder, name conflict doesn't matter
 		if nil == _parent {
 			_name = name
@@ -46,21 +47,17 @@ class NVFolder {
 		_name = name
 	}
 	
-	func setSynopsis(_ synopsis: String) {
-		self._synopsis = synopsis
-	}
-	
 	// MARK: Folders
-	func contains(folder: NVFolder) -> Bool {
+	public func contains(folder: NVFolder) -> Bool {
 		return _folders.contains(folder)
 	}
 	
-	func containsFolderName(_ name: String) -> Bool {
+	public func containsFolderName(_ name: String) -> Bool {
 		return _folders.contains(where: {$0._name == name})
 	}
 	
 	@discardableResult
-	func add(folder: NVFolder) throws -> NVFolder {
+	public func add(folder: NVFolder) throws -> NVFolder {
 		// cannot add self
 		if folder == self {
 			throw NVError.invalid("Tried to add Folder to self (\(_name)).")
@@ -84,7 +81,7 @@ class NVFolder {
 		return folder
 	}
 	
-	func remove(folder: NVFolder) throws {
+	public func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
 			throw NVError.invalid("Tried to remove Folder (\(folder._name)) from (\(_name)) but it was not a child.")
 		}
@@ -92,7 +89,7 @@ class NVFolder {
 		_folders.remove(at: idx)
 	}
 	
-	func hasDescendant(folder: NVFolder) -> Bool {
+	public func hasDescendant(folder: NVFolder) -> Bool {
 		// check this folder
 		if self.contains(folder: folder) {
 			return true
@@ -107,16 +104,16 @@ class NVFolder {
 	}
 	
 	// MARK: Variables
-	func contains(variable: NVVariable) -> Bool {
+	public func contains(variable: NVVariable) -> Bool {
 		return _variables.contains(variable)
 	}
 	
-	func containsVariableName(_ name: String) -> Bool {
+	public func containsVariableName(_ name: String) -> Bool {
 		return _variables.contains(where: {$0._name == name})
 	}
 	
 	@discardableResult
-	func add(variable: NVVariable) throws -> NVVariable {
+	public func add(variable: NVVariable) throws -> NVVariable {
 		// already a child
 		if contains(variable: variable) {
 			throw NVError.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
@@ -136,7 +133,7 @@ class NVFolder {
 		return variable
 	}
 	
-	func remove(variable: NVVariable) throws {
+	public func remove(variable: NVVariable) throws {
 		guard let idx = _variables.index(of: variable) else {
 			throw NVError.invalid("Tried to remove Variable (\(variable._name)) from (\(_name)) but it was not a child.")
 		}
@@ -146,7 +143,7 @@ class NVFolder {
 	
 	
 	// MARK - Debug
-	func debugPrint(indent: Int) {
+	public func debugPrint(indent: Int) {
 		var str = ""
 		
 		// current folder w/ indent
@@ -176,25 +173,25 @@ class NVFolder {
 
 // MARK: NVIdentifiable
 extension NVFolder: NVIdentifiable {
-	var UUID: NSUUID {
+	public var UUID: NSUUID {
 		return _uuid
 	}
 }
 
 // MARK: NVPathable
 extension NVFolder: NVPathable {
-	func localPath() -> String {
+	public func localPath() -> String {
 		return _name
 	}
 	
-	func parentPath() -> NVPathable? {
+	public func parentPath() -> NVPathable? {
 		return _parent
 	}
 }
 
 // MARK: Equatable
 extension NVFolder: Equatable {
-	static func == (lhs: NVFolder, rhs: NVFolder) -> Bool {
+	public static func == (lhs: NVFolder, rhs: NVFolder) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

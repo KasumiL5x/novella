@@ -6,7 +6,7 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-class NVTransfer {
+public class NVTransfer {
 	var _destination: NVLinkable?
 	var _function: NVFunction
 	
@@ -15,7 +15,6 @@ class NVTransfer {
 		self._function = NVFunction()
 	}
 	
-	func setDestination(_ dest: NVLinkable?) {
-		self._destination = dest
-	}
+	// MARK: Properties
+	public var Destination: NVLinkable? {get{ return _destination } set{ _destination = newValue }}
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVExitNode {
+public class NVExitNode {
 	let _uuid: NSUUID
 	
 	init(uuid: NSUUID) {
@@ -18,7 +18,7 @@ class NVExitNode {
 
 // MARK: NVIdentifiable
 extension NVExitNode: NVIdentifiable {
-	var UUID: NSUUID {
+	public var UUID: NSUUID {
 		return _uuid
 	}
 }
@@ -29,7 +29,7 @@ extension NVExitNode: NVLinkable {
 
 // MARK: Equatable
 extension NVExitNode: Equatable {
-	static func == (lhs: NVExitNode, rhs: NVExitNode) -> Bool {
+	public static func == (lhs: NVExitNode, rhs: NVExitNode) -> Bool {
 		return lhs.UUID == rhs.UUID
 	}
 }

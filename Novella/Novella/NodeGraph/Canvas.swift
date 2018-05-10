@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class Canvas: NSView {
 	var _nvStory: NVStory?
@@ -76,7 +77,7 @@ class Canvas: NSView {
 		self._nvStory = story
 		
 		// add all nodes
-		for curr in story._allNodes {
+		for curr in story.AllNodes {
 			if let asDialog = curr as? NVDialog {
 				let _ = makeDialogWidget(novellaDialog: asDialog)
 			} else {
@@ -85,9 +86,8 @@ class Canvas: NSView {
 		}
 		
 		// create all links
-		for curr in story._allLinks {
-			
-			if let node = getLinkableWidgetFrom(linkable: curr._origin) {
+		for curr in story.AllLinks {
+			if let node = getLinkableWidgetFrom(linkable: curr.Origin) {
 				node.addOutput(pin: makeLinkPin(nvBaseLink: curr))
 			} else {
 				fatalError("Recived a link without an origin!")

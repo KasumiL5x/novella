@@ -7,11 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6518B6EA20894E2600FF6BB8 /* NVStory+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		6535CB6520A2F95500E857A0 /* LinkPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535CB6420A2F95500E857A0 /* LinkPinView.swift */; };
-		653CA9B5208538F50052BAB9 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */; };
+		6546805220A45D740036B770 /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546804F20A45D740036B770 /* NVFolder.swift */; };
+		6546805320A45D740036B770 /* NVDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805020A45D740036B770 /* NVDataType.swift */; };
+		6546805420A45D740036B770 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805120A45D740036B770 /* NVVariable.swift */; };
+		6546805720A45D8E0036B770 /* NVSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805520A45D8E0036B770 /* NVSimulator.swift */; };
+		6546805820A45D8E0036B770 /* NVSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805620A45D8E0036B770 /* NVSimulation.swift */; };
+		6546805E20A45DAE0036B770 /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805920A45DAE0036B770 /* NVDelivery.swift */; };
+		6546805F20A45DAE0036B770 /* NVDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805A20A45DAE0036B770 /* NVDialog.swift */; };
+		6546806020A45DAE0036B770 /* NVContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805B20A45DAE0036B770 /* NVContext.swift */; };
+		6546806120A45DAE0036B770 /* NVNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805C20A45DAE0036B770 /* NVNode.swift */; };
+		6546806220A45DAE0036B770 /* NVCutscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805D20A45DAE0036B770 /* NVCutscene.swift */; };
+		6546806B20A45DDB0036B770 /* NVLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806320A45DDA0036B770 /* NVLinkable.swift */; };
+		6546806C20A45DDB0036B770 /* NVTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806420A45DDA0036B770 /* NVTransfer.swift */; };
+		6546806D20A45DDB0036B770 /* NVBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806520A45DDB0036B770 /* NVBranch.swift */; };
+		6546806E20A45DDB0036B770 /* NVCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806620A45DDB0036B770 /* NVCondition.swift */; };
+		6546806F20A45DDB0036B770 /* NVFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806720A45DDB0036B770 /* NVFunction.swift */; };
+		6546807020A45DDB0036B770 /* NVBaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806820A45DDB0036B770 /* NVBaseLink.swift */; };
+		6546807120A45DDB0036B770 /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806920A45DDB0036B770 /* NVLink.swift */; };
+		6546807220A45DDB0036B770 /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546806A20A45DDB0036B770 /* NVSwitch.swift */; };
+		6546807620A45DE90036B770 /* NVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807320A45DE90036B770 /* NVListener.swift */; };
+		6546807720A45DE90036B770 /* NVGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807420A45DE90036B770 /* NVGraph.swift */; };
+		6546807820A45DE90036B770 /* NVExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807520A45DE90036B770 /* NVExitNode.swift */; };
+		6546807E20A45E050036B770 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807920A45E050036B770 /* NVIdentifiable.swift */; };
+		6546807F20A45E050036B770 /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807A20A45E050036B770 /* NVPath.swift */; };
+		6546808020A45E050036B770 /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807B20A45E050036B770 /* NVStory.swift */; };
+		6546808120A45E050036B770 /* NVStory+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807C20A45E050036B770 /* NVStory+JSON.swift */; };
+		6546808220A45E050036B770 /* NVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807D20A45E050036B770 /* NVError.swift */; };
 		6553C95E2092723A00E6737B /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95D2092723A00E6737B /* Reader.storyboard */; };
 		6553C9602092726500E6737B /* Writer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95F2092726500E6737B /* Writer.storyboard */; };
 		6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96120927D6E00E6737B /* ReaderViewController.swift */; };
@@ -20,14 +44,6 @@
 		6558838A209C8C19004C412F /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588389209C8C19004C412F /* CurveHelper.swift */; };
 		6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */; };
 		655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B0B8E2098B4C000741ACA /* Canvas.swift */; };
-		655CFAEF2085FA2900C04D40 /* NVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655CFAEE2085FA2900C04D40 /* NVListener.swift */; };
-		65619E922084D711000D5322 /* NVLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65619E912084D711000D5322 /* NVLinkable.swift */; };
-		656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
-		656F99E920869B2C009366D0 /* NVExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99E820869B2C009366D0 /* NVExitNode.swift */; };
-		656F99EB2086A5E9009366D0 /* NVCutscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EA2086A5E9009366D0 /* NVCutscene.swift */; };
-		656F99ED2086A60A009366D0 /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EC2086A60A009366D0 /* NVDelivery.swift */; };
-		656F99EF2086A627009366D0 /* NVDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99EE2086A627009366D0 /* NVDialog.swift */; };
-		656F99F12086A638009366D0 /* NVContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656F99F02086A638009366D0 /* NVContext.swift */; };
 		65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65711AD120873A23005E44AF /* JSONTestViewController.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAD207E7E6500E2B46B /* ViewController.swift */; };
@@ -35,29 +51,16 @@
 		658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CB1207E7E6600E2B46B /* Main.storyboard */; };
 		658C7CBF207E7E6600E2B46B /* NovellaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CBE207E7E6600E2B46B /* NovellaTests.swift */; };
 		658C7CCA207E7E6600E2B46B /* NovellaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */; };
-		658C7CDC207E7EB900E2B46B /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CD8207E7EB800E2B46B /* NVFolder.swift */; };
-		658C7CDD207E7EB900E2B46B /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CD9207E7EB800E2B46B /* NVVariable.swift */; };
-		658C7CDE207E7EB900E2B46B /* NVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CDA207E7EB900E2B46B /* NVError.swift */; };
-		658C7CDF207E7EB900E2B46B /* NVDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CDB207E7EB900E2B46B /* NVDataType.swift */; };
 		659140582099D60B00D6273D /* LinkableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140572099D60B00D6273D /* LinkableWidget.swift */; };
 		6591405A2099D62900D6273D /* DialogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140592099D62900D6273D /* DialogWidget.swift */; };
-		6591405D209A36F600D6273D /* NVSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591405C209A36F600D6273D /* NVSimulation.swift */; };
-		65C0573F2080A20900C4367E /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0573E2080A20900C4367E /* NVPath.swift */; };
-		65C2F02320963AA1003D5025 /* NVSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C2F02220963AA1003D5025 /* NVSimulator.swift */; };
+		65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */; };
+		65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D120A4836A007938C2 /* JSONSchema.framework */; };
 		65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */; };
 		65CEA211209F7086008C49AE /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA210209F7086008C49AE /* SelectionView.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
-		65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */; };
-		65F5DF93207EA0910041FB0D /* NVBaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF92207EA0910041FB0D /* NVBaseLink.swift */; };
-		65F5DF95207EA09C0041FB0D /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF94207EA09C0041FB0D /* NVLink.swift */; };
-		65F5DF98207EA0AF0041FB0D /* NVBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF97207EA0AF0041FB0D /* NVBranch.swift */; };
-		65F5DF9A207EA0BA0041FB0D /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF99207EA0BA0041FB0D /* NVSwitch.swift */; };
-		65F5DF9C207EA0C70041FB0D /* NVCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9B207EA0C70041FB0D /* NVCondition.swift */; };
-		65F5DF9E207EA0D40041FB0D /* NVTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9D207EA0D40041FB0D /* NVTransfer.swift */; };
-		65F5DFA0207EA1600041FB0D /* NVFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DF9F207EA1600041FB0D /* NVFunction.swift */; };
-		65F5DFA2207EA3C00041FB0D /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA1207EA3C00041FB0D /* NVStory.swift */; };
-		65F5DFA4207EA3DD0041FB0D /* NVGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA3207EA3DD0041FB0D /* NVGraph.swift */; };
-		65F5DFA6207EA3FB0041FB0D /* NVNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA5207EA3FB0041FB0D /* NVNode.swift */; };
+		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
+		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */; };
 		65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F85486209E61850067A95C /* NSColor+Hex.swift */; };
 		65F8548B209EF2D50067A95C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F8548A209EF2D50067A95C /* GridView.swift */; };
@@ -78,14 +81,59 @@
 			remoteGlobalIDString = 658C7CA7207E7E6500E2B46B;
 			remoteInfo = Novella;
 		};
+		65E67DD020A458A500ED7BED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 658C7CA0207E7E6500E2B46B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65E67DCA20A458A500ED7BED;
+			remoteInfo = NovellaModel;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		65E67DD720A458A500ED7BED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVStory+JSON.swift"; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		6535CB6420A2F95500E857A0 /* LinkPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPinView.swift; sourceTree = "<group>"; };
-		653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
+		6546804F20A45D740036B770 /* NVFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
+		6546805020A45D740036B770 /* NVDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDataType.swift; sourceTree = "<group>"; };
+		6546805120A45D740036B770 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
+		6546805520A45D8E0036B770 /* NVSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSimulator.swift; sourceTree = "<group>"; };
+		6546805620A45D8E0036B770 /* NVSimulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSimulation.swift; sourceTree = "<group>"; };
+		6546805920A45DAE0036B770 /* NVDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
+		6546805A20A45DAE0036B770 /* NVDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDialog.swift; sourceTree = "<group>"; };
+		6546805B20A45DAE0036B770 /* NVContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVContext.swift; sourceTree = "<group>"; };
+		6546805C20A45DAE0036B770 /* NVNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVNode.swift; sourceTree = "<group>"; };
+		6546805D20A45DAE0036B770 /* NVCutscene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVCutscene.swift; sourceTree = "<group>"; };
+		6546806320A45DDA0036B770 /* NVLinkable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLinkable.swift; sourceTree = "<group>"; };
+		6546806420A45DDA0036B770 /* NVTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVTransfer.swift; sourceTree = "<group>"; };
+		6546806520A45DDB0036B770 /* NVBranch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVBranch.swift; sourceTree = "<group>"; };
+		6546806620A45DDB0036B770 /* NVCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVCondition.swift; sourceTree = "<group>"; };
+		6546806720A45DDB0036B770 /* NVFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFunction.swift; sourceTree = "<group>"; };
+		6546806820A45DDB0036B770 /* NVBaseLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVBaseLink.swift; sourceTree = "<group>"; };
+		6546806920A45DDB0036B770 /* NVLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
+		6546806A20A45DDB0036B770 /* NVSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
+		6546807320A45DE90036B770 /* NVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVListener.swift; sourceTree = "<group>"; };
+		6546807420A45DE90036B770 /* NVGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVGraph.swift; sourceTree = "<group>"; };
+		6546807520A45DE90036B770 /* NVExitNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVExitNode.swift; sourceTree = "<group>"; };
+		6546807920A45E050036B770 /* NVIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
+		6546807A20A45E050036B770 /* NVPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
+		6546807B20A45E050036B770 /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
+		6546807C20A45E050036B770 /* NVStory+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NVStory+JSON.swift"; sourceTree = "<group>"; };
+		6546807D20A45E050036B770 /* NVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVError.swift; sourceTree = "<group>"; };
 		6553C95D2092723A00E6737B /* Reader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reader.storyboard; sourceTree = "<group>"; };
 		6553C95F2092726500E6737B /* Writer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Writer.storyboard; sourceTree = "<group>"; };
 		6553C96120927D6E00E6737B /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
@@ -94,14 +142,6 @@
 		65588389209C8C19004C412F /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		655B0B8E2098B4C000741ACA /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
-		655CFAEE2085FA2900C04D40 /* NVListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVListener.swift; sourceTree = "<group>"; };
-		65619E912084D711000D5322 /* NVLinkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLinkable.swift; sourceTree = "<group>"; };
-		656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
-		656F99E820869B2C009366D0 /* NVExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVExitNode.swift; sourceTree = "<group>"; };
-		656F99EA2086A5E9009366D0 /* NVCutscene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVCutscene.swift; sourceTree = "<group>"; };
-		656F99EC2086A60A009366D0 /* NVDelivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
-		656F99EE2086A627009366D0 /* NVDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVDialog.swift; sourceTree = "<group>"; };
-		656F99F02086A638009366D0 /* NVContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVContext.swift; sourceTree = "<group>"; };
 		65711AD120873A23005E44AF /* JSONTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTestViewController.swift; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,29 +156,16 @@
 		658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovellaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovellaUITests.swift; sourceTree = "<group>"; };
 		658C7CCB207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		658C7CD8207E7EB800E2B46B /* NVFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
-		658C7CD9207E7EB800E2B46B /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
-		658C7CDA207E7EB900E2B46B /* NVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVError.swift; sourceTree = "<group>"; };
-		658C7CDB207E7EB900E2B46B /* NVDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDataType.swift; sourceTree = "<group>"; };
 		659140572099D60B00D6273D /* LinkableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkableWidget.swift; sourceTree = "<group>"; };
 		659140592099D62900D6273D /* DialogWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWidget.swift; sourceTree = "<group>"; };
-		6591405C209A36F600D6273D /* NVSimulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSimulation.swift; sourceTree = "<group>"; };
-		65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
-		65C0573E2080A20900C4367E /* NVPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
-		65C2F02220963AA1003D5025 /* NVSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSimulator.swift; sourceTree = "<group>"; };
+		65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		65ADB3D120A4836A007938C2 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65CEA210209F7086008C49AE /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
-		65F5DF92207EA0910041FB0D /* NVBaseLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVBaseLink.swift; sourceTree = "<group>"; };
-		65F5DF94207EA09C0041FB0D /* NVLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
-		65F5DF97207EA0AF0041FB0D /* NVBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVBranch.swift; sourceTree = "<group>"; };
-		65F5DF99207EA0BA0041FB0D /* NVSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
-		65F5DF9B207EA0C70041FB0D /* NVCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVCondition.swift; sourceTree = "<group>"; };
-		65F5DF9D207EA0D40041FB0D /* NVTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVTransfer.swift; sourceTree = "<group>"; };
-		65F5DF9F207EA1600041FB0D /* NVFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVFunction.swift; sourceTree = "<group>"; };
-		65F5DFA1207EA3C00041FB0D /* NVStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
-		65F5DFA3207EA3DD0041FB0D /* NVGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVGraph.swift; sourceTree = "<group>"; };
-		65F5DFA5207EA3FB0041FB0D /* NVNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVNode.swift; sourceTree = "<group>"; };
+		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
+		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableFolderTestViewController.swift; sourceTree = "<group>"; };
 		65F85486209E61850067A95C /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		65F8548A209EF2D50067A95C /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
@@ -149,8 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */,
-				65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */,
+				65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,31 +194,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		65E67DC720A458A500ED7BED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */,
+				65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6515048B208618AC00D38D07 /* Graphs */ = {
-			isa = PBXGroup;
-			children = (
-				655CFAEE2085FA2900C04D40 /* NVListener.swift */,
-				65F5DFA3207EA3DD0041FB0D /* NVGraph.swift */,
-				656F99E820869B2C009366D0 /* NVExitNode.swift */,
-			);
-			name = Graphs;
-			sourceTree = "<group>";
-		};
-		6519DE5320854AA7009C43E2 /* Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				65F5DFA5207EA3FB0041FB0D /* NVNode.swift */,
-				656F99EA2086A5E9009366D0 /* NVCutscene.swift */,
-				656F99EC2086A60A009366D0 /* NVDelivery.swift */,
-				656F99EE2086A627009366D0 /* NVDialog.swift */,
-				656F99F02086A638009366D0 /* NVContext.swift */,
-			);
-			name = Nodes;
-			sourceTree = "<group>";
-		};
 		652102502083BC6C0028212B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,14 +227,26 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		653CA9B620854A640052BAB9 /* Variables */ = {
+		6556937420A45C8F00E6105B /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
-				658C7CDB207E7EB900E2B46B /* NVDataType.swift */,
-				658C7CD9207E7EB800E2B46B /* NVVariable.swift */,
-				658C7CD8207E7EB800E2B46B /* NVFolder.swift */,
+				6546807520A45DE90036B770 /* NVExitNode.swift */,
+				6546807420A45DE90036B770 /* NVGraph.swift */,
+				6546807320A45DE90036B770 /* NVListener.swift */,
 			);
-			name = Variables;
+			name = Graphs;
+			sourceTree = "<group>";
+		};
+		6556937620A45CA500E6105B /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				6546805B20A45DAE0036B770 /* NVContext.swift */,
+				6546805D20A45DAE0036B770 /* NVCutscene.swift */,
+				6546805920A45DAE0036B770 /* NVDelivery.swift */,
+				6546805A20A45DAE0036B770 /* NVDialog.swift */,
+				6546805C20A45DAE0036B770 /* NVNode.swift */,
+			);
+			name = Nodes;
 			sourceTree = "<group>";
 		};
 		655B0B8D2098B48300741ACA /* NodeGraph */ = {
@@ -242,8 +267,8 @@
 		656AFB28208BEEC6007E6426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */,
-				656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */,
+				65ADB3D120A4836A007938C2 /* JSONSchema.framework */,
+				65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,6 +288,7 @@
 				658C7CAA207E7E6500E2B46B /* Novella */,
 				658C7CBD207E7E6600E2B46B /* NovellaTests */,
 				658C7CC8207E7E6600E2B46B /* NovellaUITests */,
+				65E67DCC20A458A500ED7BED /* NovellaModel */,
 				658C7CA9207E7E6500E2B46B /* Products */,
 				656AFB28208BEEC6007E6426 /* Frameworks */,
 			);
@@ -274,6 +300,7 @@
 				658C7CA8207E7E6500E2B46B /* Novella.app */,
 				658C7CBA207E7E6600E2B46B /* NovellaTests.xctest */,
 				658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */,
+				65E67DCB20A458A500ED7BED /* NovellaModel.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -288,7 +315,6 @@
 				658C7CB4207E7E6600E2B46B /* Info.plist */,
 				658C7CB5207E7E6600E2B46B /* Novella.entitlements */,
 				6581AF5E20A1099300BE71A4 /* Extensions */,
-				658C7CD7207E7E9B00E2B46B /* Model */,
 				655B0B8D2098B48300741ACA /* NodeGraph */,
 				6522C5AE2083903900F76DC8 /* Storyboards */,
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
@@ -314,45 +340,57 @@
 			path = NovellaUITests;
 			sourceTree = "<group>";
 		};
-		658C7CD7207E7E9B00E2B46B /* Model */ = {
+		65C2DDAE20A45CB900D79DF9 /* Variables */ = {
 			isa = PBXGroup;
 			children = (
-				658C7CDA207E7EB900E2B46B /* NVError.swift */,
-				653CA9B4208538F50052BAB9 /* NVIdentifiable.swift */,
-				65C0573E2080A20900C4367E /* NVPath.swift */,
-				65F5DFA1207EA3C00041FB0D /* NVStory.swift */,
-				6518B6E920894E2600FF6BB8 /* NVStory+JSON.swift */,
-				6515048B208618AC00D38D07 /* Graphs */,
-				659485962086191E003C7BE4 /* Links */,
-				6519DE5320854AA7009C43E2 /* Nodes */,
-				6591405B209A2F3100D6273D /* Simulation */,
-				653CA9B620854A640052BAB9 /* Variables */,
+				6546805020A45D740036B770 /* NVDataType.swift */,
+				6546804F20A45D740036B770 /* NVFolder.swift */,
+				6546805120A45D740036B770 /* NVVariable.swift */,
 			);
-			path = Model;
+			name = Variables;
 			sourceTree = "<group>";
 		};
-		6591405B209A2F3100D6273D /* Simulation */ = {
+		65C2DDB020A45CDF00D79DF9 /* Links */ = {
 			isa = PBXGroup;
 			children = (
-				65C2F02220963AA1003D5025 /* NVSimulator.swift */,
-				6591405C209A36F600D6273D /* NVSimulation.swift */,
+				6546806820A45DDB0036B770 /* NVBaseLink.swift */,
+				6546806520A45DDB0036B770 /* NVBranch.swift */,
+				6546806620A45DDB0036B770 /* NVCondition.swift */,
+				6546806720A45DDB0036B770 /* NVFunction.swift */,
+				6546806920A45DDB0036B770 /* NVLink.swift */,
+				6546806320A45DDA0036B770 /* NVLinkable.swift */,
+				6546806A20A45DDB0036B770 /* NVSwitch.swift */,
+				6546806420A45DDA0036B770 /* NVTransfer.swift */,
+			);
+			name = Links;
+			sourceTree = "<group>";
+		};
+		65C2DDB120A45CE600D79DF9 /* Simulation */ = {
+			isa = PBXGroup;
+			children = (
+				6546805620A45D8E0036B770 /* NVSimulation.swift */,
+				6546805520A45D8E0036B770 /* NVSimulator.swift */,
 			);
 			name = Simulation;
 			sourceTree = "<group>";
 		};
-		659485962086191E003C7BE4 /* Links */ = {
+		65E67DCC20A458A500ED7BED /* NovellaModel */ = {
 			isa = PBXGroup;
 			children = (
-				65619E912084D711000D5322 /* NVLinkable.swift */,
-				65F5DF92207EA0910041FB0D /* NVBaseLink.swift */,
-				65F5DF94207EA09C0041FB0D /* NVLink.swift */,
-				65F5DF97207EA0AF0041FB0D /* NVBranch.swift */,
-				65F5DF99207EA0BA0041FB0D /* NVSwitch.swift */,
-				65F5DF9D207EA0D40041FB0D /* NVTransfer.swift */,
-				65F5DF9B207EA0C70041FB0D /* NVCondition.swift */,
-				65F5DF9F207EA1600041FB0D /* NVFunction.swift */,
+				6546807D20A45E050036B770 /* NVError.swift */,
+				6546807920A45E050036B770 /* NVIdentifiable.swift */,
+				6546807A20A45E050036B770 /* NVPath.swift */,
+				6546807B20A45E050036B770 /* NVStory.swift */,
+				6546807C20A45E050036B770 /* NVStory+JSON.swift */,
+				6556937420A45C8F00E6105B /* Graphs */,
+				65C2DDB020A45CDF00D79DF9 /* Links */,
+				6556937620A45CA500E6105B /* Nodes */,
+				65C2DDB120A45CE600D79DF9 /* Simulation */,
+				65C2DDAE20A45CB900D79DF9 /* Variables */,
+				65E67DCD20A458A500ED7BED /* NovellaModel.h */,
+				65E67DCE20A458A500ED7BED /* Info.plist */,
 			);
-			name = Links;
+			path = NovellaModel;
 			sourceTree = "<group>";
 		};
 		65F5DFA7207EBD960041FB0D /* ViewControllers */ = {
@@ -368,6 +406,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		65E67DC820A458A500ED7BED /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		658C7CA7207E7E6500E2B46B /* Novella */ = {
 			isa = PBXNativeTarget;
@@ -378,10 +427,12 @@
 				658C7CA5207E7E6500E2B46B /* Frameworks */,
 				658C7CA6207E7E6500E2B46B /* Resources */,
 				656AFB2B208BEEEE007E6426 /* ShellScript */,
+				65E67DD720A458A500ED7BED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				65E67DD120A458A500ED7BED /* PBXTargetDependency */,
 			);
 			name = Novella;
 			productName = Novella;
@@ -424,6 +475,25 @@
 			productReference = 658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		65E67DCA20A458A500ED7BED /* NovellaModel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65E67DD420A458A500ED7BED /* Build configuration list for PBXNativeTarget "NovellaModel" */;
+			buildPhases = (
+				65ADB3D420A483C5007938C2 /* ShellScript */,
+				65E67DC620A458A500ED7BED /* Sources */,
+				65E67DC720A458A500ED7BED /* Frameworks */,
+				65E67DC820A458A500ED7BED /* Headers */,
+				65E67DC920A458A500ED7BED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NovellaModel;
+			productName = NovellaModel;
+			productReference = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -450,6 +520,10 @@
 						CreatedOnToolsVersion = 9.3;
 						TestTargetID = 658C7CA7207E7E6500E2B46B;
 					};
+					65E67DCA20A458A500ED7BED = {
+						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
+					};
 				};
 			};
 			buildConfigurationList = 658C7CA3207E7E6500E2B46B /* Build configuration list for PBXProject "Novella" */;
@@ -468,6 +542,7 @@
 				658C7CA7207E7E6500E2B46B /* Novella */,
 				658C7CB9207E7E6600E2B46B /* NovellaTests */,
 				658C7CC4207E7E6600E2B46B /* NovellaUITests */,
+				65E67DCA20A458A500ED7BED /* NovellaModel */,
 			);
 		};
 /* End PBXProject section */
@@ -493,6 +568,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		658C7CC3207E7E6600E2B46B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65E67DC920A458A500ED7BED /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -530,6 +612,19 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		65ADB3D420A483C5007938C2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}/\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -537,35 +632,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				656F99E920869B2C009366D0 /* NVExitNode.swift in Sources */,
 				655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */,
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
-				65F5DF9C207EA0C70041FB0D /* NVCondition.swift in Sources */,
-				655CFAEF2085FA2900C04D40 /* NVListener.swift in Sources */,
 				6535CB6520A2F95500E857A0 /* LinkPinView.swift in Sources */,
-				656F99EB2086A5E9009366D0 /* NVCutscene.swift in Sources */,
-				658C7CDC207E7EB900E2B46B /* NVFolder.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
-				65F5DFA0207EA1600041FB0D /* NVFunction.swift in Sources */,
 				6553C96420927D9B00E6737B /* WriterViewController.swift in Sources */,
 				659140582099D60B00D6273D /* LinkableWidget.swift in Sources */,
-				6591405D209A36F600D6273D /* NVSimulation.swift in Sources */,
-				65619E922084D711000D5322 /* NVLinkable.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
-				653CA9B5208538F50052BAB9 /* NVIdentifiable.swift in Sources */,
-				65C2F02320963AA1003D5025 /* NVSimulator.swift in Sources */,
-				65F5DF98207EA0AF0041FB0D /* NVBranch.swift in Sources */,
-				6518B6EA20894E2600FF6BB8 /* NVStory+JSON.swift in Sources */,
-				65F5DF93207EA0910041FB0D /* NVBaseLink.swift in Sources */,
-				658C7CDF207E7EB900E2B46B /* NVDataType.swift in Sources */,
 				6591405A2099D62900D6273D /* DialogWidget.swift in Sources */,
-				65F5DF95207EA09C0041FB0D /* NVLink.swift in Sources */,
-				65F5DFA6207EA3FB0041FB0D /* NVNode.swift in Sources */,
-				65F5DFA2207EA3C00041FB0D /* NVStory.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
-				656F99F12086A638009366D0 /* NVContext.swift in Sources */,
-				65F5DFA4207EA3DD0041FB0D /* NVGraph.swift in Sources */,
-				658C7CDE207E7EB900E2B46B /* NVError.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
@@ -573,14 +648,8 @@
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
-				658C7CDD207E7EB900E2B46B /* NVVariable.swift in Sources */,
 				65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */,
-				65F5DF9E207EA0D40041FB0D /* NVTransfer.swift in Sources */,
 				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
-				65C0573F2080A20900C4367E /* NVPath.swift in Sources */,
-				656F99EF2086A627009366D0 /* NVDialog.swift in Sources */,
-				65F5DF9A207EA0BA0041FB0D /* NVSwitch.swift in Sources */,
-				656F99ED2086A60A009366D0 /* NVDelivery.swift in Sources */,
 				65F8548B209EF2D50067A95C /* GridView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,6 +670,39 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		65E67DC620A458A500ED7BED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6546806C20A45DDB0036B770 /* NVTransfer.swift in Sources */,
+				6546806D20A45DDB0036B770 /* NVBranch.swift in Sources */,
+				6546807120A45DDB0036B770 /* NVLink.swift in Sources */,
+				6546805720A45D8E0036B770 /* NVSimulator.swift in Sources */,
+				6546806220A45DAE0036B770 /* NVCutscene.swift in Sources */,
+				6546807E20A45E050036B770 /* NVIdentifiable.swift in Sources */,
+				6546806120A45DAE0036B770 /* NVNode.swift in Sources */,
+				6546807720A45DE90036B770 /* NVGraph.swift in Sources */,
+				6546806E20A45DDB0036B770 /* NVCondition.swift in Sources */,
+				6546805420A45D740036B770 /* NVVariable.swift in Sources */,
+				6546806B20A45DDB0036B770 /* NVLinkable.swift in Sources */,
+				6546807020A45DDB0036B770 /* NVBaseLink.swift in Sources */,
+				6546805F20A45DAE0036B770 /* NVDialog.swift in Sources */,
+				6546807620A45DE90036B770 /* NVListener.swift in Sources */,
+				6546808220A45E050036B770 /* NVError.swift in Sources */,
+				6546806020A45DAE0036B770 /* NVContext.swift in Sources */,
+				6546807820A45DE90036B770 /* NVExitNode.swift in Sources */,
+				6546806F20A45DDB0036B770 /* NVFunction.swift in Sources */,
+				6546807220A45DDB0036B770 /* NVSwitch.swift in Sources */,
+				6546807F20A45E050036B770 /* NVPath.swift in Sources */,
+				6546805820A45D8E0036B770 /* NVSimulation.swift in Sources */,
+				6546805220A45D740036B770 /* NVFolder.swift in Sources */,
+				6546808020A45E050036B770 /* NVStory.swift in Sources */,
+				6546808120A45E050036B770 /* NVStory+JSON.swift in Sources */,
+				6546805320A45D740036B770 /* NVDataType.swift in Sources */,
+				6546805E20A45DAE0036B770 /* NVDelivery.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -613,6 +715,11 @@
 			isa = PBXTargetDependency;
 			target = 658C7CA7207E7E6500E2B46B /* Novella */;
 			targetProxy = 658C7CC6207E7E6600E2B46B /* PBXContainerItemProxy */;
+		};
+		65E67DD120A458A500ED7BED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65E67DCA20A458A500ED7BED /* NovellaModel */;
+			targetProxy = 65E67DD020A458A500ED7BED /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -744,6 +851,7 @@
 		658C7CCF207E7E6600E2B46B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Novella/Novella.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -767,6 +875,7 @@
 		658C7CD0207E7E6600E2B46B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Novella/Novella.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -869,6 +978,75 @@
 			};
 			name = Release;
 		};
+		65E67DD520A458A500ED7BED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = NovellaModel/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.NovellaModel;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		65E67DD620A458A500ED7BED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = NovellaModel/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.NovellaModel;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -904,6 +1082,15 @@
 			buildConfigurations = (
 				658C7CD5207E7E6600E2B46B /* Debug */,
 				658C7CD6207E7E6600E2B46B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65E67DD420A458A500ED7BED /* Build configuration list for PBXNativeTarget "NovellaModel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65E67DD520A458A500ED7BED /* Debug */,
+				65E67DD620A458A500ED7BED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

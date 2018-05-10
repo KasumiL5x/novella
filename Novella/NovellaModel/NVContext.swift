@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVContext: NVNode {
+public class NVContext: NVNode {
 	override init(uuid: NSUUID) {
 		super.init(uuid: uuid)
 	}

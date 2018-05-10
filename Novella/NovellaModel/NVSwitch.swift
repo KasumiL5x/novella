@@ -1,5 +1,5 @@
 //
-//  NVLink.swift
+//  NVSwitch.swift
 //  Novella
 //
 //  Created by Daniel Green on 11/04/2018.
@@ -8,13 +8,15 @@
 
 import Foundation
 
-class NVLink : NVBaseLink {
-	var _condition: NVCondition
-	var _transfer: NVTransfer
+public class NVSwitch : NVBaseLink {
+	var _variable: NVVariable?
+	var _defaultTransfer: NVTransfer
+	var _values: [AnyHashable:NVTransfer]
 	
 	override init(uuid: NSUUID, story: NVStory, origin: NVLinkable) {
-		self._condition = NVCondition(story: story)
-		self._transfer = NVTransfer()
+		self._variable = nil
+		self._defaultTransfer = NVTransfer()
+		self._values = [:]
 		
 		super.init(uuid: uuid, story: story, origin: origin)
 	}

@@ -330,7 +330,7 @@ extension NVStory {
 
 
 	
-	func toJSON() throws -> String {
+	public func toJSON() throws -> String {
 		var root: JSONDict = [:]
 		
 		// add all folders
@@ -479,7 +479,7 @@ extension NVStory {
 		return str
 	}
 	
-	static func fromJSON(str: String) throws -> (story: NVStory, errors: [String]) {
+	public static func fromJSON(str: String) throws -> (story: NVStory, errors: [String]) {
 		var errors: [String] = []
 		
 		// TODO: Should I handle name clashes of UUID internally just in case another UUID is copypasted by a user?
@@ -515,11 +515,11 @@ extension NVStory {
 			let variable = story.makeVariable(name: curr["name"].string!, type: dataType, uuid: uuid)
 			
 			if let synopsis = curr["synopsis"].string {
-				variable.setSynopsis(synopsis)
+				variable.Synopsis = synopsis
 			}
 			
 			if let constant = curr["constant"].bool {
-				variable.setConstant(constant)
+				variable.IsConstant = constant
 			}
 			
 			let value = curr["value"]
@@ -558,7 +558,7 @@ extension NVStory {
 			let folder = story.makeFolder(name: curr["name"].string!, uuid: uuid)
 			
 			if let synopsis = curr["synopsis"].string {
-				folder.setSynopsis(synopsis)
+				folder.Synopsis = synopsis
 			}
 			
 			// 2.1 link variables to folders by uuid
@@ -699,7 +699,7 @@ extension NVStory {
 				
 				if let transfer = curr["transfer"].dictionary {
 					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? NVLinkable {
-						link._transfer.setDestination(destination)
+						link._transfer.Destination = destination
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
 					}
@@ -714,7 +714,7 @@ extension NVStory {
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
 					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? NVLinkable {
-						branch._trueTransfer.setDestination(destination)
+						branch._trueTransfer.Destination = destination
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
 					}
@@ -722,7 +722,7 @@ extension NVStory {
 				
 				if let falseTransfer = curr["ftransfer"].dictionary {
 					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? NVLinkable {
-						branch._falseTransfer.setDestination(destination)
+						branch._falseTransfer.Destination = destination
 					} else {
 						errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
 					}

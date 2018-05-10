@@ -6,7 +6,7 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-protocol NVPathable {
+public protocol NVPathable {
 	// the name/id of the current path
 	func localPath() -> String
 	
@@ -14,10 +14,10 @@ protocol NVPathable {
 	func parentPath() -> NVPathable?
 }
 
-class NVPath {
+public class NVPath {
 	static let DELIMITER = "."
 	
-	static func fullPathTo(_ pathable: NVPathable) -> String {
+	public static func fullPathTo(_ pathable: NVPathable) -> String {
 		var str = ""
 		
 		// add parent paths with delimiter

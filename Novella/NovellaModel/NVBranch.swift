@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NVBranch : NVBaseLink {
+public class NVBranch : NVBaseLink {
 	var _condition: NVCondition
 	var _trueTransfer: NVTransfer
 	var _falseTransfer: NVTransfer
@@ -20,4 +20,8 @@ class NVBranch : NVBaseLink {
 		
 		super.init(uuid: uuid, story: story, origin: origin)
 	}
+	
+	// MARK: Properties
+	public var TrueTransfer:  NVTransfer {get{ return _trueTransfer }}
+	public var FalseTransfer: NVTransfer {get{ return _falseTransfer }}
 }
