@@ -9,14 +9,24 @@
 import AppKit
 
 class SelectionView: NSView {
-	private var _origin: NSPoint
-	private var _marquee: NSRect
-	private var _inMarquee: Bool
+	fileprivate var _origin: NSPoint
+	fileprivate var _marquee: NSRect
+	fileprivate var _inMarquee: Bool
+	fileprivate var _roundness: CGFloat
+	fileprivate var _width: CGFloat
+	fileprivate var _dashPattern: [CGFloat]
+	fileprivate var _dashPhase: CGFloat
+	fileprivate var _color: NSColor
 	
 	override init(frame frameRect: NSRect) {
 		self._origin = NSPoint.zero
 		self._marquee = NSRect.zero
 		self._inMarquee = false
+		self._roundness = 2.0
+		self._width = 2.0
+		self._dashPattern = [5.0, 5.0]
+		self._dashPhase = 0.0
+		self._color = NSColor.fromHex("#F8F9FC")
 		
 		super.init(frame: frameRect)
 	}
@@ -24,6 +34,7 @@ class SelectionView: NSView {
 		fatalError("SelectionView::init(coder) not implemented.")
 	}
 	
+	// MARK: Properties
 	var Origin: NSPoint {
 		get{ return _origin }
 		set{
@@ -57,10 +68,10 @@ class SelectionView: NSView {
 			
 			// NOTE: Turns out you cannot draw on top of subviews (https://stackoverflow.com/questions/5497805/how-to-draw-over-a-subview-of-nsview?rq=1)
 			//       so we must use this view as a child of the parent and add it.
-			let path = NSBezierPath(roundedRect: _marquee, xRadius: 1.0, yRadius: 1.0)
-			path.lineWidth = 2.0
-			path.setLineDash([5.0, 5.0], count: 2, phase: 0.0)
-			NSColor.fromHex("#f2f2f2").set()
+			let path = NSBezierPath(roundedRect: _marquee, xRadius: _roundness, yRadius: _roundness)
+			path.lineWidth = _width
+			path.setLineDash(_dashPattern, count: _dashPattern.count, phase: _dashPhase)
+			_color.setStroke()
 			path.stroke()
 			
 			context.restoreGState()
