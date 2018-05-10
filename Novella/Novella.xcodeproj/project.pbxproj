@@ -36,8 +36,6 @@
 		6546808020A45E050036B770 /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807B20A45E050036B770 /* NVStory.swift */; };
 		6546808120A45E050036B770 /* NVStory+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807C20A45E050036B770 /* NVStory+JSON.swift */; };
 		6546808220A45E050036B770 /* NVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807D20A45E050036B770 /* NVError.swift */; };
-		6546808320A45E350036B770 /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */; };
-		6546808420A45E350036B770 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
 		6553C95E2092723A00E6737B /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95D2092723A00E6737B /* Reader.storyboard */; };
 		6553C9602092726500E6737B /* Writer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95F2092726500E6737B /* Writer.storyboard */; };
 		6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96120927D6E00E6737B /* ReaderViewController.swift */; };
@@ -46,7 +44,6 @@
 		6558838A209C8C19004C412F /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588389209C8C19004C412F /* CurveHelper.swift */; };
 		6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */; };
 		655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B0B8E2098B4C000741ACA /* Canvas.swift */; };
-		656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */; };
 		65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65711AD120873A23005E44AF /* JSONTestViewController.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAD207E7E6500E2B46B /* ViewController.swift */; };
@@ -56,13 +53,14 @@
 		658C7CCA207E7E6600E2B46B /* NovellaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */; };
 		659140582099D60B00D6273D /* LinkableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140572099D60B00D6273D /* LinkableWidget.swift */; };
 		6591405A2099D62900D6273D /* DialogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140592099D62900D6273D /* DialogWidget.swift */; };
+		65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */; };
+		65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D120A4836A007938C2 /* JSONSchema.framework */; };
 		65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */; };
 		65CEA211209F7086008C49AE /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA210209F7086008C49AE /* SelectionView.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */; };
 		65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F5DFA8207EC1090041FB0D /* VariableFolderTestViewController.swift */; };
 		65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F85486209E61850067A95C /* NSColor+Hex.swift */; };
 		65F8548B209EF2D50067A95C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F8548A209EF2D50067A95C /* GridView.swift */; };
@@ -144,7 +142,6 @@
 		65588389209C8C19004C412F /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		655B0B8E2098B4C000741ACA /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
-		656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65711AD120873A23005E44AF /* JSONTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTestViewController.swift; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,7 +158,8 @@
 		658C7CCB207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		659140572099D60B00D6273D /* LinkableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkableWidget.swift; sourceTree = "<group>"; };
 		659140592099D62900D6273D /* DialogWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWidget.swift; sourceTree = "<group>"; };
-		65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
+		65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		65ADB3D120A4836A007938C2 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65CEA210209F7086008C49AE /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
@@ -178,8 +176,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				656AFB2A208BEEC7007E6426 /* SwiftyJSON.framework in Frameworks */,
-				65E6C2C0208BF7A600DC91FC /* JSONSchema.framework in Frameworks */,
 				65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,8 +198,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6546808320A45E350036B770 /* JSONSchema.framework in Frameworks */,
-				6546808420A45E350036B770 /* SwiftyJSON.framework in Frameworks */,
+				65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */,
+				65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,8 +267,8 @@
 		656AFB28208BEEC6007E6426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				65AE5ADD208BF6A90051EAE4 /* JSONSchema.framework */,
-				656AFB29208BEEC7007E6426 /* SwiftyJSON.framework */,
+				65ADB3D120A4836A007938C2 /* JSONSchema.framework */,
+				65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -483,6 +479,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65E67DD420A458A500ED7BED /* Build configuration list for PBXNativeTarget "NovellaModel" */;
 			buildPhases = (
+				65ADB3D420A483C5007938C2 /* ShellScript */,
 				65E67DC620A458A500ED7BED /* Sources */,
 				65E67DC720A458A500ED7BED /* Frameworks */,
 				65E67DC820A458A500ED7BED /* Headers */,
@@ -614,6 +611,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		65ADB3D420A483C5007938C2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}/\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
