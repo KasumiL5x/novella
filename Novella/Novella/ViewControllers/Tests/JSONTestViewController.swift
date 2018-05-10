@@ -38,14 +38,14 @@ class JSONTestViewController: NSViewController {
 		let eToG = _story.makeLink(origin: dlgE)
 		let fToG = _story.makeLink(origin: dlgF)
 		// set up links
-		aToB.Transfer.setDestination(dlgB)
-		aToC.Transfer.setDestination(dlgC)
-		bToD.Transfer.setDestination(dlgD)
-		cToD.Transfer.setDestination(dlgD)
-		dBranch.TrueTransfer.setDestination(dlgE)
-		dBranch.FalseTransfer.setDestination(dlgF)
-		eToG.Transfer.setDestination(dlgG)
-		fToG.Transfer.setDestination(dlgG)
+		aToB.Transfer.Destination = dlgB
+		aToC.Transfer.Destination = dlgC
+		bToD.Transfer.Destination = dlgD
+		cToD.Transfer.Destination = dlgD
+		dBranch.TrueTransfer.Destination = dlgE
+		dBranch.FalseTransfer.Destination = dlgF
+		eToG.Transfer.Destination = dlgG
+		fToG.Transfer.Destination = dlgG
 		// add nodes to graph
 		try! mainGraph.add(node: dlgA)
 		try! mainGraph.add(node: dlgB)

@@ -15,12 +15,6 @@ public class NVTransfer {
 		self._function = NVFunction()
 	}
 	
-	// MARK: Getters
-	public var Destination: NVLinkable? {
-		get{ return _destination }
-	}
-	
-	public func setDestination(_ dest: NVLinkable?) {
-		self._destination = dest
-	}
+	// MARK: Properties
+	public var Destination: NVLinkable? {get{ return _destination } set{ _destination = newValue }}
 }
