@@ -312,10 +312,14 @@ extension Canvas {
 		}
 
 		// TODO: Validate target? maybe in here maybe in drag? here is more optimized as drag is currently hacky.
+		
+		// TODO: Here (and in the branch popup callbacks) i should use commands instead of directly setting - then i can undo!
 
 		// handle case of links
 		if let asLink = pin._nvBaseLink as? NVLink {
-			asLink.Transfer.Destination = _pinDropTarget!._nvLinkable
+			// TODO: This is now undoable, but curves don't update. Maybe add a public func and hide _nvLinkable, and in that func it calls canvas redraw curves?
+			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: pin, destination: _pinDropTarget!._nvLinkable))
+//			asLink.Transfer.Destination = _pinDropTarget!._nvLinkable
 			_pinDropTarget = nil
 		}
 		// handle case of branches

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NovellaModel
 
 class MoveLinkableWidgetCmd: UndoableCommand {
 	let _widget: LinkableWidget
@@ -25,5 +26,25 @@ class MoveLinkableWidgetCmd: UndoableCommand {
 	
 	func unexecute() {
 		_widget.move(to: _from)
+	}
+}
+
+class SetLinkDestinationCmd: UndoableCommand {
+	let _pin: LinkPinView
+	let _prevDest: NVLinkable?
+	let _newDest: NVLinkable?
+	
+	init(pin: LinkPinView, destination: NVLinkable?) {
+		self._pin = pin
+		self._prevDest = (_pin._nvBaseLink as! NVLink).Transfer.Destination
+		self._newDest = destination
+	}
+	
+	func execute() {
+		(_pin._nvBaseLink as! NVLink).Transfer.Destination = _newDest
+	}
+	
+	func unexecute() {
+		(_pin._nvBaseLink as! NVLink).Transfer.Destination = _prevDest
 	}
 }
