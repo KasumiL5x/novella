@@ -151,7 +151,7 @@ class Canvas: NSView {
 
 		return _linkableWidgets.first(where: {
 			if let dlgWidget = $0 as? DialogWidget {
-				return linkable?.UUID == dlgWidget._nvLinkable!.UUID
+				return linkable?.UUID == dlgWidget.Linkable!.UUID
 			}
 			return false
 		})
@@ -318,7 +318,7 @@ extension Canvas {
 		// handle case of links
 		if let asLink = pin._nvBaseLink as? NVLink {
 			// TODO: This is now undoable, but curves don't update. Maybe add a public func and hide _nvLinkable, and in that func it calls canvas redraw curves?
-			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: pin, destination: _pinDropTarget!._nvLinkable))
+			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: pin, destination: _pinDropTarget!.Linkable))
 //			asLink.Transfer.Destination = _pinDropTarget!._nvLinkable
 			_pinDropTarget = nil
 		}
@@ -340,7 +340,7 @@ extension Canvas {
 		if _pinDropTarget == nil {
 			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
 		}
-		(_pinDropDragged!._nvBaseLink as! NVBranch).TrueTransfer.Destination = _pinDropTarget?._nvLinkable
+		(_pinDropDragged!._nvBaseLink as! NVBranch).TrueTransfer.Destination = _pinDropTarget?.Linkable
 		updateCurves()
 	}
 	@objc func onPinDropBranchFalse() {
@@ -350,7 +350,7 @@ extension Canvas {
 		if _pinDropTarget == nil {
 			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
 		}
-		(_pinDropDragged!._nvBaseLink as! NVBranch).FalseTransfer.Destination = _pinDropTarget?._nvLinkable
+		(_pinDropDragged!._nvBaseLink as! NVBranch).FalseTransfer.Destination = _pinDropTarget?.Linkable
 		updateCurves()
 	}
 }

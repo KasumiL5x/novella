@@ -10,14 +10,14 @@ import Cocoa
 import NovellaModel
 
 class LinkableWidget: NSView {
-	let _canvas: Canvas
-	var _nvLinkable: NVLinkable?
-	var _isPrimedForSelection: Bool
-	var _isSelected: Bool
+	fileprivate let _canvas: Canvas
+	fileprivate var _nvLinkable: NVLinkable?
+	fileprivate var _isPrimedForSelection: Bool
+	fileprivate var _isSelected: Bool
 	
-	var _trackingArea: NSTrackingArea?
+	fileprivate var _trackingArea: NSTrackingArea?
 	
-	var _outputs: [LinkPinView]
+	fileprivate var _outputs: [LinkPinView]
 	
 	init(frame frameRect: NSRect, novellaLinkable: NVLinkable, canvas: Canvas) {
 		self._canvas = canvas
@@ -31,6 +31,21 @@ class LinkableWidget: NSView {
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("LinkableWidget::init(coder) not implemented.")
+	}
+	
+	// MARK: Properties
+	var Linkable: NVLinkable? {
+		get{ return _nvLinkable }
+		set{
+			_nvLinkable = newValue
+			_canvas.updateCurves()
+		}
+	}
+	var IsPrimed: Bool {
+		get{ return _isPrimedForSelection }
+	}
+	var IsSelected: Bool{
+		get{ return _isSelected }
 	}
 	
 	override func updateTrackingAreas() {

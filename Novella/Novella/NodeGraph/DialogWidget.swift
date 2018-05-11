@@ -43,7 +43,7 @@ class DialogWidget: LinkableWidget {
 	}
 	
 	override func onMove() {
-		(_nvLinkable as? NVDialog)?.EditorPosition = frame.origin
+		(Linkable as? NVDialog)?.EditorPosition = frame.origin
 	}
 	
 	override func widgetRect() -> NSRect {
@@ -82,7 +82,7 @@ class DialogWidget: LinkableWidget {
 			path.stroke()
 			
 			// draw primed indicator
-			if _isPrimedForSelection {
+			if IsPrimed {
 				let selectedInset = CGFloat(1.0)
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
@@ -92,7 +92,7 @@ class DialogWidget: LinkableWidget {
 			}
 			
 			// draw selection indicator
-			if _isSelected {
+			if IsSelected {
 				let selectedInset = CGFloat(1.0)
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
