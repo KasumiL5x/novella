@@ -63,7 +63,7 @@ class LinkPinView: BasePinView {
 			// MARK: Pin Drawing
 			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5) // TODO: This could be optimized if the bounds never change.
 			_pinLayer.path = _pinPath.cgPath
-			_pinLayer.fillColor = NSColor.white.cgColor
+			_pinLayer.fillColor = NSColor.fromHex("#ebfdd6").cgColor
 			
 			// MARK: Curve Drawing
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
