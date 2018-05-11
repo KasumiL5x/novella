@@ -108,6 +108,19 @@ class BranchPinView: BasePinView {
 				_falseCurveLayer.path = _falseCurvePath.cgPath
 			}
 			
+			// tweak curve layer visuals based on whether dragging or not
+			if IsDragging {
+				_trueCurveLayer.lineWidth = 2.0
+				_trueCurveLayer.lineDashPattern = [7, 7]
+				_falseCurveLayer.lineWidth = 2.0
+				_falseCurveLayer.lineDashPattern = [7, 7]
+			} else {
+				_trueCurveLayer.lineWidth = 2.0
+				_trueCurveLayer.lineDashPattern = nil
+				_falseCurveLayer.lineWidth = 2.0
+				_falseCurveLayer.lineDashPattern = nil
+			}
+			
 			context.restoreGState()
 		}
 	}

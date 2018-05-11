@@ -24,6 +24,9 @@ class BasePinView: NSView {
 	var BaseLink: NVBaseLink {
 		get{ return _nvBaseLink }
 	}
+	var IsDragging: Bool {
+		get{ return _isDragging }
+	}
 	
 	init(link: NVBaseLink, canvas: Canvas, owner: LinkableWidget) {
 		self._nvBaseLink = link

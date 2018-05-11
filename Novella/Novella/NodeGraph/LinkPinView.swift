@@ -79,6 +79,15 @@ class LinkPinView: BasePinView {
 				_curveLayer.path = _curvePath.cgPath
 			}
 			
+			// tweak curve layer visuals based on whether dragging or not
+			if IsDragging {
+				_curveLayer.lineWidth = 2.0
+				_curveLayer.lineDashPattern = [7, 7]
+			} else {
+				_curveLayer.lineWidth = 2.0
+				_curveLayer.lineDashPattern = nil
+			}
+			
 			context.restoreGState()
 		}
 	}
