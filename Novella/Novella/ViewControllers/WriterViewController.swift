@@ -78,9 +78,9 @@ class WriterViewController: NSViewController {
 	}
 	
 	@IBAction func onCloseStory(_ sender: NSButton) {
-		_canvas!.reset()
 		_story = NVStory()
 		storyName.stringValue = ""
+		_canvas!.reset(to: _story!)
 	}
 	
 	@IBAction func onSaveStory(_ sender: NSButton) {
@@ -123,6 +123,11 @@ class WriterViewController: NSViewController {
 	
 	@IBAction func onRedo(_ sender: NSButtonCell) {
 		_canvas!.redo()
+	}
+	
+	@IBAction func onNewStory(_ sender: NSButton) {
+		_story = NVStory()
+		_canvas!.reset(to: _story!)
 	}
 	
 	@IBAction func onCreateDialog(_ sender: NSButton) {

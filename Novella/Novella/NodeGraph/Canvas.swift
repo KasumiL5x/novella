@@ -64,9 +64,8 @@ class Canvas: NSView {
 		// set up the linkable widget rmb menu
 		_linkableWidgetMenu.addItem(withTitle: "Add Link", action: #selector(Canvas.onLinkableWidgetMenuAddLink), keyEquivalent: "")
 		_linkableWidgetMenu.addItem(withTitle: "Add Branch", action: #selector(Canvas.onLinkableWidgetMenuAddBranch), keyEquivalent: "")
-
-		// initial state of canvas
-		reset()
+		
+		reset(to: story)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
@@ -88,8 +87,7 @@ class Canvas: NSView {
 
 	// MARK: Story
 	func loadFrom(story: NVStory) {
-		reset()
-		self._nvStory = story
+		reset(to: story)
 
 		// add all nodes
 		for curr in story.AllNodes {
@@ -122,7 +120,7 @@ class Canvas: NSView {
 	}
 
 	// MARK: Reset
-	func reset() {
+	func reset(to: NVStory) {
 		// remove all subviews
 		self.subviews.removeAll()
 
@@ -147,7 +145,7 @@ class Canvas: NSView {
 		_undoRedo.clear()
 		
 		// make a default empty story
-		self._nvStory = NVStory()
+		self._nvStory = to
 	}
 
 	// MARK: Convert Novella to Canvas

@@ -94,6 +94,17 @@
                                             <action selector="onCreateDialog:" target="3Zk-O9-Vwd" id="X8M-Pi-UFY"/>
                                         </connections>
                                     </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5wu-Xx-Gsp">
+                                        <rect key="frame" x="338" y="52" width="103" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="New Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9kr-aB-Tta">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onNewStory:" target="3Zk-O9-Vwd" id="e5X-m7-taQ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="W0X-MW-YFZ"/>
