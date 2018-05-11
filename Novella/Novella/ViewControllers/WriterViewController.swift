@@ -124,4 +124,9 @@ class WriterViewController: NSViewController {
 	@IBAction func onRedo(_ sender: NSButtonCell) {
 		_canvas!.redo()
 	}
+	
+	@IBAction func onCreateDialog(_ sender: NSButton) {
+		let node = _canvas!.makeDialogWidget(novellaDialog: _story!.makeDialog())
+	}
+	
 }

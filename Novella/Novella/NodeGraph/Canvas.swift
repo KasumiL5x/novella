@@ -216,6 +216,7 @@ class Canvas: NSView {
 // MARK: LinkableWidget Stuff
 extension Canvas {
 	// MARK: Creation
+	@discardableResult
 	func makeDialogWidget(novellaDialog: NVDialog) -> DialogWidget {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_linkableWidgets.append(widget)
