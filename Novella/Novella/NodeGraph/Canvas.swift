@@ -316,18 +316,18 @@ extension Canvas {
 		// TODO: Here (and in the branch popup callbacks) i should use commands instead of directly setting - then i can undo!
 
 		// handle case of links
-		if let asLink = pin._nvBaseLink as? NVLink {
+		if pin.isNVLink() {
 			// TODO: This is now undoable, but curves don't update. Maybe add a public func and hide _nvLinkable, and in that func it calls canvas redraw curves?
 			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: pin, destination: _pinDropTarget!.Linkable))
 //			asLink.Transfer.Destination = _pinDropTarget!._nvLinkable
 			_pinDropTarget = nil
 		}
 		// handle case of branches
-		if let _ = pin._nvBaseLink as? NVBranch {
+		if pin.isNVBranch() {
 			NSMenu.popUpContextMenu(_pinDropMenuBranch, with: event, for: _pinDropTarget!)
 		}
 		// handle case of switches
-		if let asSwitch = pin._nvBaseLink as? NVSwitch {
+		if pin.isNVSwitch() {
 			fatalError("Switches not yet supported.")
 		}
 
@@ -340,7 +340,8 @@ extension Canvas {
 		if _pinDropTarget == nil {
 			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
 		}
-		(_pinDropDragged!._nvBaseLink as! NVBranch).TrueTransfer.Destination = _pinDropTarget?.Linkable
+		_pinDropDragged?.setDestination(dest: _pinDropTarget?.Linkable, truth: true)
+//		(_pinDropDragged!._nvBaseLink as! NVBranch).TrueTransfer.Destination = _pinDropTarget?.Linkable
 		updateCurves()
 	}
 	@objc func onPinDropBranchFalse() {
@@ -350,7 +351,8 @@ extension Canvas {
 		if _pinDropTarget == nil {
 			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
 		}
-		(_pinDropDragged!._nvBaseLink as! NVBranch).FalseTransfer.Destination = _pinDropTarget?.Linkable
+		_pinDropDragged?.setDestination(dest: _pinDropTarget?.Linkable, truth: false)
+//		(_pinDropDragged!._nvBaseLink as! NVBranch).FalseTransfer.Destination = _pinDropTarget?.Linkable
 		updateCurves()
 	}
 }

@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 class LinkPinView: NSView {
-	var _nvBaseLink: NVBaseLink
+	fileprivate var _nvBaseLink: NVBaseLink
 	var _canvas: Canvas
 	var _owner: LinkableWidget
 	
@@ -87,6 +87,55 @@ class LinkPinView: NSView {
 	
 	func redraw() {
 		setNeedsDisplay(bounds)
+	}
+	
+	// MARK: NVLink Destination
+	func setDestination(dest: NVLinkable?) {
+		// NVLink only
+		if !isNVLink() {
+			fatalError("Tried to use setDestination() intended for NVLink on a link that's not NVLink.")
+		}
+		(_nvBaseLink as! NVLink).Transfer.Destination = dest
+		_canvas.updateCurves()
+	}
+	func getDestination() -> NVLinkable? {
+		// NVLink only
+		if !isNVLink() {
+			fatalError("Tried to use setDestination() intended for NVLink on a link that's not NVLink.")
+		}
+		return (_nvBaseLink as! NVLink).Transfer.Destination
+	}
+	func isNVLink() -> Bool {
+		return _nvBaseLink is NVLink
+	}
+	// MARK: NVBranch
+	func setDestination(dest: NVLinkable?, truth: Bool) {
+		if !isNVBranch() {
+			fatalError("Tried to use setDestination() intended for NVBranch on a link that's not NVBranch.")
+		}
+		if truth {
+			(_nvBaseLink as! NVBranch).TrueTransfer.Destination = dest
+		} else {
+			(_nvBaseLink as! NVBranch).FalseTransfer.Destination = dest
+		}
+		_canvas.updateCurves()
+	}
+	func getDestination(truth: Bool) -> NVLinkable? {
+		if !isNVBranch() {
+			fatalError("Tried to use setDestination() intended for NVBranch on a link that's not NVBranch.")
+		}
+		if truth {
+			return (_nvBaseLink as! NVBranch).TrueTransfer.Destination
+		} else {
+			return (_nvBaseLink as! NVBranch).FalseTransfer.Destination
+		}
+	}
+	func isNVBranch() -> Bool {
+		return _nvBaseLink is NVBranch
+	}
+	// MARK: NVSwitch
+	func isNVSwitch() -> Bool {
+		return _nvBaseLink is NVSwitch
 	}
 	
 	override func mouseEntered(with event: NSEvent) {

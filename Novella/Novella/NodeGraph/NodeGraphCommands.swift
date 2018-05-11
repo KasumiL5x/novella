@@ -36,15 +36,15 @@ class SetLinkDestinationCmd: UndoableCommand {
 	
 	init(pin: LinkPinView, destination: NVLinkable?) {
 		self._pin = pin
-		self._prevDest = (_pin._nvBaseLink as! NVLink).Transfer.Destination
+		self._prevDest = _pin.getDestination()
 		self._newDest = destination
 	}
 	
 	func execute() {
-		(_pin._nvBaseLink as! NVLink).Transfer.Destination = _newDest
+		_pin.setDestination(dest: _newDest)
 	}
 	
 	func unexecute() {
-		(_pin._nvBaseLink as! NVLink).Transfer.Destination = _prevDest
+		_pin.setDestination(dest: _prevDest)
 	}
 }
