@@ -24,14 +24,16 @@ class Canvas: NSView {
 
 	let _undoRedo: UndoRedo
 
-	var _nodeContextMenu: NSMenu // context menu for nodes
-
 	var _pinDropTarget: LinkableWidget? // target node when dragging pins
 	var _pinDropDragged: LinkPinView? // current one being dragged
 	var _pinDropMenuBranch: NSMenu
+	
+	// context menu for right clicking on linkable widgets
+	var _linkableWidgetMenu: NSMenu
+	var _rightClickedLinkable: LinkableWidget?
 
-	override init(frame frameRect: NSRect) {
-		self._nvStory = nil
+	init(frame frameRect: NSRect, story: NVStory) {
+		self._nvStory = story
 
 		self._grid = GridView(frame: frameRect)
 
@@ -46,20 +48,22 @@ class Canvas: NSView {
 
 		self._undoRedo = UndoRedo()
 
-		self._nodeContextMenu = NSMenu(title: "Node Context Menu")
-
 		self._pinDropTarget = nil
 		self._pinDropDragged = nil
 		self._pinDropMenuBranch = NSMenu(title: "Branch Menu")
+		
+		self._linkableWidgetMenu = NSMenu(title: "LinkableWidget Menu")
+		self._rightClickedLinkable = nil
 
 		super.init(frame: frameRect)
-
-		// set up node context menu
-		_nodeContextMenu.addItem(withTitle: "Link to...", action: #selector(Canvas.onNodeContextLinkTo), keyEquivalent: "")
 
 		// set up the pin drop branch menu
 		_pinDropMenuBranch.addItem(withTitle: "True", action: #selector(Canvas.onPinDropBranchTrue), keyEquivalent: "")
 		_pinDropMenuBranch.addItem(withTitle: "False", action: #selector(Canvas.onPinDropBranchFalse), keyEquivalent: "")
+		
+		// set up the linkable widget rmb menu
+		_linkableWidgetMenu.addItem(withTitle: "Add Link", action: #selector(Canvas.onLinkableWidgetMenuAddLink), keyEquivalent: "")
+		_linkableWidgetMenu.addItem(withTitle: "Add Branch", action: #selector(Canvas.onLinkableWidgetMenuAddBranch), keyEquivalent: "")
 
 		// initial state of canvas
 		reset()
@@ -141,6 +145,9 @@ class Canvas: NSView {
 
 		// clear undo/redo
 		_undoRedo.clear()
+		
+		// make a default empty story
+		self._nvStory = NVStory()
 	}
 
 	// MARK: Convert Novella to Canvas
@@ -263,7 +270,8 @@ extension Canvas {
 	}
 
 	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
-		NSMenu.popUpContextMenu(_nodeContextMenu, with: event, for: widget)
+		_rightClickedLinkable = widget
+		NSMenu.popUpContextMenu(_linkableWidgetMenu, with: event, for: widget)
 	}
 
 	// MARK: Command Functions
@@ -272,8 +280,28 @@ extension Canvas {
 	}
 
 	// MARK: Context Menus
-	@objc func onNodeContextLinkTo(sender: NSMenuItem) {
-		print("hello from \(sender)")
+	@objc func onLinkableWidgetMenuAddLink(sender: NSMenuItem) {
+		if _rightClickedLinkable == nil {
+			fatalError("Attempted to add link to LinkableWidget but _rightClickedLinkable was nil.")
+		}
+		if _nvStory == nil {
+			fatalError("Attempted to make some link but there was no story???")
+		}
+		
+		let linkable = _rightClickedLinkable!.Linkable
+		let link = _nvStory!.makeLink(origin: linkable!)
+		_rightClickedLinkable!.addOutput(pin: makeLinkPin(nvBaseLink: link, forWidget: _rightClickedLinkable!))
+	}
+	@objc func onLinkableWidgetMenuAddBranch(sender: NSMenuItem) {
+		if _rightClickedLinkable == nil {
+			fatalError("Attempted to add link to LinkableWidget but _rightClickedLinkable was nil.")
+		}
+		if _nvStory == nil {
+			fatalError("Attempted to make some link but there was no story???")
+		}
+		
+		let link = _nvStory!.makeBranch(origin: _rightClickedLinkable!.Linkable!)
+		_rightClickedLinkable!.addOutput(pin: makeLinkPin(nvBaseLink: link, forWidget: _rightClickedLinkable!))
 	}
 }
 

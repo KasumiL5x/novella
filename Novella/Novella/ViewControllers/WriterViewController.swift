@@ -18,12 +18,12 @@ class WriterViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		_canvas = Canvas(frame: NSRect(x: 0, y: 0, width: 2000, height: 2000))
+		_story = NVStory()
+		
+		_canvas = Canvas(frame: NSRect(x: 0, y: 0, width: 2000, height: 2000), story: _story!)
 		scrollView.documentView = _canvas
 		scrollView.hasVerticalRuler = true
 		scrollView.hasHorizontalRuler = true
-		
-		_story = NVStory()
 	}
 	
 	override func viewDidAppear() {
