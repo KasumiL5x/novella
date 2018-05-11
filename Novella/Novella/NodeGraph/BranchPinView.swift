@@ -12,27 +12,42 @@ import NovellaModel
 class BranchPinView: BasePinView {
 	var _pinLayer: CAShapeLayer
 	var _pinPath: NSBezierPath
-	var _curveLayer: CAShapeLayer
-	var _curvePath: NSBezierPath
+	var _trueCurveLayer: CAShapeLayer
+	var _trueCurvePath: NSBezierPath
+	var _falseCurveLayer: CAShapeLayer
+	var _falseCurvePath: NSBezierPath
 	
 	override init(link: NVBaseLink, canvas: Canvas, owner: LinkableWidget) {
 		self._pinLayer = CAShapeLayer()
 		self._pinPath = NSBezierPath()
-		self._curveLayer = CAShapeLayer()
-		self._curvePath = NSBezierPath()
+		self._trueCurveLayer = CAShapeLayer()
+		self._trueCurvePath = NSBezierPath()
+		self._falseCurveLayer = CAShapeLayer()
+		self._falseCurvePath = NSBezierPath()
 		
 		super.init(link: link, canvas: canvas, owner: owner)
 		
-		layer!.addSublayer(_curveLayer)
+		layer!.addSublayer(_trueCurveLayer)
+		layer!.addSublayer(_falseCurveLayer)
 		layer!.addSublayer(_pinLayer)
 		
-		// configure curve layer
-		_curveLayer.fillColor = nil
-		_curveLayer.fillRule = kCAFillRuleNonZero
-		_curveLayer.lineCap = kCALineCapRound
-		_curveLayer.lineDashPattern = nil
-		_curveLayer.lineJoin = kCALineJoinRound
-		_curveLayer.lineWidth = 2.0
+		// configure true curve layer
+		_trueCurveLayer.fillColor = nil
+		_trueCurveLayer.fillRule = kCAFillRuleNonZero
+		_trueCurveLayer.lineCap = kCALineCapRound
+		_trueCurveLayer.lineDashPattern = nil
+		_trueCurveLayer.lineJoin = kCALineJoinRound
+		_trueCurveLayer.lineWidth = 2.0
+		_trueCurveLayer.strokeColor = NSColor.fromHex("#EA772F").cgColor
+		
+		// configure false curve layer
+		_falseCurveLayer.fillColor = nil
+		_falseCurveLayer.fillRule = kCAFillRuleNonZero
+		_falseCurveLayer.lineCap = kCALineCapRound
+		_falseCurveLayer.lineDashPattern = nil
+		_falseCurveLayer.lineJoin = kCALineJoinRound
+		_falseCurveLayer.lineWidth = 2.0
+		_falseCurveLayer.strokeColor = NSColor.fromHex("#ea482f").cgColor
 		
 		// configure drag layer
 		_dragLayer.fillColor = nil
@@ -67,33 +82,30 @@ class BranchPinView: BasePinView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
-			// MARK: Pin Drawing
+			// draw pin
 			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5) // TODO: This could be optimized if the bounds never change.
 			_pinLayer.path = _pinPath.cgPath
 			_pinLayer.fillColor = NSColor.fromHex("#fae0cf").cgColor
 			
-			// MARK: Curve Drawing
+			// draw curves
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
 			var end = CGPoint.zero
-			_curveLayer.path = nil
-			_curvePath.removeAllPoints()
-			var hadDest = false
+			
+			_trueCurveLayer.path = nil
 			if let trueDest = _canvas.getLinkableWidgetFrom(linkable: getTrueDest()) {
+				_trueCurvePath.removeAllPoints()
 				// convert local from destination into local of self and make curve
 				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
-				CurveHelper.smooth(start: origin, end: end, path: _curvePath)
-				hadDest = true
+				CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
+				_trueCurveLayer.path = _trueCurvePath.cgPath
 			}
+			_falseCurveLayer.path = nil
 			if let falseDest = _canvas.getLinkableWidgetFrom(linkable: getFalseDest()) {
+				_falseCurvePath.removeAllPoints()
 				// convert local from destination into local of self and make curve
 				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
-				CurveHelper.smooth(start: origin, end: end, path: _curvePath)
-				hadDest = true
-			}
-			
-			if hadDest {
-				_curveLayer.path = _curvePath.cgPath
-				_curveLayer.strokeColor = NSColor.fromHex("#EA772F").cgColor
+				CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
+				_falseCurveLayer.path = _falseCurvePath.cgPath
 			}
 			
 			context.restoreGState()
