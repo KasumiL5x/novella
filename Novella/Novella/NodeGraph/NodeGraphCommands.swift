@@ -36,36 +36,44 @@ class SetLinkDestinationCmd: UndoableCommand {
 	
 	init(pin: LinkPinView, destination: NVLinkable?) {
 		self._pin = pin
-		self._prevDest = _pin.getDestination()
+		self._prevDest = _pin.getDest()
 		self._newDest = destination
 	}
 	
 	func execute() {
-		_pin.setDestination(dest: _newDest)
+		_pin.setDest(dest: _newDest)
 	}
 	
 	func unexecute() {
-		_pin.setDestination(dest: _prevDest)
+		_pin.setDest(dest: _prevDest)
 	}
 }
 class SetBranchDestinationCmd: UndoableCommand {
-	let _pin: LinkPinView
+	let _pin: BranchPinView
 	let _prevDest: NVLinkable?
 	let _newDest: NVLinkable?
 	let _true: Bool
 	
-	init(pin: LinkPinView, destination: NVLinkable?, trueFalse: Bool) {
+	init(pin: BranchPinView, destination: NVLinkable?, trueFalse: Bool) {
 		self._pin = pin
-		self._prevDest = _pin.getDestination(truth: trueFalse)
+		self._prevDest = trueFalse ? _pin.getTrueDest() : _pin.getFalseDest()
 		self._newDest = destination
 		self._true = trueFalse
 	}
 	
 	func execute() {
-		_pin.setDestination(dest: _newDest, truth: _true)
+		if _true {
+			_pin.setTrueDest(dest: _newDest)
+		} else {
+			_pin.setFalseDest(dest: _newDest)
+		}
 	}
 	
 	func unexecute() {
-		_pin.setDestination(dest: _prevDest, truth: _true)
+		if _true {
+			_pin.setTrueDest(dest: _prevDest)
+		} else {
+			_pin.setFalseDest(dest: _prevDest)
+		}
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  LinkPinView.swift
+//  BranchPinView.swift
 //  Novella
 //
 //  Created by Daniel Green on 11/05/2018.
@@ -9,7 +9,7 @@
 import AppKit
 import NovellaModel
 
-class LinkPinView: BasePinView {
+class BranchPinView: BasePinView {
 	var _pinLayer: CAShapeLayer
 	var _pinPath: NSBezierPath
 	var _curveLayer: CAShapeLayer
@@ -44,15 +44,22 @@ class LinkPinView: BasePinView {
 		_dragLayer.strokeColor = NSColor.red.cgColor
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("LinkPinView::init(coder) not implemented.")
+		fatalError("BranchPinView::init(coder) not implemented.")
 	}
 	
-	func setDest(dest: NVLinkable?) {
-		(BaseLink as! NVLink).Transfer.Destination = dest
+	func setTrueDest(dest: NVLinkable?) {
+		(BaseLink as! NVBranch).TrueTransfer.Destination = dest
 		_canvas.updateCurves()
 	}
-	func getDest() -> NVLinkable? {
-		return (BaseLink as! NVLink).Transfer.Destination
+	func setFalseDest(dest: NVLinkable?) {
+		(BaseLink as! NVBranch).FalseTransfer.Destination = dest
+		_canvas.updateCurves()
+	}
+	func getTrueDest() -> NVLinkable? {
+		return (BaseLink as! NVBranch).TrueTransfer.Destination
+	}
+	func getFalseDest() -> NVLinkable? {
+		return (BaseLink as! NVBranch).FalseTransfer.Destination
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
@@ -70,13 +77,23 @@ class LinkPinView: BasePinView {
 			var end = CGPoint.zero
 			_curveLayer.path = nil
 			_curvePath.removeAllPoints()
-			// draw link curve
-			if let destination = _canvas.getLinkableWidgetFrom(linkable: getDest()) {
+			var hadDest = false
+			if let trueDest = _canvas.getLinkableWidgetFrom(linkable: getTrueDest()) {
 				// convert local from destination into local of self and make curve
-				end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
+				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _curvePath)
-				_curveLayer.strokeColor = NSColor.fromHex("#B3F865").cgColor
+				hadDest = true
+			}
+			if let falseDest = _canvas.getLinkableWidgetFrom(linkable: getFalseDest()) {
+				// convert local from destination into local of self and make curve
+				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
+				CurveHelper.smooth(start: origin, end: end, path: _curvePath)
+				hadDest = true
+			}
+			
+			if hadDest {
 				_curveLayer.path = _curvePath.cgPath
+				_curveLayer.strokeColor = NSColor.fromHex("#EA772F").cgColor
 			}
 			
 			context.restoreGState()
