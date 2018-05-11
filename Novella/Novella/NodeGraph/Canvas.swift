@@ -31,6 +31,9 @@ class Canvas: NSView {
 	// context menu for right clicking on linkable widgets
 	var _linkableWidgetMenu: NSMenu
 	var _rightClickedLinkable: LinkableWidget?
+	
+	// context menu for right click canvas
+	var _canvasMenu: NSMenu
 
 	init(frame frameRect: NSRect, story: NVStory) {
 		self._nvStory = story
@@ -54,6 +57,8 @@ class Canvas: NSView {
 		
 		self._linkableWidgetMenu = NSMenu(title: "LinkableWidget Menu")
 		self._rightClickedLinkable = nil
+		
+		self._canvasMenu = NSMenu(title: "Canvas Menu")
 
 		super.init(frame: frameRect)
 
@@ -64,6 +69,9 @@ class Canvas: NSView {
 		// set up the linkable widget rmb menu
 		_linkableWidgetMenu.addItem(withTitle: "Add Link", action: #selector(Canvas.onLinkableWidgetMenuAddLink), keyEquivalent: "")
 		_linkableWidgetMenu.addItem(withTitle: "Add Branch", action: #selector(Canvas.onLinkableWidgetMenuAddBranch), keyEquivalent: "")
+		
+		// set up the canvas rmb menu
+		_canvasMenu.addItem(withTitle: "Test", action: nil, keyEquivalent: "")
 		
 		reset(to: story)
 	}
@@ -196,6 +204,10 @@ class Canvas: NSView {
 			// we just clicked, so remove selection
 			select([], append: false)
 		}
+	}
+	
+	override func rightMouseDown(with event: NSEvent) {
+		NSMenu.popUpContextMenu(_canvasMenu, with: event, for: self)
 	}
 
 	// MARK: Selection
