@@ -10,48 +10,46 @@ import Cocoa
 import NovellaModel
 
 class Canvas: NSView {
-	var _nvStory: NVStory?
-
-	var _grid: GridView
-
-	var _linkableWidgets: [LinkableWidget]
-	var _linkPinViews: [LinkPinView]
-
-	var _selectionRect: SelectionView
-	var _selectedNodes: [LinkableWidget]
-	var _trackingArea: NSTrackingArea?
-	var _prevMousePos: NSPoint // used for dragging
-
-	let _undoRedo: UndoRedo
-
+	// MARK: - Variables -
+	// MARK: Canvas Stuff
+	var _nvStory: NVStory? // reference to external story - this is never created by the Canvas
+	var _grid: GridView // background grid
+	let _undoRedo: UndoRedo // undo/redo system
+	var _canvasMenu: NSMenu // context menu for the canvas
+	var _canvasContextPosition: CGPoint // position the canvas menu appears at (used to spawn nodes)
+	var _trackingArea: NSTrackingArea? // tracking area for mouse drags
+	// MARK: Canvas Contents
+	var _linkableWidgets: [LinkableWidget] // all linkable widgets
+	var _linkPinViews: [LinkPinView] // all link pins
+	var _prevMousePos: NSPoint // used for dragging canvas elements
+	// MARK: Selection
+	var _selectionView: SelectionView // marquee select system
+	var _selectedNodes: [LinkableWidget] // all currently selected linkable widgets
+	// MARK: Link Pin Drop
 	var _pinDropTarget: LinkableWidget? // target node when dragging pins
-	var _pinDropDragged: LinkPinView? // current one being dragged
+	var _pinDropDragged: LinkPinView? // current pin being dragged
 	var _pinDropMenuBranch: NSMenu
-	
+	// MARK: Linkable Context Menu
 	// context menu for right clicking on linkable widgets
 	var _linkableWidgetMenu: NSMenu
 	var _rightClickedLinkable: LinkableWidget?
 	
-	// context menu for right click canvas
-	var _canvasMenu: NSMenu
-	var _canvasContextPosition: CGPoint
-
+	// MARK: - Initialization -
 	init(frame frameRect: NSRect, story: NVStory) {
 		self._nvStory = story
-
 		self._grid = GridView(frame: frameRect)
-
+		self._undoRedo = UndoRedo()
+		self._canvasMenu = NSMenu(title: "Canvas Menu")
+		self._canvasContextPosition = CGPoint.zero
+		self._trackingArea = nil
+		
 		self._linkableWidgets = []
 		self._linkPinViews = []
-
-		self._selectionRect = SelectionView(frame: frameRect)
-		self._selectedNodes = []
-
-		self._trackingArea = nil
 		self._prevMousePos = NSPoint.zero
-
-		self._undoRedo = UndoRedo()
-
+		
+		self._selectionView = SelectionView(frame: frameRect)
+		self._selectedNodes = []
+		
 		self._pinDropTarget = nil
 		self._pinDropDragged = nil
 		self._pinDropMenuBranch = NSMenu(title: "Branch Menu")
@@ -59,10 +57,15 @@ class Canvas: NSView {
 		self._linkableWidgetMenu = NSMenu(title: "LinkableWidget Menu")
 		self._rightClickedLinkable = nil
 		
-		self._canvasMenu = NSMenu(title: "Canvas Menu")
-		self._canvasContextPosition = CGPoint.zero
-
 		super.init(frame: frameRect)
+		
+		// set up the canvas rmb menu
+		let canvasAddSubmenu = NSMenu()
+		canvasAddSubmenu.addItem(withTitle: "Dialog", action: #selector(Canvas.canvasContextCreateDialog), keyEquivalent: "")
+		let canvasAddMenu = NSMenuItem()
+		canvasAddMenu.title = "Add..."
+		canvasAddMenu.submenu = canvasAddSubmenu
+		_canvasMenu.addItem(canvasAddMenu)
 
 		// set up the pin drop branch menu
 		_pinDropMenuBranch.addItem(withTitle: "True", action: #selector(Canvas.onPinDropBranchTrue), keyEquivalent: "")
@@ -72,19 +75,14 @@ class Canvas: NSView {
 		_linkableWidgetMenu.addItem(withTitle: "Add Link", action: #selector(Canvas.onLinkableWidgetMenuAddLink), keyEquivalent: "")
 		_linkableWidgetMenu.addItem(withTitle: "Add Branch", action: #selector(Canvas.onLinkableWidgetMenuAddBranch), keyEquivalent: "")
 		
-		// set up the canvas rmb menu
-		let canvasAddSubmenu = NSMenu()
-		canvasAddSubmenu.addItem(withTitle: "Dialog", action: #selector(Canvas.canvasContextCreateDialog), keyEquivalent: "")
-		let canvasAddMenu = NSMenuItem()
-		canvasAddMenu.title = "Add..."
-		canvasAddMenu.submenu = canvasAddSubmenu
-		_canvasMenu.addItem(canvasAddMenu)
-		
+		// reset to given story
 		reset(to: story)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
 	}
+	
+	// MARK: - Story Functions -
 
 	// configures the tracking area
 	override func updateTrackingAreas() {
@@ -100,7 +98,6 @@ class Canvas: NSView {
 		self.addTrackingArea(_trackingArea!)
 	}
 
-	// MARK: Story
 	func loadFrom(story: NVStory) {
 		reset(to: story)
 
@@ -124,26 +121,16 @@ class Canvas: NSView {
 
 		print("Loaded story!")
 	}
-
-	// MARK: Undo/Redo
-	func undo() {
-		_undoRedo.undo(levels: 1)
-	}
-
-	func redo() {
-		_undoRedo.redo(levels: 1)
-	}
-
-	// MARK: Reset
+	
 	func reset(to: NVStory) {
 		// remove all subviews
 		self.subviews.removeAll()
-
+		
 		// add background grid
 		self.addSubview(_grid)
 		// add marquee view (THIS MUST BE LAST)
-		self.addSubview(_selectionRect)
-
+		self.addSubview(_selectionView)
+		
 		// remove all nodes
 		_linkableWidgets = []
 		// remove all link pins
@@ -155,12 +142,28 @@ class Canvas: NSView {
 		// pin drop stuff
 		self._pinDropTarget = nil
 		self._pinDropDragged = nil
-
+		
 		// clear undo/redo
 		_undoRedo.clear()
 		
 		// make a default empty story
 		self._nvStory = to
+	}
+
+	func updateCurves() {
+		// updates every curve - not very efficient
+		for child in _linkPinViews {
+			child.redraw()
+		}
+	}
+	
+	// MARK: Undo/Redo
+	func undo() {
+		_undoRedo.undo(levels: 1)
+	}
+
+	func redo() {
+		_undoRedo.redo(levels: 1)
 	}
 
 	// MARK: Convert Novella to Canvas
@@ -177,36 +180,28 @@ class Canvas: NSView {
 		})
 	}
 
-	// MARK: Curves
-	func updateCurves() {
-		// updates every curve - not very efficient
-		for child in _linkPinViews {
-			child.redraw()
-		}
-	}
-
 	// MARK: Mouse Events
 	override func mouseDown(with event: NSEvent) {
 		// begin marquee mode
-		_selectionRect.Origin = self.convert(event.locationInWindow, from: nil)
-		_selectionRect.InMarquee = true
+		_selectionView.Origin = self.convert(event.locationInWindow, from: nil)
+		_selectionView.InMarquee = true
 	}
 
 	override func mouseDragged(with event: NSEvent) {
 		// update marquee
-		if _selectionRect.InMarquee {
+		if _selectionView.InMarquee {
 			let curr = self.convert(event.locationInWindow, from: nil)
-			_selectionRect.Marquee.origin = NSMakePoint(fmin(_selectionRect.Origin.x, curr.x), fmin(_selectionRect.Origin.y, curr.y))
-			_selectionRect.Marquee.size = NSMakeSize(fabs(curr.x - _selectionRect.Origin.x), fabs(curr.y - _selectionRect.Origin.y))
+			_selectionView.Marquee.origin = NSMakePoint(fmin(_selectionView.Origin.x, curr.x), fmin(_selectionView.Origin.y, curr.y))
+			_selectionView.Marquee.size = NSMakeSize(fabs(curr.x - _selectionView.Origin.x), fabs(curr.y - _selectionView.Origin.y))
 		}
 	}
 
 	override func mouseUp(with event: NSEvent) {
 		// handle marquee selection region
-		if _selectionRect.InMarquee {
-			select(allNodesIn(rect: _selectionRect.Marquee), append: event.modifierFlags.contains(.shift))
-			_selectionRect.Marquee = NSRect.zero
-			_selectionRect.InMarquee = false
+		if _selectionView.InMarquee {
+			select(allNodesIn(rect: _selectionView.Marquee), append: event.modifierFlags.contains(.shift))
+			_selectionView.Marquee = NSRect.zero
+			_selectionView.InMarquee = false
 		}	else {
 			// we just clicked, so remove selection
 			select([], append: false)
@@ -238,7 +233,7 @@ class Canvas: NSView {
 	}
 }
 
-// MARK: Canvas Context Menu
+// MARK: - Canvas Context Menu -
 extension Canvas {
 	@objc func canvasContextCreateDialog(sender: NSMenuItem) {
 		assert(_nvStory != nil)
@@ -248,14 +243,14 @@ extension Canvas {
 	}
 }
 
-// MARK: LinkableWidget Stuff
+// MARK: - LinkableWidget -
 extension Canvas {
 	// MARK: Creation
 	@discardableResult
 	func makeDialogWidget(novellaDialog: NVDialog) -> DialogWidget {
 		let widget = DialogWidget(node: novellaDialog, canvas: self)
 		_linkableWidgets.append(widget)
-		self.addSubview(widget, positioned: .below, relativeTo: _selectionRect) // make sure _selectionRect stays on top
+		self.addSubview(widget, positioned: .below, relativeTo: _selectionView) // make sure _selectionRect stays on top
 		return widget
 	}
 
@@ -333,7 +328,7 @@ extension Canvas {
 	}
 }
 
-// MARK: Links Stuff
+// MARK: - Links & Pins -
 extension Canvas {
 	// MARK: Creation
 	func makeLinkPin(nvBaseLink: NVBaseLink, forWidget: LinkableWidget) -> LinkPinView {
@@ -342,6 +337,7 @@ extension Canvas {
 		return lpv
 	}
 
+	// MARK: Pin Callbacks
 	func onDragPin(pin: LinkPinView, event: NSEvent) {
 		_pinDropDragged = pin
 		_pinDropTarget = nil
@@ -386,6 +382,7 @@ extension Canvas {
 
 	}
 
+	// MARK: Context Menus
 	@objc func onPinDropBranchTrue() {
 		if _pinDropDragged == nil {
 			fatalError("Tried to set branch's true destination but _pinDropDragged was nil.")
@@ -396,6 +393,7 @@ extension Canvas {
 		_undoRedo.execute(cmd: SetBranchDestinationCmd(pin: _pinDropDragged!, destination: _pinDropTarget?.Linkable, trueFalse: true))
 		updateCurves()
 	}
+	
 	@objc func onPinDropBranchFalse() {
 		if _pinDropDragged == nil {
 			fatalError("Tried to set branch's false destination but _pinDropDragged was nil.")
