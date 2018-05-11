@@ -17,7 +17,7 @@ class LinkableWidget: NSView {
 	
 	fileprivate var _trackingArea: NSTrackingArea?
 	
-	fileprivate var _outputs: [LinkPinView]
+	fileprivate var _outputs: [BasePinView]
 	
 	init(frame frameRect: NSRect, novellaLinkable: NVLinkable, canvas: Canvas) {
 		self._canvas = canvas
@@ -62,26 +62,21 @@ class LinkableWidget: NSView {
 		self.addTrackingArea(_trackingArea!)
 	}
 	
-	func addOutput(pin: LinkPinView?=nil) {
-		if pin == nil {
-			// TODO: add new one and link from this to nothing (or cursor etc.)
-		} else {
-			
-			// auto-position pin
-			let wrect = widgetRect()
-			var pos = CGPoint.zero
-			pos.x = wrect.width - (pin!.frame.width * 0.5)
-			pos.y = wrect.height - (pin!.frame.height * 2.0)
-			pos.y -= CGFloat(_outputs.count) * (pin!.frame.height * 1.5)
-			
-			pin!.frame.origin = pos
-			
-			_outputs.append(pin!)
-			self.addSubview(pin!)
-			
-			// subviews can't be interacted with if they are beyond the bounds of the superview
-			sizeToFitSubviews()
-		}
+	func addOutput(pin: BasePinView?) {
+		// auto-position pin
+		let wrect = widgetRect()
+		var pos = CGPoint.zero
+		pos.x = wrect.width - (pin!.frame.width * 0.5)
+		pos.y = wrect.height - (pin!.frame.height * 2.0)
+		pos.y -= CGFloat(_outputs.count) * (pin!.frame.height * 1.5)
+		
+		pin!.frame.origin = pos
+		
+		_outputs.append(pin!)
+		self.addSubview(pin!)
+		
+		// subviews can't be interacted with if they are beyond the bounds of the superview
+		sizeToFitSubviews()
 	}
 	
 	func sizeToFitSubviews() {

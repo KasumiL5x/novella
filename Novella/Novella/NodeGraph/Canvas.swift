@@ -20,14 +20,14 @@ class Canvas: NSView {
 	var _trackingArea: NSTrackingArea? // tracking area for mouse drags
 	// MARK: Canvas Contents
 	var _linkableWidgets: [LinkableWidget] // all linkable widgets
-	var _linkPinViews: [LinkPinView] // all link pins
+	var _linkPinViews: [BasePinView] // all link pins
 	var _prevMousePos: NSPoint // used for dragging canvas elements
 	// MARK: Selection
 	var _selectionView: SelectionView // marquee select system
 	var _selectedNodes: [LinkableWidget] // all currently selected linkable widgets
 	// MARK: Link Pin Drop
 	var _pinDropTarget: LinkableWidget? // target node when dragging pins
-	var _pinDropDragged: LinkPinView? // current pin being dragged
+	var _pinDropDragged: BasePinView? // current pin being dragged
 	var _pinDropMenuBranch: NSMenu
 	// MARK: Linkable Context Menu
 	// context menu for right clicking on linkable widgets
@@ -113,7 +113,19 @@ class Canvas: NSView {
 		// create all links
 		for curr in story.AllLinks {
 			if let node = getLinkableWidgetFrom(linkable: curr.Origin) {
-				node.addOutput(pin: makeLinkPin(nvBaseLink: curr, forWidget: node))
+				
+				switch curr {
+				case is NVLink:
+					node.addOutput(pin: makeLinkPin(nvBaseLink: curr, forWidget: node))
+					break
+				case is NVBranch:
+					node.addOutput(pin: makeBranchPin(nvBaseLink: curr, forWidget: node))
+					break
+				default:
+					fatalError("Switch not yet supported.")
+				}
+				
+				
 			} else {
 				fatalError("Recived a link without an origin!")
 			}
@@ -324,7 +336,7 @@ extension Canvas {
 		}
 		
 		let link = _nvStory!.makeBranch(origin: _rightClickedLinkable!.Linkable!)
-		_rightClickedLinkable!.addOutput(pin: makeLinkPin(nvBaseLink: link, forWidget: _rightClickedLinkable!))
+		_rightClickedLinkable!.addOutput(pin: makeBranchPin(nvBaseLink: link, forWidget: _rightClickedLinkable!))
 	}
 }
 
@@ -336,9 +348,14 @@ extension Canvas {
 		_linkPinViews.append(lpv)
 		return lpv
 	}
+	func makeBranchPin(nvBaseLink: NVBaseLink, forWidget: LinkableWidget) -> BranchPinView {
+		let lpv = BranchPinView(link: nvBaseLink, canvas: self, owner: forWidget)
+		_linkPinViews.append(lpv)
+		return lpv
+	}
 
 	// MARK: Pin Callbacks
-	func onDragPin(pin: LinkPinView, event: NSEvent) {
+	func onDragPin(pin: BasePinView, event: NSEvent) {
 		_pinDropDragged = pin
 		_pinDropTarget = nil
 
@@ -358,28 +375,27 @@ extension Canvas {
 		}
 	}
 
-	func onPinUp(pin: LinkPinView, event: NSEvent) {
+	func onPinUp(pin: BasePinView, event: NSEvent) {
 		if _pinDropTarget == nil {
 			print("Dropped pin on empty space.")
 			return
 		}
 
 		// TODO: Validate target? maybe in here maybe in drag? here is more optimized as drag is currently hacky.
-
-		// handle case of links
-		if pin.isNVLink() {
-			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: pin, destination: _pinDropTarget!.Linkable))
+		
+		if let asLink = pin as? LinkPinView {
+			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: asLink, destination: _pinDropTarget!.Linkable))
 			_pinDropTarget = nil
 		}
-		// handle case of branches
-		if pin.isNVBranch() {
+		
+		if let asBranch = pin as? BranchPinView {
 			NSMenu.popUpContextMenu(_pinDropMenuBranch, with: event, for: _pinDropTarget!)
 		}
-		// handle case of switches
-		if pin.isNVSwitch() {
-			fatalError("Switches not yet supported.")
-		}
-
+		
+		// TODO: Switch
+//		if let _ = pin as? SwitchPinView {
+//			fatalError("Switches not yet supported.")
+//		}
 	}
 
 	// MARK: Context Menus
@@ -390,7 +406,7 @@ extension Canvas {
 		if _pinDropTarget == nil {
 			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
 		}
-		_undoRedo.execute(cmd: SetBranchDestinationCmd(pin: _pinDropDragged!, destination: _pinDropTarget?.Linkable, trueFalse: true))
+		_undoRedo.execute(cmd: SetBranchDestinationCmd(pin: (_pinDropDragged as! BranchPinView), destination: _pinDropTarget?.Linkable, trueFalse: true))
 		updateCurves()
 	}
 	
@@ -401,7 +417,7 @@ extension Canvas {
 		if _pinDropTarget == nil {
 			fatalError("Tried to set branch's true destination but _pinDropTarget was nil.")
 		}
-		_undoRedo.execute(cmd: SetBranchDestinationCmd(pin: _pinDropDragged!, destination: _pinDropTarget?.Linkable, trueFalse: false))
+		_undoRedo.execute(cmd: SetBranchDestinationCmd(pin: (_pinDropDragged as! BranchPinView), destination: _pinDropTarget?.Linkable, trueFalse: false))
 		updateCurves()
 	}
 }

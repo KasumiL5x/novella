@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6511246A20A60F6E00F368FE /* LinkPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511246920A60F6E00F368FE /* LinkPinView.swift */; };
+		6511246C20A60F7500F368FE /* BranchPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6511246B20A60F7500F368FE /* BranchPinView.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
-		6535CB6520A2F95500E857A0 /* LinkPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535CB6420A2F95500E857A0 /* LinkPinView.swift */; };
+		6535CB6520A2F95500E857A0 /* BasePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535CB6420A2F95500E857A0 /* BasePinView.swift */; };
 		6546805220A45D740036B770 /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546804F20A45D740036B770 /* NVFolder.swift */; };
 		6546805320A45D740036B770 /* NVDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805020A45D740036B770 /* NVDataType.swift */; };
 		6546805420A45D740036B770 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805120A45D740036B770 /* NVVariable.swift */; };
@@ -105,9 +107,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6511246920A60F6E00F368FE /* LinkPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPinView.swift; sourceTree = "<group>"; };
+		6511246B20A60F7500F368FE /* BranchPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchPinView.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
-		6535CB6420A2F95500E857A0 /* LinkPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPinView.swift; sourceTree = "<group>"; };
+		6535CB6420A2F95500E857A0 /* BasePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePinView.swift; sourceTree = "<group>"; };
 		6546804F20A45D740036B770 /* NVFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
 		6546805020A45D740036B770 /* NVDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDataType.swift; sourceTree = "<group>"; };
 		6546805120A45D740036B770 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
@@ -255,7 +259,9 @@
 				655B0B8E2098B4C000741ACA /* Canvas.swift */,
 				659140572099D60B00D6273D /* LinkableWidget.swift */,
 				659140592099D62900D6273D /* DialogWidget.swift */,
-				6535CB6420A2F95500E857A0 /* LinkPinView.swift */,
+				6535CB6420A2F95500E857A0 /* BasePinView.swift */,
+				6511246920A60F6E00F368FE /* LinkPinView.swift */,
+				6511246B20A60F7500F368FE /* BranchPinView.swift */,
 				65588389209C8C19004C412F /* CurveHelper.swift */,
 				65F8548A209EF2D50067A95C /* GridView.swift */,
 				65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */,
@@ -634,11 +640,12 @@
 			files = (
 				655B0B8F2098B4C000741ACA /* Canvas.swift in Sources */,
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
-				6535CB6520A2F95500E857A0 /* LinkPinView.swift in Sources */,
+				6535CB6520A2F95500E857A0 /* BasePinView.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
 				6553C96420927D9B00E6737B /* WriterViewController.swift in Sources */,
 				659140582099D60B00D6273D /* LinkableWidget.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
+				6511246C20A60F7500F368FE /* BranchPinView.swift in Sources */,
 				6591405A2099D62900D6273D /* DialogWidget.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
@@ -648,6 +655,7 @@
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
+				6511246A20A60F6E00F368FE /* LinkPinView.swift in Sources */,
 				65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */,
 				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
 				65F8548B209EF2D50067A95C /* GridView.swift in Sources */,
