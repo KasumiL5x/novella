@@ -376,19 +376,18 @@ extension Canvas {
 	}
 
 	func onPinUp(pin: BasePinView, event: NSEvent) {
-		if _pinDropTarget == nil {
-			print("Dropped pin on empty space.")
-			return
-		}
-
 		// TODO: Validate target? maybe in here maybe in drag? here is more optimized as drag is currently hacky.
 		
 		if let asLink = pin as? LinkPinView {
-			_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: asLink, destination: _pinDropTarget!.Linkable))
-			_pinDropTarget = nil
+			if _pinDropTarget != nil {
+				_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: asLink, destination: _pinDropTarget!.Linkable))
+				_pinDropTarget = nil
+			} else {
+				_undoRedo.execute(cmd: SetLinkDestinationCmd(pin: asLink, destination: nil))
+			}
 		}
 		
-		if let asBranch = pin as? BranchPinView {
+		if let _ = pin as? BranchPinView {
 			NSMenu.popUpContextMenu(_pinDropMenuBranch, with: event, for: _pinDropTarget!)
 		}
 		
