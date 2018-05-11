@@ -71,7 +71,12 @@ class Canvas: NSView {
 		_linkableWidgetMenu.addItem(withTitle: "Add Branch", action: #selector(Canvas.onLinkableWidgetMenuAddBranch), keyEquivalent: "")
 		
 		// set up the canvas rmb menu
-		_canvasMenu.addItem(withTitle: "Test", action: nil, keyEquivalent: "")
+		let canvasAddSubmenu = NSMenu()
+		canvasAddSubmenu.addItem(withTitle: "Dialog", action: #selector(Canvas.canvasContextCreateDialog), keyEquivalent: "")
+		let canvasAddMenu = NSMenuItem()
+		canvasAddMenu.title = "Add..."
+		canvasAddMenu.submenu = canvasAddSubmenu
+		_canvasMenu.addItem(canvasAddMenu)
 		
 		reset(to: story)
 	}
@@ -227,6 +232,13 @@ class Canvas: NSView {
 			}
 		}
 		return selected
+	}
+}
+
+// MARK: Canvas Context Menu
+extension Canvas {
+	@objc func canvasContextCreateDialog(sender: NSMenuItem) {
+		print("gief dlg pls")
 	}
 }
 
