@@ -34,6 +34,7 @@ class Canvas: NSView {
 	
 	// context menu for right click canvas
 	var _canvasMenu: NSMenu
+	var _canvasContextPosition: CGPoint
 
 	init(frame frameRect: NSRect, story: NVStory) {
 		self._nvStory = story
@@ -59,6 +60,7 @@ class Canvas: NSView {
 		self._rightClickedLinkable = nil
 		
 		self._canvasMenu = NSMenu(title: "Canvas Menu")
+		self._canvasContextPosition = CGPoint.zero
 
 		super.init(frame: frameRect)
 
@@ -212,6 +214,7 @@ class Canvas: NSView {
 	}
 	
 	override func rightMouseDown(with event: NSEvent) {
+		_canvasContextPosition = self.convert(event.locationInWindow, from: nil)
 		NSMenu.popUpContextMenu(_canvasMenu, with: event, for: self)
 	}
 
@@ -238,7 +241,10 @@ class Canvas: NSView {
 // MARK: Canvas Context Menu
 extension Canvas {
 	@objc func canvasContextCreateDialog(sender: NSMenuItem) {
-		print("gief dlg pls")
+		assert(_nvStory != nil)
+		let nvDialog = _nvStory!.makeDialog()
+		nvDialog.EditorPosition = _canvasContextPosition
+		makeDialogWidget(novellaDialog: nvDialog)
 	}
 }
 
