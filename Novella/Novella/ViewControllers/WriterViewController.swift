@@ -15,12 +15,16 @@ class WriterViewController: NSViewController {
 	var _canvas: Canvas?
 	var _story: NVStory?
 	
+	@IBOutlet weak var propertiesView: NSView!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		_story = NVStory()
 		
 		_canvas = Canvas(frame: NSRect(x: 0, y: 0, width: 2000, height: 2000), story: _story!)
+		_canvas?.setCanvasDelegate(self)
+		
 		scrollView.documentView = _canvas
 		scrollView.hasVerticalRuler = true
 		scrollView.hasHorizontalRuler = true
@@ -134,4 +138,11 @@ class WriterViewController: NSViewController {
 		let node = _canvas!.makeDialogWidget(novellaDialog: _story!.makeDialog())
 	}
 	
+}
+
+
+extension WriterViewController: CanvasDelegate {
+	func onSelectionChanged(selection: [LinkableWidget]) {
+		print("Selection changed to \(selection)")
+	}
 }

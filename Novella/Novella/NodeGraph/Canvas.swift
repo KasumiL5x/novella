@@ -33,6 +33,8 @@ class Canvas: NSView {
 	// context menu for right clicking on linkable widgets
 	var _linkableWidgetMenu: NSMenu
 	var _rightClickedLinkable: LinkableWidget?
+	// MARK: Delegates
+	var _canvasDelegate: CanvasDelegate?
 	
 	// MARK: - Initialization -
 	init(frame frameRect: NSRect, story: NVStory) {
@@ -56,6 +58,8 @@ class Canvas: NSView {
 		
 		self._linkableWidgetMenu = NSMenu(title: "LinkableWidget Menu")
 		self._rightClickedLinkable = nil
+		
+		self._canvasDelegate = nil
 		
 		super.init(frame: frameRect)
 		
@@ -83,7 +87,13 @@ class Canvas: NSView {
 	}
 	
 	// MARK: - Story Functions -
-
+	
+	// MARK: Delegates
+	func setCanvasDelegate(_ delegate: CanvasDelegate) {
+		_canvasDelegate = delegate
+	}
+	
+	// MARK: Other
 	// configures the tracking area
 	override func updateTrackingAreas() {
 		if _trackingArea != nil {
@@ -230,6 +240,8 @@ class Canvas: NSView {
 		_selectedNodes.forEach({$0.deselect()})
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
+		
+		_canvasDelegate?.onSelectionChanged(selection: _selectedNodes)
 	}
 
 	func allNodesIn(rect: NSRect) -> [LinkableWidget] {

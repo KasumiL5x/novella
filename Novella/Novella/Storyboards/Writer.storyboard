@@ -110,14 +110,11 @@
                                     <constraint firstAttribute="height" constant="100" id="W0X-MW-YFZ"/>
                                 </constraints>
                             </customView>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="j0a-cc-dPc">
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="j0a-cc-dPc" userLabel="Properties">
                                 <rect key="frame" x="850" y="0.0" width="150" height="600"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="kGI-wN-nYN"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="QUC-uv-SGv" kind="embed" id="pMu-Hm-JtP"/>
-                                </connections>
                             </containerView>
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8o-UZ-Sl2">
                                 <rect key="frame" x="0.0" y="0.0" width="850" height="600"/>
@@ -190,6 +187,7 @@
                         </touchBarItems>
                     </touchBar>
                     <connections>
+                        <outlet property="propertiesView" destination="j0a-cc-dPc" id="62V-v4-kMp"/>
                         <outlet property="scrollView" destination="C8o-UZ-Sl2" id="3Wb-St-bd4"/>
                         <outlet property="storyName" destination="e3E-vl-4RR" id="Ub5-hd-YtK"/>
                     </connections>
@@ -197,30 +195,6 @@
                 <customObject id="PO1-7E-6sL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="37" y="182"/>
-        </scene>
-        <!--Properties View Controller-->
-        <scene sceneID="b0q-Wv-fzA">
-            <objects>
-                <viewController id="QUC-uv-SGv" customClass="PropertiesViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="BQW-g2-ZOv">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="600"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NsE-PJ-5aF">
-                                <rect key="frame" x="29" y="576" width="92" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Properties" id="K7x-bF-g3L">
-                                    <font key="font" size="20" name="HelveticaNeue-Light"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                    </view>
-                </viewController>
-                <customObject id="DhH-0i-10P" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="806" y="182"/>
         </scene>
     </scenes>
 </document>

@@ -60,7 +60,7 @@
 		65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */; };
 		65CEA211209F7086008C49AE /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA210209F7086008C49AE /* SelectionView.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
-		65D0D1F320A6D13C00F105C3 /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0D1F220A6D13C00F105C3 /* PropertiesViewController.swift */; };
+		65D0D1F520A6D74500F105C3 /* CanvasDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0D1F420A6D74500F105C3 /* CanvasDelegate.swift */; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -168,7 +168,7 @@
 		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65CEA210209F7086008C49AE /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
-		65D0D1F220A6D13C00F105C3 /* PropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
+		65D0D1F420A6D74500F105C3 /* CanvasDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasDelegate.swift; sourceTree = "<group>"; };
 		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -268,6 +268,7 @@
 				65F8548A209EF2D50067A95C /* GridView.swift */,
 				65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */,
 				65CEA210209F7086008C49AE /* SelectionView.swift */,
+				65D0D1F420A6D74500F105C3 /* CanvasDelegate.swift */,
 			);
 			path = NodeGraph;
 			sourceTree = "<group>";
@@ -408,7 +409,6 @@
 				658C7CAD207E7E6500E2B46B /* ViewController.swift */,
 				6553C96120927D6E00E6737B /* ReaderViewController.swift */,
 				6553C96320927D9B00E6737B /* WriterViewController.swift */,
-				65D0D1F220A6D13C00F105C3 /* PropertiesViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -648,12 +648,12 @@
 				6553C96420927D9B00E6737B /* WriterViewController.swift in Sources */,
 				659140582099D60B00D6273D /* LinkableWidget.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
-				65D0D1F320A6D13C00F105C3 /* PropertiesViewController.swift in Sources */,
 				6511246C20A60F7500F368FE /* BranchPinView.swift in Sources */,
 				6591405A2099D62900D6273D /* DialogWidget.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
+				65D0D1F520A6D74500F105C3 /* CanvasDelegate.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
 				65CEA211209F7086008C49AE /* SelectionView.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
