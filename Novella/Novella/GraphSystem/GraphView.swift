@@ -18,6 +18,7 @@ class GraphView: NSView {
 	fileprivate var _allLinkableViews: [LinkableView]
 	// MARK: Selection
 	var _marquee: MarqueeView
+	var _selectedNodes: [LinkableView]
 	// MARK: Gestures
 	var _panGesture: NSPanGestureRecognizer?
 	
@@ -30,6 +31,7 @@ class GraphView: NSView {
 		self._allLinkableViews = []
 		//
 		self._marquee = MarqueeView(frame: frameRect)
+		self._selectedNodes = []
 		//
 		self._panGesture = nil
 		
@@ -46,38 +48,7 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Functions -
-	// MARK: Gesture Callbacks
-	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
-		switch gesture.state {
-		case .cancelled, .ended:
-			if _marquee.InMarquee {
-				// TODO: Select nodes based on marquee.
-				_marquee.Marquee = NSRect.zero
-				_marquee.InMarquee = false
-			}
-			break
-			
-		case .began:
-			if !_marquee.InMarquee {
-				_marquee.Origin = gesture.location(in: self)
-				_marquee.InMarquee = true
-			}
-			break
-			
-		case .changed:
-			if _marquee.InMarquee {
-				let curr = gesture.location(in: self)
-				_marquee.Marquee.origin = NSMakePoint(fmin(_marquee.Origin.x, curr.x), fmin(_marquee.Origin.y, curr.y))
-				_marquee.Marquee.size = NSMakeSize(fabs(curr.x - _marquee.Origin.x), fabs(curr.y - _marquee.Origin.y))
-			}
-			break
-			
-		default:
-			print("In unexpected pan state.")
-			break
-		}
-	}
-	
+	// MARK: Setup
 	fileprivate func rootFor(graph: NVGraph) {
 		// remove existing views
 		self.subviews.removeAll()
@@ -104,5 +75,54 @@ class GraphView: NSView {
 				break
 			}
 		}
+	}
+	
+	// MARK: Gesture Callbacks
+	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
+		switch gesture.state {
+		case .began:
+			if !_marquee.InMarquee {
+				_marquee.Origin = gesture.location(in: self)
+				_marquee.InMarquee = true
+			}
+			break
+			
+		case .changed:
+			if _marquee.InMarquee {
+				let curr = gesture.location(in: self)
+				_marquee.Marquee.origin = NSMakePoint(fmin(_marquee.Origin.x, curr.x), fmin(_marquee.Origin.y, curr.y))
+				_marquee.Marquee.size = NSMakeSize(fabs(curr.x - _marquee.Origin.x), fabs(curr.y - _marquee.Origin.y))
+			}
+			break
+			
+		case .cancelled, .ended:
+			if _marquee.InMarquee {
+				let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
+				selectNodes(allNodesIn(rect: _marquee.Marquee), append: append)
+				_marquee.Marquee = NSRect.zero
+				_marquee.InMarquee = false
+			}
+			break
+			
+		default:
+			print("In unexpected pan state.")
+			break
+		}
+	}
+	
+	// MARK: Selection
+	fileprivate func selectNodes(_ nodes: [LinkableView], append: Bool) {
+		_selectedNodes.forEach({$0.deselect()})
+		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
+		_selectedNodes.forEach({$0.select()})
+	}
+	fileprivate func allNodesIn(rect: NSRect) -> [LinkableView] {
+		var nodes: [LinkableView] = []
+		for curr in _allLinkableViews {
+			if NSIntersectsRect(curr.frame, rect) {
+				nodes.append(curr)
+			}
+		}
+		return nodes
 	}
 }

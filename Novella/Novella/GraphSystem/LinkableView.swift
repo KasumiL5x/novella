@@ -89,10 +89,23 @@ class LinkableView: NSView {
 	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
 		print("panned \(_panGesture!.translation(in: self))")
 	}
+	
 	// MARK: Virtual Functions
 	func widgetRect() -> NSRect {
 		print("LinkableView::widgetRect() should be overridden.")
 		return NSRect.zero
+	}
+	
+	// MARK: Priming/Selection
+	func select() {
+		_isSelected = true
+		_isPrimed = false
+		setNeedsDisplay(bounds)
+	}
+	func deselect() {
+		_isSelected = false
+		_isPrimed = false
+		setNeedsDisplay(bounds)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
