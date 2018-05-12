@@ -18,6 +18,8 @@ class GraphView: NSView {
 	fileprivate var _allLinkableViews: [LinkableView]
 	// MARK: Selection
 	var _marquee: MarqueeView
+	// MARK: Gestures
+	var _panGesture: NSPanGestureRecognizer?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
@@ -28,8 +30,14 @@ class GraphView: NSView {
 		self._allLinkableViews = []
 		//
 		self._marquee = MarqueeView(frame: frameRect)
+		//
+		self._panGesture = nil
 		
 		super.init(frame: frameRect)
+		
+		self._panGesture = NSPanGestureRecognizer(target: self, action: #selector(GraphView.onPan))
+		self._panGesture!.buttonMask = 0x1 // "primary button"
+		self.addGestureRecognizer(self._panGesture!)
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -38,6 +46,38 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Functions -
+	// MARK: Gesture Callbacks
+	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
+		switch gesture.state {
+		case .cancelled, .ended:
+			if _marquee.InMarquee {
+				// TODO: Select nodes based on marquee.
+				_marquee.Marquee = NSRect.zero
+				_marquee.InMarquee = false
+			}
+			break
+			
+		case .began:
+			if !_marquee.InMarquee {
+				_marquee.Origin = gesture.location(in: self)
+				_marquee.InMarquee = true
+			}
+			break
+			
+		case .changed:
+			if _marquee.InMarquee {
+				let curr = gesture.location(in: self)
+				_marquee.Marquee.origin = NSMakePoint(fmin(_marquee.Origin.x, curr.x), fmin(_marquee.Origin.y, curr.y))
+				_marquee.Marquee.size = NSMakeSize(fabs(curr.x - _marquee.Origin.x), fabs(curr.y - _marquee.Origin.y))
+			}
+			break
+			
+		default:
+			print("In unexpected pan state.")
+			break
+		}
+	}
+	
 	fileprivate func rootFor(graph: NVGraph) {
 		// remove existing views
 		self.subviews.removeAll()
@@ -63,27 +103,6 @@ class GraphView: NSView {
 				print("Not implemented node type \(curr).")
 				break
 			}
-		}
-	}
-	
-	// MARK: Mouse Events
-	override func mouseDown(with event: NSEvent) {
-		// begin marquee
-		_marquee.Origin = self.convert(event.locationInWindow, from: nil)
-		_marquee.InMarquee = true
-	}
-	override func mouseDragged(with event: NSEvent) {
-		if _marquee.InMarquee {
-			let curr = self.convert(event.locationInWindow, from: nil)
-			_marquee.Marquee.origin = NSMakePoint(fmin(_marquee.Origin.x, curr.x), fmin(_marquee.Origin.y, curr.y))
-			_marquee.Marquee.size = NSMakeSize(fabs(curr.x - _marquee.Origin.x), fabs(curr.y - _marquee.Origin.y))
-		}
-	}
-	override func mouseUp(with event: NSEvent) {
-		if _marquee.InMarquee {
-			// TODO: Select nodes based on marquee.
-			_marquee.Marquee = NSRect.zero
-			_marquee.InMarquee = false
 		}
 	}
 }
