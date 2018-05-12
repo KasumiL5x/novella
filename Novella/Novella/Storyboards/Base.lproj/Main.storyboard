@@ -712,7 +712,7 @@
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="t5V-ki-yZp" userLabel="TestEmbedView">
                                 <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                                 <connections>
-                                    <segue destination="I9m-U4-JPY" kind="embed" id="rO1-H2-6uE"/>
+                                    <segue destination="0dD-nv-O6X" kind="embed" id="BxK-nG-uyR"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -727,6 +727,14 @@
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="907"/>
+        </scene>
+        <!--Graph-->
+        <scene sceneID="tH3-7w-mpe">
+            <objects>
+                <controllerPlaceholder storyboardName="Graph" referencedIdentifier="Graph" id="0dD-nv-O6X" sceneMemberID="viewController"/>
+                <customObject id="VFm-jf-Q1L" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="76" y="1391"/>
         </scene>
         <!--Reader-->
         <scene sceneID="EQE-hI-YQv">

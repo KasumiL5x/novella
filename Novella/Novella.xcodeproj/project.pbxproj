@@ -57,6 +57,10 @@
 		6591405A2099D62900D6273D /* DialogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659140592099D62900D6273D /* DialogWidget.swift */; };
 		65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */; };
 		65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D120A4836A007938C2 /* JSONSchema.framework */; };
+		65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6A020A7166900B9C5E5 /* GraphView.swift */; };
+		65AFA6A420A718C700B9C5E5 /* Graph.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65AFA6A320A718C700B9C5E5 /* Graph.storyboard */; };
+		65AFA6A620A71AE300B9C5E5 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6A520A71AE300B9C5E5 /* GraphViewController.swift */; };
+		65AFA6A820A7230500B9C5E5 /* GraphBGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6A720A7230500B9C5E5 /* GraphBGView.swift */; };
 		65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */; };
 		65CEA211209F7086008C49AE /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA210209F7086008C49AE /* SelectionView.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
@@ -165,6 +169,10 @@
 		659140592099D62900D6273D /* DialogWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWidget.swift; sourceTree = "<group>"; };
 		65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65ADB3D120A4836A007938C2 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
+		65AFA6A020A7166900B9C5E5 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		65AFA6A320A718C700B9C5E5 /* Graph.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Graph.storyboard; sourceTree = "<group>"; };
+		65AFA6A520A71AE300B9C5E5 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		65AFA6A720A7230500B9C5E5 /* GraphBGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphBGView.swift; sourceTree = "<group>"; };
 		65CEA20E209F4CE5008C49AE /* NodeGraphCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGraphCommands.swift; sourceTree = "<group>"; };
 		65CEA210209F7086008C49AE /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
@@ -229,6 +237,7 @@
 				6522C5AF2083906300F76DC8 /* Tests.storyboard */,
 				6553C95D2092723A00E6737B /* Reader.storyboard */,
 				6553C95F2092726500E6737B /* Writer.storyboard */,
+				65AFA6A320A718C700B9C5E5 /* Graph.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -324,6 +333,7 @@
 				658C7CB4207E7E6600E2B46B /* Info.plist */,
 				658C7CB5207E7E6600E2B46B /* Novella.entitlements */,
 				6581AF5E20A1099300BE71A4 /* Extensions */,
+				65AFA6A220A7181C00B9C5E5 /* GraphSystem */,
 				655B0B8D2098B48300741ACA /* NodeGraph */,
 				6522C5AE2083903900F76DC8 /* Storyboards */,
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
@@ -347,6 +357,15 @@
 				658C7CCB207E7E6600E2B46B /* Info.plist */,
 			);
 			path = NovellaUITests;
+			sourceTree = "<group>";
+		};
+		65AFA6A220A7181C00B9C5E5 /* GraphSystem */ = {
+			isa = PBXGroup;
+			children = (
+				65AFA6A020A7166900B9C5E5 /* GraphView.swift */,
+				65AFA6A720A7230500B9C5E5 /* GraphBGView.swift */,
+			);
+			path = GraphSystem;
 			sourceTree = "<group>";
 		};
 		65C2DDAE20A45CB900D79DF9 /* Variables */ = {
@@ -409,6 +428,7 @@
 				658C7CAD207E7E6500E2B46B /* ViewController.swift */,
 				6553C96120927D6E00E6737B /* ReaderViewController.swift */,
 				6553C96320927D9B00E6737B /* WriterViewController.swift */,
+				65AFA6A520A71AE300B9C5E5 /* GraphViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -564,6 +584,7 @@
 				6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */,
 				658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */,
 				658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */,
+				65AFA6A420A718C700B9C5E5 /* Graph.storyboard in Resources */,
 				6553C9602092726500E6737B /* Writer.storyboard in Resources */,
 				6553C95E2092723A00E6737B /* Reader.storyboard in Resources */,
 			);
@@ -650,6 +671,7 @@
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
 				6511246C20A60F7500F368FE /* BranchPinView.swift in Sources */,
 				6591405A2099D62900D6273D /* DialogWidget.swift in Sources */,
+				65AFA6A820A7230500B9C5E5 /* GraphBGView.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				658C7CAE207E7E6500E2B46B /* ViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
@@ -658,9 +680,11 @@
 				65CEA211209F7086008C49AE /* SelectionView.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
+				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				6511246A20A60F6E00F368FE /* LinkPinView.swift in Sources */,
 				65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */,
+				65AFA6A620A71AE300B9C5E5 /* GraphViewController.swift in Sources */,
 				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
 				65F8548B209EF2D50067A95C /* GridView.swift in Sources */,
 			);

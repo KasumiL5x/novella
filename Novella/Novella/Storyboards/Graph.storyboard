@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Graph-->
+        <scene sceneID="z5a-5k-fnC">
+            <objects>
+                <viewController storyboardIdentifier="Graph" id="dTP-CE-y8M" userLabel="Graph" customClass="GraphViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="keR-Yr-AB3">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xgc-BU-uAt" userLabel="toolbar">
+                                <rect key="frame" x="0.0" y="600" width="1000" height="100"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WZ-yf-UwV">
+                                        <rect key="frame" x="881" y="52" width="105" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Add Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f2l-sM-Bpj">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onAddGraph:" target="dTP-CE-y8M" id="ef9-LC-wvY"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xTJ-4G-Wfo">
+                                        <rect key="frame" x="14" y="52" width="109" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Open Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Efk-vs-BbN">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onOpenStory:" target="dTP-CE-y8M" id="FU4-gg-RC0"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="15A-Gh-fOc">
+                                        <rect key="frame" x="13" y="19" width="110" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Close Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1P1-Oj-leC">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onCloseStory:" target="dTP-CE-y8M" id="hai-Aa-FRY"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dbv-jc-7au">
+                                        <rect key="frame" x="123" y="52" width="105" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Save Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G8G-nw-WgY">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onSaveStory:" target="dTP-CE-y8M" id="QbE-GN-l3x"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iml-7C-AvJ">
+                                        <rect key="frame" x="123" y="19" width="103" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="New Story" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g9m-Kb-LwD">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onNewStory:" target="dTP-CE-y8M" id="oDt-Md-JsY"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="CsQ-fS-tM1"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="iNM-74-E4o" userLabel="statusbar">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="rdY-tW-s65"/>
+                                </constraints>
+                            </customView>
+                            <tabView translatesAutoresizingMaskIntoConstraints="NO" id="P59-Jn-kNE" userLabel="GraphTabs">
+                                <rect key="frame" x="-7" y="25" width="1014" height="581"/>
+                                <font key="font" metaFont="system"/>
+                            </tabView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Xgc-BU-uAt" firstAttribute="leading" secondItem="keR-Yr-AB3" secondAttribute="leading" id="EN6-6o-FH3"/>
+                            <constraint firstAttribute="trailing" secondItem="iNM-74-E4o" secondAttribute="trailing" id="Icp-la-EQQ"/>
+                            <constraint firstItem="P59-Jn-kNE" firstAttribute="top" secondItem="Xgc-BU-uAt" secondAttribute="bottom" id="JDb-L2-AVg"/>
+                            <constraint firstItem="iNM-74-E4o" firstAttribute="top" secondItem="P59-Jn-kNE" secondAttribute="bottom" id="Luy-T0-CGe"/>
+                            <constraint firstAttribute="trailing" secondItem="Xgc-BU-uAt" secondAttribute="trailing" id="PBX-tW-oV3"/>
+                            <constraint firstItem="iNM-74-E4o" firstAttribute="leading" secondItem="keR-Yr-AB3" secondAttribute="leading" id="YVA-T5-rNP"/>
+                            <constraint firstItem="P59-Jn-kNE" firstAttribute="leading" secondItem="keR-Yr-AB3" secondAttribute="leading" id="Zqp-vg-PRx"/>
+                            <constraint firstItem="Xgc-BU-uAt" firstAttribute="top" secondItem="keR-Yr-AB3" secondAttribute="top" id="htF-5d-F1c"/>
+                            <constraint firstAttribute="trailing" secondItem="P59-Jn-kNE" secondAttribute="trailing" id="p3G-Y3-INJ"/>
+                            <constraint firstAttribute="bottom" secondItem="iNM-74-E4o" secondAttribute="bottom" id="sqz-CW-bPv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_graphTabView" destination="P59-Jn-kNE" id="ant-Q0-91i"/>
+                    </connections>
+                </viewController>
+                <customObject id="L6U-NC-YHC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="79" y="100"/>
+        </scene>
+    </scenes>
+</document>
