@@ -185,6 +185,12 @@ class GraphView: NSView {
 	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
 		case .began:
+			
+			// if node is not selected but we dragged it, replace selection and then start dragging
+			if !node.IsSelected {
+				selectNodes([node], append: false)
+			}
+			
 			_lastLinkablePanPos = gesture.location(in: self)
 			if _undoRedo.inCompound() {
 				print("Tried to begin pan LinkableView but UndoRedo was already in a Compound!")
