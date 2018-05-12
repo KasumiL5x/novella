@@ -83,7 +83,7 @@ class DialogView: LinkableView {
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.lineWidth = 1.0
-				NSColor.red.setStroke()
+				NSColor.fromHex("#B3F865").setStroke()
 				path.stroke()
 			}
 			

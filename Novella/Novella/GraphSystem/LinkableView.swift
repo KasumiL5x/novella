@@ -107,6 +107,16 @@ class LinkableView: NSView {
 		_isPrimed = false
 		setNeedsDisplay(bounds)
 	}
+	func prime() {
+		_isSelected = false
+		_isPrimed = true
+		setNeedsDisplay(bounds)
+	}
+	func unprime() {
+		_isSelected = false
+		_isPrimed = false
+		setNeedsDisplay(bounds)
+	}
 	
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {

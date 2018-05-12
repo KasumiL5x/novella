@@ -92,6 +92,20 @@ class GraphView: NSView {
 				let curr = gesture.location(in: self)
 				_marquee.Marquee.origin = NSMakePoint(fmin(_marquee.Origin.x, curr.x), fmin(_marquee.Origin.y, curr.y))
 				_marquee.Marquee.size = NSMakeSize(fabs(curr.x - _marquee.Origin.x), fabs(curr.y - _marquee.Origin.y))
+				
+				// handle priming
+				let nodesInMarquee = allNodesIn(rect: _marquee.Marquee)
+				for curr in _allLinkableViews {
+					if curr.IsSelected {
+						continue // ignore already selected
+					}
+					
+					if nodesInMarquee.contains(curr) {
+						curr.prime()
+					} else {
+						curr.unprime()
+					}
+				}
 			}
 			break
 			
@@ -116,10 +130,13 @@ class GraphView: NSView {
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
 	}
+	fileprivate func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
+		return NSIntersectsRect(node.frame, rect)
+	}
 	fileprivate func allNodesIn(rect: NSRect) -> [LinkableView] {
 		var nodes: [LinkableView] = []
 		for curr in _allLinkableViews {
-			if NSIntersectsRect(curr.frame, rect) {
+			if nodeIn(node: curr, rect: rect) {
 				nodes.append(curr)
 			}
 		}
