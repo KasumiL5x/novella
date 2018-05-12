@@ -19,6 +19,8 @@ class LinkableView: NSView {
 	var _clickGesture: NSClickGestureRecognizer?
 	var _ctxGesture: NSClickGestureRecognizer?
 	var _panGesture: NSPanGestureRecognizer?
+	//
+	fileprivate var _outputs: [PinView]
 	
 	// MARK: - - Initialization -
 	init(frameRect: NSRect, nvLinkable: NVLinkable, graphView: GraphView) {
@@ -26,9 +28,12 @@ class LinkableView: NSView {
 		self._graphView = graphView
 		self._isPrimed = false
 		self._isSelected = false
+		//
 		self._clickGesture = nil
 		self._ctxGesture = nil
 		self._panGesture = nil
+		//
+		self._outputs = []
 		super.init(frame: frameRect)
 		
 		// primary click recognizer
@@ -127,7 +132,35 @@ class LinkableView: NSView {
 	func move(to: CGPoint) {
 		frame.origin = to
 		onMove()
-		// TODO: Update graph curves when implemented.
+		_graphView.updateCurves()
+	}
+	
+	// MARK: Outputs
+	func addOutput(pin: PinView) {
+		// auto-position
+		let wrect = widgetRect()
+		var pos = CGPoint.zero
+		pos.x = wrect.width - (pin.frame.width * 0.5)
+		pos.y = wrect.height - (pin.frame.height * 2.0)
+		pos.y -= CGFloat(_outputs.count) * (pin.frame.height * 1.5)
+		pin.frame.origin = pos
+		
+		_outputs.append(pin)
+		self.addSubview(pin)
+		
+		// subviews cannot be interacted with if they are out of the bounds of the superview, so resize
+		sizeToFitSubviews()
+	}
+	func sizeToFitSubviews() {
+		var w: CGFloat = frame.width
+		var h: CGFloat = frame.height
+		for sub in subviews {
+			let sw = sub.frame.origin.x + sub.frame.width
+			let sh = sub.frame.origin.y + sub.frame.height
+			w = max(w, sw)
+			h = max(h, sh)
+		}
+		self.frame.size = NSMakeSize(w, h)
 	}
 	
 	// MARK: - - Drawing -

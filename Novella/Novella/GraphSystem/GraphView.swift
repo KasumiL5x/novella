@@ -17,6 +17,7 @@ class GraphView: NSView {
 	fileprivate let _undoRedo: UndoRedo
 	//
 	fileprivate var _allLinkableViews: [LinkableView]
+	fileprivate var _allPinViews: [PinView]
 	// MARK: Selection
 	var _marquee: MarqueeView
 	var _selectedNodes: [LinkableView]
@@ -33,6 +34,7 @@ class GraphView: NSView {
 		self._undoRedo = UndoRedo()
 		//
 		self._allLinkableViews = []
+		self._allPinViews = []
 		//
 		self._marquee = MarqueeView(frame: frameRect)
 		self._selectedNodes = []
@@ -69,10 +71,12 @@ class GraphView: NSView {
 		
 		// clear existing linkable views
 		_allLinkableViews = []
+		// clear existing pin views
+		_allPinViews = []
 		
-		// load all views
+		
+		// load all nodes
 		for curr in graph.Nodes {
-			
 			switch curr {
 			case is NVDialog:
 				let node = DialogView(node: curr as! NVDialog, graphView: self)
@@ -83,6 +87,33 @@ class GraphView: NSView {
 				print("Not implemented node type \(curr).")
 				break
 			}
+		}
+		// load all links
+		for curr in graph.Links {
+			guard let node = getLinkableViewFrom(linkable: curr.Origin) else {
+				print("Received a link with an origin that could not be found!")
+				continue
+			}
+			
+			switch curr {
+			case is NVLink:
+				node.addOutput(pin: makePinViewLink(baseLink: curr as! NVLink, forNode: node))
+				break
+			case is NVBranch:
+				node.addOutput(pin: makePinViewBranch(baseLink: curr as! NVBranch, forNode: node))
+				break
+			default:
+				print("Found a link that is not yet supported (\(curr)).")
+				break
+			}
+			
+		}
+	}
+	
+	// MARK: Updating
+	func updateCurves() {
+		for child in _allPinViews {
+			child.redraw()
 		}
 	}
 	
@@ -168,6 +199,17 @@ class GraphView: NSView {
 		return nodes
 	}
 	
+	// MARK: Helpers
+	func getLinkableViewFrom(linkable: NVLinkable?) -> LinkableView? {
+		if nil == linkable {
+			return nil
+		}
+		
+		return _allLinkableViews.first(where: {
+			return $0.Linkable.UUID == linkable?.UUID
+		})
+	}
+	
 	// MARK: From Linkable
 	func onClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
@@ -223,5 +265,20 @@ class GraphView: NSView {
 		}
 	}
 	func onContextLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+	}
+}
+
+// MARK: - - Creation -
+extension GraphView {
+	// MARK: PinViews
+	func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
+		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
+		_allPinViews.append(pin)
+		return pin
+	}
+	func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
+		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
+		_allPinViews.append(pin)
+		return pin
 	}
 }

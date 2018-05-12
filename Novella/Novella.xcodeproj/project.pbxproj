@@ -12,6 +12,9 @@
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAA20A7641B002BF136 /* GraphViewCommands.swift */; };
+		65264CAD20A76DA8002BF136 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAC20A76DA8002BF136 /* PinView.swift */; };
+		65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAE20A76EC3002BF136 /* PinViewLink.swift */; };
+		65264CB120A7742F002BF136 /* PinViewBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CB020A7742F002BF136 /* PinViewBranch.swift */; };
 		6535CB6520A2F95500E857A0 /* BasePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6535CB6420A2F95500E857A0 /* BasePinView.swift */; };
 		6546805220A45D740036B770 /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546804F20A45D740036B770 /* NVFolder.swift */; };
 		6546805320A45D740036B770 /* NVDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805020A45D740036B770 /* NVDataType.swift */; };
@@ -121,6 +124,9 @@
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		65264CAA20A7641B002BF136 /* GraphViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
+		65264CAC20A76DA8002BF136 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		65264CAE20A76EC3002BF136 /* PinViewLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewLink.swift; sourceTree = "<group>"; };
+		65264CB020A7742F002BF136 /* PinViewBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewBranch.swift; sourceTree = "<group>"; };
 		6535CB6420A2F95500E857A0 /* BasePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePinView.swift; sourceTree = "<group>"; };
 		6546804F20A45D740036B770 /* NVFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
 		6546805020A45D740036B770 /* NVDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDataType.swift; sourceTree = "<group>"; };
@@ -376,6 +382,9 @@
 				65AFA6A920A736F500B9C5E5 /* LinkableView.swift */,
 				65AFA6AD20A748B000B9C5E5 /* DialogView.swift */,
 				65264CAA20A7641B002BF136 /* GraphViewCommands.swift */,
+				65264CAC20A76DA8002BF136 /* PinView.swift */,
+				65264CAE20A76EC3002BF136 /* PinViewLink.swift */,
+				65264CB020A7742F002BF136 /* PinViewBranch.swift */,
 			);
 			path = GraphSystem;
 			sourceTree = "<group>";
@@ -692,8 +701,10 @@
 				65D0D1F520A6D74500F105C3 /* CanvasDelegate.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
 				65CEA211209F7086008C49AE /* SelectionView.swift in Sources */,
+				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
+				65264CAD20A76DA8002BF136 /* PinView.swift in Sources */,
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
@@ -702,6 +713,7 @@
 				65AFA6A620A71AE300B9C5E5 /* GraphViewController.swift in Sources */,
 				65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */,
 				65CEA20F209F4CE5008C49AE /* NodeGraphCommands.swift in Sources */,
+				65264CB120A7742F002BF136 /* PinViewBranch.swift in Sources */,
 				65F8548B209EF2D50067A95C /* GridView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
