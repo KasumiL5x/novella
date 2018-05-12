@@ -21,6 +21,8 @@ class GraphView: NSView {
 	var _selectedNodes: [LinkableView]
 	// MARK: Gestures
 	var _panGesture: NSPanGestureRecognizer?
+	// MARK: Linkable Function Variables
+	var _lastLinkablePanPos: CGPoint
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
@@ -34,6 +36,8 @@ class GraphView: NSView {
 		self._selectedNodes = []
 		//
 		self._panGesture = nil
+		//
+		self._lastLinkablePanPos = CGPoint.zero
 		
 		super.init(frame: frameRect)
 		
@@ -165,7 +169,30 @@ class GraphView: NSView {
 		}
 
 	}
-	func onPanLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
+		switch gesture.state {
+		case .began:
+			_lastLinkablePanPos = gesture.location(in: self)
+			break
+		case .changed:
+			let curr = gesture.location(in: self)
+			let dx = (curr.x - _lastLinkablePanPos.x)
+			let dy = (curr.y - _lastLinkablePanPos.y)
+			
+			_selectedNodes.forEach({
+				let pos = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
+				$0.move(to: pos)
+			})
+			
+			_lastLinkablePanPos = curr
+			break
+		case .cancelled, .ended:
+			print("ended")
+			break
+		default:
+			print("onPanLinkable found expected gesture state.")
+			break
+		}
 	}
 	func onContextLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
 	}

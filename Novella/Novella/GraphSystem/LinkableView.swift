@@ -88,7 +88,7 @@ class LinkableView: NSView {
 	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
 		_graphView.onContextLinkable(node: self, gesture: gesture)
 	}
-	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
+	@objc fileprivate func onPan(gesture: NSPanGestureRecognizer) {
 		_graphView.onPanLinkable(node: self, gesture: gesture)
 	}
 	
@@ -96,6 +96,9 @@ class LinkableView: NSView {
 	func widgetRect() -> NSRect {
 		print("LinkableView::widgetRect() should be overridden.")
 		return NSRect.zero
+	}
+	func onMove() {
+		print("LinkableView::onMove() should be overridden.")
 	}
 	
 	// MARK: Priming/Selection
@@ -120,6 +123,14 @@ class LinkableView: NSView {
 		setNeedsDisplay(bounds)
 	}
 	
+	// MARK: Movement
+	func move(to: CGPoint) {
+		frame.origin = to
+		onMove()
+		// TODO: Update graph curves when implemented.
+	}
+	
+	// MARK: - - Drawing -
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()

@@ -44,6 +44,9 @@ class DialogView: LinkableView {
 	override func widgetRect() -> NSRect {
 		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
 	}
+	override func onMove() {
+		(Linkable as! NVDialog).EditorPosition = frame.origin
+	}
 	
 	// MARK - - Drawing -
 	override func draw(_ dirtyRect: NSRect) {
