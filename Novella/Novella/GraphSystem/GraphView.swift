@@ -14,6 +14,7 @@ class GraphView: NSView {
 	fileprivate let _nvGraph: NVGraph
 	fileprivate let _nvStory: NVStory
 	fileprivate let _bg: GraphBGView
+	fileprivate let _undoRedo: UndoRedo
 	//
 	fileprivate var _allLinkableViews: [LinkableView]
 	// MARK: Selection
@@ -29,6 +30,7 @@ class GraphView: NSView {
 		self._nvGraph = graph
 		self._nvStory = story
 		self._bg = GraphBGView(frame: frameRect)
+		self._undoRedo = UndoRedo()
 		//
 		self._allLinkableViews = []
 		//
@@ -61,6 +63,9 @@ class GraphView: NSView {
 		self.addSubview(_bg)
 		// add marquee view (must be last; others add after it)
 		self.addSubview(_marquee)
+		
+		// clear undo/redo
+		_undoRedo.clear()
 		
 		// clear existing linkable views
 		_allLinkableViews = []
@@ -128,6 +133,14 @@ class GraphView: NSView {
 		}
 	}
 	
+	// MARK: Undo/Redo
+	func undo(levels: Int=1) {
+		_undoRedo.undo(levels: levels)
+	}
+	func redo(levels: Int=1) {
+		_undoRedo.redo(levels: levels)
+	}
+	
 	// MARK: Selection
 	fileprivate func selectNodes(_ nodes: [LinkableView], append: Bool) {
 		_selectedNodes.forEach({$0.deselect()})
@@ -173,6 +186,11 @@ class GraphView: NSView {
 		switch gesture.state {
 		case .began:
 			_lastLinkablePanPos = gesture.location(in: self)
+			if _undoRedo.inCompound() {
+				print("Tried to begin pan LinkableView but UndoRedo was already in a Compound!")
+			} else {
+				_undoRedo.beginCompound(executeOnAdd: true)
+			}
 			break
 		case .changed:
 			let curr = gesture.location(in: self)
@@ -181,13 +199,17 @@ class GraphView: NSView {
 			
 			_selectedNodes.forEach({
 				let pos = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
-				$0.move(to: pos)
+				_undoRedo.execute(cmd: MoveLinkableViewCmd(node: $0, from: $0.frame.origin, to: pos))
 			})
 			
 			_lastLinkablePanPos = curr
 			break
 		case .cancelled, .ended:
-			print("ended")
+			if !_undoRedo.inCompound() {
+				print("Tried to end pan LinkableView but UndoRedo was not in a Compound!")
+			} else {
+				_undoRedo.endCompound()
+			}
 			break
 		default:
 			print("onPanLinkable found expected gesture state.")

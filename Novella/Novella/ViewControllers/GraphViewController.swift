@@ -117,11 +117,24 @@ class GraphViewController: NSViewController {
 		}
 		createEmptyStory()
 	}
-	
 	@IBAction fileprivate func onAddGraph(_ sender: NSButton) {
 		let graph = _story.makeGraph(name: "New Graph")
 		addNewTab(forGraph: graph)
 	}
+	@IBAction func onUndo(_ sender: NSButton) {
+		getActiveGraph()?.undo(levels: 1)
+	}
+	@IBAction func onRedo(_ sender: NSButton) {
+		getActiveGraph()?.redo(levels: 1)
+	}
+	
+	// MARK: - - Private Functions -
+	func getActiveGraph() -> GraphView? {
+		// NOTE: This is fugly as hell but it is functional based on the setup I have.  If that changes, this will have to also.
+		let graph = ((_graphTabView.selectedTabViewItem?.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)
+		return graph
+	}
+	
 	
 	// MARK: IDK
 	fileprivate func addNewTab(forGraph: NVGraph) {
