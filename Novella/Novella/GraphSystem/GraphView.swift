@@ -14,12 +14,16 @@ class GraphView: NSView {
 	fileprivate let _nvGraph: NVGraph
 	fileprivate let _nvStory: NVStory
 	fileprivate let _bg: GraphBGView
+	//
+	fileprivate var _allLinkableViews: [LinkableView]
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
 		self._nvGraph = graph
 		self._nvStory = story
 		self._bg = GraphBGView(frame: frameRect)
+		//
+		self._allLinkableViews = []
 		
 		super.init(frame: frameRect)
 		
@@ -36,5 +40,16 @@ class GraphView: NSView {
 		
 		// add background
 		self.addSubview(_bg)
+		
+		// clear existing linkable views
+		_allLinkableViews = []
+		
+		// load all views
+		for curr in graph.Nodes {
+			print(curr)
+			let linkableView = LinkableView(frameRect: NSMakeRect(100.0, 100.0, 100.0, 100.0), nvLinkable: curr)
+			_allLinkableViews.append(linkableView)
+			addSubview(linkableView)
+		}
 	}
 }
