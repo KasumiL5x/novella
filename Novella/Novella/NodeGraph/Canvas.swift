@@ -302,6 +302,12 @@ extension Canvas {
 		if _undoRedo.inCompound() {
 			_undoRedo.endCompound()
 		}
+		
+		// if only one selected
+		if _selectedNodes.count == 1 && _selectedNodes.contains(widget) {
+			var userInfo: [AnyHashable:Any] = [:]
+			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addTextField"), object: self, userInfo: userInfo)
+		}
 	}
 
 	func onRightMouseDownLinkableWidget(widget: LinkableWidget, event: NSEvent) {
