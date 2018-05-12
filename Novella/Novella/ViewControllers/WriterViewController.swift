@@ -143,6 +143,64 @@ class WriterViewController: NSViewController {
 
 extension WriterViewController: CanvasDelegate {
 	func onSelectionChanged(selection: [LinkableWidget]) {
-		print("Selection changed to \(selection)")
+		if selection.count != 1 {
+			setupPropertiesFor(linkableWidget: nil)
+		} else {
+			setupPropertiesFor(linkableWidget: nil)
+			setupPropertiesFor(linkableWidget: selection[0])
+		}
+	}
+}
+
+// properties panel stuff
+extension WriterViewController: NSTextFieldDelegate {
+	func setupPropertiesFor(linkableWidget: LinkableWidget?) {
+		if linkableWidget == nil {
+			propertiesView.subviews.removeAll()
+			return
+		}
+		
+		// handle dialog widgets
+		if let asDialog = linkableWidget as? DialogWidget {
+			// dialog label
+			let dlgLabel = NSTextField(labelWithString: "Dialog")
+			dlgLabel.translatesAutoresizingMaskIntoConstraints = false
+			dlgLabel.alignment = .center
+			dlgLabel.font = NSFont(name: "Arial-BoldMT", size: 20)
+			dlgLabel.sizeToFit()
+			propertiesView.addSubview(dlgLabel)
+			propertiesView.addConstraint(NSLayoutConstraint(item: dlgLabel, attribute: .left, relatedBy: .equal, toItem: propertiesView, attribute: .left, multiplier: 1.0, constant: 0))
+			propertiesView.addConstraint(NSLayoutConstraint(item: dlgLabel, attribute: .right, relatedBy: .equal, toItem: propertiesView, attribute: .right, multiplier: 1.0, constant: 0))
+			propertiesView.addConstraint(NSLayoutConstraint(item: dlgLabel, attribute: .top, relatedBy: .equal, toItem: propertiesView, attribute: .top, multiplier: 1.0, constant: 15))
+			propertiesView.addConstraint(NSLayoutConstraint(item: dlgLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: dlgLabel.frame.height))
+			
+			// name text box
+			let txtName = NSTextField(string: (asDialog.Linkable as! NVDialog).Name)
+			txtName.delegate = self
+			txtName.translatesAutoresizingMaskIntoConstraints = false
+			txtName.sizeToFit()
+			txtName.placeholderString = "Name"
+			propertiesView.addSubview(txtName)
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtName, attribute: .top, relatedBy: .equal, toItem: dlgLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtName, attribute: .left, relatedBy: .equal, toItem: propertiesView, attribute: .left, multiplier: 1.0, constant: 5))
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtName, attribute: .right, relatedBy: .equal, toItem: propertiesView, attribute: .right, multiplier: 1.0, constant: 5))
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtName, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: txtName.frame.height))
+			
+			// preview text box
+			let txtPrev = NSTextField(string: (asDialog.Linkable as! NVDialog).Preview)
+			txtPrev.delegate = self
+			txtPrev.translatesAutoresizingMaskIntoConstraints = false
+			txtPrev.sizeToFit()
+			txtPrev.placeholderString = "Preview"
+			propertiesView.addSubview(txtPrev)
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtPrev, attribute: .top, relatedBy: .equal, toItem: txtName, attribute: .bottom, multiplier: 1.0, constant: 5))
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtPrev, attribute: .left, relatedBy: .equal, toItem: propertiesView, attribute: .left, multiplier: 1.0, constant: 5))
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtPrev, attribute: .right, relatedBy: .equal, toItem: propertiesView, attribute: .right, multiplier: 1.0, constant: 5))
+			propertiesView.addConstraint(NSLayoutConstraint(item: txtPrev, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: txtPrev.frame.height))
+		}
+	}
+	
+	override func controlTextDidEndEditing(_ obj: Notification) {
+		print("ended editing \(obj)")
 	}
 }
