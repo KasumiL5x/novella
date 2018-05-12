@@ -91,20 +91,13 @@ class LinkableView: NSView {
 	}
 	// MARK: Virtual Functions
 	func widgetRect() -> NSRect {
-//		print("LinkableView::widgetRect() should be overridden.")
-		return NSMakeRect(0, 0, 10, 10)
-//		return NSRect.zero
+		print("LinkableView::widgetRect() should be overridden.")
+		return NSRect.zero
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
-			var path = NSBezierPath(roundedRect: bounds, xRadius: 2.0, yRadius: 2.0)
-			NSColor.red.setFill()
-			path.fill()
-			path = NSBezierPath(roundedRect: widgetRect(), xRadius: 2.0, yRadius: 2.0)
-			NSColor.green.setFill()
-			path.fill()
 			context.restoreGState()
 		}
 	}

@@ -52,10 +52,17 @@ class GraphView: NSView {
 		
 		// load all views
 		for curr in graph.Nodes {
-			print(curr)
-			let linkableView = LinkableView(frameRect: NSMakeRect(100.0, 100.0, 100.0, 100.0), nvLinkable: curr)
-			_allLinkableViews.append(linkableView)
-			self.addSubview(linkableView, positioned: .below, relativeTo: _marquee)
+			
+			switch curr {
+			case is NVDialog:
+				let node = DialogView(node: curr as! NVDialog)
+				_allLinkableViews.append(node)
+				self.addSubview(node, positioned: .below, relativeTo: _marquee)
+				break
+			default:
+				print("Not implemented node type \(curr).")
+				break
+			}
 		}
 	}
 	
