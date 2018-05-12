@@ -16,9 +16,9 @@ class LinkableView: NSView {
 	fileprivate var _isPrimed: Bool
 	fileprivate var _isSelected: Bool
 	//
-	var _clickGesture: NSClickGestureRecognizer?
-	var _ctxGesture: NSClickGestureRecognizer?
-	var _panGesture: NSPanGestureRecognizer?
+	fileprivate var _clickGesture: NSClickGestureRecognizer?
+	fileprivate var _ctxGesture: NSClickGestureRecognizer?
+	fileprivate var _panGesture: NSPanGestureRecognizer?
 	//
 	fileprivate var _outputs: [PinView]
 	
