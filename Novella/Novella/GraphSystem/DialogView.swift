@@ -14,13 +14,13 @@ class DialogView: LinkableView {
 	fileprivate let _nameLabel: NSTextField
 	
 	// MARK: - - Initialization -
-	init(node: NVDialog) {
+	init(node: NVDialog, graphView: GraphView) {
 		self._nameLabel = NSTextField(labelWithString: node.Name.isEmpty ? "?" : node.Name)
 		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
 		self._nameLabel.sizeToFit()
 		
 		let rect = NSMakeRect(node.EditorPosition.x, node.EditorPosition.y, 1.0, 1.0)
-		super.init(frameRect: rect, nvLinkable: node)
+		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
 		self.frame.size = widgetRect().size
 		
 		// set up name label

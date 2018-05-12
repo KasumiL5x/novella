@@ -12,6 +12,7 @@ import NovellaModel
 class LinkableView: NSView {
 	// MARK: - - Variables -
 	fileprivate var _nvLinkable: NVLinkable
+	fileprivate var _graphView: GraphView
 	fileprivate var _isPrimed: Bool
 	fileprivate var _isSelected: Bool
 	//
@@ -20,8 +21,9 @@ class LinkableView: NSView {
 	var _panGesture: NSPanGestureRecognizer?
 	
 	// MARK: - - Initialization -
-	init(frameRect: NSRect, nvLinkable: NVLinkable) {
+	init(frameRect: NSRect, nvLinkable: NVLinkable, graphView: GraphView) {
 		self._nvLinkable = nvLinkable
+		self._graphView = graphView
 		self._isPrimed = false
 		self._isSelected = false
 		self._clickGesture = nil
@@ -81,13 +83,13 @@ class LinkableView: NSView {
 	
 	// MARK: Gesture Callbacks
 	@objc fileprivate func onClick(gesture: NSGestureRecognizer) {
-		print("clicked \(gesture.location(in: self))")
+		_graphView.onClickLinkable(node: self, gesture: gesture)
 	}
 	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
-		print("context clicked \(gesture.location(in: self))")
+		_graphView.onContextLinkable(node: self, gesture: gesture)
 	}
 	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
-		print("panned \(_panGesture!.translation(in: self))")
+		_graphView.onPanLinkable(node: self, gesture: gesture)
 	}
 	
 	// MARK: Virtual Functions

@@ -66,7 +66,7 @@ class GraphView: NSView {
 			
 			switch curr {
 			case is NVDialog:
-				let node = DialogView(node: curr as! NVDialog)
+				let node = DialogView(node: curr as! NVDialog, graphView: self)
 				_allLinkableViews.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
 				break
@@ -130,6 +130,14 @@ class GraphView: NSView {
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
 	}
+	fileprivate func deselectNodes(_ nodes: [LinkableView]) {
+		nodes.forEach({
+			if _selectedNodes.contains($0) {
+				$0.deselect()
+				_selectedNodes.remove(at: _selectedNodes.index(of: $0)!)
+			}
+		})
+	}
 	fileprivate func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
 		return NSIntersectsRect(node.frame, rect)
 	}
@@ -141,5 +149,24 @@ class GraphView: NSView {
 			}
 		}
 		return nodes
+	}
+	
+	// MARK: From Linkable
+	func onClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
+		if append {
+			if node.IsSelected {
+				deselectNodes([node])
+			} else {
+				selectNodes([node], append: append)
+			}
+		} else {
+			selectNodes([node], append: append)
+		}
+
+	}
+	func onPanLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+	}
+	func onContextLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
 	}
 }
