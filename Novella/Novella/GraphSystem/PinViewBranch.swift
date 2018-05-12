@@ -74,6 +74,7 @@ class PinViewBranch: PinView {
 	// MARK: - - Drawing -
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
+		
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			

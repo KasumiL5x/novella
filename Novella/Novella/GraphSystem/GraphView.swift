@@ -227,7 +227,6 @@ class GraphView: NSView {
 	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
 		case .began:
-			
 			// if node is not selected but we dragged it, replace selection and then start dragging
 			if !node.IsSelected {
 				selectNodes([node], append: false)
@@ -260,11 +259,36 @@ class GraphView: NSView {
 			}
 			break
 		default:
-			print("onPanLinkable found expected gesture state.")
+			print("onPanLinkable found unexpected gesture state.")
 			break
 		}
 	}
 	func onContextLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+	}
+	
+	// MARK: From PinView
+	func onPanPin(pin: PinView, gesture: NSPanGestureRecognizer) {
+		switch gesture.state {
+		case .began:
+			pin.IsDragging = true
+			pin.DragPosition = gesture.location(in: pin)
+			pin.redraw()
+			break
+			
+		case .changed:
+			pin.DragPosition = gesture.location(in: pin)
+			pin.redraw()
+			break
+			
+		case .cancelled, .ended:
+			pin.IsDragging = false
+			pin.redraw()
+			break
+			
+		default:
+			print("onPanPin found unexpected gesture state.")
+			break
+		}
 	}
 }
 
