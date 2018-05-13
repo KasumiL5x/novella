@@ -9,6 +9,12 @@
 import Cocoa
 import NovellaModel
 
+enum SaveAlertResult {
+	case save
+	case dontsave
+	case cancel
+}
+
 class GraphViewController: NSViewController {
 	// MARK: - - Constants -
 	fileprivate static let SCROLL_SIZE: CGFloat = 6000.0
@@ -20,21 +26,13 @@ class GraphViewController: NSViewController {
 	
 	// MARK: - - Variables -
 	fileprivate var _story: NVStory = NVStory()
+	fileprivate var _openedFile: URL?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 	}
 	
 	// MARK: - - Helpers -
-	fileprivate func alertCancelOK(message: String, info: String) -> Bool {
-		let alert = NSAlert()
-		alert.messageText = message
-		alert.informativeText = info
-		alert.alertStyle = .warning
-		alert.addButton(withTitle: "Cancel")
-		alert.addButton(withTitle: "OK")
-		return alert.runModal() != .alertFirstButtonReturn // true for OK, false for Cancel
-	}
 	fileprivate func alertError(message: String, info: String) {
 		let alert = NSAlert()
 		alert.messageText = message
@@ -42,6 +40,56 @@ class GraphViewController: NSViewController {
 		alert.alertStyle = .critical
 		alert.addButton(withTitle: "OK")
 		alert.runModal()
+	}
+	fileprivate func alertSave(message: String, info: String) -> SaveAlertResult {
+		let alert = NSAlert()
+		alert.messageText = message
+		alert.informativeText = info
+		alert.alertStyle = .critical
+		alert.addButton(withTitle: "Save")
+		alert.addButton(withTitle: "Don't Save")
+		alert.addButton(withTitle: "Cancel")
+		switch alert.runModal() {
+		case NSApplication.ModalResponse.alertFirstButtonReturn:
+			return .save
+		case NSApplication.ModalResponse.alertSecondButtonReturn:
+			return .dontsave
+		default:
+			return .cancel
+		}
+	}
+	fileprivate func saveStory() -> Bool {
+		if _openedFile == nil {
+			let sfd = NSSavePanel()
+			sfd.title = "Save Novella Story JSON."
+			sfd.canCreateDirectories = true
+			sfd.allowedFileTypes = ["json"]
+			sfd.allowsOtherFileTypes = false
+			if sfd.runModal() != .OK {
+				return false
+			}
+			_openedFile = sfd.url!
+		}
+		
+		let saveURL: URL
+		saveURL = _openedFile!
+		
+		// convert story to json
+		let jsonString: String
+		do { jsonString = try _story.toJSON() } catch {
+			alertError(message: "Failed to save.", info: "Unable to convert Story to JSON.")
+			_openedFile = nil
+			return false
+		}
+		
+		// write json string to file
+		do { try jsonString.write(to: saveURL, atomically: true, encoding: .utf8) } catch {
+			alertError(message: "Failed to save.", info: "Unable to write JSON to file.")
+			_openedFile = nil
+			return false
+		}
+		
+		return true
 	}
 	fileprivate func createEmptyStory() {
 		// remove all graph tabs
@@ -54,8 +102,17 @@ class GraphViewController: NSViewController {
 	
 	// MARK: - - UI Callbacks -
 	@IBAction fileprivate func onOpenStory(_ sender: NSButton) {
-		if !alertCancelOK(message: "Open Story?", info: "This will replace the current story.") {
+		let saveAlertResult = alertSave(message: "Save Before Open?", info: "Opening a Story will lose any unsaved changes.  Do you want to save first?")
+		switch saveAlertResult {
+		case .cancel:
 			return
+		case .save:
+			if !saveStory() {
+				return
+			}
+			break
+		case .dontsave:
+			break
 		}
 		
 		// open file
@@ -100,22 +157,49 @@ class GraphViewController: NSViewController {
 		for curr in _story.Graphs {
 			addNewTab(forGraph: curr)
 		}
+		
+		// store file url for saving
+		_openedFile = ofd.url!
 	}
 	@IBAction fileprivate func onCloseStory(_ sender: NSButton) {
-		// TODO: Handle unsaved stories.
-		if !alertCancelOK(message: "Close Story?", info: "Closing the story will lose any unsaved progress?") {
+		let saveAlertResult = alertSave(message: "Save Before Close?", info: "Closing the Story will lose any unsaved changes.  Do you want to save first?")
+		switch saveAlertResult {
+		case .cancel:
 			return
+		case .save:
+			if !saveStory() {
+				return
+			}
+			break
+		case .dontsave:
+			break
 		}
+		
 		createEmptyStory()
+		
+		// no longer has an open file
+		_openedFile = nil
 	}
 	@IBAction fileprivate func onSaveStory(_ sender: NSButton) {
-		fatalError("Not yet implemented.")
+		_ = saveStory()
 	}
 	@IBAction fileprivate func onNewStory(_ sender: NSButton) {
-		if !alertCancelOK(message: "Create new Story?", info: "This will replace the current story.") {
+		let saveAlertResult = alertSave(message: "Save Before New?", info: "Making a new Story will lose any unsaved changes.  Do you want to save first?")
+		switch saveAlertResult {
+		case .cancel:
 			return
+		case .save:
+			if !saveStory() {
+				return
+			}
+			break
+		case .dontsave:
+			break
 		}
 		createEmptyStory()
+		
+		// no longer has an open file
+		_openedFile = nil
 	}
 	@IBAction fileprivate func onAddGraph(_ sender: NSButton) {
 		let graph = _story.makeGraph(name: "New Graph")
@@ -129,7 +213,7 @@ class GraphViewController: NSViewController {
 	}
 	
 	// MARK: - - Private Functions -
-	func getActiveGraph() -> GraphView? {
+	fileprivate func getActiveGraph() -> GraphView? {
 		// NOTE: This is fugly as hell but it is functional based on the setup I have.  If that changes, this will have to also.
 		let graph = ((_graphTabView.selectedTabViewItem?.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)
 		return graph
