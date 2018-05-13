@@ -94,8 +94,7 @@ class GraphView: NSView {
 		fatalError("GraphView::init(coder) not implemented.")
 	}
 	
-	// MARK: - - Functions -
-	// MARK: Setup
+	// MARK: - - Setup -
 	fileprivate func rootFor(graph: NVGraph) {
 		// remove existing views
 		self.subviews.removeAll()
@@ -145,18 +144,37 @@ class GraphView: NSView {
 				print("Found a link that is not yet supported (\(curr)).")
 				break
 			}
-			
 		}
 	}
 	
-	// MARK: Updating
+	// MARK: - - Graph Functions / Helpers -
 	func updateCurves() {
 		for child in _allPinViews {
 			child.redraw()
 		}
 	}
 	
-	// MARK: Gesture Callbacks
+	func undo(levels: Int=1) {
+		_undoRedo.undo(levels: levels)
+	}
+	func redo(levels: Int=1) {
+		_undoRedo.redo(levels: levels)
+	}
+	
+	func getLinkableViewFrom(linkable: NVLinkable?) -> LinkableView? {
+		if nil == linkable {
+			return nil
+		}
+		
+		return _allLinkableViews.first(where: {
+			return $0.Linkable.UUID == linkable?.UUID
+		})
+	}
+}
+
+// MARK: - - Gestures -
+extension GraphView {
+	// MARK: GraphView Callbacks
 	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
 		switch gesture.state {
 		case .began:
@@ -211,53 +229,7 @@ class GraphView: NSView {
 		}
 	}
 	
-	// MARK: Undo/Redo
-	func undo(levels: Int=1) {
-		_undoRedo.undo(levels: levels)
-	}
-	func redo(levels: Int=1) {
-		_undoRedo.redo(levels: levels)
-	}
-	
-	// MARK: Selection
-	fileprivate func selectNodes(_ nodes: [LinkableView], append: Bool) {
-		_selectedNodes.forEach({$0.deselect()})
-		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
-		_selectedNodes.forEach({$0.select()})
-	}
-	fileprivate func deselectNodes(_ nodes: [LinkableView]) {
-		nodes.forEach({
-			if _selectedNodes.contains($0) {
-				$0.deselect()
-				_selectedNodes.remove(at: _selectedNodes.index(of: $0)!)
-			}
-		})
-	}
-	fileprivate func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
-		return NSIntersectsRect(node.frame, rect)
-	}
-	fileprivate func allNodesIn(rect: NSRect) -> [LinkableView] {
-		var nodes: [LinkableView] = []
-		for curr in _allLinkableViews {
-			if nodeIn(node: curr, rect: rect) {
-				nodes.append(curr)
-			}
-		}
-		return nodes
-	}
-	
-	// MARK: Helpers
-	func getLinkableViewFrom(linkable: NVLinkable?) -> LinkableView? {
-		if nil == linkable {
-			return nil
-		}
-		
-		return _allLinkableViews.first(where: {
-			return $0.Linkable.UUID == linkable?.UUID
-		})
-	}
-	
-	// MARK: From Linkable
+	// MARK: From LinkableView
 	func onClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
 		if append {
@@ -269,7 +241,6 @@ class GraphView: NSView {
 		} else {
 			selectNodes([node], append: append)
 		}
-
 	}
 	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
@@ -317,24 +288,6 @@ class GraphView: NSView {
 		} else {
 			print("Tried to open a context menu for a linkable but there was no event available to use.")
 		}
-		
-	}
-	// MARK: Linkable Context Menu
-	@objc fileprivate func onLinkableMenuAddLink() {
-		guard let clicked = _contextClickedLinkable else {
-			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
-			return
-		}
-		let nvLink = _nvStory.makeLink(origin: clicked.Linkable)
-		clicked.addOutput(pin: makePinViewLink(baseLink: nvLink, forNode: clicked))
-	}
-	@objc fileprivate func onLinkableMenuAddBranch() {
-		guard let clicked = _contextClickedLinkable else {
-			print("Tried to add a link to a branch via context but _contextClickedLinkable was nil.")
-			return
-		}
-		let nvBranch = _nvStory.makeBranch(origin: clicked.Linkable)
-		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
 	}
 	
 	// MARK: From PinView
@@ -382,16 +335,15 @@ class GraphView: NSView {
 				_undoRedo.execute(cmd: SetPinLinkDestinationCmd(pin: asLink, destination: _pinDropTarget?.Linkable))
 				_pinDragged = nil // no longer dragging anything
 			} else
-			if let _ = pin as? PinViewBranch {
-				if let event = NSApp.currentEvent {
-					let forView = _pinDropTarget ?? self
-					NSMenu.popUpContextMenu(_pinDropBranchMenu, with: event, for: forView)
+				if let _ = pin as? PinViewBranch {
+					if let event = NSApp.currentEvent {
+						let forView = _pinDropTarget ?? self
+						NSMenu.popUpContextMenu(_pinDropBranchMenu, with: event, for: forView)
+					} else {
+						print("Tried to open a context menu for dropping a Branch but there was no event available to use.")
+					}
 				} else {
-					print("Tried to open a context menu for dropping a Branch but there was no event available to use.")
-				}
-				
-			} else {
-				print("dropped an unhandled pin type")
+					print("dropped an unhandled pin type")
 			}
 			
 			break
@@ -401,7 +353,45 @@ class GraphView: NSView {
 			break
 		}
 	}
-	// MARK: PinView Context Menus
+}
+
+// MARK: - - Context Menu Callbacks -
+extension GraphView {
+	// MARK: GraphView Menu
+	@objc fileprivate func onGraphViewMenuAddDialog() {
+		// make the actual dialog node
+		let nvDialog = _nvStory.makeDialog()
+		// add it to this graph
+		do { try _nvGraph.add(node: nvDialog) } catch {
+			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
+			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
+		}
+		let dlgView = makeDialogView(nvDialog: nvDialog)
+		var pos = _lastContextLocation
+		pos.x -= dlgView.frame.width/2
+		pos.y -= dlgView.frame.height/2
+		dlgView.move(to: pos)
+	}
+	
+	// MARK: Linkable Menu
+	@objc fileprivate func onLinkableMenuAddLink() {
+		guard let clicked = _contextClickedLinkable else {
+			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
+			return
+		}
+		let nvLink = _nvStory.makeLink(origin: clicked.Linkable)
+		clicked.addOutput(pin: makePinViewLink(baseLink: nvLink, forNode: clicked))
+	}
+	@objc fileprivate func onLinkableMenuAddBranch() {
+		guard let clicked = _contextClickedLinkable else {
+			print("Tried to add a link to a branch via context but _contextClickedLinkable was nil.")
+			return
+		}
+		let nvBranch = _nvStory.makeBranch(origin: clicked.Linkable)
+		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
+	}
+	
+	// MARK: PinView Dropping Menu
 	@objc fileprivate func onPinDropBranchTrue() {
 		guard let draggedPin = _pinDragged else {
 			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
@@ -428,21 +418,37 @@ class GraphView: NSView {
 			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
 		}
 	}
+}
+
+// MARK: - - Selection -
+extension GraphView {
+	fileprivate func selectNodes(_ nodes: [LinkableView], append: Bool) {
+		_selectedNodes.forEach({$0.deselect()})
+		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
+		_selectedNodes.forEach({$0.select()})
+	}
 	
-	// MARK: GraphView Context Menu
-	@objc fileprivate func onGraphViewMenuAddDialog() {
-		// make the actual dialog node
-		let nvDialog = _nvStory.makeDialog()
-		// add it to this graph
-		do { try _nvGraph.add(node: nvDialog) } catch {
-			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
-			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
+	fileprivate func deselectNodes(_ nodes: [LinkableView]) {
+		nodes.forEach({
+			if _selectedNodes.contains($0) {
+				$0.deselect()
+				_selectedNodes.remove(at: _selectedNodes.index(of: $0)!)
+			}
+		})
+	}
+	
+	fileprivate func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
+		return NSIntersectsRect(node.frame, rect)
+	}
+	
+	fileprivate func allNodesIn(rect: NSRect) -> [LinkableView] {
+		var nodes: [LinkableView] = []
+		for curr in _allLinkableViews {
+			if nodeIn(node: curr, rect: rect) {
+				nodes.append(curr)
+			}
 		}
-		let dlgView = makeDialogView(nvDialog: nvDialog)
-		var pos = _lastContextLocation
-		pos.x -= dlgView.frame.width/2
-		pos.y -= dlgView.frame.height/2
-		dlgView.move(to: pos)
+		return nodes
 	}
 }
 
