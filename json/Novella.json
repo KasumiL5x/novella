@@ -53,9 +53,18 @@
 
 		// MARK: uuid
 		"uuid": {
-			"type": "string",
-			// Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
-			"pattern": "[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}"
+			"anyOf": [
+				{
+					"type": "string",
+					// Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
+					"pattern": "[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}"
+				},
+				{
+					"type": "string",
+					"minLength": 0,
+					"maxLength": 0
+				}
+			]
 		},
 		// END uuid
 

@@ -203,6 +203,10 @@ class GraphViewController: NSViewController {
 	}
 	@IBAction fileprivate func onAddGraph(_ sender: NSButton) {
 		let graph = _story.makeGraph(name: "New Graph")
+		do { try _story.add(graph: graph) } catch {
+			alertError(message: "Could not add Graph!", info: "Adding a graph to the Story failed.")
+			return // TODO: Remove graph
+		}
 		addNewTab(forGraph: graph)
 	}
 	@IBAction func onUndo(_ sender: NSButton) {

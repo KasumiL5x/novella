@@ -68,9 +68,18 @@ extension NVStory {
 			
 			// MARK: uuid
 			"uuid": [
-				"type": "string",
-				// Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
-				"pattern": "[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}"
+				"anyOf": [
+					[
+						"type": "string",
+						// Conforms to RFC 4122 Version 4 (https://developer.apple.com/documentation/foundation/nsuuid and https://stackoverflow.com/a/38191078)
+						"pattern": "[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}"
+					],
+					[
+						"type": "string",
+						"minLength": 0,
+						"maxLength": 0
+					]
+				]
 			],
 			// END uuid
 			
@@ -671,10 +680,12 @@ extension NVStory {
 		for curr in json["graphs"].arrayValue {
 			let graph = story.findBy(uuid: curr["uuid"].string!) as! NVGraph
 			if let entry = curr["entry"].string {
-				if let linkable = story.findBy(uuid: entry) as? NVLinkable {
-					try! graph.setEntry(linkable)
-				} else {
-					errors.append("Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph._uuid.uuidString)).")
+				if !entry.isEmpty {
+					if let linkable = story.findBy(uuid: entry) as? NVLinkable {
+						try! graph.setEntry(linkable)
+					} else {
+						errors.append("Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph._uuid.uuidString)).")
+					}
 				}
 			}
 		}
@@ -698,10 +709,13 @@ extension NVStory {
 				}
 				
 				if let transfer = curr["transfer"].dictionary {
-					if let destination = story.findBy(uuid: transfer["destination"]!.string!) as? NVLinkable {
-						link._transfer.Destination = destination
-					} else {
-						errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
+					let transferDestination = transfer["destination"]!.string!
+					if !transferDestination.isEmpty {
+						if let destination = story.findBy(uuid: transferDestination) as? NVLinkable {
+							link._transfer.Destination = destination
+						} else {
+							errors.append("Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
+						}
 					}
 				}
 				break
@@ -713,18 +727,24 @@ extension NVStory {
 				}
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
-					if let destination = story.findBy(uuid: trueTransfer["destination"]!.string!) as? NVLinkable {
-						branch._trueTransfer.Destination = destination
-					} else {
-						errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
+					let transferDestination = trueTransfer["destination"]!.string!
+					if !transferDestination.isEmpty {
+						if let destination = story.findBy(uuid: transferDestination) as? NVLinkable {
+							branch._trueTransfer.Destination = destination
+						} else {
+							errors.append("Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
+						}
 					}
 				}
 				
 				if let falseTransfer = curr["ftransfer"].dictionary {
-					if let destination = story.findBy(uuid: falseTransfer["destination"]!.string!) as? NVLinkable {
-						branch._falseTransfer.Destination = destination
-					} else {
-						errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
+					let transferDestination = falseTransfer["destination"]!.string!
+					if !transferDestination.isEmpty {
+						if let destination = story.findBy(uuid: transferDestination) as? NVLinkable {
+							branch._falseTransfer.Destination = destination
+						} else {
+							errors.append("Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
+						}
 					}
 				}
 				break

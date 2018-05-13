@@ -1,2 +1,45 @@
 {
+  "folders" : [
+
+  ],
+  "variables" : [
+
+  ],
+  "links" : [
+
+  ],
+  "story" : {
+    "graphs" : [
+      "1BC4A18E-58D1-49DC-A745-932B5336BA8F"
+    ],
+    "name" : "",
+    "folders" : [
+
+    ]
+  },
+  "nodes" : [
+
+  ],
+  "graphs" : [
+    {
+      "name" : "New Graph",
+      "nodes" : [
+
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "1BC4A18E-58D1-49DC-A745-932B5336BA8F",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ]
 }
