@@ -24,16 +24,24 @@ class MainViewController: NSViewController {
 	// MARK: - - Variables -
 	fileprivate var _story: NVStory = NVStory()
 	fileprivate var _openedFile: URL?
+	fileprivate var _browserTopLevel: [String] = [
+		"Graphs",
+		"Variables"
+	]
 	
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
+	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
 	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		_story = NVStory()
+		
+		_storyBrowser.delegate = self
+		_storyBrowser.dataSource = self
 	}
 	
 	// MARK: - - Functions called from window -
@@ -56,6 +64,8 @@ class MainViewController: NSViewController {
 		_openedFile = nil
 		// no name
 		_storyName.stringValue = ""
+		
+		reloadBrowser()
 	}
 
 	func onOpen() {
@@ -120,6 +130,8 @@ class MainViewController: NSViewController {
 		
 		// story name
 		_storyName.stringValue = _story.Name
+		
+		reloadBrowser()
 	}
 	
 	func onSave() {
@@ -147,6 +159,8 @@ class MainViewController: NSViewController {
 		
 		// no name
 		_storyName.stringValue = ""
+		
+		reloadBrowser()
 	}
 	
 	// MARK: - - Alerts -
@@ -268,6 +282,43 @@ class MainViewController: NSViewController {
 	
 	@IBAction func onRedo(_ sender: NSButton) {
 		getActiveGraph()?.redo()
+	}
+	
+	// MARK: - - Story Browser Functions -
+	func reloadBrowser() {
+		_storyBrowser.reloadData()
+	}
+}
+
+// MARK: - - Story Browser -
+extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		return _browserTopLevel.count
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		return _browserTopLevel[index]
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		return false
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+		var view: NSTableCellView? = nil
+		
+		var name = "error"
+		
+		if item is String {
+			name = item as! String
+		}
+		
+		if tableColumn?.identifier.rawValue == "NameCell" {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+			view?.textField?.stringValue = name
+		}
+		
+		return view
 	}
 }
 
