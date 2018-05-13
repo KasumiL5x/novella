@@ -293,9 +293,13 @@ class MainViewController: NSViewController {
 // MARK: - - Story Browser -
 extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		
 		if let asFolder = item as? NVFolder {
 			return asFolder.Folders.count + asFolder.Variables.count
+		}
+		
+		if let asGraph = item as? NVGraph {
+			return (asGraph.Graphs.count +
+			        asGraph.Nodes.count)
 		}
 		
 		if let asString = item as? String {
@@ -318,6 +322,20 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 			return asFolder.Variables[index - asFolder.Folders.count]
 		}
 		
+		if let asGraph = item as? NVGraph {
+			if index < asGraph.Graphs.count {
+				return asGraph.Graphs[index]
+			}
+			var offset = asGraph.Graphs.count
+			
+			if index < (offset + asGraph.Nodes.count) {
+				return asGraph.Nodes[index - offset]
+			}
+			offset += asGraph.Nodes.count
+			
+			return "umm?"
+		}
+		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
 				return _story.Graphs[index]
@@ -331,9 +349,13 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		
 		if let asFolder = item as? NVFolder {
 			return (asFolder.Folders.count + asFolder.Variables.count) > 0
+		}
+		
+		if let asGraph = item as? NVGraph {
+			return (asGraph.Graphs.count +
+				      asGraph.Nodes.count) > 0
 		}
 		
 		if let asString = item as? String {
@@ -367,6 +389,10 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		
 		if let asGraph = item as? NVGraph {
 			name = asGraph.Name
+		}
+		
+		if let asDialog = item as? NVDialog {
+			name = asDialog.Name
 		}
 		
 		if tableColumn?.identifier.rawValue == "NameCell" {
