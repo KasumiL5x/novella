@@ -21,18 +21,22 @@ class MainViewController: NSViewController {
 	fileprivate static let MIN_ZOOM: CGFloat = 0.2
 	fileprivate static let MAX_ZOOM: CGFloat = 4.0
 	
+	// MARK: - - Variables -
 	fileprivate var _story: NVStory = NVStory()
 	fileprivate var _openedFile: URL?
+	
+	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
 	
-	
+	// MARK: - - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		_story = NVStory()
 	}
 	
+	// MARK: - - Functions called from window -
 	func onNew() {
 		let saveAlertResult = alertSave(message: "Save Before New?", info: "Making a new Story will lose any unsaved changes.  Do you want to save first?")
 		switch saveAlertResult {
@@ -145,7 +149,7 @@ class MainViewController: NSViewController {
 		_storyName.stringValue = ""
 	}
 	
-	// MARK: - - Helpers -
+	// MARK: - - Alerts -
 	fileprivate func alertError(message: String, info: String) {
 		let alert = NSAlert()
 		alert.messageText = message
@@ -171,6 +175,8 @@ class MainViewController: NSViewController {
 			return .cancel
 		}
 	}
+	
+	// MARK: - - Story Helpers -
 	fileprivate func saveStory() -> Bool {
 		if _openedFile == nil {
 			let sfd = NSSavePanel()
@@ -212,6 +218,8 @@ class MainViewController: NSViewController {
 		// create a new story
 		_story = NVStory()
 	}
+	
+	// MARK: - - TabView Functions -
 	fileprivate func addNewTab(forGraph: NVGraph) {
 		let tabViewItem = NSTabViewItem()
 		tabViewItem.label = forGraph.Name
@@ -238,6 +246,13 @@ class MainViewController: NSViewController {
 		_tabView.addTabViewItem(tabViewItem)
 	}
 	
+	fileprivate func getActiveGraph() -> GraphView? {
+		// NOTE: This is fugly as hell but it is functional based on the setup I have.  If that changes, this will have to also.
+		let graph = ((_tabView.selectedTabViewItem?.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)
+		return graph
+	}
+	
+	// MARK: - - Interface Buttons -
 	@IBAction func onAddGraph(_ sender: NSButton) {
 		let graph = _story.makeGraph(name: NSUUID().uuidString)
 		do { try _story.add(graph: graph) } catch {
@@ -254,12 +269,5 @@ class MainViewController: NSViewController {
 	@IBAction func onRedo(_ sender: NSButton) {
 		getActiveGraph()?.redo()
 	}
-	
-	fileprivate func getActiveGraph() -> GraphView? {
-		// NOTE: This is fugly as hell but it is functional based on the setup I have.  If that changes, this will have to also.
-		let graph = ((_tabView.selectedTabViewItem?.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)
-		return graph
-	}
-	
 }
 
