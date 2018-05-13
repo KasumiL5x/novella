@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -689,6 +690,82 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="12E012E0-D885-4C7A-8FDE-D7872ECC04DC" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="3Fv-VZ-4Be">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="IoK-NT-XCw"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ZnF-5M-B5E"/>
+                                <toolbarItem implicitItemIdentifier="93086EE6-4A3A-4135-B87B-92C0B1EC007C" label="New" paletteLabel="New" id="yAs-BL-6Ic">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="82" height="32"/>
+                                    <size key="maxSize" width="82" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="AFM-bh-V9M" userLabel="Button">
+                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="New" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DoV-Pj-ag1">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarNew:" target="B8D-0N-5wS" id="ZdT-aM-LJU"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="EB6E7DD0-1505-4BE6-9D42-320327DF2609" label="Open" paletteLabel="Open" id="8Ar-IQ-E2T">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="82" height="32"/>
+                                    <size key="maxSize" width="82" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="yKP-rv-IHN" userLabel="Button">
+                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dy0-ab-pfT">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarOpen:" target="B8D-0N-5wS" id="WNS-Vw-6z1"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="C03CF843-D93D-4286-9558-E608603DE869" label="Save" paletteLabel="Save" id="jRt-y2-Trn">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="82" height="32"/>
+                                    <size key="maxSize" width="82" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="3tk-6L-knR" userLabel="Button">
+                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IUB-rk-sXt">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarSave:" target="B8D-0N-5wS" id="Cx2-oa-IJF"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="3B117741-72D2-4518-AB6F-FDA775FAA0E3" label="Close" paletteLabel="Close" id="4IA-Hw-nMU">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="82" height="32"/>
+                                    <size key="maxSize" width="82" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="Ilb-hH-Mhd">
+                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sju-Ic-sMO">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarClose:" target="B8D-0N-5wS" id="Jij-Pz-hhe"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="yAs-BL-6Ic"/>
+                                <toolbarItem reference="8Ar-IQ-E2T"/>
+                                <toolbarItem reference="jRt-y2-Trn"/>
+                                <toolbarItem reference="4IA-Hw-nMU"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -704,95 +781,122 @@
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" userLabel="Main View Controller" customClass="ViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" userLabel="Main View Controller" customClass="MainViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="t5V-ki-yZp" userLabel="TestEmbedView">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
-                                <connections>
-                                    <segue destination="I9m-U4-JPY" kind="embed" id="fh8-xl-ezy"/>
-                                </connections>
-                            </containerView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="lAI-62-NHd" userLabel="Header">
+                                <rect key="frame" x="0.0" y="665" width="1000" height="35"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
+                                        <rect key="frame" x="18" y="6" width="68" height="24"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Untitled" id="KTj-OS-o4p">
+                                            <font key="font" metaFont="systemThin" size="20"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eJg-1b-Gs4" secondAttribute="trailing" constant="20" symbolic="YES" id="11y-Oz-gNN"/>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="SSb-i1-UEY"/>
+                                    <constraint firstAttribute="height" constant="35" id="Wx1-Ec-wQJ"/>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="hLH-76-mcK"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Fw-GNM" userLabel="Footer">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="35"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kTQ-zk-6WD">
+                                        <rect key="frame" x="937" y="0.0" width="49" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6Br-Ly-KWL">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onRedo:" target="XfG-lQ-9wD" id="Umf-jX-AqH"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQa-hL-Ngk">
+                                        <rect key="frame" x="888" y="0.0" width="49" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hCi-5D-xUU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onUndo:" target="XfG-lQ-9wD" id="zfQ-sN-0bf"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tq-XK-EPs">
+                                        <rect key="frame" x="783" y="0.0" width="105" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Add Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QLv-Jj-n72">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onAddGraph:" target="XfG-lQ-9wD" id="CW6-am-Xi1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Q13-ba-BAO"/>
+                                </constraints>
+                            </customView>
+                            <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgM-Cu-kjf">
+                                <rect key="frame" x="0.0" y="35" width="1000" height="630"/>
+                                <subviews>
+                                    <customView fixedFrame="YES" id="2eW-Ki-Lug" userLabel="Left">
+                                        <rect key="frame" x="0.0" y="0.0" width="206" height="630"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </customView>
+                                    <customView id="XDB-4Q-yfT" userLabel="Right">
+                                        <rect key="frame" x="207" y="0.0" width="793" height="630"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <tabView type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="Hr9-R1-huE" userLabel="TabView">
+                                                <rect key="frame" x="-7" y="-6" width="807" height="640"/>
+                                                <font key="font" metaFont="system"/>
+                                            </tabView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Hr9-R1-huE" firstAttribute="leading" secondItem="XDB-4Q-yfT" secondAttribute="leading" id="IKC-lt-HTK"/>
+                                            <constraint firstAttribute="bottom" secondItem="Hr9-R1-huE" secondAttribute="bottom" id="IOK-Cc-oBa"/>
+                                            <constraint firstItem="Hr9-R1-huE" firstAttribute="top" secondItem="XDB-4Q-yfT" secondAttribute="top" id="YgL-Ab-b2W"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hr9-R1-huE" secondAttribute="trailing" id="zBW-UJ-im2"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <holdingPriorities>
+                                    <real value="250"/>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                            </splitView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="t5V-ki-yZp" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="FeR-9w-mDQ"/>
-                            <constraint firstAttribute="bottom" secondItem="t5V-ki-yZp" secondAttribute="bottom" id="G2z-fO-OcP"/>
-                            <constraint firstItem="t5V-ki-yZp" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="YFk-FV-ebR"/>
-                            <constraint firstAttribute="trailing" secondItem="t5V-ki-yZp" secondAttribute="trailing" id="fLE-1y-IJY"/>
+                            <constraint firstItem="lAI-62-NHd" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="2Jp-qn-BGF"/>
+                            <constraint firstItem="mgM-Cu-kjf" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="bottom" id="462-yM-86b"/>
+                            <constraint firstAttribute="trailing" secondItem="lAI-62-NHd" secondAttribute="trailing" id="8bj-Kb-5MO"/>
+                            <constraint firstItem="aTZ-Fw-GNM" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Eax-An-ny6"/>
+                            <constraint firstItem="aTZ-Fw-GNM" firstAttribute="top" secondItem="mgM-Cu-kjf" secondAttribute="bottom" id="Ecv-bN-qB3"/>
+                            <constraint firstAttribute="trailing" secondItem="aTZ-Fw-GNM" secondAttribute="trailing" id="MRc-X3-LN3"/>
+                            <constraint firstItem="lAI-62-NHd" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ms6-8U-X9H"/>
+                            <constraint firstItem="mgM-Cu-kjf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Y5T-eg-ft5"/>
+                            <constraint firstAttribute="bottom" secondItem="aTZ-Fw-GNM" secondAttribute="bottom" id="q1o-XY-ef4"/>
+                            <constraint firstAttribute="trailing" secondItem="mgM-Cu-kjf" secondAttribute="trailing" id="xar-DD-1Xa"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_storyName" destination="eJg-1b-Gs4" id="Pf1-eP-wR8"/>
+                        <outlet property="_tabView" destination="Hr9-R1-huE" id="0we-Xx-H65"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="907"/>
-        </scene>
-        <!--Graph-->
-        <scene sceneID="tH3-7w-mpe">
-            <objects>
-                <controllerPlaceholder storyboardName="Graph" referencedIdentifier="Graph" id="0dD-nv-O6X" sceneMemberID="viewController"/>
-                <customObject id="VFm-jf-Q1L" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1298" y="907"/>
-        </scene>
-        <!--Reader-->
-        <scene sceneID="EQE-hI-YQv">
-            <objects>
-                <controllerPlaceholder storyboardName="Reader" referencedIdentifier="Reader" id="ebd-5j-XWq" sceneMemberID="viewController"/>
-                <customObject id="Vug-Ct-fQC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1301" y="991"/>
-        </scene>
-        <!--Tab View Controller-->
-        <scene sceneID="EcT-TQ-Dq0">
-            <objects>
-                <tabViewController selectedTabViewItemIndex="0" tabStyle="bottom" id="I9m-U4-JPY" sceneMemberID="viewController">
-                    <tabViewItems>
-                        <tabViewItem id="ZVl-rG-i5O"/>
-                        <tabViewItem id="cqj-Eu-Atb"/>
-                    </tabViewItems>
-                    <tabView key="tabView" type="noTabsNoBorder" id="6QT-Jj-Uvl">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <font key="font" metaFont="message"/>
-                        <connections>
-                            <outlet property="delegate" destination="I9m-U4-JPY" id="x3O-qq-GV4"/>
-                        </connections>
-                    </tabView>
-                    <connections>
-                        <outlet property="tabView" destination="6QT-Jj-Uvl" id="TsV-Qu-9z5"/>
-                        <segue destination="0dD-nv-O6X" kind="relationship" relationship="tabItems" id="yBY-3J-38P"/>
-                        <segue destination="ebd-5j-XWq" kind="relationship" relationship="tabItems" id="1IR-dT-wsy"/>
-                    </connections>
-                </tabViewController>
-                <customObject id="apB-jo-vdr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="924" y="907"/>
-        </scene>
-        <!--VariableFolderTest-->
-        <scene sceneID="BcC-zH-bTK">
-            <objects>
-                <controllerPlaceholder storyboardName="Tests" referencedIdentifier="VariableFolderTest" id="0tw-xp-Qoj" sceneMemberID="viewController"/>
-                <customObject id="1cF-I6-lIL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1069" y="1220"/>
-        </scene>
-        <!--StoryTest-->
-        <scene sceneID="Ju4-wI-4dI">
-            <objects>
-                <controllerPlaceholder storyboardName="Tests" referencedIdentifier="StoryTest" id="Cz0-Jb-cuJ" sceneMemberID="viewController"/>
-                <customObject id="V6y-eF-ICz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1070" y="1169"/>
-        </scene>
-        <!--JSONTest-->
-        <scene sceneID="Ns1-H0-7cH">
-            <objects>
-                <controllerPlaceholder storyboardName="Tests" referencedIdentifier="JSONTest" id="jV0-lu-Scv" sceneMemberID="viewController"/>
-                <customObject id="9i2-8g-cFg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1069" y="1126"/>
         </scene>
     </scenes>
 </document>

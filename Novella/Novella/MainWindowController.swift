@@ -12,7 +12,28 @@ class MainWindowController: NSWindowController {
 	override func windowDidLoad() {
 		super.windowDidLoad()
 		
-		// make sure the window is allowed to accept mouse moved events
-//		window!.acceptsMouseMovedEvents = true
+		// style toolbar and window
+		window?.styleMask.remove(.unifiedTitleAndToolbar)
+		window?.styleMask.remove(.fullSizeContentView)
+		window?.styleMask.insert(.titled)
+		window?.toolbar?.isVisible = true
+		window?.titleVisibility = .hidden
+		window?.titlebarAppearsTransparent = false
+	}
+	
+	@IBAction func onToolbarNew(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.onNew()
+	}
+	
+	@IBAction func onToolbarOpen(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.onOpen()
+	}
+	
+	@IBAction func onToolbarSave(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.onSave()
+	}
+	
+	@IBAction func onToolbarClose(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.onClose()
 	}
 }

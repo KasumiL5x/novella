@@ -9,11 +9,7 @@
 import Cocoa
 import NovellaModel
 
-enum SaveAlertResult {
-	case save
-	case dontsave
-	case cancel
-}
+
 
 class GraphViewController: NSViewController {
 	// MARK: - - Constants -

@@ -1,0 +1,152 @@
+{
+  "folders" : [
+
+  ],
+  "variables" : [
+
+  ],
+  "links" : [
+    {
+      "linktype" : "link",
+      "origin" : "64135863-B812-4379-83AA-6C18730D57A0",
+      "uuid" : "DA9E05E9-BCBE-4E9D-81C8-A566FBE0FCEF",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "90032407-2DBA-4430-B1B1-FDFDBA42CFE1"
+      }
+    },
+    {
+      "linktype" : "branch",
+      "origin" : "28C763AB-EB59-46D7-9156-3757654B8370",
+      "uuid" : "4E0CA44F-8073-4B5E-9DD0-BB8CCEE07E07",
+      "condition" : {
+        "jscode" : ""
+      },
+      "ftransfer" : {
+        "destination" : "C628F159-EFCE-47B0-8404-B324CC054A19"
+      },
+      "ttransfer" : {
+        "destination" : "6B150F29-7D92-4B68-87DE-86E7BDE74DDF"
+      }
+    }
+  ],
+  "story" : {
+    "graphs" : [
+      "743DFD9F-9634-4FB0-9852-25375AA29882",
+      "BD580636-E0CD-4AA1-8933-88AC235DD9EC"
+    ],
+    "name" : "",
+    "folders" : [
+
+    ]
+  },
+  "nodes" : [
+    {
+      "position" : {
+        "y" : 240.9921875,
+        "x" : 162.66015625
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "64135863-B812-4379-83AA-6C18730D57A0"
+    },
+    {
+      "position" : {
+        "y" : 247.671875,
+        "x" : 349.55078125
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "90032407-2DBA-4430-B1B1-FDFDBA42CFE1"
+    },
+    {
+      "position" : {
+        "y" : 300.58984375,
+        "x" : 213.671875
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "28C763AB-EB59-46D7-9156-3757654B8370"
+    },
+    {
+      "position" : {
+        "y" : 303.703125,
+        "x" : 455.42578125
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "6B150F29-7D92-4B68-87DE-86E7BDE74DDF"
+    },
+    {
+      "position" : {
+        "y" : 224.2578125,
+        "x" : 479.2890625
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "C628F159-EFCE-47B0-8404-B324CC054A19"
+    }
+  ],
+  "graphs" : [
+    {
+      "name" : "F4DAA9B7-18C2-4261-962D-E8F1A07D5EBF",
+      "nodes" : [
+        "64135863-B812-4379-83AA-6C18730D57A0",
+        "90032407-2DBA-4430-B1B1-FDFDBA42CFE1"
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "743DFD9F-9634-4FB0-9852-25375AA29882",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "name" : "1B73731A-310B-4F97-8E12-D8FB8E4C9326",
+      "nodes" : [
+        "28C763AB-EB59-46D7-9156-3757654B8370",
+        "6B150F29-7D92-4B68-87DE-86E7BDE74DDF",
+        "C628F159-EFCE-47B0-8404-B324CC054A19"
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "BD580636-E0CD-4AA1-8933-88AC235DD9EC",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ]
+}
