@@ -293,14 +293,58 @@ class MainViewController: NSViewController {
 // MARK: - - Story Browser -
 extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		
+		if let asFolder = item as? NVFolder {
+			return asFolder.Folders.count + asFolder.Variables.count
+		}
+		
+		if let asString = item as? String {
+			if asString == _browserTopLevel[0] {
+				return _story.Graphs.count
+			}
+			if asString == _browserTopLevel[1] {
+				return _story.Folders.count
+			}
+		}
+		
 		return _browserTopLevel.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		if let asFolder = item as? NVFolder {
+			if index < asFolder.Folders.count {
+				return asFolder.Folders[index]
+			}
+			return asFolder.Variables[index - asFolder.Folders.count]
+		}
+		
+		if let asString = item as? String {
+			if asString == _browserTopLevel[0] {
+				return _story.Graphs[index]
+			}
+			if asString == _browserTopLevel[1] {
+				return _story.Folders[index]
+			}
+		}
+		
 		return _browserTopLevel[index]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		
+		if let asFolder = item as? NVFolder {
+			return (asFolder.Folders.count + asFolder.Variables.count) > 0
+		}
+		
+		if let asString = item as? String {
+			if asString == _browserTopLevel[0] {
+				return _story.Graphs.count > 0
+			}
+			if asString == _browserTopLevel[1] {
+				return _story.Folders.count > 0
+			}
+		}
+		
 		return false
 	}
 	
@@ -311,6 +355,18 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		
 		if item is String {
 			name = item as! String
+		}
+		
+		if let asFolder = item as? NVFolder {
+			name = asFolder.Name
+		}
+		
+		if let asVariable = item as? NVVariable {
+			name = asVariable.Name
+		}
+		
+		if let asGraph = item as? NVGraph {
+			name = asGraph.Name
 		}
 		
 		if tableColumn?.identifier.rawValue == "NameCell" {
