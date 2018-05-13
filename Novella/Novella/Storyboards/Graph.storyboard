@@ -8,7 +8,7 @@
         <!--Graph-->
         <scene sceneID="z5a-5k-fnC">
             <objects>
-                <viewController storyboardIdentifier="Graph" id="dTP-CE-y8M" userLabel="Graph" customClass="GraphViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="GraphView" storyboardIdentifier="Graph" id="dTP-CE-y8M" userLabel="Graph" customClass="GraphViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="keR-Yr-AB3">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -712,7 +712,7 @@
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="t5V-ki-yZp" userLabel="TestEmbedView">
                                 <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                                 <connections>
-                                    <segue destination="0dD-nv-O6X" kind="embed" id="BxK-nG-uyR"/>
+                                    <segue destination="I9m-U4-JPY" kind="embed" id="fh8-xl-ezy"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -734,7 +734,7 @@
                 <controllerPlaceholder storyboardName="Graph" referencedIdentifier="Graph" id="0dD-nv-O6X" sceneMemberID="viewController"/>
                 <customObject id="VFm-jf-Q1L" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76" y="1391"/>
+            <point key="canvasLocation" x="1298" y="907"/>
         </scene>
         <!--Reader-->
         <scene sceneID="EQE-hI-YQv">
@@ -749,7 +749,7 @@
             <objects>
                 <tabViewController selectedTabViewItemIndex="0" tabStyle="bottom" id="I9m-U4-JPY" sceneMemberID="viewController">
                     <tabViewItems>
-                        <tabViewItem id="vGW-gS-vOI"/>
+                        <tabViewItem id="ZVl-rG-i5O"/>
                         <tabViewItem id="cqj-Eu-Atb"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="6QT-Jj-Uvl">
@@ -762,7 +762,7 @@
                     </tabView>
                     <connections>
                         <outlet property="tabView" destination="6QT-Jj-Uvl" id="TsV-Qu-9z5"/>
-                        <segue destination="RQk-0B-LUE" kind="relationship" relationship="tabItems" id="J4j-Yo-4WR"/>
+                        <segue destination="0dD-nv-O6X" kind="relationship" relationship="tabItems" id="yBY-3J-38P"/>
                         <segue destination="ebd-5j-XWq" kind="relationship" relationship="tabItems" id="1IR-dT-wsy"/>
                     </connections>
                 </tabViewController>
@@ -776,7 +776,7 @@
                 <controllerPlaceholder storyboardName="Tests" referencedIdentifier="VariableFolderTest" id="0tw-xp-Qoj" sceneMemberID="viewController"/>
                 <customObject id="1cF-I6-lIL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="822" y="1126"/>
+            <point key="canvasLocation" x="1069" y="1220"/>
         </scene>
         <!--StoryTest-->
         <scene sceneID="Ju4-wI-4dI">
@@ -784,7 +784,7 @@
                 <controllerPlaceholder storyboardName="Tests" referencedIdentifier="StoryTest" id="Cz0-Jb-cuJ" sceneMemberID="viewController"/>
                 <customObject id="V6y-eF-ICz" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="965" y="1126"/>
+            <point key="canvasLocation" x="1070" y="1169"/>
         </scene>
         <!--JSONTest-->
         <scene sceneID="Ns1-H0-7cH">
@@ -793,14 +793,6 @@
                 <customObject id="9i2-8g-cFg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1069" y="1126"/>
-        </scene>
-        <!--Writer-->
-        <scene sceneID="P5c-K4-ksX">
-            <objects>
-                <controllerPlaceholder storyboardName="Writer" referencedIdentifier="Writer" id="RQk-0B-LUE" sceneMemberID="viewController"/>
-                <customObject id="MSe-8S-ayR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1301" y="823"/>
         </scene>
     </scenes>
 </document>
