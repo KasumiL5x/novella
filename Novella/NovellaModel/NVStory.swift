@@ -136,6 +136,20 @@ extension NVStory {
 		return _allIdentifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
 	
+	public func getNameOf(linkable: NVLinkable?) -> String {
+		if linkable == nil {
+			return ""
+		}
+		
+		if let asNode = linkable as? NVNode {
+			return asNode.Name
+		}
+		if let asGraph = linkable as? NVGraph {
+			return asGraph.Name
+		}
+		return "nameless"
+	}
+	
 	@discardableResult
 	public func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
 		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)

@@ -299,7 +299,8 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		
 		if let asGraph = item as? NVGraph {
 			return (asGraph.Graphs.count +
-			        asGraph.Nodes.count)
+			        asGraph.Nodes.count +
+							asGraph.Links.count)
 		}
 		
 		if let asString = item as? String {
@@ -333,6 +334,11 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 			}
 			offset += asGraph.Nodes.count
 			
+			if index < (offset + asGraph.Links.count) {
+				return asGraph.Links[index - offset]
+			}
+			offset += asGraph.Links.count
+			
 			return "umm?"
 		}
 		
@@ -355,7 +361,8 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		
 		if let asGraph = item as? NVGraph {
 			return (asGraph.Graphs.count +
-				      asGraph.Nodes.count) > 0
+				      asGraph.Nodes.count +
+				      asGraph.Links.count) > 0
 		}
 		
 		if let asString = item as? String {
@@ -393,6 +400,19 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		
 		if let asDialog = item as? NVDialog {
 			name = asDialog.Name
+		}
+		
+		if let asLink = item as? NVLink {
+			let from = _story.getNameOf(linkable: asLink.Origin)
+			let to = _story.getNameOf(linkable: asLink.Transfer.Destination)
+			name = "\(from) => \(to)"
+		}
+		
+		if let asBranch = item as? NVBranch {
+			let from = _story.getNameOf(linkable: asBranch.Origin)
+			let toTrue = _story.getNameOf(linkable: asBranch.TrueTransfer.Destination)
+			let toFalse = _story.getNameOf(linkable: asBranch.FalseTransfer.Destination)
+			name = "\(from) => T=\(toTrue); F=\(toFalse)"
 		}
 		
 		if tableColumn?.identifier.rawValue == "NameCell" {
