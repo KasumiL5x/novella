@@ -29,6 +29,9 @@ class GraphView: NSView {
 	fileprivate var _pinDropTarget: LinkableView?
 	fileprivate var _pinDragged: PinView?
 	fileprivate var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
+	// MARK: Node Context Menus
+	fileprivate var _linkableMenu: NSMenu // context menu for linkable widgets
+	fileprivate var _contextClickedLinkable: LinkableView?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
@@ -47,6 +50,9 @@ class GraphView: NSView {
 		//
 		self._lastLinkablePanPos = CGPoint.zero
 		self._pinDropBranchMenu = NSMenu()
+		//
+		self._linkableMenu = NSMenu()
+		self._contextClickedLinkable = nil
 		
 		super.init(frame: frameRect)
 		
@@ -58,6 +64,9 @@ class GraphView: NSView {
 		// configure pin branch menu
 		_pinDropBranchMenu.addItem(withTitle: "True", action: #selector(GraphView.onPinDropBranchTrue), keyEquivalent: "")
 		_pinDropBranchMenu.addItem(withTitle: "False", action: #selector(GraphView.onPinDropBranchFalse), keyEquivalent: "")
+		// configure linkable menu
+		_linkableMenu.addItem(withTitle: "Add Link", action: #selector(GraphView.onLinkableMenuAddLink), keyEquivalent: "")
+		_linkableMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.onLinkableMenuAddBranch), keyEquivalent: "")
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -274,6 +283,30 @@ class GraphView: NSView {
 		}
 	}
 	func onContextLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+		if let event = NSApp.currentEvent {
+			_contextClickedLinkable = node
+			NSMenu.popUpContextMenu(_linkableMenu, with: event, for: node)
+		} else {
+			print("Tried to open a context menu for a linkable but there was no event available to use.")
+		}
+		
+	}
+	// MARK: Linkable Context Menu
+	@objc fileprivate func onLinkableMenuAddLink() {
+		guard let clicked = _contextClickedLinkable else {
+			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
+			return
+		}
+		let nvLink = _nvStory.makeLink(origin: clicked.Linkable)
+		clicked.addOutput(pin: makePinViewLink(baseLink: nvLink, forNode: clicked))
+	}
+	@objc fileprivate func onLinkableMenuAddBranch() {
+		guard let clicked = _contextClickedLinkable else {
+			print("Tried to add a link to a branch via context but _contextClickedLinkable was nil.")
+			return
+		}
+		let nvBranch = _nvStory.makeBranch(origin: clicked.Linkable)
+		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
 	}
 	
 	// MARK: From PinView
