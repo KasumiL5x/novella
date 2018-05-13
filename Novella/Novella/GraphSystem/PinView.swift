@@ -61,6 +61,9 @@ class PinView: NSView {
 	var BaseLink: NVBaseLink {
 		get{ return _nvBaseLink }
 	}
+	var Owner: LinkableView {
+		get{ return _owner }
+	}
 	var IsDragging: Bool {
 		get{ return _isDragging }
 		set{ _isDragging = newValue }

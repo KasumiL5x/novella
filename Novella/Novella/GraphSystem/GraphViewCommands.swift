@@ -28,3 +28,23 @@ class MoveLinkableViewCmd: UndoableCommand {
 		_node.move(to: _from)
 	}
 }
+
+class SetPinLinkDestinationCmd: UndoableCommand {
+	let _pin: PinViewLink
+	let _prevDest: NVLinkable?
+	let _newDest: NVLinkable?
+	
+	init(pin: PinViewLink, destination: NVLinkable?) {
+		self._pin = pin
+		self._prevDest = _pin.getDestination()
+		self._newDest = destination
+	}
+	
+	func execute() {
+		_pin.setDestination(dest: _newDest)
+	}
+	
+	func unexecute() {
+		_pin.setDestination(dest: _prevDest)
+	}
+}

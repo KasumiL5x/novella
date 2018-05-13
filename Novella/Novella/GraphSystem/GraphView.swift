@@ -25,6 +25,8 @@ class GraphView: NSView {
 	var _panGesture: NSPanGestureRecognizer?
 	// MARK: Linkable Function Variables
 	var _lastLinkablePanPos: CGPoint
+	// MARK: Pin Dropping
+	var _pinDropTarget: LinkableView?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
@@ -278,11 +280,43 @@ class GraphView: NSView {
 		case .changed:
 			pin.DragPosition = gesture.location(in: pin)
 			pin.redraw()
+			
+			// figure out which VALID linkable we are hovering - not efficient but it works
+			_pinDropTarget = nil
+			for curr in _allLinkableViews {
+				let pos = gesture.location(in: self) // must be in graph view space as hitTest() is based on superview, which is this
+				let hit = curr.hitTest(pos)
+				
+				// didn't hit, or hit subview (such as a pin)
+				if hit != curr || hit == pin.Owner {
+					curr.unprime() // bit hacky but disables priming if not valid
+					continue
+				}
+				
+				_pinDropTarget = curr
+				curr.prime()
+			}
+			
 			break
 			
 		case .cancelled, .ended:
 			pin.IsDragging = false
 			pin.redraw()
+			
+			// unprime as we're done
+			_pinDropTarget?.unprime()
+			
+			// since _pinDropTarget could be nil, this automatically detaches if dragged onto a non-valid node.
+			// if i want to change that behavior, i'd just have to manually check nil here
+			if let asLink = pin as? PinViewLink {
+				_undoRedo.execute(cmd: SetPinLinkDestinationCmd(pin: asLink, destination: _pinDropTarget?.Linkable))
+			} else
+			if let asBranch = pin as? PinViewBranch {
+				print("todo")
+			} else {
+				print("dropped an unhandled pin type")
+			}
+			
 			break
 			
 		default:
