@@ -27,6 +27,8 @@ class GraphView: NSView {
 	fileprivate var _lastLinkablePanPos: CGPoint
 	// MARK: Pin Dropping
 	fileprivate var _pinDropTarget: LinkableView?
+	fileprivate var _pinDragged: PinView?
+	fileprivate var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
@@ -44,12 +46,18 @@ class GraphView: NSView {
 		self._panGesture = nil
 		//
 		self._lastLinkablePanPos = CGPoint.zero
+		self._pinDropBranchMenu = NSMenu()
 		
 		super.init(frame: frameRect)
 		
+		// configure pan gesture
 		self._panGesture = NSPanGestureRecognizer(target: self, action: #selector(GraphView.onPan))
 		self._panGesture!.buttonMask = 0x1 // "primary button"
 		self.addGestureRecognizer(self._panGesture!)
+		
+		// configure pin branch menu
+		_pinDropBranchMenu.addItem(withTitle: "True", action: #selector(GraphView.onPinDropBranchTrue), keyEquivalent: "")
+		_pinDropBranchMenu.addItem(withTitle: "False", action: #selector(GraphView.onPinDropBranchFalse), keyEquivalent: "")
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -275,6 +283,7 @@ class GraphView: NSView {
 			pin.IsDragging = true
 			pin.DragPosition = gesture.location(in: pin)
 			pin.redraw()
+			_pinDragged = pin
 			break
 			
 		case .changed:
@@ -310,9 +319,16 @@ class GraphView: NSView {
 			// if i want to change that behavior, i'd just have to manually check nil here
 			if let asLink = pin as? PinViewLink {
 				_undoRedo.execute(cmd: SetPinLinkDestinationCmd(pin: asLink, destination: _pinDropTarget?.Linkable))
+				_pinDragged = nil // no longer dragging anything
 			} else
-			if let asBranch = pin as? PinViewBranch {
-				print("todo")
+			if let _ = pin as? PinViewBranch {
+				if let event = NSApp.currentEvent {
+					let forView = _pinDropTarget ?? self
+					NSMenu.popUpContextMenu(_pinDropBranchMenu, with: event, for: forView)
+				} else {
+					print("Tried to open a context menu for dropping a Branch but there was no event available to use.")
+				}
+				
 			} else {
 				print("dropped an unhandled pin type")
 			}
@@ -322,6 +338,33 @@ class GraphView: NSView {
 		default:
 			print("onPanPin found unexpected gesture state.")
 			break
+		}
+	}
+	// MARK: PinView Context Menus
+	@objc fileprivate func onPinDropBranchTrue() {
+		guard let draggedPin = _pinDragged else {
+			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
+			return
+		}
+		// should never happen but just in case
+		if let asBranchPin = draggedPin as? PinViewBranch {
+			_undoRedo.execute(cmd: SetPinBranchDestinationCmd(pin: asBranchPin, destination: _pinDropTarget?.Linkable, forTrue: true))
+			_pinDragged = nil // no longer dragging anything
+		} else {
+			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
+		}
+	}
+	@objc fileprivate func onPinDropBranchFalse() {
+		guard let draggedPin = _pinDragged else {
+			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
+			return
+		}
+		// should never happen but just in case
+		if let asBranchPin = draggedPin as? PinViewBranch {
+			_undoRedo.execute(cmd: SetPinBranchDestinationCmd(pin: asBranchPin, destination: _pinDropTarget?.Linkable, forTrue: false))
+			_pinDragged = nil // no longer dragging anything
+		} else {
+			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
 		}
 	}
 }

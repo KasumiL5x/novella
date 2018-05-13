@@ -10,9 +10,9 @@ import Cocoa
 import NovellaModel
 
 class MoveLinkableViewCmd: UndoableCommand {
-	let _node: LinkableView
-	let _from: CGPoint
-	let _to: CGPoint
+	fileprivate let _node: LinkableView
+	fileprivate let _from: CGPoint
+	fileprivate let _to: CGPoint
 	
 	init(node: LinkableView, from: CGPoint, to: CGPoint) {
 		self._node = node
@@ -30,13 +30,13 @@ class MoveLinkableViewCmd: UndoableCommand {
 }
 
 class SetPinLinkDestinationCmd: UndoableCommand {
-	let _pin: PinViewLink
-	let _prevDest: NVLinkable?
-	let _newDest: NVLinkable?
+	fileprivate let _pin: PinViewLink
+	fileprivate let _prevDest: NVLinkable?
+	fileprivate let _newDest: NVLinkable?
 	
 	init(pin: PinViewLink, destination: NVLinkable?) {
 		self._pin = pin
-		self._prevDest = _pin.getDestination()
+		self._prevDest = pin.getDestination()
 		self._newDest = destination
 	}
 	
@@ -46,5 +46,35 @@ class SetPinLinkDestinationCmd: UndoableCommand {
 	
 	func unexecute() {
 		_pin.setDestination(dest: _prevDest)
+	}
+}
+
+class SetPinBranchDestinationCmd: UndoableCommand {
+	fileprivate let _pin: PinViewBranch
+	fileprivate let _prevDest: NVLinkable?
+	fileprivate let _newDest: NVLinkable?
+	fileprivate let _forTrue: Bool
+	
+	init(pin: PinViewBranch, destination: NVLinkable?, forTrue: Bool) {
+		self._pin = pin
+		self._prevDest = forTrue ? pin.getTrueDestination() : pin.getFalseDestination()
+		self._newDest = destination
+		self._forTrue = forTrue
+	}
+	
+	func execute() {
+		if _forTrue {
+			_pin.setTrueDestination(dest: _newDest)
+		} else {
+			_pin.setFalseDestination(dest: _newDest)
+		}
+	}
+	
+	func unexecute() {
+		if _forTrue {
+			_pin.setTrueDestination(dest: _prevDest)
+		} else {
+			_pin.setFalseDestination(dest: _prevDest)
+		}
 	}
 }
