@@ -104,6 +104,16 @@ class GraphView: NSView {
 		// add marquee view (must be last; others add after it)
 		self.addSubview(_marquee)
 		
+		// remove selection
+		selectNodes([], append: false)
+		
+		// reset some other things
+		_lastLinkablePanPos = CGPoint.zero
+		_pinDropTarget = nil
+		_pinDragged = nil
+		_contextClickedLinkable = nil
+		_lastContextLocation = CGPoint.zero
+		
 		// clear undo/redo
 		_undoRedo.clear()
 		
