@@ -19,14 +19,14 @@ class GraphView: NSView {
 	fileprivate var _allLinkableViews: [LinkableView]
 	fileprivate var _allPinViews: [PinView]
 	// MARK: Selection
-	var _marquee: MarqueeView
-	var _selectedNodes: [LinkableView]
+	fileprivate var _marquee: MarqueeView
+	fileprivate var _selectedNodes: [LinkableView]
 	// MARK: Gestures
-	var _panGesture: NSPanGestureRecognizer?
+	fileprivate var _panGesture: NSPanGestureRecognizer?
 	// MARK: Linkable Function Variables
-	var _lastLinkablePanPos: CGPoint
+	fileprivate var _lastLinkablePanPos: CGPoint
 	// MARK: Pin Dropping
-	var _pinDropTarget: LinkableView?
+	fileprivate var _pinDropTarget: LinkableView?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
