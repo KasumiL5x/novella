@@ -23,15 +23,19 @@ class GraphView: NSView {
 	fileprivate var _selectedNodes: [LinkableView]
 	// MARK: Gestures
 	fileprivate var _panGesture: NSPanGestureRecognizer?
+	fileprivate var _contextGesture: NSClickGestureRecognizer?
 	// MARK: Linkable Function Variables
 	fileprivate var _lastLinkablePanPos: CGPoint
 	// MARK: Pin Dropping
 	fileprivate var _pinDropTarget: LinkableView?
 	fileprivate var _pinDragged: PinView?
 	fileprivate var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
-	// MARK: Node Context Menus
+	// MARK: Node Context Menu
 	fileprivate var _linkableMenu: NSMenu // context menu for linkable widgets
 	fileprivate var _contextClickedLinkable: LinkableView?
+	// MARK: GraphView Context Menu
+	fileprivate var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
+	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
@@ -47,12 +51,16 @@ class GraphView: NSView {
 		self._selectedNodes = []
 		//
 		self._panGesture = nil
+		self._contextGesture = nil
 		//
 		self._lastLinkablePanPos = CGPoint.zero
 		self._pinDropBranchMenu = NSMenu()
 		//
 		self._linkableMenu = NSMenu()
 		self._contextClickedLinkable = nil
+		//
+		self._graphViewMenu = NSMenu()
+		self._lastContextLocation = CGPoint.zero
 		
 		super.init(frame: frameRect)
 		
@@ -60,6 +68,11 @@ class GraphView: NSView {
 		self._panGesture = NSPanGestureRecognizer(target: self, action: #selector(GraphView.onPan))
 		self._panGesture!.buttonMask = 0x1 // "primary button"
 		self.addGestureRecognizer(self._panGesture!)
+		// configure context gesture
+		self._contextGesture = NSClickGestureRecognizer(target: self, action: #selector(GraphView.onContextClick))
+		self._contextGesture!.buttonMask = 0x2 // "secondary button"
+		self._contextGesture!.numberOfClicksRequired = 1
+		self.addGestureRecognizer(self._contextGesture!)
 		
 		// configure pin branch menu
 		_pinDropBranchMenu.addItem(withTitle: "True", action: #selector(GraphView.onPinDropBranchTrue), keyEquivalent: "")
@@ -67,6 +80,13 @@ class GraphView: NSView {
 		// configure linkable menu
 		_linkableMenu.addItem(withTitle: "Add Link", action: #selector(GraphView.onLinkableMenuAddLink), keyEquivalent: "")
 		_linkableMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.onLinkableMenuAddBranch), keyEquivalent: "")
+		// configure graphview menu
+		let addSubMenu = NSMenu()
+		addSubMenu.addItem(withTitle: "Dialog", action: #selector(GraphView.onGraphViewMenuAddDialog), keyEquivalent: "")
+		let addMenu = NSMenuItem()
+		addMenu.title = "Add..."
+		addMenu.submenu = addSubMenu
+		_graphViewMenu.addItem(addMenu)
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -180,6 +200,14 @@ class GraphView: NSView {
 		default:
 			print("In unexpected pan state.")
 			break
+		}
+	}
+	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
+		if let event = NSApp.currentEvent {
+			_lastContextLocation = gesture.location(in: self)
+			NSMenu.popUpContextMenu(_graphViewMenu, with: event, for: self)
+		} else {
+			print("Tried to open a context menu for the graph view but there was no event available to use.")
 		}
 	}
 	
@@ -400,10 +428,35 @@ class GraphView: NSView {
 			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
 		}
 	}
+	
+	// MARK: GraphView Context Menu
+	@objc fileprivate func onGraphViewMenuAddDialog() {
+		// make the actual dialog node
+		let nvDialog = _nvStory.makeDialog()
+		// add it to this graph
+		do { try _nvGraph.add(node: nvDialog) } catch {
+			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
+			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
+		}
+		let dlgView = makeDialogView(nvDialog: nvDialog)
+		var pos = _lastContextLocation
+		pos.x -= dlgView.frame.width/2
+		pos.y -= dlgView.frame.height/2
+		dlgView.move(to: pos)
+	}
 }
 
 // MARK: - - Creation -
 extension GraphView {
+	// MARK: LinkableViews
+	@discardableResult
+	func makeDialogView(nvDialog: NVDialog) -> DialogView {
+		let node = DialogView(node: nvDialog, graphView: self)
+		_allLinkableViews.append(node)
+		self.addSubview(node, positioned: .below, relativeTo: _marquee)
+		return node
+	}
+	
 	// MARK: PinViews
 	func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
