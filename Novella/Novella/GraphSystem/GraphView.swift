@@ -390,6 +390,10 @@ extension GraphView {
 			return
 		}
 		let nvLink = _nvStory.makeLink(origin: clicked.Linkable)
+		// add it to this graph
+		do { try _nvGraph.add(link: nvLink) } catch {
+			fatalError("Tried to add a new link but couldn't add it to this graph.")
+		}
 		clicked.addOutput(pin: makePinViewLink(baseLink: nvLink, forNode: clicked))
 	}
 	@objc fileprivate func onLinkableMenuAddBranch() {
@@ -398,6 +402,10 @@ extension GraphView {
 			return
 		}
 		let nvBranch = _nvStory.makeBranch(origin: clicked.Linkable)
+		// add it to this graph
+		do{ try _nvGraph.add(link: nvBranch) } catch {
+			fatalError("Tried to add a new branch but couldn't add it to this graph.")
+		}
 		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
 	}
 	

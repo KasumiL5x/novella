@@ -7,35 +7,35 @@
   ],
   "links" : [
     {
-      "linktype" : "link",
-      "origin" : "64135863-B812-4379-83AA-6C18730D57A0",
-      "uuid" : "DA9E05E9-BCBE-4E9D-81C8-A566FBE0FCEF",
-      "condition" : {
-        "jscode" : ""
-      },
-      "transfer" : {
-        "destination" : "90032407-2DBA-4430-B1B1-FDFDBA42CFE1"
-      }
-    },
-    {
       "linktype" : "branch",
-      "origin" : "28C763AB-EB59-46D7-9156-3757654B8370",
-      "uuid" : "4E0CA44F-8073-4B5E-9DD0-BB8CCEE07E07",
+      "origin" : "D454552F-066A-491C-BAC3-A6AB92084DA4",
+      "uuid" : "638F8A4A-2D59-4B4E-8D6B-581486FEDB15",
       "condition" : {
         "jscode" : ""
       },
       "ftransfer" : {
-        "destination" : "C628F159-EFCE-47B0-8404-B324CC054A19"
+        "destination" : "D78ACFFA-7722-4296-9C1D-8CC45B7AD6F5"
       },
       "ttransfer" : {
-        "destination" : "6B150F29-7D92-4B68-87DE-86E7BDE74DDF"
+        "destination" : "37BBF94C-2A12-4D35-879B-F9CD4192A652"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "6540FDFF-94AB-42C5-97E8-F66CDE7662B2",
+      "uuid" : "A5A98013-2F71-4327-869A-F17197039B09",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "3DC75211-79C3-4EA0-AED9-EC85A00C7640"
       }
     }
   ],
   "story" : {
     "graphs" : [
-      "743DFD9F-9634-4FB0-9852-25375AA29882",
-      "BD580636-E0CD-4AA1-8933-88AC235DD9EC"
+      "B457CC69-3CE8-47DF-B3A8-B173EA52F614",
+      "530351D0-A587-46D4-8AF9-4BE9153B9022"
     ],
     "name" : "",
     "folders" : [
@@ -45,77 +45,78 @@
   "nodes" : [
     {
       "position" : {
-        "y" : 240.9921875,
-        "x" : 162.66015625
+        "y" : 285.91015625,
+        "x" : 203.29296875
       },
       "name" : "",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
       "preview" : "",
-      "uuid" : "64135863-B812-4379-83AA-6C18730D57A0"
+      "uuid" : "D454552F-066A-491C-BAC3-A6AB92084DA4"
     },
     {
       "position" : {
-        "y" : 247.671875,
-        "x" : 349.55078125
+        "y" : 349.4765625,
+        "x" : 368.44921875
       },
       "name" : "",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
       "preview" : "",
-      "uuid" : "90032407-2DBA-4430-B1B1-FDFDBA42CFE1"
+      "uuid" : "37BBF94C-2A12-4D35-879B-F9CD4192A652"
     },
     {
       "position" : {
-        "y" : 300.58984375,
-        "x" : 213.671875
+        "y" : 227.9375,
+        "x" : 366.0625
       },
       "name" : "",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
       "preview" : "",
-      "uuid" : "28C763AB-EB59-46D7-9156-3757654B8370"
+      "uuid" : "D78ACFFA-7722-4296-9C1D-8CC45B7AD6F5"
     },
     {
       "position" : {
-        "y" : 303.703125,
-        "x" : 455.42578125
+        "y" : 338.17578125,
+        "x" : 115.77734375
       },
       "name" : "",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
       "preview" : "",
-      "uuid" : "6B150F29-7D92-4B68-87DE-86E7BDE74DDF"
+      "uuid" : "6540FDFF-94AB-42C5-97E8-F66CDE7662B2"
     },
     {
       "position" : {
-        "y" : 224.2578125,
-        "x" : 479.2890625
+        "y" : 304.0546875,
+        "x" : 385.91796875
       },
       "name" : "",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
       "preview" : "",
-      "uuid" : "C628F159-EFCE-47B0-8404-B324CC054A19"
+      "uuid" : "3DC75211-79C3-4EA0-AED9-EC85A00C7640"
     }
   ],
   "graphs" : [
     {
-      "name" : "F4DAA9B7-18C2-4261-962D-E8F1A07D5EBF",
+      "name" : "B061E727-C0B7-4CD3-A314-4C64FB6D74AD",
       "nodes" : [
-        "64135863-B812-4379-83AA-6C18730D57A0",
-        "90032407-2DBA-4430-B1B1-FDFDBA42CFE1"
+        "D454552F-066A-491C-BAC3-A6AB92084DA4",
+        "37BBF94C-2A12-4D35-879B-F9CD4192A652",
+        "D78ACFFA-7722-4296-9C1D-8CC45B7AD6F5"
       ],
       "links" : [
-
+        "638F8A4A-2D59-4B4E-8D6B-581486FEDB15"
       ],
       "entry" : "",
-      "uuid" : "743DFD9F-9634-4FB0-9852-25375AA29882",
+      "uuid" : "B457CC69-3CE8-47DF-B3A8-B173EA52F614",
       "subgraphs" : [
 
       ],
@@ -127,17 +128,16 @@
       ]
     },
     {
-      "name" : "1B73731A-310B-4F97-8E12-D8FB8E4C9326",
+      "name" : "39665628-AD9B-4CEC-97C0-E1233CE1647D",
       "nodes" : [
-        "28C763AB-EB59-46D7-9156-3757654B8370",
-        "6B150F29-7D92-4B68-87DE-86E7BDE74DDF",
-        "C628F159-EFCE-47B0-8404-B324CC054A19"
+        "6540FDFF-94AB-42C5-97E8-F66CDE7662B2",
+        "3DC75211-79C3-4EA0-AED9-EC85A00C7640"
       ],
       "links" : [
-
+        "A5A98013-2F71-4327-869A-F17197039B09"
       ],
       "entry" : "",
-      "uuid" : "BD580636-E0CD-4AA1-8933-88AC235DD9EC",
+      "uuid" : "530351D0-A587-46D4-8AF9-4BE9153B9022",
       "subgraphs" : [
 
       ],
