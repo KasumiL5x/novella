@@ -450,7 +450,7 @@ class GraphView: NSView {
 extension GraphView {
 	// MARK: LinkableViews
 	@discardableResult
-	func makeDialogView(nvDialog: NVDialog) -> DialogView {
+	fileprivate func makeDialogView(nvDialog: NVDialog) -> DialogView {
 		let node = DialogView(node: nvDialog, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
@@ -458,12 +458,12 @@ extension GraphView {
 	}
 	
 	// MARK: PinViews
-	func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
+	fileprivate func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		return pin
 	}
-	func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
+	fileprivate func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
 		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		return pin
