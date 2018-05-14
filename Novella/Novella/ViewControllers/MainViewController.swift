@@ -262,21 +262,35 @@ class MainViewController: NSViewController {
 		_tabView.addTabViewItem(tabViewItem)
 	}
 	
+	fileprivate func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
+		// must have a view
+		guard let view = tab.view else {
+			return nil
+		}
+		// must have a subview
+		if view.subviews.count < 1 {
+			return nil
+		}
+		// subview must be a scrollview
+		guard let scroll = view.subviews[0] as? NSScrollView else {
+			return nil
+		}
+		return scroll.documentView as? GraphView
+	}
+	
 	fileprivate func getActiveGraph() -> GraphView? {
-		guard let view = _tabView.selectedTabViewItem?.view else { return nil } // must have a view
-		if view.subviews.count < 1 { return nil } // must have a subview
-		guard let scroll = view.subviews[0] as? NSScrollView else { return nil } // child must be a scroll view
-		guard let graphView = scroll.documentView as? GraphView else { return nil } // document of scroll must be a graph view
-		return graphView
+		if let selectedTab = _tabView.selectedTabViewItem {
+			return getGraphViewFromTab(tab: selectedTab)
+		}
+		return nil
 	}
 	
 	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
 		return _tabView.tabViewItems.first(where: {
-			guard let view = $0.view else { return false } // must have a view
-			if view.subviews.count < 1 { return false } // must have a subview
-			guard let scroll = view.subviews[0] as? NSScrollView else { return false } // child must be a scroll view
-			guard let graphView = scroll.documentView as? GraphView else { return false } // document of scroll must be a graph view
-			return graphView.NovellaGraph == graph // actual check we care about
+			guard let graphView = getGraphViewFromTab(tab: $0) else {
+				return false
+			}
+			return graphView.NovellaGraph == graph
 		}) != nil
 	}
 	
