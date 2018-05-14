@@ -339,6 +339,14 @@ class MainViewController: NSViewController {
 
 // MARK: - - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
+	func onLinkAdded(link: PinViewLink) {
+		reloadBrowser()
+	}
+	
+	func onBranchAdded(branch: PinViewBranch) {
+		reloadBrowser()
+	}
+	
 	func onDialogAdded(dialog: DialogView) {
 		reloadBrowser()
 	}

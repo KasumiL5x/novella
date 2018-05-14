@@ -11,6 +11,8 @@ import NovellaModel
 
 protocol GraphViewDelegate {
 	func onDialogAdded(dialog: DialogView)
+	func onLinkAdded(link: PinViewLink)
+	func onBranchAdded(branch: PinViewBranch)
 }
 
 class GraphView: NSView {
@@ -504,11 +506,15 @@ extension GraphView {
 	fileprivate func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
+		
+		Delegate?.onLinkAdded(link: pin)
 		return pin
 	}
 	fileprivate func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
 		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
+		
+		Delegate?.onBranchAdded(branch: pin)
 		return pin
 	}
 }
