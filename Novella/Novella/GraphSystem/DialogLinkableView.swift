@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class DialogView: LinkableView {
+class DialogLinkableView: LinkableView {
 	// MARK: - - Variables -
 	fileprivate let _nameLabel: NSTextField
 	
@@ -36,7 +36,7 @@ class DialogView: LinkableView {
 		self.layer?.shadowRadius = 5.0
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("DialogView::init(coder:) not implemented.")
+		fatalError("DialogLinkableView::init(coder:) not implemented.")
 	}
 	
 	// MARK: - - Functions -

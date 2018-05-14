@@ -347,7 +347,7 @@ extension MainViewController: GraphViewDelegate {
 		reloadBrowser()
 	}
 	
-	func onDialogAdded(dialog: DialogView) {
+	func onDialogAdded(dialog: DialogLinkableView) {
 		reloadBrowser()
 	}
 }

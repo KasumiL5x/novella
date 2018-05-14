@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 protocol GraphViewDelegate {
-	func onDialogAdded(dialog: DialogView)
+	func onDialogAdded(dialog: DialogLinkableView)
 	func onLinkAdded(link: PinViewLink)
 	func onBranchAdded(branch: PinViewBranch)
 }
@@ -151,7 +151,7 @@ class GraphView: NSView {
 		for curr in graph.Nodes {
 			switch curr {
 			case is NVDialog:
-				let node = DialogView(node: curr as! NVDialog, graphView: self)
+				let node = DialogLinkableView(node: curr as! NVDialog, graphView: self)
 				_allLinkableViews.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
 				break
@@ -511,8 +511,8 @@ extension GraphView {
 extension GraphView {
 	// MARK: LinkableViews
 	@discardableResult
-	fileprivate func makeDialogView(nvDialog: NVDialog) -> DialogView {
-		let node = DialogView(node: nvDialog, graphView: self)
+	fileprivate func makeDialogView(nvDialog: NVDialog) -> DialogLinkableView {
+		let node = DialogLinkableView(node: nvDialog, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
