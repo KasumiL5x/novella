@@ -263,14 +263,20 @@ class MainViewController: NSViewController {
 	}
 	
 	fileprivate func getActiveGraph() -> GraphView? {
-		// NOTE: This is fugly as hell but it is functional based on the setup I have.  If that changes, this will have to also.
-		let graph = ((_tabView.selectedTabViewItem?.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)
-		return graph
+		guard let view = _tabView.selectedTabViewItem?.view else { return nil } // must have a view
+		if view.subviews.count < 1 { return nil } // must have a subview
+		guard let scroll = view.subviews[0] as? NSScrollView else { return nil } // child must be a scroll view
+		guard let graphView = scroll.documentView as? GraphView else { return nil } // document of scroll must be a graph view
+		return graphView
 	}
 	
 	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
 		return _tabView.tabViewItems.first(where: {
-			(($0.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)?.NovellaGraph == graph
+			guard let view = $0.view else { return false } // must have a view
+			if view.subviews.count < 1 { return false } // must have a subview
+			guard let scroll = view.subviews[0] as? NSScrollView else { return false } // child must be a scroll view
+			guard let graphView = scroll.documentView as? GraphView else { return false } // document of scroll must be a graph view
+			return graphView.NovellaGraph == graph // actual check we care about
 		}) != nil
 	}
 	
