@@ -314,6 +314,8 @@ class MainViewController: NSViewController {
 			return // TODO: Remove graph
 		}
 		addNewTab(forGraph: graph)
+		
+		reloadBrowser()
 	}
 	
 	@IBAction func onUndo(_ sender: NSButton) {
