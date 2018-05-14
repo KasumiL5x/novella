@@ -267,6 +267,12 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Interface Buttons -
+	@IBAction func onCloseTab(_ sender: NSButton) {
+		if let item = _tabView.selectedTabViewItem {
+			_tabView.removeTabViewItem(item)
+		}
+	}
+	
 	@IBAction func onAddGraph(_ sender: NSButton) {
 		let graph = _story.makeGraph(name: NSUUID().uuidString)
 		do { try _story.add(graph: graph) } catch {
