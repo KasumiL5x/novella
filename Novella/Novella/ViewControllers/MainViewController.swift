@@ -236,7 +236,8 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - TabView Functions -
-	fileprivate func addNewTab(forGraph: NVGraph) {
+	@discardableResult
+	fileprivate func addNewTab(forGraph: NVGraph) -> NSTabViewItem {
 		let tabViewItem = NSTabViewItem()
 		tabViewItem.label = forGraph.Name
 		let view = tabViewItem.view!
@@ -260,6 +261,7 @@ class MainViewController: NSViewController {
 		scrollView.documentView = graphView
 		
 		_tabView.addTabViewItem(tabViewItem)
+		return tabViewItem
 	}
 	
 	fileprivate func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
@@ -285,13 +287,17 @@ class MainViewController: NSViewController {
 		return nil
 	}
 	
-	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
+	fileprivate func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
 		return _tabView.tabViewItems.first(where: {
 			guard let graphView = getGraphViewFromTab(tab: $0) else {
 				return false
 			}
 			return graphView.NovellaGraph == graph
-		}) != nil
+		})
+	}
+	
+	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
+		return getTabForGraph(graph: graph) != nil
 	}
 	
 	// MARK: - - Interface Buttons -
@@ -339,8 +345,11 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		let clickedItem = _storyBrowser.item(atRow: clickedRow)
 		
 		if let asGraph = clickedItem as? NVGraph {
-			if !isGraphOpen(graph: asGraph) {
-				addNewTab(forGraph: asGraph)
+			// if graph is open, switch to it
+			if let tab = getTabForGraph(graph: asGraph) {
+				_tabView.selectTabViewItem(tab)
+			} else {
+				_tabView.selectTabViewItem(addNewTab(forGraph: asGraph))
 			}
 		}
 	}
