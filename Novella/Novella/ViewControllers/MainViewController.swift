@@ -39,6 +39,7 @@ class MainViewController: NSViewController {
 		super.viewDidLoad()
 		
 		_story = NVStory()
+		_story.Delegate = self
 		
 		_storyBrowser.delegate = self
 		_storyBrowser.dataSource = self
@@ -337,18 +338,55 @@ class MainViewController: NSViewController {
 	}
 }
 
+// MARK: - - NVStoryDelegate -
+extension MainViewController: NVStoryDelegate {
+	func onStoryMakeFolder(folder: NVFolder) {
+		reloadBrowser()
+	}
+	func onStoryMakeVariable(variable: NVVariable) {
+		reloadBrowser()
+	}
+	func onStoryMakeGraph(graph: NVGraph) {
+		reloadBrowser()
+	}
+	func onStoryMakeLink(link: NVLink) {
+		reloadBrowser()
+	}
+	func onStoryMakeBranch(branch: NVBranch) {
+		reloadBrowser()
+	}
+	func onStoryMakeSwitch(switch: NVSwitch) {
+		reloadBrowser()
+	}
+	func onStoryMakeDialog(dialog: NVDialog) {
+		reloadBrowser()
+	}
+	func onStoryAddFolder(folder: NVFolder) {
+		reloadBrowser()
+	}
+	func onStoryRemoveFolder(folder: NVFolder) {
+		reloadBrowser()
+	}
+	func onStoryAddGraph(graph: NVGraph) {
+		reloadBrowser()
+	}
+	func onStoryRemoveGraph(graph: NVGraph) {
+		reloadBrowser()
+	}
+}
+
 // MARK: - - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
 	func onLinkAdded(link: PinViewLink) {
-		reloadBrowser()
+		print("GraphView added link.")
 	}
 	
 	func onBranchAdded(branch: PinViewBranch) {
-		reloadBrowser()
+		print("GraphView added branch.")
 	}
 	
 	func onDialogAdded(dialog: DialogLinkableView) {
-		reloadBrowser()
+		print("GraphView added dialog.")
 	}
 }
 

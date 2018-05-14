@@ -41,6 +41,7 @@
 		6546808220A45E050036B770 /* NVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807D20A45E050036B770 /* NVError.swift */; };
 		654A155D20AA110500C99141 /* GraphBoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A155C20AA110500C99141 /* GraphBoundsView.swift */; };
 		654A155F20AA33C000C99141 /* GraphLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A155E20AA33C000C99141 /* GraphLinkableView.swift */; };
+		654A156120AA3BA900C99141 /* NVStoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A156020AA3BA900C99141 /* NVStoryDelegate.swift */; };
 		6553C95E2092723A00E6737B /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95D2092723A00E6737B /* Reader.storyboard */; };
 		6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96120927D6E00E6737B /* ReaderViewController.swift */; };
 		65588384209C6295004C412F /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588383209C6295004C412F /* CommandSystem.swift */; };
@@ -141,6 +142,7 @@
 		6546807D20A45E050036B770 /* NVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVError.swift; sourceTree = "<group>"; };
 		654A155C20AA110500C99141 /* GraphBoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphBoundsView.swift; sourceTree = "<group>"; };
 		654A155E20AA33C000C99141 /* GraphLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphLinkableView.swift; sourceTree = "<group>"; };
+		654A156020AA3BA900C99141 /* NVStoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStoryDelegate.swift; sourceTree = "<group>"; };
 		6553C95D2092723A00E6737B /* Reader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reader.storyboard; sourceTree = "<group>"; };
 		6553C96120927D6E00E6737B /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		65588383209C6295004C412F /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				6546807920A45E050036B770 /* NVIdentifiable.swift */,
 				6546807A20A45E050036B770 /* NVPath.swift */,
 				6546807B20A45E050036B770 /* NVStory.swift */,
+				654A156020AA3BA900C99141 /* NVStoryDelegate.swift */,
 				6546807C20A45E050036B770 /* NVStory+JSON.swift */,
 				6556937420A45C8F00E6105B /* Graphs */,
 				65C2DDB020A45CDF00D79DF9 /* Links */,
@@ -684,6 +687,7 @@
 			files = (
 				6546806C20A45DDB0036B770 /* NVTransfer.swift in Sources */,
 				6546806D20A45DDB0036B770 /* NVBranch.swift in Sources */,
+				654A156120AA3BA900C99141 /* NVStoryDelegate.swift in Sources */,
 				6546807120A45DDB0036B770 /* NVLink.swift in Sources */,
 				6546805720A45D8E0036B770 /* NVSimulator.swift in Sources */,
 				6546806220A45DAE0036B770 /* NVCutscene.swift in Sources */,

@@ -22,6 +22,7 @@ public class NVStory {
 	var _folders: [NVFolder]
 	var _graphs: [NVGraph]
 	var _name: String
+	var _delegate: NVStoryDelegate?
 	let _jsContext: JSContext
 	
 	public init() {
@@ -35,6 +36,7 @@ public class NVStory {
 		self._folders = []
 		self._graphs = []
 		self._name = ""
+		self._delegate = nil
 		self._jsContext = JSContext()
 		self._jsContext.exceptionHandler = { context, exception in
 			if let ex = exception {
@@ -54,6 +56,10 @@ public class NVStory {
 	public var Name:     String       {
 		get{ return _name }
 		set{ _name = newValue }
+	}
+	public var Delegate: NVStoryDelegate? {
+		get{ return _delegate }
+		set{ _delegate = newValue }
 	}
 	
 	// MARK: Javascript stuff
@@ -86,6 +92,8 @@ extension NVStory {
 		}
 		// now add
 		_folders.append(folder)
+		
+		Delegate?.onStoryAddFolder(folder: folder)
 		return folder
 	}
 	
@@ -94,6 +102,8 @@ extension NVStory {
 			throw NVError.invalid("Tried to remove Folder (\(folder._name)) from story but it was not a child.")
 		}
 		_folders.remove(at: idx)
+		
+		Delegate?.onStoryRemoveFolder(folder: folder)
 	}
 	
 	// MARK: Graphs
@@ -122,6 +132,8 @@ extension NVStory {
 		// now add
 		graph._parent = nil
 		_graphs.append(graph)
+		
+		Delegate?.onStoryAddGraph(graph: graph)
 		return graph
 	}
 	
@@ -130,6 +142,8 @@ extension NVStory {
 			throw NVError.invalid("Tried to remove Graph (\(graph._name)) from story but it was not a child.")
 		}
 		_graphs.remove(at: idx)
+		
+		Delegate?.onStoryRemoveGraph(graph: graph)
 	}
 }
 
@@ -158,6 +172,8 @@ extension NVStory {
 		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
 		_allFolders.append(folder)
 		_allIdentifiables.append(folder)
+		
+		_delegate?.onStoryMakeFolder(folder: folder)
 		return folder
 	}
 	
@@ -166,6 +182,8 @@ extension NVStory {
 		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
 		_allVariables.append(variable)
 		_allIdentifiables.append(variable)
+		
+		_delegate?.onStoryMakeVariable(variable: variable)
 		return variable
 	}
 	
@@ -174,6 +192,8 @@ extension NVStory {
 		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: self)
 		_allGraphs.append(graph)
 		_allIdentifiables.append(graph)
+		
+		_delegate?.onStoryMakeGraph(graph: graph)
 		return graph
 	}
 	
@@ -182,6 +202,8 @@ extension NVStory {
 		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(link)
 		_allIdentifiables.append(link)
+		
+		_delegate?.onStoryMakeLink(link: link)
 		return link
 	}
 	@discardableResult
@@ -189,6 +211,8 @@ extension NVStory {
 		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(branch)
 		_allIdentifiables.append(branch)
+		
+		_delegate?.onStoryMakeBranch(branch: branch)
 		return branch
 	}
 	@discardableResult
@@ -196,6 +220,8 @@ extension NVStory {
 		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), story: self, origin: origin)
 		_allLinks.append(swtch)
 		_allIdentifiables.append(swtch)
+		
+		_delegate?.onStoryMakeSwitch(switch: swtch)
 		return swtch
 	}
 	
@@ -204,6 +230,8 @@ extension NVStory {
 		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID())
 		_allNodes.append(dialog)
 		_allIdentifiables.append(dialog)
+		
+		_delegate?.onStoryMakeDialog(dialog: dialog)
 		return dialog
 	}
 	
