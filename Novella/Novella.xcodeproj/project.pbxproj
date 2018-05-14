@@ -39,6 +39,7 @@
 		6546808020A45E050036B770 /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807B20A45E050036B770 /* NVStory.swift */; };
 		6546808120A45E050036B770 /* NVStory+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807C20A45E050036B770 /* NVStory+JSON.swift */; };
 		6546808220A45E050036B770 /* NVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546807D20A45E050036B770 /* NVError.swift */; };
+		654A155D20AA110500C99141 /* GraphBoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654A155C20AA110500C99141 /* GraphBoundsView.swift */; };
 		6553C95E2092723A00E6737B /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6553C95D2092723A00E6737B /* Reader.storyboard */; };
 		6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6553C96120927D6E00E6737B /* ReaderViewController.swift */; };
 		65588384209C6295004C412F /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588383209C6295004C412F /* CommandSystem.swift */; };
@@ -137,6 +138,7 @@
 		6546807B20A45E050036B770 /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
 		6546807C20A45E050036B770 /* NVStory+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NVStory+JSON.swift"; sourceTree = "<group>"; };
 		6546807D20A45E050036B770 /* NVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVError.swift; sourceTree = "<group>"; };
+		654A155C20AA110500C99141 /* GraphBoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphBoundsView.swift; sourceTree = "<group>"; };
 		6553C95D2092723A00E6737B /* Reader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reader.storyboard; sourceTree = "<group>"; };
 		6553C96120927D6E00E6737B /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		65588383209C6295004C412F /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				65264CAC20A76DA8002BF136 /* PinView.swift */,
 				65264CB020A7742F002BF136 /* PinViewBranch.swift */,
 				65264CAE20A76EC3002BF136 /* PinViewLink.swift */,
+				654A155C20AA110500C99141 /* GraphBoundsView.swift */,
 			);
 			path = GraphSystem;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
+				654A155D20AA110500C99141 /* GraphBoundsView.swift in Sources */,
 				65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */,
 				65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */,
 				65264CB120A7742F002BF136 /* PinViewBranch.swift in Sources */,

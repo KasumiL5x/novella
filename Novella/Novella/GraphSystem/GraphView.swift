@@ -21,6 +21,7 @@ class GraphView: NSView {
 	fileprivate let _nvStory: NVStory
 	fileprivate let _bg: GraphBGView
 	fileprivate let _undoRedo: UndoRedo
+	fileprivate let _graphBounds: GraphBoundsView
 	//
 	fileprivate var _allLinkableViews: [LinkableView]
 	fileprivate var _allPinViews: [PinView]
@@ -46,11 +47,13 @@ class GraphView: NSView {
 	fileprivate var _delegate: GraphViewDelegate?
 	
 	// MARK: - - Initialization -
-	init(graph: NVGraph, story: NVStory, frameRect: NSRect) {
+	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
 		self._nvGraph = graph
 		self._nvStory = story
 		self._bg = GraphBGView(frame: frameRect)
 		self._undoRedo = UndoRedo()
+		self._graphBounds = GraphBoundsView(initialBounds: NSMakeSize(visibleRect.width * 0.75, visibleRect.height * 0.75))
+		self._graphBounds.frame.origin = NSMakePoint((visibleRect.width - self._graphBounds.Boundary.width)/2, (visibleRect.height - self._graphBounds.Boundary.height)/2)
 		//
 		self._allLinkableViews = []
 		self._allPinViews = []
@@ -120,6 +123,8 @@ class GraphView: NSView {
 		
 		// add background
 		self.addSubview(_bg)
+		// add graph bounds above bg but below everything else
+//		self.addSubview(_graphBounds)
 		// add marquee view (must be last; others add after it)
 		self.addSubview(_marquee)
 		
