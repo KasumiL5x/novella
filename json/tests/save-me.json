@@ -108,7 +108,7 @@
     "graphs" : [
       "8E885248-DD43-4E95-B1B1-2CECD4520C6E"
     ],
-    "name" : "Simplified",
+    "name" : "Simplified Story",
     "folders" : [
       "CD692335-1A27-4F72-88F4-926AC5196DA6"
     ]
@@ -128,8 +128,8 @@
     },
     {
       "position" : {
-        "y" : 349.13671875,
-        "x" : 220.51953125
+        "y" : 349,
+        "x" : 220
       },
       "name" : "B",
       "content" : "This was choice 1.",
@@ -140,8 +140,8 @@
     },
     {
       "position" : {
-        "y" : 149.13671875,
-        "x" : 220.51953125
+        "y" : 149,
+        "x" : 220
       },
       "name" : "C",
       "content" : "This was choice 2.",
@@ -152,8 +152,8 @@
     },
     {
       "position" : {
-        "y" : 249.13671875,
-        "x" : 370.51953125
+        "y" : 249,
+        "x" : 370
       },
       "name" : "D",
       "content" : "This node resolves from B and C regardless of choice.  There is a branch here based on some condition.",
@@ -164,8 +164,8 @@
     },
     {
       "position" : {
-        "y" : 349.13671875,
-        "x" : 520.51953125
+        "y" : 349,
+        "x" : 520
       },
       "name" : "E",
       "content" : "This is the true result.",
@@ -176,8 +176,8 @@
     },
     {
       "position" : {
-        "y" : 149.13671875,
-        "x" : 520.51953125
+        "y" : 149,
+        "x" : 520
       },
       "name" : "F",
       "content" : "This is the false result.",
@@ -188,8 +188,8 @@
     },
     {
       "position" : {
-        "y" : 249.13671875,
-        "x" : 670.51953125
+        "y" : 249,
+        "x" : 670
       },
       "name" : "G",
       "content" : "This is the final resolve from E and F regardless of chioce.",

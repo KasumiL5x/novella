@@ -790,19 +790,25 @@
                                 <rect key="frame" x="0.0" y="665" width="1000" height="35"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
-                                        <rect key="frame" x="18" y="6" width="68" height="24"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Untitled" id="KTj-OS-o4p">
+                                        <rect key="frame" x="18" y="6" width="204" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="VPB-xS-Nr6"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Untitled" id="KTj-OS-o4p">
                                             <font key="font" metaFont="systemThin" size="20"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <action selector="onEditedStoryName:" target="XfG-lQ-9wD" id="88t-WV-U2v"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eJg-1b-Gs4" secondAttribute="trailing" constant="20" symbolic="YES" id="11y-Oz-gNN"/>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="4wc-7t-6FX"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eJg-1b-Gs4" secondAttribute="trailing" constant="20" symbolic="YES" id="DeH-Gg-5nO"/>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="SSb-i1-UEY"/>
                                     <constraint firstAttribute="height" constant="35" id="Wx1-Ec-wQJ"/>
-                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="hLH-76-mcK"/>
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Fw-GNM" userLabel="Footer">
@@ -894,9 +900,8 @@
                                                                             <rect key="frame" x="1" y="1" width="201" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DGe-nO-qdT">
+                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="DGe-nO-qdT">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="201" height="17"/>
-                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="8eU-HD-zpb">
                                                                                         <font key="font" metaFont="system"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -904,6 +909,11 @@
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                             </subviews>
+                                                                            <constraints>
+                                                                                <constraint firstItem="DGe-nO-qdT" firstAttribute="centerX" secondItem="fQF-aB-L0l" secondAttribute="centerX" id="CVI-IP-Lqh"/>
+                                                                                <constraint firstItem="DGe-nO-qdT" firstAttribute="leading" secondItem="fQF-aB-L0l" secondAttribute="leading" constant="2" id="Hcr-bL-U4s"/>
+                                                                                <constraint firstItem="DGe-nO-qdT" firstAttribute="centerY" secondItem="fQF-aB-L0l" secondAttribute="centerY" id="oj5-dO-hxw"/>
+                                                                            </constraints>
                                                                             <connections>
                                                                                 <outlet property="textField" destination="DGe-nO-qdT" id="LTh-vC-NYv"/>
                                                                             </connections>

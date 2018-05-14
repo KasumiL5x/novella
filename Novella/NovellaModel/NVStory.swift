@@ -51,7 +51,10 @@ public class NVStory {
 	public var AllLinks: [NVBaseLink] {get{ return _allLinks }}
 	public var Folders:  [NVFolder]   {get{ return _folders }}
 	public var Graphs:   [NVGraph]    {get{ return _graphs }}
-	public var Name:     String       {get{ return _name }}
+	public var Name:     String       {
+		get{ return _name }
+		set{ _name = newValue }
+	}
 	
 	// MARK: Javascript stuff
 	// TODO: Get/Set variables in JS

@@ -318,6 +318,10 @@ class MainViewController: NSViewController {
 		getActiveGraph()?.redo()
 	}
 	
+	@IBAction func onEditedStoryName(_ sender: NSTextField) {
+		_story.Name = sender.stringValue
+	}
+	
 	// MARK: - - Story Browser Functions -
 	func reloadBrowser() {
 		_storyBrowser.reloadData()
