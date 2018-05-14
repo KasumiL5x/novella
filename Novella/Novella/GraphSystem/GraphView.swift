@@ -96,6 +96,7 @@ class GraphView: NSView {
 		// configure graphview menu
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(GraphView.onGraphViewMenuAddDialog), keyEquivalent: "")
+		addSubMenu.addItem(withTitle: "Graph", action: #selector(GraphView.onGraphViewMenuAddGraph), keyEquivalent: "")
 		let addMenu = NSMenuItem()
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
@@ -413,11 +414,22 @@ extension GraphView {
 			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
 			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
 		}
-		let dlgView = makeDialogView(nvDialog: nvDialog)
+		let dlgView = makeDialogLinkableView(nvDialog: nvDialog)
 		var pos = _lastContextLocation
 		pos.x -= dlgView.frame.width/2
 		pos.y -= dlgView.frame.height/2
 		dlgView.move(to: pos)
+	}
+	@objc fileprivate func onGraphViewMenuAddGraph() {
+		let nvGraph = _nvStory.makeGraph(name: NSUUID().uuidString)
+		do { try _nvGraph.add(graph: nvGraph) } catch {
+			fatalError("Tried to add a new graph but couldn't add it to this graph.")
+		}
+		let gView = makeGraphLinkableView(nvGraph: nvGraph)
+		var pos = _lastContextLocation
+		pos.x -= gView.frame.width/2
+		pos.y -= gView.frame.height/2
+		gView.move(to: pos)
 	}
 	
 	// MARK: Linkable Menu
@@ -511,12 +523,20 @@ extension GraphView {
 extension GraphView {
 	// MARK: LinkableViews
 	@discardableResult
-	fileprivate func makeDialogView(nvDialog: NVDialog) -> DialogLinkableView {
+	fileprivate func makeDialogLinkableView(nvDialog: NVDialog) -> DialogLinkableView {
 		let node = DialogLinkableView(node: nvDialog, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
 		Delegate?.onDialogAdded(dialog: node)
+		return node
+	}
+	@discardableResult
+	fileprivate func makeGraphLinkableView(nvGraph: NVGraph) -> GraphLinkableView {
+		let node = GraphLinkableView(node: nvGraph, graphView: self)
+		_allLinkableViews.append(node)
+		self.addSubview(node, positioned: .below, relativeTo: _marquee)
+		
 		return node
 	}
 	
