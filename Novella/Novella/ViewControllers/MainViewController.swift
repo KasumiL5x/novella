@@ -42,6 +42,8 @@ class MainViewController: NSViewController {
 		
 		_storyBrowser.delegate = self
 		_storyBrowser.dataSource = self
+		_storyBrowser.target = self
+		_storyBrowser.doubleAction = #selector(MainViewController.onStoryBrowserDoubleClick)
 	}
 	
 	// MARK: - - Functions called from window -
@@ -266,6 +268,12 @@ class MainViewController: NSViewController {
 		return graph
 	}
 	
+	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
+		return _tabView.tabViewItems.first(where: {
+			(($0.view?.subviews[0] as? NSScrollView)?.documentView as? GraphView)?.NovellaGraph == graph
+		}) != nil
+	}
+	
 	// MARK: - - Interface Buttons -
 	@IBAction func onCloseTab(_ sender: NSButton) {
 		if let item = _tabView.selectedTabViewItem {
@@ -298,6 +306,21 @@ class MainViewController: NSViewController {
 
 // MARK: - - Story Browser -
 extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
+	@objc fileprivate func onStoryBrowserDoubleClick() {
+		let clickedRow = _storyBrowser.clickedRow
+		if -1 == clickedRow {
+			return
+		}
+		
+		let clickedItem = _storyBrowser.item(atRow: clickedRow)
+		
+		if let asGraph = clickedItem as? NVGraph {
+			if !isGraphOpen(graph: asGraph) {
+				addNewTab(forGraph: asGraph)
+			}
+		}
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if let asFolder = item as? NVFolder {
 			return asFolder.Folders.count + asFolder.Variables.count

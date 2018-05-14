@@ -94,6 +94,11 @@ class GraphView: NSView {
 		fatalError("GraphView::init(coder) not implemented.")
 	}
 	
+	// MARK: - - Properties -
+	var NovellaGraph: NVGraph {
+		get{ return _nvGraph }
+	}
+	
 	// MARK: - - Setup -
 	fileprivate func rootFor(graph: NVGraph) {
 		// remove existing views
