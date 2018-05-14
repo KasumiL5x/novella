@@ -154,6 +154,7 @@
 			"properties": {
 				"uuid": { "$ref": "#/definitions/uuid" },
 				"name": { "$ref": "#/definitions/name" },
+				"position": { "$ref": "#/definitions/position" },
 				"entry": { "$ref": "#/definitions/uuid" },
 				"subgraphs": {
 					"type": "array",
@@ -176,7 +177,7 @@
 					"items": { "$ref": "#/definitions/uuid" }
 				}
 			},
-			"required": ["uuid", "name"]
+			"required": ["uuid", "name", "position"]
 		},
 		// END graph
 

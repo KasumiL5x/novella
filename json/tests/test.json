@@ -106,6 +106,10 @@
   ],
   "graphs" : [
     {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
       "name" : "B061E727-C0B7-4CD3-A314-4C64FB6D74AD",
       "nodes" : [
         "D454552F-066A-491C-BAC3-A6AB92084DA4",
@@ -128,6 +132,10 @@
       ]
     },
     {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
       "name" : "39665628-AD9B-4CEC-97C0-E1233CE1647D",
       "nodes" : [
         "6540FDFF-94AB-42C5-97E8-F66CDE7662B2",

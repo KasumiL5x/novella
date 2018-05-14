@@ -21,8 +21,7 @@ public class NVNode {
 	}
 	
 	// MARK: Properties
-	public var Name:           String  {get{ return _name } set{ _name = newValue }}
-	public var EditorPosition: CGPoint {get{ return _editorPos }	set{ _editorPos = newValue }}
+	public var Name: String {get{ return _name } set{ _name = newValue }}
 }
 
 // MARK: NVIdentifiable
@@ -34,6 +33,15 @@ extension NVNode: NVIdentifiable {
 
 // MARK: NVLinkable
 extension NVNode: NVLinkable {
+	public var EditorPosition: CGPoint {
+		get {
+			return _editorPos
+		}
+		set {
+			_editorPos = newValue
+		}
+	}
+	
 }
 
 // MARK: Equatable

@@ -7,4 +7,5 @@
 //
 
 public protocol NVLinkable: NVIdentifiable {
+	var EditorPosition: CGPoint {get set}
 }

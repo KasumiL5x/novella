@@ -17,6 +17,7 @@ public class NVGraph {
 	var _listeners: [NVListener]
 	var _exits: [NVExitNode]
 	var _entry: NVLinkable?
+	var _editorPos: CGPoint
 	
 	// parent graph is valid unless as a direct child of the story
 	var _parent: NVGraph?
@@ -31,6 +32,7 @@ public class NVGraph {
 		self._listeners = []
 		self._exits = []
 		self._entry = nil
+		self._editorPos = CGPoint.zero
 		self._parent = nil
 		self._story = story
 	}
@@ -238,6 +240,15 @@ extension NVGraph: NVIdentifiable {
 
 // MARK: NVLinkable
 extension NVGraph: NVLinkable {
+	public var EditorPosition: CGPoint {
+		get {
+			return _editorPos
+		}
+		set {
+			_editorPos = newValue
+		}
+	}
+	
 }
 
 // MARK: Equatable

@@ -169,6 +169,7 @@ extension NVStory {
 				"properties": [
 					"uuid": [ "$ref": "#/definitions/uuid" ],
 					"name": [ "$ref": "#/definitions/name" ],
+					"position": [ "$ref": "#/definitions/position" ],
 					"entry": [ "$ref": "#/definitions/uuid" ],
 					"subgraphs": [
 						"type": "array",
@@ -191,7 +192,7 @@ extension NVStory {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]
 				],
-				"required": ["uuid", "name"]
+				"required": ["uuid", "name", "position"]
 			],
 			// END graph
 			
@@ -376,6 +377,10 @@ extension NVStory {
 			entry["name"] = curr._name
 			entry["uuid"] = curr._uuid.uuidString
 			entry["entry"] = curr._entry?.UUID.uuidString ?? ""
+			entry["position"] = [
+				"x": curr._editorPos.x,
+				"y": curr._editorPos.y
+			]
 			entry["subgraphs"] = curr._graphs.map({$0._uuid.uuidString})
 			entry["nodes"] = curr._nodes.map({$0._uuid.uuidString})
 			entry["links"] = curr._links.map({$0._uuid.uuidString})
@@ -599,13 +604,13 @@ extension NVStory {
 			
 			let name = curr["name"].string
 			
-			let posX = curr["position"]["x"].int!
-			let posY = curr["position"]["y"].int!
+			let posX = curr["position"]["x"].float!
+			let posY = curr["position"]["y"].float!
 			
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
-				dialog._editorPos = NSPoint(x: posX, y: posY)
+				dialog._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				
 				if name != nil {
 					dialog.Name = name!
@@ -647,6 +652,11 @@ extension NVStory {
 		for curr in json["graphs"].arrayValue {
 			let uuid = NSUUID(uuidString: curr["uuid"].stringValue)!
 			let graph = story.makeGraph(name: curr["name"].string!, uuid: uuid)
+			
+			// position
+			let posX = curr["position"]["x"].float!
+			let posY = curr["position"]["y"].float!
+			graph._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {

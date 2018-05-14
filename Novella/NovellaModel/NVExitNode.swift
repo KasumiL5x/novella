@@ -10,9 +10,11 @@ import Foundation
 
 public class NVExitNode {
 	let _uuid: NSUUID
+	var _editorPos: CGPoint
 	
 	init(uuid: NSUUID) {
 		self._uuid = uuid
+		self._editorPos = CGPoint.zero
 	}
 }
 
@@ -25,6 +27,15 @@ extension NVExitNode: NVIdentifiable {
 
 // MARK: NVLinkable
 extension NVExitNode: NVLinkable {
+	public var EditorPosition: CGPoint {
+		get {
+			return _editorPos
+		}
+		set {
+			_editorPos = newValue
+		}
+	}
+	
 }
 
 // MARK: Equatable

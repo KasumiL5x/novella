@@ -30,6 +30,10 @@
 
       ],
       "entry" : "",
+			"position" : {
+				"y" : 0.0,
+				"x" : 0.0
+			},
       "uuid" : "1BC4A18E-58D1-49DC-A745-932B5336BA8F",
       "subgraphs" : [
 
