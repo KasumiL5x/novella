@@ -292,7 +292,20 @@ extension GraphView {
 			let dy = (curr.y - _lastLinkablePanPos.y)
 			
 			_selectedNodes.forEach({
-				let pos = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
+				var pos = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
+				// clamp to bounds
+				if pos.x < 0.0 {
+					pos.x = 0
+				}
+				if pos.y < 0.0 {
+					pos.y = 0.0
+				}
+				if (pos.y + $0.frame.height) > bounds.height {
+					pos.y = bounds.height - $0.frame.height
+				}
+				if (pos.x + $0.frame.width) > bounds.width {
+					pos.x = bounds.width - $0.frame.width
+				}
 				_undoRedo.execute(cmd: MoveLinkableViewCmd(node: $0, from: $0.frame.origin, to: pos))
 			})
 			
