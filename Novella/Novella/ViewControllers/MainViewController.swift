@@ -258,6 +258,7 @@ class MainViewController: NSViewController {
 		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0))
 		
 		let graphView = GraphView(graph: forGraph,story: _story, frameRect: NSMakeRect(0.0, 0.0, MainViewController.SCROLL_SIZE, MainViewController.SCROLL_SIZE))
+		graphView.Delegate = self
 		scrollView.documentView = graphView
 		
 		_tabView.addTabViewItem(tabViewItem)
@@ -333,6 +334,13 @@ class MainViewController: NSViewController {
 	// MARK: - - Story Browser Functions -
 	func reloadBrowser() {
 		_storyBrowser.reloadData()
+	}
+}
+
+// MARK: - - GraphViewDelegate -
+extension MainViewController: GraphViewDelegate {
+	func onDialogAdded(dialog: DialogView) {
+		reloadBrowser()
 	}
 }
 
