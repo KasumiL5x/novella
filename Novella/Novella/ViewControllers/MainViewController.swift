@@ -8,11 +8,40 @@
 
 import Cocoa
 import NovellaModel
+import class KPCTabsControl.TabsControl
+import struct KPCTabsControl.DefaultStyle
+import struct KPCTabsControl.SafariStyle
+import struct KPCTabsControl.ChromeStyle
+import protocol KPCTabsControl.TabsControlDelegate
+import protocol KPCTabsControl.TabsControlDataSource
 
 enum SaveAlertResult {
 	case save
 	case dontsave
 	case cancel
+}
+
+class TabItem {
+	var title: String = ""
+	var icon: NSImage?
+	var menu: NSMenu?
+	var altIcon: NSImage?
+	var selectable: Bool
+	var tabItem: NSTabViewItem
+	
+	init(title: String, icon: NSImage?, menu: NSMenu?, altIcon: NSImage?, tabItem: NSTabViewItem, selectable: Bool = true) {
+		self.title = title
+		self.icon = icon
+		self.menu = menu
+		self.altIcon = altIcon
+		self.tabItem = tabItem
+		self.selectable = selectable
+	}
+}
+extension TabItem: Equatable {
+	static func == (lhs: TabItem, rhs: TabItem) -> Bool {
+		return lhs.title == rhs.title
+	}
 }
 
 class MainViewController: NSViewController {
@@ -24,6 +53,8 @@ class MainViewController: NSViewController {
 	// MARK: - - Variables -
 	fileprivate var _story: NVStory = NVStory()
 	fileprivate var _openedFile: URL?
+	fileprivate var _tabs: [TabItem] = []
+	fileprivate var _selectedTab: TabItem?
 	fileprivate var _browserTopLevel: [String] = [
 		"Graphs",
 		"Variables"
@@ -33,6 +64,7 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
 	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
+	@IBOutlet weak var _tabController: TabsControl!
 	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
@@ -45,6 +77,13 @@ class MainViewController: NSViewController {
 		_storyBrowser.dataSource = self
 		_storyBrowser.target = self
 		_storyBrowser.doubleAction = #selector(MainViewController.onStoryBrowserDoubleClick)
+		
+		_tabs = []
+		_selectedTab = nil
+		_tabController.style = ChromeStyle()
+		_tabController.delegate = self
+		_tabController.dataSource = self
+		_tabController.reloadTabs()
 	}
 	
 	// MARK: - - Functions called from window -
@@ -118,15 +157,18 @@ class MainViewController: NSViewController {
 			return
 		}
 		
-		// remove all existing tabs
-		for curr in _tabView.tabViewItems.reversed() {
-			_tabView.removeTabViewItem(curr)
-		}
+		// close any current tabs
+		closeAllTabs()
 		
 		// add a new graph tab for each subgraph of the story
 		for curr in _story.Graphs {
 			addNewTab(forGraph: curr)
 		}
+		if _tabs.count > 0 {
+			_tabController.reloadTabs()
+			selectTab(item: _tabs[0])
+		}
+		
 		
 		// store file url for saving
 		_openedFile = ofd.url!
@@ -228,10 +270,8 @@ class MainViewController: NSViewController {
 		return true
 	}
 	fileprivate func createEmptyStory() {
-		// remove all existing tabs
-		for curr in _tabView.tabViewItems.reversed() {
-			_tabView.removeTabViewItem(curr)
-		}
+		// close existing tabs
+		closeAllTabs()
 		// create a new story
 		_story = NVStory()
 	}
@@ -239,10 +279,12 @@ class MainViewController: NSViewController {
 	// MARK: - - TabView Functions -
 	@discardableResult
 	fileprivate func addNewTab(forGraph: NVGraph) -> NSTabViewItem {
+		// make main tab view
 		let tabViewItem = NSTabViewItem()
 		tabViewItem.label = forGraph.Name
 		let view = tabViewItem.view!
 		
+		// add and configure scroll view
 		let scrollView = NSScrollView()
 		scrollView.allowsMagnification = true
 		scrollView.minMagnification = MainViewController.MIN_ZOOM
@@ -258,13 +300,30 @@ class MainViewController: NSViewController {
 		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
 		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0))
 		
+		// create graph view and add it as the scroll view's document view
 		let graphView = GraphView(graph: forGraph,story: _story, frameRect: NSMakeRect(0.0, 0.0, MainViewController.SCROLL_SIZE, MainViewController.SCROLL_SIZE), visibleRect: NSMakeRect(0.0, 0.0, _tabView.frame.size.width, _tabView.frame.size.height))
 		graphView.Delegate = self
 		scrollView.documentView = graphView
 		
+		// add to tab view
 		_tabView.addTabViewItem(tabViewItem)
+		
+		// add to the tab control list
+		let tabItem = TabItem(title: forGraph.Name, icon: nil, menu: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		_tabs.append(tabItem)
+		_tabController.reloadTabs()
+		
 		return tabViewItem
 	}
+	fileprivate func closeAllTabs() {
+		_tabs = []
+		_selectedTab = nil
+		for curr in _tabView.tabViewItems.reversed() {
+			_tabView.removeTabViewItem(curr)
+		}
+		_tabController.reloadTabs()
+	}
+	
 	
 	fileprivate func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
 		// must have a view
@@ -283,19 +342,19 @@ class MainViewController: NSViewController {
 	}
 	
 	fileprivate func getActiveGraph() -> GraphView? {
-		if let selectedTab = _tabView.selectedTabViewItem {
-			return getGraphViewFromTab(tab: selectedTab)
+		if let selectedTab = _selectedTab {
+			return getGraphViewFromTab(tab: selectedTab.tabItem)
 		}
 		return nil
 	}
 	
 	fileprivate func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
-		return _tabView.tabViewItems.first(where: {
-			guard let graphView = getGraphViewFromTab(tab: $0) else {
+		return _tabs.first(where: {
+			guard let graphView = getGraphViewFromTab(tab: $0.tabItem) else {
 				return false
 			}
 			return graphView.NovellaGraph == graph
-		})
+		})?.tabItem
 	}
 	
 	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
@@ -304,8 +363,16 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Interface Buttons -
 	@IBAction func onCloseTab(_ sender: NSButton) {
-		if let item = _tabView.selectedTabViewItem {
-			_tabView.removeTabViewItem(item)
+		if let item = _selectedTab {
+			guard let index = _tabs.index(of: item) else {
+				fatalError("Could not find tab for some reason: \(item)")
+			}
+			// behavior of the tab framework seems to be select tab to the right if exists but not left (i.e. nil otherwise)
+			_selectedTab = (index+1 >= _tabs.count) ? nil : _tabs[index+1]
+			
+			_tabs.remove(at: index)
+			_tabController.reloadTabs()
+			_tabView.removeTabViewItem(item.tabItem)
 		}
 	}
 	
@@ -316,6 +383,10 @@ class MainViewController: NSViewController {
 			return // TODO: Remove graph
 		}
 		addNewTab(forGraph: graph)
+		selectTab(item: _tabs[_tabs.count - 1])
+		
+		print("the fuck")
+//		print(_selectedTab)
 		
 		reloadBrowser()
 	}
@@ -403,9 +474,10 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		if let asGraph = clickedItem as? NVGraph {
 			// if graph is open, switch to it
 			if let tab = getTabForGraph(graph: asGraph) {
-				_tabView.selectTabViewItem(tab)
+				selectTab(item: _tabs.first(where: {$0.tabItem == tab}))
 			} else {
-				_tabView.selectTabViewItem(addNewTab(forGraph: asGraph))
+				_ = addNewTab(forGraph: asGraph)
+				selectTab(item: _tabs[_tabs.count-1])
 			}
 		}
 	}
@@ -539,6 +611,78 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		}
 		
 		return view
+	}
+}
+
+extension MainViewController {
+	func selectTab(item: TabItem?) {
+		// update selected tab
+		_selectedTab = item
+		// get index
+		if _selectedTab != nil, let index = _tabs.index(of: _selectedTab!) {
+			_tabController.selectItemAtIndex(index)
+			onSelectedTabChanged()
+		} else {
+			_tabController.selectItemAtIndex(-1) // invalid clears selection
+		}
+	}
+	
+	func onSelectedTabChanged() {
+		_tabView.selectTabViewItem(_selectedTab?.tabItem)
+	}
+}
+extension MainViewController: TabsControlDelegate {
+	func tabsControl(_ control: TabsControl, didReorderItems items: [AnyObject]) {
+	}
+	func tabsControl(_ control: TabsControl, canEditTitleOfItem item: AnyObject) -> Bool {
+		return false
+	}
+	func tabsControl(_ control: TabsControl, setTitle newTitle: String, forItem item: AnyObject) {
+	}
+	
+	func tabsControl(_ control: TabsControl, canSelectItem item: AnyObject) -> Bool {
+		return (item as! TabItem).selectable
+	}
+	
+	func tabsControl(_ control: TabsControl, canReorderItem item: AnyObject) -> Bool {
+		// If this is true, there's a bug when selecting tabs (i maybe can fix and PR it).
+		// If true and you call selectItemAtIndex() (during a mousedown event like click button?), then
+		// it will eventually call selectTab(), which for some unknown reason goes into reorder mode, and until
+		// you click on the window to disable it, will hang your program as if it's in async mode.  This causes
+		// fairly severe issues as code after the above call WON'T execute until after clicking again, but
+		// the function does return.
+		return false
+	}
+	
+	func tabsControlDidChangeSelection(_ control: TabsControl, item: AnyObject) {
+		_selectedTab = (item as! TabItem)
+		onSelectedTabChanged()
+	}
+	
+}
+extension MainViewController: TabsControlDataSource {
+	func tabsControlNumberOfTabs(_ control: TabsControl) -> Int {
+		return _tabs.count
+	}
+	
+	func tabsControl(_ control: TabsControl, itemAtIndex index: Int) -> AnyObject {
+		return _tabs[index]
+	}
+	
+	func tabsControl(_ control: TabsControl, titleForItem item: AnyObject) -> String {
+		return (item as! TabItem).title
+	}
+	
+	func tabsControl(_ control: TabsControl, menuForItem item: AnyObject) -> NSMenu? {
+		return (item as! TabItem).menu
+	}
+	
+	func tabsControl(_ control: TabsControl, iconForItem item: AnyObject) -> NSImage? {
+		return (item as! TabItem).icon
+	}
+	
+	func tabsControl(_ control: TabsControl, titleAlternativeIconForItem item: AnyObject) -> NSImage? {
+		return (item as! TabItem).altIcon
 	}
 }
 

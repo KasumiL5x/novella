@@ -1,2 +1,3 @@
 github "SwiftyJSON/SwiftyJSON"
-github "KasumiL5x/JSONSchemaSwift" "master"
+github "KasumiL5x/JSONSchemaSwift" "smartpatient-eu-path"
+github "onekiloparsec/KPCTabsControl"

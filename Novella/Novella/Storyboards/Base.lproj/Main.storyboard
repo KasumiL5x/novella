@@ -803,17 +803,6 @@
                                             <action selector="onEditedStoryName:" target="XfG-lQ-9wD" id="88t-WV-U2v"/>
                                         </connections>
                                     </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="4wc-7t-6FX"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eJg-1b-Gs4" secondAttribute="trailing" constant="20" symbolic="YES" id="DeH-Gg-5nO"/>
-                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="SSb-i1-UEY"/>
-                                    <constraint firstAttribute="height" constant="35" id="Wx1-Ec-wQJ"/>
-                                </constraints>
-                            </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Fw-GNM" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="35"/>
-                                <subviews>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kTQ-zk-6WD">
                                         <rect key="frame" x="937" y="0.0" width="49" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -859,6 +848,15 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="4wc-7t-6FX"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eJg-1b-Gs4" secondAttribute="trailing" constant="20" symbolic="YES" id="DeH-Gg-5nO"/>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="SSb-i1-UEY"/>
+                                    <constraint firstAttribute="height" constant="35" id="Wx1-Ec-wQJ"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Fw-GNM" userLabel="Footer">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Q13-ba-BAO"/>
                                 </constraints>
@@ -945,16 +943,25 @@
                                         <rect key="frame" x="207" y="0.0" width="793" height="630"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <tabView type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="Hr9-R1-huE" userLabel="TabView">
-                                                <rect key="frame" x="-7" y="-6" width="807" height="640"/>
+                                            <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="Hr9-R1-huE" userLabel="TabView">
+                                                <rect key="frame" x="0.0" y="0.0" width="793" height="595"/>
                                                 <font key="font" metaFont="system"/>
                                             </tabView>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="vEJ-7e-YwK" customClass="TabsControl" customModule="KPCTabsControl">
+                                                <rect key="frame" x="0.0" y="595" width="793" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="fuI-MI-mzA"/>
+                                                </constraints>
+                                            </customView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Hr9-R1-huE" firstAttribute="leading" secondItem="XDB-4Q-yfT" secondAttribute="leading" id="IKC-lt-HTK"/>
-                                            <constraint firstAttribute="bottom" secondItem="Hr9-R1-huE" secondAttribute="bottom" id="IOK-Cc-oBa"/>
-                                            <constraint firstItem="Hr9-R1-huE" firstAttribute="top" secondItem="XDB-4Q-yfT" secondAttribute="top" id="YgL-Ab-b2W"/>
-                                            <constraint firstAttribute="trailing" secondItem="Hr9-R1-huE" secondAttribute="trailing" id="zBW-UJ-im2"/>
+                                            <constraint firstAttribute="bottom" secondItem="Hr9-R1-huE" secondAttribute="bottom" id="3JA-PX-AqN"/>
+                                            <constraint firstItem="vEJ-7e-YwK" firstAttribute="top" secondItem="XDB-4Q-yfT" secondAttribute="top" id="ML9-NG-Xax"/>
+                                            <constraint firstItem="Hr9-R1-huE" firstAttribute="leading" secondItem="XDB-4Q-yfT" secondAttribute="leading" id="NfF-VT-KWJ"/>
+                                            <constraint firstItem="Hr9-R1-huE" firstAttribute="top" secondItem="vEJ-7e-YwK" secondAttribute="bottom" id="Tg6-pK-Ho4"/>
+                                            <constraint firstAttribute="trailing" secondItem="vEJ-7e-YwK" secondAttribute="trailing" id="cDb-vU-KxI"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hr9-R1-huE" secondAttribute="trailing" id="dcH-fS-zks"/>
+                                            <constraint firstItem="vEJ-7e-YwK" firstAttribute="leading" secondItem="XDB-4Q-yfT" secondAttribute="leading" id="wlN-ul-Fym"/>
                                         </constraints>
                                     </customView>
                                 </subviews>
@@ -980,6 +987,7 @@
                     <connections>
                         <outlet property="_storyBrowser" destination="zUN-Je-02J" id="FTA-ek-KoR"/>
                         <outlet property="_storyName" destination="eJg-1b-Gs4" id="Pf1-eP-wR8"/>
+                        <outlet property="_tabController" destination="vEJ-7e-YwK" id="ryl-kE-bBA"/>
                         <outlet property="_tabView" destination="Hr9-R1-huE" id="0we-Xx-H65"/>
                     </connections>
                 </viewController>

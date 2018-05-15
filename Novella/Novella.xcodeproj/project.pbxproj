@@ -62,6 +62,8 @@
 		65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */; };
 		65C8C06620A83C7D00CDEDD9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C8C06520A83C7D00CDEDD9 /* MainViewController.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
+		65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; };
+		65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -101,6 +103,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */,
+				65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +173,7 @@
 		65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLinkableView.swift; sourceTree = "<group>"; };
 		65C8C06520A83C7D00CDEDD9 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
 		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */,
+				65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +262,7 @@
 		656AFB28208BEEC6007E6426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65DE07C620AAD81600B79540 /* KPCTabsControl.framework */,
 				65ADB3D120A4836A007938C2 /* JSONSchema.framework */,
 				65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */,
 			);
@@ -613,6 +619,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/JSONSchema.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/KPCTabsControl.framework",
 			);
 			outputPaths = (
 			);
