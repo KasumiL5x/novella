@@ -110,7 +110,7 @@
         "y" : 0,
         "x" : 0
       },
-      "name" : "B061E727-C0B7-4CD3-A314-4C64FB6D74AD",
+      "name" : "graph 1",
       "nodes" : [
         "D454552F-066A-491C-BAC3-A6AB92084DA4",
         "37BBF94C-2A12-4D35-879B-F9CD4192A652",
@@ -136,7 +136,7 @@
         "y" : 0,
         "x" : 0
       },
-      "name" : "39665628-AD9B-4CEC-97C0-E1233CE1647D",
+      "name" : "graph 2",
       "nodes" : [
         "6540FDFF-94AB-42C5-97E8-F66CDE7662B2",
         "3DC75211-79C3-4EA0-AED9-EC85A00C7640"

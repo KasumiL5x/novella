@@ -66,9 +66,21 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
 	@IBOutlet weak var _tabController: TabsControl!
 	
+	// MARK: - - Images for Story Browser -
+	fileprivate var _graphIcon: NSImage?
+	fileprivate var _folderIcon: NSImage?
+	fileprivate var _variableIcon: NSImage?
+	fileprivate var _dialogIcon: NSImage?
+	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		// load icons
+		_graphIcon = NSImage(named: NSImage.Name(rawValue: "Graph"))
+		_folderIcon = NSImage(named: NSImage.Name(rawValue: "Folder"))
+		_variableIcon = NSImage(named: NSImage.Name(rawValue: "Variable"))
+		_dialogIcon = NSImage(named: NSImage.Name(rawValue: "Dialog"))
 		
 		_story = NVStory()
 		_story.Delegate = self
@@ -572,47 +584,59 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		return false
 	}
 	
+	func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+		if item is String {
+			return true
+		}
+		return false
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
-		var name = "error"
-		
-		if item is String {
-			name = item as! String
-		}
-		
-		if let asFolder = item as? NVFolder {
-			name = asFolder.Name
-		}
-		
-		if let asVariable = item as? NVVariable {
-			name = asVariable.Name
-		}
-		
-		if let asGraph = item as? NVGraph {
-			name = asGraph.Name
-		}
-		
-		if let asDialog = item as? NVDialog {
-			name = asDialog.Name
-		}
-		
-		if let asLink = item as? NVLink {
-			let from = _story.getNameOf(linkable: asLink.Origin)
-			let to = _story.getNameOf(linkable: asLink.Transfer.Destination)
-			name = "\(from) => \(to)"
-		}
-		
-		if let asBranch = item as? NVBranch {
-			let from = _story.getNameOf(linkable: asBranch.Origin)
-			let toTrue = _story.getNameOf(linkable: asBranch.TrueTransfer.Destination)
-			let toFalse = _story.getNameOf(linkable: asBranch.FalseTransfer.Destination)
-			name = "\(from) => T=\(toTrue); F=\(toFalse)"
-		}
-		
-		if tableColumn?.identifier.rawValue == "NameCell" {
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+		if let asString = item as? String {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "HeaderCell"), owner: self) as? NSTableCellView
+			view?.textField?.stringValue = asString
+		} else {
+			var name = "error"
+			var icon: NSImage? = nil
+			switch item {
+			case is NVFolder:
+				name = (item as! NVFolder).Name
+				icon = _folderIcon
+				
+			case is NVVariable:
+				name = (item as! NVVariable).Name
+				icon = _variableIcon
+				
+			case is NVGraph:
+				name = (item as! NVGraph).Name
+				icon = _graphIcon
+				
+			case is NVDialog:
+				name = (item as! NVDialog).Name
+				icon = _dialogIcon
+				
+			case is NVLink:
+				let from = _story.getNameOf(linkable: (item as! NVLink).Origin)
+				let to = _story.getNameOf(linkable: (item as! NVLink).Transfer.Destination)
+				name = "\(from) => \(to)"
+				icon = nil
+				
+			case is NVBranch:
+				let from = _story.getNameOf(linkable: (item as! NVBranch).Origin)
+				let toTrue = _story.getNameOf(linkable: (item as! NVBranch).TrueTransfer.Destination)
+				let toFalse = _story.getNameOf(linkable: (item as! NVBranch).FalseTransfer.Destination)
+				name = "\(from) => T=\(toTrue); F=\(toFalse)"
+				icon = nil
+				
+			default:
+				break
+			}
+			
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DataCell"), owner: self) as? NSTableCellView
 			view?.textField?.stringValue = name
+			view?.imageView?.image = icon
 		}
 		
 		return view
