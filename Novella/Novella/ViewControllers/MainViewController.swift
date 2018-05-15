@@ -164,11 +164,11 @@ class MainViewController: NSViewController {
 		for curr in _story.Graphs {
 			addNewTab(forGraph: curr)
 		}
+		// select first tab
 		if _tabs.count > 0 {
 			_tabController.reloadTabs()
 			selectTab(item: _tabs[0])
 		}
-		
 		
 		// store file url for saving
 		_openedFile = ofd.url!
@@ -276,9 +276,9 @@ class MainViewController: NSViewController {
 		_story = NVStory()
 	}
 	
-	// MARK: - - TabView Functions -
+	// MARK: - - Tabs/TabView Functions -
 	@discardableResult
-	fileprivate func addNewTab(forGraph: NVGraph) -> NSTabViewItem {
+	fileprivate func addNewTab(forGraph: NVGraph) -> TabItem {
 		// make main tab view
 		let tabViewItem = NSTabViewItem()
 		tabViewItem.label = forGraph.Name
@@ -313,17 +313,37 @@ class MainViewController: NSViewController {
 		_tabs.append(tabItem)
 		_tabController.reloadTabs()
 		
-		return tabViewItem
+		return tabItem
 	}
+	
+	fileprivate func closeTab(tab: TabItem) {
+		guard let index = _tabs.index(of: tab) else { return }
+		
+		// re-assign selected tab if this tab was selected
+		if _selectedTab == tab {
+			// behavior of KPCTabsControl seems to be select to right if it exists, but don't select left and instead give nil
+			_selectedTab = (index+1 >= _tabs.count) ? nil : _tabs[index+1]
+		}
+		
+		// remove from tabs array
+		_tabs.remove(at: index)
+		
+		// refresh tab control
+		_tabController.reloadTabs()
+		
+		// remove from actual tab view
+		_tabView.removeTabViewItem(tab.tabItem)
+	}
+	
 	fileprivate func closeAllTabs() {
 		_tabs = []
 		_selectedTab = nil
+		_tabController.reloadTabs()
+		
 		for curr in _tabView.tabViewItems.reversed() {
 			_tabView.removeTabViewItem(curr)
 		}
-		_tabController.reloadTabs()
 	}
-	
 	
 	fileprivate func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
 		// must have a view
@@ -357,22 +377,10 @@ class MainViewController: NSViewController {
 		})?.tabItem
 	}
 	
-	fileprivate func isGraphOpen(graph: NVGraph) -> Bool {
-		return getTabForGraph(graph: graph) != nil
-	}
-	
 	// MARK: - - Interface Buttons -
 	@IBAction func onCloseTab(_ sender: NSButton) {
 		if let item = _selectedTab {
-			guard let index = _tabs.index(of: item) else {
-				fatalError("Could not find tab for some reason: \(item)")
-			}
-			// behavior of the tab framework seems to be select tab to the right if exists but not left (i.e. nil otherwise)
-			_selectedTab = (index+1 >= _tabs.count) ? nil : _tabs[index+1]
-			
-			_tabs.remove(at: index)
-			_tabController.reloadTabs()
-			_tabView.removeTabViewItem(item.tabItem)
+			closeTab(tab: item)
 		}
 	}
 	
@@ -382,11 +390,8 @@ class MainViewController: NSViewController {
 			alertError(message: "Could not add Graph!", info: "Adding a graph to the Story failed.")
 			return // TODO: Remove graph
 		}
-		addNewTab(forGraph: graph)
-		selectTab(item: _tabs[_tabs.count - 1])
-		
-		print("the fuck")
-//		print(_selectedTab)
+		let newTab = addNewTab(forGraph: graph)
+		selectTab(item: newTab)
 		
 		reloadBrowser()
 	}
