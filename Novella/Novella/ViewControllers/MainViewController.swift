@@ -640,9 +640,23 @@ extension MainViewController: TabsControlDelegate {
 	func tabsControl(_ control: TabsControl, didReorderItems items: [AnyObject]) {
 	}
 	func tabsControl(_ control: TabsControl, canEditTitleOfItem item: AnyObject) -> Bool {
-		return false
+		return true
 	}
 	func tabsControl(_ control: TabsControl, setTitle newTitle: String, forItem item: AnyObject) {
+		let tabItem = (item as! TabItem)
+		let oldName = tabItem.title
+		
+		if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
+			do {
+				try nvGraph.setName(newTitle)
+				tabItem.title = newTitle
+			} catch {
+				tabItem.title = oldName
+				control.reloadTabs() // must reload if it failed to update the tab again
+			}
+		}
+		
+		reloadBrowser()
 	}
 	
 	func tabsControl(_ control: TabsControl, canSelectItem item: AnyObject) -> Bool {
