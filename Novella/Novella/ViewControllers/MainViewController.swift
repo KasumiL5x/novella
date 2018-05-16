@@ -61,10 +61,11 @@ class MainViewController: NSViewController {
 	]
 	
 	// MARK: - - Outlets -
+	@IBOutlet fileprivate weak var _splitView: NSSplitView!
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
 	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
-	@IBOutlet weak var _tabController: TabsControl!
+	@IBOutlet fileprivate weak var _tabController: TabsControl!
 	
 	// MARK: - - Images for Story Browser -
 	fileprivate var _graphIcon: NSImage?
@@ -84,6 +85,8 @@ class MainViewController: NSViewController {
 		
 		_story = NVStory()
 		_story.Delegate = self
+		
+		_splitView.delegate = self
 		
 		_storyBrowser.delegate = self
 		_storyBrowser.dataSource = self
@@ -770,3 +773,36 @@ extension MainViewController: TabsControlDataSource {
 	}
 }
 
+// MARK: - - NSSplitViewDelegate -
+extension MainViewController: NSSplitViewDelegate {
+	func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+		let subviews = splitView.subviews
+		let count = subviews.count
+		if count < 1 {
+			return false
+		}
+		if (subview == subviews[0]) || (subview == subviews[count-1]) {
+			return true
+		}
+		
+		return false
+	}
+	
+	func splitView(_ splitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAt dividerIndex: Int) -> Bool {
+		return true
+	}
+	
+	func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+		if dividerIndex == 0 {
+			return proposedMinimumPosition + 150.0
+		}
+		return proposedMinimumPosition
+	}
+	
+	func splitView(_ splitView: NSSplitView, constrainMaxCoordinate proposedMaximumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+		if dividerIndex == (splitView.subviews.count-2) { // number of subviews - 1 is the number of dividers, so -2 to get the last divider
+			return proposedMaximumPosition - 150.0
+		}
+		return proposedMaximumPosition
+	}
+}
