@@ -314,7 +314,6 @@ class MainViewController: NSViewController {
 		
 		// create graph view and add it as the scroll view's document view
 		let graphView = GraphView(graph: forGraph,story: _story, frameRect: NSMakeRect(0.0, 0.0, MainViewController.SCROLL_SIZE, MainViewController.SCROLL_SIZE), visibleRect: NSMakeRect(0.0, 0.0, _tabView.frame.size.width, _tabView.frame.size.height))
-		graphView.Delegate = self
 		scrollView.documentView = graphView
 		
 		// add to tab view
@@ -510,21 +509,6 @@ extension MainViewController: NVStoryDelegate {
 	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
 		print("Changed graph's entry to \(entry.UUID).")
 		reloadBrowser()
-	}
-}
-
-// MARK: - - GraphViewDelegate -
-extension MainViewController: GraphViewDelegate {
-	func onLinkAdded(link: PinViewLink) {
-		print("GraphView added link.")
-	}
-	
-	func onBranchAdded(branch: PinViewBranch) {
-		print("GraphView added branch.")
-	}
-	
-	func onDialogAdded(dialog: DialogLinkableView) {
-		print("GraphView added dialog.")
 	}
 }
 

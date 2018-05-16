@@ -9,12 +9,6 @@
 import Cocoa
 import NovellaModel
 
-protocol GraphViewDelegate {
-	func onDialogAdded(dialog: DialogLinkableView)
-	func onLinkAdded(link: PinViewLink)
-	func onBranchAdded(branch: PinViewBranch)
-}
-
 class GraphView: NSView {
 	// MARK: - - Variables -
 	fileprivate let _nvGraph: NVGraph
@@ -43,8 +37,6 @@ class GraphView: NSView {
 	// MARK: GraphView Context Menu
 	fileprivate var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
 	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
-	// MARK: Delegates
-	fileprivate var _delegate: GraphViewDelegate?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -72,8 +64,6 @@ class GraphView: NSView {
 		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
-		//
-		self._delegate = nil
 		
 		super.init(frame: frameRect)
 		
@@ -111,10 +101,6 @@ class GraphView: NSView {
 	// MARK: - - Properties -
 	var NovellaGraph: NVGraph {
 		get{ return _nvGraph }
-	}
-	var Delegate: GraphViewDelegate? {
-		get{ return _delegate }
-		set{ _delegate = newValue }
 	}
 	
 	// MARK: - - Setup -
@@ -534,7 +520,6 @@ extension GraphView {
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
-		Delegate?.onDialogAdded(dialog: node)
 		return node
 	}
 	@discardableResult
@@ -551,14 +536,12 @@ extension GraphView {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		
-		Delegate?.onLinkAdded(link: pin)
 		return pin
 	}
 	fileprivate func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
 		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		
-		Delegate?.onBranchAdded(branch: pin)
 		return pin
 	}
 }
