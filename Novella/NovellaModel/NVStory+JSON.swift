@@ -99,7 +99,7 @@ extension NVStory {
 				"properties": [
 					"uuid": [ "$ref": "#/definitions/uuid" ],
 					"name": [ "$ref": "#/definitions/name" ],
-					// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
+					// This is mapped to DataType.stringValue
 					"datatype": [
 						"type": "string",
 						"enum": ["boolean", "integer", "double"]
@@ -283,7 +283,6 @@ extension NVStory {
 									"content": [ "type": "string" ],
 									"preview": [ "type": "string" ],
 									"directions": [ "type": "string" ]
-									// TODO: dialog properties
 								]
 							],
 							// delivery
@@ -452,8 +451,6 @@ extension NVStory {
 			
 			if let asDialog = curr as? NVDialog {
 				entry["nodetype"] = "dialog"
-				
-				// TODO: Missing out the below (so it doesn't validate oneOf) doesn't print the path in the jsonschema, why?
 				entry["content"] = asDialog._content
 				entry["preview"] = asDialog._preview
 				entry["directions"] = asDialog._directions

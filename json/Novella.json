@@ -84,7 +84,7 @@
 			"properties": {
 				"uuid": { "$ref": "#/definitions/uuid" },
 				"name": { "$ref": "#/definitions/name" },
-				// This is mapped to DataType.stringValue; TODO: Can I auto-map this?
+				// This is mapped to DataType.stringValue
 				"datatype": {
 					"type": "string",
 					"enum": ["boolean", "integer", "double"]
@@ -268,7 +268,6 @@
 								"content": { "type": "string" },
 								"preview": { "type": "string" },
 								"directions": { "type": "string" }
-								// TODO: dialog properties
 							}
 						},
 						// delivery
