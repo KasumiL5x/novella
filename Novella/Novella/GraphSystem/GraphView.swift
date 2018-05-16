@@ -155,11 +155,17 @@ class GraphView: NSView {
 				let node = DialogLinkableView(node: curr as! NVDialog, graphView: self)
 				_allLinkableViews.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
-				break
+				
 			default:
 				print("Not implemented node type \(curr).")
 				break
 			}
+		}
+		// load all subgraph (nodes)
+		for curr in graph.Graphs {
+			let node = GraphLinkableView(node: curr, graphView: self)
+			_allLinkableViews.append(node)
+			self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		}
 		// load all links
 		for curr in graph.Links {

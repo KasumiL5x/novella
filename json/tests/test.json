@@ -37,7 +37,7 @@
       "B457CC69-3CE8-47DF-B3A8-B173EA52F614",
       "530351D0-A587-46D4-8AF9-4BE9153B9022"
     ],
-    "name" : "",
+    "name" : "My Test Story",
     "folders" : [
 
     ]
@@ -110,7 +110,7 @@
         "y" : 0,
         "x" : 0
       },
-      "name" : "graph 1",
+      "name" : "Main Graph",
       "nodes" : [
         "D454552F-066A-491C-BAC3-A6AB92084DA4",
         "37BBF94C-2A12-4D35-879B-F9CD4192A652",
@@ -136,7 +136,7 @@
         "y" : 0,
         "x" : 0
       },
-      "name" : "graph 2",
+      "name" : "Secondary Graph",
       "nodes" : [
         "6540FDFF-94AB-42C5-97E8-F66CDE7662B2",
         "3DC75211-79C3-4EA0-AED9-EC85A00C7640"
