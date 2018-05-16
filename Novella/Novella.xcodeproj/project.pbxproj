@@ -51,8 +51,6 @@
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
 		658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CB1207E7E6600E2B46B /* Main.storyboard */; };
-		658C7CBF207E7E6600E2B46B /* NovellaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CBE207E7E6600E2B46B /* NovellaTests.swift */; };
-		658C7CCA207E7E6600E2B46B /* NovellaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */; };
 		65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */; };
 		65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D120A4836A007938C2 /* JSONSchema.framework */; };
 		65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6A020A7166900B9C5E5 /* GraphView.swift */; };
@@ -72,20 +70,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		658C7CBB207E7E6600E2B46B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658C7CA0207E7E6500E2B46B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 658C7CA7207E7E6500E2B46B;
-			remoteInfo = Novella;
-		};
-		658C7CC6207E7E6600E2B46B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658C7CA0207E7E6500E2B46B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 658C7CA7207E7E6500E2B46B;
-			remoteInfo = Novella;
-		};
 		65E67DD020A458A500ED7BED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 658C7CA0207E7E6500E2B46B /* Project object */;
@@ -158,12 +142,6 @@
 		658C7CB2207E7E6600E2B46B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		658C7CB4207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658C7CB5207E7E6600E2B46B /* Novella.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Novella.entitlements; sourceTree = "<group>"; };
-		658C7CBA207E7E6600E2B46B /* NovellaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovellaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		658C7CBE207E7E6600E2B46B /* NovellaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovellaTests.swift; sourceTree = "<group>"; };
-		658C7CC0207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovellaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovellaUITests.swift; sourceTree = "<group>"; };
-		658C7CCB207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65ADB3D120A4836A007938C2 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65AFA6A020A7166900B9C5E5 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -188,20 +166,6 @@
 			files = (
 				65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */,
 				65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658C7CB7207E7E6600E2B46B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658C7CC2207E7E6600E2B46B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,8 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				658C7CAA207E7E6500E2B46B /* Novella */,
-				658C7CBD207E7E6600E2B46B /* NovellaTests */,
-				658C7CC8207E7E6600E2B46B /* NovellaUITests */,
 				65E67DCC20A458A500ED7BED /* NovellaModel */,
 				658C7CA9207E7E6500E2B46B /* Products */,
 				656AFB28208BEEC6007E6426 /* Frameworks */,
@@ -294,8 +256,6 @@
 			isa = PBXGroup;
 			children = (
 				658C7CA8207E7E6500E2B46B /* Novella.app */,
-				658C7CBA207E7E6600E2B46B /* NovellaTests.xctest */,
-				658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */,
 				65E67DCB20A458A500ED7BED /* NovellaModel.framework */,
 			);
 			name = Products;
@@ -316,24 +276,6 @@
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
 			);
 			path = Novella;
-			sourceTree = "<group>";
-		};
-		658C7CBD207E7E6600E2B46B /* NovellaTests */ = {
-			isa = PBXGroup;
-			children = (
-				658C7CBE207E7E6600E2B46B /* NovellaTests.swift */,
-				658C7CC0207E7E6600E2B46B /* Info.plist */,
-			);
-			path = NovellaTests;
-			sourceTree = "<group>";
-		};
-		658C7CC8207E7E6600E2B46B /* NovellaUITests */ = {
-			isa = PBXGroup;
-			children = (
-				658C7CC9207E7E6600E2B46B /* NovellaUITests.swift */,
-				658C7CCB207E7E6600E2B46B /* Info.plist */,
-			);
-			path = NovellaUITests;
 			sourceTree = "<group>";
 		};
 		65AFA6A220A7181C00B9C5E5 /* GraphSystem */ = {
@@ -454,42 +396,6 @@
 			productReference = 658C7CA8207E7E6500E2B46B /* Novella.app */;
 			productType = "com.apple.product-type.application";
 		};
-		658C7CB9207E7E6600E2B46B /* NovellaTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 658C7CD1207E7E6600E2B46B /* Build configuration list for PBXNativeTarget "NovellaTests" */;
-			buildPhases = (
-				658C7CB6207E7E6600E2B46B /* Sources */,
-				658C7CB7207E7E6600E2B46B /* Frameworks */,
-				658C7CB8207E7E6600E2B46B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				658C7CBC207E7E6600E2B46B /* PBXTargetDependency */,
-			);
-			name = NovellaTests;
-			productName = NovellaTests;
-			productReference = 658C7CBA207E7E6600E2B46B /* NovellaTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		658C7CC4207E7E6600E2B46B /* NovellaUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 658C7CD4207E7E6600E2B46B /* Build configuration list for PBXNativeTarget "NovellaUITests" */;
-			buildPhases = (
-				658C7CC1207E7E6600E2B46B /* Sources */,
-				658C7CC2207E7E6600E2B46B /* Frameworks */,
-				658C7CC3207E7E6600E2B46B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				658C7CC7207E7E6600E2B46B /* PBXTargetDependency */,
-			);
-			name = NovellaUITests;
-			productName = NovellaUITests;
-			productReference = 658C7CC5207E7E6600E2B46B /* NovellaUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		65E67DCA20A458A500ED7BED /* NovellaModel */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65E67DD420A458A500ED7BED /* Build configuration list for PBXNativeTarget "NovellaModel" */;
@@ -527,14 +433,6 @@
 							};
 						};
 					};
-					658C7CB9207E7E6600E2B46B = {
-						CreatedOnToolsVersion = 9.3;
-						TestTargetID = 658C7CA7207E7E6500E2B46B;
-					};
-					658C7CC4207E7E6600E2B46B = {
-						CreatedOnToolsVersion = 9.3;
-						TestTargetID = 658C7CA7207E7E6500E2B46B;
-					};
 					65E67DCA20A458A500ED7BED = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 0930;
@@ -555,8 +453,6 @@
 			projectRoot = "";
 			targets = (
 				658C7CA7207E7E6500E2B46B /* Novella */,
-				658C7CB9207E7E6600E2B46B /* NovellaTests */,
-				658C7CC4207E7E6600E2B46B /* NovellaUITests */,
 				65E67DCA20A458A500ED7BED /* NovellaModel */,
 			);
 		};
@@ -571,20 +467,6 @@
 				658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */,
 				658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */,
 				6553C95E2092723A00E6737B /* Reader.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658C7CB8207E7E6600E2B46B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658C7CC3207E7E6600E2B46B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,22 +554,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		658C7CB6207E7E6600E2B46B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				658C7CBF207E7E6600E2B46B /* NovellaTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658C7CC1207E7E6600E2B46B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				658C7CCA207E7E6600E2B46B /* NovellaUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		65E67DC620A458A500ED7BED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -725,16 +591,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		658C7CBC207E7E6600E2B46B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 658C7CA7207E7E6500E2B46B /* Novella */;
-			targetProxy = 658C7CBB207E7E6600E2B46B /* PBXContainerItemProxy */;
-		};
-		658C7CC7207E7E6600E2B46B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 658C7CA7207E7E6500E2B46B /* Novella */;
-			targetProxy = 658C7CC6207E7E6600E2B46B /* PBXContainerItemProxy */;
-		};
 		65E67DD120A458A500ED7BED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 65E67DCA20A458A500ED7BED /* NovellaModel */;
@@ -915,88 +771,6 @@
 			};
 			name = Release;
 		};
-		658C7CD2207E7E6600E2B46B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
-				INFOPLIST_FILE = NovellaTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.NovellaTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Novella.app/Contents/MacOS/Novella";
-			};
-			name = Debug;
-		};
-		658C7CD3207E7E6600E2B46B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
-				INFOPLIST_FILE = NovellaTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.NovellaTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Novella.app/Contents/MacOS/Novella";
-			};
-			name = Release;
-		};
-		658C7CD5207E7E6600E2B46B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
-				INFOPLIST_FILE = NovellaUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.NovellaUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TEST_TARGET_NAME = Novella;
-			};
-			name = Debug;
-		};
-		658C7CD6207E7E6600E2B46B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 59LJ6Z4X2Z;
-				INFOPLIST_FILE = NovellaUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.NovellaUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TEST_TARGET_NAME = Novella;
-			};
-			name = Release;
-		};
 		65E67DD520A458A500ED7BED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1083,24 +857,6 @@
 			buildConfigurations = (
 				658C7CCF207E7E6600E2B46B /* Debug */,
 				658C7CD0207E7E6600E2B46B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		658C7CD1207E7E6600E2B46B /* Build configuration list for PBXNativeTarget "NovellaTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				658C7CD2207E7E6600E2B46B /* Debug */,
-				658C7CD3207E7E6600E2B46B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		658C7CD4207E7E6600E2B46B /* Build configuration list for PBXNativeTarget "NovellaUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				658C7CD5207E7E6600E2B46B /* Debug */,
-				658C7CD6207E7E6600E2B46B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
