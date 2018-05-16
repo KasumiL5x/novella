@@ -23,6 +23,8 @@ public class NVGraph {
 	var _parent: NVGraph?
 	var _story: NVStory
 	
+	var _delegate: NVStoryDelegate?
+	
 	init(uuid: NSUUID, name: String, story: NVStory) {
 		self._uuid = uuid
 		self._name = name
@@ -35,6 +37,7 @@ public class NVGraph {
 		self._editorPos = CGPoint.zero
 		self._parent = nil
 		self._story = story
+		self._delegate = nil
 	}
 	
 	// MARK:  Properties
@@ -115,6 +118,8 @@ public class NVGraph {
 		// now add
 		graph._parent = self
 		_graphs.append(graph)
+		
+		_delegate?.onStoryGraphAddGraph(graph: graph, parent: self)
 		return graph
 	}
 	

@@ -449,6 +449,7 @@ extension MainViewController: NVStoryDelegate {
 	func onStoryMakeDialog(dialog: NVDialog) {
 		reloadBrowser()
 	}
+	
 	func onStoryAddFolder(folder: NVFolder) {
 		reloadBrowser()
 	}
@@ -460,6 +461,10 @@ extension MainViewController: NVStoryDelegate {
 	}
 	func onStoryRemoveGraph(graph: NVGraph) {
 		reloadBrowser()
+	}
+	
+	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
+		print("Added graph \(graph.Name) to graph \(parent.Name).")
 	}
 }
 

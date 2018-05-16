@@ -33,6 +33,9 @@ public protocol NVStoryDelegate {
 	func onStoryAddGraph(graph: NVGraph)
 	// Called when an NVGraph is removed from the Story using Story.remove(graph).
 	func onStoryRemoveGraph(graph: NVGraph)
+	
+	// Called when an NVGraph is added to an NVGraph using NVGraph.add(graph).
+	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph)
 }
 
 // MARK: - - Default Implementations -
@@ -59,5 +62,8 @@ public extension NVStoryDelegate {
 	func onStoryAddGraph(graph: NVGraph) {
 	}
 	func onStoryRemoveGraph(graph: NVGraph) {
+	}
+	
+	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
 	}
 }

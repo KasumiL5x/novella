@@ -59,7 +59,10 @@ public class NVStory {
 	}
 	public var Delegate: NVStoryDelegate? {
 		get{ return _delegate }
-		set{ _delegate = newValue }
+		set{
+			_delegate = newValue
+			_allGraphs.forEach{$0._delegate = _delegate}
+		}
 	}
 	
 	// MARK: Javascript stuff
@@ -190,6 +193,7 @@ extension NVStory {
 	@discardableResult
 	public func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
 		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: self)
+		graph._delegate = _delegate
 		_allGraphs.append(graph)
 		_allIdentifiables.append(graph)
 		
