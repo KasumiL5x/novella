@@ -36,6 +36,28 @@ public protocol NVStoryDelegate {
 	
 	// Called when an NVGraph is added to an NVGraph using NVGraph.add(graph).
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph)
+	// Called when an NVNode (or derived class) is added to an NVGraph using NVGraph.add(node).
+	func onStoryGraphAddNode(node: NVNode, parent: NVGraph)
+	// Called when an NVBaseLink (or derived class) is added to an NVGraph using NVGraph.add(link).
+	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph)
+	// Called when an NVListener is added to an NVGraph using NVGraph.add(listener).
+	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph)
+	// Called when an NVExitNode is added to an NVGraph using NVGraph.add(exit).
+	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph)
+	// Called when an NVGraph is removed from an NVGraph using NVGraph.remove(graph).
+	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph)
+	// Called when an NVNode (or derived class) is removed from an NVGraph using NVGraph.remove(node).
+	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph)
+	// Called when an NVBaseLink (or derived class) is removed from NVGraph using NVGraph.remove(link).
+	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph)
+	// Called when an NVListener is removed from an NVGraph using NVGraph.remove(listener).
+	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph)
+	// Called when an NVExitNode is removed from an NVGraph using NVGraph.remove(exit).
+	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph)
+	// Called when an NVGraph's name is changed using NVGraph.setName().
+	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph)
+	// Called when an NVGraph's entry is set using NVGraph.setEntry().
+	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph)
 }
 
 // MARK: - - Default Implementations -
@@ -65,5 +87,27 @@ public extension NVStoryDelegate {
 	}
 	
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
+	}
+	func onStoryGraphAddNode(node: NVNode, parent: NVGraph) {
+	}
+	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph) {
+	}
+	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph) {
+	}
+	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph) {
+	}
+	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
+	}
+	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph) {
+	}
+	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph) {
+	}
+	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
+	}
+	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
+	}
+	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
+	}
+	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
 	}
 }

@@ -53,12 +53,15 @@ public class NVGraph {
 	
 	// MARK: Setters
 	public func setName(_ name: String) throws {
+		let oldName = _name // for delegate
+		
 		// if there's no parent graph, check siblings of the story for name clashes
 		if nil == _parent {
 			if _story.containsGraphName(name) {
 				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the Story already contains that name.")
 			}
 			_name = name
+			_delegate?.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)
 			return
 		}
 		
@@ -68,6 +71,7 @@ public class NVGraph {
 				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the parent Graph (\(_parent!._name)) already contains that name.")
 			}
 			_name = name
+			_delegate?.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)
 			return
 		}
 		
@@ -86,6 +90,8 @@ public class NVGraph {
 			}
 		}
 		_entry = entry
+		
+		_delegate?.onStoryGraphSetEntry(entry: entry, graph: self)
 	}
 	
 	// MARK: Subgraphs
@@ -129,6 +135,8 @@ public class NVGraph {
 		}
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
+		
+		_delegate?.onStoryGraphRemoveGraph(graph: graph, from: self)
 	}
 	
 	// MARK: Nodes
@@ -143,6 +151,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to add a Node but it already exists (to \(_name)).")
 		}
 		_nodes.append(node)
+		
+		_delegate?.onStoryGraphAddNode(node: node, parent: self)
 		return node
 	}
 	
@@ -151,6 +161,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to remove a Node from (\(_name)) but it was not a child.")
 		}
 		_nodes.remove(at: idx)
+		
+		_delegate?.onStoryGraphRemoveNode(node: node, from: self)
 	}
 	
 	// MARK: Links
@@ -165,6 +177,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
 		}
 		_links.append(link)
+		
+		_delegate?.onStoryGraphAddLink(link: link, parent: self)
 		return link
 	}
 	
@@ -173,6 +187,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
 		}
 		_links.remove(at: idx)
+		
+		_delegate?.onStoryGraphRemoveLink(link: link, from: self)
 	}
 	
 	// MARK: Listeners
@@ -187,6 +203,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to add a Listener but it already exists (to Graph \(_name)).")
 		}
 		_listeners.append(listener)
+		
+		_delegate?.onStoryGraphAddListener(listener: listener, parent: self)
 		return listener
 	}
 	
@@ -195,6 +213,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to remove Listener from Graph (\(_name)) but it was not a child.")
 		}
 		_listeners.remove(at: idx)
+		
+		_delegate?.onStoryGraphRemoveListener(listener: listener, from: self)
 	}
 	
 	// MARK: Exit Nodes
@@ -209,6 +229,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to Graph \(_name)).")
 		}
 		_exits.append(exit)
+		
+		_delegate?.onStoryGraphAddExit(exit: exit, parent: self)
 		return exit
 	}
 	
@@ -217,6 +239,8 @@ public class NVGraph {
 			throw NVError.invalid("Tried to remove ExitNode from Graph (\(_name)) but it was not a child.")
 		}
 		_exits.remove(at: idx)
+		
+		_delegate?.onStoryGraphRemoveExit(exit: exit, from: self)
 	}
 	
 	// MARK: Simulation
