@@ -422,6 +422,13 @@ class MainViewController: NSViewController {
 	// MARK: - - Story Browser Functions -
 	func reloadBrowser() {
 		_storyBrowser.reloadData()
+		//_storyBrowser.expandItem(nil, expandChildren: false) // expands everything
+		// expand top-level objects
+		for i in 0..._storyBrowser.numberOfRows {
+			if _storyBrowser.level(forRow: i) == 0 { // depth=0 a.k.a top level
+				_storyBrowser.expandItem(_storyBrowser.item(atRow: i), expandChildren: false)
+			}
+		}
 	}
 }
 
