@@ -13,36 +13,6 @@ import struct KPCTabsControl.DefaultStyle
 import struct KPCTabsControl.SafariStyle
 import struct KPCTabsControl.ChromeStyle
 import protocol KPCTabsControl.TabsControlDelegate
-import protocol KPCTabsControl.TabsControlDataSource
-
-enum SaveAlertResult {
-	case save
-	case dontsave
-	case cancel
-}
-
-class TabItem {
-	var title: String = ""
-	var icon: NSImage?
-	var menu: NSMenu?
-	var altIcon: NSImage?
-	var selectable: Bool
-	var tabItem: NSTabViewItem
-	
-	init(title: String, icon: NSImage?, menu: NSMenu?, altIcon: NSImage?, tabItem: NSTabViewItem, selectable: Bool = true) {
-		self.title = title
-		self.icon = icon
-		self.menu = menu
-		self.altIcon = altIcon
-		self.tabItem = tabItem
-		self.selectable = selectable
-	}
-}
-extension TabItem: Equatable {
-	static func == (lhs: TabItem, rhs: TabItem) -> Bool {
-		return lhs.title == rhs.title
-	}
-}
 
 class MainViewController: NSViewController {
 	// MARK: - - Constants -
@@ -53,7 +23,6 @@ class MainViewController: NSViewController {
 	// MARK: - - Variables -
 	fileprivate var _story: NVStory = NVStory()
 	fileprivate var _openedFile: URL?
-	fileprivate var _tabs: [TabItem] = []
 	fileprivate var _selectedTab: TabItem?
 	fileprivate var _browserTopLevel: [String] = [
 		"Graphs",
@@ -67,37 +36,45 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
 	
-	// MARK: - - Images for Story Browser -
-	fileprivate var _graphIcon: NSImage?
-	fileprivate var _folderIcon: NSImage?
-	fileprivate var _variableIcon: NSImage?
-	fileprivate var _dialogIcon: NSImage?
+	// MARK: - - Delegates & Data Sources -
+	fileprivate var _storyDelegate: StoryDelegate?
+	fileprivate var _storyBrowserDataSource: StoryBrowserDataSource?
+	fileprivate var _storyBrowserDelegate: StoryBrowserDelegate?
+	fileprivate var _tabsDataSource: TabsDataSource?
+	
+	// MARK: - - Properties -
+	var Story: NVStory {
+		get{ return _story }
+	}
 	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		// load icons
-		_graphIcon = NSImage(named: NSImage.Name(rawValue: "Graph"))
-		_folderIcon = NSImage(named: NSImage.Name(rawValue: "Folder"))
-		_variableIcon = NSImage(named: NSImage.Name(rawValue: "Variable"))
-		_dialogIcon = NSImage(named: NSImage.Name(rawValue: "Dialog"))
+		// delegates and data sources
+		_storyDelegate = StoryDelegate(mvc: self)
+		_storyBrowserDataSource = StoryBrowserDataSource(mvc: self)
+		_storyBrowserDelegate = StoryBrowserDelegate(mvc: self)
+		_tabsDataSource = TabsDataSource()
 		
+		// story
 		_story = NVStory()
-		_story.Delegate = self
-		
+		_story.Delegate = _storyDelegate
+
+		// split view
 		_splitView.delegate = self
 		
-		_storyBrowser.delegate = self
-		_storyBrowser.dataSource = self
+		// story browser
+		_storyBrowser.delegate = _storyBrowserDelegate
+		_storyBrowser.dataSource = _storyBrowserDataSource
 		_storyBrowser.target = self
 		_storyBrowser.doubleAction = #selector(MainViewController.onStoryBrowserDoubleClick)
 		
-		_tabs = []
+		// tab controller
 		_selectedTab = nil
 		_tabController.style = ChromeStyle()
 		_tabController.delegate = self
-		_tabController.dataSource = self
+		_tabController.dataSource = _tabsDataSource
 		_tabController.reloadTabs()
 	}
 	
@@ -180,9 +157,9 @@ class MainViewController: NSViewController {
 			addNewTab(forGraph: curr)
 		}
 		// select first tab
-		if _tabs.count > 0 {
+		if _tabsDataSource!.Tabs.count > 0 {
 			_tabController.reloadTabs()
-			selectTab(item: _tabs[0])
+			selectTab(item: _tabsDataSource!.Tabs[0])
 		}
 		
 		// store file url for saving
@@ -324,23 +301,23 @@ class MainViewController: NSViewController {
 		
 		// add to the tab control list
 		let tabItem = TabItem(title: forGraph.Name, icon: nil, menu: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
-		_tabs.append(tabItem)
+		_tabsDataSource!.Tabs.append(tabItem)
 		_tabController.reloadTabs()
 		
 		return tabItem
 	}
 	
 	fileprivate func closeTab(tab: TabItem) {
-		guard let index = _tabs.index(of: tab) else { return }
+		guard let index = _tabsDataSource!.Tabs.index(of: tab) else { return }
 		
 		// re-assign selected tab if this tab was selected
 		if _selectedTab == tab {
 			// behavior of KPCTabsControl seems to be select to right if it exists, but don't select left and instead give nil
-			_selectedTab = (index+1 >= _tabs.count) ? nil : _tabs[index+1]
+			_selectedTab = (index+1 >= _tabsDataSource!.Tabs.count) ? nil : _tabsDataSource!.Tabs[index+1]
 		}
 		
 		// remove from tabs array
-		_tabs.remove(at: index)
+		_tabsDataSource!.Tabs.remove(at: index)
 		
 		// refresh tab control
 		_tabController.reloadTabs()
@@ -350,7 +327,7 @@ class MainViewController: NSViewController {
 	}
 	
 	fileprivate func closeAllTabs() {
-		_tabs = []
+		_tabsDataSource!.Tabs = []
 		_selectedTab = nil
 		_tabController.reloadTabs()
 		
@@ -383,7 +360,7 @@ class MainViewController: NSViewController {
 	}
 	
 	fileprivate func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
-		return _tabs.first(where: {
+		return _tabsDataSource!.Tabs.first(where: {
 			guard let graphView = getGraphViewFromTab(tab: $0.tabItem) else {
 				return false
 			}
@@ -435,95 +412,8 @@ class MainViewController: NSViewController {
 	}
 }
 
-// MARK: - - NVStoryDelegate -
-extension MainViewController: NVStoryDelegate {
-	func onStoryMakeFolder(folder: NVFolder) {
-		reloadBrowser()
-	}
-	func onStoryMakeVariable(variable: NVVariable) {
-		reloadBrowser()
-	}
-	func onStoryMakeGraph(graph: NVGraph) {
-		reloadBrowser()
-	}
-	func onStoryMakeLink(link: NVLink) {
-		reloadBrowser()
-	}
-	func onStoryMakeBranch(branch: NVBranch) {
-		reloadBrowser()
-	}
-	func onStoryMakeSwitch(switch: NVSwitch) {
-		reloadBrowser()
-	}
-	func onStoryMakeDialog(dialog: NVDialog) {
-		reloadBrowser()
-	}
-	
-	func onStoryAddFolder(folder: NVFolder) {
-		reloadBrowser()
-	}
-	func onStoryRemoveFolder(folder: NVFolder) {
-		reloadBrowser()
-	}
-	func onStoryAddGraph(graph: NVGraph) {
-		reloadBrowser()
-	}
-	func onStoryRemoveGraph(graph: NVGraph) {
-		reloadBrowser()
-	}
-	
-	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
-		print("Added graph \(graph.Name) to graph \(parent.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphAddNode(node: NVNode, parent: NVGraph) {
-		print("Added node \(node.Name) to graph \(parent.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph) {
-		print("Added link \(link.UUID) to graph \(parent.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph) {
-		print("Added listener \(listener.UUID) to graph \(parent.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph) {
-		print("Added exit \(exit.UUID) to graph \(parent.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
-		print("Removed graph \(graph.Name) from graph \(from.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph) {
-		print("Removed node \(node.Name) from graph \(from.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph) {
-		print("Removed link \(link.UUID) from graph \(from.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
-		print("Removed listener \(listener.UUID) from graph \(from.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
-		print("Removed exit \(exit.UUID) from graph \(from.Name).")
-		reloadBrowser()
-	}
-	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
-		print("Changed graph's name from (\(oldName)) to (\(newName)).")
-		reloadBrowser()
-	}
-	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
-		print("Changed graph's entry to \(entry.UUID).")
-		reloadBrowser()
-	}
-}
-
 // MARK: - - Story Browser -
-extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
+extension MainViewController {
 	@objc fileprivate func onStoryBrowserDoubleClick() {
 		let clickedRow = _storyBrowser.clickedRow
 		if -1 == clickedRow {
@@ -535,155 +425,12 @@ extension MainViewController: NSOutlineViewDelegate, NSOutlineViewDataSource {
 		if let asGraph = clickedItem as? NVGraph {
 			// if graph is open, switch to it
 			if let tab = getTabForGraph(graph: asGraph) {
-				selectTab(item: _tabs.first(where: {$0.tabItem == tab}))
+				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
 			} else {
 				_ = addNewTab(forGraph: asGraph)
-				selectTab(item: _tabs[_tabs.count-1])
+				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
 			}
 		}
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if let asFolder = item as? NVFolder {
-			return asFolder.Folders.count + asFolder.Variables.count
-		}
-		
-		if let asGraph = item as? NVGraph {
-			return (asGraph.Graphs.count +
-			        asGraph.Nodes.count +
-							asGraph.Links.count)
-		}
-		
-		if let asString = item as? String {
-			if asString == _browserTopLevel[0] {
-				return _story.Graphs.count
-			}
-			if asString == _browserTopLevel[1] {
-				return _story.Folders.count
-			}
-		}
-		
-		return _browserTopLevel.count
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if let asFolder = item as? NVFolder {
-			if index < asFolder.Folders.count {
-				return asFolder.Folders[index]
-			}
-			return asFolder.Variables[index - asFolder.Folders.count]
-		}
-		
-		if let asGraph = item as? NVGraph {
-			if index < asGraph.Graphs.count {
-				return asGraph.Graphs[index]
-			}
-			var offset = asGraph.Graphs.count
-			
-			if index < (offset + asGraph.Nodes.count) {
-				return asGraph.Nodes[index - offset]
-			}
-			offset += asGraph.Nodes.count
-			
-			if index < (offset + asGraph.Links.count) {
-				return asGraph.Links[index - offset]
-			}
-			offset += asGraph.Links.count
-			
-			return "umm?"
-		}
-		
-		if let asString = item as? String {
-			if asString == _browserTopLevel[0] {
-				return _story.Graphs[index]
-			}
-			if asString == _browserTopLevel[1] {
-				return _story.Folders[index]
-			}
-		}
-		
-		return _browserTopLevel[index]
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		if let asFolder = item as? NVFolder {
-			return (asFolder.Folders.count + asFolder.Variables.count) > 0
-		}
-		
-		if let asGraph = item as? NVGraph {
-			return (asGraph.Graphs.count +
-				      asGraph.Nodes.count +
-				      asGraph.Links.count) > 0
-		}
-		
-		if let asString = item as? String {
-			if asString == _browserTopLevel[0] {
-				return _story.Graphs.count > 0
-			}
-			if asString == _browserTopLevel[1] {
-				return _story.Folders.count > 0
-			}
-		}
-		
-		return false
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
-		if item is String {
-			return true
-		}
-		return false
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-		var view: NSTableCellView? = nil
-		
-		if let asString = item as? String {
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "HeaderCell"), owner: self) as? NSTableCellView
-			view?.textField?.stringValue = asString
-		} else {
-			var name = "error"
-			var icon: NSImage? = nil
-			switch item {
-			case is NVFolder:
-				name = (item as! NVFolder).Name
-				icon = _folderIcon
-				
-			case is NVVariable:
-				name = (item as! NVVariable).Name
-				icon = _variableIcon
-				
-			case is NVGraph:
-				name = (item as! NVGraph).Name
-				icon = _graphIcon
-				
-			case is NVDialog:
-				name = (item as! NVDialog).Name
-				icon = _dialogIcon
-				
-			case is NVLink:
-				let from = _story.getNameOf(linkable: (item as! NVLink).Origin)
-				let to = _story.getNameOf(linkable: (item as! NVLink).Transfer.Destination)
-				name = "\(from) => \(to)"
-				icon = nil
-				
-			case is NVBranch:
-				let from = _story.getNameOf(linkable: (item as! NVBranch).Origin)
-				let toTrue = _story.getNameOf(linkable: (item as! NVBranch).TrueTransfer.Destination)
-				let toFalse = _story.getNameOf(linkable: (item as! NVBranch).FalseTransfer.Destination)
-				name = "\(from) => T=\(toTrue); F=\(toFalse)"
-				icon = nil
-				
-			default:
-				break
-			}
-			
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DataCell"), owner: self) as? NSTableCellView
-			view?.textField?.stringValue = name
-			view?.imageView?.image = icon
-		}
-		
-		return view
 	}
 }
 
@@ -692,7 +439,7 @@ extension MainViewController {
 		// update selected tab
 		_selectedTab = item
 		// get index
-		if _selectedTab != nil, let index = _tabs.index(of: _selectedTab!) {
+		if _selectedTab != nil, let index = _tabsDataSource!.Tabs.index(of: _selectedTab!) {
 			_tabController.selectItemAtIndex(index)
 			onSelectedTabChanged()
 		} else {
@@ -746,31 +493,6 @@ extension MainViewController: TabsControlDelegate {
 		onSelectedTabChanged()
 	}
 	
-}
-extension MainViewController: TabsControlDataSource {
-	func tabsControlNumberOfTabs(_ control: TabsControl) -> Int {
-		return _tabs.count
-	}
-	
-	func tabsControl(_ control: TabsControl, itemAtIndex index: Int) -> AnyObject {
-		return _tabs[index]
-	}
-	
-	func tabsControl(_ control: TabsControl, titleForItem item: AnyObject) -> String {
-		return (item as! TabItem).title
-	}
-	
-	func tabsControl(_ control: TabsControl, menuForItem item: AnyObject) -> NSMenu? {
-		return (item as! TabItem).menu
-	}
-	
-	func tabsControl(_ control: TabsControl, iconForItem item: AnyObject) -> NSImage? {
-		return (item as! TabItem).icon
-	}
-	
-	func tabsControl(_ control: TabsControl, titleAlternativeIconForItem item: AnyObject) -> NSImage? {
-		return (item as! TabItem).altIcon
-	}
 }
 
 // MARK: - - NSSplitViewDelegate -

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65040A4120ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4020ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift */; };
+		65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4220ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift */; };
+		65040A4520ADCED600BC57FE /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4420ADCED600BC57FE /* TabItem.swift */; };
+		65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */; };
+		65040A4920ADD05500BC57FE /* MVC+TabsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */; };
+		65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAA20A7641B002BF136 /* GraphViewCommands.swift */; };
@@ -95,6 +101,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		65040A4020ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryBrowserDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+StoryBrowserDataSource.swift"; sourceTree = SOURCE_ROOT; };
+		65040A4220ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryBrowserDelegate.swift"; path = "Novella/ViewControllers/Main/MVC+StoryBrowserDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		65040A4420ADCED600BC57FE /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabItem.swift; path = Novella/ViewControllers/Main/TabItem.swift; sourceTree = SOURCE_ROOT; };
+		65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SaveAlertResult.swift; path = Novella/ViewControllers/Main/SaveAlertResult.swift; sourceTree = SOURCE_ROOT; };
+		65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+TabsDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+TabsDataSource.swift"; sourceTree = SOURCE_ROOT; };
+		65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryDelegate.swift"; path = "Novella/ViewControllers/Main/MVC+StoryDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		65264CAA20A7641B002BF136 /* GraphViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
@@ -181,6 +193,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65040A3F20ADC8D300BC57FE /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				65C8C06520A83C7D00CDEDD9 /* MainViewController.swift */,
+				65040A4020ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift */,
+				65040A4220ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift */,
+				65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */,
+				65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */,
+				65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */,
+				65040A4420ADCED600BC57FE /* TabItem.swift */,
+			);
+			name = Main;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		652102502083BC6C0028212B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,8 +381,8 @@
 		65F5DFA7207EBD960041FB0D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				65040A3F20ADC8D300BC57FE /* Main */,
 				6553C96120927D6E00E6737B /* ReaderViewController.swift */,
-				65C8C06520A83C7D00CDEDD9 /* MainViewController.swift */,
 				652102502083BC6C0028212B /* Tests */,
 			);
 			path = ViewControllers;
@@ -532,6 +559,7 @@
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
 				65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */,
+				65040A4520ADCED600BC57FE /* TabItem.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
 				65C8C06620A83C7D00CDEDD9 /* MainViewController.swift in Sources */,
 				65AFA6A820A7230500B9C5E5 /* GraphBGView.swift in Sources */,
@@ -539,12 +567,17 @@
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
+				65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
+				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65264CAD20A76DA8002BF136 /* PinView.swift in Sources */,
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
+				65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */,
+				65040A4920ADD05500BC57FE /* MVC+TabsDataSource.swift in Sources */,
+				65040A4120ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				654A155F20AA33C000C99141 /* GraphLinkableView.swift in Sources */,
 				654A155D20AA110500C99141 /* GraphBoundsView.swift in Sources */,
