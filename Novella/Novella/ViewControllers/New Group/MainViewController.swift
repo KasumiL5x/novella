@@ -35,12 +35,14 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
 	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
+	@IBOutlet weak var _inspector: NSTableView!
 	
 	// MARK: - - Delegates & Data Sources -
 	fileprivate var _storyDelegate: StoryDelegate?
 	fileprivate var _storyBrowserDataSource: StoryBrowserDataSource?
 	fileprivate var _storyBrowserDelegate: StoryBrowserDelegate?
 	fileprivate var _tabsDataSource: TabsDataSource?
+	fileprivate var _inspectorDataDelegate: InspectorDataSource?
 	
 	// MARK: - - Properties -
 	var Story: NVStory {
@@ -56,6 +58,7 @@ class MainViewController: NSViewController {
 		_storyBrowserDataSource = StoryBrowserDataSource(mvc: self)
 		_storyBrowserDelegate = StoryBrowserDelegate(mvc: self)
 		_tabsDataSource = TabsDataSource()
+		_inspectorDataDelegate = InspectorDataSource()
 		
 		// story
 		_story = NVStory()
@@ -76,6 +79,10 @@ class MainViewController: NSViewController {
 		_tabController.delegate = self
 		_tabController.dataSource = _tabsDataSource
 		_tabController.reloadTabs()
+		
+		// inspector
+		_inspector.dataSource = _inspectorDataDelegate
+		_inspector.delegate = _inspectorDataDelegate
 	}
 	
 	// MARK: - - Functions called from window -
@@ -294,6 +301,7 @@ class MainViewController: NSViewController {
 		
 		// create graph view and add it as the scroll view's document view
 		let graphView = GraphView(graph: forGraph,story: _story, frameRect: NSMakeRect(0.0, 0.0, MainViewController.SCROLL_SIZE, MainViewController.SCROLL_SIZE), visibleRect: NSMakeRect(0.0, 0.0, _tabView.frame.size.width, _tabView.frame.size.height))
+		graphView.Delegate = self
 		scrollView.documentView = graphView
 		
 		// add to tab view
@@ -526,5 +534,28 @@ extension MainViewController: NSSplitViewDelegate {
 			return proposedMaximumPosition - 150.0
 		}
 		return proposedMaximumPosition
+	}
+}
+
+// MARK: - - GraphViewDelegate -
+extension MainViewController: GraphViewDelegate {
+	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
+		if selection.isEmpty {
+			_inspectorDataDelegate!.clearTarget()
+		} else if selection.count == 1 {
+			let item = selection[0]
+			switch item {
+			case is DialogLinkableView:
+				_inspectorDataDelegate!.setTarget(dialog: (item.Linkable as! NVDialog))
+			case is GraphLinkableView:
+				_inspectorDataDelegate!.setTarget(graph: (item.Linkable as! NVGraph))
+			default:
+				break
+			}
+		} else {
+			_inspectorDataDelegate!.clearTarget() // cannot handle selection of multiple items
+		}
+		
+		_inspector.reloadData()
 	}
 }

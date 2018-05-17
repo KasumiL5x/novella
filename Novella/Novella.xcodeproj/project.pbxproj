@@ -13,6 +13,8 @@
 		65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */; };
 		65040A4920ADD05500BC57FE /* MVC+TabsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */; };
 		65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */; };
+		65040A4D20ADECD200BC57FE /* MVC+InspectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4C20ADECD200BC57FE /* MVC+InspectorDataSource.swift */; };
+		65040A4F20ADF56800BC57FE /* GraphViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAA20A7641B002BF136 /* GraphViewCommands.swift */; };
@@ -107,6 +109,8 @@
 		65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SaveAlertResult.swift; path = Novella/ViewControllers/Main/SaveAlertResult.swift; sourceTree = SOURCE_ROOT; };
 		65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+TabsDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+TabsDataSource.swift"; sourceTree = SOURCE_ROOT; };
 		65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryDelegate.swift"; path = "Novella/ViewControllers/Main/MVC+StoryDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		65040A4C20ADECD200BC57FE /* MVC+InspectorDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MVC+InspectorDataSource.swift"; sourceTree = "<group>"; };
+		65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewDelegate.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		65264CAA20A7641B002BF136 /* GraphViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */,
 				65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */,
 				65040A4420ADCED600BC57FE /* TabItem.swift */,
+				65040A4C20ADECD200BC57FE /* MVC+InspectorDataSource.swift */,
 			);
 			name = Main;
 			path = "New Group";
@@ -320,6 +325,7 @@
 				65264CB020A7742F002BF136 /* PinViewBranch.swift */,
 				65264CAE20A76EC3002BF136 /* PinViewLink.swift */,
 				654A155C20AA110500C99141 /* GraphBoundsView.swift */,
+				65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */,
 			);
 			path = GraphSystem;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 			files = (
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
+				65040A4D20ADECD200BC57FE /* MVC+InspectorDataSource.swift in Sources */,
 				65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */,
 				65040A4520ADCED600BC57FE /* TabItem.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
@@ -573,6 +580,7 @@
 				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65264CAD20A76DA8002BF136 /* PinView.swift in Sources */,
+				65040A4F20ADF56800BC57FE /* GraphViewDelegate.swift in Sources */,
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */,

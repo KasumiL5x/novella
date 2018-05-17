@@ -37,6 +37,8 @@ class GraphView: NSView {
 	// MARK: GraphView Context Menu
 	fileprivate var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
 	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
+	// MARK: Delegate
+	fileprivate var _delegate: GraphViewDelegate?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -101,6 +103,10 @@ class GraphView: NSView {
 	// MARK: - - Properties -
 	var NovellaGraph: NVGraph {
 		get{ return _nvGraph }
+	}
+	var Delegate: GraphViewDelegate? {
+		get{ return _delegate }
+		set{ _delegate = newValue }
 	}
 	
 	// MARK: - - Setup -
@@ -485,6 +491,8 @@ extension GraphView {
 		_selectedNodes.forEach({$0.deselect()})
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
+		
+		_delegate?.onSelectionChanged(graphView: self, selection: _selectedNodes)
 	}
 	
 	fileprivate func deselectNodes(_ nodes: [LinkableView]) {
