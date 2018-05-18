@@ -78,7 +78,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		var view: NSTableCellView?
 		
 		if tableColumn?.identifier.rawValue == "NameColumn" {
-			view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DataCell"), owner: self) as? NSTableCellView
+			view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameDataCell"), owner: self) as? NSTableCellView
 			
 			switch _target {
 			case is NVDialog:
@@ -91,7 +91,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		}
 		
 		if tableColumn?.identifier.rawValue == "ValueColumn" {
-			view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DataCell"), owner: self) as? NSTableCellView
+			view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ValueDataCell"), owner: self) as? NSTableCellView
 			
 			switch _target {
 			case is NVDialog:

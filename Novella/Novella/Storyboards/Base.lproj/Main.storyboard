@@ -1024,7 +1024,7 @@
                                                                     </textFieldCell>
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
-                                                                        <tableCellView identifier="DataCell" id="IY2-Ex-x7p" userLabel="DataCell">
+                                                                        <tableCellView identifier="NameDataCell" id="IY2-Ex-x7p" userLabel="DataCell">
                                                                             <rect key="frame" x="1" y="1" width="118" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
@@ -1057,7 +1057,7 @@
                                                                     </textFieldCell>
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
-                                                                        <tableCellView identifier="DataCell" id="ggB-f8-gC8" userLabel="DataCell">
+                                                                        <tableCellView identifier="ValueDataCell" id="ggB-f8-gC8" userLabel="DataCell">
                                                                             <rect key="frame" x="122" y="1" width="102" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
