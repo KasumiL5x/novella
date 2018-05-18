@@ -48,6 +48,9 @@ class MainViewController: NSViewController {
 	var Story: NVStory {
 		get{ return _story }
 	}
+	var InspectorDelegate: InspectorDataSource? {
+		get{ return _inspectorDataDelegate }
+	}
 	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
@@ -539,6 +542,10 @@ extension MainViewController: NSSplitViewDelegate {
 
 // MARK: - - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
+	func reloadInspector() {
+		_inspector.reloadData()
+	}
+	
 	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
 		if selection.isEmpty {
 			_inspectorDataDelegate!.setTarget(target: nil)
@@ -556,6 +563,6 @@ extension MainViewController: GraphViewDelegate {
 			_inspectorDataDelegate!.setTarget(target: nil) // cannot handle selection of multiple items
 		}
 		
-		_inspector.reloadData()
+		reloadInspector()
 	}
 }

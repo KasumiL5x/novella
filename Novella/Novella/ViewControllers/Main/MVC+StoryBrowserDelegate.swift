@@ -33,6 +33,28 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 		return false
 	}
 	
+	func outlineViewSelectionDidChange(_ notification: Notification) {
+		guard let outlineView = notification.object as? NSOutlineView else {
+			print("Expected an NSOutlineView but didn't receive one.")
+			return
+		}
+		
+		let idx = outlineView.selectedRow
+		if idx == -1 {
+			return
+		}
+		
+		let item = outlineView.item(atRow: idx)
+		
+		if item is NVDialog || item is NVGraph {
+			_mvc.InspectorDelegate?.setTarget(target: item)
+			_mvc.reloadInspector()
+		} else {
+			_mvc.InspectorDelegate?.setTarget(target: nil)
+			_mvc.reloadInspector()
+		}
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
