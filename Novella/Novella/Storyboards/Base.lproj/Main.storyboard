@@ -790,12 +790,9 @@
                                 <rect key="frame" x="0.0" y="865" width="1512" height="35"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
-                                        <rect key="frame" x="18" y="6" width="204" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="VPB-xS-Nr6"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Untitled" id="KTj-OS-o4p">
-                                            <font key="font" metaFont="systemThin" size="20"/>
+                                        <rect key="frame" x="18" y="0.0" width="1221" height="35"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Untitled" id="KTj-OS-o4p">
+                                            <font key="font" metaFont="systemThin" size="28"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -803,7 +800,7 @@
                                             <action selector="onEditedStoryName:" target="XfG-lQ-9wD" id="88t-WV-U2v"/>
                                         </connections>
                                     </textField>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kTQ-zk-6WD">
+                                    <button horizontalHuggingPriority="253" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kTQ-zk-6WD">
                                         <rect key="frame" x="1469" y="-7" width="49" height="46"/>
                                         <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6Br-Ly-KWL">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -813,7 +810,7 @@
                                             <action selector="onRedo:" target="XfG-lQ-9wD" id="Umf-jX-AqH"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RQa-hL-Ngk">
+                                    <button horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RQa-hL-Ngk">
                                         <rect key="frame" x="1432" y="-7" width="49" height="46"/>
                                         <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hCi-5D-xUU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -824,7 +821,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nmP-Ef-Z6a">
-                                        <rect key="frame" x="1219" y="-7" width="100" height="46"/>
+                                        <rect key="frame" x="1231" y="-7" width="100" height="46"/>
                                         <buttonCell key="cell" type="push" title="Close Tab" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kqe-eB-QB0">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -833,7 +830,7 @@
                                             <action selector="onCloseTab:" target="XfG-lQ-9wD" id="Pnc-Xy-k2i"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Tq-XK-EPs">
+                                    <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Tq-XK-EPs">
                                         <rect key="frame" x="1319" y="-7" width="105" height="46"/>
                                         <buttonCell key="cell" type="push" title="Add Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QLv-Jj-n72">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -845,7 +842,6 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="nmP-Ef-Z6a" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="1225" id="3Oy-ys-TuX"/>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="4wc-7t-6FX"/>
                                     <constraint firstItem="kTQ-zk-6WD" firstAttribute="leading" secondItem="RQa-hL-Ngk" secondAttribute="trailing" id="5zY-43-GJG"/>
                                     <constraint firstAttribute="bottom" secondItem="RQa-hL-Ngk" secondAttribute="bottom" id="6qR-wb-54r"/>
@@ -855,11 +851,15 @@
                                     <constraint firstAttribute="trailing" secondItem="kTQ-zk-6WD" secondAttribute="trailing" id="RDO-dH-8Zh"/>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="SSb-i1-UEY"/>
                                     <constraint firstItem="kTQ-zk-6WD" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="SZp-uu-kxC"/>
+                                    <constraint firstAttribute="bottom" secondItem="eJg-1b-Gs4" secondAttribute="bottom" id="TZJ-K2-I27"/>
+                                    <constraint firstItem="nmP-Ef-Z6a" firstAttribute="leading" secondItem="eJg-1b-Gs4" secondAttribute="trailing" id="U3s-wr-ILw"/>
                                     <constraint firstAttribute="height" constant="35" id="Wx1-Ec-wQJ"/>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="XlG-8f-9Pi"/>
                                     <constraint firstItem="4Tq-XK-EPs" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="boL-mD-epD"/>
                                     <constraint firstAttribute="bottom" secondItem="4Tq-XK-EPs" secondAttribute="bottom" id="g0h-h1-bl2"/>
+                                    <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="hAq-9C-UN0"/>
                                     <constraint firstItem="RQa-hL-Ngk" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="mB6-8F-peY"/>
-                                    <constraint firstItem="4Tq-XK-EPs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nmP-Ef-Z6a" secondAttribute="trailing" constant="12" symbolic="YES" id="nBt-aR-TSH"/>
+                                    <constraint firstItem="4Tq-XK-EPs" firstAttribute="leading" secondItem="nmP-Ef-Z6a" secondAttribute="trailing" id="nBt-aR-TSH"/>
                                     <constraint firstAttribute="bottom" secondItem="kTQ-zk-6WD" secondAttribute="bottom" id="tRy-IE-3bk"/>
                                     <constraint firstAttribute="bottom" secondItem="nmP-Ef-Z6a" secondAttribute="bottom" id="zzV-LF-b00"/>
                                 </constraints>
@@ -1081,11 +1081,11 @@
                                                         </tableView>
                                                     </subviews>
                                                 </clipView>
-                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.5" horizontal="YES" id="xxc-yt-JL1">
+                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="xxc-yt-JL1">
                                                     <rect key="frame" x="1" y="813" width="222" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
-                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="aps-If-RDI">
+                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="aps-If-RDI">
                                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
