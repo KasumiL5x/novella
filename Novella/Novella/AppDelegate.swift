@@ -10,10 +10,23 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+	fileprivate var _preferencesController: NSWindowController?
+	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 	}
 	
 	func applicationWillTerminate(_ aNotification: Notification) {
+	}
+	
+	@IBAction func onPreferences(_ sender: NSMenuItem) {
+		if nil == _preferencesController {
+			let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Preferences"), bundle: nil)
+			_preferencesController = sb.instantiateInitialController() as? NSWindowController
+		}
+		
+		if _preferencesController != nil {
+			_preferencesController!.showWindow(sender)
+		}
 	}
 }
 
