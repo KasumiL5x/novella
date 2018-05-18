@@ -10,6 +10,9 @@ import Cocoa
 import NovellaModel
 
 class LinkableView: NSView {
+	// MARK: - - Identifiers -
+	static let HIT_IGNORE_TAG: Int = 10
+	
 	// MARK: - - Variables -
 	fileprivate var _nvLinkable: NVLinkable
 	fileprivate var _graphView: GraphView
@@ -73,6 +76,10 @@ class LinkableView: NSView {
 		// manually check each subview's bounds (if i want to do something similar i'd need to override their hittest and call it here)
 		for sub in subviews {
 			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
+				// return the node itself if a subview has the ignore tag (this is used for things like overlaying labels)
+				if sub.tag == LinkableView.HIT_IGNORE_TAG {
+					return self
+				}
 				return sub
 			}
 		}
