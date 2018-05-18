@@ -541,19 +541,19 @@ extension MainViewController: NSSplitViewDelegate {
 extension MainViewController: GraphViewDelegate {
 	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
 		if selection.isEmpty {
-			_inspectorDataDelegate!.clearTarget()
+			_inspectorDataDelegate!.setTarget(target: nil)
 		} else if selection.count == 1 {
 			let item = selection[0]
 			switch item {
 			case is DialogLinkableView:
-				_inspectorDataDelegate!.setTarget(dialog: (item.Linkable as! NVDialog))
+				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVDialog))
 			case is GraphLinkableView:
-				_inspectorDataDelegate!.setTarget(graph: (item.Linkable as! NVGraph))
+				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVGraph))
 			default:
 				break
 			}
 		} else {
-			_inspectorDataDelegate!.clearTarget() // cannot handle selection of multiple items
+			_inspectorDataDelegate!.setTarget(target: nil) // cannot handle selection of multiple items
 		}
 		
 		_inspector.reloadData()

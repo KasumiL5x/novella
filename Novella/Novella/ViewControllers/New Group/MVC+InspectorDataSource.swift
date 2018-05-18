@@ -28,34 +28,39 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		_graphDict = []
 	}
 	
-	func clearTarget() {
+	func setTarget(target: Any?) {
 		nilAllTargets()
-	}
-	
-	func setTarget(dialog: NVDialog) {
-		nilAllTargets()
-		_target = dialog
 		
-		_dialogDict = [
-			("Name", dialog.Name),
-			("Preview", dialog.Preview),
-			("Content", dialog.Content),
-			("Directions", dialog.Directions),
-			("Position", "(\(dialog.EditorPosition.x), \(dialog.EditorPosition.y))")
-		]
-	}
-	
-	func setTarget(graph: NVGraph) {
-		nilAllTargets()
-		_target = graph
+		if nil == target {
+			return
+		}
 		
-		_graphDict = [
-			("Name", graph.Name),
-			("Position", "(\(graph.EditorPosition.x), \(graph.EditorPosition.y))"),
-			("Subgraphs", "\(graph.Graphs.count)"),
-			("Nodes", "\(graph.Nodes.count)"),
-			("Links", "\(graph.Links.count)")
-		]
+		switch target {
+		case is NVDialog:
+			let dialog = target as! NVDialog
+			_dialogDict = [
+				("Name", dialog.Name),
+				("Preview", dialog.Preview),
+				("Content", dialog.Content),
+				("Directions", dialog.Directions),
+				("Position", "(\(dialog.EditorPosition.x), \(dialog.EditorPosition.y))")
+			]
+			
+		case is NVGraph:
+			let graph = target as! NVGraph
+			_graphDict = [
+				("Name", graph.Name),
+				("Position", "(\(graph.EditorPosition.x), \(graph.EditorPosition.y))"),
+				("Subgraphs", "\(graph.Graphs.count)"),
+				("Nodes", "\(graph.Nodes.count)"),
+				("Links", "\(graph.Links.count)")
+			]
+		default:
+			print("Given target was not handled in the switch (\(target!)).")
+			return
+		}
+		
+		_target = target
 	}
 	
 	func numberOfRows(in tableView: NSTableView) -> Int {
