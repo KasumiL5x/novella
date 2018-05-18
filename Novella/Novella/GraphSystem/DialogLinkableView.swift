@@ -24,8 +24,9 @@ class DialogLinkableView: LinkableView {
 		
 		// set up name label
 		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
+		self._nameLabel.font = NSFont.systemFont(ofSize: 42.0, weight: .ultraLight)
 		self._nameLabel.sizeToFit()
-		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2)
+		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
 		self.addSubview(self._nameLabel)
 		
 		// add shadow
