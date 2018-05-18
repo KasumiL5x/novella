@@ -789,9 +789,9 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="lAI-62-NHd" userLabel="Header">
                                 <rect key="frame" x="0.0" y="865" width="1512" height="35"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
                                         <rect key="frame" x="18" y="0.0" width="1221" height="35"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Untitled" id="KTj-OS-o4p">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" alignment="left" placeholderString="Untitled" id="KTj-OS-o4p">
                                             <font key="font" metaFont="systemThin" size="28"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
