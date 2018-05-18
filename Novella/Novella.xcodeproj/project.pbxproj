@@ -16,6 +16,7 @@
 		65040A4F20ADF56800BC57FE /* GraphViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */; };
 		65040A5420AF558500BC57FE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5220AF558500BC57FE /* MainViewController.swift */; };
 		65040A5520AF558500BC57FE /* MVC+InspectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */; };
+		65040A5720AF5AAA00BC57FE /* GraphSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5620AF5AAA00BC57FE /* GraphSettings.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAA20A7641B002BF136 /* GraphViewCommands.swift */; };
@@ -112,6 +113,7 @@
 		65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewDelegate.swift; sourceTree = "<group>"; };
 		65040A5220AF558500BC57FE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Novella/ViewControllers/Main/MainViewController.swift; sourceTree = SOURCE_ROOT; };
 		65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MVC+InspectorDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+InspectorDataSource.swift"; sourceTree = SOURCE_ROOT; };
+		65040A5620AF5AAA00BC57FE /* GraphSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSettings.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		65264CAA20A7641B002BF136 /* GraphViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				65264CAE20A76EC3002BF136 /* PinViewLink.swift */,
 				654A155C20AA110500C99141 /* GraphBoundsView.swift */,
 				65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */,
+				65040A5620AF5AAA00BC57FE /* GraphSettings.swift */,
 			);
 			path = GraphSystem;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
 				65040A5520AF558500BC57FE /* MVC+InspectorDataSource.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
+				65040A5720AF5AAA00BC57FE /* GraphSettings.swift in Sources */,
 				65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
