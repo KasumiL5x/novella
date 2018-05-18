@@ -65,7 +65,7 @@ class DialogLinkableView: LinkableView {
 			var path = NSBezierPath(roundedRect: dialogRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgStartColor = NSColor.fromHex("#434343").withAlphaComponent(1.0)
+			let bgStartColor = NSColor.fromHex("#A8E6CF").withAlphaComponent(1.0)
 			let bgEndColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
 			let bgColors = [bgStartColor.cgColor, bgEndColor.cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
