@@ -24,15 +24,10 @@ class GraphDialogPopoverViewController: NSViewController {
 		_dialogNode = nil
 	}
 	
-	func setDialogNode(node: DialogLinkableView?) {
+	func setDialogNode(node: DialogLinkableView!) {
 		_dialogNode = node
 		
-		if _dialogNode == nil {
-			_testTextField.stringValue = ""
-		} else {
-			let name = (_dialogNode!.Linkable as! NVDialog).Name
-			_testTextField.stringValue = name.isEmpty ? "no name" : name
-		}
-		
+		let name = (_dialogNode!.Linkable as! NVDialog).Name
+		_testTextField.stringValue = name.isEmpty ? "no name" : name
 	}
 }

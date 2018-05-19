@@ -39,9 +39,6 @@ class GraphView: NSView {
 	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
 	// MARK: Delegate
 	fileprivate var _delegate: GraphViewDelegate?
-	// MARK: Popover ViewControllers
-	fileprivate let _dialogNodePopover: NSPopover
-	fileprivate var _dialogNodePopoverVC: GraphDialogPopoverViewController?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -69,9 +66,6 @@ class GraphView: NSView {
 		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
-		//
-		self._dialogNodePopover = NSPopover()
-		self._dialogNodePopoverVC = nil
 		
 		super.init(frame: frameRect)
 		
@@ -99,18 +93,6 @@ class GraphView: NSView {
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
 		_graphViewMenu.addItem(addMenu)
-		
-		// configure dialog popover
-		let gdpopSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
-		let gdpopID = NSStoryboard.SceneIdentifier(rawValue: "GraphDialogPopover")
-		_dialogNodePopoverVC = gdpopSB.instantiateController(withIdentifier: gdpopID) as? GraphDialogPopoverViewController
-		if _dialogNodePopoverVC != nil {
-			_dialogNodePopover.contentViewController = _dialogNodePopoverVC
-			_dialogNodePopover.animates = true
-			_dialogNodePopover.behavior = .transient
-		} else {
-			print("Couldn't find dialog popover storyboard stuff.")
-		}
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -296,8 +278,23 @@ extension GraphView {
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
 		switch node {
 		case is DialogLinkableView:
-			_dialogNodePopover.show(relativeTo: node.bounds, of: node, preferredEdge: .minY)
-			_dialogNodePopoverVC!.setDialogNode(node: node as? DialogLinkableView) // must be after show
+			
+			let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
+			let dialogPopoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphDialogPopover")
+			let dialogPopoverVC = popoverStoryboard.instantiateController(withIdentifier: dialogPopoverID) as? GraphDialogPopoverViewController
+			
+			if dialogPopoverVC != nil {
+				let popover = NSPopover()
+				popover.contentViewController = dialogPopoverVC
+				popover.appearance = NSAppearance.init(named: NSAppearance.Name.vibrantLight)
+				popover.animates = true
+				popover.behavior = .transient
+				popover.delegate = self
+				popover.show(relativeTo: node.bounds, of: node, preferredEdge: .minY)
+				dialogPopoverVC?.setDialogNode(node: node as! DialogLinkableView)
+			} else {
+				print("Unable to create GraphDialogPopover for some reason.")
+			}
 		default:
 			print("Double clicked a LinkableView that doesn't have a popover implemented.")
 		}
@@ -578,5 +575,16 @@ extension GraphView {
 		_allPinViews.append(pin)
 		
 		return pin
+	}
+}
+
+// MARK: - - NSPopoverDelegate -
+extension GraphView: NSPopoverDelegate {
+	func detachableWindow(for popover: NSPopover) -> NSWindow? {
+		return nil // this uses the default window; if i return my own NSWindow here it will use that instead.
+	}
+	
+	func popoverShouldDetach(_ popover: NSPopover) -> Bool {
+		return true
 	}
 }
