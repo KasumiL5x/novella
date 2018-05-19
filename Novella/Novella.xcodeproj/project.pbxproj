@@ -222,7 +222,7 @@
 				65040A4420ADCED600BC57FE /* TabItem.swift */,
 			);
 			name = Main;
-			path = "New Group";
+			path = "Main";
 			sourceTree = "<group>";
 		};
 		65040A5E20AF8C8C00BC57FE /* Preferences */ = {
