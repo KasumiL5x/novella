@@ -41,6 +41,7 @@ class GraphView: NSView {
 	fileprivate var _delegate: GraphViewDelegate?
 	// MARK: Popover ViewControllers
 	fileprivate let _dialogNodePopover: NSPopover
+	fileprivate var _dialogNodePopoverVC: GraphDialogPopoverViewController?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -70,6 +71,7 @@ class GraphView: NSView {
 		self._lastContextLocation = CGPoint.zero
 		//
 		self._dialogNodePopover = NSPopover()
+		self._dialogNodePopoverVC = nil
 		
 		super.init(frame: frameRect)
 		
@@ -101,8 +103,9 @@ class GraphView: NSView {
 		// configure dialog popover
 		let gdpopSB = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let gdpopID = NSStoryboard.SceneIdentifier(rawValue: "GraphDialogPopover")
-		if let gdpopVC = gdpopSB.instantiateController(withIdentifier: gdpopID) as? GraphDialogPopoverViewController {
-			_dialogNodePopover.contentViewController = gdpopVC
+		_dialogNodePopoverVC = gdpopSB.instantiateController(withIdentifier: gdpopID) as? GraphDialogPopoverViewController
+		if _dialogNodePopoverVC != nil {
+			_dialogNodePopover.contentViewController = _dialogNodePopoverVC
 			_dialogNodePopover.animates = true
 			_dialogNodePopover.behavior = .transient
 		} else {
@@ -291,7 +294,13 @@ extension GraphView {
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
-		_dialogNodePopover.show(relativeTo: node.bounds, of: node, preferredEdge: .minY)
+		switch node {
+		case is DialogLinkableView:
+			_dialogNodePopover.show(relativeTo: node.bounds, of: node, preferredEdge: .minY)
+			_dialogNodePopoverVC!.setDialogNode(node: node as? DialogLinkableView) // must be after show
+		default:
+			print("Double clicked a LinkableView that doesn't have a popover implemented.")
+		}
 	}
 	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
 		switch gesture.state {

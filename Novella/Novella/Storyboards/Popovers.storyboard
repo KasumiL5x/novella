@@ -16,7 +16,7 @@
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fpY-QX-FI2">
                                 <rect key="frame" x="81" y="124" width="288" height="51"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Dialog Properties" id="CQJ-ll-jdq">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Dialog Properties" id="CQJ-ll-jdq">
                                     <font key="font" metaFont="systemUltraLight" size="42"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -28,6 +28,9 @@
                             <constraint firstItem="fpY-QX-FI2" firstAttribute="centerY" secondItem="YOU-so-lCI" secondAttribute="centerY" id="OgJ-63-BqR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_testTextField" destination="fpY-QX-FI2" id="7rf-kR-toT"/>
+                    </connections>
                 </viewController>
                 <customObject id="mH3-Tn-c7v" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
