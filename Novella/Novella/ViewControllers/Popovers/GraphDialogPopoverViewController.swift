@@ -11,9 +11,10 @@ import NovellaModel
 
 class GraphDialogPopoverViewController: NSViewController {
 	// MARK: - - Outlets -
-	@IBOutlet weak var _testTextField: NSTextField!
-	
-	
+	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
+	@IBOutlet fileprivate weak var _directionsTextField: NSTextField!
+	@IBOutlet fileprivate weak var _previewTextField: NSTextField!
+	@IBOutlet fileprivate weak var _contentTextField: NSTextField!
 	
 	// MARK: - - Variables -
 	fileprivate var _dialogNode: DialogLinkableView?
@@ -27,7 +28,18 @@ class GraphDialogPopoverViewController: NSViewController {
 	func setDialogNode(node: DialogLinkableView!) {
 		_dialogNode = node
 		
-		let name = (_dialogNode!.Linkable as! NVDialog).Name
-		_testTextField.stringValue = name.isEmpty ? "no name" : name
+		let dlg = (_dialogNode!.Linkable as! NVDialog)
+		
+		let name = dlg.Name
+		_nameTextField.stringValue = name.isEmpty ? "No name" : name
+		
+		let dirs = dlg.Preview
+		_directionsTextField.stringValue = dirs.isEmpty ? "No directions" : dirs
+		
+		let prev = dlg.Preview
+		_previewTextField.stringValue = prev.isEmpty ? "No preview" : prev
+		
+		let content = dlg.Content
+		_contentTextField.stringValue = content.isEmpty ? "No content" : content
 	}
 }
