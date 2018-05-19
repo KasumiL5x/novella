@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
+    </dependencies>
+    <scenes>
+        <!--GraphDialogPopover-->
+        <scene sceneID="pXw-mM-CRy">
+            <objects>
+                <viewController storyboardIdentifier="GraphDialogPopover" id="96W-zo-SDM" userLabel="GraphDialogPopover" customClass="GraphDialogPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="YOU-so-lCI">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fpY-QX-FI2">
+                                <rect key="frame" x="81" y="124" width="288" height="51"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Dialog Properties" id="CQJ-ll-jdq">
+                                    <font key="font" metaFont="systemUltraLight" size="42"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="fpY-QX-FI2" firstAttribute="centerX" secondItem="YOU-so-lCI" secondAttribute="centerX" id="8AK-Q2-Bo4"/>
+                            <constraint firstItem="fpY-QX-FI2" firstAttribute="centerY" secondItem="YOU-so-lCI" secondAttribute="centerY" id="OgJ-63-BqR"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="mH3-Tn-c7v" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="58" y="62"/>
+        </scene>
+    </scenes>
+</document>

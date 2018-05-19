@@ -20,6 +20,7 @@ class LinkableView: NSView {
 	fileprivate var _isSelected: Bool
 	//
 	fileprivate var _clickGesture: NSClickGestureRecognizer?
+	fileprivate var _doubleClickGesture: NSClickGestureRecognizer?
 	fileprivate var _ctxGesture: NSClickGestureRecognizer?
 	fileprivate var _panGesture: NSPanGestureRecognizer?
 	//
@@ -33,6 +34,7 @@ class LinkableView: NSView {
 		self._isSelected = false
 		//
 		self._clickGesture = nil
+		self._doubleClickGesture = nil
 		self._ctxGesture = nil
 		self._panGesture = nil
 		//
@@ -44,6 +46,11 @@ class LinkableView: NSView {
 		_clickGesture!.buttonMask = 0x1 // "primary click"
 		_clickGesture!.numberOfClicksRequired = 1
 		self.addGestureRecognizer(_clickGesture!)
+		// double click recognizer
+		_doubleClickGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onDoubleClick))
+		_doubleClickGesture!.buttonMask = 0x1 // "primary click"
+		_doubleClickGesture?.numberOfClicksRequired = 2
+		self.addGestureRecognizer(_doubleClickGesture!)
 		// context click recognizer
 		_ctxGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onContextClick))
 		_ctxGesture!.buttonMask = 0x2 // "secondary click"
@@ -96,6 +103,9 @@ class LinkableView: NSView {
 	// MARK: Gesture Callbacks
 	@objc fileprivate func onClick(gesture: NSGestureRecognizer) {
 		_graphView.onClickLinkable(node: self, gesture: gesture)
+	}
+	@objc fileprivate func onDoubleClick(gesture: NSGestureRecognizer) {
+		_graphView.onDoubleClickLinkable(node: self, gesture: gesture)
 	}
 	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
 		_graphView.onContextLinkable(node: self, gesture: gesture)

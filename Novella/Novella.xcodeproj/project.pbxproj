@@ -20,6 +20,8 @@
 		65040A5920AF813800BC57FE /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65040A5820AF813800BC57FE /* Preferences.storyboard */; };
 		65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5A20AF82BA00BC57FE /* PreferencesViewController.swift */; };
 		65040A5D20AF838A00BC57FE /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5C20AF838A00BC57FE /* PreferencesWindowController.swift */; };
+		65040A6020B0902600BC57FE /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65040A5F20B0902600BC57FE /* Popovers.storyboard */; };
+		65040A6320B0914F00BC57FE /* GraphDialogPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAA20A7641B002BF136 /* GraphViewCommands.swift */; };
@@ -120,6 +122,8 @@
 		65040A5820AF813800BC57FE /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		65040A5A20AF82BA00BC57FE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		65040A5C20AF838A00BC57FE /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		65040A5F20B0902600BC57FE /* Popovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
+		65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDialogPopoverViewController.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		65264CAA20A7641B002BF136 /* GraphViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
@@ -230,6 +234,14 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		65040A6120B0911600BC57FE /* Popovers */ = {
+			isa = PBXGroup;
+			children = (
+				65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */,
+			);
+			path = Popovers;
+			sourceTree = "<group>";
+		};
 		652102502083BC6C0028212B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +259,7 @@
 				6553C95D2092723A00E6737B /* Reader.storyboard */,
 				6522C5AF2083906300F76DC8 /* Tests.storyboard */,
 				65040A5820AF813800BC57FE /* Preferences.storyboard */,
+				65040A5F20B0902600BC57FE /* Popovers.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -406,6 +419,7 @@
 		65F5DFA7207EBD960041FB0D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				65040A6120B0911600BC57FE /* Popovers */,
 				65040A5E20AF8C8C00BC57FE /* Preferences */,
 				65040A3F20ADC8D300BC57FE /* Main */,
 				6553C96120927D6E00E6737B /* ReaderViewController.swift */,
@@ -518,6 +532,7 @@
 			files = (
 				6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */,
 				658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */,
+				65040A6020B0902600BC57FE /* Popovers.storyboard in Resources */,
 				658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */,
 				65040A5920AF813800BC57FE /* Preferences.storyboard in Resources */,
 				6553C95E2092723A00E6737B /* Reader.storyboard in Resources */,
@@ -600,6 +615,7 @@
 				65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
+				65040A6320B0914F00BC57FE /* GraphDialogPopoverViewController.swift in Sources */,
 				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65040A5420AF558500BC57FE /* MainViewController.swift in Sources */,
