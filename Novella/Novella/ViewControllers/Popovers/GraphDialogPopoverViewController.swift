@@ -49,52 +49,30 @@ class GraphDialogPopoverViewController: NSViewController {
 	}
 	
 	@IBAction func onNameChanged(_ sender: NSTextField) {
-		if _dialogNode == nil {
+		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
 			return
 		}
-		
-		let oldName = (_dialogNode!.Linkable as! NVDialog).Name
-		let newName = sender.stringValue
-		
-		// don't forget to revert sender if name change fails
-		
-		print("Name changed from \(oldName) to \(newName) (but not implemented yet)")
+		dlg.Name = sender.stringValue
 	}
 	
 	@IBAction func onDirectionsChanged(_ sender: NSTextField) {
-		if _dialogNode == nil {
+		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
 			return
 		}
-		
-		let oldDir = (_dialogNode!.Linkable as! NVDialog).Directions
-		let newDir = sender.stringValue
-		
-		print("Directions changed from \(oldDir) to \(newDir) (but not implemented yet)")
+		dlg.Directions = sender.stringValue
 	}
 	
 	@IBAction func onPreviewChanged(_ sender: NSTextField) {
-		if _dialogNode == nil {
+		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
 			return
 		}
-		
-		let oldPrev = (_dialogNode!.Linkable as! NVDialog).Preview
-		let newPrev = sender.stringValue
-		
-		print("Preview changed from \(oldPrev) to \(newPrev) (but not implemented yet)")
+		dlg.Preview = sender.stringValue
 	}
 	
 	@IBAction func onContentChanged(_ sender: NSTextField) {
-		if _dialogNode == nil {
+		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
 			return
 		}
-		
-		let oldContent = (_dialogNode!.Linkable as! NVDialog).Content
-		let newContent = sender.stringValue
-		
-		print("Content changed from \(oldContent) to \(newContent) (but not implemented yet)")
+		dlg.Content = sender.stringValue
 	}
-	
-	
-	
-	
 }

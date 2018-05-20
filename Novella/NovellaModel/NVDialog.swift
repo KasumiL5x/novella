@@ -28,21 +28,10 @@ public class NVDialog: NVNode {
 	}
 	public var Preview: String {
 		get{ return _preview }
+		set{ _preview = newValue }
 	}
 	public var Directions: String {
 		get{ return _directions }
-	}
-	
-	// MARK: Setters
-	func setContent(_ content: String) {
-		self._content = content
-	}
-	
-	func setPreview(_ preview: String) {
-		self._preview = preview
-	}
-	
-	func setDirections(_ directions: String) {
-		self._directions = directions
+		set{ _directions = newValue }
 	}
 }

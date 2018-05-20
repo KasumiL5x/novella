@@ -614,15 +614,15 @@ extension NVStory {
 				}
 				
 				if let content = curr["content"].string {
-					dialog.setContent(content)
+					dialog.Content = content
 				}
 				
 				if let preview = curr["preview"].string {
-					dialog.setPreview(preview)
+					dialog.Preview = preview
 				}
 				
 				if let directions = curr["directions"].string {
-					dialog.setDirections(directions)
+					dialog.Directions = directions
 				}
 				break
 			case "delivery":
