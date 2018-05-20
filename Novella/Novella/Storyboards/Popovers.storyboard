@@ -30,6 +30,9 @@
                                     <color key="textColor" red="0.25882352941176467" green="0.25882352941176467" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="onNameChanged:" target="96W-zo-SDM" id="7Rh-gI-j40"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jwm-NW-0vh">
                                 <rect key="frame" x="18" y="178" width="55" height="19"/>
@@ -66,6 +69,9 @@
                                     <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="onDirectionsChanged:" target="96W-zo-SDM" id="YFu-XE-Fah"/>
+                                </connections>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XhN-ZO-ygL">
                                 <rect key="frame" x="95" y="120" width="335" height="22"/>
@@ -75,6 +81,9 @@
                                     <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="onPreviewChanged:" target="96W-zo-SDM" id="jPy-7O-Ld2"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ufz-lv-A6R">
                                 <rect key="frame" x="18" y="148" width="89" height="19"/>
@@ -93,6 +102,9 @@
                                     <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="onContentChanged:" target="96W-zo-SDM" id="qbD-ML-0xt"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <constraints>
