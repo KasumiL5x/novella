@@ -39,6 +39,8 @@ class GraphView: NSView {
 	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
 	// MARK: Delegate
 	fileprivate var _delegate: GraphViewDelegate?
+	// MARK: Popovers
+	fileprivate var _nodePopovers: [NodePopover]
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -66,6 +68,8 @@ class GraphView: NSView {
 		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
+		//
+		self._nodePopovers = []
 		
 		super.init(frame: frameRect)
 		
@@ -276,25 +280,19 @@ extension GraphView {
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+		let popover: NodePopover
+		if let existing = _nodePopovers.first(where: {$0.Node == node}) {
+			popover = existing
+		} else {
+			popover = NodePopover()
+			_nodePopovers.append(popover)
+		}
+		popover.show(forView: node, at: .minY)
+		
+		// set content based on the type of node
 		switch node {
 		case is DialogLinkableView:
-			
-			let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
-			let dialogPopoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphDialogPopover")
-			let dialogPopoverVC = popoverStoryboard.instantiateController(withIdentifier: dialogPopoverID) as? GraphDialogPopoverViewController
-			
-			if dialogPopoverVC != nil {
-				let popover = NSPopover()
-				popover.contentViewController = dialogPopoverVC
-				popover.appearance = NSAppearance.init(named: NSAppearance.Name.vibrantLight)
-				popover.animates = true
-				popover.behavior = .transient
-				popover.delegate = self
-				popover.show(relativeTo: node.bounds, of: node, preferredEdge: .minY)
-				dialogPopoverVC?.setDialogNode(node: node as! DialogLinkableView)
-			} else {
-				print("Unable to create GraphDialogPopover for some reason.")
-			}
+			(popover.ViewController as! GraphDialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView)
 		default:
 			print("Double clicked a LinkableView that doesn't have a popover implemented.")
 		}

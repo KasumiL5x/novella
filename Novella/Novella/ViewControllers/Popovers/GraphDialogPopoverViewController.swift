@@ -14,7 +14,7 @@ class GraphDialogPopoverViewController: NSViewController {
 	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
 	@IBOutlet fileprivate weak var _directionsTextField: NSTextField!
 	@IBOutlet fileprivate weak var _previewTextField: NSTextField!
-	@IBOutlet fileprivate weak var _contentTextField: NSTextField!
+	@IBOutlet weak var _contentTextField: NSTextField!
 	
 	// MARK: - - Variables -
 	fileprivate var _dialogNode: DialogLinkableView?
@@ -23,6 +23,11 @@ class GraphDialogPopoverViewController: NSViewController {
 		super.viewDidLoad()
 		
 		_dialogNode = nil
+		
+	}
+	
+	override var acceptsFirstResponder: Bool {
+		return true
 	}
 	
 	func setDialogNode(node: DialogLinkableView!) {
