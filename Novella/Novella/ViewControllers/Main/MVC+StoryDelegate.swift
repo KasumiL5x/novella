@@ -98,4 +98,10 @@ class StoryDelegate: NVStoryDelegate {
 		print("Changed graph's entry to \(entry.UUID).")
 		_mvc.reloadBrowser()
 	}
+	
+	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
+		print("Changed node's name from \(oldName) to \(newName).")
+		_mvc.reloadBrowser()
+		_mvc.reloadInspector()
+	}
 }

@@ -14,14 +14,24 @@ public class NVNode {
 	
 	var _editorPos: CGPoint
 	
+	var _delegate: NVStoryDelegate?
+	
 	init(uuid: NSUUID) {
 		self._uuid = uuid
 		self._name = ""
 		self._editorPos = CGPoint.zero
+		self._delegate = nil
 	}
 	
 	// MARK: Properties
-	public var Name: String {get{ return _name } set{ _name = newValue }}
+	public var Name: String {
+		get { return _name }
+		set {
+			let oldName = _name
+			_name = newValue
+			_delegate?.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)
+		}
+	}
 }
 
 // MARK: NVIdentifiable

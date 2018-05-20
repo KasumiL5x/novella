@@ -62,6 +62,7 @@ public class NVStory {
 		set{
 			_delegate = newValue
 			_allGraphs.forEach{$0._delegate = _delegate}
+			_allNodes.forEach{$0._delegate = _delegate}
 		}
 	}
 	
@@ -232,6 +233,7 @@ extension NVStory {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
 		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID())
+		dialog._delegate = _delegate
 		_allNodes.append(dialog)
 		_allIdentifiables.append(dialog)
 		

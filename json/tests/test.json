@@ -48,7 +48,7 @@
         "y" : 285.91015625,
         "x" : 203.29296875
       },
-      "name" : "",
+      "name" : "node_a",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
@@ -60,7 +60,7 @@
         "y" : 349.4765625,
         "x" : 368.44921875
       },
-      "name" : "",
+      "name" : "choice_a",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
@@ -72,7 +72,7 @@
         "y" : 227.9375,
         "x" : 366.0625
       },
-      "name" : "",
+      "name" : "choice_b",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
@@ -84,7 +84,7 @@
         "y" : 338.17578125,
         "x" : 115.77734375
       },
-      "name" : "",
+      "name" : "node_a",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",
@@ -96,7 +96,7 @@
         "y" : 304.0546875,
         "x" : 385.91796875
       },
-      "name" : "",
+      "name" : "node_b",
       "content" : "",
       "directions" : "",
       "nodetype" : "dialog",

@@ -58,6 +58,9 @@ public protocol NVStoryDelegate {
 	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph)
 	// Called when an NVGraph's entry is set using NVGraph.setEntry().
 	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph)
+	
+	// Called when an NVNode's name is changed using NVNode.Name.
+	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode)
 }
 
 // MARK: - - Default Implementations -
@@ -109,5 +112,8 @@ public extension NVStoryDelegate {
 	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
 	}
 	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
+	}
+	
+	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
 	}
 }

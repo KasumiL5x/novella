@@ -28,6 +28,13 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		_graphDict = []
 	}
 	
+	func refresh() {
+		// just set target back to itself which will reparse everything
+		if _target != nil {
+			setTarget(target: _target)
+		}
+	}
+	
 	func setTarget(target: Any?) {
 		nilAllTargets()
 		

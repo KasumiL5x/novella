@@ -65,7 +65,6 @@ class MainViewController: NSViewController {
 		
 		// story
 		_story = NVStory()
-		_story.Delegate = _storyDelegate
 
 		// split view
 		_splitView.delegate = self
@@ -86,6 +85,9 @@ class MainViewController: NSViewController {
 		// inspector
 		_inspector.dataSource = _inspectorDataDelegate
 		_inspector.delegate = _inspectorDataDelegate
+		
+		// start with an empty story
+		createEmptyStory()
 	}
 	
 	// MARK: - - Functions called from window -
@@ -154,6 +156,7 @@ class MainViewController: NSViewController {
 				return
 			}
 			_story = story
+			_story.Delegate = _storyDelegate
 		} catch {
 			alertError(message: "Failed to load Story.", info: "Failed to load the story.")
 			return
@@ -276,6 +279,7 @@ class MainViewController: NSViewController {
 		closeAllTabs()
 		// create a new story
 		_story = NVStory()
+		_story.Delegate = _storyDelegate
 	}
 	
 	// MARK: - - Tabs/TabView Functions -
@@ -543,6 +547,7 @@ extension MainViewController: NSSplitViewDelegate {
 // MARK: - - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
 	func reloadInspector() {
+		_inspectorDataDelegate!.refresh()
 		_inspector.reloadData()
 	}
 	
