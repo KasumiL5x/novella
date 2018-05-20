@@ -61,6 +61,12 @@ public protocol NVStoryDelegate {
 	
 	// Called when an NVNode's name is changed using NVNode.Name.
 	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode)
+	// Called when an NVDialog's content is changed using NVDialog.Content.
+	func onStoryDialogContentChanged(content: String, node: NVDialog)
+	// Called when an NVDialog's preview is changed using NVDialog.Preview.
+	func onStoryDialogPreviewChanged(preview: String, node: NVDialog)
+	// Called when an NVDialog's directions are changed using NVDialog.Directions.
+	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog)
 }
 
 // MARK: - - Default Implementations -
@@ -115,5 +121,11 @@ public extension NVStoryDelegate {
 	}
 	
 	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
+	}
+	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+	}
+	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
+	}
+	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
 	}
 }

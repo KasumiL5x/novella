@@ -104,4 +104,16 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadBrowser()
 		_mvc.reloadInspector()
 	}
+	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+		print("Changed dialog's content to \"\(content)\".")
+		_mvc.reloadInspector()
+	}
+	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
+		print("Changed dialog's preview to \"\(preview)\".")
+		_mvc.reloadInspector()
+	}
+	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
+		print("Changed dialog's directions to \"\(directions)\".")
+		_mvc.reloadInspector()
+	}
 }
