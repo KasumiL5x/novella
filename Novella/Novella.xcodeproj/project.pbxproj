@@ -74,6 +74,7 @@
 		65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */; };
 		65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */; };
 		65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */; };
+		65B0701020B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
 		65D045E020B15EAE0026FFC0 /* NodePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D045DF20B15EAE0026FFC0 /* NodePopover.swift */; };
 		65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; };
@@ -182,6 +183,7 @@
 		65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLinkableView.swift; sourceTree = "<group>"; };
 		65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
 		65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryLinkableView.swift; sourceTree = "<group>"; };
+		65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDeliveryPopoverViewController.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65D045DF20B15EAE0026FFC0 /* NodePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopover.swift; sourceTree = "<group>"; };
 		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */,
+				65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */,
 				65040A4920ADD05500BC57FE /* MVC+TabsDataSource.swift in Sources */,
+				65B0701020B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift in Sources */,
 				65040A4120ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */,
