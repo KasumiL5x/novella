@@ -30,7 +30,7 @@ class MainWindowController: NSWindowController {
 	}
 	
 	@IBAction func onToolbarSave(_ sender: NSButton) {
-		(contentViewController as? MainViewController)?.onSave()
+		(contentViewController as? MainViewController)?.onSave(forcePrompt: false)
 	}
 	
 	@IBAction func onToolbarClose(_ sender: NSButton) {

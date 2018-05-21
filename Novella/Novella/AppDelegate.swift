@@ -30,5 +30,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			_preferencesController!.showWindow(sender)
 		}
 	}
+	
+	
+	@IBAction func onFileNew(_ sender: Any) {
+		(NSApplication.shared.mainWindow?.contentViewController as? MainViewController)?.onNew()
+	}
+	@IBAction func onFileOpen(_ sender: Any) {
+		(NSApplication.shared.mainWindow?.contentViewController as? MainViewController)?.onOpen()
+	}
+	@IBAction func onFileClose(_ sender: Any) {
+		(NSApplication.shared.mainWindow?.contentViewController as? MainViewController)?.onClose()
+	}
+	@IBAction func onFileSave(_ sender: Any) {
+		(NSApplication.shared.mainWindow?.contentViewController as? MainViewController)?.onSave(forcePrompt: false)
+	}
+	@IBAction func onFileSaveAs(_ sender: Any) {
+		(NSApplication.shared.mainWindow?.contentViewController as? MainViewController)?.onSave(forcePrompt: true)
+	}
 }
 

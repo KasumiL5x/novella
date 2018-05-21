@@ -97,7 +97,7 @@ class MainViewController: NSViewController {
 		case .cancel:
 			return
 		case .save:
-			if !saveStory() {
+			if !saveStory(false) {
 				return
 			}
 			break
@@ -120,7 +120,7 @@ class MainViewController: NSViewController {
 		case .cancel:
 			return
 		case .save:
-			if !saveStory() {
+			if !saveStory(false) {
 				return
 			}
 			break
@@ -184,8 +184,8 @@ class MainViewController: NSViewController {
 		reloadBrowser()
 	}
 	
-	func onSave() {
-		_ = saveStory()
+	func onSave(forcePrompt: Bool) {
+		_ = saveStory(forcePrompt)
 	}
 	
 	func onClose() {
@@ -194,7 +194,7 @@ class MainViewController: NSViewController {
 		case .cancel:
 			return
 		case .save:
-			if !saveStory() {
+			if !saveStory(false) {
 				return
 			}
 			break
@@ -241,8 +241,8 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Story Helpers -
-	fileprivate func saveStory() -> Bool {
-		if _openedFile == nil {
+	fileprivate func saveStory(_ forcePrompt: Bool) -> Bool {
+		if _openedFile == nil || forcePrompt {
 			let sfd = NSSavePanel()
 			sfd.title = "Save Novella Story JSON."
 			sfd.canCreateDirectories = true
