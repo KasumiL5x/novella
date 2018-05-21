@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--VariableTab-->
+        <scene sceneID="jET-on-QDE">
+            <objects>
+                <viewController storyboardIdentifier="VariableTab" id="qwa-hs-HaY" userLabel="VariableTab" sceneMemberID="viewController">
+                    <view key="view" id="Xd5-Gc-eOA">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mIV-Pg-twx">
+                                <rect key="frame" x="45" y="104" width="360" height="92"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="VariableTab" id="9lH-Yf-ARK">
+                                    <font key="font" size="80" name="HelveticaNeue-UltraLight"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="mIV-Pg-twx" firstAttribute="centerX" secondItem="Xd5-Gc-eOA" secondAttribute="centerX" id="6cD-Zu-8if"/>
+                            <constraint firstItem="mIV-Pg-twx" firstAttribute="centerY" secondItem="Xd5-Gc-eOA" secondAttribute="centerY" id="QqW-bE-vQS"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="cqp-gJ-sYP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117" y="149"/>
+        </scene>
+        <!--GraphTab-->
+        <scene sceneID="dBX-a1-bFB">
+            <objects>
+                <viewController storyboardIdentifier="GraphTab" id="WIY-dn-675" userLabel="GraphTab" customClass="GraphTabViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="V1r-fO-eby">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView focusRingType="none" borderType="none" horizontalLineScroll="1" horizontalPageScroll="1" verticalLineScroll="1" verticalPageScroll="1" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" scrollerKnobStyle="light" translatesAutoresizingMaskIntoConstraints="NO" id="UVg-Au-lFN" userLabel="ScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                <clipView key="contentView" id="HRk-D0-xGp">
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykB-jB-b6q">
+                                            <rect key="frame" x="0.0" y="0.0" width="435" height="285"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="BdX-FE-drs">
+                                    <rect key="frame" x="0.0" y="284" width="450" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="skV-5y-lyb">
+                                    <rect key="frame" x="434" y="0.0" width="16" height="300"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="UVg-Au-lFN" secondAttribute="trailing" id="3AP-qm-nAl"/>
+                            <constraint firstItem="UVg-Au-lFN" firstAttribute="top" secondItem="V1r-fO-eby" secondAttribute="top" id="Eay-H2-aMD"/>
+                            <constraint firstAttribute="bottom" secondItem="UVg-Au-lFN" secondAttribute="bottom" id="a4W-0q-XKY"/>
+                            <constraint firstItem="UVg-Au-lFN" firstAttribute="leading" secondItem="V1r-fO-eby" secondAttribute="leading" id="gOk-JH-8aZ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_scrollView" destination="UVg-Au-lFN" id="f3n-C7-MgR"/>
+                    </connections>
+                </viewController>
+                <customObject id="jyu-tG-vlN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="569"/>
+        </scene>
+    </scenes>
+</document>

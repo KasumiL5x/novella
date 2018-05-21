@@ -52,6 +52,7 @@ class MainViewController: NSViewController {
 		get{ return _inspectorDataDelegate }
 	}
 	
+	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -284,37 +285,17 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Tabs/TabView Functions -
 	@discardableResult
-	fileprivate func addNewTab(forGraph: NVGraph) -> TabItem {
-		// make main tab view
-		let tabViewItem = NSTabViewItem()
-		tabViewItem.label = forGraph.Name
-		let view = tabViewItem.view!
-		
-		// add and configure scroll view
-		let scrollView = NSScrollView()
-		scrollView.allowsMagnification = true
-		scrollView.minMagnification = MainViewController.MIN_ZOOM
-		scrollView.maxMagnification = MainViewController.MAX_ZOOM
-		scrollView.hasVerticalRuler = true
-		scrollView.hasHorizontalRuler = true
-		scrollView.hasVerticalScroller = true
-		scrollView.hasHorizontalScroller = true
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(scrollView)
-		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
-		view.addConstraint(NSLayoutConstraint(item: scrollView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0))
-		
-		// create graph view and add it as the scroll view's document view
-		let graphView = GraphView(graph: forGraph,story: _story, frameRect: NSMakeRect(0.0, 0.0, MainViewController.SCROLL_SIZE, MainViewController.SCROLL_SIZE), visibleRect: NSMakeRect(0.0, 0.0, _tabView.frame.size.width, _tabView.frame.size.height))
-		graphView.Delegate = self
-		scrollView.documentView = graphView
-		
-		// add to tab view
+	fileprivate func addNewTab(forGraph: NVGraph) -> TabItem? {
+		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
+		let id = NSStoryboard.SceneIdentifier(rawValue: "GraphTab")
+		guard let vc =  sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
+			print("Failed to initialize GraphTabViewController.")
+			return nil
+		}
+		vc.setup(story: _story, graph: forGraph, delegate: self)
+		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
-		// add to the tab control list
 		let tabItem = TabItem(title: forGraph.Name, icon: nil, menu: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
 		_tabsDataSource!.Tabs.append(tabItem)
 		_tabController.reloadTabs()
@@ -352,19 +333,11 @@ class MainViewController: NSViewController {
 	}
 	
 	fileprivate func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
-		// must have a view
-		guard let view = tab.view else {
+		// must have correct VC
+		guard let vc = tab.viewController as? GraphTabViewController else {
 			return nil
 		}
-		// must have a subview
-		if view.subviews.count < 1 {
-			return nil
-		}
-		// subview must be a scrollview
-		guard let scroll = view.subviews[0] as? NSScrollView else {
-			return nil
-		}
-		return scroll.documentView as? GraphView
+		return vc.Graph
 	}
 	
 	fileprivate func getActiveGraph() -> GraphView? {
