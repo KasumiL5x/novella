@@ -13,6 +13,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	fileprivate var _preferencesController: NSWindowController?
 	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
+		Settings.resetToApp()
+		Settings.loadDefaults()
 	}
 	
 	func applicationWillTerminate(_ aNotification: Notification) {

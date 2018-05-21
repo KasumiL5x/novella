@@ -61,12 +61,12 @@ class GraphLinkableView: LinkableView {
 			let dialogRect = widgetRect()
 			
 			// draw background gradient
-			let bgRadius = GraphSettings.nodes.roundness
+			let bgRadius = Settings.graph.nodes.roundness
 			var path = NSBezierPath(roundedRect: dialogRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgStartColor = GraphSettings.nodes.graphStartColor
-			let bgEndColor = GraphSettings.nodes.endColor
+			let bgStartColor = Settings.graph.nodes.graphStartColor
+			let bgEndColor = Settings.graph.nodes.endColor
 			let bgColors = [bgStartColor.cgColor, bgEndColor.cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: dialogRect.height)
@@ -74,31 +74,31 @@ class GraphLinkableView: LinkableView {
 			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
 			
 			// draw outline (inset)
-			let outlineInset = GraphSettings.nodes.outlineInset
+			let outlineInset = Settings.graph.nodes.outlineInset
 			let selectedRect = dialogRect.insetBy(dx: outlineInset, dy: outlineInset)
 			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
 			context.resetClip()
-			path.lineWidth = GraphSettings.nodes.outlineWidth
-			GraphSettings.nodes.outlineColor.setStroke()
+			path.lineWidth = Settings.graph.nodes.outlineWidth
+			Settings.graph.nodes.outlineColor.setStroke()
 			path.stroke()
 			
 			// draw primed indicator
 			if IsPrimed {
-				let selectedInset = GraphSettings.nodes.primedInset
+				let selectedInset = Settings.graph.nodes.primedInset
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
-				path.lineWidth = GraphSettings.nodes.primedWidth
-				GraphSettings.nodes.primedColor.setStroke()
+				path.lineWidth = Settings.graph.nodes.primedWidth
+				Settings.graph.nodes.primedColor.setStroke()
 				path.stroke()
 			}
 			
 			// draw selection indicator
 			if IsSelected {
-				let selectedInset = GraphSettings.nodes.selectedInset
+				let selectedInset = Settings.graph.nodes.selectedInset
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
-				path.lineWidth = GraphSettings.nodes.selectedWidth
-				GraphSettings.nodes.selectedColor.setStroke()
+				path.lineWidth = Settings.graph.nodes.selectedWidth
+				Settings.graph.nodes.selectedColor.setStroke()
 				path.stroke()
 			}
 			

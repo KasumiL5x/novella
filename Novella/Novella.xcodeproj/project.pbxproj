@@ -16,7 +16,6 @@
 		65040A4F20ADF56800BC57FE /* GraphViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */; };
 		65040A5420AF558500BC57FE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5220AF558500BC57FE /* MainViewController.swift */; };
 		65040A5520AF558500BC57FE /* MVC+InspectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */; };
-		65040A5720AF5AAA00BC57FE /* GraphSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5620AF5AAA00BC57FE /* GraphSettings.swift */; };
 		65040A5920AF813800BC57FE /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65040A5820AF813800BC57FE /* Preferences.storyboard */; };
 		65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5A20AF82BA00BC57FE /* PreferencesViewController.swift */; };
 		65040A5D20AF838A00BC57FE /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5C20AF838A00BC57FE /* PreferencesWindowController.swift */; };
@@ -73,10 +72,12 @@
 		65AFA6AA20A736F500B9C5E5 /* LinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6A920A736F500B9C5E5 /* LinkableView.swift */; };
 		65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6AB20A739E200B9C5E5 /* MarqueeView.swift */; };
 		65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */; };
+		65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
 		65D045E020B15EAE0026FFC0 /* NodePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D045DF20B15EAE0026FFC0 /* NodePopover.swift */; };
 		65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; };
 		65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		65DE4F5620B224C6002053BA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DE4F5520B224C6002053BA /* Settings.swift */; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -119,7 +120,6 @@
 		65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewDelegate.swift; sourceTree = "<group>"; };
 		65040A5220AF558500BC57FE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Novella/ViewControllers/Main/MainViewController.swift; sourceTree = SOURCE_ROOT; };
 		65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MVC+InspectorDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+InspectorDataSource.swift"; sourceTree = SOURCE_ROOT; };
-		65040A5620AF5AAA00BC57FE /* GraphSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSettings.swift; sourceTree = "<group>"; };
 		65040A5820AF813800BC57FE /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		65040A5A20AF82BA00BC57FE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		65040A5C20AF838A00BC57FE /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -179,9 +179,11 @@
 		65AFA6A920A736F500B9C5E5 /* LinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkableView.swift; sourceTree = "<group>"; };
 		65AFA6AB20A739E200B9C5E5 /* MarqueeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeView.swift; sourceTree = "<group>"; };
 		65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLinkableView.swift; sourceTree = "<group>"; };
+		65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65D045DF20B15EAE0026FFC0 /* NodePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopover.swift; sourceTree = "<group>"; };
 		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
+		65DE4F5520B224C6002053BA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */,
 				65F85486209E61850067A95C /* NSColor+Hex.swift */,
+				65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				65AFA6A220A7181C00B9C5E5 /* GraphSystem */,
 				6522C5AE2083903900F76DC8 /* Storyboards */,
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
+				65DE4F5520B224C6002053BA /* Settings.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -358,7 +362,6 @@
 				65264CAE20A76EC3002BF136 /* PinViewLink.swift */,
 				654A155C20AA110500C99141 /* GraphBoundsView.swift */,
 				65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */,
-				65040A5620AF5AAA00BC57FE /* GraphSettings.swift */,
 				65D045DF20B15EAE0026FFC0 /* NodePopover.swift */,
 			);
 			path = GraphSystem;
@@ -606,6 +609,7 @@
 				65040A4520ADCED600BC57FE /* TabItem.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
 				65AFA6A820A7230500B9C5E5 /* GraphBGView.swift in Sources */,
+				65DE4F5620B224C6002053BA /* Settings.swift in Sources */,
 				65D045E020B15EAE0026FFC0 /* NodePopover.swift in Sources */,
 				65AFA6AA20A736F500B9C5E5 /* LinkableView.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
@@ -614,7 +618,7 @@
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
 				65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */,
 				65040A5D20AF838A00BC57FE /* PreferencesWindowController.swift in Sources */,
-				65040A5720AF5AAA00BC57FE /* GraphSettings.swift in Sources */,
+				65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */,
 				65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
