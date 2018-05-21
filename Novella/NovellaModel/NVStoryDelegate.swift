@@ -24,6 +24,8 @@ public protocol NVStoryDelegate {
 	func onStoryMakeSwitch(switch: NVSwitch)
 	// Called when an NVDialog is created using Story.makeDialog().
 	func onStoryMakeDialog(dialog: NVDialog)
+	// Called when an NVDelivery is created using Story.makeDelivery.
+	func onStoryMakeDelivery(delivery: NVDelivery)
 	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
@@ -67,6 +69,12 @@ public protocol NVStoryDelegate {
 	func onStoryDialogPreviewChanged(preview: String, node: NVDialog)
 	// Called when an NVDialog's directions are changed using NVDialog.Directions.
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog)
+	// Called when an NVDelivery's content is changed using NVDelivery.Content.
+	func onStoryDeliveryContentChanged(content: String, node: NVDelivery)
+	// Called when an NVDelivery's preview is changed using NVDeliveryPreview.
+	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery)
+	// Called when an NVDelivery's directions are changed using NVDelivery.Directions.
+	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery)
 }
 
 // MARK: - - Default Implementations -
@@ -84,6 +92,8 @@ public extension NVStoryDelegate {
 	func onStoryMakeSwitch(switch: NVSwitch) {
 	}
 	func onStoryMakeDialog(dialog: NVDialog) {
+	}
+	func onStoryMakeDelivery(delivery: NVDelivery) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
@@ -127,5 +137,11 @@ public extension NVStoryDelegate {
 	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
+	}
+	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
+	}
+	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery) {
+	}
+	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 	}
 }

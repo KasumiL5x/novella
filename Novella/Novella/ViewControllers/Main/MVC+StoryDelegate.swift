@@ -36,6 +36,9 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryMakeDialog(dialog: NVDialog) {
 		_mvc.reloadBrowser()
 	}
+	func onStoryMakeDelivery(delivery: NVDelivery) {
+		_mvc.reloadBrowser()
+	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
 		_mvc.reloadBrowser()
@@ -114,6 +117,19 @@ class StoryDelegate: NVStoryDelegate {
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
 		print("Changed dialog's directions to \"\(directions)\".")
+		_mvc.reloadInspector()
+	}
+	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
+		print("Changed delivery's content to \"\(content)\".")
+		_mvc.reloadInspector()
+	}
+	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery) {
+		print("Changed delivery's preview to \"\(preview)\".")
+		_mvc.reloadInspector()
+
+	}
+	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
+		print("Changed delivery's directions to \"\(directions)\".")
 		_mvc.reloadInspector()
 	}
 }

@@ -241,6 +241,17 @@ extension NVStory {
 		return dialog
 	}
 	
+	@discardableResult
+	public func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
+		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID())
+		delivery._delegate = _delegate
+		_allNodes.append(delivery)
+		_allIdentifiables.append(delivery)
+		
+		_delegate?.onStoryMakeDelivery(delivery: delivery)
+		return delivery
+	}
+	
 	public func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
 		return _allLinks.filter({$0._origin.UUID == linkable.UUID})
 	}
@@ -306,13 +317,16 @@ extension NVStory {
 			print("\nNodes (\(_allNodes.count)):")
 			_allNodes.forEach({
 				print("\tUUID: \($0._uuid.uuidString)")
-				if let dlg = $0 as? NVDialog {
+				if let asDialog = $0 as? NVDialog {
 					print("\tType: Dialog")
-					print("\tContent: \(dlg._content)")
-					print("\tPreview: \(dlg._preview)")
-					print("\tDirections: \(dlg._directions)")
-				} else if let _ = $0 as? NVDelivery {
+					print("\tContent: \(asDialog._content)")
+					print("\tPreview: \(asDialog._preview)")
+					print("\tDirections: \(asDialog._directions)")
+				} else if let asDelivery = $0 as? NVDelivery {
 					print("\tType: Delivery")
+					print("\tContent: \(asDelivery._content)")
+					print("\tPreview: \(asDelivery._preview)")
+					print("\tDirections: \(asDelivery._directions)")
 				} else if let _ = $0 as? NVCutscene {
 					print("\tType: Cutscene")
 				} else if let _ = $0 as? NVContext {
