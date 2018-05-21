@@ -70,7 +70,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		case is NVContext:
 			let context = target as! NVContext
 			_contextDict = [
-				("Name", context.Name)
+				("Name", context.Name),
+				("Position", "(\(context.EditorPosition.x), \(context.EditorPosition.y))")
 			]
 			
 		case is NVGraph:

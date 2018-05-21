@@ -561,6 +561,8 @@ extension MainViewController: GraphViewDelegate {
 				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVDialog))
 			case is DeliveryLinkableView:
 				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVDelivery))
+			case is ContextLinkableView:
+				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVContext))
 			case is GraphLinkableView:
 				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVGraph))
 			default:
