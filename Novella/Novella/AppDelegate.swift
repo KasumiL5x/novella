@@ -37,7 +37,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 	}
 	
-	
 	@IBAction func onFileNew(_ sender: Any) {
 		(NSApplication.shared.mainWindow?.contentViewController as? MainViewController)?.onNew()
 	}

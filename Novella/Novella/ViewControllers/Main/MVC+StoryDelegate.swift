@@ -39,6 +39,9 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 		_mvc.reloadBrowser()
 	}
+	func onStoryMakeContext(context: NVContext) {
+		_mvc.reloadBrowser()
+	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
 		_mvc.reloadBrowser()

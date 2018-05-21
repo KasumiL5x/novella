@@ -24,8 +24,10 @@ public protocol NVStoryDelegate {
 	func onStoryMakeSwitch(switch: NVSwitch)
 	// Called when an NVDialog is created using Story.makeDialog().
 	func onStoryMakeDialog(dialog: NVDialog)
-	// Called when an NVDelivery is created using Story.makeDelivery.
+	// Called when an NVDelivery is created using Story.makeDelivery().
 	func onStoryMakeDelivery(delivery: NVDelivery)
+	// Called when a NVContext is created using Story.makeContext().
+	func onStoryMakeContext(context: NVContext)
 	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
@@ -94,6 +96,8 @@ public extension NVStoryDelegate {
 	func onStoryMakeDialog(dialog: NVDialog) {
 	}
 	func onStoryMakeDelivery(delivery: NVDelivery) {
+	}
+	func onStoryMakeContext(context: NVContext) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {

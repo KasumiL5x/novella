@@ -80,6 +80,7 @@
 		65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; };
 		65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65DE4F5620B224C6002053BA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DE4F5520B224C6002053BA /* Settings.swift */; };
+		65E6741A20B3041300E1B1BE /* ContextLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6741920B3041300E1B1BE /* ContextLinkableView.swift */; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -188,6 +189,7 @@
 		65D045DF20B15EAE0026FFC0 /* NodePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopover.swift; sourceTree = "<group>"; };
 		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
 		65DE4F5520B224C6002053BA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		65E6741920B3041300E1B1BE /* ContextLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextLinkableView.swift; sourceTree = "<group>"; };
 		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				65588389209C8C19004C412F /* CurveHelper.swift */,
+				65E6741920B3041300E1B1BE /* ContextLinkableView.swift */,
 				65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */,
 				65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */,
 				654A155E20AA33C000C99141 /* GraphLinkableView.swift */,
@@ -645,6 +648,7 @@
 				654A155F20AA33C000C99141 /* GraphLinkableView.swift in Sources */,
 				654A155D20AA110500C99141 /* GraphBoundsView.swift in Sources */,
 				65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */,
+				65E6741A20B3041300E1B1BE /* ContextLinkableView.swift in Sources */,
 				65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */,
 				65264CB120A7742F002BF136 /* PinViewBranch.swift in Sources */,
 			);

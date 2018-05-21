@@ -252,6 +252,17 @@ extension NVStory {
 		return delivery
 	}
 	
+	@discardableResult
+	public func makeContext(uuid: NSUUID?=nil) -> NVContext {
+		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID())
+		context._delegate = _delegate
+		_allNodes.append(context)
+		_allIdentifiables.append(context)
+		
+		_delegate?.onStoryMakeContext(context: context)
+		return context
+	}
+	
 	public func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
 		return _allLinks.filter({$0._origin.UUID == linkable.UUID})
 	}

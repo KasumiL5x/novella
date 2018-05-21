@@ -28,6 +28,7 @@ struct Settings {
 				static let dialogStartColor = "graph.nodes.dialogStartColor"
 				static let graphStartColor = "graph.nodes.graphStartColor"
 				static let deliveryStartColor = "graph.nodes.deliveryStartColor"
+				static let contextStartColor = "graph.nodes.contextStartColor"
 			}
 		}
 	}
@@ -48,6 +49,7 @@ struct Settings {
 			static var dialogStartColor:   NSColor = NSColor.fromHex("#A8E6CF")
 			static var graphStartColor:    NSColor = NSColor.fromHex("#BA78CD")
 			static var deliveryStartColor: NSColor = NSColor.fromHex("#FFA35F")
+			static var contextStartColor:  NSColor = NSColor.fromHex("#FF5E3A")
 		}
 	}
 	
@@ -67,6 +69,7 @@ struct Settings {
 		Settings.graph.nodes.dialogStartColor = NSColor.fromHex("#A8E6CF")
 		Settings.graph.nodes.graphStartColor = NSColor.fromHex("#BA78CD")
 		Settings.graph.nodes.deliveryStartColor = NSColor.fromHex("#FFA35F")
+		Settings.graph.nodes.contextStartColor = NSColor.fromHex("#FF5E3A")
 	}
 	
 	
@@ -114,6 +117,9 @@ struct Settings {
 		if hasKey(key: Settings.keys.graph.nodes.deliveryStartColor) {
 			Settings.graph.nodes.deliveryStartColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.deliveryStartColor)!
 		}
+		if hasKey(key: Settings.keys.graph.nodes.contextStartColor) {
+			Settings.graph.nodes.contextStartColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.contextStartColor)!
+		}
 	}
 	
 	static func saveDefaults() {
@@ -132,6 +138,7 @@ struct Settings {
 		UserDefaults.standard.set(Settings.graph.nodes.dialogStartColor, forKey: Settings.keys.graph.nodes.dialogStartColor)
 		UserDefaults.standard.set(Settings.graph.nodes.graphStartColor, forKey: Settings.keys.graph.nodes.graphStartColor)
 		UserDefaults.standard.set(Settings.graph.nodes.deliveryStartColor, forKey: Settings.keys.graph.nodes.deliveryStartColor)
+		UserDefaults.standard.set(Settings.graph.nodes.contextStartColor, forKey: Settings.keys.graph.nodes.contextStartColor)
 	}
 	
 	
