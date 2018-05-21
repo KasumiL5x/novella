@@ -17,7 +17,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		Settings.loadDefaults()
 	}
 	
-	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+	func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+		if !flag {
+			for x in sender.windows {
+				x.makeKeyAndOrderFront(self)
+			}
+		}
 		return true
 	}
 	
