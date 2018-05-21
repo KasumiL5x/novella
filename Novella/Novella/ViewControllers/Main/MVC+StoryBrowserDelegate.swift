@@ -46,7 +46,7 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 		
 		let item = outlineView.item(atRow: idx)
 		
-		if item is NVDialog || item is NVDelivery || item is NVGraph {
+		if item is NVDialog || item is NVDelivery || item is NVGraph || item is NVContext {
 			_mvc.InspectorDelegate?.setTarget(target: item)
 			_mvc.reloadInspector()
 		} else {
@@ -84,6 +84,9 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 			case is NVDelivery:
 				name = (item as! NVDelivery).Name
 				icon = _dialogIcon
+				
+			case is NVContext:
+				name = (item as! NVContext).Name
 				
 			case is NVLink:
 				let from = _mvc.Story.getNameOf(linkable: (item as! NVLink).Origin)

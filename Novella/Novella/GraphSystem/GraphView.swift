@@ -293,7 +293,7 @@ extension GraphView {
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
 		// disallow not yet implemented types
-		if node is GraphLinkableView || node is ContextLinkableView {
+		if node is GraphLinkableView {
 			return
 		}
 		
@@ -312,6 +312,8 @@ extension GraphView {
 			(popover.ViewController as! GraphDialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView)
 		case is DeliveryLinkableView:
 			(popover.ViewController as! GraphDeliveryPopoverViewController).setDeliveryNode(node: node as! DeliveryLinkableView)
+		case is ContextLinkableView:
+			(popover.ViewController as! GraphContextPopoverViewController).setContextNode(node: node as! ContextLinkableView)
 		default:
 			print("Double clicked a LinkableView that doesn't have a popover implemented.")
 		}

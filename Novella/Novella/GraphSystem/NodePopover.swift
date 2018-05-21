@@ -57,6 +57,8 @@ class NodePopover: NSObject, NSPopoverDelegate {
 				popoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphDialogPopover")
 			case is DeliveryLinkableView:
 				popoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphDeliveryPopover")
+			case is ContextLinkableView:
+				popoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphContextPopover")
 			default:
 				fatalError("NodePopover::createViewController() encountered an unexpected node type (\(_node!)).")
 			}

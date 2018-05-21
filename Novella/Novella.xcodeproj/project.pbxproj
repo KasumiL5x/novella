@@ -81,6 +81,7 @@
 		65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65DE4F5620B224C6002053BA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DE4F5520B224C6002053BA /* Settings.swift */; };
 		65E6741A20B3041300E1B1BE /* ContextLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6741920B3041300E1B1BE /* ContextLinkableView.swift */; };
+		65E6741C20B3065300E1B1BE /* GraphContextPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6741B20B3065200E1B1BE /* GraphContextPopoverViewController.swift */; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -190,6 +191,7 @@
 		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
 		65DE4F5520B224C6002053BA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		65E6741920B3041300E1B1BE /* ContextLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextLinkableView.swift; sourceTree = "<group>"; };
+		65E6741B20B3065200E1B1BE /* GraphContextPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphContextPopoverViewController.swift; sourceTree = "<group>"; };
 		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		65040A6120B0911600BC57FE /* Popovers */ = {
 			isa = PBXGroup;
 			children = (
+				65E6741B20B3065200E1B1BE /* GraphContextPopoverViewController.swift */,
 				65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */,
 				65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */,
 			);
@@ -615,6 +618,7 @@
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
 				65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */,
+				65E6741C20B3065300E1B1BE /* GraphContextPopoverViewController.swift in Sources */,
 				65040A4520ADCED600BC57FE /* TabItem.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
 				65AFA6A820A7230500B9C5E5 /* GraphBGView.swift in Sources */,

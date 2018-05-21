@@ -16,6 +16,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 	
 	var _dialogDict: [NamedValue] = []
 	var _deliveryDict: [NamedValue] = []
+	var _contextDict: [NamedValue] = []
 	var _graphDict: [NamedValue] = []
 	
 	override init() {
@@ -27,6 +28,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		_target = nil
 		_dialogDict = []
 		_deliveryDict = []
+		_contextDict = []
 		_graphDict = []
 	}
 	
@@ -65,6 +67,12 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 				("Position", "(\(delivery.EditorPosition.x), \(delivery.EditorPosition.y))")
 			]
 			
+		case is NVContext:
+			let context = target as! NVContext
+			_contextDict = [
+				("Name", context.Name)
+			]
+			
 		case is NVGraph:
 			let graph = target as! NVGraph
 			_graphDict = [
@@ -88,6 +96,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 			return _dialogDict.count
 		case is NVDelivery:
 			return _deliveryDict.count
+		case is NVContext:
+			return _contextDict.count
 		case is NVGraph:
 			return _graphDict.count
 		default:
@@ -106,6 +116,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 				view?.textField?.stringValue = _dialogDict[row].key
 			case is NVDelivery:
 				view?.textField?.stringValue = _deliveryDict[row].key
+			case is NVContext:
+				view?.textField?.stringValue = _contextDict[row].key
 			case is NVGraph:
 				view?.textField?.stringValue = _graphDict[row].key
 			default:
@@ -121,6 +133,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 				view?.textField?.stringValue = _dialogDict[row].value as! String
 			case is NVDelivery:
 				view?.textField?.stringValue = _deliveryDict[row].value as! String
+			case is NVContext:
+				view?.textField?.stringValue = _contextDict[row].value as! String
 			case is NVGraph:
 				view?.textField?.stringValue = _graphDict[row].value as! String
 			default:

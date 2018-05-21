@@ -240,5 +240,56 @@
             </objects>
             <point key="canvasLocation" x="57" y="432"/>
         </scene>
+        <!--GraphContextPopover-->
+        <scene sceneID="veu-0r-Xwy">
+            <objects>
+                <viewController storyboardIdentifier="GraphContextPopover" id="IcY-ai-hLd" userLabel="GraphContextPopover" customClass="GraphContextPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="N6v-Eo-VcE">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="110"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rzz-F5-87K">
+                                <rect key="frame" x="69" y="49" width="313" height="51"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Context Properties" id="bOA-OY-qhv">
+                                    <font key="font" metaFont="systemUltraLight" size="42"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7iP-LQ-5Y2">
+                                <rect key="frame" x="79" y="19" width="351" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" placeholderString="NVContext.Name" drawsBackground="YES" id="3nA-uQ-u0s">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="onNameChanged:" target="IcY-ai-hLd" id="KPW-Z8-M6C"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SMx-Dw-OAu">
+                                <rect key="frame" x="18" y="20" width="55" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name:" id="7Da-1b-uAw">
+                                    <font key="font" metaFont="systemBold" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="rzz-F5-87K" firstAttribute="centerX" secondItem="N6v-Eo-VcE" secondAttribute="centerX" id="JMs-rh-9Ey"/>
+                            <constraint firstItem="rzz-F5-87K" firstAttribute="top" secondItem="N6v-Eo-VcE" secondAttribute="top" constant="10" id="X5v-xe-CNG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_nameTextField" destination="7iP-LQ-5Y2" id="qub-jh-4xS"/>
+                    </connections>
+                </viewController>
+                <customObject id="rPC-7D-Jx4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="65" y="695"/>
+        </scene>
     </scenes>
 </document>
