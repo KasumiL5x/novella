@@ -17,7 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		Settings.loadDefaults()
 	}
 	
-	func applicationWillTerminate(_ aNotification: Notification) {
+	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+		return true
 	}
 	
 	@IBAction func onPreferences(_ sender: NSMenuItem) {
