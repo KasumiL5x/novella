@@ -288,8 +288,10 @@ extension NVStory {
 							// delivery
 							[
 								"properties": [
-									"nodetype": [ "enum": ["delivery"] ]
-									// TODO: delivery properties
+									"nodetype": [ "enum": ["delivery"] ],
+									"content": [ "type": "string" ],
+									"preview": [ "type": "string" ],
+									"directions": [ "type": "string" ]
 								],
 								"required": []
 							],
@@ -456,6 +458,17 @@ extension NVStory {
 				entry["directions"] = asDialog._directions
 			}
 			
+			if let asDelivery = curr as? NVDelivery {
+				entry["nodetype"] = "delivery"
+				entry["content"] = asDelivery._content
+				entry["preview"] = asDelivery._preview
+				entry["directions"] = asDelivery._directions
+			}
+			
+			if let _ = curr as? NVContext {
+				entry["nodetype"] = "context"
+			}
+			
 			nodes.append(entry)
 		}
 		root["nodes"] = nodes
@@ -608,32 +621,45 @@ extension NVStory {
 			case "dialog":
 				let dialog = story.makeDialog(uuid: uuid)
 				dialog._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
-				
 				if name != nil {
 					dialog.Name = name!
 				}
-				
 				if let content = curr["content"].string {
 					dialog.Content = content
 				}
-				
 				if let preview = curr["preview"].string {
 					dialog.Preview = preview
 				}
-				
 				if let directions = curr["directions"].string {
 					dialog.Directions = directions
 				}
-				break
+				
 			case "delivery":
-				fatalError("Not yet implemented.")
-				break
+				let delivery = story.makeDelivery(uuid: uuid)
+				delivery._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				if name != nil {
+					delivery.Name = name!
+				}
+				if let content = curr["content"].string {
+					delivery.Content = content
+				}
+				if let preview = curr["preview"].string {
+					delivery.Preview = preview
+				}
+				if let directions = curr["directions"].string {
+					delivery.Directions = directions
+				}
+				
 			case "cutscene":
 				fatalError("Not yet implemented.")
-				break
+				
 			case "context":
-				fatalError("Not yet implemented.")
-				break
+				let context = story.makeContext(uuid: uuid)
+				context._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				if name != nil {
+					context.Name = name!
+				}
+				
 			default:
 				fatalError("Invalid node type.")
 			}

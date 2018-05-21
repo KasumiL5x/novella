@@ -273,8 +273,10 @@
 						// delivery
 						{
 							"properties": {
-								"nodetype": { "enum": ["delivery"] }
-								// TODO: delivery properties
+								"nodetype": { "enum": ["delivery"] },
+								"content": { "type": "string" },
+								"preview": { "type": "string" },
+								"directions": { "type": "string" }
 							},
 							"required": []
 						},
