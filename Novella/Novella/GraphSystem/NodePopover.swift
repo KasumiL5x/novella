@@ -54,11 +54,11 @@ class NodePopover: NSObject, NSPopoverDelegate {
 			let popoverID: NSStoryboard.SceneIdentifier
 			switch _node {
 			case is DialogLinkableView:
-				popoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphDialogPopover")
+				popoverID = NSStoryboard.SceneIdentifier(rawValue: "Dialog")
 			case is DeliveryLinkableView:
-				popoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphDeliveryPopover")
+				popoverID = NSStoryboard.SceneIdentifier(rawValue: "Delivery")
 			case is ContextLinkableView:
-				popoverID = NSStoryboard.SceneIdentifier(rawValue: "GraphContextPopover")
+				popoverID = NSStoryboard.SceneIdentifier(rawValue: "Context")
 			default:
 				fatalError("NodePopover::createViewController() encountered an unexpected node type (\(_node!)).")
 			}

@@ -1,5 +1,5 @@
 //
-//  GraphDialogPopoverViewController.swift
+//  DialogPopoverViewController.swift
 //  Novella
 //
 //  Created by Daniel Green on 19/05/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class GraphDialogPopoverViewController: NSViewController {
+class DialogPopoverViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
 	@IBOutlet fileprivate weak var _directionsTextField: NSTextField!

@@ -1,5 +1,5 @@
 //
-//  GraphContextPopoverViewController.swift
+//  ContextPopoverViewController.swift
 //  Novella
 //
 //  Created by Daniel Green on 21/05/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class GraphContextPopoverViewController: NSViewController {
+class ContextPopoverViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
 	

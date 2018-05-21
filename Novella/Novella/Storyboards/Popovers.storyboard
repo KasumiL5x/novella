@@ -6,10 +6,10 @@
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
-        <!--GraphDialogPopover-->
+        <!--Dialog-->
         <scene sceneID="pXw-mM-CRy">
             <objects>
-                <viewController storyboardIdentifier="GraphDialogPopover" id="96W-zo-SDM" userLabel="GraphDialogPopover" customClass="GraphDialogPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Dialog" id="96W-zo-SDM" userLabel="Dialog" customClass="DialogPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="YOU-so-lCI">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="268"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -123,10 +123,10 @@
             </objects>
             <point key="canvasLocation" x="57" y="86"/>
         </scene>
-        <!--GraphDeliveryPopover-->
+        <!--Delivery-->
         <scene sceneID="5gJ-Ye-a6w">
             <objects>
-                <viewController storyboardIdentifier="GraphDeliveryPopover" id="2mq-uh-NSK" userLabel="GraphDeliveryPopover" customClass="GraphDeliveryPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Delivery" id="2mq-uh-NSK" userLabel="Delivery" customClass="DeliveryPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="zru-I6-Qo0">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="268"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -240,10 +240,10 @@
             </objects>
             <point key="canvasLocation" x="57" y="432"/>
         </scene>
-        <!--GraphContextPopover-->
+        <!--Context-->
         <scene sceneID="veu-0r-Xwy">
             <objects>
-                <viewController storyboardIdentifier="GraphContextPopover" id="IcY-ai-hLd" userLabel="GraphContextPopover" customClass="GraphContextPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Context" id="IcY-ai-hLd" userLabel="Context" customClass="ContextPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="N6v-Eo-VcE">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="110"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -289,7 +289,7 @@
                 </viewController>
                 <customObject id="rPC-7D-Jx4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="65" y="695"/>
+            <point key="canvasLocation" x="57" y="695"/>
         </scene>
     </scenes>
 </document>

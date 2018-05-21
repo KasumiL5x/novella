@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65040A4120ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4020ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift */; };
-		65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4220ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift */; };
+		65040A4120ADCA0400BC57FE /* StoryBrowserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4020ADCA0400BC57FE /* StoryBrowserDataSource.swift */; };
+		65040A4320ADCCF400BC57FE /* StoryBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4220ADCCF400BC57FE /* StoryBrowserDelegate.swift */; };
 		65040A4520ADCED600BC57FE /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4420ADCED600BC57FE /* TabItem.swift */; };
 		65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */; };
-		65040A4920ADD05500BC57FE /* MVC+TabsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */; };
-		65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */; };
+		65040A4920ADD05500BC57FE /* TabsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4820ADD05500BC57FE /* TabsDataSource.swift */; };
+		65040A4B20ADD36200BC57FE /* StoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4A20ADD36200BC57FE /* StoryDelegate.swift */; };
 		65040A4F20ADF56800BC57FE /* GraphViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */; };
 		65040A5420AF558500BC57FE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5220AF558500BC57FE /* MainViewController.swift */; };
-		65040A5520AF558500BC57FE /* MVC+InspectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */; };
+		65040A5520AF558500BC57FE /* InspectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5320AF558500BC57FE /* InspectorDataSource.swift */; };
 		65040A5920AF813800BC57FE /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65040A5820AF813800BC57FE /* Preferences.storyboard */; };
 		65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5A20AF82BA00BC57FE /* PreferencesViewController.swift */; };
 		65040A5D20AF838A00BC57FE /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A5C20AF838A00BC57FE /* PreferencesWindowController.swift */; };
 		65040A6020B0902600BC57FE /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65040A5F20B0902600BC57FE /* Popovers.storyboard */; };
-		65040A6320B0914F00BC57FE /* GraphDialogPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */; };
+		65040A6320B0914F00BC57FE /* DialogPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A6220B0914F00BC57FE /* DialogPopoverViewController.swift */; };
 		652102522083BD390028212B /* StoryTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652102512083BD390028212B /* StoryTestViewController.swift */; };
 		6522C5B02083906300F76DC8 /* Tests.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522C5AF2083906300F76DC8 /* Tests.storyboard */; };
 		65264CAB20A7641B002BF136 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAA20A7641B002BF136 /* GraphViewCommands.swift */; };
@@ -76,14 +76,14 @@
 		65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */; };
 		65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */; };
 		65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */; };
-		65B0701020B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */; };
+		65B0701020B2EDA900C0694F /* DeliveryPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
 		65D045E020B15EAE0026FFC0 /* NodePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D045DF20B15EAE0026FFC0 /* NodePopover.swift */; };
 		65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; };
 		65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65DE4F5620B224C6002053BA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DE4F5520B224C6002053BA /* Settings.swift */; };
 		65E6741A20B3041300E1B1BE /* ContextLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6741920B3041300E1B1BE /* ContextLinkableView.swift */; };
-		65E6741C20B3065300E1B1BE /* GraphContextPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6741B20B3065200E1B1BE /* GraphContextPopoverViewController.swift */; };
+		65E6741C20B3065300E1B1BE /* ContextPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6741B20B3065200E1B1BE /* ContextPopoverViewController.swift */; };
 		65E67DCF20A458A500ED7BED /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E67DCD20A458A500ED7BED /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; };
 		65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65E67DCB20A458A500ED7BED /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -117,20 +117,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		65040A4020ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryBrowserDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+StoryBrowserDataSource.swift"; sourceTree = SOURCE_ROOT; };
-		65040A4220ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryBrowserDelegate.swift"; path = "Novella/ViewControllers/Main/MVC+StoryBrowserDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		65040A4020ADCA0400BC57FE /* StoryBrowserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoryBrowserDataSource.swift; path = Novella/ViewControllers/Main/StoryBrowserDataSource.swift; sourceTree = SOURCE_ROOT; };
+		65040A4220ADCCF400BC57FE /* StoryBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoryBrowserDelegate.swift; path = Novella/ViewControllers/Main/StoryBrowserDelegate.swift; sourceTree = SOURCE_ROOT; };
 		65040A4420ADCED600BC57FE /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabItem.swift; path = Novella/ViewControllers/Main/TabItem.swift; sourceTree = SOURCE_ROOT; };
 		65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SaveAlertResult.swift; path = Novella/ViewControllers/Main/SaveAlertResult.swift; sourceTree = SOURCE_ROOT; };
-		65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+TabsDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+TabsDataSource.swift"; sourceTree = SOURCE_ROOT; };
-		65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MVC+StoryDelegate.swift"; path = "Novella/ViewControllers/Main/MVC+StoryDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		65040A4820ADD05500BC57FE /* TabsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabsDataSource.swift; path = Novella/ViewControllers/Main/TabsDataSource.swift; sourceTree = SOURCE_ROOT; };
+		65040A4A20ADD36200BC57FE /* StoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoryDelegate.swift; path = Novella/ViewControllers/Main/StoryDelegate.swift; sourceTree = SOURCE_ROOT; };
 		65040A4E20ADF56800BC57FE /* GraphViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewDelegate.swift; sourceTree = "<group>"; };
 		65040A5220AF558500BC57FE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Novella/ViewControllers/Main/MainViewController.swift; sourceTree = SOURCE_ROOT; };
-		65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MVC+InspectorDataSource.swift"; path = "Novella/ViewControllers/Main/MVC+InspectorDataSource.swift"; sourceTree = SOURCE_ROOT; };
+		65040A5320AF558500BC57FE /* InspectorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InspectorDataSource.swift; path = Novella/ViewControllers/Main/InspectorDataSource.swift; sourceTree = SOURCE_ROOT; };
 		65040A5820AF813800BC57FE /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		65040A5A20AF82BA00BC57FE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		65040A5C20AF838A00BC57FE /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		65040A5F20B0902600BC57FE /* Popovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
-		65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDialogPopoverViewController.swift; sourceTree = "<group>"; };
+		65040A6220B0914F00BC57FE /* DialogPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogPopoverViewController.swift; sourceTree = "<group>"; };
 		652102512083BD390028212B /* StoryTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTestViewController.swift; sourceTree = "<group>"; };
 		6522C5AF2083906300F76DC8 /* Tests.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tests.storyboard; sourceTree = "<group>"; };
 		65264CAA20A7641B002BF136 /* GraphViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
@@ -189,13 +189,13 @@
 		65AFA6AD20A748B000B9C5E5 /* DialogLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLinkableView.swift; sourceTree = "<group>"; };
 		65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
 		65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryLinkableView.swift; sourceTree = "<group>"; };
-		65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDeliveryPopoverViewController.swift; sourceTree = "<group>"; };
+		65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryPopoverViewController.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65D045DF20B15EAE0026FFC0 /* NodePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopover.swift; sourceTree = "<group>"; };
 		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
 		65DE4F5520B224C6002053BA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		65E6741920B3041300E1B1BE /* ContextLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextLinkableView.swift; sourceTree = "<group>"; };
-		65E6741B20B3065200E1B1BE /* GraphContextPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphContextPopoverViewController.swift; sourceTree = "<group>"; };
+		65E6741B20B3065200E1B1BE /* ContextPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextPopoverViewController.swift; sourceTree = "<group>"; };
 		65E67DCB20A458A500ED7BED /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E67DCD20A458A500ED7BED /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		65E67DCE20A458A500ED7BED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -229,11 +229,11 @@
 			isa = PBXGroup;
 			children = (
 				65040A5220AF558500BC57FE /* MainViewController.swift */,
-				65040A5320AF558500BC57FE /* MVC+InspectorDataSource.swift */,
-				65040A4020ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift */,
-				65040A4220ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift */,
-				65040A4A20ADD36200BC57FE /* MVC+StoryDelegate.swift */,
-				65040A4820ADD05500BC57FE /* MVC+TabsDataSource.swift */,
+				65040A5320AF558500BC57FE /* InspectorDataSource.swift */,
+				65040A4020ADCA0400BC57FE /* StoryBrowserDataSource.swift */,
+				65040A4220ADCCF400BC57FE /* StoryBrowserDelegate.swift */,
+				65040A4A20ADD36200BC57FE /* StoryDelegate.swift */,
+				65040A4820ADD05500BC57FE /* TabsDataSource.swift */,
 				65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */,
 				65040A4420ADCED600BC57FE /* TabItem.swift */,
 			);
@@ -252,9 +252,9 @@
 		65040A6120B0911600BC57FE /* Popovers */ = {
 			isa = PBXGroup;
 			children = (
-				65E6741B20B3065200E1B1BE /* GraphContextPopoverViewController.swift */,
-				65040A6220B0914F00BC57FE /* GraphDialogPopoverViewController.swift */,
-				65B0700F20B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift */,
+				65E6741B20B3065200E1B1BE /* ContextPopoverViewController.swift */,
+				65040A6220B0914F00BC57FE /* DialogPopoverViewController.swift */,
+				65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -273,11 +273,11 @@
 			isa = PBXGroup;
 			children = (
 				658C7CB1207E7E6600E2B46B /* Main.storyboard */,
+				654C7C4920B3303F00E53EF4 /* TabPages.storyboard */,
+				65040A5F20B0902600BC57FE /* Popovers.storyboard */,
+				65040A5820AF813800BC57FE /* Preferences.storyboard */,
 				6553C95D2092723A00E6737B /* Reader.storyboard */,
 				6522C5AF2083906300F76DC8 /* Tests.storyboard */,
-				65040A5820AF813800BC57FE /* Preferences.storyboard */,
-				65040A5F20B0902600BC57FE /* Popovers.storyboard */,
-				654C7C4920B3303F00E53EF4 /* TabPages.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -357,6 +357,7 @@
 				658C7CAB207E7E6500E2B46B /* AppDelegate.swift */,
 				65CEA212209FB412008C49AE /* MainWindowController.swift */,
 				65588383209C6295004C412F /* CommandSystem.swift */,
+				65DE4F5520B224C6002053BA /* Settings.swift */,
 				658C7CAF207E7E6600E2B46B /* Assets.xcassets */,
 				658C7CB4207E7E6600E2B46B /* Info.plist */,
 				658C7CB5207E7E6600E2B46B /* Novella.entitlements */,
@@ -364,7 +365,6 @@
 				65AFA6A220A7181C00B9C5E5 /* GraphSystem */,
 				6522C5AE2083903900F76DC8 /* Storyboards */,
 				65F5DFA7207EBD960041FB0D /* ViewControllers */,
-				65DE4F5520B224C6002053BA /* Settings.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -449,10 +449,10 @@
 		65F5DFA7207EBD960041FB0D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				65040A3F20ADC8D300BC57FE /* Main */,
 				654C7C4B20B3432F00E53EF4 /* Tabs */,
 				65040A6120B0911600BC57FE /* Popovers */,
 				65040A5E20AF8C8C00BC57FE /* Preferences */,
-				65040A3F20ADC8D300BC57FE /* Main */,
 				6553C96120927D6E00E6737B /* ReaderViewController.swift */,
 				652102502083BC6C0028212B /* Tests */,
 			);
@@ -633,7 +633,7 @@
 				6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */,
 				6553C96220927D6E00E6737B /* ReaderViewController.swift in Sources */,
 				65AFA6AE20A748B000B9C5E5 /* DialogLinkableView.swift in Sources */,
-				65E6741C20B3065300E1B1BE /* GraphContextPopoverViewController.swift in Sources */,
+				65E6741C20B3065300E1B1BE /* ContextPopoverViewController.swift in Sources */,
 				65040A4520ADCED600BC57FE /* TabItem.swift in Sources */,
 				65F85487209E61850067A95C /* NSColor+Hex.swift in Sources */,
 				65AFA6A820A7230500B9C5E5 /* GraphBGView.swift in Sources */,
@@ -642,15 +642,15 @@
 				65AFA6AA20A736F500B9C5E5 /* LinkableView.swift in Sources */,
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
-				65040A5520AF558500BC57FE /* MVC+InspectorDataSource.swift in Sources */,
+				65040A5520AF558500BC57FE /* InspectorDataSource.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
 				65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */,
 				65040A5D20AF838A00BC57FE /* PreferencesWindowController.swift in Sources */,
 				65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */,
-				65040A4320ADCCF400BC57FE /* MVC+StoryBrowserDelegate.swift in Sources */,
+				65040A4320ADCCF400BC57FE /* StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
-				65040A6320B0914F00BC57FE /* GraphDialogPopoverViewController.swift in Sources */,
+				65040A6320B0914F00BC57FE /* DialogPopoverViewController.swift in Sources */,
 				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
 				65040A5420AF558500BC57FE /* MainViewController.swift in Sources */,
@@ -659,10 +659,10 @@
 				65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */,
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				654C7C4D20B3434600E53EF4 /* GraphTabViewController.swift in Sources */,
-				65040A4B20ADD36200BC57FE /* MVC+StoryDelegate.swift in Sources */,
-				65040A4920ADD05500BC57FE /* MVC+TabsDataSource.swift in Sources */,
-				65B0701020B2EDA900C0694F /* GraphDeliveryPopoverViewController.swift in Sources */,
-				65040A4120ADCA0400BC57FE /* MVC+StoryBrowserDataSource.swift in Sources */,
+				65040A4B20ADD36200BC57FE /* StoryDelegate.swift in Sources */,
+				65040A4920ADD05500BC57FE /* TabsDataSource.swift in Sources */,
+				65B0701020B2EDA900C0694F /* DeliveryPopoverViewController.swift in Sources */,
+				65040A4120ADCA0400BC57FE /* StoryBrowserDataSource.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */,
 				654A155F20AA33C000C99141 /* GraphLinkableView.swift in Sources */,

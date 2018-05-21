@@ -309,11 +309,11 @@ extension GraphView {
 		// set content based on the type of node
 		switch node {
 		case is DialogLinkableView:
-			(popover.ViewController as! GraphDialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView)
+			(popover.ViewController as! DialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView)
 		case is DeliveryLinkableView:
-			(popover.ViewController as! GraphDeliveryPopoverViewController).setDeliveryNode(node: node as! DeliveryLinkableView)
+			(popover.ViewController as! DeliveryPopoverViewController).setDeliveryNode(node: node as! DeliveryLinkableView)
 		case is ContextLinkableView:
-			(popover.ViewController as! GraphContextPopoverViewController).setContextNode(node: node as! ContextLinkableView)
+			(popover.ViewController as! ContextPopoverViewController).setContextNode(node: node as! ContextLinkableView)
 		default:
 			print("Double clicked a LinkableView that doesn't have a popover implemented.")
 		}

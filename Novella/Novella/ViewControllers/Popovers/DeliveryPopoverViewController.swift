@@ -1,5 +1,5 @@
 //
-//  GraphDeliveryPopoverViewController.swift
+//  DeliveryPopoverViewController.swift
 //  Novella
 //
 //  Created by Daniel Green on 21/05/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class GraphDeliveryPopoverViewController: NSViewController {
+class DeliveryPopoverViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
 	@IBOutlet fileprivate weak var _directionsTextField: NSTextField!
