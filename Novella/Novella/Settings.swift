@@ -27,25 +27,27 @@ struct Settings {
 				//
 				static let dialogStartColor = "graph.nodes.dialogStartColor"
 				static let graphStartColor = "graph.nodes.graphStartColor"
+				static let deliveryStartColor = "graph.nodes.deliveryStartColor"
 			}
 		}
 	}
 	
 	struct graph {
 		struct nodes {
-			static var roundness:        CGFloat = 10.0
-			static var endColor:         NSColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
-			static var outlineInset:     CGFloat = 1.0
-			static var outlineColor:     NSColor = NSColor.fromHex("#FAFAF6").withAlphaComponent(0.7)
-			static var outlineWidth:     CGFloat = 1.5
-			static var primedInset:      CGFloat = 1.0
-			static var primedWidth:      CGFloat = 1.0
-			static var primedColor:      NSColor = NSColor.fromHex("#B3F865")
-			static var selectedInset:    CGFloat = 1.0
-			static var selectedWidth:    CGFloat = 3.0
-			static var selectedColor:    NSColor = NSColor.green
-			static var dialogStartColor: NSColor = NSColor.fromHex("#A8E6CF")
-			static var graphStartColor:  NSColor = NSColor.fromHex("#BA78CD")
+			static var roundness:          CGFloat = 10.0
+			static var endColor:           NSColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
+			static var outlineInset:       CGFloat = 1.0
+			static var outlineColor:       NSColor = NSColor.fromHex("#FAFAF6").withAlphaComponent(0.7)
+			static var outlineWidth:       CGFloat = 1.5
+			static var primedInset:        CGFloat = 1.0
+			static var primedWidth:        CGFloat = 1.0
+			static var primedColor:        NSColor = NSColor.fromHex("#B3F865")
+			static var selectedInset:      CGFloat = 1.0
+			static var selectedWidth:      CGFloat = 3.0
+			static var selectedColor:      NSColor = NSColor.green
+			static var dialogStartColor:   NSColor = NSColor.fromHex("#A8E6CF")
+			static var graphStartColor:    NSColor = NSColor.fromHex("#BA78CD")
+			static var deliveryStartColor: NSColor = NSColor.fromHex("#FFA35F")
 		}
 	}
 	
@@ -64,6 +66,7 @@ struct Settings {
 		Settings.graph.nodes.selectedColor = NSColor.green
 		Settings.graph.nodes.dialogStartColor = NSColor.fromHex("#A8E6CF")
 		Settings.graph.nodes.graphStartColor = NSColor.fromHex("#BA78CD")
+		Settings.graph.nodes.deliveryStartColor = NSColor.fromHex("#FFA35F")
 	}
 	
 	
@@ -108,6 +111,9 @@ struct Settings {
 		if hasKey(key: Settings.keys.graph.nodes.graphStartColor) {
 			Settings.graph.nodes.graphStartColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.graphStartColor)!
 		}
+		if hasKey(key: Settings.keys.graph.nodes.deliveryStartColor) {
+			Settings.graph.nodes.deliveryStartColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.deliveryStartColor)!
+		}
 	}
 	
 	static func saveDefaults() {
@@ -125,6 +131,7 @@ struct Settings {
 		UserDefaults.standard.set(Settings.graph.nodes.selectedColor, forKey: Settings.keys.graph.nodes.selectedColor)
 		UserDefaults.standard.set(Settings.graph.nodes.dialogStartColor, forKey: Settings.keys.graph.nodes.dialogStartColor)
 		UserDefaults.standard.set(Settings.graph.nodes.graphStartColor, forKey: Settings.keys.graph.nodes.graphStartColor)
+		UserDefaults.standard.set(Settings.graph.nodes.deliveryStartColor, forKey: Settings.keys.graph.nodes.deliveryStartColor)
 	}
 	
 	

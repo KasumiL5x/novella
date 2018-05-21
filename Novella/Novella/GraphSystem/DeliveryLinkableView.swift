@@ -1,20 +1,20 @@
 //
-//  DialogView.swift
+//  DeliveryLinkableView.swift
 //  Novella
 //
-//  Created by Daniel Green on 12/05/2018.
+//  Created by Daniel Green on 21/05/2018.
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Cocoa
 import NovellaModel
 
-class DialogLinkableView: LinkableView {
+class DeliveryLinkableView: LinkableView {
 	// MARK: - - Variables -
 	fileprivate let _nameLabel: NSTextField
 	
 	// MARK: - - Initialization -
-	init(node: NVDialog, graphView: GraphView) {
+	init(node: NVDelivery, graphView: GraphView) {
 		self._nameLabel = NSTextField(labelWithString: "D")
 		self._nameLabel.tag = LinkableView.HIT_IGNORE_TAG
 		
@@ -38,7 +38,7 @@ class DialogLinkableView: LinkableView {
 		self.layer?.shadowRadius = 5.0
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("DialogLinkableView::init(coder:) not implemented.")
+		fatalError("DeliveryLinkableView::init(coder:) not implemented.")
 	}
 	
 	// MARK: - - Functions -
@@ -47,7 +47,7 @@ class DialogLinkableView: LinkableView {
 		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
 	}
 	override func onMove() {
-		(Linkable as! NVDialog).EditorPosition = frame.origin
+		(Linkable as! NVDelivery).EditorPosition = frame.origin
 	}
 	
 	// MARK - - Drawing -
@@ -58,22 +58,22 @@ class DialogLinkableView: LinkableView {
 			context.saveGState()
 			
 			// create drawing rect for this object
-			let dialogRect = widgetRect()
+			let deliveryRect = widgetRect()
 			
 			// draw background gradient
 			let bgRadius = Settings.graph.nodes.roundness
-			var path = NSBezierPath(roundedRect: dialogRect, xRadius: bgRadius, yRadius: bgRadius)
+			var path = NSBezierPath(roundedRect: deliveryRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Settings.graph.nodes.dialogStartColor.cgColor, Settings.graph.nodes.endColor.cgColor]
+			let bgColors = [Settings.graph.nodes.deliveryStartColor.cgColor, Settings.graph.nodes.endColor.cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
-			let bgStart = CGPoint(x: 0, y: dialogRect.height)
+			let bgStart = CGPoint(x: 0, y: deliveryRect.height)
 			let bgEnd = CGPoint.zero
 			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
 			
 			// draw outline (inset)
 			let outlineInset = Settings.graph.nodes.outlineInset
-			let selectedRect = dialogRect.insetBy(dx: outlineInset, dy: outlineInset)
+			let selectedRect = deliveryRect.insetBy(dx: outlineInset, dy: outlineInset)
 			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
 			context.resetClip()
 			path.lineWidth = Settings.graph.nodes.outlineWidth
@@ -83,7 +83,7 @@ class DialogLinkableView: LinkableView {
 			// draw primed indicator
 			if IsPrimed {
 				let selectedInset = Settings.graph.nodes.primedInset
-				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
+				let insetRect = deliveryRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.lineWidth = Settings.graph.nodes.primedWidth
 				Settings.graph.nodes.primedColor.setStroke()
@@ -93,7 +93,7 @@ class DialogLinkableView: LinkableView {
 			// draw selection indicator
 			if IsSelected {
 				let selectedInset = Settings.graph.nodes.selectedInset
-				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
+				let insetRect = deliveryRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.lineWidth = Settings.graph.nodes.selectedWidth
 				Settings.graph.nodes.selectedColor.setStroke()

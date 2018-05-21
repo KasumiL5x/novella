@@ -15,6 +15,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 	var _target: Any?
 	
 	var _dialogDict: [NamedValue] = []
+	var _deliveryDict: [NamedValue] = []
 	var _graphDict: [NamedValue] = []
 	
 	override init() {
@@ -25,6 +26,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 	fileprivate func nilAllTargets() {
 		_target = nil
 		_dialogDict = []
+		_deliveryDict = []
 		_graphDict = []
 	}
 	
@@ -53,6 +55,16 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 				("Position", "(\(dialog.EditorPosition.x), \(dialog.EditorPosition.y))")
 			]
 			
+		case is NVDelivery:
+			let delivery = target as! NVDelivery
+			_deliveryDict = [
+				("Name", delivery.Name),
+				("Preview", delivery.Preview),
+				("Content", delivery.Content),
+				("Directions", delivery.Directions),
+				("Position", "(\(delivery.EditorPosition.x), \(delivery.EditorPosition.y))")
+			]
+			
 		case is NVGraph:
 			let graph = target as! NVGraph
 			_graphDict = [
@@ -74,6 +86,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 		switch _target {
 		case is NVDialog:
 			return _dialogDict.count
+		case is NVDelivery:
+			return _deliveryDict.count
 		case is NVGraph:
 			return _graphDict.count
 		default:
@@ -90,6 +104,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 			switch _target {
 			case is NVDialog:
 				view?.textField?.stringValue = _dialogDict[row].key
+			case is NVDelivery:
+				view?.textField?.stringValue = _deliveryDict[row].key
 			case is NVGraph:
 				view?.textField?.stringValue = _graphDict[row].key
 			default:
@@ -103,6 +119,8 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 			switch _target {
 			case is NVDialog:
 				view?.textField?.stringValue = _dialogDict[row].value as! String
+			case is NVDelivery:
+				view?.textField?.stringValue = _deliveryDict[row].value as! String
 			case is NVGraph:
 				view?.textField?.stringValue = _graphDict[row].value as! String
 			default:

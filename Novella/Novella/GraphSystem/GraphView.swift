@@ -92,6 +92,7 @@ class GraphView: NSView {
 		// configure graphview menu
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(GraphView.onGraphViewMenuAddDialog), keyEquivalent: "")
+		addSubMenu.addItem(withTitle: "Delivery", action: #selector(GraphView.onGraphViewMenuAddDelivery), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Graph", action: #selector(GraphView.onGraphViewMenuAddGraph), keyEquivalent: "")
 		let addMenu = NSMenuItem()
 		addMenu.title = "Add..."
@@ -149,6 +150,11 @@ class GraphView: NSView {
 			switch curr {
 			case is NVDialog:
 				let node = DialogLinkableView(node: curr as! NVDialog, graphView: self)
+				_allLinkableViews.append(node)
+				self.addSubview(node, positioned: .below, relativeTo: _marquee)
+				
+			case is NVDelivery:
+				let node = DeliveryLinkableView(node: curr as! NVDelivery, graphView: self)
 				_allLinkableViews.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
 				
@@ -280,6 +286,11 @@ extension GraphView {
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+		// disallow not yet implemented types
+		if node is GraphLinkableView || node is DeliveryLinkableView {
+			return
+		}
+		
 		let popover: NodePopover
 		if let existing = _nodePopovers.first(where: {$0.Node == node}) {
 			popover = existing
@@ -440,6 +451,17 @@ extension GraphView {
 		pos.y -= dlgView.frame.height/2
 		dlgView.move(to: pos)
 	}
+	@objc fileprivate func onGraphViewMenuAddDelivery() {
+		let nvDelivery = _nvStory.makeDelivery()
+		do { try _nvGraph.add(node: nvDelivery) } catch {
+			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
+		}
+		let deliveryView = makeDeliveryLinkableView(nvDelivery: nvDelivery)
+		var pos = _lastContextLocation
+		pos.x -= deliveryView.frame.width/2
+		pos.y -= deliveryView.frame.height/2
+		deliveryView.move(to: pos)
+	}
 	@objc fileprivate func onGraphViewMenuAddGraph() {
 		let nvGraph = _nvStory.makeGraph(name: NSUUID().uuidString)
 		do { try _nvGraph.add(graph: nvGraph) } catch {
@@ -547,6 +569,14 @@ extension GraphView {
 	@discardableResult
 	fileprivate func makeDialogLinkableView(nvDialog: NVDialog) -> DialogLinkableView {
 		let node = DialogLinkableView(node: nvDialog, graphView: self)
+		_allLinkableViews.append(node)
+		self.addSubview(node, positioned: .below, relativeTo: _marquee)
+		
+		return node
+	}
+	@discardableResult
+	fileprivate func makeDeliveryLinkableView(nvDelivery: NVDelivery) -> DeliveryLinkableView {
+		let node = DeliveryLinkableView(node: nvDelivery, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		

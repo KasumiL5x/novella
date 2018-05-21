@@ -104,6 +104,5 @@ class GraphLinkableView: LinkableView {
 			
 			context.restoreGState()
 		}
-		
 	}
 }
