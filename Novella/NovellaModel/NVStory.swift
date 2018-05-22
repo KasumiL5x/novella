@@ -197,6 +197,8 @@ extension NVStory {
 		// actual remove
 		_allFolders.remove(at: _allFolders.index(where: {$0 == folder})!)
 		_allIdentifiables.remove(at: _allIdentifiables.index(where: {$0.UUID == folder.UUID})!)
+		
+		_delegate?.onStoryDeleteFolder(folder: folder, contents: deleteContents)
 	}
 	
 	@discardableResult
@@ -213,6 +215,8 @@ extension NVStory {
 		try! _allFolders.first(where: {$0._variables.contains(variable)})?.remove(variable: variable)
 		_allVariables.remove(at: _allVariables.index(where: {$0 == variable})!)
 		_allIdentifiables.remove(at: _allIdentifiables.index(where: {$0.UUID == variable.UUID})!)
+		
+		_delegate?.onStoryDeleteVariable(variable: variable)
 	}
 	
 	@discardableResult

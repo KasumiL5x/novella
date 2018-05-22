@@ -43,6 +43,13 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadBrowser()
 	}
 	
+	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
+		_mvc.reloadBrowser()
+	}
+	func onStoryDeleteVariable(variable: NVVariable) {
+		_mvc.reloadBrowser()
+	}
+	
 	func onStoryAddFolder(folder: NVFolder) {
 		_mvc.reloadBrowser()
 	}

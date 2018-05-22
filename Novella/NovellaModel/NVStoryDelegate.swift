@@ -29,6 +29,11 @@ public protocol NVStoryDelegate {
 	// Called when a NVContext is created using Story.makeContext().
 	func onStoryMakeContext(context: NVContext)
 	
+	// Called when an NVFolder is deleted using Story.deleteFolder().
+	func onStoryDeleteFolder(folder: NVFolder, contents: Bool)
+	// Called when an NVVariable is deleted using Story.deleteVariable().
+	func onStoryDeleteVariable(variable: NVVariable)
+	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
 	// Called when an NVFolder is removed from the Story using Story.remove(folder).
@@ -98,6 +103,11 @@ public extension NVStoryDelegate {
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 	}
 	func onStoryMakeContext(context: NVContext) {
+	}
+	
+	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
+	}
+	func onStoryDeleteVariable(variable: NVVariable) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
