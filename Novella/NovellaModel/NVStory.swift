@@ -181,6 +181,10 @@ extension NVStory {
 		return folder
 	}
 	
+	public func deleteFolder(folder: NVFolder, deleteContents: Bool) {
+		fatalError("Not yet implemented.")
+	}
+	
 	@discardableResult
 	public func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
 		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
