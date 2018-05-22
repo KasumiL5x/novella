@@ -273,6 +273,9 @@ class MainViewController: NSViewController {
 			return false
 		}
 		
+		let toastSettings = ToastSettings()
+		self.view.showToast(message: "Saved", userSettings: toastSettings)
+		
 		return true
 	}
 	fileprivate func createEmptyStory() {
