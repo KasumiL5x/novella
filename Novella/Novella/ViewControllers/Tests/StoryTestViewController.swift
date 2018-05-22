@@ -111,10 +111,7 @@ extension StoryTestViewController: NSTextFieldDelegate {
 		let item = outline.item(atRow: outline.selectedRow)
 		
 		if let graph = item as? NVGraph {
-			do{ try graph.setName(fieldEditor.string) } catch {
-				statusLabel.stringValue = "Could not rename FG (\(graph.Name)->\(fieldEditor.string))!"
-				control.stringValue = graph.Name
-			}
+			graph.setName(fieldEditor.string)
 		}
 		
 		return true

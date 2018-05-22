@@ -454,6 +454,7 @@ extension MainViewController {
 	}
 }
 
+// MARK: - - Tabs -
 extension MainViewController {
 	func selectTab(item: TabItem?) {
 		// update selected tab
@@ -479,18 +480,12 @@ extension MainViewController: TabsControlDelegate {
 	}
 	func tabsControl(_ control: TabsControl, setTitle newTitle: String, forItem item: AnyObject) {
 		let tabItem = (item as! TabItem)
-		let oldName = tabItem.title
 		
 		switch tabItem.tabItem.viewController {
 		case is GraphTabViewController:
 			if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
-				do {
-					try nvGraph.setName(newTitle)
-					tabItem.title = newTitle
-				} catch {
-					tabItem.title = oldName
-					control.reloadTabs() // must reload if it failed to update the tab again
-				}
+				nvGraph.setName(newTitle)
+				tabItem.title = newTitle
 			}
 			reloadBrowser()
 			

@@ -52,30 +52,10 @@ public class NVGraph {
 	public var Story:     NVStory      {get{ return _story }}
 	
 	// MARK: Setters
-	public func setName(_ name: String) throws {
-		let oldName = _name // for delegate
-		
-		// if there's no parent graph, check siblings of the story for name clashes
-		if nil == _parent {
-			if _story.containsGraphName(name) {
-				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the Story already contains that name.")
-			}
-			_name = name
-			_delegate?.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)
-			return
-		}
-		
-		// parent graph can't contain same name
-		if _parent != nil {
-			if _parent!.containsGraphName(name) {
-				throw NVError.nameAlreadyTaken("Tried to change Graph \(_name) to \(name), but the parent Graph (\(_parent!._name)) already contains that name.")
-			}
-			_name = name
-			_delegate?.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)
-			return
-		}
-		
-		throw NVError.invalid("Oh dear.")
+	public func setName(_ name: String) {
+		let oldName = _name
+		_name = name
+		_delegate?.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)
 	}
 	
 	public func setEntry(_ entry: NVLinkable) throws {
@@ -112,10 +92,6 @@ public class NVGraph {
 		// already a child
 		if contains(graph: graph) {
 			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph._name) to \(_name)).")
-		}
-		// already contains same name
-		if containsGraphName(graph._name) {
-			throw NVError.nameTaken("Tried to add a Graph but its name was already in use (\(graph._name) to \(_name)).")
 		}
 		// unparent first
 		if graph._parent != nil {

@@ -128,19 +128,13 @@ class VariableFolderTestViewController: NSViewController {
 			if newName == folder.Name {
 				return
 			}
-			do { try folder.setName(newName) } catch {
-				statusLabel.stringValue = "Could not rename Folder (\(folder.Name)->\(newName))!"
-				sender.stringValue = folder.Name
-			}
+			folder.Name = newName
 		}
 		if let variable = item as? NVVariable {
 			if newName == variable.Name {
 				return
 			}
-			do { try variable.setName(newName) } catch {
-				statusLabel.stringValue = "Could not rename Variable (\(variable.Name)->\(newName))!"
-				sender.stringValue = variable.Name
-			}
+			variable.Name = newName
 		}
 	}
 	

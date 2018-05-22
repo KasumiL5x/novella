@@ -90,10 +90,6 @@ extension NVStory {
 		if contains(folder: folder) {
 			throw NVError.invalid("Tried to add a Folder but it already exists (\(folder._name) to story).")
 		}
-		// already contains same name
-		if containsFolderName(folder._name) {
-			throw NVError.nameTaken("Tried to add a Folder but its name was already in use (\(folder._name) to story).")
-		}
 		// now add
 		_folders.append(folder)
 		
@@ -124,10 +120,6 @@ extension NVStory {
 		// already a child
 		if contains(graph: graph) {
 			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph._name) to story).")
-		}
-		// already contains same name
-		if containsGraphName(graph._name) {
-			throw NVError.nameTaken("Tried to add a Graph but its name was already in use (\(graph._name) to story).")
 		}
 		// unparent first
 		if graph._parent != nil {

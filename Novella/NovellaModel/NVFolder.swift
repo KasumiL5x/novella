@@ -26,26 +26,16 @@ public class NVFolder {
 	}
 	
 	// MARK: Properties
-	public var Name:      String       {get{ return _name }}
+	public var Name: String {
+		get{ return _name }
+		set{
+			_name = newValue
+		}
+	}
 	public var Synopsis:  String       {get{ return _synopsis } set{ _synopsis = newValue }}
 	public var Variables: [NVVariable] {get{ return _variables }}
 	public var Folders:   [NVFolder]   {get{ return _folders }}
 	public var Parent:    NVFolder?    {get{ return _parent }}
-	
-	// MARK: Setters
-	public func setName(_ name: String) throws {
-		// if not in a parent folder, name conflict doesn't matter
-		if nil == _parent {
-			_name = name
-			return
-		}
-		
-		// parent folder can't contain the requested name already
-		if _parent!.containsFolderName(name) {
-			throw NVError.nameAlreadyTaken("Tried to change Folder \(_name) to \(name), but its parent Folder (\(_parent!.Name) already contains that name.")
-		}
-		_name = name
-	}
 	
 	// MARK: Folders
 	public func contains(folder: NVFolder) -> Bool {
@@ -65,10 +55,6 @@ public class NVFolder {
 		// already a child
 		if contains(folder: folder) {
 			throw NVError.invalid("Tried to add Folder but it already exists (\(folder._name) to \(_name)).")
-		}
-		// already contains same name
-		if containsFolderName(folder._name) {
-			throw NVError.nameTaken("Tried to add Folder but its name was already in use (\(folder._name) to \(_name)).")
 		}
 		// unparent first
 		if folder._parent != nil {
@@ -117,10 +103,6 @@ public class NVFolder {
 		// already a child
 		if contains(variable: variable) {
 			throw NVError.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
-		}
-		// already contains same name
-		if containsVariableName(variable._name) {
-			throw NVError.nameTaken("Tried to add Variable but its name was already in use (\(variable._name) to \(_name)).")
 		}
 		// unparent first
 		if variable._folder != nil {

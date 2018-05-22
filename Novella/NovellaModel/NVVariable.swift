@@ -30,7 +30,12 @@ public class NVVariable {
 	}
 	
 	// MARK:  Properties
-	public var Name:         String     {get{ return _name }}
+	public var Name: String {
+		get{ return _name }
+		set{
+			_name = newValue
+		}
+	}
 	public var Synopsis:     String     {get{ return _synopsis } set{ _synopsis = newValue }}
 	public var DataType:     NVDataType {get{ return _type }}
 	public var Value:        Any        {get{ return _value }}
@@ -39,19 +44,6 @@ public class NVVariable {
 	public var Folder:       NVFolder?  {get{ return _folder }}
 	
 	// MARK: Setters
-	public func setName(_ name: String) throws {
-		// if not in a folder, name conflict doesn't matter
-		if nil == _folder {
-			_name = name
-			return
-		}
-		// containing folder can't contain the requested name already
-		if _folder!.containsVariableName(name) {
-			throw NVError.nameTaken("Tried to change a Variable's name (\(_name)->\(name)) but its Folder (\(_folder!._name) already contains that.")
-		}
-		_name = name
-	}
-	
 	public func setType(_ type: NVDataType) {
 		_type = type
 		_value = type.defaultValue
