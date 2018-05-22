@@ -174,7 +174,29 @@ extension NVStory {
 	}
 	
 	public func deleteFolder(folder: NVFolder, deleteContents: Bool) {
-		fatalError("Not yet implemented.")
+		// delete children
+		if deleteContents {
+			for childVariable in folder._variables {
+				deleteVariable(variable: childVariable)
+			}
+			for childFolder in folder.Folders {
+				deleteFolder(folder: childFolder, deleteContents: true)
+			}
+		}
+		
+		// remove from parent
+		if let parent = folder._parent {
+			try! parent.remove(folder: folder)
+		}
+		
+		// remove from story
+		if self._folders.contains(folder) {
+			self._folders.remove(at: self._folders.index(where: {$0 == folder})!)
+		}
+		
+		// actual remove
+		_allFolders.remove(at: _allFolders.index(where: {$0 == folder})!)
+		_allIdentifiables.remove(at: _allIdentifiables.index(where: {$0.UUID == folder.UUID})!)
 	}
 	
 	@discardableResult
@@ -185,6 +207,12 @@ extension NVStory {
 		
 		_delegate?.onStoryMakeVariable(variable: variable)
 		return variable
+	}
+	
+	public func deleteVariable(variable: NVVariable) {
+		try! _allFolders.first(where: {$0._variables.contains(variable)})?.remove(variable: variable)
+		_allVariables.remove(at: _allVariables.index(where: {$0 == variable})!)
+		_allIdentifiables.remove(at: _allIdentifiables.index(where: {$0.UUID == variable.UUID})!)
 	}
 	
 	@discardableResult
