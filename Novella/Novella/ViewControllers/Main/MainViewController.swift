@@ -306,6 +306,24 @@ class MainViewController: NSViewController {
 		return tabItem
 	}
 	
+	@discardableResult
+	fileprivate func addVariableTabEditor() -> TabItem? {
+		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
+		let id = NSStoryboard.SceneIdentifier(rawValue: "VariableTab")
+		guard let vc =  sb.instantiateController(withIdentifier: id) as? VariableTabViewController else {
+			print("Failed to initialize VariableTabViewController.")
+			return nil
+		}
+		let tabViewItem = NSTabViewItem(viewController: vc)
+		_tabView.addTabViewItem(tabViewItem)
+		
+		let tabItem = TabItem(title: "Variable Editor", icon: nil, menu: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		_tabsDataSource!.Tabs.append(tabItem)
+		_tabController.reloadTabs()
+		
+		return tabItem
+	}
+	
 	fileprivate func closeTab(tab: TabItem) {
 		guard let index = _tabsDataSource!.Tabs.index(of: tab) else { return }
 		
@@ -360,6 +378,16 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Interface Buttons -
+	
+	@IBAction func onVariableEditor(_ sender: NSButton) {
+		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
+			selectTab(item: existing)
+		} else {
+			let varTab = addVariableTabEditor()
+			selectTab(item: varTab)
+		}
+	}
+	
 	@IBAction func onCloseTab(_ sender: NSButton) {
 		if let item = _selectedTab {
 			closeTab(tab: item)
@@ -446,23 +474,29 @@ extension MainViewController: TabsControlDelegate {
 	func tabsControl(_ control: TabsControl, didReorderItems items: [AnyObject]) {
 	}
 	func tabsControl(_ control: TabsControl, canEditTitleOfItem item: AnyObject) -> Bool {
-		return true
+		return (item as! TabItem).tabItem.viewController is GraphTabViewController
 	}
 	func tabsControl(_ control: TabsControl, setTitle newTitle: String, forItem item: AnyObject) {
 		let tabItem = (item as! TabItem)
 		let oldName = tabItem.title
 		
-		if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
-			do {
-				try nvGraph.setName(newTitle)
-				tabItem.title = newTitle
-			} catch {
-				tabItem.title = oldName
-				control.reloadTabs() // must reload if it failed to update the tab again
+		switch tabItem.tabItem.viewController {
+		case is GraphTabViewController:
+			if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
+				do {
+					try nvGraph.setName(newTitle)
+					tabItem.title = newTitle
+				} catch {
+					tabItem.title = oldName
+					control.reloadTabs() // must reload if it failed to update the tab again
+				}
 			}
+			reloadBrowser()
+			
+		default:
+			print("Unexpected ViewController type for renamed tab.")
+			break
 		}
-		
-		reloadBrowser()
 	}
 	
 	func tabsControl(_ control: TabsControl, canSelectItem item: AnyObject) -> Bool {

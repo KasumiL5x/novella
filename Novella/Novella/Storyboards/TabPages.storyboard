@@ -8,7 +8,7 @@
         <!--VariableTab-->
         <scene sceneID="jET-on-QDE">
             <objects>
-                <viewController storyboardIdentifier="VariableTab" id="qwa-hs-HaY" userLabel="VariableTab" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VariableTab" id="qwa-hs-HaY" userLabel="VariableTab" customClass="VariableTabViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Xd5-Gc-eOA">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

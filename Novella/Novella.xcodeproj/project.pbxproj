@@ -27,6 +27,7 @@
 		65264CAD20A76DA8002BF136 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAC20A76DA8002BF136 /* PinView.swift */; };
 		65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAE20A76EC3002BF136 /* PinViewLink.swift */; };
 		65264CB120A7742F002BF136 /* PinViewBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CB020A7742F002BF136 /* PinViewBranch.swift */; };
+		6528D3F420B496F300B60147 /* VariableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D3F320B496F300B60147 /* VariableTabViewController.swift */; };
 		6546805220A45D740036B770 /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546804F20A45D740036B770 /* NVFolder.swift */; };
 		6546805320A45D740036B770 /* NVDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805020A45D740036B770 /* NVDataType.swift */; };
 		6546805420A45D740036B770 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805120A45D740036B770 /* NVVariable.swift */; };
@@ -138,6 +139,7 @@
 		65264CAC20A76DA8002BF136 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		65264CAE20A76EC3002BF136 /* PinViewLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewLink.swift; sourceTree = "<group>"; };
 		65264CB020A7742F002BF136 /* PinViewBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewBranch.swift; sourceTree = "<group>"; };
+		6528D3F320B496F300B60147 /* VariableTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableTabViewController.swift; sourceTree = "<group>"; };
 		6546804F20A45D740036B770 /* NVFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
 		6546805020A45D740036B770 /* NVDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDataType.swift; sourceTree = "<group>"; };
 		6546805120A45D740036B770 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				654C7C4C20B3434600E53EF4 /* GraphTabViewController.swift */,
+				6528D3F320B496F300B60147 /* VariableTabViewController.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				65040A6320B0914F00BC57FE /* DialogPopoverViewController.swift in Sources */,
 				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
+				6528D3F420B496F300B60147 /* VariableTabViewController.swift in Sources */,
 				65040A5420AF558500BC57FE /* MainViewController.swift in Sources */,
 				65264CAD20A76DA8002BF136 /* PinView.swift in Sources */,
 				65040A4F20ADF56800BC57FE /* GraphViewDelegate.swift in Sources */,

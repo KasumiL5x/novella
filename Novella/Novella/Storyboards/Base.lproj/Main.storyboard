@@ -345,6 +345,17 @@
                                             <action selector="onAddGraph:" target="XfG-lQ-9wD" id="CW6-am-Xi1"/>
                                         </connections>
                                     </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-4j-0da">
+                                        <rect key="frame" x="1102" y="0.0" width="129" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Variable Editor" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Uad-71-ixU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onVariableEditor:" target="XfG-lQ-9wD" id="hd1-3y-Nvq"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="4wc-7t-6FX"/>
