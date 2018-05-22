@@ -32,13 +32,52 @@ class VariableTabViewController: NSViewController {
 		}
 	}
 	
+	func getSelectedFolder() -> NVFolder? {
+		let selectedIndex = _outlineView.selectedRow
+		if selectedIndex == -1 {
+			return nil
+		}
+		let selectedItem = _outlineView.item(atRow: selectedIndex)
+		
+		// if folder is selected, get it
+		if selectedItem is NVFolder {
+			return selectedItem as? NVFolder
+		}
+		
+		// look up the parent chain until a folder is found
+		var parent: Any? = _outlineView.parent(forItem: selectedItem)
+		while parent != nil {
+			if parent is NVFolder {
+				return parent as? NVFolder
+			}
+			parent = _outlineView.parent(forItem: parent)
+		}
+
+		// no folders
+		return nil
+	}
+	
 	@IBAction fileprivate func onAddVariable(_ sender: NSButton) {
+		if let parent = getSelectedFolder() {
+			let variable = _story!.makeVariable(name: NSUUID().uuidString, type: .boolean)
+			try! parent.add(variable: variable)
+			_outlineView.reloadData()
+		}
 	}
 	
 	@IBAction fileprivate func onAddFolder(_ sender: NSButton) {
+		let folder = _story!.makeFolder(name: NSUUID().uuidString)
+		if let parent = getSelectedFolder() {
+			try! parent.add(folder: folder)
+		} else {
+			try! _story?.add(folder: folder)
+		}
+		
+		_outlineView.reloadData()
 	}
 	
 	@IBAction fileprivate func onRemoveSelected(_ sender: NSButton) {
+		print("not implemented")
 	}
 }
 
