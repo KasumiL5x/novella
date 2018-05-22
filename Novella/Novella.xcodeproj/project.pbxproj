@@ -65,6 +65,7 @@
 		6558838A209C8C19004C412F /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588389209C8C19004C412F /* CurveHelper.swift */; };
 		6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */; };
 		65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65711AD120873A23005E44AF /* JSONTestViewController.swift */; };
+		657F147120B4B4F700322516 /* String+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657F147020B4B4F700322516 /* String+FromAny.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
 		658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CB1207E7E6600E2B46B /* Main.storyboard */; };
@@ -177,6 +178,7 @@
 		65588389209C8C19004C412F /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		65711AD120873A23005E44AF /* JSONTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTestViewController.swift; sourceTree = "<group>"; };
+		657F147020B4B4F700322516 /* String+FromAny.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		658C7CAF207E7E6600E2B46B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */,
 				65F85486209E61850067A95C /* NSColor+Hex.swift */,
 				65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */,
+				657F147020B4B4F700322516 /* String+FromAny.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				65040A4320ADCCF400BC57FE /* StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
+				657F147120B4B4F700322516 /* String+FromAny.swift in Sources */,
 				65040A6320B0914F00BC57FE /* DialogPopoverViewController.swift in Sources */,
 				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,

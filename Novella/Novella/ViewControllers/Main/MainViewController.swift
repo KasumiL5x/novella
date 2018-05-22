@@ -314,6 +314,7 @@ class MainViewController: NSViewController {
 			print("Failed to initialize VariableTabViewController.")
 			return nil
 		}
+		vc.setup(story: _story)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
