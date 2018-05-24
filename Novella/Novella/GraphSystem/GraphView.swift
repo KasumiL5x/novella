@@ -264,8 +264,11 @@ extension GraphView {
 			
 		case .cancelled, .ended:
 			if _marquee.InMarquee {
-				let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
-				_selectionHandler?.select(allNodesIn(rect: _marquee.Marquee), append: append)
+				if NSApp.currentEvent!.modifierFlags.contains(.shift) {
+					_undoRedo.execute(cmd: SelectNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
+				} else {
+					_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
+				}
 				_marquee.Marquee = NSRect.zero
 				_marquee.InMarquee = false
 			}
@@ -290,12 +293,12 @@ extension GraphView {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
 		if append {
 			if node.IsSelected {
-				_selectionHandler?.deselect([node])
+				_undoRedo.execute(cmd: DeselectNodesCmd(selection: [node], handler: _selectionHandler!))
 			} else {
-				_selectionHandler?.select([node], append: append)
+				_undoRedo.execute(cmd: SelectNodesCmd(selection: [node], handler: _selectionHandler!))
 			}
 		} else {
-			_selectionHandler?.select([node], append: append)
+			_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
@@ -330,7 +333,7 @@ extension GraphView {
 		case .began:
 			// if node is not selected but we dragged it, replace selection and then start dragging
 			if !node.IsSelected {
-				_selectionHandler?.select([node], append: false)
+				_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
 			}
 			
 			_lastLinkablePanPos = gesture.location(in: self)

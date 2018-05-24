@@ -10,21 +10,56 @@ import Cocoa
 import NovellaModel
 
 class SelectNodesCmd: UndoableCommand {
-	fileprivate let _prevSelection: [LinkableView]
-	fileprivate let _newSelection: [LinkableView]
-	fileprivate let _graphView: GraphView
+	fileprivate let _selection: [LinkableView]
+	fileprivate let _handler: SelectionHandler
 	
-	init(prev: [LinkableView], new: [LinkableView], view: GraphView) {
-		self._prevSelection = prev
-		self._newSelection = new
-		self._graphView = view
+	init(selection: [LinkableView], handler: SelectionHandler) {
+		self._selection = selection
+		self._handler = handler
 	}
 	
 	func execute() {
+		_handler.select(_selection, append: true)
 	}
 	
 	func unexecute() {
-		
+		_handler.deselect(_selection)
+	}
+}
+class ReplacedSelectedNodesCmd: UndoableCommand {
+	fileprivate let _selection: [LinkableView]
+	fileprivate let _oldSelection: [LinkableView]
+	fileprivate let _handler: SelectionHandler
+	
+	init(selection: [LinkableView], handler: SelectionHandler) {
+		self._selection = selection
+		self._oldSelection = handler.Selection.map({$0}) // arrays have value copy in swift
+		self._handler = handler
+	}
+	
+	func execute() {
+		_handler.select(_selection, append: false)
+	}
+	
+	func unexecute() {
+		_handler.select(_oldSelection, append: false)
+	}
+}
+class DeselectNodesCmd: UndoableCommand {
+	fileprivate let _selection: [LinkableView]
+	fileprivate let _handler: SelectionHandler
+	
+	init(selection: [LinkableView], handler: SelectionHandler) {
+		self._selection = selection
+		self._handler = handler
+	}
+	
+	func execute() {
+		_handler.deselect(_selection)
+	}
+	
+	func unexecute() {
+		_handler.select(_selection, append: true)
 	}
 }
 
