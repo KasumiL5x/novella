@@ -21,7 +21,8 @@ class GraphView: NSView {
 	fileprivate var _allPinViews: [PinView]
 	// MARK: Selection
 	fileprivate var _marquee: MarqueeView
-	fileprivate var _selectedNodes: [LinkableView]
+
+	fileprivate var _selectionHandler: SelectionHandler?
 	// MARK: Gestures
 	fileprivate var _panGesture: NSPanGestureRecognizer?
 	fileprivate var _contextGesture: NSClickGestureRecognizer?
@@ -55,7 +56,7 @@ class GraphView: NSView {
 		self._allPinViews = []
 		//
 		self._marquee = MarqueeView(frame: frameRect)
-		self._selectedNodes = []
+		self._selectionHandler = nil
 		//
 		self._panGesture = nil
 		self._contextGesture = nil
@@ -72,6 +73,9 @@ class GraphView: NSView {
 		self._nodePopovers = []
 		
 		super.init(frame: frameRect)
+		
+		// selection handler
+		self._selectionHandler = SelectionHandler(graph: self)
 		
 		// configure pan gesture
 		self._panGesture = NSPanGestureRecognizer(target: self, action: #selector(GraphView.onPan))
@@ -112,7 +116,10 @@ class GraphView: NSView {
 	}
 	var Delegate: GraphViewDelegate? {
 		get{ return _delegate }
-		set{ _delegate = newValue }
+		set{
+			_delegate = newValue
+			_selectionHandler?.Delegate = Delegate
+		}
 	}
 	
 	// MARK: - - Setup -
@@ -128,7 +135,7 @@ class GraphView: NSView {
 		self.addSubview(_marquee)
 		
 		// remove selection
-		selectNodes([], append: false)
+		_selectionHandler?.select([], append: false)
 		
 		// reset some other things
 		_lastLinkablePanPos = CGPoint.zero
@@ -258,7 +265,7 @@ extension GraphView {
 		case .cancelled, .ended:
 			if _marquee.InMarquee {
 				let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
-				selectNodes(allNodesIn(rect: _marquee.Marquee), append: append)
+				_selectionHandler?.select(allNodesIn(rect: _marquee.Marquee), append: append)
 				_marquee.Marquee = NSRect.zero
 				_marquee.InMarquee = false
 			}
@@ -283,12 +290,12 @@ extension GraphView {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
 		if append {
 			if node.IsSelected {
-				deselectNodes([node])
+				_selectionHandler?.deselect([node])
 			} else {
-				selectNodes([node], append: append)
+				_selectionHandler?.select([node], append: append)
 			}
 		} else {
-			selectNodes([node], append: append)
+			_selectionHandler?.select([node], append: append)
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
@@ -323,7 +330,7 @@ extension GraphView {
 		case .began:
 			// if node is not selected but we dragged it, replace selection and then start dragging
 			if !node.IsSelected {
-				selectNodes([node], append: false)
+				_selectionHandler?.select([node], append: false)
 			}
 			
 			_lastLinkablePanPos = gesture.location(in: self)
@@ -338,7 +345,7 @@ extension GraphView {
 			let dx = (curr.x - _lastLinkablePanPos.x)
 			let dy = (curr.y - _lastLinkablePanPos.y)
 			
-			_selectedNodes.forEach({
+			_selectionHandler?.Selection.forEach({
 				var pos = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
 				// clamp to bounds
 				if pos.x < 0.0 {
@@ -552,23 +559,6 @@ extension GraphView {
 
 // MARK: - - Selection -
 extension GraphView {
-	fileprivate func selectNodes(_ nodes: [LinkableView], append: Bool) {
-		_selectedNodes.forEach({$0.deselect()})
-		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
-		_selectedNodes.forEach({$0.select()})
-		
-		_delegate?.onSelectionChanged(graphView: self, selection: _selectedNodes)
-	}
-	
-	fileprivate func deselectNodes(_ nodes: [LinkableView]) {
-		nodes.forEach({
-			if _selectedNodes.contains($0) {
-				$0.deselect()
-				_selectedNodes.remove(at: _selectedNodes.index(of: $0)!)
-			}
-		})
-	}
-	
 	fileprivate func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
 		return NSIntersectsRect(node.frame, rect)
 	}

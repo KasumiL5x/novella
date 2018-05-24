@@ -9,6 +9,25 @@
 import Cocoa
 import NovellaModel
 
+class SelectNodesCmd: UndoableCommand {
+	fileprivate let _prevSelection: [LinkableView]
+	fileprivate let _newSelection: [LinkableView]
+	fileprivate let _graphView: GraphView
+	
+	init(prev: [LinkableView], new: [LinkableView], view: GraphView) {
+		self._prevSelection = prev
+		self._newSelection = new
+		self._graphView = view
+	}
+	
+	func execute() {
+	}
+	
+	func unexecute() {
+		
+	}
+}
+
 class MoveLinkableViewCmd: UndoableCommand {
 	fileprivate let _node: LinkableView
 	fileprivate let _from: CGPoint

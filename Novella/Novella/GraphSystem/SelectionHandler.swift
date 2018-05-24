@@ -1,0 +1,51 @@
+//
+//  SelectionHandler.swift
+//  Novella
+//
+//  Created by Daniel Green on 23/05/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
+//
+
+import Foundation
+
+class SelectionHandler {
+	// MARK: - - Variables -
+	fileprivate var _selectedNodes: [LinkableView]
+	fileprivate var _delegate: GraphViewDelegate?
+	fileprivate var _graph: GraphView
+	
+	// MARK: - - Initialization -
+	init(graph: GraphView) {
+		self._selectedNodes = []
+		self._graph = graph
+	}
+	
+	// MARK: - - Properties -
+	var Selection: [LinkableView] {
+		get{ return _selectedNodes }
+	}
+	var Delegate: GraphViewDelegate? {
+		get{ return _delegate }
+		set{ _delegate = newValue }
+	}
+	
+	// MARK: - - Functions -
+	func select(_ nodes: [LinkableView], append: Bool) {
+		_selectedNodes.forEach({$0.deselect()})
+		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
+		_selectedNodes.forEach({$0.select()})
+		
+		_delegate?.onSelectionChanged(graphView: _graph, selection: _selectedNodes)
+	}
+	
+	func deselect(_ nodes: [LinkableView]) {
+		nodes.forEach({
+			if _selectedNodes.contains($0) {
+				$0.deselect()
+				_selectedNodes.remove(at: _selectedNodes.index(of: $0)!)
+			}
+		})
+		
+		_delegate?.onSelectionChanged(graphView: _graph, selection: _selectedNodes)
+	}
+}
