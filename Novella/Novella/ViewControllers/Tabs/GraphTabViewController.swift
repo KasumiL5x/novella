@@ -12,6 +12,8 @@ import NovellaModel
 class GraphTabViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _scrollView: NSScrollView!
+	@IBOutlet fileprivate weak var _toolbarView: NSView!
+	
 	
 	// MARK: - - Variables -
 	fileprivate static let GRAPH_SIZE: CGFloat = 6000.0
@@ -34,6 +36,9 @@ class GraphTabViewController: NSViewController {
 		if _story != nil && _graph != nil && _delegate != nil {
 			configure()
 		}
+		
+		_toolbarView.wantsLayer = true
+		_toolbarView.layer?.backgroundColor = NSColor.fromHex("#252525").cgColor
 	}
 	
 	fileprivate func configure() {
@@ -51,5 +56,27 @@ class GraphTabViewController: NSViewController {
 		if isViewLoaded {
 			configure()
 		}
+	}
+	
+	fileprivate func centerOfGraph() -> CGPoint {
+		let centerSelf = NSMakePoint(self.view.frame.width/2, self.view.frame.height/2)
+		return _graphView?.convert(centerSelf, from: self.view) ?? CGPoint.zero
+	}
+	
+	// MARK: - - Interface Callbacks -
+	@IBAction func onToolbarDialog(_ sender: NSButton) {
+		_graphView?.makeDialog(at: centerOfGraph())
+	}
+	
+	@IBAction func onToolbarDelivery(_ sender: NSButton) {
+		_graphView?.makeDelivery(at: centerOfGraph())
+	}
+	
+	@IBAction func onToolbarContext(_ sender: NSButton) {
+		_graphView?.makeContext(at: centerOfGraph())
+	}
+	
+	@IBAction func onToolbarGraph(_ sender: NSButton) {
+		_graphView?.makeGraph(at: centerOfGraph())
 	}
 }

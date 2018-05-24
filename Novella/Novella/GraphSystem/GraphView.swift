@@ -458,51 +458,16 @@ extension GraphView {
 extension GraphView {
 	// MARK: GraphView Menu
 	@objc fileprivate func onGraphViewMenuAddDialog() {
-		// make the actual dialog node
-		let nvDialog = _nvStory.makeDialog()
-		// add it to this graph
-		do { try _nvGraph.add(node: nvDialog) } catch {
-			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
-			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
-		}
-		let dlgView = makeDialogLinkableView(nvDialog: nvDialog)
-		var pos = _lastContextLocation
-		pos.x -= dlgView.frame.width/2
-		pos.y -= dlgView.frame.height/2
-		dlgView.move(to: pos)
+		makeDialog(at: _lastContextLocation)
 	}
 	@objc fileprivate func onGraphViewMenuAddDelivery() {
-		let nvDelivery = _nvStory.makeDelivery()
-		do { try _nvGraph.add(node: nvDelivery) } catch {
-			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
-		}
-		let deliveryView = makeDeliveryLinkableView(nvDelivery: nvDelivery)
-		var pos = _lastContextLocation
-		pos.x -= deliveryView.frame.width/2
-		pos.y -= deliveryView.frame.height/2
-		deliveryView.move(to: pos)
+		makeDelivery(at: _lastContextLocation)
 	}
 	@objc fileprivate func onGraphViewMenuAddContext() {
-		let nvContext = _nvStory.makeContext()
-		do { try _nvGraph.add(node: nvContext) } catch {
-			fatalError("Tried to add a new context but couldn't add it to this graph.")
-		}
-		let contextView = makeContextLinkableView(nvContext: nvContext)
-		var pos = _lastContextLocation
-		pos.x -= contextView.frame.width/2
-		pos.y -= contextView.frame.height/2
-		contextView.move(to: pos)
+		makeContext(at: _lastContextLocation)
 	}
 	@objc fileprivate func onGraphViewMenuAddGraph() {
-		let nvGraph = _nvStory.makeGraph(name: NSUUID().uuidString)
-		do { try _nvGraph.add(graph: nvGraph) } catch {
-			fatalError("Tried to add a new graph but couldn't add it to this graph.")
-		}
-		let gView = makeGraphLinkableView(nvGraph: nvGraph)
-		var pos = _lastContextLocation
-		pos.x -= gView.frame.width/2
-		pos.y -= gView.frame.height/2
-		gView.move(to: pos)
+		makeGraph(at: _lastContextLocation)
 	}
 	
 	// MARK: Linkable Menu
@@ -579,39 +544,97 @@ extension GraphView {
 
 // MARK: - - Creation -
 extension GraphView {
+	// MARK: LinkableView Conveniences
+	@discardableResult
+	func makeDialog(at: CGPoint) -> DialogLinkableView {
+		let nvDialog = _nvStory.makeDialog()
+		do { try _nvGraph.add(node: nvDialog) } catch {
+			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
+			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
+		}
+		return makeDialogLinkableView(nvDialog: nvDialog, at: at)
+	}
+	
+	@discardableResult
+	func makeDelivery(at: CGPoint) -> DeliveryLinkableView {
+		let nvDelivery = _nvStory.makeDelivery()
+		do { try _nvGraph.add(node: nvDelivery) } catch {
+			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
+		}
+		return makeDeliveryLinkableView(nvDelivery: nvDelivery, at: at)
+	}
+	
+	@discardableResult
+	func makeContext(at: CGPoint) -> ContextLinkableView {
+		let nvContext = _nvStory.makeContext()
+		do { try _nvGraph.add(node: nvContext) } catch {
+			fatalError("Tried to add a new context but couldn't add it to this graph.")
+		}
+		return makeContextLinkableView(nvContext: nvContext, at: at)
+	}
+	
+	@discardableResult
+	func makeGraph(at: CGPoint) -> GraphLinkableView {
+		let nvGraph = _nvStory.makeGraph(name: NSUUID().uuidString)
+		do { try _nvGraph.add(graph: nvGraph) } catch {
+			fatalError("Tried to add a new graph but couldn't add it to this graph.")
+		}
+		return makeGraphLinkableView(nvGraph: nvGraph, at: _lastContextLocation)
+	}
+	
 	// MARK: LinkableViews
 	@discardableResult
-	fileprivate func makeDialogLinkableView(nvDialog: NVDialog) -> DialogLinkableView {
+	fileprivate func makeDialogLinkableView(nvDialog: NVDialog, at: CGPoint) -> DialogLinkableView {
 		let node = DialogLinkableView(node: nvDialog, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
+		var pos = at
+		pos.x -= node.frame.width/2
+		pos.y -= node.frame.height/2
+		node.move(to: pos)
+		
 		return node
 	}
 	
 	@discardableResult
-	fileprivate func makeDeliveryLinkableView(nvDelivery: NVDelivery) -> DeliveryLinkableView {
+	fileprivate func makeDeliveryLinkableView(nvDelivery: NVDelivery, at: CGPoint) -> DeliveryLinkableView {
 		let node = DeliveryLinkableView(node: nvDelivery, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
-		return node
-	}
-	
-	@discardableResult
-	fileprivate func makeContextLinkableView(nvContext: NVContext) -> ContextLinkableView {
-		let node = ContextLinkableView(node: nvContext, graphView: self)
-		_allLinkableViews.append(node)
-		self.addSubview(node, positioned: .below, relativeTo: _marquee)
+		var pos = at
+		pos.x -= node.frame.width/2
+		pos.y -= node.frame.height/2
+		node.move(to: pos)
 		
 		return node
 	}
 	
 	@discardableResult
-	fileprivate func makeGraphLinkableView(nvGraph: NVGraph) -> GraphLinkableView {
+	fileprivate func makeContextLinkableView(nvContext: NVContext, at: CGPoint) -> ContextLinkableView {
+		let node = ContextLinkableView(node: nvContext, graphView: self)
+		_allLinkableViews.append(node)
+		self.addSubview(node, positioned: .below, relativeTo: _marquee)
+		
+		var pos = at
+		pos.x -= node.frame.width/2
+		pos.y -= node.frame.height/2
+		node.move(to: pos)
+		
+		return node
+	}
+	
+	@discardableResult
+	fileprivate func makeGraphLinkableView(nvGraph: NVGraph, at: CGPoint) -> GraphLinkableView {
 		let node = GraphLinkableView(node: nvGraph, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
+		
+		var pos = at
+		pos.x -= node.frame.width/2
+		pos.y -= node.frame.height/2
+		node.move(to: pos)
 		
 		return node
 	}
