@@ -165,6 +165,8 @@ class GraphView: NSView {
 		// clear existing pin views
 		_allPinViews = []
 		
+		// clear all popovers
+		self._nodePopovers = []
 		
 		// load all nodes
 		for curr in graph.Nodes {
