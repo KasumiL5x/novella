@@ -44,7 +44,7 @@ class GraphView: NSView {
 	// MARK: Delegate
 	fileprivate var _delegate: GraphViewDelegate?
 	// MARK: Popovers
-	fileprivate var _nodePopovers: [NodePopover]
+	fileprivate var _nodePopovers: [GenericPopover]
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -315,30 +315,33 @@ extension GraphView {
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
-		// disallow not yet implemented types
-		if node is GraphLinkableView {
+		// just reshow existing if it already exists
+		if let existing = _nodePopovers.first(where: {$0.View == node}) {
+			existing.show(forView: node, at: .minY)
 			return
 		}
 		
-		let popover: NodePopover
-		if let existing = _nodePopovers.first(where: {$0.Node == node}) {
-			popover = existing
-		} else {
-			popover = NodePopover()
-			_nodePopovers.append(popover)
-		}
-		popover.show(forView: node, at: .minY)
-		
-		// set content based on the type of node
 		switch node {
 		case is DialogLinkableView:
+			let popover = DialogPopover()
+			_nodePopovers.append(popover)
+			popover.show(forView: node, at: .minY)
 			(popover.ViewController as! DialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView)
+			
 		case is DeliveryLinkableView:
+			let popover = DeliveryPopover()
+			_nodePopovers.append(popover)
+			popover.show(forView: node, at: .minY)
 			(popover.ViewController as! DeliveryPopoverViewController).setDeliveryNode(node: node as! DeliveryLinkableView)
+			
 		case is ContextLinkableView:
+			let popover = ContextPopover()
+			_nodePopovers.append(popover)
+			popover.show(forView: node, at: .minY)
 			(popover.ViewController as! ContextPopoverViewController).setContextNode(node: node as! ContextLinkableView)
+			
 		default:
-			print("Double clicked a LinkableView that doesn't have a popover implemented.")
+			print("Double clicked a LinkableView that doesn't support popovers.")
 		}
 	}
 	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
