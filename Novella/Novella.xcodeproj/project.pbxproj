@@ -74,6 +74,8 @@
 		65AC951E20B8787E00372D74 /* DialogPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC951D20B8787E00372D74 /* DialogPopover.swift */; };
 		65AC952020B878DF00372D74 /* DeliveryPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC951F20B878DF00372D74 /* DeliveryPopover.swift */; };
 		65AC952220B8791100372D74 /* ContextPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC952120B8791100372D74 /* ContextPopover.swift */; };
+		65AC952420B87C6A00372D74 /* ConditionPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC952320B87C6A00372D74 /* ConditionPopoverViewController.swift */; };
+		65AC952620B87CC500372D74 /* ConditionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC952520B87CC500372D74 /* ConditionPopover.swift */; };
 		65ADB3D220A4836A007938C2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */; };
 		65ADB3D320A4836A007938C2 /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ADB3D120A4836A007938C2 /* JSONSchema.framework */; };
 		65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AFA6A020A7166900B9C5E5 /* GraphView.swift */; };
@@ -194,6 +196,8 @@
 		65AC951D20B8787E00372D74 /* DialogPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogPopover.swift; sourceTree = "<group>"; };
 		65AC951F20B878DF00372D74 /* DeliveryPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryPopover.swift; sourceTree = "<group>"; };
 		65AC952120B8791100372D74 /* ContextPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopover.swift; sourceTree = "<group>"; };
+		65AC952320B87C6A00372D74 /* ConditionPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionPopoverViewController.swift; sourceTree = "<group>"; };
+		65AC952520B87CC500372D74 /* ConditionPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionPopover.swift; sourceTree = "<group>"; };
 		65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65ADB3D120A4836A007938C2 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65AFA6A020A7166900B9C5E5 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 				65E6741B20B3065200E1B1BE /* ContextPopoverViewController.swift */,
 				65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */,
 				65040A6220B0914F00BC57FE /* DialogPopoverViewController.swift */,
+				65AC952320B87C6A00372D74 /* ConditionPopoverViewController.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				65AC951D20B8787E00372D74 /* DialogPopover.swift */,
 				65AC951F20B878DF00372D74 /* DeliveryPopover.swift */,
 				65AC952120B8791100372D74 /* ContextPopover.swift */,
+				65AC952520B87CC500372D74 /* ConditionPopover.swift */,
 			);
 			name = Popovers;
 			sourceTree = "<group>";
@@ -716,6 +722,7 @@
 				65040A6320B0914F00BC57FE /* DialogPopoverViewController.swift in Sources */,
 				65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */,
 				65588384209C6295004C412F /* CommandSystem.swift in Sources */,
+				65AC952620B87CC500372D74 /* ConditionPopover.swift in Sources */,
 				6528D3F420B496F300B60147 /* VariableTabViewController.swift in Sources */,
 				65040A5420AF558500BC57FE /* MainViewController.swift in Sources */,
 				65264CAD20A76DA8002BF136 /* PinView.swift in Sources */,
@@ -724,6 +731,7 @@
 				65AFA6A120A7166900B9C5E5 /* GraphView.swift in Sources */,
 				65AC952020B878DF00372D74 /* DeliveryPopover.swift in Sources */,
 				654C7C4D20B3434600E53EF4 /* GraphTabViewController.swift in Sources */,
+				65AC952420B87C6A00372D74 /* ConditionPopoverViewController.swift in Sources */,
 				65040A4B20ADD36200BC57FE /* StoryDelegate.swift in Sources */,
 				65040A4920ADD05500BC57FE /* TabsDataSource.swift in Sources */,
 				65B0701020B2EDA900C0694F /* DeliveryPopoverViewController.swift in Sources */,

@@ -45,6 +45,8 @@ class GraphView: NSView {
 	fileprivate var _delegate: GraphViewDelegate?
 	// MARK: Popovers
 	fileprivate var _nodePopovers: [GenericPopover]
+	fileprivate var _pinPopovers: [GenericPopover]
+	fileprivate var _pinClicked: PinView?
 	
 	// MARK: - - Initialization -
 	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
@@ -77,6 +79,7 @@ class GraphView: NSView {
 		self._branchPinMenu = NSMenu()
 		//
 		self._nodePopovers = []
+		self._pinPopovers = []
 		
 		super.init(frame: frameRect)
 		
@@ -111,7 +114,7 @@ class GraphView: NSView {
 		_graphViewMenu.addItem(addMenu)
 		
 		// configure pin context menus
-		_linkPinMenu.addItem(withTitle: "Condition...", action: nil, keyEquivalent: "")
+		_linkPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onLinkPinCondition), keyEquivalent: "")
 		_linkPinMenu.addItem(withTitle: "Function...", action: nil, keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Condition...", action: nil, keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Function (true)...", action: nil, keyEquivalent: "")
@@ -154,6 +157,7 @@ class GraphView: NSView {
 		_lastLinkablePanPos = CGPoint.zero
 		_pinDropTarget = nil
 		_pinDragged = nil
+		_pinClicked = nil
 		_contextClickedLinkable = nil
 		_lastContextLocation = CGPoint.zero
 		
@@ -167,6 +171,7 @@ class GraphView: NSView {
 		
 		// clear all popovers
 		self._nodePopovers = []
+		self._pinPopovers = []
 		
 		// load all nodes
 		for curr in graph.Nodes {
@@ -475,12 +480,12 @@ extension GraphView {
 		if let event = NSApp.currentEvent {
 			switch pin.BaseLink {
 			case is NVLink:
+				_pinClicked = pin
 				NSMenu.popUpContextMenu(_linkPinMenu, with: event, for: pin)
-				break
 				
 			case is NVBranch:
+				_pinClicked = pin
 				NSMenu.popUpContextMenu(_branchPinMenu, with: event, for: pin)
-				break
 				
 			default:
 				print("Attempted to context click a Pin that doesn't handle context clicking!")
@@ -558,6 +563,23 @@ extension GraphView {
 			_pinDragged = nil // no longer dragging anything
 		} else {
 			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
+		}
+	}
+	
+	// MARK: - - Pin Popovers -
+	@objc fileprivate func onLinkPinCondition() {
+		guard let pin = _pinClicked else {
+			print("Tried to open Condition for a pin but _pinClicked was nil.")
+			return
+		}
+		
+		// open popover
+		if let existing = _pinPopovers.first(where: {$0.View == _pinClicked}) {
+			existing.show(forView: pin, at: .maxX)
+		} else {
+			let popover = ConditionPopover()
+			_pinPopovers.append(popover)
+			popover.show(forView: pin, at: .maxX)
 		}
 	}
 }

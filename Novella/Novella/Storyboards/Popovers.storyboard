@@ -126,7 +126,7 @@
         <!--Condition-->
         <scene sceneID="hU6-ti-Ucr">
             <objects>
-                <viewController id="Zhj-u3-ioO" userLabel="Condition" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Condition" id="Zhj-u3-ioO" userLabel="Condition" customClass="ConditionPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="BRt-3j-nQp">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -139,29 +139,29 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <predicateEditor verticalHuggingPriority="750" ambiguous="YES" nestingMode="compound" canRemoveAllRows="YES" rowHeight="25" id="hb2-7t-R6B">
-                                            <rect key="frame" x="0.0" y="0.0" width="408" height="84"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="209"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <rowTemplates>
-                                                <predicateEditorRowTemplate rowType="compound" id="baB-d7-SxR">
+                                                <predicateEditorRowTemplate rowType="compound" id="h0P-m5-jkS">
                                                     <popUpMenus>
-                                                        <menu id="EcB-uT-BfP">
+                                                        <menu id="eDE-FV-pUU">
                                                             <items>
-                                                                <menuItem title="Any" state="on" id="mgD-J2-pz8">
+                                                                <menuItem title="Any" state="on" id="ubN-FS-mJ5">
                                                                     <integer key="representedObject" value="2"/>
                                                                 </menuItem>
-                                                                <menuItem title="All" id="CkH-T9-ssE">
+                                                                <menuItem title="All" id="lgv-xp-h5a">
                                                                     <integer key="representedObject" value="1"/>
                                                                 </menuItem>
                                                             </items>
                                                         </menu>
-                                                        <menu id="4dQ-yk-GOO">
+                                                        <menu id="l77-4i-IIP">
                                                             <items>
-                                                                <menuItem title="of the following are true" state="on" id="YDL-Wy-eMs"/>
+                                                                <menuItem title="of the following are true" state="on" id="7cE-Mf-Mwb"/>
                                                             </items>
                                                         </menu>
                                                     </popUpMenus>
                                                 </predicateEditorRowTemplate>
-                                                <predicateEditorRowTemplate rowType="simple" id="mc7-bC-eLS">
+                                                <predicateEditorRowTemplate rowType="simple" id="Bq0-Mp-CYM">
                                                     <array key="leftExpressionObject">
                                                         <expression type="keyPath">
                                                             <string key="keyPath">name</string>
@@ -175,40 +175,40 @@
                                                     </array>
                                                     <integer key="rightExpressionObject" value="700"/>
                                                     <popUpMenus>
-                                                        <menu id="pTX-4C-J8c">
+                                                        <menu id="heR-Bc-V4I">
                                                             <items>
-                                                                <menuItem title="name" state="on" id="7Wx-51-Ztl">
+                                                                <menuItem title="name" state="on" id="noU-qh-QhQ">
                                                                     <expression key="representedObject" type="keyPath">
                                                                         <string key="keyPath">name</string>
                                                                     </expression>
                                                                 </menuItem>
-                                                                <menuItem title="address" id="brB-eg-cm3">
+                                                                <menuItem title="address" id="t2a-7R-Xxm">
                                                                     <expression key="representedObject" type="keyPath">
                                                                         <string key="keyPath">address</string>
                                                                     </expression>
                                                                 </menuItem>
-                                                                <menuItem title="sign" id="RVd-Z3-l2F">
+                                                                <menuItem title="sign" id="gDz-67-wUP">
                                                                     <expression key="representedObject" type="keyPath">
                                                                         <string key="keyPath">sign</string>
                                                                     </expression>
                                                                 </menuItem>
                                                             </items>
                                                         </menu>
-                                                        <menu id="BCG-aU-BCp">
+                                                        <menu id="lDR-k3-LI2">
                                                             <items>
-                                                                <menuItem title="contains" state="on" id="bV6-Sx-lUo">
+                                                                <menuItem title="contains" state="on" id="Cik-mU-YlO">
                                                                     <integer key="representedObject" value="99"/>
                                                                 </menuItem>
-                                                                <menuItem title="begins with" id="ncm-nV-b6K">
+                                                                <menuItem title="begins with" id="Xsl-SY-b6f">
                                                                     <integer key="representedObject" value="8"/>
                                                                 </menuItem>
-                                                                <menuItem title="ends with" id="VBH-BP-bNj">
+                                                                <menuItem title="ends with" id="pk2-cZ-gTv">
                                                                     <integer key="representedObject" value="9"/>
                                                                 </menuItem>
-                                                                <menuItem title="is" id="Orh-s8-W0C">
+                                                                <menuItem title="is" id="fGA-gw-gUt">
                                                                     <integer key="representedObject" value="4"/>
                                                                 </menuItem>
-                                                                <menuItem title="is not" id="OvJ-sq-7vJ">
+                                                                <menuItem title="is not" id="kft-D4-ya8">
                                                                     <integer key="representedObject" value="5"/>
                                                                 </menuItem>
                                                             </items>
