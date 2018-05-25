@@ -38,6 +38,9 @@ class GraphView: NSView {
 	// MARK: GraphView Context Menu
 	fileprivate var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
 	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
+	// MARK: Pin Context Menus
+	fileprivate var _linkPinMenu: NSMenu // context menu for clicking on a NVLink pin
+	fileprivate var _branchPinMenu: NSMenu // context menu for clicking on a NVBranch pin
 	// MARK: Delegate
 	fileprivate var _delegate: GraphViewDelegate?
 	// MARK: Popovers
@@ -69,6 +72,9 @@ class GraphView: NSView {
 		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
+		//
+		self._linkPinMenu = NSMenu()
+		self._branchPinMenu = NSMenu()
 		//
 		self._nodePopovers = []
 		
@@ -103,6 +109,13 @@ class GraphView: NSView {
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
 		_graphViewMenu.addItem(addMenu)
+		
+		// configure pin context menus
+		_linkPinMenu.addItem(withTitle: "Condition...", action: nil, keyEquivalent: "")
+		_linkPinMenu.addItem(withTitle: "Function...", action: nil, keyEquivalent: "")
+		_branchPinMenu.addItem(withTitle: "Condition...", action: nil, keyEquivalent: "")
+		_branchPinMenu.addItem(withTitle: "Function (true)...", action: nil, keyEquivalent: "")
+		_branchPinMenu.addItem(withTitle: "Function (false)...", action: nil, keyEquivalent: "")
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -450,6 +463,25 @@ extension GraphView {
 		default:
 			print("onPanPin found unexpected gesture state.")
 			break
+		}
+	}
+	
+	func onContextPin(pin: PinView, gesture: NSClickGestureRecognizer) {
+		if let event = NSApp.currentEvent {
+			switch pin.BaseLink {
+			case is NVLink:
+				NSMenu.popUpContextMenu(_linkPinMenu, with: event, for: pin)
+				break
+				
+			case is NVBranch:
+				NSMenu.popUpContextMenu(_branchPinMenu, with: event, for: pin)
+				break
+				
+			default:
+				print("Attempted to context click a Pin that doesn't handle context clicking!")
+			}
+		} else {
+			print("Tried to open a context menu for a pin but there was no event available to use.")
 		}
 	}
 }

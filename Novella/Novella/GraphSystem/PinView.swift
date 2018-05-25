@@ -20,6 +20,8 @@ class PinView: NSView {
 	fileprivate var _dragPosition: CGPoint
 	fileprivate var _dragLayer: CAShapeLayer
 	fileprivate var _dragPath: NSBezierPath
+	//
+	fileprivate var _contextGesture: NSClickGestureRecognizer?
 	
 	// MARK: - - Initialization -
 	init(link: NVBaseLink, graphView: GraphView, owner: LinkableView) {
@@ -32,16 +34,24 @@ class PinView: NSView {
 		self._dragPosition = CGPoint.zero
 		self._dragLayer = CAShapeLayer()
 		self._dragPath = NSBezierPath()
+		//
+		self._contextGesture = nil
 		super.init(frame: NSMakeRect(0.0, 0.0, 15.0, 15.0))
 		
 		// setup layers
 		wantsLayer = true
 		layer!.masksToBounds = false
 		
-		// pan regoznizer
+		// pan recognizer
 		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(PinView.onPan))
 		_panGesture!.buttonMask = 0x1 // "primary click"
 		self.addGestureRecognizer(_panGesture!)
+		
+		// context click recognizer
+		_contextGesture = NSClickGestureRecognizer(target: self, action: #selector(PinView.onContext))
+		_contextGesture!.buttonMask = 0x2 // "secondary click"
+		_contextGesture!.numberOfClicksRequired = 1
+		self.addGestureRecognizer(_contextGesture!)
 		
 		// configure drag layer
 		_dragLayer.fillColor = nil
@@ -81,6 +91,10 @@ class PinView: NSView {
 	// MARK: Gesture Callbacks
 	@objc fileprivate func onPan(gesture: NSPanGestureRecognizer) {
 		_graphView.onPanPin(pin: self, gesture: gesture)
+	}
+	
+	@objc fileprivate func onContext(gesture: NSClickGestureRecognizer) {
+		_graphView.onContextPin(pin: self, gesture: gesture)
 	}
 	
 	// MARK: - - Drawing -
