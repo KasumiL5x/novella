@@ -117,8 +117,8 @@ class GraphView: NSView {
 		_linkPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onLinkPinCondition), keyEquivalent: "")
 		_linkPinMenu.addItem(withTitle: "Function...", action: #selector(GraphView.onLinkPinFunction), keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onBranchPinCondition), keyEquivalent: "")
-		_branchPinMenu.addItem(withTitle: "Function (true)...", action: nil, keyEquivalent: "")
-		_branchPinMenu.addItem(withTitle: "Function (false)...", action: nil, keyEquivalent: "")
+		_branchPinMenu.addItem(withTitle: "Function (true)...", action: #selector(GraphView.onBranchPinFunctionTrue), keyEquivalent: "")
+		_branchPinMenu.addItem(withTitle: "Function (false)...", action: #selector(GraphView.onBranchPinFunctionFalse), keyEquivalent: "")
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -593,7 +593,7 @@ extension GraphView {
 		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked}) {
 			existing.show(forView: pin, at: .maxX)
 		} else {
-			let popover = FunctionPopover()
+			let popover = FunctionPopover(true)
 			_pinPopovers.append(popover)
 			popover.show(forView: pin, at: .maxX)
 			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVLink).Transfer.Function)
@@ -613,6 +613,38 @@ extension GraphView {
 			_pinPopovers.append(popover)
 			popover.show(forView: pin, at: .maxX)
 			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVBranch).Condition)
+		}
+	}
+	@objc fileprivate func onBranchPinFunctionTrue() {
+		guard let pin = _pinClicked else {
+			print("Tried to open Condition for a pin but _pinClicked was nil.")
+			return
+		}
+		
+		// open popover
+		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked && ($0 as! FunctionPopover).TrueFalse}) {
+			existing.show(forView: pin, at: .maxX)
+		} else {
+			let popover = FunctionPopover(true)
+			_pinPopovers.append(popover)
+			popover.show(forView: pin, at: .maxX)
+			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVBranch).TrueTransfer.Function)
+		}
+	}
+	@objc fileprivate func onBranchPinFunctionFalse() {
+		guard let pin = _pinClicked else {
+			print("Tried to open Condition for a pin but _pinClicked was nil.")
+			return
+		}
+		
+		// open popover
+		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked && !($0 as! FunctionPopover).TrueFalse}) {
+			existing.show(forView: pin, at: .maxX)
+		} else {
+			let popover = FunctionPopover(false)
+			_pinPopovers.append(popover)
+			popover.show(forView: pin, at: .maxX)
+			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVBranch).FalseTransfer.Function)
 		}
 	}
 }

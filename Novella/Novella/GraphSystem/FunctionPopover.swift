@@ -9,6 +9,17 @@
 import Cocoa
 
 class FunctionPopover: GenericPopover {
+	fileprivate var _trueFalse: Bool
+	
+	var TrueFalse: Bool {
+		get{ return _trueFalse }
+	}
+	
+	init(_ trueFalse: Bool) {
+		_trueFalse = trueFalse
+		super.init()
+	}
+	
 	override func createViewController() -> Bool {
 		let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let popoverID = NSStoryboard.SceneIdentifier(rawValue: "Function")
