@@ -132,9 +132,31 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="vdo-P2-a2f" userLabel="Toolbar">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="35"/>
+                                <rect key="frame" x="10" y="0.0" width="430" height="35"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ivb-xf-Zc3">
+                                        <rect key="frame" x="18" y="9" width="107" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Compile Status:" id="zs5-1E-g02">
+                                            <font key="font" metaFont="systemBold"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LLv-9D-ibF">
+                                        <rect key="frame" x="129" y="9" width="23" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OK" id="MeZ-Gk-UMd">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
                                 <constraints>
+                                    <constraint firstItem="Ivb-xf-Zc3" firstAttribute="leading" secondItem="vdo-P2-a2f" secondAttribute="leading" constant="20" id="23t-i6-rhL"/>
                                     <constraint firstAttribute="height" constant="35" id="UUM-9G-fGR"/>
+                                    <constraint firstItem="Ivb-xf-Zc3" firstAttribute="centerY" secondItem="vdo-P2-a2f" secondAttribute="centerY" id="fxy-I6-GgF"/>
+                                    <constraint firstItem="LLv-9D-ibF" firstAttribute="centerY" secondItem="Ivb-xf-Zc3" secondAttribute="centerY" id="qf4-jd-32o"/>
+                                    <constraint firstItem="LLv-9D-ibF" firstAttribute="leading" secondItem="Ivb-xf-Zc3" secondAttribute="trailing" constant="8" id="rNU-oa-0HA"/>
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Eue-7k-ktL" userLabel="TextView">
@@ -142,16 +164,17 @@
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="vdo-P2-a2f" firstAttribute="leading" secondItem="BRt-3j-nQp" secondAttribute="leading" id="8Na-fy-2M7"/>
+                            <constraint firstItem="vdo-P2-a2f" firstAttribute="leading" secondItem="BRt-3j-nQp" secondAttribute="leading" constant="10" id="8Na-fy-2M7"/>
                             <constraint firstItem="vdo-P2-a2f" firstAttribute="top" secondItem="Eue-7k-ktL" secondAttribute="bottom" id="JJV-zg-jVu"/>
                             <constraint firstItem="Eue-7k-ktL" firstAttribute="top" secondItem="BRt-3j-nQp" secondAttribute="top" constant="10" id="JJy-df-uB9"/>
                             <constraint firstItem="Eue-7k-ktL" firstAttribute="leading" secondItem="BRt-3j-nQp" secondAttribute="leading" constant="10" id="N8U-wh-fct"/>
                             <constraint firstAttribute="trailing" secondItem="Eue-7k-ktL" secondAttribute="trailing" constant="10" id="P6w-o5-1ka"/>
                             <constraint firstAttribute="bottom" secondItem="vdo-P2-a2f" secondAttribute="bottom" id="cre-eI-ADI"/>
-                            <constraint firstAttribute="trailing" secondItem="vdo-P2-a2f" secondAttribute="trailing" id="lvO-Br-0u3"/>
+                            <constraint firstAttribute="trailing" secondItem="vdo-P2-a2f" secondAttribute="trailing" priority="1" constant="10" id="lvO-Br-0u3"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_compileStatus" destination="LLv-9D-ibF" id="ej9-n3-sGy"/>
                         <outlet property="_textContainer" destination="Eue-7k-ktL" id="lku-pC-KvN"/>
                         <outlet property="_textView" destination="Eue-7k-ktL" id="Rel-GB-0of"/>
                     </connections>

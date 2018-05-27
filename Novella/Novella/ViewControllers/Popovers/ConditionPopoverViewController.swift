@@ -13,14 +13,13 @@ import Highlightr
 class ConditionPopoverViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet weak var _textView: NSView!
-	
+	@IBOutlet weak var _compileStatus: NSTextField!
 	
 	// MARK: - - Variables -
 	fileprivate let _textStorage = CodeAttributedString()
 	fileprivate let _layoutManager = NSLayoutManager()
 	fileprivate var _textContainer: NSTextContainer!
 	fileprivate var _codeTextbox: NSTextView!
-//	fileprivate var _highlightr: Highlightr?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
