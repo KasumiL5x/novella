@@ -8,7 +8,44 @@
 
 import Cocoa
 import NovellaModel
+import Highlightr
 
 class ConditionPopoverViewController: NSViewController {
+	// MARK: - - Outlets -
+	@IBOutlet weak var _textView: NSView!
 	
+	
+	// MARK: - - Variables -
+	fileprivate let _textStorage = CodeAttributedString()
+	fileprivate let _layoutManager = NSLayoutManager()
+	fileprivate var _textContainer: NSTextContainer!
+	fileprivate var _codeTextbox: NSTextView!
+//	fileprivate var _highlightr: Highlightr?
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		_textStorage.language = "JavaScript"
+		print(_textStorage.highlightr.setTheme(to: "dracula"))
+		_textStorage.highlightr.theme.codeFont = NSFont(name: "Courier", size: 12)
+		_textStorage.setAttributedString(NSAttributedString(string: "let x = 10"))
+		_textStorage.addLayoutManager(_layoutManager)
+		
+		let textboxFrame = _textView.bounds
+		_textContainer = NSTextContainer(size: textboxFrame.size)
+		_layoutManager.addTextContainer(_textContainer)
+		
+		_codeTextbox = NSTextView(frame: textboxFrame, textContainer: _textContainer)
+		_codeTextbox.autoresizingMask = [.width, .height]
+		_codeTextbox.translatesAutoresizingMaskIntoConstraints = false
+		_codeTextbox.backgroundColor = (_textStorage.highlightr.theme.themeBackgroundColor)
+		_codeTextbox.insertionPointColor = NSColor.white
+		_textView.addSubview(_codeTextbox)
+		_textView.addConstraints([
+			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: _textView, attribute: .left, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: _textView, attribute: .right, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: _textView, attribute: .top, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .bottom, relatedBy: .equal, toItem: _textView, attribute: .bottom, multiplier: 1.0, constant: 0)
+		])
+	}
 }

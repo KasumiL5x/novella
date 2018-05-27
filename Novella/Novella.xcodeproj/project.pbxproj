@@ -66,6 +66,8 @@
 		6558838A209C8C19004C412F /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65588389209C8C19004C412F /* CurveHelper.swift */; };
 		6558838C209C915D004C412F /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */; };
 		65711AD220873A23005E44AF /* JSONTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65711AD120873A23005E44AF /* JSONTestViewController.swift */; };
+		6579ED3020BADE37005C1185 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6579ED2F20BADE37005C1185 /* Highlightr.framework */; };
+		6579ED3120BADE37005C1185 /* Highlightr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6579ED2F20BADE37005C1185 /* Highlightr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		657F147120B4B4F700322516 /* String+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657F147020B4B4F700322516 /* String+FromAny.swift */; };
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
@@ -119,6 +121,7 @@
 			files = (
 				65E67DD320A458A500ED7BED /* NovellaModel.framework in Embed Frameworks */,
 				65DE07C920AAD81D00B79540 /* KPCTabsControl.framework in Embed Frameworks */,
+				6579ED3120BADE37005C1185 /* Highlightr.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,6 +188,7 @@
 		65588389209C8C19004C412F /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		6558838B209C915D004C412F /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		65711AD120873A23005E44AF /* JSONTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTestViewController.swift; sourceTree = "<group>"; };
+		6579ED2F20BADE37005C1185 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		657F147020B4B4F700322516 /* String+FromAny.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
 		658C7CA8207E7E6500E2B46B /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C7CAB207E7E6500E2B46B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -228,6 +232,7 @@
 			files = (
 				65E67DD220A458A500ED7BED /* NovellaModel.framework in Frameworks */,
 				65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */,
+				6579ED3020BADE37005C1185 /* Highlightr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +340,7 @@
 		656AFB28208BEEC6007E6426 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6579ED2F20BADE37005C1185 /* Highlightr.framework */,
 				65DE07C620AAD81600B79540 /* KPCTabsControl.framework */,
 				65ADB3D120A4836A007938C2 /* JSONSchema.framework */,
 				65ADB3D020A4836A007938C2 /* SwiftyJSON.framework */,
@@ -667,6 +673,7 @@
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/Mac//Highlightr.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/JSONSchema.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/KPCTabsControl.framework",
@@ -931,6 +938,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Novella/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -955,6 +963,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Novella/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
