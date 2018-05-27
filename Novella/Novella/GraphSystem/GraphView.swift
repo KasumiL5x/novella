@@ -116,7 +116,7 @@ class GraphView: NSView {
 		// configure pin context menus
 		_linkPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onLinkPinCondition), keyEquivalent: "")
 		_linkPinMenu.addItem(withTitle: "Function...", action: nil, keyEquivalent: "")
-		_branchPinMenu.addItem(withTitle: "Condition...", action: nil, keyEquivalent: "")
+		_branchPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onBranchPinCondition), keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Function (true)...", action: nil, keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Function (false)...", action: nil, keyEquivalent: "")
 		
@@ -581,6 +581,22 @@ extension GraphView {
 			_pinPopovers.append(popover)
 			popover.show(forView: pin, at: .maxX)
 			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVLink).Condition)
+		}
+	}
+	@objc fileprivate func onBranchPinCondition() {
+		guard let pin = _pinClicked else {
+			print("Tried to open Condition for a pin but _pinClicked was nil.")
+			return
+		}
+		
+		// open popover
+		if let existing = _pinPopovers.first(where: {$0.View == _pinClicked}) {
+			existing.show(forView: pin, at: .maxX)
+		} else {
+			let popover = ConditionPopover()
+			_pinPopovers.append(popover)
+			popover.show(forView: pin, at: .maxX)
+			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVBranch).Condition)
 		}
 	}
 }

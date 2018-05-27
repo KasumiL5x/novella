@@ -22,6 +22,13 @@ public class NVBranch : NVBaseLink {
 	}
 	
 	// MARK: Properties
-	public var TrueTransfer:  NVTransfer {get{ return _trueTransfer }}
-	public var FalseTransfer: NVTransfer {get{ return _falseTransfer }}
+	public var Condition: NVCondition {
+		get{ return _condition }
+	}
+	public var TrueTransfer:  NVTransfer {
+		get{ return _trueTransfer }
+	}
+	public var FalseTransfer: NVTransfer {
+		get{ return _falseTransfer }
+	}
 }
