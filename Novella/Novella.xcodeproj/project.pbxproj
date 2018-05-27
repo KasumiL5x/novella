@@ -72,6 +72,7 @@
 		658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C7CAB207E7E6500E2B46B /* AppDelegate.swift */; };
 		658C7CB0207E7E6600E2B46B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CAF207E7E6600E2B46B /* Assets.xcassets */; };
 		658C7CB3207E7E6600E2B46B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C7CB1207E7E6600E2B46B /* Main.storyboard */; };
+		658F139D20BB48E1003563AB /* FunctionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F139C20BB48E1003563AB /* FunctionPopover.swift */; };
 		65AC951C20B8755E00372D74 /* GenericPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC951B20B8755E00372D74 /* GenericPopover.swift */; };
 		65AC951E20B8787E00372D74 /* DialogPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC951D20B8787E00372D74 /* DialogPopover.swift */; };
 		65AC952020B878DF00372D74 /* DeliveryPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AC951F20B878DF00372D74 /* DeliveryPopover.swift */; };
@@ -88,6 +89,7 @@
 		65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */; };
 		65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */; };
 		65B0701020B2EDA900C0694F /* DeliveryPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */; };
+		65B2282E20BB469D00DFB0B0 /* FunctionPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B2282D20BB469D00DFB0B0 /* FunctionPopoverViewController.swift */; };
 		65CEA213209FB412008C49AE /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEA212209FB412008C49AE /* MainWindowController.swift */; };
 		65D881D620B378A400837337 /* NSView+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D881D520B378A400837337 /* NSView+Toast.swift */; };
 		65DE07C820AAD81D00B79540 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE07C620AAD81600B79540 /* KPCTabsControl.framework */; };
@@ -196,6 +198,7 @@
 		658C7CB2207E7E6600E2B46B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		658C7CB4207E7E6600E2B46B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658C7CB5207E7E6600E2B46B /* Novella.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Novella.entitlements; sourceTree = "<group>"; };
+		658F139C20BB48E1003563AB /* FunctionPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionPopover.swift; sourceTree = "<group>"; };
 		65AC951B20B8755E00372D74 /* GenericPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPopover.swift; sourceTree = "<group>"; };
 		65AC951D20B8787E00372D74 /* DialogPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogPopover.swift; sourceTree = "<group>"; };
 		65AC951F20B878DF00372D74 /* DeliveryPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryPopover.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 		65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
 		65B0700D20B2E8FD00C0694F /* DeliveryLinkableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryLinkableView.swift; sourceTree = "<group>"; };
 		65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryPopoverViewController.swift; sourceTree = "<group>"; };
+		65B2282D20BB469D00DFB0B0 /* FunctionPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionPopoverViewController.swift; sourceTree = "<group>"; };
 		65CEA212209FB412008C49AE /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65D881D520B378A400837337 /* NSView+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Toast.swift"; sourceTree = "<group>"; };
 		65DE07C620AAD81600B79540 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 				65B0700F20B2EDA900C0694F /* DeliveryPopoverViewController.swift */,
 				65040A6220B0914F00BC57FE /* DialogPopoverViewController.swift */,
 				65AC952320B87C6A00372D74 /* ConditionPopoverViewController.swift */,
+				65B2282D20BB469D00DFB0B0 /* FunctionPopoverViewController.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -405,6 +410,7 @@
 				65AC951F20B878DF00372D74 /* DeliveryPopover.swift */,
 				65AC952120B8791100372D74 /* ContextPopover.swift */,
 				65AC952520B87CC500372D74 /* ConditionPopover.swift */,
+				658F139C20BB48E1003563AB /* FunctionPopover.swift */,
 			);
 			name = Popovers;
 			sourceTree = "<group>";
@@ -717,6 +723,7 @@
 				652102522083BD390028212B /* StoryTestViewController.swift in Sources */,
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
 				65040A5520AF558500BC57FE /* InspectorDataSource.swift in Sources */,
+				658F139D20BB48E1003563AB /* FunctionPopover.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
 				65AC952220B8791100372D74 /* ContextPopover.swift in Sources */,
 				65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */,
@@ -744,6 +751,7 @@
 				65B0701020B2EDA900C0694F /* DeliveryPopoverViewController.swift in Sources */,
 				65AC951C20B8755E00372D74 /* GenericPopover.swift in Sources */,
 				65040A4120ADCA0400BC57FE /* StoryBrowserDataSource.swift in Sources */,
+				65B2282E20BB469D00DFB0B0 /* FunctionPopoverViewController.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */,
 				654A155F20AA33C000C99141 /* GraphLinkableView.swift in Sources */,

@@ -16,5 +16,11 @@ public class NVTransfer {
 	}
 	
 	// MARK: Properties
-	public var Destination: NVLinkable? {get{ return _destination } set{ _destination = newValue }}
+	public var Destination: NVLinkable? {
+		get{ return _destination }
+		set{ _destination = newValue }
+	}
+	public var Function: NVFunction {
+		get{ return _function }
+	}
 }

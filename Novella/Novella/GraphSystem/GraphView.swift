@@ -115,7 +115,7 @@ class GraphView: NSView {
 		
 		// configure pin context menus
 		_linkPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onLinkPinCondition), keyEquivalent: "")
-		_linkPinMenu.addItem(withTitle: "Function...", action: nil, keyEquivalent: "")
+		_linkPinMenu.addItem(withTitle: "Function...", action: #selector(GraphView.onLinkPinFunction), keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onBranchPinCondition), keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Function (true)...", action: nil, keyEquivalent: "")
 		_branchPinMenu.addItem(withTitle: "Function (false)...", action: nil, keyEquivalent: "")
@@ -574,13 +574,29 @@ extension GraphView {
 		}
 		
 		// open popover
-		if let existing = _pinPopovers.first(where: {$0.View == _pinClicked}) {
+		if let existing = _pinPopovers.first(where: {$0 is ConditionPopover && $0.View == _pinClicked}) {
 			existing.show(forView: pin, at: .maxX)
 		} else {
 			let popover = ConditionPopover()
 			_pinPopovers.append(popover)
 			popover.show(forView: pin, at: .maxX)
 			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVLink).Condition)
+		}
+	}
+	@objc fileprivate func onLinkPinFunction() {
+		guard let pin = _pinClicked else {
+			print("Tried to open Function for a pin but _pinClicked was nil.")
+			return
+		}
+		
+		// open popover
+		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked}) {
+			existing.show(forView: pin, at: .maxX)
+		} else {
+			let popover = FunctionPopover()
+			_pinPopovers.append(popover)
+			popover.show(forView: pin, at: .maxX)
+			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVLink).Transfer.Function)
 		}
 	}
 	@objc fileprivate func onBranchPinCondition() {
@@ -590,7 +606,7 @@ extension GraphView {
 		}
 		
 		// open popover
-		if let existing = _pinPopovers.first(where: {$0.View == _pinClicked}) {
+		if let existing = _pinPopovers.first(where: {$0 is ConditionPopover && $0.View == _pinClicked}) {
 			existing.show(forView: pin, at: .maxX)
 		} else {
 			let popover = ConditionPopover()

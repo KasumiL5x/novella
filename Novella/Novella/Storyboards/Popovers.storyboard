@@ -183,6 +183,65 @@
             </objects>
             <point key="canvasLocation" x="604" y="86"/>
         </scene>
+        <!--Function-->
+        <scene sceneID="7ho-SU-2uY">
+            <objects>
+                <viewController storyboardIdentifier="Function" id="IBr-q9-PTg" userLabel="Function" customClass="FunctionPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Ryh-0u-6OO">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="zR4-BB-poH" userLabel="Toolbar">
+                                <rect key="frame" x="10" y="0.0" width="430" height="35"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jDb-rg-Tq0">
+                                        <rect key="frame" x="18" y="9" width="107" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Compile Status:" id="bxf-hZ-yDu">
+                                            <font key="font" metaFont="systemBold"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oaq-wr-VAR">
+                                        <rect key="frame" x="129" y="9" width="23" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OK" id="NCh-O6-EVD">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="8kV-VQ-Qtb"/>
+                                    <constraint firstItem="jDb-rg-Tq0" firstAttribute="leading" secondItem="zR4-BB-poH" secondAttribute="leading" constant="20" id="bbu-GH-xPO"/>
+                                    <constraint firstItem="jDb-rg-Tq0" firstAttribute="centerY" secondItem="zR4-BB-poH" secondAttribute="centerY" id="fGN-2r-keV"/>
+                                    <constraint firstItem="Oaq-wr-VAR" firstAttribute="centerY" secondItem="jDb-rg-Tq0" secondAttribute="centerY" id="mPR-lU-C7f"/>
+                                    <constraint firstItem="Oaq-wr-VAR" firstAttribute="leading" secondItem="jDb-rg-Tq0" secondAttribute="trailing" constant="8" id="ocC-ft-yXy"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Yo6-e9-aEI" userLabel="TextView">
+                                <rect key="frame" x="10" y="35" width="430" height="255"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="zR4-BB-poH" firstAttribute="leading" secondItem="Ryh-0u-6OO" secondAttribute="leading" constant="10" id="G3C-A8-mAv"/>
+                            <constraint firstAttribute="bottom" secondItem="zR4-BB-poH" secondAttribute="bottom" id="Orq-2V-idX"/>
+                            <constraint firstItem="Yo6-e9-aEI" firstAttribute="leading" secondItem="Ryh-0u-6OO" secondAttribute="leading" constant="10" id="WzP-q0-foP"/>
+                            <constraint firstAttribute="trailing" secondItem="Yo6-e9-aEI" secondAttribute="trailing" constant="10" id="bLQ-XX-KSL"/>
+                            <constraint firstItem="Yo6-e9-aEI" firstAttribute="top" secondItem="Ryh-0u-6OO" secondAttribute="top" constant="10" id="cyk-by-564"/>
+                            <constraint firstItem="zR4-BB-poH" firstAttribute="top" secondItem="Yo6-e9-aEI" secondAttribute="bottom" id="g3N-Ux-zaP"/>
+                            <constraint firstAttribute="trailing" secondItem="zR4-BB-poH" secondAttribute="trailing" priority="1" constant="10" id="mbh-sx-Avy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_compileStatus" destination="Oaq-wr-VAR" id="9K9-ah-fAH"/>
+                        <outlet property="_textView" destination="Yo6-e9-aEI" id="s4J-Sz-U9F"/>
+                    </connections>
+                </viewController>
+                <customObject id="LOB-71-bxJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="604" y="481"/>
+        </scene>
         <!--Delivery-->
         <scene sceneID="5gJ-Ye-a6w">
             <objects>
