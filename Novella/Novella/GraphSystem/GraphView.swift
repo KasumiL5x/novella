@@ -580,6 +580,7 @@ extension GraphView {
 			let popover = ConditionPopover()
 			_pinPopovers.append(popover)
 			popover.show(forView: pin, at: .maxX)
+			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVLink).Condition)
 		}
 	}
 }

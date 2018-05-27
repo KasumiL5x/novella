@@ -20,5 +20,10 @@ public class NVLink : NVBaseLink {
 	}
 	
 	// MARK: Properties
-	public var Transfer: NVTransfer {get{ return _transfer }}
+	public var Transfer: NVTransfer {
+		get{ return _transfer }
+	}
+	public var Condition: NVCondition {
+		get{ return _condition }
+	}
 }

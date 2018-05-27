@@ -9,16 +9,24 @@
 import JavaScriptCore
 
 public class NVCondition {
+	// MARK: - - Variables -
 	var _story: NVStory
 	var _javascript: String
 	
+	// MARK: - - Initialization -
 	init(story: NVStory) {
 		self._story = story
 		_javascript = ""
 	}
 	
+	// MARK: - - Properties -
+	public var Javascript: String {
+		get{ return _javascript }
+		set{ _javascript = newValue } // TODO: Make this a function and validate the JS upon change?
+	}
+	
+	// MARK: - - Functions -
 	func execute() -> Bool {
-		
 		// create function (TODO: What happens if I redefine this function more than once?)
 		var boolFunc = "function executeCondition() {\n"
 		boolFunc += _javascript
