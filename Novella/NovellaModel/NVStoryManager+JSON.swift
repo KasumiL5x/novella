@@ -223,26 +223,26 @@ extension NVStoryManager {
 			switch variable._type {
 			case .boolean:
 				if value != JSON.null {
-					try! variable.setValue(value.bool!)
+					variable.setValue(value.bool!)
 				}
 				if initialValue != JSON.null {
-					try! variable.setInitialValue(initialValue.bool!)
+					variable.setInitialValue(initialValue.bool!)
 				}
 				break
 			case .integer:
 				if value != JSON.null {
-					try! variable.setValue(value.int!)
+					variable.setValue(value.int!)
 				}
 				if initialValue != JSON.null {
-					try! variable.setInitialValue(initialValue.int!)
+					variable.setInitialValue(initialValue.int!)
 				}
 				break
 			case .double:
 				if value != JSON.null {
-					try! variable.setValue(value.double!)
+					variable.setValue(value.double!)
 				}
 				if initialValue != JSON.null {
-					try! variable.setInitialValue(initialValue.double!)
+					variable.setInitialValue(initialValue.double!)
 				}
 				break
 			}
