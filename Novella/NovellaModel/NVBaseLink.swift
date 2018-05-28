@@ -12,7 +12,7 @@ public class NVBaseLink {
 	let _uuid: NSUUID
 	var _origin: NVLinkable
 	
-	init(uuid: NSUUID, story: NVStory, origin: NVLinkable) {
+	init(uuid: NSUUID, storyManager: NVStoryManager, origin: NVLinkable) {
 		self._uuid = uuid
 		self._origin = origin
 	}

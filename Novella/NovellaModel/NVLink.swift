@@ -12,11 +12,11 @@ public class NVLink : NVBaseLink {
 	var _condition: NVCondition
 	var _transfer: NVTransfer
 	
-	override init(uuid: NSUUID, story: NVStory, origin: NVLinkable) {
-		self._condition = NVCondition(story: story)
+	override init(uuid: NSUUID, storyManager: NVStoryManager, origin: NVLinkable) {
+		self._condition = NVCondition(storyManager: storyManager)
 		self._transfer = NVTransfer()
 		
-		super.init(uuid: uuid, story: story, origin: origin)
+		super.init(uuid: uuid, storyManager: storyManager, origin: origin)
 	}
 	
 	// MARK: Properties

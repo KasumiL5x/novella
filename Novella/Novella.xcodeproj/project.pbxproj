@@ -482,6 +482,8 @@
 				6546807D20A45E050036B770 /* NVError.swift */,
 				6546807920A45E050036B770 /* NVIdentifiable.swift */,
 				6546807A20A45E050036B770 /* NVPath.swift */,
+				65687E8620BBF0D900CA37E1 /* NVStoryManager.swift */,
+				65687E8820BBF93F00CA37E1 /* NVStoryManager+JSON.swift */,
 				6546807B20A45E050036B770 /* NVStory.swift */,
 				654A156020AA3BA900C99141 /* NVStoryDelegate.swift */,
 				6556937420A45C8F00E6105B /* Graphs */,
@@ -491,8 +493,6 @@
 				65C2DDAE20A45CB900D79DF9 /* Variables */,
 				65E67DCD20A458A500ED7BED /* NovellaModel.h */,
 				65E67DCE20A458A500ED7BED /* Info.plist */,
-				65687E8620BBF0D900CA37E1 /* NVStoryManager.swift */,
-				65687E8820BBF93F00CA37E1 /* NVStoryManager+JSON.swift */,
 			);
 			path = NovellaModel;
 			sourceTree = "<group>";

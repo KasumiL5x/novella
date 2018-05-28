@@ -10,12 +10,12 @@ import JavaScriptCore
 
 public class NVCondition {
 	// MARK: - - Variables -
-	var _story: NVStory
+	var _storyManager: NVStoryManager
 	var _javascript: String
 	
 	// MARK: - - Initialization -
-	init(story: NVStory) {
-		self._story = story
+	init(storyManager: NVStoryManager) {
+		self._storyManager = storyManager
 		_javascript = ""
 	}
 	
@@ -35,10 +35,10 @@ public class NVCondition {
 		print(boolFunc)
 		
 		// evaluate the script so JS knows about it
-		_story._jsContext.evaluateScript(boolFunc)
+		_storyManager._jsContext.evaluateScript(boolFunc)
 		
 		// get a reference to the function
-		guard let execFunc = _story._jsContext.objectForKeyedSubscript("executeCondition") else {
+		guard let execFunc = _storyManager._jsContext.objectForKeyedSubscript("executeCondition") else {
 			fatalError("Could not find JavaScript function executeCondition().")
 		}
 		

@@ -13,9 +13,9 @@ public class NVListener {
 	let _condition: NVCondition
 	let _transfer: NVTransfer
 	
-	init(uuid: NSUUID, story: NVStory) {
+	init(uuid: NSUUID, storyManager: NVStoryManager) {
 		self._uuid = uuid
-		self._condition = NVCondition(story: story)
+		self._condition = NVCondition(storyManager: storyManager)
 		self._transfer = NVTransfer()
 	}
 }

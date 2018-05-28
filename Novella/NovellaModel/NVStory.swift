@@ -15,22 +15,12 @@ public class NVStory {
 	var _graphs: [NVGraph]
 	var _name: String
 	var _delegate: NVStoryDelegate?
-	let _jsContext: JSContext
 	
 	public init() {
 		self._folders = []
 		self._graphs = []
 		self._name = ""
 		self._delegate = nil
-		self._jsContext = JSContext()
-		self._jsContext.exceptionHandler = { context, exception in
-			if let ex = exception {
-				print("JS Exception: \(ex.toString())")
-			}
-		}
-		let consoleLogObject = unsafeBitCast(self.consoleLog, to: AnyObject.self)
-		self._jsContext.setObject(consoleLogObject, forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol))
-//		_ = self._jsContext.evaluateScript("consoleLog(nil);")
 	}
 	
 	// MARK: Properties
@@ -39,12 +29,6 @@ public class NVStory {
 	public var Name:     String       {
 		get{ return _name }
 		set{ _name = newValue }
-	}
-	
-	// MARK: Javascript stuff
-	// TODO: Get/Set variables in JS
-	let consoleLog: @convention(block) (String) -> Void = { logMessage in
-		print("\nJS Console: \(logMessage)")
 	}
 }
 

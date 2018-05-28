@@ -6,6 +6,8 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
+import JavaScriptCore
+
 public class NVStoryManager {
 	// MARK: - - Variables -
 	var _story: NVStory
@@ -16,6 +18,7 @@ public class NVStoryManager {
 	var _links: [NVBaseLink]
 	var _nodes: [NVNode]
 	var _delegate: NVStoryDelegate?
+	var _jsContext: JSContext
 	
 	// MARK: - - Properties -
 	public var Story: NVStory {
@@ -41,6 +44,9 @@ public class NVStoryManager {
 		self._links = []
 		self._nodes = []
 		self._delegate = nil
+		self._jsContext = JSContext()
+		
+		setupJavascript()
 	}
 	
 	// MARK: - - Generic Functions -
@@ -53,6 +59,9 @@ public class NVStoryManager {
 		self._links = []
 		self._nodes = []
 		self._delegate = nil
+		self._jsContext = JSContext()
+		
+		setupJavascript()
 	}
 	
 	func find(uuid: String) -> NVIdentifiable? {
@@ -97,6 +106,24 @@ public class NVStoryManager {
 			
 			return false
 		})
+	}
+	
+	// MARK: - - JavaScript Stuff -
+	func setupJavascript() {
+		// javascript runtime error handling
+		_jsContext.exceptionHandler = { (ctx, ex) in
+			if let ex = ex {
+				print("JavaScript error: \(ex.toString())")
+			}
+		}
+		
+		// function to print to the console from JS
+		let nvLogObject = unsafeBitCast(self.js_nvlog, to: AnyObject.self)
+		_jsContext.setObject(nvLogObject, forKeyedSubscript: "nvlog" as (NSCopying & NSObjectProtocol))
+	}
+	
+	let js_nvlog: @convention(block) (String) -> Void = { msg in
+		print("\nJavaScript Console: \(msg)")
 	}
 }
 
@@ -180,7 +207,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
-		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), story: _story, origin: origin)
+		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self, origin: origin)
 		_links.append(link)
 		_identifiables.append(link)
 		
@@ -190,7 +217,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeBranch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVBranch {
-		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), story: _story, origin: origin)
+		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self, origin: origin)
 		_links.append(branch)
 		_identifiables.append(branch)
 		
@@ -200,7 +227,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeSwitch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVSwitch {
-		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), story: _story, origin: origin)
+		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self, origin: origin)
 		_links.append(swtch)
 		_identifiables.append(swtch)
 		

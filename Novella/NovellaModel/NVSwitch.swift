@@ -13,11 +13,11 @@ public class NVSwitch : NVBaseLink {
 	var _defaultTransfer: NVTransfer
 	var _values: [AnyHashable:NVTransfer]
 	
-	override init(uuid: NSUUID, story: NVStory, origin: NVLinkable) {
+	override init(uuid: NSUUID, storyManager: NVStoryManager, origin: NVLinkable) {
 		self._variable = nil
 		self._defaultTransfer = NVTransfer()
 		self._values = [:]
 		
-		super.init(uuid: uuid, story: story, origin: origin)
+		super.init(uuid: uuid, storyManager: storyManager, origin: origin)
 	}
 }
