@@ -26,6 +26,11 @@ class LinkableView: NSView {
 	//
 	fileprivate var _outputs: [PinView]
 	
+	// MARK: - - Properties -
+	public var Outputs: [PinView] {
+		get{ return _outputs }
+	}
+	
 	// MARK: - - Initialization -
 	init(frameRect: NSRect, nvLinkable: NVLinkable, graphView: GraphView) {
 		self._nvLinkable = nvLinkable

@@ -102,6 +102,7 @@ class GraphView: NSView {
 		// configure linkable menu
 		_linkableMenu.addItem(withTitle: "Add Link", action: #selector(GraphView.onLinkableMenuAddLink), keyEquivalent: "")
 		_linkableMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.onLinkableMenuAddBranch), keyEquivalent: "")
+		_linkableMenu.addItem(withTitle: "Delete", action: #selector(GraphView.onLinkableMenuDelete), keyEquivalent: "")
 		// configure graphview menu
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(GraphView.onGraphViewMenuAddDialog), keyEquivalent: "")
@@ -527,7 +528,7 @@ extension GraphView {
 	}
 	@objc fileprivate func onLinkableMenuAddBranch() {
 		guard let clicked = _contextClickedLinkable else {
-			print("Tried to add a link to a branch via context but _contextClickedLinkable was nil.")
+			print("Tried to add a branch to a linkable via context but _contextClickedLinkable was nil.")
 			return
 		}
 		let nvBranch = _nvStoryManager.makeBranch(origin: clicked.Linkable)
@@ -536,6 +537,20 @@ extension GraphView {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
 		}
 		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
+	}
+	@objc fileprivate func onLinkableMenuDelete() {
+		guard let clicked = _contextClickedLinkable else {
+			print("Tried to delete a to a branch via context but _contextClickedLinkable was nil.")
+			return
+		}
+		
+		_nvStoryManager.delete(node: clicked.Linkable as! NVNode)
+		_allLinkableViews.remove(at: _allLinkableViews.index(of: clicked)!)
+		self.subviews.remove(at: self.subviews.index(of: clicked)!)
+		
+		clicked.Outputs.forEach { (pin) in
+			_allPinViews.remove(at: _allPinViews.index(of: pin)!)
+		}
 	}
 	
 	// MARK: PinView Dropping Menu

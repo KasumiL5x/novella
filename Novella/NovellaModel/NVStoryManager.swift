@@ -234,6 +234,18 @@ extension NVStoryManager {
 		_delegate?.onStoryMakeSwitch(switch: swtch)
 		return swtch
 	}
+	
+	public func delete(link: NVBaseLink) {
+		// remove link from all graphs containing it
+		_graphs.forEach { (graph) in
+			if graph._links.contains(link) {
+				try! graph.remove(link: link)
+			}
+		}
+		
+		_links.remove(at: _links.index(of: link)!)
+		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == link.UUID})!)
+	}
 }
 
 // MARK: - - Nodes -
@@ -269,6 +281,34 @@ extension NVStoryManager {
 		
 		_delegate?.onStoryMakeContext(context: context)
 		return context
+	}
+	
+	public func delete(node: NVNode) {
+		// remove from all graphs
+		_graphs.forEach { (graph) in
+			if graph.contains(node: node) {
+				try! graph.remove(node: node)
+			}
+		}
+		
+		// any links that end in this node must have their destinations changed
+		getLinksTo(node).forEach { (link) in
+			switch link {
+			case is NVLink:
+				(link as! NVLink)._transfer._destination = nil
+			case is NVBranch:
+				let asBranch = link as! NVBranch
+				asBranch._trueTransfer._destination = (asBranch._trueTransfer._destination?.UUID == node.UUID) ? nil : asBranch._trueTransfer._destination
+				asBranch._falseTransfer._destination = (asBranch._falseTransfer._destination?.UUID == node.UUID) ? nil : asBranch._falseTransfer._destination
+			case is NVSwitch:
+				print("NVStoryManager::delete(node): Tried to remove node from NVSwitch but is not implemented.")
+			default:
+				break
+			}
+		}
+		
+		_nodes.remove(at: _nodes.index(of: node)!)
+		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == node.UUID})!)
 	}
 }
 
