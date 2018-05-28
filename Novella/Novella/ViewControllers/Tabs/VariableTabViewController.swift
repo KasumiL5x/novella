@@ -80,10 +80,10 @@ class VariableTabViewController: NSViewController {
 		if let selectedItem = _outlineView.item(atRow: _outlineView.selectedRow) {
 			switch selectedItem {
 			case is NVFolder:
-				_story?.deleteFolder(folder: selectedItem as! NVFolder, deleteContents: true)
+				_story?.delete(folder: selectedItem as! NVFolder, deleteContents: true)
 				
 			case is NVVariable:
-				_story?.deleteVariable(variable: selectedItem as! NVVariable)
+				_story?.delete(variable: selectedItem as! NVVariable)
 				
 			default:
 				break

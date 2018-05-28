@@ -173,14 +173,14 @@ extension NVStory {
 		return folder
 	}
 	
-	public func deleteFolder(folder: NVFolder, deleteContents: Bool) {
+	public func delete(folder: NVFolder, deleteContents: Bool) {
 		// delete children
 		if deleteContents {
 			for childVariable in folder._variables {
-				deleteVariable(variable: childVariable)
+				delete(variable: childVariable)
 			}
 			for childFolder in folder.Folders {
-				deleteFolder(folder: childFolder, deleteContents: true)
+				delete(folder: childFolder, deleteContents: true)
 			}
 		}
 		
@@ -211,7 +211,7 @@ extension NVStory {
 		return variable
 	}
 	
-	public func deleteVariable(variable: NVVariable) {
+	public func delete(variable: NVVariable) {
 		try! _allFolders.first(where: {$0._variables.contains(variable)})?.remove(variable: variable)
 		_allVariables.remove(at: _allVariables.index(where: {$0 == variable})!)
 		_allIdentifiables.remove(at: _allIdentifiables.index(where: {$0.UUID == variable.UUID})!)
