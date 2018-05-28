@@ -51,21 +51,24 @@ public class NVVariable {
 		// TODO: Can I somehow convert existing data safely or revert to defaults otherwise?
 	}
 
-	public func setValue(_ val: Any) throws {
+	public func setValue(_ val: Any) {
 		if self._constant {
-			throw NVError.isConstant("")
+			print("NVVariable::setValue(): Variable is constant.")
+			return
 		}
 		
 		if !_type.matches(value: val) {
-			throw NVError.dataTypeMismatch("")
+			print("NVVariable::setValue(): Variable datatype mismatch (\(_type.stringValue) vs \(_type.stringValue)).")
+			return
 		}
 		
 		_value = val
 	}
 	
-	public func setInitialValue(_ val: Any) throws {
+	public func setInitialValue(_ val: Any) {
 		if !_type.matches(value: val) {
-			throw NVError.dataTypeMismatch("")
+			print("NVVariable::setInitial(): Variable datatype mismatch (\(_type.stringValue) vs \(_type.stringValue)).")
+			return
 		}
 		_initialValue = val
 		_value = val

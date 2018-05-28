@@ -14,8 +14,8 @@ public enum NVError: Error {
 	case nameTaken(String)
 	
 	// old errors
-	case nameAlreadyTaken(String)
-	case notImplemented(String)
-	case dataTypeMismatch(String)
-	case isConstant(String)
+//	case nameAlreadyTaken(String)
+//	case notImplemented(String)
+//	case dataTypeMismatch(String)
+//	case isConstant(String)
 }
