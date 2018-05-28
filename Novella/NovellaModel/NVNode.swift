@@ -8,23 +8,14 @@
 
 import Foundation
 
-public class NVNode {
+public class NVNode: NVBaseObject {
 	let _uuid: NSUUID
 	var _name: String
-	var _inTrash: Bool
 	
-	var _editorPos: CGPoint
-	
-	var _delegates: [NVStoryDelegate]
-	var _storyManager: NVStoryManager
-	
-	init(uuid: NSUUID, storyManager: NVStoryManager) {
+	override init(uuid: NSUUID, storyManager: NVStoryManager) {
 		self._uuid = uuid
 		self._name = ""
-		self._inTrash = false
-		self._editorPos = CGPoint.zero
-		self._delegates = []
-		self._storyManager = storyManager
+		super.init(uuid: uuid, storyManager: storyManager)
 	}
 	
 	// MARK: Properties
@@ -33,51 +24,7 @@ public class NVNode {
 		set {
 			let oldName = _name
 			_name = newValue
-			_delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
+			Delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
 		}
-	}
-}
-
-// MARK: NVTrashable
-extension NVNode: NVTrashable {
-	public func trash() {
-		_inTrash = true
-		_storyManager.trash(self)
-	}
-	
-	public func untrash() {
-		_inTrash = false
-		_storyManager.untrash(self)
-	}
-	
-	public func inTrash() -> Bool {
-		return _inTrash
-	}
-}
-
-// MARK: NVIdentifiable
-extension NVNode: NVIdentifiable {
-	public var UUID: NSUUID {
-		return _uuid
-	}
-}
-
-// MARK: NVLinkable
-extension NVNode: NVLinkable {
-	public var EditorPosition: CGPoint {
-		get {
-			return _editorPos
-		}
-		set {
-			_editorPos = newValue
-		}
-	}
-	
-}
-
-// MARK: Equatable
-extension NVNode: Equatable {
-	public static func == (lhs: NVNode, rhs: NVNode) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }

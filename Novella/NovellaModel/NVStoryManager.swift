@@ -47,7 +47,7 @@ public class NVStoryManager {
 		_delegates.append(delegate)
 		_story._delegates.append(delegate)
 		_graphs.forEach{$0._delegates.append(delegate)}
-		_nodes.forEach{$0._delegates.append(delegate)}
+		_nodes.forEach{$0.Delegates.append(delegate)}
 	}
 	
 	public func reset() {
@@ -254,7 +254,7 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
 		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		dialog._delegates = _delegates
+		dialog.Delegates = _delegates
 		_nodes.append(dialog)
 		_identifiables.append(dialog)
 		
@@ -265,7 +265,7 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
 		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		delivery._delegates = _delegates
+		delivery.Delegates = _delegates
 		_nodes.append(delivery)
 		_identifiables.append(delivery)
 		
@@ -276,7 +276,7 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeContext(uuid: NSUUID?=nil) -> NVContext {
 		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		context._delegates = _delegates
+		context.Delegates = _delegates
 		_nodes.append(context)
 		_identifiables.append(context)
 		

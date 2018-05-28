@@ -119,8 +119,8 @@ extension NVStoryManager {
 			entry["name"] = curr._name
 			
 			entry["position"] = [
-				"x": curr._editorPos.x,
-				"y": curr._editorPos.y
+				"x": curr.EditorPosition.x,
+				"y": curr.EditorPosition.y
 			]
 			
 			if let asDialog = curr as? NVDialog {
@@ -291,7 +291,7 @@ extension NVStoryManager {
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = storyManager.makeDialog(uuid: uuid)
-				dialog._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				dialog.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					dialog.Name = name!
 				}
@@ -307,7 +307,7 @@ extension NVStoryManager {
 				
 			case "delivery":
 				let delivery = storyManager.makeDelivery(uuid: uuid)
-				delivery._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				delivery.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					delivery.Name = name!
 				}
@@ -326,7 +326,7 @@ extension NVStoryManager {
 				
 			case "context":
 				let context = storyManager.makeContext(uuid: uuid)
-				context._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				context.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					context.Name = name!
 				}

@@ -26,21 +26,21 @@ public class NVDialog: NVNode {
 		get { return _content }
 		set {
 			_content = newValue
-			_delegates.forEach{$0.onStoryDialogContentChanged(content: _content, node: self)}
+			Delegates.forEach{$0.onStoryDialogContentChanged(content: _content, node: self)}
 		}
 	}
 	public var Preview: String {
 		get { return _preview }
 		set {
 			_preview = newValue
-			_delegates.forEach{$0.onStoryDialogPreviewChanged(preview: _preview, node: self)}
+			Delegates.forEach{$0.onStoryDialogPreviewChanged(preview: _preview, node: self)}
 		}
 	}
 	public var Directions: String {
 		get { return _directions }
 		set {
 			_directions = newValue
-			_delegates.forEach{$0.onStoryDialogDirectionsChanged(directions: _directions, node: self)}
+			Delegates.forEach{$0.onStoryDialogDirectionsChanged(directions: _directions, node: self)}
 		}
 	}
 }
