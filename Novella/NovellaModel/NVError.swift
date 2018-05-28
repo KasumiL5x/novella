@@ -12,10 +12,4 @@ public enum NVError: Error {
 	// new errors
 	case invalid(String)
 	case nameTaken(String)
-	
-	// old errors
-	case nameAlreadyTaken(String)
-	case notImplemented(String)
-	case dataTypeMismatch(String)
-	case isConstant(String)
 }

@@ -19,48 +19,48 @@ class StoryTestViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		// set up some story graph and variable content
-		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
-		let mq1 = try! mainGraph.add(graph: _story.makeGraph(name: "quest1"))
-		try! mq1.add(graph: _story.makeGraph(name: "objective1"))
-		let mq2 = try! mainGraph.add(graph: _story.makeGraph(name: "quest2"))
-		try! mq2.add(graph: _story.makeGraph(name: "objective1"))
-		try! mq2.add(graph: _story.makeGraph(name: "objective2"))
-		let side = try! _story.add(graph: _story.makeGraph(name: "side"))
-		try! side.add(graph: _story.makeGraph(name: "quest1"))
-		try! side.add(graph: _story.makeGraph(name: "quest2"))
-		//
-		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
-		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
-		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
-		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
-		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
-		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
-		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
-		
-		outline.reloadData()
+//		// set up some story graph and variable content
+//		let mainGraph = try! _story.add(graph: _story.makeGraph(name: "main"))
+//		let mq1 = try! mainGraph.add(graph: _story.makeGraph(name: "quest1"))
+//		try! mq1.add(graph: _story.makeGraph(name: "objective1"))
+//		let mq2 = try! mainGraph.add(graph: _story.makeGraph(name: "quest2"))
+//		try! mq2.add(graph: _story.makeGraph(name: "objective1"))
+//		try! mq2.add(graph: _story.makeGraph(name: "objective2"))
+//		let side = try! _story.add(graph: _story.makeGraph(name: "side"))
+//		try! side.add(graph: _story.makeGraph(name: "quest1"))
+//		try! side.add(graph: _story.makeGraph(name: "quest2"))
+//		//
+//		let mainFolder = try! _story.add(folder: _story.makeFolder(name: "story"))
+//		let chars = try! mainFolder.add(folder: _story.makeFolder(name: "characters"))
+//		let player = try! chars.add(folder: _story.makeFolder(name: "player"))
+//		try! player.add(variable: _story.makeVariable(name: "health", type: .integer))
+//		let decs = try! mainFolder.add(folder: _story.makeFolder(name: "choices"))
+//		try! decs.add(variable: _story.makeVariable(name: "talked_to_dave", type: .boolean))
+//		try! decs.add(variable: _story.makeVariable(name: "completed_task", type: .boolean))
+//
+//		outline.reloadData()
 	}
 	
 	@IBAction func onAddRootgraph(_ sender: NSButton) {
-		let name = NSUUID().uuidString
-		do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
-			statusLabel.stringValue = "Could not add FG to Story as name was taken."
-		}
-		outline.reloadData()
+//		let name = NSUUID().uuidString
+//		do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
+//			statusLabel.stringValue = "Could not add FG to Story as name was taken."
+//		}
+//		outline.reloadData()
 	}
 	
 	@IBAction func onAddGraph(_ sender: NSButton) {
-		let idx = outline.selectedRow
-		if -1 == idx {
-			return
-		}
-		if let graph = outline.item(atRow: idx) as? NVGraph {
-			let name = NSUUID().uuidString
-			do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
-				statusLabel.stringValue = "Could not add FG to \(graph.Name) as name was taken."
-			}
-		}
-		outline.reloadData()
+//		let idx = outline.selectedRow
+//		if -1 == idx {
+//			return
+//		}
+//		if let graph = outline.item(atRow: idx) as? NVGraph {
+//			let name = NSUUID().uuidString
+//			do{ try _story.add(graph: _story.makeGraph(name: name)) } catch {
+//				statusLabel.stringValue = "Could not add FG to \(graph.Name) as name was taken."
+//			}
+//		}
+//		outline.reloadData()
 	}
 	
 	@IBAction func onRemoveGraph(_ sender: NSButton) {

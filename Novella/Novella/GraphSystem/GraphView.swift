@@ -12,7 +12,7 @@ import NovellaModel
 class GraphView: NSView {
 	// MARK: - - Variables -
 	fileprivate let _nvGraph: NVGraph
-	fileprivate let _nvStory: NVStory
+	fileprivate let _nvStoryManager: NVStoryManager
 	fileprivate let _bg: GraphBGView
 	fileprivate let _undoRedo: UndoRedo
 	fileprivate let _graphBounds: GraphBoundsView
@@ -49,9 +49,9 @@ class GraphView: NSView {
 	fileprivate var _pinClicked: PinView?
 	
 	// MARK: - - Initialization -
-	init(graph: NVGraph, story: NVStory, frameRect: NSRect, visibleRect: NSRect) {
+	init(graph: NVGraph, storyManager: NVStoryManager, frameRect: NSRect, visibleRect: NSRect) {
 		self._nvGraph = graph
-		self._nvStory = story
+		self._nvStoryManager = storyManager
 		self._bg = GraphBGView(frame: frameRect)
 		self._undoRedo = UndoRedo()
 		self._graphBounds = GraphBoundsView(initialBounds: NSMakeSize(visibleRect.width * 0.75, visibleRect.height * 0.75))
@@ -518,7 +518,7 @@ extension GraphView {
 			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
 			return
 		}
-		let nvLink = _nvStory.makeLink(origin: clicked.Linkable)
+		let nvLink = _nvStoryManager.makeLink(origin: clicked.Linkable)
 		// add it to this graph
 		do { try _nvGraph.add(link: nvLink) } catch {
 			fatalError("Tried to add a new link but couldn't add it to this graph.")
@@ -530,7 +530,7 @@ extension GraphView {
 			print("Tried to add a link to a branch via context but _contextClickedLinkable was nil.")
 			return
 		}
-		let nvBranch = _nvStory.makeBranch(origin: clicked.Linkable)
+		let nvBranch = _nvStoryManager.makeBranch(origin: clicked.Linkable)
 		// add it to this graph
 		do{ try _nvGraph.add(link: nvBranch) } catch {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
@@ -671,7 +671,7 @@ extension GraphView {
 	// MARK: LinkableView Conveniences
 	@discardableResult
 	func makeDialog(at: CGPoint) -> DialogLinkableView {
-		let nvDialog = _nvStory.makeDialog()
+		let nvDialog = _nvStoryManager.makeDialog()
 		do { try _nvGraph.add(node: nvDialog) } catch {
 			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
 			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
@@ -681,7 +681,7 @@ extension GraphView {
 	
 	@discardableResult
 	func makeDelivery(at: CGPoint) -> DeliveryLinkableView {
-		let nvDelivery = _nvStory.makeDelivery()
+		let nvDelivery = _nvStoryManager.makeDelivery()
 		do { try _nvGraph.add(node: nvDelivery) } catch {
 			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
 		}
@@ -690,7 +690,7 @@ extension GraphView {
 	
 	@discardableResult
 	func makeContext(at: CGPoint) -> ContextLinkableView {
-		let nvContext = _nvStory.makeContext()
+		let nvContext = _nvStoryManager.makeContext()
 		do { try _nvGraph.add(node: nvContext) } catch {
 			fatalError("Tried to add a new context but couldn't add it to this graph.")
 		}
@@ -699,7 +699,7 @@ extension GraphView {
 	
 	@discardableResult
 	func makeGraph(at: CGPoint) -> GraphLinkableView {
-		let nvGraph = _nvStory.makeGraph(name: NSUUID().uuidString)
+		let nvGraph = _nvStoryManager.makeGraph(name: NSUUID().uuidString)
 		do { try _nvGraph.add(graph: nvGraph) } catch {
 			fatalError("Tried to add a new graph but couldn't add it to this graph.")
 		}
