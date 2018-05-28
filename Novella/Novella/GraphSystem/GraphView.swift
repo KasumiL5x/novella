@@ -793,7 +793,7 @@ extension GraphView: NSPopoverDelegate {
 
 
 extension GraphView: NVStoryDelegate {
-	func onStoryTrashItem(item: NVTrashable) {
+	func onStoryTrashItem(item: NVLinkable) {
 		switch item {
 		case is NVDialog:
 			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
@@ -804,7 +804,7 @@ extension GraphView: NVStoryDelegate {
 			print("Trashed unsupported item: \(item)")
 		}
 	}
-	func onStoryUntrashItem(item: NVTrashable) {
+	func onStoryUntrashItem(item: NVLinkable) {
 		switch item {
 		case is NVDialog:
 			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {

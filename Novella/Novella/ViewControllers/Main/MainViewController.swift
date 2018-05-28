@@ -378,12 +378,9 @@ class MainViewController: NSViewController {
 			return
 		}
 		
-		if let trashable = item as? NVTrashable {
-			if trashable.inTrash() {
-				trashable.untrash()
-			} else {
-				trashable.trash()
-			}
+		if var trashable = item as? NVLinkable {
+			let inTrash = trashable.Trashed
+			trashable.Trashed = !inTrash
 		}
 	}
 	
