@@ -57,14 +57,14 @@ class PinViewBranch: PinView {
 	// MARK: - - Functions -
 	// MARK: Destination
 	func setTrueDestination(dest: NVLinkable?) {
-		(BaseLink as! NVBranch).TrueTransfer.Destination = dest
+		(BaseLink as! NVBranch).setTrueDestination(dest: dest)
 		_graphView.updateCurves()
 	}
 	func getTrueDestination() -> NVLinkable? {
 		return (BaseLink as! NVBranch).TrueTransfer.Destination
 	}
 	func setFalseDestination(dest: NVLinkable?) {
-		(BaseLink as! NVBranch).FalseTransfer.Destination = dest
+		(BaseLink as! NVBranch).setFalseDestination(dest: dest)
 		_graphView.updateCurves()
 	}
 	func getFalseDestination() -> NVLinkable? {

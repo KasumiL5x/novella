@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 class StoryTestViewController: NSViewController {
-	let _story: NVStory = NVStory()
+//	let _story: NVStory = NVStory()
 	
 //	@IBOutlet weak var browser: NSBrowser!
 	@IBOutlet weak var outline: NSOutlineView!
@@ -64,21 +64,21 @@ class StoryTestViewController: NSViewController {
 	}
 	
 	@IBAction func onRemoveGraph(_ sender: NSButton) {
-		let idx = outline.selectedRow
-		if -1 == idx {
-			return
-		}
-		
-		let item = outline.item(atRow: idx)
-		if let graph = item as? NVGraph {
-			if graph.Parent != nil {
-				try! graph.Parent?.remove(graph: graph)
-			} else {
-				try! graph.Story.remove(graph: graph)
-			}
-		}
-		
-		outline.reloadData()
+//		let idx = outline.selectedRow
+//		if -1 == idx {
+//			return
+//		}
+//
+//		let item = outline.item(atRow: idx)
+//		if let graph = item as? NVGraph {
+//			if graph.Parent != nil {
+//				try! graph.Parent?.remove(graph: graph)
+//			} else {
+//				try! graph.Story.remove(graph: graph)
+//			}
+//		}
+//
+//		outline.reloadData()
 	}
 	
 	@IBAction func onPrintPath(_ sender: NSButton) {
@@ -111,97 +111,97 @@ extension StoryTestViewController: NSTextFieldDelegate {
 		let item = outline.item(atRow: outline.selectedRow)
 		
 		if let graph = item as? NVGraph {
-			graph.setName(fieldEditor.string)
+//			graph.setName(fieldEditor.string)
 		}
 		
 		return true
 	}
 }
-
-extension StoryTestViewController: NSOutlineViewDataSource {
-	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if let _ = item as? NVVariable {
-			return 0
-		}
-		
-		if let folder = item as? NVFolder {
-			return folder.Folders.count + folder.Variables.count
-		}
-		
-		if let graph = item as? NVGraph {
-			return graph.Graphs.count
-		}
-		
-		return _story.Graphs.count + _story.Folders.count
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if let folder = item as? NVFolder {
-			if index < folder.Folders.count {
-				return folder.Folders[index]
-			}
-			return folder.Variables[index - folder.Folders.count]
-		}
-		
-		if let graph = item as? NVGraph {
-			return graph.Graphs[index]
-		}
-		
-		if index < _story.Graphs.count {
-			return _story.Graphs[index]
-		}
-		return _story.Folders[index - _story.Graphs.count]
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		if let _ = item as? NVVariable {
-			return false
-		}
-		
-		if let folder = item as? NVFolder {
-			return (folder.Folders.count + folder.Variables.count) > 0
-		}
-		
-		if let graph = item as? NVGraph {
-			return graph.Graphs.count > 0
-		}
-		
-		return (_story.Graphs.count + _story.Folders.count) > 0 // root folder
-	}
-}
-
-extension StoryTestViewController: NSOutlineViewDelegate {
-	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-		var view: NSTableCellView? = nil
-		
-		var name = ""
-		var type = ""
-		if let variable = item as? NVVariable {
-			name = variable.Name
-			type = "Variable"
-		}
-		if let folder = item as? NVFolder {
-			name = folder.Name
-			type = "Folder"
-		}
-		if let graph = item as? NVGraph {
-			name = graph.Name
-			type = "Graph"
-		}
-		
-		if tableColumn?.identifier.rawValue == "NameCell" {
-			view = outline.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
-			if let textField = view?.textField {
-				textField.stringValue = name
-			}
-		}
-		if tableColumn?.identifier.rawValue == "TypeCell" {
-			view = outline.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeCell"), owner: self) as? NSTableCellView
-			if let textField = view?.textField {
-				textField.stringValue = type
-			}
-		}
-		
-		return view
-	}
-}
+//
+//extension StoryTestViewController: NSOutlineViewDataSource {
+//	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+//		if let _ = item as? NVVariable {
+//			return 0
+//		}
+//		
+//		if let folder = item as? NVFolder {
+//			return folder.Folders.count + folder.Variables.count
+//		}
+//		
+//		if let graph = item as? NVGraph {
+//			return graph.Graphs.count
+//		}
+//		
+//		return _story.Graphs.count + _story.Folders.count
+//	}
+//	
+//	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+//		if let folder = item as? NVFolder {
+//			if index < folder.Folders.count {
+//				return folder.Folders[index]
+//			}
+//			return folder.Variables[index - folder.Folders.count]
+//		}
+//		
+//		if let graph = item as? NVGraph {
+//			return graph.Graphs[index]
+//		}
+//		
+//		if index < _story.Graphs.count {
+//			return _story.Graphs[index]
+//		}
+//		return _story.Folders[index - _story.Graphs.count]
+//	}
+//	
+//	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+//		if let _ = item as? NVVariable {
+//			return false
+//		}
+//		
+//		if let folder = item as? NVFolder {
+//			return (folder.Folders.count + folder.Variables.count) > 0
+//		}
+//		
+//		if let graph = item as? NVGraph {
+//			return graph.Graphs.count > 0
+//		}
+//		
+//		return (_story.Graphs.count + _story.Folders.count) > 0 // root folder
+//	}
+//}
+//
+//extension StoryTestViewController: NSOutlineViewDelegate {
+//	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+//		var view: NSTableCellView? = nil
+//		
+//		var name = ""
+//		var type = ""
+//		if let variable = item as? NVVariable {
+//			name = variable.Name
+//			type = "Variable"
+//		}
+//		if let folder = item as? NVFolder {
+//			name = folder.Name
+//			type = "Folder"
+//		}
+//		if let graph = item as? NVGraph {
+//			name = graph.Name
+//			type = "Graph"
+//		}
+//		
+//		if tableColumn?.identifier.rawValue == "NameCell" {
+//			view = outline.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+//			if let textField = view?.textField {
+//				textField.stringValue = name
+//			}
+//		}
+//		if tableColumn?.identifier.rawValue == "TypeCell" {
+//			view = outline.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeCell"), owner: self) as? NSTableCellView
+//			if let textField = view?.textField {
+//				textField.stringValue = type
+//			}
+//		}
+//		
+//		return view
+//	}
+//}

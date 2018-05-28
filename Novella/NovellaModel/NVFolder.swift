@@ -9,20 +9,22 @@
 import Foundation
 
 public class NVFolder {
-	let _uuid: NSUUID
-	var _name: String
-	var _synopsis: String
-	var _folders: [NVFolder]
-	var _variables: [NVVariable]
-	var _parent: NVFolder?
+	fileprivate let _uuid: NSUUID
+	fileprivate var _name: String
+	fileprivate var _synopsis: String
+	fileprivate var _folders: [NVFolder]
+	fileprivate var _variables: [NVVariable]
+	internal var _parent: NVFolder?
+	fileprivate let _storyManager: NVStoryManager
 	
-	init(uuid: NSUUID, name: String) {
+	init(uuid: NSUUID, name: String, storyManager: NVStoryManager) {
 		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
 		self._folders = []
 		self._variables = []
 		self._parent = nil
+		self._storyManager = storyManager
 	}
 	
 	// MARK: Properties
@@ -30,12 +32,25 @@ public class NVFolder {
 		get{ return _name }
 		set{
 			_name = newValue
+			_storyManager.Delegates.forEach{$0.onStoryFolderNameChanged(folder: self, name: _name)}
 		}
 	}
-	public var Synopsis:  String       {get{ return _synopsis } set{ _synopsis = newValue }}
-	public var Variables: [NVVariable] {get{ return _variables }}
-	public var Folders:   [NVFolder]   {get{ return _folders }}
-	public var Parent:    NVFolder?    {get{ return _parent }}
+	public var Synopsis: String {
+		get{ return _synopsis }
+		set{
+			_synopsis = newValue
+			_storyManager.Delegates.forEach{$0.onStoryFolderSynopsisChanged(folder: self, synopsis: _synopsis)}
+		}
+	}
+	public var Folders: [NVFolder] {
+		get{ return _folders }
+	}
+	public var Variables: [NVVariable] {
+		get{ return _variables }
+	}
+	public var Parent: NVFolder? {
+		get{ return _parent }
+	}
 	
 	// MARK: Folders
 	public func contains(folder: NVFolder) -> Bool {
@@ -64,6 +79,7 @@ public class NVFolder {
 		folder._parent = self
 		_folders.append(folder)
 		
+		_storyManager.Delegates.forEach{$0.onStoryFolderAddFolder(parent: self, child: folder)}
 		return folder
 	}
 	
@@ -73,6 +89,8 @@ public class NVFolder {
 		}
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
+		
+		_storyManager.Delegates.forEach{$0.onStoryFolderRemoveFolder(parent: self, child: folder)}
 	}
 	
 	public func hasDescendant(folder: NVFolder) -> Bool {
@@ -95,32 +113,35 @@ public class NVFolder {
 	}
 	
 	public func containsVariableName(_ name: String) -> Bool {
-		return _variables.contains(where: {$0._name == name})
+		return _variables.contains(where: {$0.Name == name})
 	}
 	
 	@discardableResult
 	public func add(variable: NVVariable) throws -> NVVariable {
 		// already a child
 		if contains(variable: variable) {
-			throw NVError.invalid("Tried to add Variable but it already exists (\(variable._name) to \(_name)).")
+			throw NVError.invalid("Tried to add Variable but it already exists (\(variable.Name) to \(_name)).")
 		}
 		// unparent first
-		if variable._folder != nil {
-			try! variable._folder?.remove(variable: variable)
+		if variable.Folder != nil {
+			try! variable.Folder?.remove(variable: variable)
 		}
 		// now add
 		variable._folder = self
 		_variables.append(variable)
 		
+		_storyManager.Delegates.forEach{$0.onStoryFolderAddVariable(parent: self, child: variable)}
 		return variable
 	}
 	
 	public func remove(variable: NVVariable) throws {
 		guard let idx = _variables.index(of: variable) else {
-			throw NVError.invalid("Tried to remove Variable (\(variable._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Variable (\(variable.Name)) from (\(_name)) but it was not a child.")
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
+		
+		_storyManager.Delegates.forEach{$0.onStoryFolderRemoveVariable(parent: self, child: variable)}
 	}
 	
 	
@@ -153,14 +174,14 @@ public class NVFolder {
 	}
 }
 
-// MARK: NVIdentifiable
+// MARK: - NVIdentifiable -
 extension NVFolder: NVIdentifiable {
 	public var UUID: NSUUID {
 		return _uuid
 	}
 }
 
-// MARK: NVPathable
+// MARK: - NVPathable -
 extension NVFolder: NVPathable {
 	public func localPath() -> String {
 		return _name
@@ -171,7 +192,7 @@ extension NVFolder: NVPathable {
 	}
 }
 
-// MARK: Equatable
+// MARK: - Equatable -
 extension NVFolder: Equatable {
 	public static func == (lhs: NVFolder, rhs: NVFolder) -> Bool {
 		return lhs.UUID == rhs.UUID

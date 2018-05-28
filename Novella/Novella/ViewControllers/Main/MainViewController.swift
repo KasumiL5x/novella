@@ -491,7 +491,7 @@ extension MainViewController: TabsControlDelegate {
 		switch tabItem.tabItem.viewController {
 		case is GraphTabViewController:
 			if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
-				nvGraph.setName(newTitle)
+				nvGraph.Name = newTitle
 				tabItem.title = newTitle
 			}
 			reloadBrowser()

@@ -30,9 +30,9 @@ public protocol NVStoryDelegate {
 	func onStoryMakeContext(context: NVContext)
 	
 	// Called when a NVTrashable is added to the trash using the internal StoryManager.trash().
-	func onStoryTrashItem(item: NVTrashable)
+	func onStoryTrashItem(item: NVLinkable)
 	// Called when a NVTrashable is removed from the trash using the internal StoryManager().
-	func onStoryUntrashItem(item: NVTrashable)
+	func onStoryUntrashItem(item: NVLinkable)
 	
 	// Called when an NVFolder is deleted using StoryManager.deleteFolder().
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool)
@@ -87,6 +87,42 @@ public protocol NVStoryDelegate {
 	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery)
 	// Called when an NVDelivery's directions are changed using NVDelivery.Directions.
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery)
+	
+	// Called when an NVLink's transfer's destination is set using NVLink.SetDestination().
+	func onStoryLinkSetDestination(link: NVLink, dest: NVLinkable?)
+	// Called when an NVBranch's true transfer's destination is set using NVBranch.SetTrueDestination().
+	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVLinkable?)
+	// Called when an NVBranch's false transfer's destination is set using NVBranch.SetTrueDestination().
+	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVLinkable?)
+	
+	// Called when an NVVariable's name is changed using NVVariable.Name.
+	func onStoryVariableNameChanged(variable: NVVariable, name: String)
+	// Called when an NVVariable's synopsis is changed using NVVariable.Synopsis.
+	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String)
+	// Called when an NVVariable's type is changed using NVVariable.setType().
+	func onStoryVariableTypeChanged(variable: NVVariable, type: NVDataType)
+	// Called when an NVVariable's value is changed using NVVariable.setValue().
+	func onStoryVariableValueChanged(variable: NVVariable, value: Any)
+	// Called when an NVVariable's initial value is changed using NVVariable.setInitialValue().
+	func onStoryVariableInitialValueChanged(variable: NVVariable, value: Any)
+	// Called when an NVVariable's constant is changed using NVVariable.Constant.
+	func onStoryVariableConstantChanged(variable: NVVariable, constant: Bool)
+	
+	// Called when an NVFolder's name is changed using NVFolder.Name.
+	func onStoryFolderNameChanged(folder: NVFolder, name: String)
+	// Called when an NVFolder's synopsis is changed using NVFolder.Synopsis.
+	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String)
+	// Called when an NVFolder is added to an NVFolder as a child.
+	func onStoryFolderAddFolder(parent: NVFolder, child: NVFolder)
+	// Called when an NVFolder is removed from an NVFolder as a child.
+	func onStoryFolderRemoveFolder(parent: NVFolder, child: NVFolder)
+	// Called when an NVVariable is added to an NVFolder as a child.
+	func onStoryFolderAddVariable(parent: NVFolder, child: NVVariable)
+	// Called when an NVVariable is removed from an NVFolder as a child.
+	func onStoryFolderRemoveVariable(parent: NVFolder, child: NVVariable)
+	
+	// Called when an NVStory's name is changed using NVStory.Name.
+	func onStoryNameChanged(story: NVStory, name: String)
 }
 
 // MARK: - - Default Implementations -
@@ -110,9 +146,9 @@ public extension NVStoryDelegate {
 	func onStoryMakeContext(context: NVContext) {
 	}
 	
-	func onStoryTrashItem(item: NVTrashable) {
+	func onStoryTrashItem(item: NVLinkable) {
 	}
-	func onStoryUntrashItem(item: NVTrashable) {
+	func onStoryUntrashItem(item: NVLinkable) {
 	}
 	
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
@@ -167,5 +203,41 @@ public extension NVStoryDelegate {
 	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery) {
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
+	}
+	
+	func onStoryLinkSetDestination(link: NVLink, dest: NVLinkable?) {
+	}
+	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVLinkable?) {
+	}
+	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVLinkable?) {
+	}
+	
+	func onStoryVariableNameChanged(variable: NVVariable, name: String) {
+	}
+	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String) {
+	}
+	func onStoryVariableTypeChanged(variable: NVVariable, type: NVDataType) {
+	}
+	func onStoryVariableValueChanged(variable: NVVariable, value: Any) {
+	}
+	func onStoryVariableInitialValueChanged(variable: NVVariable, value: Any) {
+	}
+	func onStoryVariableConstantChanged(variable: NVVariable, constant: Bool) {
+	}
+	
+	func onStoryFolderNameChanged(folder: NVFolder, name: String) {
+	}
+	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String) {
+	}
+	func onStoryFolderAddFolder(parent: NVFolder, child: NVFolder) {
+	}
+	func onStoryFolderRemoveFolder(parent: NVFolder, child: NVFolder) {
+	}
+	func onStoryFolderAddVariable(parent: NVFolder, child: NVVariable) {
+	}
+	func onStoryFolderRemoveVariable(parent: NVFolder, child: NVVariable) {
+	}
+	
+	func onStoryNameChanged(story: NVStory, name: String) {
 	}
 }

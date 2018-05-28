@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 class JSONTestViewController: NSViewController {
-	let _story: NVStory = NVStory()
+//	let _story: NVStory = NVStory()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

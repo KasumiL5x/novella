@@ -9,8 +9,8 @@
 import Foundation
 
 public class NVLink : NVBaseLink {
-	var _condition: NVCondition
-	var _transfer: NVTransfer
+	fileprivate var _condition: NVCondition
+	fileprivate var _transfer: NVTransfer
 	
 	override init(uuid: NSUUID, storyManager: NVStoryManager, origin: NVLinkable) {
 		self._condition = NVCondition(storyManager: storyManager)
@@ -19,11 +19,15 @@ public class NVLink : NVBaseLink {
 		super.init(uuid: uuid, storyManager: storyManager, origin: origin)
 	}
 	
-	// MARK: Properties
 	public var Transfer: NVTransfer {
 		get{ return _transfer }
 	}
 	public var Condition: NVCondition {
 		get{ return _condition }
+	}
+	
+	public func setDestination(dest: NVLinkable?) {
+		_transfer._destination = dest
+		_storyManager.Delegates.forEach{$0.onStoryLinkSetDestination(link: self, dest: dest)}
 	}
 }

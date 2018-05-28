@@ -18,82 +18,82 @@ extension NVStoryManager {
 
 		// add all folders
 		var folders: [JSONDict] = []
-		_folders.forEach{ (curr) in
+		Folders.forEach{ (curr) in
 			var entry: JSONDict = [:]
-			entry["name"] = curr._name
-			entry["uuid"] = curr._uuid.uuidString
-			entry["variables"] = curr._variables.map({$0._uuid.uuidString})
-			entry["subfolders"] = curr._folders.map({$0._uuid.uuidString})
+			entry["name"] = curr.Name
+			entry["uuid"] = curr.UUID.uuidString
+			entry["variables"] = curr.Variables.map({$0.UUID.uuidString})
+			entry["subfolders"] = curr.Folders.map({$0.UUID.uuidString})
 			folders.append(entry)
 		}
 		root["folders"] = folders
 		
 		// add all variables
 		var variables: [JSONDict] = []
-		_variables.forEach{ (curr) in
+		Variables.forEach{ (curr) in
 			var entry: JSONDict = [:]
-			entry["name"] = curr._name
-			entry["uuid"] = curr._uuid.uuidString
-			entry["synopsis"] = curr._synopsis
-			entry["datatype"] = curr._type.stringValue
-			entry["constant"] = curr._constant
-			entry["initialValue"] = curr._initialValue
-			entry["value"] = curr._value
+			entry["name"] = curr.Name
+			entry["uuid"] = curr.UUID.uuidString
+			entry["synopsis"] = curr.Synopsis
+			entry["datatype"] = curr.DataType.stringValue
+			entry["constant"] = curr.IsConstant
+			entry["initialValue"] = curr.InitialValue
+			entry["value"] = curr.Value
 			variables.append(entry)
 		}
 		root["variables"] = variables
 		
 		// add all graphs
 		var graphs: [JSONDict] = []
-		_graphs.forEach { (curr) in
+		Graphs.forEach { (curr) in
 			var entry: JSONDict = [:]
-			entry["name"] = curr._name
-			entry["uuid"] = curr._uuid.uuidString
+			entry["name"] = curr.Name
+			entry["uuid"] = curr.UUID.uuidString
 			entry["entry"] = curr._entry?.UUID.uuidString ?? ""
 			entry["position"] = [
-				"x": curr._editorPos.x,
-				"y": curr._editorPos.y
+				"x": curr.EditorPosition.x,
+				"y": curr.EditorPosition.y
 			]
-			entry["subgraphs"] = curr._graphs.map({$0._uuid.uuidString})
-			entry["nodes"] = curr._nodes.map({$0._uuid.uuidString})
-			entry["links"] = curr._links.map({$0._uuid.uuidString})
-			entry["listeners"] = curr._listeners.map({$0._uuid.uuidString})
-			entry["exits"] = curr._exits.map({$0._uuid.uuidString})
+			entry["subgraphs"] = curr._graphs.map({$0.UUID.uuidString})
+			entry["nodes"] = curr._nodes.map({$0.UUID.uuidString})
+			entry["links"] = curr._links.map({$0.UUID.uuidString})
+			entry["listeners"] = curr._listeners.map({$0.UUID.uuidString})
+			entry["exits"] = curr._exits.map({$0.UUID.uuidString})
 			graphs.append(entry)
 		}
 		root["graphs"] = graphs
 		
 		// add all links
 		var links: [JSONDict] = []
-		_links.forEach{ (curr) in
+		Links.forEach{ (curr) in
 			var entry: JSONDict = [:]
-			entry["uuid"] = curr._uuid.uuidString
-			entry["origin"] = curr._origin.UUID.uuidString
+			entry["uuid"] = curr.UUID.uuidString
+			entry["origin"] = curr.Origin.UUID.uuidString
 			
 			if let asLink = curr as? NVLink {
 				entry["linktype"] = "link"
 				
 				var condition: JSONDict = [:]
-				condition["jscode"] = asLink._condition._javascript
+				condition["jscode"] = asLink.Condition.Javascript
 				entry["condition"] = condition
 				
 				var transfer: JSONDict = [:]
-				transfer["destination"] = asLink._transfer._destination?.UUID.uuidString ?? ""
+				transfer["destination"] = asLink.Transfer.Destination?.UUID.uuidString ?? ""
 				entry["transfer"] = transfer
 			}
 			else if let asBranch = curr as? NVBranch {
 				entry["linktype"] = "branch"
 				
 				var condition: JSONDict = [:]
-				condition["jscode"] = asBranch._condition._javascript
+				condition["jscode"] = asBranch.Condition.Javascript
 				entry["condition"] = condition
 				
 				var ttransfer: JSONDict = [:]
-				ttransfer["destination"] = asBranch._trueTransfer._destination?.UUID.uuidString ?? ""
+				ttransfer["destination"] = asBranch.TrueTransfer.Destination?.UUID.uuidString ?? ""
 				entry["ttransfer"] = ttransfer
 				
 				var ftransfer: JSONDict = [:]
-				ftransfer["destination"] = asBranch._falseTransfer._destination?.UUID.uuidString ?? ""
+				ftransfer["destination"] = asBranch.FalseTransfer.Destination?.UUID.uuidString ?? ""
 				entry["ftransfer"] = ftransfer
 			}
 			else if curr is NVSwitch {
@@ -113,10 +113,10 @@ extension NVStoryManager {
 		
 		// add all nodes
 		var nodes: [JSONDict] = []
-		_nodes.forEach{ (curr) in
+		Nodes.forEach{ (curr) in
 			var entry: JSONDict = [:]
-			entry["uuid"] = curr._uuid.uuidString
-			entry["name"] = curr._name
+			entry["uuid"] = curr.UUID.uuidString
+			entry["name"] = curr.Name
 			
 			entry["position"] = [
 				"x": curr.EditorPosition.x,
@@ -125,16 +125,16 @@ extension NVStoryManager {
 			
 			if let asDialog = curr as? NVDialog {
 				entry["nodetype"] = "dialog"
-				entry["content"] = asDialog._content
-				entry["preview"] = asDialog._preview
-				entry["directions"] = asDialog._directions
+				entry["content"] = asDialog.Content
+				entry["preview"] = asDialog.Preview
+				entry["directions"] = asDialog.Directions
 			}
 			
 			if let asDelivery = curr as? NVDelivery {
 				entry["nodetype"] = "delivery"
-				entry["content"] = asDelivery._content
-				entry["preview"] = asDelivery._preview
-				entry["directions"] = asDelivery._directions
+				entry["content"] = asDelivery.Content
+				entry["preview"] = asDelivery.Preview
+				entry["directions"] = asDelivery.Directions
 			}
 			
 			if let _ = curr as? NVContext {
@@ -147,9 +147,9 @@ extension NVStoryManager {
 		
 		// add folders and graphs (uuid) for story
 		var storyEntry: JSONDict = [:]
-		storyEntry["folders"] = _story._folders.map({$0._uuid.uuidString})
-		storyEntry["graphs"] = _story._graphs.map({$0._uuid.uuidString})
-		storyEntry["name"] = _story._name
+		storyEntry["folders"] = Story.Folders.map({$0.UUID.uuidString})
+		storyEntry["graphs"] = Story.Graphs.map({$0.UUID.uuidString})
+		storyEntry["name"] = Story.Name
 		root["story"] = storyEntry
 		
 		// check if the root object is valid JSON
@@ -220,7 +220,7 @@ extension NVStoryManager {
 			
 			let value = curr["value"]
 			let initialValue = curr["initialValue"]
-			switch variable._type {
+			switch variable.DataType {
 			case .boolean:
 				if value != JSON.null {
 					variable.setValue(value.bool!)
@@ -350,7 +350,7 @@ extension NVStoryManager {
 			// position
 			let posX = curr["position"]["x"].float!
 			let posY = curr["position"]["y"].float!
-			graph._editorPos = NSMakePoint(CGFloat(posX), CGFloat(posY))
+			graph.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {
@@ -388,7 +388,7 @@ extension NVStoryManager {
 					if let linkable = storyManager.find(uuid: entry) as? NVLinkable {
 						try! graph.setEntry(linkable)
 					} else {
-						print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph._uuid.uuidString)).")
+						print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph.UUID.uuidString)).")
 					}
 				}
 			}
@@ -409,14 +409,14 @@ extension NVStoryManager {
 				let link = storyManager.makeLink(origin: origin, uuid: uuid)
 				
 				if let condition = curr["condition"].dictionary {
-					link._condition._javascript = condition["jscode"]!.string!
+					link.Condition.Javascript = condition["jscode"]!.string!
 				}
 				
 				if let transfer = curr["transfer"].dictionary {
 					let transferDestination = transfer["destination"]!.string!
 					if !transferDestination.isEmpty {
 						if let destination = storyManager.find(uuid: transferDestination) as? NVLinkable {
-							link._transfer.Destination = destination
+							link.setDestination(dest: destination)
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
 						}
@@ -427,14 +427,14 @@ extension NVStoryManager {
 				let branch = storyManager.makeBranch(origin: origin, uuid: uuid)
 				
 				if let condition = curr["condition"].dictionary {
-					branch._condition._javascript = condition["jscode"]!.string!
+					branch.Condition.Javascript = condition["jscode"]!.string!
 				}
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
 					let transferDestination = trueTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
 						if let destination = storyManager.find(uuid: transferDestination) as? NVLinkable {
-							branch._trueTransfer.Destination = destination
+							branch.setTrueDestination(dest: destination)
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
 						}
@@ -445,7 +445,7 @@ extension NVStoryManager {
 					let transferDestination = falseTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
 						if let destination = storyManager.find(uuid: transferDestination) as? NVLinkable {
-							branch._falseTransfer.Destination = destination
+							branch.setFalseDestination(dest: destination)
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
 						}
@@ -468,7 +468,7 @@ extension NVStoryManager {
 				if let link = storyManager.find(uuid: child.string!) as? NVBaseLink {
 					try! graph.add(link: link)
 				} else {
-					print("NVStoryManager::fromJSON(): Unable to find BaseLink by UUID (\(child.string!)) when adding to Graph (\(graph._uuid.uuidString)).")
+					print("NVStoryManager::fromJSON(): Unable to find BaseLink by UUID (\(child.string!)) when adding to Graph (\(graph.UUID.uuidString)).")
 				}
 			}
 		}
@@ -476,7 +476,7 @@ extension NVStoryManager {
 		// 9. assign folders and graphs to story's local stuff
 		for curr in json["story"]["folders"].arrayValue {
 			if let folder = storyManager.find(uuid: curr.string!) as? NVFolder {
-				try! storyManager._story.add(folder: folder)
+				try! storyManager.Story.add(folder: folder)
 			} else {
 				print("NVStoryManager::fromJSON(): Unable to find Folder by UUID (\(curr.string!)) when adding to Story.")
 			}
@@ -484,7 +484,7 @@ extension NVStoryManager {
 		}
 		for curr in json["story"]["graphs"].arrayValue {
 			if let graph = storyManager.find(uuid: curr.string!) as? NVGraph {
-				try! storyManager._story.add(graph: graph)
+				try! storyManager.Story.add(graph: graph)
 			} else {
 				print("NVStoryManager::fromJSON(): Unable to find Graph by UUID (\(curr.string!)) when adding to Story.")
 			}
@@ -492,7 +492,7 @@ extension NVStoryManager {
 		
 		// 10. read story's name
 		if let storyName = json["story"]["name"].string {
-			storyManager._story._name = storyName
+			storyManager.Story.Name = storyName
 		}
 		
 		return storyManager

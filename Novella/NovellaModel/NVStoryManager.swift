@@ -10,25 +10,42 @@ import JavaScriptCore
 
 public class NVStoryManager {
 	// MARK: - - Variables -
-	var _story: NVStory
-	var _identifiables: [NVIdentifiable]
-	var _folders: [NVFolder]
-	var _variables: [NVVariable]
-	var _graphs: [NVGraph]
-	var _links: [NVBaseLink]
-	var _nodes: [NVNode]
-	var _trashed: [NVTrashable]
-	var _delegates: [NVStoryDelegate]
-	var _jsContext: JSContext
+	fileprivate var _story: NVStory!
+	fileprivate var _identifiables: [NVIdentifiable]
+	fileprivate var _folders: [NVFolder]
+	fileprivate var _variables: [NVVariable]
+	fileprivate var _graphs: [NVGraph]
+	fileprivate var _links: [NVBaseLink]
+	fileprivate var _nodes: [NVNode]
+	fileprivate var _trashed: [NVLinkable]
+	fileprivate var _delegates: [NVStoryDelegate]
+	internal var _jsContext: JSContext
 	
 	// MARK: - - Properties -
 	public var Story: NVStory {
 		get{ return _story }
 	}
+	public var Delegates: [NVStoryDelegate] {
+		get{ return _delegates }
+	}
+	public var Folders: [NVFolder] {
+		get{ return _folders }
+	}
+	public var Variables: [NVVariable] {
+		get{ return _variables }
+	}
+	public var Graphs: [NVGraph] {
+		get{ return _graphs }
+	}
+	public var Links: [NVBaseLink] {
+		get{ return _links}
+	}
+	public var Nodes: [NVNode] {
+		get{ return _nodes }
+	}
 	
 	// MARK: - - Initialization -
 	public init() {
-		self._story = NVStory()
 		self._identifiables = []
 		self._folders = []
 		self._variables = []
@@ -38,6 +55,7 @@ public class NVStoryManager {
 		self._trashed = []
 		self._delegates = []
 		self._jsContext = JSContext()
+		self._story = NVStory(storyManager: self)
 		
 		setupJavascript()
 	}
@@ -45,13 +63,10 @@ public class NVStoryManager {
 	// MARK: - - Generic Functions -
 	public func addDelegate(_ delegate: NVStoryDelegate) {
 		_delegates.append(delegate)
-		_story._delegates.append(delegate)
-		_graphs.forEach{$0._delegates.append(delegate)}
-		_nodes.forEach{$0.Delegates.append(delegate)}
 	}
 	
 	public func reset() {
-		self._story = NVStory()
+		self._story = NVStory(storyManager: self)
 		self._identifiables = []
 		self._folders = []
 		self._variables = []
@@ -81,7 +96,7 @@ public class NVStoryManager {
 	}
 	
 	public func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
-		return _links.filter({$0._origin.UUID == linkable.UUID})
+		return _links.filter({$0.Origin.UUID == linkable.UUID})
 	}
 	
 	public func getLinksTo(_ linkable: NVLinkable) -> [NVBaseLink] {
@@ -132,7 +147,7 @@ public class NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
-		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
+		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name, storyManager: self)
 		_folders.append(folder)
 		_identifiables.append(folder)
 		
@@ -143,7 +158,7 @@ extension NVStoryManager {
 	public func delete(folder: NVFolder, deleteContents: Bool) {
 		// delete children
 		if deleteContents {
-			for childVariable in folder._variables {
+			for childVariable in folder.Variables {
 				delete(variable: childVariable)
 			}
 			for childFolder in folder.Folders {
@@ -173,7 +188,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
-		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
+		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type, storyManager: self)
 		_variables.append(variable)
 		_identifiables.append(variable)
 		
@@ -182,7 +197,7 @@ extension NVStoryManager {
 	}
 	
 	public func delete(variable: NVVariable) {
-		try! _folders.first(where: {$0._variables.contains(variable)})?.remove(variable: variable)
+		try! _folders.first(where: {$0.Variables.contains(variable)})?.remove(variable: variable)
 		_variables.remove(at: _variables.index(where: {$0 == variable})!)
 		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == variable.UUID})!)
 		
@@ -194,8 +209,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
-		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: _story)
-		graph._delegates = _delegates
+		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, storyManager: self)
 		_graphs.append(graph)
 		_identifiables.append(graph)
 		
@@ -254,7 +268,6 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
 		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		dialog.Delegates = _delegates
 		_nodes.append(dialog)
 		_identifiables.append(dialog)
 		
@@ -265,7 +278,6 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
 		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		delivery.Delegates = _delegates
 		_nodes.append(delivery)
 		_identifiables.append(delivery)
 		
@@ -276,7 +288,6 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeContext(uuid: NSUUID?=nil) -> NVContext {
 		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		context.Delegates = _delegates
 		_nodes.append(context)
 		_identifiables.append(context)
 		
@@ -315,12 +326,12 @@ extension NVStoryManager {
 
 // MARK: - - NVTrashable Stuff -
 extension NVStoryManager {
-	func trash(_ item: NVTrashable) {
+	func trash(_ item: NVLinkable) {
 		_trashed.append(item)
 		_delegates.forEach{$0.onStoryTrashItem(item: item)}
 	}
 	
-	func untrash(_ item: NVTrashable) {
+	func untrash(_ item: NVLinkable) {
 		if let idx = _trashed.index(where: {$0.UUID == item.UUID}) {
 			_trashed.remove(at: idx)
 			_delegates.forEach{$0.onStoryUntrashItem(item: item)}
