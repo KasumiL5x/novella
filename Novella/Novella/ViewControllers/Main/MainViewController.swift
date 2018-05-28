@@ -372,6 +372,20 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Interface Buttons -
+	@IBAction func onTrashItem(_ sender: NSButton) {
+		let item = _storyBrowser.item(atRow: _storyBrowser.selectedRow)
+		if item == nil {
+			return
+		}
+		
+		if let trashable = item as? NVTrashable {
+			if trashable.inTrash() {
+				trashable.untrash()
+			} else {
+				trashable.trash()
+			}
+		}
+	}
 	
 	@IBAction func onVariableEditor(_ sender: NSButton) {
 		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {

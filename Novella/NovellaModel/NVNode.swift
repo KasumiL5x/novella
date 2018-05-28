@@ -41,12 +41,13 @@ public class NVNode {
 // MARK: NVTrashable
 extension NVNode: NVTrashable {
 	public func trash() {
-		_storyManager.trash(self)
 		_inTrash = true
+		_storyManager.trash(self)
 	}
 	
 	public func untrash() {
 		_inTrash = false
+		_storyManager.untrash(self)
 	}
 	
 	public func inTrash() -> Bool {

@@ -104,7 +104,6 @@ class GraphView: NSView {
 		// configure linkable menu
 		_linkableMenu.addItem(withTitle: "Add Link", action: #selector(GraphView.onLinkableMenuAddLink), keyEquivalent: "")
 		_linkableMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.onLinkableMenuAddBranch), keyEquivalent: "")
-		_linkableMenu.addItem(withTitle: "Delete", action: #selector(GraphView.onLinkableMenuDelete), keyEquivalent: "")
 		// configure graphview menu
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(GraphView.onGraphViewMenuAddDialog), keyEquivalent: "")
@@ -540,17 +539,6 @@ extension GraphView {
 		}
 		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
 	}
-	@objc fileprivate func onLinkableMenuDelete() {
-		guard let clicked = _contextClickedLinkable else {
-			print("Tried to delete a to a branch via context but _contextClickedLinkable was nil.")
-			return
-		}
-		
-		if clicked.Linkable is NVTrashable {
-			(clicked.Linkable as! NVTrashable).trash()
-			clicked.redraw()
-		}
-	}
 	
 	// MARK: PinView Dropping Menu
 	@objc fileprivate func onPinDropBranchTrue() {
@@ -817,6 +805,14 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	func onStoryUntrashItem(item: NVTrashable) {
-		print("Untrashed unsupported item: \(item)")
+		switch item {
+		case is NVDialog:
+			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
+				lv.isHidden = false
+			}
+			
+		default:
+			print("Trashed unsupported item: \(item)")
+		}
 	}
 }

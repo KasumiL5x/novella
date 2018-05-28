@@ -382,6 +382,19 @@
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Fw-GNM" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="0.0" width="1512" height="35"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ODC-oR-9dB">
+                                        <rect key="frame" x="14" y="0.0" width="59" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="🗑" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="m43-6E-9Et">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" size="13" name="AppleColorEmoji"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onTrashItem:" target="XfG-lQ-9wD" id="lA4-sa-gvM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Q13-ba-BAO"/>
                                 </constraints>
