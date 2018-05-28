@@ -11,16 +11,20 @@ import Foundation
 public class NVNode {
 	let _uuid: NSUUID
 	var _name: String
+	var _inTrash: Bool
 	
 	var _editorPos: CGPoint
 	
 	var _delegate: NVStoryDelegate?
+	var _storyManager: NVStoryManager
 	
-	init(uuid: NSUUID) {
+	init(uuid: NSUUID, storyManager: NVStoryManager) {
 		self._uuid = uuid
 		self._name = ""
+		self._inTrash = false
 		self._editorPos = CGPoint.zero
 		self._delegate = nil
+		self._storyManager = storyManager
 	}
 	
 	// MARK: Properties
@@ -31,6 +35,22 @@ public class NVNode {
 			_name = newValue
 			_delegate?.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)
 		}
+	}
+}
+
+// MARK: NVTrashable
+extension NVNode: NVTrashable {
+	public func trash() {
+		_storyManager.trash(self)
+		_inTrash = true
+	}
+	
+	public func untrash() {
+		_inTrash = false
+	}
+	
+	public func inTrash() -> Bool {
+		return _inTrash
 	}
 }
 

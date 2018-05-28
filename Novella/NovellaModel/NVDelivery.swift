@@ -13,12 +13,12 @@ public class NVDelivery: NVNode {
 	var _preview: String
 	var _directions: String
 	
-	override init(uuid: NSUUID) {
+	override init(uuid: NSUUID, storyManager: NVStoryManager) {
 		self._content = ""
 		self._preview = ""
 		self._directions = ""
 		
-		super.init(uuid: uuid)
+		super.init(uuid: uuid, storyManager: storyManager)
 	}
 	
 	// MARK: Getters/Setter

@@ -544,12 +544,9 @@ extension GraphView {
 			return
 		}
 		
-		_nvStoryManager.delete(node: clicked.Linkable as! NVNode)
-		_allLinkableViews.remove(at: _allLinkableViews.index(of: clicked)!)
-		self.subviews.remove(at: self.subviews.index(of: clicked)!)
-		
-		clicked.Outputs.forEach { (pin) in
-			_allPinViews.remove(at: _allPinViews.index(of: pin)!)
+		if clicked.Linkable is NVTrashable {
+			(clicked.Linkable as! NVTrashable).trash()
+			clicked.redraw()
 		}
 	}
 	

@@ -17,6 +17,7 @@ public class NVStoryManager {
 	var _graphs: [NVGraph]
 	var _links: [NVBaseLink]
 	var _nodes: [NVNode]
+	var _trashed: [NVTrashable]
 	var _delegate: NVStoryDelegate?
 	var _jsContext: JSContext
 	
@@ -43,6 +44,7 @@ public class NVStoryManager {
 		self._graphs = []
 		self._links = []
 		self._nodes = []
+		self._trashed = []
 		self._delegate = nil
 		self._jsContext = JSContext()
 		
@@ -58,6 +60,7 @@ public class NVStoryManager {
 		self._graphs = []
 		self._links = []
 		self._nodes = []
+		self._trashed = []
 		self._delegate = nil
 		self._jsContext = JSContext()
 		
@@ -149,21 +152,21 @@ extension NVStoryManager {
 				delete(folder: childFolder, deleteContents: true)
 			}
 		}
-		
+
 		// remove from parent
 		if let parent = folder._parent {
 			try! parent.remove(folder: folder)
 		}
-		
+
 		// remove from story
 		if self._folders.contains(folder) {
 			self._folders.remove(at: self._folders.index(where: {$0 == folder})!)
 		}
-		
+
 		// actual remove
 		_folders.remove(at: _folders.index(where: {$0 == folder})!)
 		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == folder.UUID})!)
-		
+
 		_delegate?.onStoryDeleteFolder(folder: folder, contents: deleteContents)
 	}
 }
@@ -235,24 +238,24 @@ extension NVStoryManager {
 		return swtch
 	}
 	
-	public func delete(link: NVBaseLink) {
-		// remove link from all graphs containing it
-		_graphs.forEach { (graph) in
-			if graph._links.contains(link) {
-				try! graph.remove(link: link)
-			}
-		}
-		
-		_links.remove(at: _links.index(of: link)!)
-		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == link.UUID})!)
-	}
+//	public func delete(link: NVBaseLink) {
+//		// remove link from all graphs containing it
+//		_graphs.forEach { (graph) in
+//			if graph._links.contains(link) {
+//				try! graph.remove(link: link)
+//			}
+//		}
+//
+//		_links.remove(at: _links.index(of: link)!)
+//		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == link.UUID})!)
+//	}
 }
 
 // MARK: - - Nodes -
 extension NVStoryManager {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
-		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID())
+		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
 		dialog._delegate = _delegate
 		_nodes.append(dialog)
 		_identifiables.append(dialog)
@@ -263,7 +266,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
-		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID())
+		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
 		delivery._delegate = _delegate
 		_nodes.append(delivery)
 		_identifiables.append(delivery)
@@ -274,7 +277,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeContext(uuid: NSUUID?=nil) -> NVContext {
-		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID())
+		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
 		context._delegate = _delegate
 		_nodes.append(context)
 		_identifiables.append(context)
@@ -283,32 +286,50 @@ extension NVStoryManager {
 		return context
 	}
 	
-	public func delete(node: NVNode) {
-		// remove from all graphs
-		_graphs.forEach { (graph) in
-			if graph.contains(node: node) {
-				try! graph.remove(node: node)
-			}
+//	public func delete(node: NVNode) {
+//		// remove from all graphs
+//		_graphs.forEach { (graph) in
+//			if graph.contains(node: node) {
+//				try! graph.remove(node: node)
+//			}
+//		}
+//
+//		// any links that end in this node must have their destinations changed
+//		getLinksTo(node).forEach { (link) in
+//			switch link {
+//			case is NVLink:
+//				(link as! NVLink)._transfer._destination = nil
+//			case is NVBranch:
+//				let asBranch = link as! NVBranch
+//				asBranch._trueTransfer._destination = (asBranch._trueTransfer._destination?.UUID == node.UUID) ? nil : asBranch._trueTransfer._destination
+//				asBranch._falseTransfer._destination = (asBranch._falseTransfer._destination?.UUID == node.UUID) ? nil : asBranch._falseTransfer._destination
+//			case is NVSwitch:
+//				print("NVStoryManager::delete(node): Tried to remove node from NVSwitch but is not implemented.")
+//			default:
+//				break
+//			}
+//		}
+//
+//		_nodes.remove(at: _nodes.index(of: node)!)
+//		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == node.UUID})!)
+//	}
+}
+
+// MARK: - - NVTrashable Stuff -
+extension NVStoryManager {
+	func trash(_ item: NVTrashable) {
+		_trashed.append(item)
+	}
+	
+	func untrash(_ item: NVTrashable) {
+		if let idx = _trashed.index(where: {$0.UUID == item.UUID}) {
+			_trashed.remove(at: idx)
 		}
-		
-		// any links that end in this node must have their destinations changed
-		getLinksTo(node).forEach { (link) in
-			switch link {
-			case is NVLink:
-				(link as! NVLink)._transfer._destination = nil
-			case is NVBranch:
-				let asBranch = link as! NVBranch
-				asBranch._trueTransfer._destination = (asBranch._trueTransfer._destination?.UUID == node.UUID) ? nil : asBranch._trueTransfer._destination
-				asBranch._falseTransfer._destination = (asBranch._falseTransfer._destination?.UUID == node.UUID) ? nil : asBranch._falseTransfer._destination
-			case is NVSwitch:
-				print("NVStoryManager::delete(node): Tried to remove node from NVSwitch but is not implemented.")
-			default:
-				break
-			}
-		}
-		
-		_nodes.remove(at: _nodes.index(of: node)!)
-		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == node.UUID})!)
+	}
+	
+	public func emptyTrash() {
+		// for all trashable items, actually DELETE them. Make delete private?
+		print("Not yet implemented.")
 	}
 }
 

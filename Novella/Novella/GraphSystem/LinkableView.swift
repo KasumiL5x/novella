@@ -82,6 +82,10 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - - Functions -
+	func redraw() {
+		setNeedsDisplay(bounds)
+	}
+	
 	// MARK: Hit Test
 	override func hitTest(_ point: NSPoint) -> NSView? {
 		// point is in the superview's coordinate system
