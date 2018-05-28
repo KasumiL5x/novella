@@ -16,7 +16,7 @@ class ReaderViewController: NSViewController {
 	@IBOutlet weak var currentNodeInfo: NSTextField!
 	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
-	var _story: NVStory?
+	var _storyManager: NVStoryManager?
 	var _simulator: NVSimulator?
 	
 	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
@@ -62,23 +62,16 @@ class ReaderViewController: NSViewController {
 		}
 		
 		// parse contents into a Story
-		do {
-			let (story, errors) = try NVStory.fromJSON(str: contents)
-			_story = story
-			
-			for e in errors {
-				print(e)
-			}
-			
-			_story?.debugPrint(global: true)
-		} catch {
+		if let manager = NVStoryManager.fromJSON(str: contents) {
+			_storyManager = manager
+		} else {
 			print("Failed to parse JSON.")
 			return
 		}
 		
 		
 		// open the simulator
-		_simulator = NVSimulator(story: _story!, controller: self)
+		_simulator = NVSimulator(storyManager: _storyManager!, controller: self)
 		outlineView.reloadData()
 	}
 	
@@ -139,7 +132,7 @@ extension ReaderViewController: NVSimulatorController {
 
 extension ReaderViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if _story == nil {
+		if _storyManager == nil {
 			return 0
 		}
 		
@@ -158,11 +151,11 @@ extension ReaderViewController: NSOutlineViewDataSource {
 				)
 		}
 		
-		return _story!.Folders.count + _story!.Graphs.count
+		return _storyManager!.Story.Folders.count + _storyManager!.Story.Graphs.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if _story == nil {
+		if _storyManager == nil {
 			return ""
 		}
 		
@@ -192,10 +185,10 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return graph.Entry
 		}
 		
-		if index < _story!.Graphs.count {
-			return _story!.Graphs[index]
+		if index < _storyManager!.Story.Graphs.count {
+			return _storyManager!.Story.Graphs[index]
 		}
-		return _story!.Folders[index - _story!.Graphs.count]
+		return _storyManager!.Story.Folders[index - _storyManager!.Story.Graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {

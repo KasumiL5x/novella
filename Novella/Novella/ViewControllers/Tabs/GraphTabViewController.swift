@@ -19,7 +19,7 @@ class GraphTabViewController: NSViewController {
 	fileprivate static let GRAPH_SIZE: CGFloat = 6000.0
 	fileprivate var _graphView: GraphView?
 	//
-	fileprivate var _story: NVStory?
+	fileprivate var _storyManager: NVStoryManager?
 	fileprivate var _graph: NVGraph?
 	fileprivate var _delegate: GraphViewDelegate?
 	
@@ -33,7 +33,7 @@ class GraphTabViewController: NSViewController {
 		super.viewDidLoad()
 		
 		// if setup was called pre-load...
-		if _story != nil && _graph != nil && _delegate != nil {
+		if _storyManager != nil && _graph != nil && _delegate != nil {
 			configure()
 		}
 		
@@ -42,13 +42,13 @@ class GraphTabViewController: NSViewController {
 	}
 	
 	fileprivate func configure() {
-		_graphView = GraphView(graph: _graph!, story: _story!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE), visibleRect: NSRect.zero)
+		_graphView = GraphView(graph: _graph!, storyManager: _storyManager!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE), visibleRect: NSRect.zero)
 		_graphView?.Delegate = _delegate
 		_scrollView.documentView = _graphView!
 	}
 	
-	func setup(story: NVStory, graph: NVGraph, delegate: GraphViewDelegate) {
-		_story = story
+	func setup(storyManager: NVStoryManager, graph: NVGraph, delegate: GraphViewDelegate) {
+		_storyManager = storyManager
 		_graph = graph
 		_delegate = delegate
 		

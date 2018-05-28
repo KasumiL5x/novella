@@ -89,15 +89,15 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 				name = (item as! NVContext).Name
 				
 			case is NVLink:
-				let from = _mvc.Story.getNameOf(linkable: (item as! NVLink).Origin)
-				let to = _mvc.Story.getNameOf(linkable: (item as! NVLink).Transfer.Destination)
+				let from = _mvc.StoryManager.nameOf(linkable: (item as! NVLink).Origin)
+				let to = _mvc.StoryManager.nameOf(linkable: (item as! NVLink).Transfer.Destination)
 				name = "\(from) => \(to)"
 				icon = nil
 				
 			case is NVBranch:
-				let from = _mvc.Story.getNameOf(linkable: (item as! NVBranch).Origin)
-				let toTrue = _mvc.Story.getNameOf(linkable: (item as! NVBranch).TrueTransfer.Destination)
-				let toFalse = _mvc.Story.getNameOf(linkable: (item as! NVBranch).FalseTransfer.Destination)
+				let from = _mvc.StoryManager.nameOf(linkable: (item as! NVBranch).Origin)
+				let toTrue = _mvc.StoryManager.nameOf(linkable: (item as! NVBranch).TrueTransfer.Destination)
+				let toFalse = _mvc.StoryManager.nameOf(linkable: (item as! NVBranch).FalseTransfer.Destination)
 				name = "\(from) => T=\(toTrue); F=\(toFalse)"
 				icon = nil
 				

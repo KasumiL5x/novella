@@ -34,10 +34,10 @@ class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
 		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
-				return _mvc.Story.Graphs.count
+				return _mvc.StoryManager.Story.Graphs.count
 			}
 			if asString == _browserTopLevel[1] {
-				return _mvc.Story.Folders.count
+				return _mvc.StoryManager.Story.Folders.count
 			}
 		}
 		
@@ -73,10 +73,10 @@ class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
 		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
-				return _mvc.Story.Graphs[index]
+				return _mvc.StoryManager.Story.Graphs[index]
 			}
 			if asString == _browserTopLevel[1] {
-				return _mvc.Story.Folders[index]
+				return _mvc.StoryManager.Story.Folders[index]
 			}
 		}
 		
@@ -96,10 +96,10 @@ class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
 		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
-				return _mvc.Story.Graphs.count > 0
+				return _mvc.StoryManager.Story.Graphs.count > 0
 			}
 			if asString == _browserTopLevel[1] {
-				return _mvc.Story.Folders.count > 0
+				return _mvc.StoryManager.Story.Folders.count > 0
 			}
 		}
 		
