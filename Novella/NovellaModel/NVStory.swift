@@ -14,13 +14,13 @@ public class NVStory {
 	var _folders: [NVFolder]
 	var _graphs: [NVGraph]
 	var _name: String
-	var _delegate: NVStoryDelegate?
+	var _delegates: [NVStoryDelegate]
 	
 	public init() {
 		self._folders = []
 		self._graphs = []
 		self._name = ""
-		self._delegate = nil
+		self._delegates = []
 	}
 	
 	// MARK: Properties
@@ -52,7 +52,7 @@ extension NVStory {
 		// now add
 		_folders.append(folder)
 		
-		_delegate?.onStoryAddFolder(folder: folder)
+		_delegates.forEach{$0.onStoryAddFolder(folder: folder)}
 		return folder
 	}
 	
@@ -62,7 +62,7 @@ extension NVStory {
 		}
 		_folders.remove(at: idx)
 		
-		_delegate?.onStoryRemoveFolder(folder: folder)
+		_delegates.forEach{$0.onStoryRemoveFolder(folder: folder)}
 	}
 	
 	// MARK: Graphs
@@ -88,7 +88,7 @@ extension NVStory {
 		graph._parent = nil
 		_graphs.append(graph)
 		
-		_delegate?.onStoryAddGraph(graph: graph)
+		_delegates.forEach{$0.onStoryAddGraph(graph: graph)}
 		return graph
 	}
 	
@@ -98,6 +98,6 @@ extension NVStory {
 		}
 		_graphs.remove(at: idx)
 		
-		_delegate?.onStoryRemoveGraph(graph: graph)
+		_delegates.forEach{$0.onStoryRemoveGraph(graph: graph)}
 	}
 }

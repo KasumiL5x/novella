@@ -150,7 +150,7 @@ class MainViewController: NSViewController {
 		// load story object from json string
 		if let manager = NVStoryManager.fromJSON(str: contents) {
 			_storyManager = manager
-			_storyManager.Delegate = _storyDelegate
+			_storyManager.addDelegate(_storyDelegate!)
 		} else {
 			alertError(message: "Failed to load Story.", info: "Failed to load the story.")
 			return
@@ -276,7 +276,7 @@ class MainViewController: NSViewController {
 		closeAllTabs()
 		// create a new story
 		_storyManager.reset()
-		_storyManager.Delegate = _storyDelegate
+		_storyManager.addDelegate(_storyDelegate!)
 	}
 	
 	// MARK: - - Tabs/TabView Functions -

@@ -10,28 +10,33 @@ import Foundation
 
 // MARK: - - Main Delegate -
 public protocol NVStoryDelegate {
-	// Called when an NVFolder is created using Story.makeFolder().
+	// Called when an NVFolder is created using StoryManager.makeFolder().
 	func onStoryMakeFolder(folder: NVFolder)
-	// Called when an NVVariable is created using Story.makeVariable().
+	// Called when an NVVariable is created using StoryManager.makeVariable().
 	func onStoryMakeVariable(variable: NVVariable)
-	// Called when an NVGraph is created using Story.makeGraph().
+	// Called when an NVGraph is created using StoryManager.makeGraph().
 	func onStoryMakeGraph(graph: NVGraph)
-	// Called when an NVLink is created using Story.makeLink().
+	// Called when an NVLink is created using StoryManager.makeLink().
 	func onStoryMakeLink(link: NVLink)
-	// Called when an NVBranch is created using Story.makeBranch().
+	// Called when an NVBranch is created using StoryManager.makeBranch().
 	func onStoryMakeBranch(branch: NVBranch)
-	// Called when an NVSwitch is created using Story.makeSwitch().
+	// Called when an NVSwitch is created using StoryManager.makeSwitch().
 	func onStoryMakeSwitch(switch: NVSwitch)
-	// Called when an NVDialog is created using Story.makeDialog().
+	// Called when an NVDialog is created using StoryManager.makeDialog().
 	func onStoryMakeDialog(dialog: NVDialog)
-	// Called when an NVDelivery is created using Story.makeDelivery().
+	// Called when an NVDelivery is created using StoryManager.makeDelivery().
 	func onStoryMakeDelivery(delivery: NVDelivery)
-	// Called when a NVContext is created using Story.makeContext().
+	// Called when a NVContext is created using StoryManager.makeContext().
 	func onStoryMakeContext(context: NVContext)
 	
-	// Called when an NVFolder is deleted using Story.deleteFolder().
+	// Called when a NVTrashable is added to the trash using the internal StoryManager.trash().
+	func onStoryTrashItem(item: NVTrashable)
+	// Called when a NVTrashable is removed from the trash using the internal StoryManager().
+	func onStoryUntrashItem(item: NVTrashable)
+	
+	// Called when an NVFolder is deleted using StoryManager.deleteFolder().
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool)
-	// Called when an NVVariable is deleted using Story.deleteVariable().
+	// Called when an NVVariable is deleted using StoryManager.deleteVariable().
 	func onStoryDeleteVariable(variable: NVVariable)
 	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
@@ -103,6 +108,11 @@ public extension NVStoryDelegate {
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 	}
 	func onStoryMakeContext(context: NVContext) {
+	}
+	
+	func onStoryTrashItem(item: NVTrashable) {
+	}
+	func onStoryUntrashItem(item: NVTrashable) {
 	}
 	
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {

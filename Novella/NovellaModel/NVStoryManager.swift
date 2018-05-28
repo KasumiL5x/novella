@@ -18,21 +18,12 @@ public class NVStoryManager {
 	var _links: [NVBaseLink]
 	var _nodes: [NVNode]
 	var _trashed: [NVTrashable]
-	var _delegate: NVStoryDelegate?
+	var _delegates: [NVStoryDelegate]
 	var _jsContext: JSContext
 	
 	// MARK: - - Properties -
 	public var Story: NVStory {
 		get{ return _story }
-	}
-	public var Delegate: NVStoryDelegate? {
-		get{ return _delegate }
-		set {
-			_delegate = newValue
-			_story._delegate = _delegate
-			_graphs.forEach{$0._delegate = _delegate}
-			_nodes.forEach{$0._delegate = _delegate}
-		}
 	}
 	
 	// MARK: - - Initialization -
@@ -45,13 +36,20 @@ public class NVStoryManager {
 		self._links = []
 		self._nodes = []
 		self._trashed = []
-		self._delegate = nil
+		self._delegates = []
 		self._jsContext = JSContext()
 		
 		setupJavascript()
 	}
 	
 	// MARK: - - Generic Functions -
+	public func addDelegate(_ delegate: NVStoryDelegate) {
+		_delegates.append(delegate)
+		_story._delegates.append(delegate)
+		_graphs.forEach{$0._delegates.append(delegate)}
+		_nodes.forEach{$0._delegates.append(delegate)}
+	}
+	
 	public func reset() {
 		self._story = NVStory()
 		self._identifiables = []
@@ -61,7 +59,7 @@ public class NVStoryManager {
 		self._links = []
 		self._nodes = []
 		self._trashed = []
-		self._delegate = nil
+		self._delegates = []
 		self._jsContext = JSContext()
 		
 		setupJavascript()
@@ -138,7 +136,7 @@ extension NVStoryManager {
 		_folders.append(folder)
 		_identifiables.append(folder)
 		
-		_delegate?.onStoryMakeFolder(folder: folder)
+		_delegates.forEach{$0.onStoryMakeFolder(folder: folder)}
 		return folder
 	}
 	
@@ -167,7 +165,7 @@ extension NVStoryManager {
 		_folders.remove(at: _folders.index(where: {$0 == folder})!)
 		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == folder.UUID})!)
 
-		_delegate?.onStoryDeleteFolder(folder: folder, contents: deleteContents)
+		_delegates.forEach{$0.onStoryDeleteFolder(folder: folder, contents: deleteContents)}
 	}
 }
 
@@ -179,7 +177,7 @@ extension NVStoryManager {
 		_variables.append(variable)
 		_identifiables.append(variable)
 		
-		_delegate?.onStoryMakeVariable(variable: variable)
+		_delegates.forEach{$0.onStoryMakeVariable(variable: variable)}
 		return variable
 	}
 	
@@ -188,7 +186,7 @@ extension NVStoryManager {
 		_variables.remove(at: _variables.index(where: {$0 == variable})!)
 		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == variable.UUID})!)
 		
-		_delegate?.onStoryDeleteVariable(variable: variable)
+		_delegates.forEach{$0.onStoryDeleteVariable(variable: variable)}
 	}
 }
 
@@ -197,11 +195,11 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
 		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name, story: _story)
-		graph._delegate = _delegate
+		graph._delegates = _delegates
 		_graphs.append(graph)
 		_identifiables.append(graph)
 		
-		_delegate?.onStoryMakeGraph(graph: graph)
+		_delegates.forEach{$0.onStoryMakeGraph(graph: graph)}
 		return graph
 	}
 }
@@ -214,7 +212,7 @@ extension NVStoryManager {
 		_links.append(link)
 		_identifiables.append(link)
 		
-		_delegate?.onStoryMakeLink(link: link)
+		_delegates.forEach{$0.onStoryMakeLink(link: link)}
 		return link
 	}
 	
@@ -224,7 +222,7 @@ extension NVStoryManager {
 		_links.append(branch)
 		_identifiables.append(branch)
 		
-		_delegate?.onStoryMakeBranch(branch: branch)
+		_delegates.forEach{$0.onStoryMakeBranch(branch: branch)}
 		return branch
 	}
 	
@@ -234,7 +232,7 @@ extension NVStoryManager {
 		_links.append(swtch)
 		_identifiables.append(swtch)
 		
-		_delegate?.onStoryMakeSwitch(switch: swtch)
+		_delegates.forEach{$0.onStoryMakeSwitch(switch: swtch)}
 		return swtch
 	}
 	
@@ -256,33 +254,33 @@ extension NVStoryManager {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
 		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		dialog._delegate = _delegate
+		dialog._delegates = _delegates
 		_nodes.append(dialog)
 		_identifiables.append(dialog)
 		
-		_delegate?.onStoryMakeDialog(dialog: dialog)
+		_delegates.forEach{$0.onStoryMakeDialog(dialog: dialog)}
 		return dialog
 	}
 	
 	@discardableResult
 	public func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
 		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		delivery._delegate = _delegate
+		delivery._delegates = _delegates
 		_nodes.append(delivery)
 		_identifiables.append(delivery)
 		
-		_delegate?.onStoryMakeDelivery(delivery: delivery)
+		_delegates.forEach{$0.onStoryMakeDelivery(delivery: delivery)}
 		return delivery
 	}
 	
 	@discardableResult
 	public func makeContext(uuid: NSUUID?=nil) -> NVContext {
 		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID(), storyManager: self)
-		context._delegate = _delegate
+		context._delegates = _delegates
 		_nodes.append(context)
 		_identifiables.append(context)
 		
-		_delegate?.onStoryMakeContext(context: context)
+		_delegates.forEach{$0.onStoryMakeContext(context: context)}
 		return context
 	}
 	
@@ -319,11 +317,13 @@ extension NVStoryManager {
 extension NVStoryManager {
 	func trash(_ item: NVTrashable) {
 		_trashed.append(item)
+		_delegates.forEach{$0.onStoryTrashItem(item: item)}
 	}
 	
 	func untrash(_ item: NVTrashable) {
 		if let idx = _trashed.index(where: {$0.UUID == item.UUID}) {
 			_trashed.remove(at: idx)
+			_delegates.forEach{$0.onStoryUntrashItem(item: item)}
 		}
 	}
 	

@@ -83,6 +83,8 @@ class GraphView: NSView {
 		
 		super.init(frame: frameRect)
 		
+		self._nvStoryManager.addDelegate(self)
+		
 		// selection handler
 		self._selectionHandler = SelectionHandler(graph: self)
 		
@@ -798,5 +800,23 @@ extension GraphView: NSPopoverDelegate {
 	
 	func popoverShouldDetach(_ popover: NSPopover) -> Bool {
 		return true
+	}
+}
+
+
+extension GraphView: NVStoryDelegate {
+	func onStoryTrashItem(item: NVTrashable) {
+		switch item {
+		case is NVDialog:
+			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
+				lv.isHidden = true
+			}
+			
+		default:
+			print("Trashed unsupported item: \(item)")
+		}
+	}
+	func onStoryUntrashItem(item: NVTrashable) {
+		print("Untrashed unsupported item: \(item)")
 	}
 }

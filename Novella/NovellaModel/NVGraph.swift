@@ -23,7 +23,7 @@ public class NVGraph {
 	var _parent: NVGraph?
 	var _story: NVStory
 	
-	var _delegate: NVStoryDelegate?
+	var _delegates: [NVStoryDelegate]
 	
 	init(uuid: NSUUID, name: String, story: NVStory) {
 		self._uuid = uuid
@@ -37,7 +37,7 @@ public class NVGraph {
 		self._editorPos = CGPoint.zero
 		self._parent = nil
 		self._story = story
-		self._delegate = nil
+		self._delegates = []
 	}
 	
 	// MARK:  Properties
@@ -55,7 +55,7 @@ public class NVGraph {
 	public func setName(_ name: String) {
 		let oldName = _name
 		_name = name
-		_delegate?.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)
+		_delegates.forEach{$0.onStoryGraphSetName(oldName: oldName, newName: name, graph: self)}
 	}
 	
 	public func setEntry(_ entry: NVLinkable) throws {
@@ -71,7 +71,7 @@ public class NVGraph {
 		}
 		_entry = entry
 		
-		_delegate?.onStoryGraphSetEntry(entry: entry, graph: self)
+		_delegates.forEach{$0.onStoryGraphSetEntry(entry: entry, graph: self)}
 	}
 	
 	// MARK: Subgraphs
@@ -101,7 +101,7 @@ public class NVGraph {
 		graph._parent = self
 		_graphs.append(graph)
 		
-		_delegate?.onStoryGraphAddGraph(graph: graph, parent: self)
+		_delegates.forEach{$0.onStoryGraphAddGraph(graph: graph, parent: self)}
 		return graph
 	}
 	
@@ -112,7 +112,7 @@ public class NVGraph {
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
 		
-		_delegate?.onStoryGraphRemoveGraph(graph: graph, from: self)
+		_delegates.forEach{$0.onStoryGraphRemoveGraph(graph: graph, from: self)}
 	}
 	
 	// MARK: Nodes
@@ -128,7 +128,7 @@ public class NVGraph {
 		}
 		_nodes.append(node)
 		
-		_delegate?.onStoryGraphAddNode(node: node, parent: self)
+		_delegates.forEach{$0.onStoryGraphAddNode(node: node, parent: self)}
 		return node
 	}
 	
@@ -138,7 +138,7 @@ public class NVGraph {
 		}
 		_nodes.remove(at: idx)
 		
-		_delegate?.onStoryGraphRemoveNode(node: node, from: self)
+		_delegates.forEach{$0.onStoryGraphRemoveNode(node: node, from: self)}
 	}
 	
 	// MARK: Links
@@ -154,7 +154,7 @@ public class NVGraph {
 		}
 		_links.append(link)
 		
-		_delegate?.onStoryGraphAddLink(link: link, parent: self)
+		_delegates.forEach{$0.onStoryGraphAddLink(link: link, parent: self)}
 		return link
 	}
 	
@@ -164,7 +164,7 @@ public class NVGraph {
 		}
 		_links.remove(at: idx)
 		
-		_delegate?.onStoryGraphRemoveLink(link: link, from: self)
+		_delegates.forEach{$0.onStoryGraphRemoveLink(link: link, from: self)}
 	}
 	
 	// MARK: Listeners
@@ -180,7 +180,7 @@ public class NVGraph {
 		}
 		_listeners.append(listener)
 		
-		_delegate?.onStoryGraphAddListener(listener: listener, parent: self)
+		_delegates.forEach{$0.onStoryGraphAddListener(listener: listener, parent: self)}
 		return listener
 	}
 	
@@ -190,7 +190,7 @@ public class NVGraph {
 		}
 		_listeners.remove(at: idx)
 		
-		_delegate?.onStoryGraphRemoveListener(listener: listener, from: self)
+		_delegates.forEach{$0.onStoryGraphRemoveListener(listener: listener, from: self)}
 	}
 	
 	// MARK: Exit Nodes
@@ -206,7 +206,7 @@ public class NVGraph {
 		}
 		_exits.append(exit)
 		
-		_delegate?.onStoryGraphAddExit(exit: exit, parent: self)
+		_delegates.forEach{$0.onStoryGraphAddExit(exit: exit, parent: self)}
 		return exit
 	}
 	
@@ -216,7 +216,7 @@ public class NVGraph {
 		}
 		_exits.remove(at: idx)
 		
-		_delegate?.onStoryGraphRemoveExit(exit: exit, from: self)
+		_delegates.forEach{$0.onStoryGraphRemoveExit(exit: exit, from: self)}
 	}
 	
 	// MARK: Simulation

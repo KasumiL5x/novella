@@ -15,7 +15,7 @@ public class NVNode {
 	
 	var _editorPos: CGPoint
 	
-	var _delegate: NVStoryDelegate?
+	var _delegates: [NVStoryDelegate]
 	var _storyManager: NVStoryManager
 	
 	init(uuid: NSUUID, storyManager: NVStoryManager) {
@@ -23,7 +23,7 @@ public class NVNode {
 		self._name = ""
 		self._inTrash = false
 		self._editorPos = CGPoint.zero
-		self._delegate = nil
+		self._delegates = []
 		self._storyManager = storyManager
 	}
 	
@@ -33,7 +33,7 @@ public class NVNode {
 		set {
 			let oldName = _name
 			_name = newValue
-			_delegate?.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)
+			_delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
 		}
 	}
 }
