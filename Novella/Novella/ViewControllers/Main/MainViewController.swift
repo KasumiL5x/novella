@@ -364,7 +364,8 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Interface Buttons -
 	@IBAction func onTrashItem(_ sender: NSButton) {
-		let item = _storyBrowser.item(atRow: _storyBrowser.selectedRow)
+		let selectedRow = _storyBrowser.selectedRow
+		let item = _storyBrowser.item(atRow: selectedRow)
 		if item == nil {
 			return
 		}
@@ -373,6 +374,8 @@ class MainViewController: NSViewController {
 			let inTrash = trashable.Trashed
 			trashable.Trashed = !inTrash
 			reloadBrowser()
+			
+			_storyBrowser.selectRowIndexes(.init(integer: selectedRow), byExtendingSelection: false)
 		}
 	}
 	
