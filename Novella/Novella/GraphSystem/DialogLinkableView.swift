@@ -43,6 +43,8 @@ class DialogLinkableView: LinkableView {
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
+	override func onTrashed() {
+	}
 	override func widgetRect() -> NSRect {
 		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
 	}
@@ -65,7 +67,8 @@ class DialogLinkableView: LinkableView {
 			var path = NSBezierPath(roundedRect: dialogRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Settings.graph.nodes.dialogStartColor.cgColor, Settings.graph.nodes.endColor.cgColor]
+			let bgColors = [Settings.graph.nodes.dialogStartColor.withSaturation(Trashed ? Settings.graph.trashedSaturation : 1.0).cgColor,
+											Settings.graph.nodes.endColor.withSaturation(Trashed ? Settings.graph.trashedSaturation : 1.0).cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: dialogRect.height)
 			let bgEnd = CGPoint.zero

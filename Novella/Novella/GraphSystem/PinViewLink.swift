@@ -13,15 +13,19 @@ class PinViewLink: PinView {
 	// MARK: - - Variables -
 	fileprivate let _pinLayer: CAShapeLayer
 	fileprivate var _pinPath: NSBezierPath
+	fileprivate var _pinColor: NSColor
 	fileprivate let _curveLayer: CAShapeLayer
 	fileprivate let _curvePath: NSBezierPath
+	fileprivate var _curveColor: NSColor
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
 		self._pinLayer = CAShapeLayer()
 		self._pinPath = NSBezierPath()
+		self._pinColor = NSColor.fromHex("#ebfdd6")
 		self._curveLayer = CAShapeLayer()
 		self._curvePath = NSBezierPath()
+		self._curveColor = NSColor.fromHex("#B3F865")
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
@@ -41,6 +45,10 @@ class PinViewLink: PinView {
 	}
 	
 	// MARK: - - Functions -
+	override func onTrashed() {
+		_curveColor = _curveColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : 1.0)
+		_pinColor = _pinColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : 1.0)
+	}
 	// MARK: Destination
 	func setDestination(dest: NVLinkable?) {
 		(BaseLink as! NVLink).setDestination(dest: dest)
@@ -60,7 +68,7 @@ class PinViewLink: PinView {
 			// MARK: Pin Drawing
 			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5) // TODO: This could be optimized if the bounds never change.
 			_pinLayer.path = _pinPath.cgPath
-			_pinLayer.fillColor = NSColor.fromHex("#ebfdd6").cgColor
+			_pinLayer.fillColor = _pinColor.cgColor
 			
 			// MARK: Curve Drawing
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
@@ -72,7 +80,7 @@ class PinViewLink: PinView {
 				// convert local from destination into local of self and make curve
 				end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _curvePath)
-				_curveLayer.strokeColor = NSColor.fromHex("#B3F865").cgColor
+				_curveLayer.strokeColor = _curveColor.cgColor
 				_curveLayer.path = _curvePath.cgPath
 			}
 			

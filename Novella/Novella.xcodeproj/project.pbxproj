@@ -29,6 +29,7 @@
 		65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CAE20A76EC3002BF136 /* PinViewLink.swift */; };
 		65264CB120A7742F002BF136 /* PinViewBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65264CB020A7742F002BF136 /* PinViewBranch.swift */; };
 		6528D3F420B496F300B60147 /* VariableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D3F320B496F300B60147 /* VariableTabViewController.swift */; };
+		652E5C7120BD369F00EF7F5B /* NSColor+Saturation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652E5C7020BD369F00EF7F5B /* NSColor+Saturation.swift */; };
 		6546805220A45D740036B770 /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546804F20A45D740036B770 /* NVFolder.swift */; };
 		6546805320A45D740036B770 /* NVDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805020A45D740036B770 /* NVDataType.swift */; };
 		6546805420A45D740036B770 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546805120A45D740036B770 /* NVVariable.swift */; };
@@ -154,6 +155,7 @@
 		65264CAE20A76EC3002BF136 /* PinViewLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewLink.swift; sourceTree = "<group>"; };
 		65264CB020A7742F002BF136 /* PinViewBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewBranch.swift; sourceTree = "<group>"; };
 		6528D3F320B496F300B60147 /* VariableTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableTabViewController.swift; sourceTree = "<group>"; };
+		652E5C7020BD369F00EF7F5B /* NSColor+Saturation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Saturation.swift"; sourceTree = "<group>"; };
 		6546804F20A45D740036B770 /* NVFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
 		6546805020A45D740036B770 /* NVDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDataType.swift; sourceTree = "<group>"; };
 		6546805120A45D740036B770 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				65D881D520B378A400837337 /* NSView+Toast.swift */,
 				657F147020B4B4F700322516 /* String+FromAny.swift */,
 				65B0700B20B2BE6500C0694F /* UserDefaults+Color.swift */,
+				652E5C7020BD369F00EF7F5B /* NSColor+Saturation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				658C7CAC207E7E6500E2B46B /* AppDelegate.swift in Sources */,
 				65040A5520AF558500BC57FE /* InspectorDataSource.swift in Sources */,
 				658F139D20BB48E1003563AB /* FunctionPopover.swift in Sources */,
+				652E5C7120BD369F00EF7F5B /* NSColor+Saturation.swift in Sources */,
 				6558838A209C8C19004C412F /* CurveHelper.swift in Sources */,
 				65AC952220B8791100372D74 /* ContextPopover.swift in Sources */,
 				65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */,

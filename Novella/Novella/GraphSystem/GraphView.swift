@@ -795,14 +795,14 @@ extension GraphView: NVStoryDelegate {
 		
 		for linkTo in NVStoryManager.shared.getLinksTo(item) {
 			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
-				pin.isHidden = true
+				pin.TrashMode = true
 			}
 		}
 		
 		switch item {
 		case is NVDialog:
 			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
-				lv.isHidden = true
+				lv.Trashed = true
 			}
 			
 		default:
@@ -812,14 +812,14 @@ extension GraphView: NVStoryDelegate {
 	func onStoryUntrashItem(item: NVLinkable) {
 		for linkTo in NVStoryManager.shared.getLinksTo(item) {
 			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
-				pin.isHidden = false
+				pin.TrashMode = false
 			}
 		}
 		
 		switch item {
 		case is NVDialog:
 			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
-				lv.isHidden = false
+				lv.Trashed = false
 			}
 			
 		default:

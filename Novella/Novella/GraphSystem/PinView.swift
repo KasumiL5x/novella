@@ -22,6 +22,8 @@ class PinView: NSView {
 	fileprivate var _dragPath: NSBezierPath
 	//
 	fileprivate var _contextGesture: NSClickGestureRecognizer?
+	//
+	fileprivate var _trashMode: Bool
 	
 	// MARK: - - Initialization -
 	init(link: NVBaseLink, graphView: GraphView, owner: LinkableView) {
@@ -36,6 +38,8 @@ class PinView: NSView {
 		self._dragPath = NSBezierPath()
 		//
 		self._contextGesture = nil
+		//
+		self._trashMode = false
 		super.init(frame: NSMakeRect(0.0, 0.0, 15.0, 15.0))
 		
 		// setup layers
@@ -82,10 +86,21 @@ class PinView: NSView {
 		get{ return _dragPosition }
 		set{ _dragPosition = newValue }
 	}
+	var TrashMode: Bool {
+		get{ return _trashMode }
+		set{
+			_trashMode = newValue
+			onTrashed()
+			redraw()
+		}
+	}
 	
 	// MARK: - - Functions -
 	func redraw() {
 		setNeedsDisplay(bounds)
+	}
+	func onTrashed() {
+		print("PinView::onTrashed() should be overridden.")
 	}
 	
 	// MARK: Gesture Callbacks

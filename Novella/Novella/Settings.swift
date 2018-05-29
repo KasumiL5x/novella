@@ -12,6 +12,8 @@ struct Settings {
 	
 	struct keys {
 		struct graph {
+			static let trashedSaturation = "trashedSaturation"
+			
 			struct nodes {
 				static let roundness = "graph.nodes.roundness"
 				static let endColor = "graph.nodes.endColor"
@@ -34,6 +36,7 @@ struct Settings {
 	}
 	
 	struct graph {
+		static var trashedSaturation: CGFloat = 0.1
 		struct nodes {
 			static var roundness:          CGFloat = 10.0
 			static var endColor:           NSColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
@@ -54,6 +57,9 @@ struct Settings {
 	}
 	
 	static func resetToApp() {
+		// graph
+		Settings.graph.trashedSaturation = 0.1
+		
 		// graph.nodes
 		Settings.graph.nodes.roundness = 10.0
 		Settings.graph.nodes.endColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
@@ -74,6 +80,11 @@ struct Settings {
 	
 	
 	static func loadDefaults() {
+		// graph
+		if hasKey(key: Settings.keys.graph.trashedSaturation) {
+			Settings.graph.trashedSaturation = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.trashedSaturation))
+		}
+		
 		// graph.nodes
 		if hasKey(key: Settings.keys.graph.nodes.roundness) {
 			Settings.graph.nodes.roundness = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.roundness))
@@ -123,6 +134,9 @@ struct Settings {
 	}
 	
 	static func saveDefaults() {
+		// graph
+		UserDefaults.standard.set(Settings.graph.trashedSaturation, forKey: Settings.keys.graph.trashedSaturation)
+		
 		// graph.nodes
 		UserDefaults.standard.set(Settings.graph.nodes.roundness, forKey: Settings.keys.graph.nodes.roundness)
 		UserDefaults.standard.set(Settings.graph.nodes.endColor, forKey: Settings.keys.graph.nodes.endColor)

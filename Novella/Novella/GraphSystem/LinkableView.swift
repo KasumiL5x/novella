@@ -25,10 +25,21 @@ class LinkableView: NSView {
 	fileprivate var _panGesture: NSPanGestureRecognizer?
 	//
 	fileprivate var _outputs: [PinView]
+	//
+	fileprivate var _trashMode: Bool
 	
 	// MARK: - - Properties -
 	public var Outputs: [PinView] {
 		get{ return _outputs }
+	}
+	public var Trashed: Bool {
+		get{ return _trashMode }
+		set{
+			_trashMode = newValue
+			_outputs.forEach{$0.TrashMode = newValue}
+			onTrashed()
+			redraw()
+		}
 	}
 	
 	// MARK: - - Initialization -
@@ -44,6 +55,8 @@ class LinkableView: NSView {
 		self._panGesture = nil
 		//
 		self._outputs = []
+		//
+		self._trashMode = false
 		super.init(frame: frameRect)
 		
 		// primary click recognizer
@@ -82,6 +95,10 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - - Functions -
+	func onTrashed() {
+		print("LinkableView::onTrashed() should be overridden.")
+	}
+	
 	func redraw() {
 		setNeedsDisplay(bounds)
 	}

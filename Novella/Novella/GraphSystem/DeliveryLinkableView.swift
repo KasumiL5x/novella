@@ -43,6 +43,8 @@ class DeliveryLinkableView: LinkableView {
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
+	override func onTrashed() {
+	}
 	override func widgetRect() -> NSRect {
 		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
 	}
@@ -65,7 +67,8 @@ class DeliveryLinkableView: LinkableView {
 			var path = NSBezierPath(roundedRect: deliveryRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Settings.graph.nodes.deliveryStartColor.cgColor, Settings.graph.nodes.endColor.cgColor]
+			let bgColors = [Settings.graph.nodes.deliveryStartColor.withSaturation(Trashed ? Settings.graph.trashedSaturation : 1.0).cgColor,
+											Settings.graph.nodes.endColor.withSaturation(Trashed ? Settings.graph.trashedSaturation : 1.0).cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: deliveryRect.height)
 			let bgEnd = CGPoint.zero
