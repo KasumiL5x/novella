@@ -372,6 +372,7 @@ class MainViewController: NSViewController {
 		if var trashable = item as? NVLinkable {
 			let inTrash = trashable.Trashed
 			trashable.Trashed = !inTrash
+			reloadBrowser()
 		}
 	}
 	

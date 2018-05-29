@@ -74,19 +74,23 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 				icon = _variableIcon
 				
 			case is NVGraph:
-				name = (item as! NVGraph).Name
+				let asGraph = (item as! NVGraph)
+				name = (asGraph.Trashed ? "🗑" : "") + asGraph.Name
 				icon = _graphIcon
 				
 			case is NVDialog:
-				name = (item as! NVDialog).Name
+				let asDialog = (item as! NVDialog)
+				name = (asDialog.Trashed ? "🗑" : "") + asDialog.Name
 				icon = _dialogIcon
 				
 			case is NVDelivery:
-				name = (item as! NVDelivery).Name
+				let asDelivery = (item as! NVDelivery)
+				name = (asDelivery.Trashed ? "🗑" : "") + asDelivery.Name
 				icon = _dialogIcon
 				
 			case is NVContext:
-				name = (item as! NVContext).Name
+				let asContext = (item as! NVContext)
+				name = (asContext.Trashed ? "🗑" : "") + asContext.Name
 				
 			case is NVLink:
 				let from = NVStoryManager.shared.nameOf(linkable: (item as! NVLink).Origin)
