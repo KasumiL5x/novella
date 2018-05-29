@@ -14,18 +14,22 @@ class PinViewLink: PinView {
 	fileprivate let _pinLayer: CAShapeLayer
 	fileprivate var _pinPath: NSBezierPath
 	fileprivate var _pinColor: NSColor
+	fileprivate let _pinSaturation: CGFloat
 	fileprivate let _curveLayer: CAShapeLayer
 	fileprivate let _curvePath: NSBezierPath
 	fileprivate var _curveColor: NSColor
+	fileprivate let _curveSaturation: CGFloat
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
 		self._pinLayer = CAShapeLayer()
 		self._pinPath = NSBezierPath()
 		self._pinColor = NSColor.fromHex("#ebfdd6")
+		self._pinSaturation = self._pinColor.saturationComponent
 		self._curveLayer = CAShapeLayer()
 		self._curvePath = NSBezierPath()
 		self._curveColor = NSColor.fromHex("#B3F865")
+		self._curveSaturation = self._curveColor.saturationComponent
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
@@ -46,8 +50,8 @@ class PinViewLink: PinView {
 	
 	// MARK: - - Functions -
 	override func onTrashed() {
-		_curveColor = _curveColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : 1.0)
-		_pinColor = _pinColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : 1.0)
+		_pinColor = _pinColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : _pinSaturation)
+		_curveColor = _curveColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : _curveSaturation)
 	}
 	// MARK: Destination
 	func setDestination(dest: NVLinkable?) {
@@ -66,7 +70,7 @@ class PinViewLink: PinView {
 			context.saveGState()
 			
 			// MARK: Pin Drawing
-			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5) // TODO: This could be optimized if the bounds never change.
+			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
 			_pinLayer.path = _pinPath.cgPath
 			_pinLayer.fillColor = _pinColor.cgColor
 			
