@@ -10,12 +10,22 @@ import Cocoa
 import NovellaModel
 
 class VariableTabViewController: NSViewController {
-	// MARK: - - Outlets -
+	// MARK: - Outlets -
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
 	
-	// MARK: - - Functions -
+	// MARK: - Variables -
+	fileprivate var _variableTypeIndices: [String:Int] = [:]
+	
+	// MARK: - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		// map the variable data types to an index in the popup's menu set
+		self._variableTypeIndices = [
+			NVDataType.boolean.stringValue: 0,
+			NVDataType.integer.stringValue: 1,
+			NVDataType.double.stringValue: 2
+		]
 		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
@@ -86,62 +96,73 @@ class VariableTabViewController: NSViewController {
 // MARK: - - NSOutlineViewDelegate -
 extension VariableTabViewController: NSOutlineViewDelegate {
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-		var view: NSTableCellView?
+		var view: NSView?
 		
 		switch tableColumn?.identifier.rawValue {
 		case "NameColumn":
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				view?.textField?.stringValue = (item as! NVFolder).Name
+				(view as! NSTableCellView).textField?.stringValue = (item as! NVFolder).Name
 			case is NVVariable:
-				view?.textField?.stringValue = (item as! NVVariable).Name
+				(view as! NSTableCellView).textField?.stringValue = (item as! NVVariable).Name
 			default:
-				view?.textField?.stringValue = "error"
+				(view as! NSTableCellView).textField?.stringValue = "error"
 			}
 			
 		case "SynopsisColumn":
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SynopsisCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				view?.textField?.stringValue = (item as! NVFolder).Synopsis
+				(view as! NSTableCellView).textField?.stringValue = (item as! NVFolder).Synopsis
 			case is NVVariable:
-				view?.textField?.stringValue = (item as! NVVariable).Synopsis
+				(view as! NSTableCellView).textField?.stringValue = (item as! NVVariable).Synopsis
 			default:
-				view?.textField?.stringValue = "error"
+				(view as! NSTableCellView).textField?.stringValue = "error"
 			}
 			
 		case "TypeColumn":
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				view?.textField?.stringValue = "Folder"
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
+				(view as! NSTableCellView).textField?.stringValue = "Folder"
 			case is NVVariable:
-				view?.textField?.stringValue = (item as! NVVariable).DataType.stringValue
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PopUpCell"), owner: self) as? NSPopUpButton
+				// add menu items (this is only called on creation so should be fine)
+				(view as! NSPopUpButton).addItems(withTitles: [
+					NVDataType.boolean.stringValue,
+					NVDataType.integer.stringValue,
+					NVDataType.double.stringValue
+					])
+				(view as! NSPopUpButton).selectItem(at: _variableTypeIndices[(item as! NVVariable).DataType.stringValue]!)
+				// TODO: How to hook this action upon change knowing the selected item (does clicking a popup select the row?) and the value of this in particular???
+				
+//				(view as! NSPopUpButton).action = #selector(<#T##@objc method#>)
 			default:
-				view?.textField?.stringValue = "error"
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
+				(view as! NSTableCellView).textField?.stringValue = "Error"
 			}
 			
 		case "InitialValueColumn":
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				view?.textField?.stringValue = ""
+				(view as! NSTableCellView).textField?.stringValue = ""
 			case is NVVariable:
-				view?.textField?.stringValue = String.fromAny((item as! NVVariable).InitialValue)
+				(view as! NSTableCellView).textField?.stringValue = String.fromAny((item as! NVVariable).InitialValue)
 			default:
-				view?.textField?.stringValue = "error"
+				(view as! NSTableCellView).textField?.stringValue = "error"
 			}
 			
 		case "ConstantColumn":
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ConstantCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				view?.textField?.stringValue = ""
+				(view as! NSTableCellView).textField?.stringValue = ""
 			case is NVVariable:
-				view?.textField?.stringValue = (item as! NVVariable).IsConstant ? "true" : "false"
+				(view as! NSTableCellView).textField?.stringValue = (item as! NVVariable).IsConstant ? "true" : "false"
 			default:
-				view?.textField?.stringValue = "error"
+				(view as! NSTableCellView).textField?.stringValue = "error"
 			}
 			break
 			
