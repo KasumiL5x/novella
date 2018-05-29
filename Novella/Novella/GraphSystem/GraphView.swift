@@ -792,6 +792,13 @@ extension GraphView: NSPopoverDelegate {
 
 extension GraphView: NVStoryDelegate {
 	func onStoryTrashItem(item: NVLinkable) {
+		
+		for linkTo in NVStoryManager.shared.getLinksTo(item) {
+			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
+				pin.isHidden = true
+			}
+		}
+		
 		switch item {
 		case is NVDialog:
 			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
@@ -803,6 +810,12 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	func onStoryUntrashItem(item: NVLinkable) {
+		for linkTo in NVStoryManager.shared.getLinksTo(item) {
+			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
+				pin.isHidden = false
+			}
+		}
+		
 		switch item {
 		case is NVDialog:
 			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
