@@ -9,9 +9,9 @@
 import Foundation
 
 public class NVSwitch : NVBaseLink {
-	var _variable: NVVariable?
-	var _defaultTransfer: NVTransfer
-	var _values: [AnyHashable:NVTransfer]
+	fileprivate var _variable: NVVariable?
+	fileprivate var _defaultTransfer: NVTransfer
+	fileprivate var _values: [AnyHashable:NVTransfer]
 	
 	override init(uuid: NSUUID, storyManager: NVStoryManager, origin: NVLinkable) {
 		self._variable = nil

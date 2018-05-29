@@ -378,12 +378,9 @@ class MainViewController: NSViewController {
 			return
 		}
 		
-		if let trashable = item as? NVTrashable {
-			if trashable.inTrash() {
-				trashable.untrash()
-			} else {
-				trashable.trash()
-			}
+		if var trashable = item as? NVLinkable {
+			let inTrash = trashable.Trashed
+			trashable.Trashed = !inTrash
 		}
 	}
 	
@@ -491,7 +488,7 @@ extension MainViewController: TabsControlDelegate {
 		switch tabItem.tabItem.viewController {
 		case is GraphTabViewController:
 			if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
-				nvGraph.setName(newTitle)
+				nvGraph.Name = newTitle
 				tabItem.title = newTitle
 			}
 			reloadBrowser()

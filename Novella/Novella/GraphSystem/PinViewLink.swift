@@ -43,7 +43,7 @@ class PinViewLink: PinView {
 	// MARK: - - Functions -
 	// MARK: Destination
 	func setDestination(dest: NVLinkable?) {
-		(BaseLink as! NVLink).Transfer.Destination = dest
+		(BaseLink as! NVLink).setDestination(dest: dest)
 		_graphView.updateCurves()
 	}
 	func getDestination() -> NVLinkable? {

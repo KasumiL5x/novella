@@ -48,10 +48,10 @@ public class NVSimulator {
 		var destinationUUID: String?
 		
 		if let asLink = link as? NVLink {
-			destinationUUID = asLink._transfer._destination?.UUID.uuidString
+			destinationUUID = asLink.Transfer._destination?.UUID.uuidString
 		} else if let asBranch = link as? NVBranch {
-			destinationUUID = asBranch._condition.execute() ? asBranch._trueTransfer._destination?.UUID.uuidString : asBranch._falseTransfer._destination?.UUID.uuidString
-		} else if let asSwitch = link as? NVSwitch {
+			destinationUUID = asBranch.Condition.execute() ? asBranch.TrueTransfer._destination?.UUID.uuidString : asBranch.FalseTransfer._destination?.UUID.uuidString
+		} else if let _ = link as? NVSwitch {
 			fatalError("Not yet implemented.")
 		}
 		
