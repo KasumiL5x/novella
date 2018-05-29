@@ -16,7 +16,6 @@ class ReaderViewController: NSViewController {
 	@IBOutlet weak var currentNodeInfo: NSTextField!
 	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
-	var _storyManager: NVStoryManager?
 	var _simulator: NVSimulator?
 	
 	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
@@ -62,16 +61,14 @@ class ReaderViewController: NSViewController {
 		}
 		
 		// parse contents into a Story
-		if let manager = NVStoryManager.fromJSON(str: contents) {
-			_storyManager = manager
-		} else {
+		if !NVStoryManager.fromJSON(str: contents) {
 			print("Failed to parse JSON.")
 			return
 		}
 		
 		
 		// open the simulator
-		_simulator = NVSimulator(storyManager: _storyManager!, controller: self)
+		_simulator = NVSimulator(controller: self)
 		outlineView.reloadData()
 	}
 	
@@ -132,10 +129,6 @@ extension ReaderViewController: NVSimulatorController {
 
 extension ReaderViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if _storyManager == nil {
-			return 0
-		}
-		
 		if let folder = item as? NVFolder {
 			return folder.Folders.count + folder.Variables.count
 		}
@@ -151,14 +144,10 @@ extension ReaderViewController: NSOutlineViewDataSource {
 				)
 		}
 		
-		return _storyManager!.Story.Folders.count + _storyManager!.Story.Graphs.count
+		return NVStoryManager.shared.Story.Folders.count + NVStoryManager.shared.Story.Graphs.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if _storyManager == nil {
-			return ""
-		}
-		
 		if let folder = item as? NVFolder {
 			if index < folder.Folders.count {
 				return folder.Folders[index]
@@ -185,10 +174,10 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return graph.Entry
 		}
 		
-		if index < _storyManager!.Story.Graphs.count {
-			return _storyManager!.Story.Graphs[index]
+		if index < NVStoryManager.shared.Story.Graphs.count {
+			return NVStoryManager.shared.Story.Graphs[index]
 		}
-		return _storyManager!.Story.Folders[index - _storyManager!.Story.Graphs.count]
+		return NVStoryManager.shared.Story.Folders[index - NVStoryManager.shared.Story.Graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {

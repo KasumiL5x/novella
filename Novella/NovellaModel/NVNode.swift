@@ -12,15 +12,13 @@ public class NVNode {
 	fileprivate let _uuid: NSUUID
 	fileprivate var _inTrash: Bool
 	fileprivate var _editorPos: CGPoint
-	internal let _storyManager: NVStoryManager
 	
 	fileprivate var _name: String
 	
-	init(uuid: NSUUID, storyManager: NVStoryManager) {
+	init(uuid: NSUUID) {
 		self._uuid = uuid
 		self._inTrash = false
 		self._editorPos = CGPoint.zero
-		self._storyManager = storyManager
 		
 		self._name = ""
 	}
@@ -30,7 +28,7 @@ public class NVNode {
 		set {
 			let oldName = _name
 			_name = newValue
-			_storyManager.Delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
+			NVStoryManager.shared.Delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
 		}
 	}
 }
@@ -49,10 +47,10 @@ extension NVNode: NVLinkable {
 		set {
 			if newValue {
 				_inTrash = true
-				_storyManager.trash(self)
+				NVStoryManager.shared.trash(self)
 			} else {
 				_inTrash = false
-				_storyManager.untrash(self)
+				NVStoryManager.shared.untrash(self)
 			}
 		}
 	}

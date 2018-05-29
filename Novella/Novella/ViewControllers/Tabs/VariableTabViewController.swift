@@ -13,9 +13,6 @@ class VariableTabViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
 	
-	// MARK: - - Variables -
-	fileprivate var _storyManager: NVStoryManager?
-	
 	// MARK: - - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -23,13 +20,6 @@ class VariableTabViewController: NSViewController {
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
 		_outlineView.reloadData()
-	}
-	
-	func setup(storyManager: NVStoryManager) {
-		_storyManager = storyManager
-		if isViewLoaded {
-			_outlineView.reloadData()
-		}
 	}
 	
 	func getSelectedFolder() -> NVFolder? {
@@ -59,18 +49,18 @@ class VariableTabViewController: NSViewController {
 	
 	@IBAction fileprivate func onAddVariable(_ sender: NSButton) {
 		if let parent = getSelectedFolder() {
-			let variable = _storyManager!.makeVariable(name: NSUUID().uuidString, type: .boolean)
+			let variable = NVStoryManager.shared.makeVariable(name: NSUUID().uuidString, type: .boolean)
 			try! parent.add(variable: variable)
 			_outlineView.reloadData()
 		}
 	}
 	
 	@IBAction fileprivate func onAddFolder(_ sender: NSButton) {
-		let folder = _storyManager!.makeFolder(name: NSUUID().uuidString)
+		let folder = NVStoryManager.shared.makeFolder(name: NSUUID().uuidString)
 		if let parent = getSelectedFolder() {
 			try! parent.add(folder: folder)
 		} else {
-			try! _storyManager!.Story.add(folder: folder)
+			try! NVStoryManager.shared.Story.add(folder: folder)
 		}
 		
 		_outlineView.reloadData()
@@ -80,10 +70,10 @@ class VariableTabViewController: NSViewController {
 		if let selectedItem = _outlineView.item(atRow: _outlineView.selectedRow) {
 			switch selectedItem {
 			case is NVFolder:
-				_storyManager?.delete(folder: selectedItem as! NVFolder, deleteContents: true)
+				NVStoryManager.shared.delete(folder: selectedItem as! NVFolder, deleteContents: true)
 				
 			case is NVVariable:
-				_storyManager?.delete(variable: selectedItem as! NVVariable)
+				NVStoryManager.shared.delete(variable: selectedItem as! NVVariable)
 				
 			default:
 				break
@@ -166,10 +156,6 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 // MARK: - - NSOutlineViewDataSource -
 extension VariableTabViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if _storyManager == nil {
-			return 0
-		}
-		
 		switch item {
 		case is NVFolder:
 			let asFolder = item as! NVFolder
@@ -179,15 +165,11 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return 0
 			
 		default:
-			return _storyManager!.Story.Folders.count
+			return NVStoryManager.shared.Story.Folders.count
 		}
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if _storyManager == nil {
-			return ""
-		}
-		
 		switch item {
 		case is NVFolder:
 			let asFolder = item as! NVFolder
@@ -197,15 +179,11 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return asFolder.Variables[index - asFolder.Folders.count]
 			
 		default:
-			return _storyManager!.Story.Folders[index]
+			return NVStoryManager.shared.Story.Folders[index]
 		}
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		if _storyManager == nil {
-			return false
-		}
-		
 		switch item {
 		case is NVFolder:
 			let asFolder = item as! NVFolder
@@ -215,7 +193,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return false
 			
 		default:
-			return _storyManager!.Story.Folders.count > 0
+			return NVStoryManager.shared.Story.Folders.count > 0
 		}
 	}
 }

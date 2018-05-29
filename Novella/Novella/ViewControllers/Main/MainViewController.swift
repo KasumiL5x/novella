@@ -21,7 +21,6 @@ class MainViewController: NSViewController {
 	fileprivate static let MAX_ZOOM: CGFloat = 4.0
 	
 	// MARK: - - Variables -
-	fileprivate var _storyManager = NVStoryManager()
 	fileprivate var _openedFile: URL?
 	fileprivate var _selectedTab: TabItem?
 	fileprivate var _browserTopLevel: [String] = [
@@ -45,9 +44,6 @@ class MainViewController: NSViewController {
 	fileprivate var _inspectorDataDelegate: InspectorDataSource?
 	
 	// MARK: - - Properties -
-	var StoryManager: NVStoryManager {
-		get{ return _storyManager }
-	}
 	var InspectorDelegate: InspectorDataSource? {
 		get{ return _inspectorDataDelegate }
 	}
@@ -59,14 +55,11 @@ class MainViewController: NSViewController {
 		
 		// delegates and data sources
 		_storyDelegate = StoryDelegate(mvc: self)
-		_storyBrowserDataSource = StoryBrowserDataSource(mvc: self)
+		_storyBrowserDataSource = StoryBrowserDataSource()
 		_storyBrowserDelegate = StoryBrowserDelegate(mvc: self)
 		_tabsDataSource = TabsDataSource()
 		_inspectorDataDelegate = InspectorDataSource()
 		
-		// story
-		_storyManager = NVStoryManager()
-
 		// split view
 		_splitView.delegate = self
 		
@@ -148,9 +141,8 @@ class MainViewController: NSViewController {
 		}
 		
 		// load story object from json string
-		if let manager = NVStoryManager.fromJSON(str: contents) {
-			_storyManager = manager
-			_storyManager.addDelegate(_storyDelegate!)
+		if NVStoryManager.fromJSON(str: contents) {
+			NVStoryManager.shared.addDelegate(_storyDelegate!)
 		} else {
 			alertError(message: "Failed to load Story.", info: "Failed to load the story.")
 			return
@@ -160,7 +152,7 @@ class MainViewController: NSViewController {
 		closeAllTabs()
 		
 		// add a new graph tab for each subgraph of the story
-		for curr in _storyManager.Story.Graphs {
+		for curr in NVStoryManager.shared.Story.Graphs {
 			addNewTab(forGraph: curr)
 		}
 		// select first tab
@@ -173,7 +165,7 @@ class MainViewController: NSViewController {
 		_openedFile = ofd.url!
 		
 		// story name
-		_storyName.stringValue = _storyManager.Story.Name
+		_storyName.stringValue = NVStoryManager.shared.Story.Name
 		
 		reloadBrowser()
 	}
@@ -252,7 +244,7 @@ class MainViewController: NSViewController {
 		saveURL = _openedFile!
 		
 		// convert story to json
-		let jsonString = _storyManager.toJSON()
+		let jsonString = NVStoryManager.shared.toJSON()
 		if jsonString == "" {
 			alertError(message: "Failed to save.", info: "Unable to convert Story to JSON.")
 			_openedFile = nil
@@ -275,8 +267,8 @@ class MainViewController: NSViewController {
 		// close existing tabs
 		closeAllTabs()
 		// create a new story
-		_storyManager.reset()
-		_storyManager.addDelegate(_storyDelegate!)
+		NVStoryManager.shared.reset()
+		NVStoryManager.shared.addDelegate(_storyDelegate!)
 	}
 	
 	// MARK: - - Tabs/TabView Functions -
@@ -288,7 +280,7 @@ class MainViewController: NSViewController {
 			print("Failed to initialize GraphTabViewController.")
 			return nil
 		}
-		vc.setup(storyManager: _storyManager, graph: forGraph, delegate: self)
+		vc.setup(graph: forGraph, delegate: self)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -307,7 +299,6 @@ class MainViewController: NSViewController {
 			print("Failed to initialize VariableTabViewController.")
 			return nil
 		}
-		vc.setup(storyManager: _storyManager)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -400,8 +391,8 @@ class MainViewController: NSViewController {
 	}
 	
 	@IBAction func onAddGraph(_ sender: NSButton) {
-		let graph = _storyManager.makeGraph(name: NSUUID().uuidString)
-		do { try _storyManager.Story.add(graph: graph) } catch {
+		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
+		do { try NVStoryManager.shared.Story.add(graph: graph) } catch {
 			alertError(message: "Could not add Graph!", info: "Adding a graph to the Story failed.")
 			return // TODO: Remove graph
 		}
@@ -420,7 +411,7 @@ class MainViewController: NSViewController {
 	}
 	
 	@IBAction func onEditedStoryName(_ sender: NSTextField) {
-		_storyManager.Story.Name = sender.stringValue
+		NVStoryManager.shared.Story.Name = sender.stringValue
 	}
 	
 	// MARK: - - Story Browser Functions -

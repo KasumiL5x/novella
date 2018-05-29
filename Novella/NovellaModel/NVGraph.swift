@@ -12,7 +12,6 @@ public class NVGraph {
 	fileprivate let _uuid: NSUUID
 	fileprivate var _inTrash: Bool
 	fileprivate var _editorPos: CGPoint
-	internal let _storyManager: NVStoryManager
 	fileprivate var _name: String
 	
 	var _graphs: [NVGraph]
@@ -25,11 +24,10 @@ public class NVGraph {
 	// parent graph is valid unless as a direct child of the story
 	var _parent: NVGraph?
 	
-	init(uuid: NSUUID, name: String, storyManager: NVStoryManager) {
+	init(uuid: NSUUID, name: String) {
 		self._uuid = uuid
 		self._inTrash = false
 		self._editorPos = CGPoint.zero
-		self._storyManager = storyManager
 		self._name = name
 		self._graphs = []
 		self._nodes = []
@@ -46,7 +44,7 @@ public class NVGraph {
 		set {
 			let oldName = _name
 			_name = newValue
-			_storyManager.Delegates.forEach{$0.onStoryGraphSetName(oldName: oldName, newName: newValue, graph: self)}
+			NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphSetName(oldName: oldName, newName: newValue, graph: self)}
 		}
 	}
 	public var Graphs:    [NVGraph]    {get{ return _graphs }}
@@ -71,7 +69,7 @@ public class NVGraph {
 		}
 		_entry = entry
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphSetEntry(entry: entry, graph: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphSetEntry(entry: entry, graph: self)}
 	}
 	
 	// MARK: Subgraphs
@@ -101,7 +99,7 @@ public class NVGraph {
 		graph._parent = self
 		_graphs.append(graph)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphAddGraph(graph: graph, parent: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphAddGraph(graph: graph, parent: self)}
 		return graph
 	}
 	
@@ -112,7 +110,7 @@ public class NVGraph {
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphRemoveGraph(graph: graph, from: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphRemoveGraph(graph: graph, from: self)}
 	}
 	
 	// MARK: Nodes
@@ -128,7 +126,7 @@ public class NVGraph {
 		}
 		_nodes.append(node)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphAddNode(node: node, parent: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphAddNode(node: node, parent: self)}
 		return node
 	}
 	
@@ -138,7 +136,7 @@ public class NVGraph {
 		}
 		_nodes.remove(at: idx)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphRemoveNode(node: node, from: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphRemoveNode(node: node, from: self)}
 	}
 	
 	// MARK: Links
@@ -154,7 +152,7 @@ public class NVGraph {
 		}
 		_links.append(link)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphAddLink(link: link, parent: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphAddLink(link: link, parent: self)}
 		return link
 	}
 	
@@ -164,7 +162,7 @@ public class NVGraph {
 		}
 		_links.remove(at: idx)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphRemoveLink(link: link, from: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphRemoveLink(link: link, from: self)}
 	}
 	
 	// MARK: Listeners
@@ -180,7 +178,7 @@ public class NVGraph {
 		}
 		_listeners.append(listener)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphAddListener(listener: listener, parent: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphAddListener(listener: listener, parent: self)}
 		return listener
 	}
 	
@@ -190,7 +188,7 @@ public class NVGraph {
 		}
 		_listeners.remove(at: idx)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphRemoveListener(listener: listener, from: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphRemoveListener(listener: listener, from: self)}
 	}
 	
 	// MARK: Exit Nodes
@@ -206,7 +204,7 @@ public class NVGraph {
 		}
 		_exits.append(exit)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphAddExit(exit: exit, parent: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphAddExit(exit: exit, parent: self)}
 		return exit
 	}
 	
@@ -216,7 +214,7 @@ public class NVGraph {
 		}
 		_exits.remove(at: idx)
 		
-		_storyManager.Delegates.forEach{$0.onStoryGraphRemoveExit(exit: exit, from: self)}
+		NVStoryManager.shared.Delegates.forEach{$0.onStoryGraphRemoveExit(exit: exit, from: self)}
 	}
 	
 	// MARK: Simulation
@@ -250,10 +248,10 @@ extension NVGraph: NVLinkable {
 		set {
 			if newValue {
 				_inTrash = true
-				_storyManager.trash(self)
+				NVStoryManager.shared.trash(self)
 			} else {
 				_inTrash = false
-				_storyManager.untrash(self)
+				NVStoryManager.shared.untrash(self)
 			}
 		}
 	}

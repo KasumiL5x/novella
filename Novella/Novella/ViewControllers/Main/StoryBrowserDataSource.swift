@@ -10,11 +10,9 @@ import Cocoa
 import NovellaModel
 
 class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
-	fileprivate let _mvc: MainViewController
 	fileprivate let _browserTopLevel: [String]
 	
-	init(mvc: MainViewController) {
-		self._mvc = mvc
+	override init() {
 		self._browserTopLevel = [
 			"Graphs",
 			"Variables"
@@ -34,10 +32,10 @@ class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
 		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
-				return _mvc.StoryManager.Story.Graphs.count
+				return NVStoryManager.shared.Story.Graphs.count
 			}
 			if asString == _browserTopLevel[1] {
-				return _mvc.StoryManager.Story.Folders.count
+				return NVStoryManager.shared.Story.Folders.count
 			}
 		}
 		
@@ -73,10 +71,10 @@ class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
 		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
-				return _mvc.StoryManager.Story.Graphs[index]
+				return NVStoryManager.shared.Story.Graphs[index]
 			}
 			if asString == _browserTopLevel[1] {
-				return _mvc.StoryManager.Story.Folders[index]
+				return NVStoryManager.shared.Story.Folders[index]
 			}
 		}
 		
@@ -96,10 +94,10 @@ class StoryBrowserDataSource: NSObject, NSOutlineViewDataSource {
 		
 		if let asString = item as? String {
 			if asString == _browserTopLevel[0] {
-				return _mvc.StoryManager.Story.Graphs.count > 0
+				return NVStoryManager.shared.Story.Graphs.count > 0
 			}
 			if asString == _browserTopLevel[1] {
-				return _mvc.StoryManager.Story.Folders.count > 0
+				return NVStoryManager.shared.Story.Folders.count > 0
 			}
 		}
 		

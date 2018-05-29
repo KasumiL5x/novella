@@ -12,10 +12,10 @@ public class NVListener: NVNode {
 	fileprivate let _condition: NVCondition
 	fileprivate let _transfer: NVTransfer
 	
-	override init(uuid: NSUUID, storyManager: NVStoryManager) {
-		self._condition = NVCondition(storyManager: storyManager)
+	override init(uuid: NSUUID) {
+		self._condition = NVCondition()
 		self._transfer = NVTransfer()
 		
-		super.init(uuid: uuid, storyManager: storyManager)
+		super.init(uuid: uuid)
 	}
 }

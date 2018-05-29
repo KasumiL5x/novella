@@ -14,12 +14,10 @@ public protocol NVSimulatorController {
 }
 
 public class NVSimulator {
-	var _storyManager: NVStoryManager
 	var _controller: NVSimulatorController?
 	var _currentNode: NVNode?
 	
-	public init(storyManager: NVStoryManager, controller: NVSimulatorController) {
-		self._storyManager = storyManager
+	public init(controller: NVSimulatorController) {
 		self._controller = controller
 		self._currentNode = nil
 	}
@@ -34,14 +32,14 @@ public class NVSimulator {
 		}
 		
 		_currentNode = resolveLinkable(graph._entry)
-		_controller?.currentNode(node: _currentNode!, outputs: _storyManager.getLinksFrom(_currentNode!))
+		_controller?.currentNode(node: _currentNode!, outputs: NVStoryManager.shared.getLinksFrom(_currentNode!))
 		
 		return true
 	}
 	
 	// controller should call this to proceed from the current node
 	public func proceed(_ link: NVBaseLink) throws {
-		if !_storyManager.getLinksFrom(_currentNode!).contains(link) {
+		if !NVStoryManager.shared.getLinksFrom(_currentNode!).contains(link) {
 			throw NVError.invalid("Tried to progress along a link that didn't belong to the current node.")
 		}
 		
@@ -55,12 +53,12 @@ public class NVSimulator {
 			fatalError("Not yet implemented.")
 		}
 		
-		guard let destNode = _storyManager.find(uuid: destinationUUID ?? "") as? NVNode else {
+		guard let destNode = NVStoryManager.shared.find(uuid: destinationUUID ?? "") as? NVNode else {
 			throw NVError.invalid("Destination node was not found or was not a Node.")
 		}
 		
 		_currentNode = resolveLinkable(destNode)
-		_controller?.currentNode(node: _currentNode!, outputs: _storyManager.getLinksFrom(_currentNode!))
+		_controller?.currentNode(node: _currentNode!, outputs: NVStoryManager.shared.getLinksFrom(_currentNode!))
 	}
 	
 	// keeps traversing graph entry points until the first node is found
