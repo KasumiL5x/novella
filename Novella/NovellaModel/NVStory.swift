@@ -14,7 +14,7 @@ public class NVStory {
 	fileprivate var _graphs: [NVGraph]
 	fileprivate var _name: String
 	
-	public init() {
+	init() {
 		self._folders = []
 		self._graphs = []
 		self._name = ""
