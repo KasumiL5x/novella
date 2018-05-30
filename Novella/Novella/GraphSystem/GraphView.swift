@@ -432,6 +432,11 @@ extension GraphView {
 				let pos = gesture.location(in: self) // must be in graph view space as hitTest() is based on superview, which is this
 				let hit = curr.hitTest(pos)
 				
+				// cannot connect to trashed objects
+				if curr.Trashed {
+					continue
+				}
+				
 				// didn't hit, or hit subview (such as a pin)
 				if hit != curr || hit == pin.Owner {
 					curr.unprime() // bit hacky but disables priming if not valid
