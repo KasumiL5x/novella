@@ -12,16 +12,11 @@ import NovellaModel
 class GraphLinkableView: LinkableView {
 	// MARK: - - Variables -
 	fileprivate let _nameLabel: NSTextField
-	fileprivate let _bgStartSaturation: CGFloat
-	fileprivate let _bgEndSaturation: CGFloat
 	
 	// MARK: - - Initialization -
 	init(node: NVGraph, graphView: GraphView) {
 		self._nameLabel = NSTextField(labelWithString: "G")
 		self._nameLabel.tag = LinkableView.HIT_IGNORE_TAG
-		
-		self._bgStartSaturation = Settings.graph.nodes.graphStartColor.saturationComponent
-		self._bgEndSaturation = Settings.graph.nodes.endColor.saturationComponent
 		
 		let rect = NSMakeRect(node.EditorPosition.x, node.EditorPosition.y, 1.0, 1.0)
 		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
@@ -72,8 +67,8 @@ class GraphLinkableView: LinkableView {
 			var path = NSBezierPath(roundedRect: dialogRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Settings.graph.nodes.graphStartColor.withSaturation(Trashed ? Settings.graph.trashedSaturation : _bgStartSaturation).cgColor,
-											Settings.graph.nodes.endColor.withSaturation(Trashed ? Settings.graph.trashedSaturation : _bgEndSaturation).cgColor]
+			let bgColors = [Trashed ? Settings.graph.nodes.graphStartColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.nodes.graphStartColor.cgColor,
+											Trashed ? Settings.graph.nodes.endColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.nodes.endColor.cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: dialogRect.height)
 			let bgEnd = CGPoint.zero

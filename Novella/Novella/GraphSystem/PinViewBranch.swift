@@ -14,30 +14,24 @@ class PinViewBranch: PinView {
 	fileprivate let _pinLayer: CAShapeLayer
 	fileprivate var _pinPath: NSBezierPath
 	fileprivate var _pinColor: NSColor
-	fileprivate let _pinSaturation: CGFloat
 	fileprivate let _trueCurveLayer: CAShapeLayer
 	fileprivate let _trueCurvePath: NSBezierPath
 	fileprivate var _trueCurveColor: NSColor
-	fileprivate let _trueCurveSaturation: CGFloat
 	fileprivate let _falseCurveLayer: CAShapeLayer
 	fileprivate let _falseCurvePath: NSBezierPath
 	fileprivate var _falseCurveColor: NSColor
-	fileprivate let _falseCurveSaturation: CGFloat
 	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
 		self._pinLayer = CAShapeLayer()
 		self._pinPath = NSBezierPath()
 		self._pinColor = NSColor.fromHex("#fae0cf")
-		self._pinSaturation = self._pinColor.saturationComponent
 		self._trueCurveLayer = CAShapeLayer()
 		self._trueCurvePath = NSBezierPath()
 		self._trueCurveColor = NSColor.fromHex("#EA772F")
-		self._trueCurveSaturation = self._trueCurveColor.saturationComponent
 		self._falseCurveLayer = CAShapeLayer()
 		self._falseCurvePath = NSBezierPath()
 		self._falseCurveColor = NSColor.fromHex("#ea482f")
-		self._falseCurveSaturation = self._falseCurveColor.saturationComponent
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		layer!.addSublayer(_trueCurveLayer)
@@ -66,9 +60,9 @@ class PinViewBranch: PinView {
 	
 	// MARK: - - Functions -
 	override func onTrashed() {
-		_pinColor = _pinColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : _pinSaturation)
-		_trueCurveColor = _trueCurveColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : _trueCurveSaturation)
-		_falseCurveColor = _falseCurveColor.withSaturation(TrashMode ? Settings.graph.trashedSaturation : _falseCurveSaturation)
+		_pinColor = TrashMode ? _pinColor.withSaturation(Settings.graph.trashedSaturation) : _pinColor
+		_trueCurveColor = TrashMode ? _trueCurveColor.withSaturation(Settings.graph.trashedSaturation) : _trueCurveColor
+		_falseCurveColor = TrashMode ? _falseCurveColor.withSaturation(Settings.graph.trashedSaturation) : _falseCurveColor
 	}
 	// MARK: Destination
 	func setTrueDestination(dest: NVLinkable?) {
