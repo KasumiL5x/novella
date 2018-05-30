@@ -32,6 +32,14 @@ struct Settings {
 				static let deliveryStartColor = "graph.nodes.deliveryStartColor"
 				static let contextStartColor = "graph.nodes.contextStartColor"
 			}
+			
+			struct pins {
+				static let linkPinColor = "graph.pins.linkPinColor"
+				static let linkCurveColor = "graph.pins.linkCurveColor"
+				static let branchPinColor = "graph.pins.branchPinColor"
+				static let branchTrueCurveColor = "graph.pins.branchTrueCurveColor"
+				static let branchFalseCurveColor = "graph.pins.branchFalseCurveColor"
+			}
 		}
 	}
 	
@@ -53,6 +61,13 @@ struct Settings {
 			static var graphStartColor:    NSColor = NSColor.fromHex("#BA78CD")
 			static var deliveryStartColor: NSColor = NSColor.fromHex("#FFA35F")
 			static var contextStartColor:  NSColor = NSColor.fromHex("#FF5E3A")
+		}
+		struct pins {
+			static var linkPinColor:          NSColor = NSColor.fromHex("#ebfdd6")
+			static var linkCurveColor:        NSColor = NSColor.fromHex("#B3F865")
+			static var branchPinColor:        NSColor = NSColor.fromHex("#fae0cf")
+			static var branchTrueCurveColor:  NSColor = NSColor.fromHex("#EA772F")
+			static var branchFalseCurveColor: NSColor = NSColor.fromHex("#ea482f")
 		}
 	}
 	
@@ -76,6 +91,13 @@ struct Settings {
 		Settings.graph.nodes.graphStartColor = NSColor.fromHex("#BA78CD")
 		Settings.graph.nodes.deliveryStartColor = NSColor.fromHex("#FFA35F")
 		Settings.graph.nodes.contextStartColor = NSColor.fromHex("#FF5E3A")
+		
+		// graph.pins
+		Settings.graph.pins.linkPinColor = NSColor.fromHex("#ebfdd6")
+		Settings.graph.pins.linkCurveColor = NSColor.fromHex("#B3F865")
+		Settings.graph.pins.branchPinColor = NSColor.fromHex("#fae0cf")
+		Settings.graph.pins.branchTrueCurveColor = NSColor.fromHex("#EA772F")
+		Settings.graph.pins.branchFalseCurveColor = NSColor.fromHex("#ea482f")
 	}
 	
 	
@@ -131,6 +153,23 @@ struct Settings {
 		if hasKey(key: Settings.keys.graph.nodes.contextStartColor) {
 			Settings.graph.nodes.contextStartColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.contextStartColor)!
 		}
+		
+		// graph.pins
+		if hasKey(key: Settings.keys.graph.pins.linkPinColor) {
+			Settings.graph.pins.linkPinColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.linkPinColor)!
+		}
+		if hasKey(key: Settings.keys.graph.pins.linkCurveColor) {
+			Settings.graph.pins.linkCurveColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.linkCurveColor)!
+		}
+		if hasKey(key: Settings.keys.graph.pins.branchPinColor) {
+			Settings.graph.pins.branchPinColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.branchPinColor)!
+		}
+		if hasKey(key: Settings.keys.graph.pins.branchTrueCurveColor) {
+			Settings.graph.pins.branchTrueCurveColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.branchTrueCurveColor)!
+		}
+		if hasKey(key: Settings.keys.graph.pins.branchFalseCurveColor) {
+			Settings.graph.pins.branchFalseCurveColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.branchFalseCurveColor)!
+		}
 	}
 	
 	static func saveDefaults() {
@@ -153,6 +192,13 @@ struct Settings {
 		UserDefaults.standard.set(Settings.graph.nodes.graphStartColor, forKey: Settings.keys.graph.nodes.graphStartColor)
 		UserDefaults.standard.set(Settings.graph.nodes.deliveryStartColor, forKey: Settings.keys.graph.nodes.deliveryStartColor)
 		UserDefaults.standard.set(Settings.graph.nodes.contextStartColor, forKey: Settings.keys.graph.nodes.contextStartColor)
+		
+		// graph.pins
+		UserDefaults.standard.set(Settings.graph.pins.linkPinColor, forKey: Settings.keys.graph.pins.linkPinColor)
+		UserDefaults.standard.set(Settings.graph.pins.linkCurveColor, forKey: Settings.keys.graph.pins.linkCurveColor)
+		UserDefaults.standard.set(Settings.graph.pins.branchPinColor, forKey: Settings.keys.graph.pins.branchPinColor)
+		UserDefaults.standard.set(Settings.graph.pins.branchTrueCurveColor, forKey: Settings.keys.graph.pins.branchTrueCurveColor)
+		UserDefaults.standard.set(Settings.graph.pins.branchFalseCurveColor, forKey: Settings.keys.graph.pins.branchFalseCurveColor)
 	}
 	
 	

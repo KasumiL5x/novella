@@ -13,25 +13,19 @@ class PinViewBranch: PinView {
 	// MARK: - - Variables -
 	fileprivate let _pinLayer: CAShapeLayer
 	fileprivate var _pinPath: NSBezierPath
-	fileprivate var _pinColor: NSColor
 	fileprivate let _trueCurveLayer: CAShapeLayer
 	fileprivate let _trueCurvePath: NSBezierPath
-	fileprivate var _trueCurveColor: NSColor
 	fileprivate let _falseCurveLayer: CAShapeLayer
 	fileprivate let _falseCurvePath: NSBezierPath
-	fileprivate var _falseCurveColor: NSColor
 	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
 		self._pinLayer = CAShapeLayer()
 		self._pinPath = NSBezierPath()
-		self._pinColor = NSColor.fromHex("#fae0cf")
 		self._trueCurveLayer = CAShapeLayer()
 		self._trueCurvePath = NSBezierPath()
-		self._trueCurveColor = NSColor.fromHex("#EA772F")
 		self._falseCurveLayer = CAShapeLayer()
 		self._falseCurvePath = NSBezierPath()
-		self._falseCurveColor = NSColor.fromHex("#ea482f")
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		layer!.addSublayer(_trueCurveLayer)
@@ -60,9 +54,6 @@ class PinViewBranch: PinView {
 	
 	// MARK: - - Functions -
 	override func onTrashed() {
-		_pinColor = TrashMode ? _pinColor.withSaturation(Settings.graph.trashedSaturation) : _pinColor
-		_trueCurveColor = TrashMode ? _trueCurveColor.withSaturation(Settings.graph.trashedSaturation) : _trueCurveColor
-		_falseCurveColor = TrashMode ? _falseCurveColor.withSaturation(Settings.graph.trashedSaturation) : _falseCurveColor
 	}
 	// MARK: Destination
 	func setTrueDestination(dest: NVLinkable?) {
@@ -90,7 +81,7 @@ class PinViewBranch: PinView {
 			// draw pin
 			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
 			_pinLayer.path = _pinPath.cgPath
-			_pinLayer.fillColor = _pinColor.cgColor
+			_pinLayer.fillColor = TrashMode ? Settings.graph.pins.branchPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchPinColor.cgColor
 			
 			// draw curves
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
@@ -103,7 +94,7 @@ class PinViewBranch: PinView {
 				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
 				_trueCurveLayer.path = _trueCurvePath.cgPath
-				_trueCurveLayer.strokeColor = _trueCurveColor.cgColor
+				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
 			}
 			_falseCurveLayer.path = nil
 			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination()) {
@@ -112,7 +103,7 @@ class PinViewBranch: PinView {
 				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
 				_falseCurveLayer.path = _falseCurvePath.cgPath
-				_falseCurveLayer.strokeColor = _falseCurveColor.cgColor
+				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
 			}
 			
 			context.restoreGState()
