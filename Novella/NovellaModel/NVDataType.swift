@@ -19,6 +19,16 @@ public enum NVDataType {
 		}
 	}
 	
+	public static var all: [NVDataType] {
+		get{
+			return [
+				.boolean,
+				.integer,
+				.double
+			]
+		}
+	}
+	
 	func matches(value: Any) -> Bool {
 		switch self {
 		case .boolean: return value is Bool
@@ -35,7 +45,7 @@ public enum NVDataType {
 		}
 	}
 	
-	static func fromString(str: String) -> NVDataType {
+	public static func fromString(str: String) -> NVDataType {
 		switch str {
 		case "boolean": return .boolean
 		case "integer": return .integer

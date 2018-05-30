@@ -9,6 +9,27 @@
 import Cocoa
 import NovellaModel
 
+class VariableTypePopUpCell: NSTableCellView {
+	@IBOutlet weak var _popupButton: NSPopUpButton!
+	var _forItem: Any?
+	var _outlineView: NSOutlineView?
+	
+	@IBAction func onPopupChanged(_ sender: NSPopUpButton) {
+		guard let asVariable = _forItem as? NVVariable else {
+			return
+		}
+		guard let string = sender.selectedItem?.title else {
+			return
+		}
+		
+		let newDataType = NVDataType.fromString(str: string)
+		asVariable.setType(newDataType)
+		
+		// reload the item as its data type changed
+		_outlineView?.reloadItem(_forItem)
+	}
+}
+
 class VariableTabViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
@@ -127,17 +148,16 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
 				(view as! NSTableCellView).textField?.stringValue = "Folder"
 			case is NVVariable:
-				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PopUpCell"), owner: self) as? NSPopUpButton
-				// add menu items (this is only called on creation so should be fine)
-				(view as! NSPopUpButton).addItems(withTitles: [
-					NVDataType.boolean.stringValue,
-					NVDataType.integer.stringValue,
-					NVDataType.double.stringValue
-					])
-				(view as! NSPopUpButton).selectItem(at: _variableTypeIndices[(item as! NVVariable).DataType.stringValue]!)
-				// TODO: How to hook this action upon change knowing the selected item (does clicking a popup select the row?) and the value of this in particular???
-				
-//				(view as! NSPopUpButton).action = #selector(<#T##@objc method#>)
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PopUpCell"), owner: self) as? VariableTypePopUpCell
+				let asCustomPopup = view as! VariableTypePopUpCell
+				// add menu items mapped from NVDataType (this is only called on creation so should be fine)
+				asCustomPopup._popupButton.addItems(withTitles: NVDataType.all.map{$0.stringValue})
+				// select item by string (should match!)
+				asCustomPopup._popupButton.selectItem(withTitle: (item as! NVVariable).DataType.stringValue)
+				// tell the popup which item it is dealing with
+				asCustomPopup._forItem = item
+				// set which outline view it uses so it can refresh upon change
+				asCustomPopup._outlineView = outlineView
 			default:
 				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
 				(view as! NSTableCellView).textField?.stringValue = "Error"
