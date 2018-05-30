@@ -15,6 +15,7 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 	fileprivate var _folderIcon: NSImage?
 	fileprivate var _variableIcon: NSImage?
 	fileprivate var _dialogIcon: NSImage?
+	fileprivate var _contextIcon: NSImage?
 	
 	init(mvc: MainViewController) {
 		self._mvc = mvc
@@ -24,6 +25,7 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 		_folderIcon = NSImage(named: NSImage.Name(rawValue: "Folder"))
 		_variableIcon = NSImage(named: NSImage.Name(rawValue: "Variable"))
 		_dialogIcon = NSImage(named: NSImage.Name(rawValue: "Dialog"))
+		_contextIcon = NSImage(named: NSImage.Name(rawValue: "Context"))
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
@@ -91,6 +93,7 @@ class StoryBrowserDelegate: NSObject, NSOutlineViewDelegate {
 			case is NVContext:
 				let asContext = (item as! NVContext)
 				name = (asContext.Trashed ? "🗑" : "") + asContext.Name
+				icon = _contextIcon
 				
 			case is NVLink:
 				let from = NVStoryManager.shared.nameOf(linkable: (item as! NVLink).Origin)
