@@ -80,7 +80,7 @@ class GraphLinkableView: LinkableView {
 			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
 			context.resetClip()
 			path.lineWidth = Settings.graph.nodes.outlineWidth
-			Settings.graph.nodes.outlineColor.setStroke()
+			Trashed ? Settings.graph.nodes.outlineColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.outlineColor.setStroke()
 			path.stroke()
 			
 			// draw primed indicator
@@ -89,7 +89,7 @@ class GraphLinkableView: LinkableView {
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.lineWidth = Settings.graph.nodes.primedWidth
-				Settings.graph.nodes.primedColor.setStroke()
+				Trashed ? Settings.graph.nodes.primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.primedColor.setStroke()
 				path.stroke()
 			}
 			
@@ -99,7 +99,7 @@ class GraphLinkableView: LinkableView {
 				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.lineWidth = Settings.graph.nodes.selectedWidth
-				Settings.graph.nodes.selectedColor.setStroke()
+				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
 				path.stroke()
 			}
 			
