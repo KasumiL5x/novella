@@ -9,27 +9,59 @@
 import Cocoa
 import NovellaModel
 
+// MARK: - Custom Cell Views -
+// MARK: Type
 class VariableTypePopUpCell: NSTableCellView {
 	@IBOutlet weak var _popupButton: NSPopUpButton!
 	var _forItem: Any?
 	var _outlineView: NSOutlineView?
 	
 	@IBAction func onPopupChanged(_ sender: NSPopUpButton) {
-		guard let asVariable = _forItem as? NVVariable else {
-			return
-		}
-		guard let string = sender.selectedItem?.title else {
-			return
-		}
+		guard let asVariable = _forItem as? NVVariable else { return }
+		guard let string = sender.selectedItem?.title else { return }
 		
 		let newDataType = NVDataType.fromString(str: string)
 		asVariable.setType(newDataType)
-		
 		// reload the item as its data type changed
 		_outlineView?.reloadItem(_forItem)
 	}
 }
+// MARK: Initial Value
+class VariableInitialValueBoolCell: NSTableCellView {
+	@IBOutlet weak var _popupButton: NSPopUpButton!
+	var _forItem: Any?
+	
+	@IBAction func onPopupChanged(_ sender: NSPopUpButton) {
+		guard let asVariable = _forItem as? NVVariable else { return }
+		
+		let bool = sender.selectedItem?.title == "true" ? true : false
+		asVariable.setInitialValue(bool)
+	}
+}
+class VariableInitialValueIntCell: NSTableCellView {
+	@IBOutlet weak var _textfield: NSTextField!
+	var _forItem: Any?
+	
+	@IBAction func onTextfieldChanged(_ sender: NSTextField) {
+		guard let asVariable = _forItem as? NVVariable else { return }
+		
+		let int = Int(sender.stringValue) ?? 0
+		asVariable.setInitialValue(int)
+	}
+}
+class VariableInitialValueDoubleCell: NSTableCellView {
+	@IBOutlet weak var _textfield: NSTextField!
+	var _forItem: Any?
+	
+	@IBAction func onTextfieldChanged(_ sender: NSTextField) {
+		guard let asVariable = _forItem as? NVVariable else { return }
 
+		let double = Double(sender.stringValue) ?? 0.0
+		asVariable.setInitialValue(double)
+	}
+}
+
+// MARK: - View Controller -
 class VariableTabViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
@@ -164,14 +196,28 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 			}
 			
 		case "InitialValueColumn":
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				(view as! NSTableCellView).textField?.stringValue = ""
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueTextCell"), owner: self) as? NSTableCellView
 			case is NVVariable:
-				(view as! NSTableCellView).textField?.stringValue = String.fromAny((item as! NVVariable).InitialValue)
+				let asVariable = (item as! NVVariable)
+				switch asVariable.DataType {
+				case .boolean:
+					view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueBoolCell"), owner: self) as? VariableInitialValueBoolCell
+					(view as! VariableInitialValueBoolCell)._forItem = item
+					(view as! VariableInitialValueBoolCell)._popupButton.selectItem(withTitle: (asVariable.InitialValue as! Bool) ? "true" : "false")
+				case .integer:
+					view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueIntCell"), owner: self) as? VariableInitialValueIntCell
+					(view as! VariableInitialValueIntCell)._forItem = item
+					(view as! VariableInitialValueIntCell)._textfield.stringValue = String((asVariable.InitialValue as! Int))
+				case .double:
+					view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueDoubleCell"), owner: self) as? VariableInitialValueDoubleCell
+					(view as! VariableInitialValueDoubleCell)._forItem = item
+					(view as! VariableInitialValueDoubleCell)._textfield.stringValue = String((asVariable.InitialValue as! Double))
+				}
 			default:
-				(view as! NSTableCellView).textField?.stringValue = "error"
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "InitialValueTextCell"), owner: self) as? NSTableCellView
+				(view as! NSTableCellView).textField?.stringValue = "Error"
 			}
 			
 		case "ConstantColumn":

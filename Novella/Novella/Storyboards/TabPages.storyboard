@@ -125,11 +125,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="SynopsisCell" id="aEJ-av-lGi">
-                                                            <rect key="frame" x="176.5" y="1" width="173" height="17"/>
+                                                            <rect key="frame" x="176.5" y="1" width="172" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFk-5l-EAP">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="171" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="NX9-fe-psT">
                                                                         <font key="font" metaFont="system"/>
@@ -175,7 +175,7 @@
                                                                 </popUpButton>
                                                             </subviews>
                                                             <connections>
-                                                                <outlet property="_popupButton" destination="gWM-Og-08y" id="pqg-yM-9Bs"/>
+                                                                <outlet property="_popupButton" destination="gWM-Og-08y" id="qkn-cm-YIa"/>
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="TypeTextCell" id="yQZ-xX-e6h" userLabel="TextCell">
@@ -211,8 +211,78 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="InitialValueCell" id="IC9-Yp-xuB" userLabel="TextCell">
+                                                        <tableCellView identifier="InitialValueDoubleCell" id="M2w-YN-hkK" userLabel="DoubleCell" customClass="VariableInitialValueDoubleCell" customModule="Novella" customModuleProvider="target">
                                                             <rect key="frame" x="462" y="1" width="107" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BtH-Ex-Drf">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="108" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="center" placeholderString="Double" id="x2M-Vh-geZ">
+                                                                        <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" generatesDecimalNumbers="YES" alwaysShowsDecimalSeparator="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="3" id="qoz-EE-qpJ"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <connections>
+                                                                        <action selector="onTextfieldChanged:" target="M2w-YN-hkK" id="k1f-Se-40Q"/>
+                                                                    </connections>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="_textfield" destination="BtH-Ex-Drf" id="UU9-H0-zaH"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <tableCellView identifier="InitialValueIntCell" id="NDf-R1-ba1" userLabel="IntCell" customClass="VariableInitialValueIntCell" customModule="Novella" customModuleProvider="target">
+                                                            <rect key="frame" x="462" y="20" width="107" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PSa-Wn-qIb">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="108" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="center" placeholderString="Integer" id="coa-sg-JAG">
+                                                                        <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" allowsFloats="NO" roundingMode="ceiling" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="K8v-kf-ruK"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <connections>
+                                                                        <action selector="onTextfieldChanged:" target="NDf-R1-ba1" id="hOF-d9-DvX"/>
+                                                                    </connections>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="_textfield" destination="PSa-Wn-qIb" id="2t9-Ve-eHo"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <tableCellView identifier="InitialValueBoolCell" id="kpO-6V-bLZ" userLabel="BoolCell" customClass="VariableInitialValueBoolCell" customModule="Novella" customModuleProvider="target">
+                                                            <rect key="frame" x="462" y="39" width="107" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dFF-a7-KIT" userLabel="Popup Button">
+                                                                    <rect key="frame" x="-2" y="-9" width="107" height="26"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <popUpButtonCell key="cell" type="push" title="true" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kSa-kh-VQI" id="NFZ-7Y-LaS">
+                                                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="menu"/>
+                                                                        <menu key="menu" id="2Ol-99-VGw">
+                                                                            <items>
+                                                                                <menuItem title="true" state="on" id="kSa-kh-VQI" userLabel="true"/>
+                                                                                <menuItem title="false" id="yQX-uZ-t4d" userLabel="false"/>
+                                                                            </items>
+                                                                        </menu>
+                                                                    </popUpButtonCell>
+                                                                    <connections>
+                                                                        <action selector="onPopupChanged:" target="kpO-6V-bLZ" id="Da8-XR-izM"/>
+                                                                    </connections>
+                                                                </popUpButton>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="_popupButton" destination="dFF-a7-KIT" id="csF-w6-xdW"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <tableCellView identifier="InitialValueTextCell" id="IC9-Yp-xuB" userLabel="TextCell">
+                                                            <rect key="frame" x="462" y="58" width="107" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yl0-Xu-hwT">
@@ -245,11 +315,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="ConstantCell" id="GRh-I4-Mil">
-                                                            <rect key="frame" x="571.5" y="1" width="92" height="17"/>
+                                                            <rect key="frame" x="571.5" y="1" width="91" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FLd-oc-gGN">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="89" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Table View Cell" id="yU6-mh-eqF">
                                                                         <font key="font" metaFont="system"/>
