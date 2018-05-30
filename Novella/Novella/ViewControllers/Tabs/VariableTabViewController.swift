@@ -145,10 +145,10 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 		case "TypeColumn":
 			switch item {
 			case is NVFolder:
-				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeTextCell"), owner: self) as? NSTableCellView
 				(view as! NSTableCellView).textField?.stringValue = "Folder"
 			case is NVVariable:
-				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PopUpCell"), owner: self) as? VariableTypePopUpCell
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypePopUpCell"), owner: self) as? VariableTypePopUpCell
 				let asCustomPopup = view as! VariableTypePopUpCell
 				// add menu items mapped from NVDataType (this is only called on creation so should be fine)
 				asCustomPopup._popupButton.addItems(withTitles: NVDataType.all.map{$0.stringValue})
@@ -159,7 +159,7 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 				// set which outline view it uses so it can refresh upon change
 				asCustomPopup._outlineView = outlineView
 			default:
-				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TypeTextCell"), owner: self) as? NSTableCellView
 				(view as! NSTableCellView).textField?.stringValue = "Error"
 			}
 			
