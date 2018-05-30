@@ -293,7 +293,7 @@
                                 <rect key="frame" x="0.0" y="250" width="450" height="50"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i1y-Bf-Rlj">
-                                        <rect key="frame" x="-2" y="2" width="93" height="48"/>
+                                        <rect key="frame" x="-2" y="2" width="95" height="48"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Story" id="FcV-MA-KFI">
                                             <font key="font" metaFont="system" size="40"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -311,7 +311,7 @@
                                 <rect key="frame" x="0.0" y="100" width="450" height="150"/>
                                 <clipView key="contentView" id="R8v-LX-B6U">
                                     <rect key="frame" x="1" y="0.0" width="448" height="149"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="oQb-lZ-G36" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9Ad-dJ-uBY" id="BEO-kl-60E">
                                             <rect key="frame" x="0.0" y="0.0" width="452" height="126"/>

@@ -105,10 +105,12 @@ class PinView: NSView {
 	
 	// MARK: Gesture Callbacks
 	@objc fileprivate func onPan(gesture: NSPanGestureRecognizer) {
+		if _trashMode { return }
 		_graphView.onPanPin(pin: self, gesture: gesture)
 	}
 	
 	@objc fileprivate func onContext(gesture: NSClickGestureRecognizer) {
+		if _trashMode { return }
 		_graphView.onContextPin(pin: self, gesture: gesture)
 	}
 	

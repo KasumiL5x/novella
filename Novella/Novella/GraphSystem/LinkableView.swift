@@ -131,9 +131,11 @@ class LinkableView: NSView {
 		_graphView.onClickLinkable(node: self, gesture: gesture)
 	}
 	@objc fileprivate func onDoubleClick(gesture: NSGestureRecognizer) {
+		if _trashMode { return }
 		_graphView.onDoubleClickLinkable(node: self, gesture: gesture)
 	}
 	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
+		if _trashMode { return }
 		_graphView.onContextLinkable(node: self, gesture: gesture)
 	}
 	@objc fileprivate func onPan(gesture: NSPanGestureRecognizer) {
