@@ -801,7 +801,11 @@ extension GraphView: NVStoryDelegate {
 		
 		switch item {
 		case is NVDialog:
-			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
+			fallthrough
+		case is NVDelivery:
+			fallthrough
+		case is NVContext:
+			if let lv = getLinkableViewFrom(linkable: item) {
 				lv.Trashed = true
 			}
 			
@@ -818,7 +822,11 @@ extension GraphView: NVStoryDelegate {
 		
 		switch item {
 		case is NVDialog:
-			if let lv = getLinkableViewFrom(linkable: item as! NVDialog) {
+			fallthrough
+		case is NVDelivery:
+			fallthrough
+		case is NVContext:
+			if let lv = getLinkableViewFrom(linkable: item) {
 				lv.Trashed = false
 			}
 			
