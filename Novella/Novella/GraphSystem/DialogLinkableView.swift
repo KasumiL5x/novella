@@ -51,59 +51,10 @@ class DialogLinkableView: LinkableView {
 	override func onMove() {
 		(Linkable as! NVDialog).EditorPosition = frame.origin
 	}
-	
-	// MARK - - Drawing -
-	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-		
-		if let context = NSGraphicsContext.current?.cgContext {
-			context.saveGState()
-			
-			// create drawing rect for this object
-			let dialogRect = widgetRect()
-			
-			// draw background gradient
-			let bgRadius = Settings.graph.nodes.roundness
-			var path = NSBezierPath(roundedRect: dialogRect, xRadius: bgRadius, yRadius: bgRadius)
-			path.addClip()
-			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Trashed ? Settings.graph.nodes.dialogStartColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.nodes.dialogStartColor.cgColor,
-											Trashed ? Settings.graph.nodes.endColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.nodes.endColor.cgColor]
-			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
-			let bgStart = CGPoint(x: 0, y: dialogRect.height)
-			let bgEnd = CGPoint.zero
-			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
-			
-			// draw outline (inset)
-			let outlineInset = Settings.graph.nodes.outlineInset
-			let selectedRect = dialogRect.insetBy(dx: outlineInset, dy: outlineInset)
-			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
-			context.resetClip()
-			path.lineWidth = Settings.graph.nodes.outlineWidth
-			Trashed ? Settings.graph.nodes.outlineColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.outlineColor.setStroke()
-			path.stroke()
-			
-			// draw primed indicator
-			if IsPrimed {
-				let selectedInset = Settings.graph.nodes.primedInset
-				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
-				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
-				path.lineWidth = Settings.graph.nodes.primedWidth
-				Trashed ? Settings.graph.nodes.primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.primedColor.setStroke()
-				path.stroke()
-			}
-			
-			// draw selection indicator
-			if IsSelected {
-				let selectedInset = Settings.graph.nodes.selectedInset
-				let insetRect = dialogRect.insetBy(dx: selectedInset, dy: selectedInset)
-				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
-				path.lineWidth = Settings.graph.nodes.selectedWidth
-				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
-				path.stroke()
-			}
-			
-			context.restoreGState()
-		}
+	override func bgTopColor() -> NSColor {
+		return Settings.graph.nodes.dialogStartColor
+	}
+	override func bgBottomColor() -> NSColor {
+		return Settings.graph.nodes.endColor
 	}
 }

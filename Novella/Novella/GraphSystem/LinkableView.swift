@@ -150,6 +150,14 @@ class LinkableView: NSView {
 	func onMove() {
 		print("LinkableView::onMove() should be overridden.")
 	}
+	func bgTopColor() -> NSColor {
+		print("LinkableView::bgTopColor() should be overridden.")
+		return NSColor.black
+	}
+	func bgBottomColor() -> NSColor {
+		print("LinkableView::bgBottomColor() should be overridden.")
+		return NSColor.black
+	}
 	
 	// MARK: Priming/Selection
 	func select() {
@@ -212,6 +220,51 @@ class LinkableView: NSView {
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
+			
+			// create drawing rect for this object
+			let drawingRect = widgetRect()
+			
+			// draw background gradient
+			let bgRadius = Settings.graph.nodes.roundness
+			var path = NSBezierPath(roundedRect: drawingRect, xRadius: bgRadius, yRadius: bgRadius)
+			path.addClip()
+			let colorSpace = CGColorSpaceCreateDeviceRGB()
+			let bgColors = [Trashed ? bgTopColor().withSaturation(Settings.graph.trashedSaturation).cgColor : bgTopColor().cgColor,
+											Trashed ? bgBottomColor().withSaturation(Settings.graph.trashedSaturation).cgColor : bgBottomColor().cgColor]
+			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
+			let bgStart = CGPoint(x: 0, y: drawingRect.height)
+			let bgEnd = CGPoint.zero
+			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
+			
+			// draw outline (inset)
+			let outlineInset = Settings.graph.nodes.outlineInset
+			let selectedRect = drawingRect.insetBy(dx: outlineInset, dy: outlineInset)
+			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
+			context.resetClip()
+			path.lineWidth = Settings.graph.nodes.outlineWidth
+			Trashed ? Settings.graph.nodes.outlineColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.outlineColor.setStroke()
+			path.stroke()
+			
+			// draw primed indicator
+			if IsPrimed {
+				let selectedInset = Settings.graph.nodes.primedInset
+				let insetRect = drawingRect.insetBy(dx: selectedInset, dy: selectedInset)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path.lineWidth = Settings.graph.nodes.primedWidth
+				Trashed ? Settings.graph.nodes.primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.primedColor.setStroke()
+				path.stroke()
+			}
+			
+			// draw selection indicator
+			if IsSelected {
+				let selectedInset = Settings.graph.nodes.selectedInset
+				let insetRect = drawingRect.insetBy(dx: selectedInset, dy: selectedInset)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path.lineWidth = Settings.graph.nodes.selectedWidth
+				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
+				path.stroke()
+			}
+			
 			context.restoreGState()
 		}
 	}
