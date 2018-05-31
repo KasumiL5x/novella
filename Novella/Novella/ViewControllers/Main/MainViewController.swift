@@ -379,6 +379,10 @@ class MainViewController: NSViewController {
 		}
 	}
 	
+	@IBAction func onEmptyTrash(_ sender: NSButton) {
+		NVStoryManager.shared.emptyTrash()
+	}
+	
 	@IBAction func onVariableEditor(_ sender: NSButton) {
 		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
 			selectTab(item: existing)
