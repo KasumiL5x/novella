@@ -27,7 +27,7 @@ After Carthage has finished cloning and building the dependencies, the project s
 
 ## Meta
 
-Your Name – [@KasumiL5x](https://twitter.com/kasumil5x) – dgreen@bournemouth.ac.uk
+Daniel Green – [@KasumiL5x](https://twitter.com/kasumil5x) – dgreen@bournemouth.ac.uk
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
