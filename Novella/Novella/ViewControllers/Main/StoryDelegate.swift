@@ -49,6 +49,12 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryDeleteVariable(variable: NVVariable) {
 		_mvc.reloadBrowser()
 	}
+	func onStoryDeleteLink(link: NVBaseLink) {
+		_mvc.reloadBrowser()
+	}
+	func onStoryDeleteNode(node: NVNode) {
+		_mvc.reloadBrowser()
+	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
 		_mvc.reloadBrowser()

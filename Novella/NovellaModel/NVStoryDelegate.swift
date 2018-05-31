@@ -38,6 +38,10 @@ public protocol NVStoryDelegate {
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool)
 	// Called when an NVVariable is deleted using StoryManager.deleteVariable().
 	func onStoryDeleteVariable(variable: NVVariable)
+	// Called when an NVNode is deleted using StoryManager.delete(node).
+	func onStoryDeleteNode(node: NVNode)
+	// Called when an NVBaseLink is deleted using StoryManager.delete(link).
+	func onStoryDeleteLink(link: NVBaseLink)
 	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
@@ -154,6 +158,10 @@ public extension NVStoryDelegate {
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
 	}
 	func onStoryDeleteVariable(variable: NVVariable) {
+	}
+	func onStoryDeleteNode(node: NVNode) {
+	}
+	func onStoryDeleteLink(link: NVBaseLink) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {

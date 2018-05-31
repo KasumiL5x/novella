@@ -95,6 +95,12 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - - Functions -
+	func removeOutput(pin: PinView) {
+		if let idx = _outputs.index(of: pin) {
+			_outputs.remove(at: idx)
+		}
+	}
+	
 	func onTrashed() {
 		print("LinkableView::onTrashed() should be overridden.")
 	}

@@ -768,6 +768,22 @@ extension GraphView {
 		return node
 	}
 	
+	fileprivate func deleteLinkableView(node: LinkableView) {
+		// 1. remove from parent view
+		node.removeFromSuperview()
+		
+		// 2. remove all of its pins (as we need to remove them from lists and can't rely on auto remove)
+		node.Outputs.forEach { (pin) in
+			deletePinView(pin: pin)
+		}
+		
+		// 3. remove from all linkables
+		_allLinkableViews.remove(at: _allLinkableViews.index(of: node)!)
+		
+		// 4. update all curves as anything incoming no longer links to this item
+		updateCurves() // TODO: Could optimize by only redrawing the connected curves
+	}
+	
 	// MARK: PinViews
 	fileprivate func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
@@ -780,6 +796,24 @@ extension GraphView {
 		_allPinViews.append(pin)
 		
 		return pin
+	}
+	
+	fileprivate func deletePinView(pin: PinView) {
+		// 1. remove from parent view
+		pin.removeFromSuperview()
+		
+		// 2. remove from linkable's list
+		_allLinkableViews.forEach { (lview) in
+			if lview.Outputs.contains(pin) {
+				lview.removeOutput(pin: pin)
+			}
+		}
+		
+		// 3. remove from all pin views
+		_allPinViews.remove(at: _allPinViews.index(of: pin)!)
+		
+		// 4. update all curves as anything incoming no longer links to this item
+		updateCurves() // TODO: Could optimize by only redrawing the connected curves
 	}
 }
 
@@ -837,6 +871,17 @@ extension GraphView: NVStoryDelegate {
 			
 		default:
 			print("Trashed unsupported item: \(item)")
+		}
+	}
+	
+	func onStoryDeleteLink(link: NVBaseLink) {
+		if let pin = _allPinViews.first(where: {$0.BaseLink == link}) {
+			deletePinView(pin: pin)
+		}
+	}
+	func onStoryDeleteNode(node: NVNode) {
+		if let node = _allLinkableViews.first(where: {$0.Linkable.UUID == node.UUID}) {
+			deleteLinkableView(node: node)
 		}
 	}
 }
