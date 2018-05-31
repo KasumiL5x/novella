@@ -60,6 +60,18 @@ class VariableInitialValueDoubleCell: NSTableCellView {
 		asVariable.setInitialValue(double)
 	}
 }
+// MARK: Constant
+class VariableConstantBoolCell: NSTableCellView {
+	@IBOutlet weak var _popupButton: NSPopUpButton!
+	var _forItem: Any?
+	
+	@IBAction func onPopupChanged(_ sender: NSPopUpButton) {
+		guard let asVariable = _forItem as? NVVariable else { return }
+		
+		let bool = sender.selectedItem?.title == "true" ? true : false
+		asVariable.IsConstant = bool
+	}
+}
 
 // MARK: - View Controller -
 class VariableTabViewController: NSViewController {
@@ -221,16 +233,17 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 			}
 			
 		case "ConstantColumn":
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ConstantCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
-				(view as! NSTableCellView).textField?.stringValue = ""
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ConstantTextCell"), owner: self) as? NSTableCellView
 			case is NVVariable:
-				(view as! NSTableCellView).textField?.stringValue = (item as! NVVariable).IsConstant ? "true" : "false"
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ConstantBoolCell"), owner: self) as? VariableConstantBoolCell
+				(view as! VariableConstantBoolCell)._forItem = item
+				(view as! VariableConstantBoolCell)._popupButton.selectItem(withTitle: (item as! NVVariable).IsConstant ? "true" : "false")
 			default:
-				(view as! NSTableCellView).textField?.stringValue = "error"
+				view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ConstantTextCell"), owner: self) as? NSTableCellView
+				(view as! NSTableCellView).textField?.stringValue = "Error"
 			}
-			break
 			
 		default:
 			break
