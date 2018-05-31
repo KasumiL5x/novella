@@ -831,12 +831,14 @@ extension GraphView: NSPopoverDelegate {
 
 extension GraphView: NVStoryDelegate {
 	func onStoryTrashItem(item: NVLinkable) {
-		
+
+		/* decided not to trash incoming links as you may want to reuse them
 		for linkTo in NVStoryManager.shared.getLinksTo(item) {
 			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
 				pin.TrashMode = true
 			}
 		}
+		*/
 		
 		switch item {
 		case is NVDialog:
