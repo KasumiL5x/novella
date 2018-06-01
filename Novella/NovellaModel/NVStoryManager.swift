@@ -365,14 +365,16 @@ extension NVStoryManager {
 	}
 	
 	public func emptyTrash() {
-		// TODO: Remove in reverse order by index so things can be literally removed IN the loop.
-		for curr in _trashed {
+		for i in (0..<_trashed.count).reversed() {
+			let curr = _trashed[i]
 			switch curr {
 			case is NVBaseLink:
 				delete(link: curr as! NVBaseLink)
+				_trashed.remove(at: i)
 				
 			case is NVNode:
 				delete(node: curr as! NVNode)
+				_trashed.remove(at: i)
 				
 			default:
 				print("Tried to untrash some unhandled object: \(curr)")
