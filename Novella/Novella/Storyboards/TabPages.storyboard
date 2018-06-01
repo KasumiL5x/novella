@@ -91,7 +91,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="NameCell" id="oUz-aQ-P6K">
+                                                        <tableCellView identifier="NameTextCell" id="oUz-aQ-P6K" userLabel="TextCell">
                                                             <rect key="frame" x="1" y="1" width="173" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -127,7 +127,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="SynopsisCell" id="aEJ-av-lGi">
+                                                        <tableCellView identifier="SynopsisTextCell" id="aEJ-av-lGi" userLabel="TextCell">
                                                             <rect key="frame" x="176.5" y="1" width="172" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>

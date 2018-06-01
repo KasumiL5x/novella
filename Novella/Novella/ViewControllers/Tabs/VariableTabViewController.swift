@@ -200,7 +200,7 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 		
 		switch tableColumn?.identifier.rawValue {
 		case "NameColumn":
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: self) as? NSTableCellView
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameTextCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
 				(view as! NSTableCellView).textField?.stringValue = (item as! NVFolder).Name
@@ -211,7 +211,7 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 			}
 			
 		case "SynopsisColumn":
-			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SynopsisCell"), owner: self) as? NSTableCellView
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SynopsisTextCell"), owner: self) as? NSTableCellView
 			switch item {
 			case is NVFolder:
 				(view as! NSTableCellView).textField?.stringValue = (item as! NVFolder).Synopsis
