@@ -156,9 +156,27 @@ class VariableTabViewController: NSViewController {
 			_outlineView.reloadData()
 		}
 	}
+	
+	// MARK: - Table Callbacks -
+	@IBAction func onSynopsisChanged(_ sender: NSTextField) {
+		guard let item = _outlineView.item(atRow: _outlineView.selectedRow) else {
+			return
+		}
+		
+		switch item {
+		case is NVFolder:
+			(item as! NVFolder).Synopsis = sender.stringValue
+			
+		case is NVVariable:
+			(item as! NVVariable).Synopsis = sender.stringValue
+			
+		default:
+			break
+		}
+	}
 }
 
-// MARK: - - NSOutlineViewDelegate -
+// MARK: - NSOutlineViewDelegate -
 extension VariableTabViewController: NSOutlineViewDelegate {
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSView?
@@ -253,7 +271,7 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 	}
 }
 
-// MARK: - - NSOutlineViewDataSource -
+// MARK: - NSOutlineViewDataSource -
 extension VariableTabViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		switch item {
