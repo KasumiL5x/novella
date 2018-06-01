@@ -10,7 +10,7 @@
   ],
   "story" : {
     "graphs" : [
-      "1BC4A18E-58D1-49DC-A745-932B5336BA8F"
+      "E7412E37-ACF9-47CF-8AAF-6344492CFE4D"
     ],
     "name" : "",
     "folders" : [
@@ -18,7 +18,15 @@
     ]
   },
   "nodes" : [
-
+    {
+      "position" : {
+        "y" : 376.5,
+        "x" : 481
+      },
+      "name" : "",
+      "uuid" : "BEA3A1A2-FF4C-42BB-B81D-3410B81A5665",
+      "nodetype" : "context"
+    }
   ],
   "graphs" : [
     {
@@ -26,15 +34,15 @@
         "y" : 0,
         "x" : 0
       },
-      "name" : "New Graph",
+      "name" : "154C7A5E-D077-4AC7-BC4B-149FA93F370E",
       "nodes" : [
-
+        "BEA3A1A2-FF4C-42BB-B81D-3410B81A5665"
       ],
       "links" : [
 
       ],
       "entry" : "",
-      "uuid" : "1BC4A18E-58D1-49DC-A745-932B5336BA8F",
+      "uuid" : "E7412E37-ACF9-47CF-8AAF-6344492CFE4D",
       "subgraphs" : [
 
       ],
