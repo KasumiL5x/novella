@@ -43,6 +43,15 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadBrowser()
 	}
 	
+	func onStoryTrashItem(item: NVLinkable) {
+		_mvc.reloadBrowser()
+		_mvc.reloadInspector()
+	}
+	func onStoryUntrashItem(item: NVLinkable) {
+		_mvc.reloadBrowser()
+		_mvc.reloadInspector()
+	}
+	
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
 		_mvc.reloadBrowser()
 	}
