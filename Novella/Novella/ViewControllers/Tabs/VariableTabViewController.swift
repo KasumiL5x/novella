@@ -174,6 +174,23 @@ class VariableTabViewController: NSViewController {
 			break
 		}
 	}
+	
+	@IBAction func onNameChanged(_ sender: NSTextField) {
+		guard let item = _outlineView.item(atRow: _outlineView.selectedRow) else {
+			return
+		}
+		
+		switch item {
+		case is NVFolder:
+			(item as! NVFolder).Name = sender.stringValue
+			
+		case is NVVariable:
+			(item as! NVVariable).Name = sender.stringValue
+			
+		default:
+			break
+		}
+	}
 }
 
 // MARK: - NSOutlineViewDelegate -
