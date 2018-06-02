@@ -81,7 +81,7 @@ class MainViewController: NSViewController {
 		
 		// tab controller
 		_selectedTab = nil
-		_tabController.style = ChromeStyle()
+		_tabController.style = SafariStyle()
 		_tabController.delegate = self
 		_tabController.dataSource = _tabsDataSource
 		_tabController.reloadTabs()
@@ -323,7 +323,10 @@ class MainViewController: NSViewController {
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
-		let tabItem = TabItem(title: forGraph.Name, icon: nil, menu: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		let tabItem = TabItem(title: forGraph.Name, icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		tabItem.closeFunc = { (item) in
+			self.closeTab(tab: item)
+		}
 		_tabsDataSource!.Tabs.append(tabItem)
 		_tabController.reloadTabs()
 		
@@ -341,7 +344,10 @@ class MainViewController: NSViewController {
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
-		let tabItem = TabItem(title: "Variable Editor", icon: nil, menu: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		let tabItem = TabItem(title: "Variable Editor", icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		tabItem.closeFunc = { (item) in
+			self.closeTab(tab: item)
+		}
 		_tabsDataSource!.Tabs.append(tabItem)
 		_tabController.reloadTabs()
 		
@@ -412,12 +418,6 @@ class MainViewController: NSViewController {
 		} else {
 			let varTab = addVariableTabEditor()
 			selectTab(item: varTab)
-		}
-	}
-	
-	@IBAction func onCloseTab(_ sender: NSButton) {
-		if let item = _selectedTab {
-			closeTab(tab: item)
 		}
 	}
 	

@@ -15,14 +15,21 @@ class TabItem {
 	var altIcon: NSImage?
 	var selectable: Bool
 	var tabItem: NSTabViewItem
+	var closeFunc: ((TabItem) -> ())?
 	
-	init(title: String, icon: NSImage?, menu: NSMenu?, altIcon: NSImage?, tabItem: NSTabViewItem, selectable: Bool = true) {
+	init(title: String, icon: NSImage?, altIcon: NSImage?, tabItem: NSTabViewItem, selectable: Bool = true) {
 		self.title = title
 		self.icon = icon
-		self.menu = menu
 		self.altIcon = altIcon
 		self.tabItem = tabItem
 		self.selectable = selectable
+		
+		self.menu = NSMenu()
+		self.menu!.addItem(withTitle: "Close", action: #selector(TabItem.onMenuClose), keyEquivalent: "").target = self
+	}
+	
+	@objc private func onMenuClose() {
+		self.closeFunc?(self)
 	}
 }
 extension TabItem: Equatable {
