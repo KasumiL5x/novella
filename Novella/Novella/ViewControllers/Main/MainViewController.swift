@@ -32,23 +32,18 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _splitView: NSSplitView!
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
-	@IBOutlet fileprivate weak var _storyBrowser: NSOutlineView!
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
 	@IBOutlet weak var _inspector: NSTableView!
-	
-	@IBOutlet fileprivate weak var _outlinerView: NSOutlineView!
-	fileprivate var _outlinerDelegateDataSource: OutlinerGraphDelegateDataSource?
-	@IBOutlet weak var _selectedGraphName: NSTextField!
-	@IBOutlet weak var _selectedOutlinerView: NSOutlineView!
-	var _selectedOutlineStuff: OutlinerSelectedDelegateDataSource?
-	
+	@IBOutlet fileprivate weak var _allGraphsOutline: NSOutlineView!
+	@IBOutlet fileprivate weak var _selectedGraphOutline: NSOutlineView!
+	@IBOutlet fileprivate weak var _selectedGraphName: NSTextField!
 	
 	// MARK: - - Delegates & Data Sources -
 	fileprivate var _storyDelegate: StoryDelegate?
-	fileprivate var _storyBrowserDataSource: StoryBrowserDataSource?
-	fileprivate var _storyBrowserDelegate: StoryBrowserDelegate?
 	fileprivate var _tabsDataSource: TabsDataSource?
 	fileprivate var _inspectorDataDelegate: InspectorDataSource?
+	fileprivate var _allGraphsDelegate: AllGraphsDelegate?
+	fileprivate var _selectedGraphDelegate: SelectedGraphDelegate?
 	
 	// MARK: - - Properties -
 	var InspectorDelegate: InspectorDataSource? {
@@ -56,25 +51,37 @@ class MainViewController: NSViewController {
 	}
 	
 	
+	// MARK: - _TESTING_ -
+	func setSelectedGraph(graph: NVGraph?) {
+		_selectedGraphDelegate?.Graph = graph
+		_selectedGraphName.stringValue = graph?.Name ?? ""
+		_selectedGraphOutline.reloadData()
+		
+		// handle opening of graph view
+		if let graph = graph {
+			// if a tab is open, switch to it
+			if let tab = getTabForGraph(graph: graph) {
+				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
+			} else {
+				_ = addNewTab(forGraph: graph)
+				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
+			}
+		}
+	}
+	
 	// MARK: - - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		// delegates and data sources
 		_storyDelegate = StoryDelegate(mvc: self)
-		_storyBrowserDataSource = StoryBrowserDataSource()
-		_storyBrowserDelegate = StoryBrowserDelegate(mvc: self)
 		_tabsDataSource = TabsDataSource()
 		_inspectorDataDelegate = InspectorDataSource()
+		_allGraphsDelegate = AllGraphsDelegate(mvc: self)
+		_selectedGraphDelegate = SelectedGraphDelegate(mvc: self)
 		
 		// split view
 		_splitView.delegate = self
-		
-		// story browser
-		_storyBrowser.delegate = _storyBrowserDelegate
-		_storyBrowser.dataSource = _storyBrowserDataSource
-		_storyBrowser.target = self
-		_storyBrowser.doubleAction = #selector(MainViewController.onStoryBrowserDoubleClick)
 		
 		// tab controller
 		_selectedTab = nil
@@ -87,13 +94,11 @@ class MainViewController: NSViewController {
 		_inspector.dataSource = _inspectorDataDelegate
 		_inspector.delegate = _inspectorDataDelegate
 		
-		// test
-		_outlinerDelegateDataSource = OutlinerGraphDelegateDataSource(mvc: self)
-		_outlinerView.dataSource = _outlinerDelegateDataSource
-		_outlinerView.delegate = _outlinerDelegateDataSource
-		_selectedOutlineStuff = OutlinerSelectedDelegateDataSource(mvc: self)
-		_selectedOutlinerView.delegate = _selectedOutlineStuff
-		_selectedOutlinerView.dataSource = _selectedOutlineStuff
+		// outliners
+		_allGraphsOutline.dataSource = _allGraphsDelegate
+		_allGraphsOutline.delegate = _allGraphsDelegate
+		_selectedGraphOutline.delegate = _selectedGraphDelegate
+		_selectedGraphOutline.dataSource = _selectedGraphDelegate
 		
 		// start with an empty story
 		createEmptyStory()
@@ -120,7 +125,9 @@ class MainViewController: NSViewController {
 		// no name
 		_storyName.stringValue = ""
 		
-		reloadBrowser()
+		reloadAllGraphs()
+		setSelectedGraph(graph: nil)
+		reloadInspector()
 	}
 
 	func onOpen() {
@@ -182,7 +189,9 @@ class MainViewController: NSViewController {
 		// story name
 		_storyName.stringValue = NVStoryManager.shared.Story.Name
 		
-		reloadBrowser()
+		reloadAllGraphs()
+		setSelectedGraph(graph: nil)
+		reloadInspector()
 	}
 	
 	func onSave(forcePrompt: Bool) {
@@ -211,7 +220,9 @@ class MainViewController: NSViewController {
 		// no name
 		_storyName.stringValue = ""
 		
-		reloadBrowser()
+		reloadAllGraphs()
+		setSelectedGraph(graph: nil)
+		reloadInspector()
 	}
 	
 	// MARK: - - Alerts -
@@ -379,17 +390,18 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Interface Buttons -
 	@IBAction func onTrashItem(_ sender: NSButton) {
-		let selectedRow = _storyBrowser.selectedRow
-		let item = _storyBrowser.item(atRow: selectedRow)
-		if item == nil {
-			return
-		}
-		
-		if var trashable = item as? NVLinkable {
-			let inTrash = trashable.Trashed
-			trashable.Trashed = !inTrash
-			_storyBrowser.selectRowIndexes(.init(integer: selectedRow), byExtendingSelection: false)
-		}
+		print("Need to reimplement this.")
+//		let selectedRow = _storyBrowser.selectedRow
+//		let item = _storyBrowser.item(atRow: selectedRow)
+//		if item == nil {
+//			return
+//		}
+//
+//		if var trashable = item as? NVLinkable {
+//			let inTrash = trashable.Trashed
+//			trashable.Trashed = !inTrash
+//			_storyBrowser.selectRowIndexes(.init(integer: selectedRow), byExtendingSelection: false)
+//		}
 	}
 	
 	@IBAction func onEmptyTrash(_ sender: NSButton) {
@@ -420,7 +432,7 @@ class MainViewController: NSViewController {
 		let newTab = addNewTab(forGraph: graph)
 		selectTab(item: newTab)
 		
-		reloadBrowser()
+		reloadAllGraphs()
 	}
 	
 	@IBAction func onUndo(_ sender: NSButton) {
@@ -435,42 +447,35 @@ class MainViewController: NSViewController {
 		NVStoryManager.shared.Story.Name = sender.stringValue
 	}
 	
-	// MARK: - - Story Browser Functions -
-	func reloadBrowser() {
-		_outlinerView.reloadData()
-		_selectedOutlinerView.reloadData()
-		
-		_storyBrowser.reloadData()
-		//_storyBrowser.expandItem(nil, expandChildren: false) // expands everything
-		// expand top-level objects
-		for i in 0..._storyBrowser.numberOfRows {
-			if _storyBrowser.level(forRow: i) == 0 { // depth=0 a.k.a top level
-				_storyBrowser.expandItem(_storyBrowser.item(atRow: i), expandChildren: false)
-			}
-		}
+	// MARK: - - Outliner Functions -
+	func reloadAllGraphs() {
+		_allGraphsOutline.reloadData()
+	}
+	func reloadSelectedGraph() {
+		_selectedGraphOutline.reloadData()
 	}
 }
 
 // MARK: - - Story Browser -
 extension MainViewController {
-	@objc fileprivate func onStoryBrowserDoubleClick() {
-		let clickedRow = _storyBrowser.clickedRow
-		if -1 == clickedRow {
-			return
-		}
-		
-		let clickedItem = _storyBrowser.item(atRow: clickedRow)
-		
-		if let asGraph = clickedItem as? NVGraph {
-			// if graph is open, switch to it
-			if let tab = getTabForGraph(graph: asGraph) {
-				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
-			} else {
-				_ = addNewTab(forGraph: asGraph)
-				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
-			}
-		}
-	}
+//	@objc fileprivate func onStoryBrowserDoubleClick() {
+//		let clickedRow = _storyBrowser.clickedRow
+//		if -1 == clickedRow {
+//			return
+//		}
+//
+//		let clickedItem = _storyBrowser.item(atRow: clickedRow)
+//
+//		if let asGraph = clickedItem as? NVGraph {
+//			// if graph is open, switch to it
+//			if let tab = getTabForGraph(graph: asGraph) {
+//				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
+//			} else {
+//				_ = addNewTab(forGraph: asGraph)
+//				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
+//			}
+//		}
+//	}
 }
 
 // MARK: - - Tabs -
@@ -506,7 +511,8 @@ extension MainViewController: TabsControlDelegate {
 				nvGraph.Name = newTitle
 				tabItem.title = newTitle
 			}
-			reloadBrowser()
+			reloadAllGraphs()
+			reloadSelectedGraph()
 			
 		default:
 			print("Unexpected ViewController type for renamed tab.")

@@ -19,7 +19,7 @@ class OutlinerTableRowView: NSTableRowView {
 	}
 }
 
-class OutlinerSelectedDelegateDataSource: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
 	fileprivate var _graph: NVGraph?
 	fileprivate var _mvc: MainViewController
 	
@@ -27,7 +27,6 @@ class OutlinerSelectedDelegateDataSource: NSObject, NSOutlineViewDataSource, NSO
 		get{ return _graph }
 		set{
 			_graph = newValue
-			_mvc.reloadBrowser()
 		}
 	}
 	
@@ -104,7 +103,7 @@ class OutlinerSelectedDelegateDataSource: NSObject, NSOutlineViewDataSource, NSO
 	
 }
 
-class OutlinerGraphDelegateDataSource: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
 	fileprivate var _mvc: MainViewController
 	
 	init(mvc: MainViewController) {
@@ -114,14 +113,7 @@ class OutlinerGraphDelegateDataSource: NSObject, NSOutlineViewDataSource, NSOutl
 	func outlineViewSelectionDidChange(_ notification: Notification) {
 		let outlineView = (notification.object as! NSOutlineView)
 		
-		if let item = outlineView.item(atRow: outlineView.selectedRow) {
-			_mvc._selectedOutlineStuff!.Graph = item as! NVGraph
-			_mvc._selectedGraphName.stringValue = (item as! NVGraph).Name
-		} else {
-			_mvc._selectedOutlineStuff!.Graph = nil
-			_mvc._selectedGraphName.stringValue = ""
-		}
-		_mvc.reloadBrowser()
+		_mvc.setSelectedGraph(graph: outlineView.item(atRow: outlineView.selectedRow) as? NVGraph)
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
