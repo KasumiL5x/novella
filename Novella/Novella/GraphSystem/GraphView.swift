@@ -112,6 +112,7 @@ class GraphView: NSView {
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
 		_graphViewMenu.addItem(withTitle: "Un/Trash Selection", action: #selector(GraphView.onGraphViewMenuTrashSelection), keyEquivalent: "")
+		_graphViewMenu.addItem(withTitle: "Empty Trash", action: #selector(GraphView.onGraphViewMenuEmptyTrash), keyEquivalent: "")
 		_graphViewMenu.addItem(addMenu)
 		
 		// configure pin context menus
@@ -523,6 +524,9 @@ extension GraphView {
 			var linkable = curr.Linkable
 			linkable.Trashed = !inTrash
 		}
+	}
+	@objc fileprivate func onGraphViewMenuEmptyTrash() {
+		NVStoryManager.shared.emptyTrash()
 	}
 	
 	// MARK: Linkable Menu

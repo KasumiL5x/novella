@@ -410,25 +410,6 @@ class MainViewController: NSViewController {
 		addGraph(parent: nil)
 	}
 	
-	@IBAction func onTrashItem(_ sender: NSButton) {
-		print("Need to reimplement this.")
-//		let selectedRow = _storyBrowser.selectedRow
-//		let item = _storyBrowser.item(atRow: selectedRow)
-//		if item == nil {
-//			return
-//		}
-//
-//		if var trashable = item as? NVLinkable {
-//			let inTrash = trashable.Trashed
-//			trashable.Trashed = !inTrash
-//			_storyBrowser.selectRowIndexes(.init(integer: selectedRow), byExtendingSelection: false)
-//		}
-	}
-	
-	@IBAction func onEmptyTrash(_ sender: NSButton) {
-		NVStoryManager.shared.emptyTrash()
-	}
-	
 	@IBAction func onVariableEditor(_ sender: NSButton) {
 		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
 			selectTab(item: existing)
