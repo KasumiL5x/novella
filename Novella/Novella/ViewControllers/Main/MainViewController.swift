@@ -36,6 +36,13 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
 	@IBOutlet weak var _inspector: NSTableView!
 	
+	@IBOutlet fileprivate weak var _outlinerView: NSOutlineView!
+	fileprivate var _outlinerDelegateDataSource: OutlinerGraphDelegateDataSource?
+	@IBOutlet weak var _selectedGraphName: NSTextField!
+	@IBOutlet weak var _selectedOutlinerView: NSOutlineView!
+	var _selectedOutlineStuff: OutlinerSelectedDelegateDataSource?
+	
+	
 	// MARK: - - Delegates & Data Sources -
 	fileprivate var _storyDelegate: StoryDelegate?
 	fileprivate var _storyBrowserDataSource: StoryBrowserDataSource?
@@ -79,6 +86,14 @@ class MainViewController: NSViewController {
 		// inspector
 		_inspector.dataSource = _inspectorDataDelegate
 		_inspector.delegate = _inspectorDataDelegate
+		
+		// test
+		_outlinerDelegateDataSource = OutlinerGraphDelegateDataSource(mvc: self)
+		_outlinerView.dataSource = _outlinerDelegateDataSource
+		_outlinerView.delegate = _outlinerDelegateDataSource
+		_selectedOutlineStuff = OutlinerSelectedDelegateDataSource(mvc: self)
+		_selectedOutlinerView.delegate = _selectedOutlineStuff
+		_selectedOutlinerView.dataSource = _selectedOutlineStuff
 		
 		// start with an empty story
 		createEmptyStory()
@@ -422,6 +437,9 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Story Browser Functions -
 	func reloadBrowser() {
+		_outlinerView.reloadData()
+		_selectedOutlinerView.reloadData()
+		
 		_storyBrowser.reloadData()
 		//_storyBrowser.expandItem(nil, expandChildren: false) // expands everything
 		// expand top-level objects
