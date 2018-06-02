@@ -9,9 +9,11 @@
 import JavaScriptCore
 
 public class NVCondition {
-	fileprivate var _javascript: String
+	private let _manager: NVStoryManager
+	private var _javascript: String
 	
-	init() {
+	init(manager: NVStoryManager) {
+		self._manager = manager
 		_javascript = ""
 	}
 	
@@ -29,10 +31,10 @@ public class NVCondition {
 		print(boolFunc)
 		
 		// evaluate the script so JS knows about it
-		NVStoryManager.shared._jsContext.evaluateScript(boolFunc)
+		_manager._jsContext.evaluateScript(boolFunc)
 		
 		// get a reference to the function
-		guard let execFunc = NVStoryManager.shared._jsContext.objectForKeyedSubscript("executeCondition") else {
+		guard let execFunc = _manager._jsContext.objectForKeyedSubscript("executeCondition") else {
 			fatalError("Could not find JavaScript function executeCondition().")
 		}
 		

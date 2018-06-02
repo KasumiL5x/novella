@@ -9,13 +9,15 @@
 import Foundation
 
 public class NVNode {
-	fileprivate let _uuid: NSUUID
-	fileprivate var _inTrash: Bool
-	fileprivate var _editorPos: CGPoint
+	internal let _manager: NVStoryManager
+	private let _uuid: NSUUID
+	private var _inTrash: Bool
+	private var _editorPos: CGPoint
 	
-	fileprivate var _name: String
+	private var _name: String
 	
-	init(uuid: NSUUID) {
+	init(manager: NVStoryManager, uuid: NSUUID) {
+		self._manager = manager
 		self._uuid = uuid
 		self._inTrash = false
 		self._editorPos = CGPoint.zero
@@ -28,7 +30,7 @@ public class NVNode {
 		set {
 			let oldName = _name
 			_name = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
+			_manager.Delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
 		}
 	}
 }
@@ -47,10 +49,10 @@ extension NVNode: NVLinkable {
 		set {
 			if newValue {
 				_inTrash = true
-				NVStoryManager.shared.trash(self)
+				_manager.trash(self)
 			} else {
 				_inTrash = false
-				NVStoryManager.shared.untrash(self)
+				_manager.untrash(self)
 			}
 		}
 	}

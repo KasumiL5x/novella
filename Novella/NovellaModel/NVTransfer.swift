@@ -8,7 +8,7 @@
 
 public class NVTransfer {
 	internal var _destination: NVLinkable?
-	fileprivate var _function: NVFunction
+	private var _function: NVFunction
 	
 	init() {
 		self._destination = nil

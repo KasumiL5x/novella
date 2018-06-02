@@ -21,13 +21,12 @@ class MainViewController: NSViewController {
 	fileprivate static let MAX_ZOOM: CGFloat = 4.0
 	
 	// MARK: - - Variables -
-	fileprivate var _openedFile: URL?
+	private var _manager: NVStoryManager?
 	fileprivate var _selectedTab: TabItem?
 	
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _splitView: NSSplitView!
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
-	@IBOutlet fileprivate weak var _storyName: NSTextField!
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
 	@IBOutlet private weak var _inspector: NSTableView!
 	@IBOutlet private weak var _allGraphsOutline: AllGraphsOutlineView!
@@ -42,12 +41,35 @@ class MainViewController: NSViewController {
 	fileprivate var _selectedGraphDelegate: SelectedGraphDelegate?
 	
 	// MARK: - - Properties -
+	var Manager: NVStoryManager? {
+		get{ return _manager }
+	}
 	var InspectorDelegate: InspectorDataSource? {
 		get{ return _inspectorDataDelegate }
 	}
 	
 	
 	// MARK: - _TESTING_ -
+	func setManager(manager: NVStoryManager) {
+		_manager = manager
+		
+		// close any tabs
+		closeAllTabs()
+		
+		// add a new graph tab for each subgraph of the story
+		for curr in _manager!.Story.Graphs {
+			addNewTab(forGraph: curr)
+		}
+		// select first tab
+		if _tabsDataSource!.Tabs.count > 0 {
+			_tabController.reloadTabs()
+			selectTab(item: _tabsDataSource!.Tabs[0])
+		}
+		
+		reloadAllGraphs()
+		setSelectedGraph(graph: nil)
+		reloadInspector()
+	}
 	func setSelectedGraph(graph: NVGraph?) {
 		_selectedGraphDelegate?.Graph = graph
 		_selectedGraphName.stringValue = graph?.Name ?? ""
@@ -97,132 +119,8 @@ class MainViewController: NSViewController {
 		_selectedGraphOutline.MVC = self
 		_selectedGraphOutline.delegate = _selectedGraphDelegate
 		_selectedGraphOutline.dataSource = _selectedGraphDelegate
-		
-		// start with an empty story
-		createEmptyStory()
-	}
-	
-	// MARK: - - Functions called from window -
-	func onNew() {
-		let saveAlertResult = alertSave(message: "Save Before New?", info: "Making a new Story will lose any unsaved changes.  Do you want to save first?")
-		switch saveAlertResult {
-		case .cancel:
-			return
-		case .save:
-			if !saveStory(false) {
-				return
-			}
-			break
-		case .dontsave:
-			break
-		}
-		createEmptyStory()
-		
-		// no longer has an open file
-		_openedFile = nil
-		// no name
-		_storyName.stringValue = ""
-		
-		reloadAllGraphs()
-		setSelectedGraph(graph: nil)
-		reloadInspector()
 	}
 
-	func onOpen() {
-		let saveAlertResult = alertSave(message: "Save Before Open?", info: "Opening a Story will lose any unsaved changes.  Do you want to save first?")
-		switch saveAlertResult {
-		case .cancel:
-			return
-		case .save:
-			if !saveStory(false) {
-				return
-			}
-			break
-		case .dontsave:
-			break
-		}
-		
-		// open file
-		let ofd = NSOpenPanel()
-		ofd.title = "Open Novella Story JSON."
-		ofd.canChooseFiles = true
-		ofd.canChooseDirectories = false
-		ofd.allowsMultipleSelection = false
-		ofd.allowedFileTypes = ["json"]
-		if ofd.runModal() != .OK {
-			return
-		}
-		
-		// read file contents
-		let contents: String
-		do { contents = try String(contentsOf: ofd.url!) } catch {
-			alertError(message: "Failed to open.", info: "The selected JSON file could not be read.")
-			return
-		}
-		
-		// load story object from json string
-		if NVStoryManager.fromJSON(str: contents) {
-			NVStoryManager.shared.addDelegate(_storyDelegate!)
-		} else {
-			alertError(message: "Failed to load Story.", info: "Failed to load the story.")
-			return
-		}
-		
-		// close any current tabs
-		closeAllTabs()
-		
-		// add a new graph tab for each subgraph of the story
-		for curr in NVStoryManager.shared.Story.Graphs {
-			addNewTab(forGraph: curr)
-		}
-		// select first tab
-		if _tabsDataSource!.Tabs.count > 0 {
-			_tabController.reloadTabs()
-			selectTab(item: _tabsDataSource!.Tabs[0])
-		}
-		
-		// store file url for saving
-		_openedFile = ofd.url!
-		
-		// story name
-		_storyName.stringValue = NVStoryManager.shared.Story.Name
-		
-		reloadAllGraphs()
-		setSelectedGraph(graph: nil)
-		reloadInspector()
-	}
-	
-	func onSave(forcePrompt: Bool) {
-		_ = saveStory(forcePrompt)
-	}
-	
-	func onClose() {
-		let saveAlertResult = alertSave(message: "Save Before Close?", info: "Closing the Story will lose any unsaved changes.  Do you want to save first?")
-		switch saveAlertResult {
-		case .cancel:
-			return
-		case .save:
-			if !saveStory(false) {
-				return
-			}
-			break
-		case .dontsave:
-			break
-		}
-		
-		createEmptyStory()
-		
-		// no longer has an open file
-		_openedFile = nil
-		
-		// no name
-		_storyName.stringValue = ""
-		
-		reloadAllGraphs()
-		setSelectedGraph(graph: nil)
-		reloadInspector()
-	}
-	
 	// MARK: - - Alerts -
 	fileprivate func alertError(message: String, info: String) {
 		let alert = NSAlert()
@@ -252,62 +150,18 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Story Helpers -
 	func addGraph(parent: NVGraph?) {
-		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
-		
-		if parent == nil {
-			try! NVStoryManager.shared.Story.add(graph: graph)
-		} else {
-			try! parent!.add(graph: graph)
-		}
-		let newTab = addNewTab(forGraph: graph)
-		selectTab(item: newTab)
-		
-		reloadAllGraphs()
-		reloadSelectedGraph()
-	}
-	
-	fileprivate func saveStory(_ forcePrompt: Bool) -> Bool {
-		if _openedFile == nil || forcePrompt {
-			let sfd = NSSavePanel()
-			sfd.title = "Save Novella Story JSON."
-			sfd.canCreateDirectories = true
-			sfd.allowedFileTypes = ["json"]
-			sfd.allowsOtherFileTypes = false
-			if sfd.runModal() != .OK {
-				return false
+		if let graph = _manager?.makeGraph(name: NSUUID().uuidString) {
+			if parent == nil {
+				try! _manager?.Story.add(graph: graph)
+			} else {
+				try! parent!.add(graph: graph)
 			}
-			_openedFile = sfd.url!
+			let newTab = addNewTab(forGraph: graph)
+			selectTab(item: newTab)
+			
+			reloadAllGraphs()
+			reloadSelectedGraph()
 		}
-		
-		let saveURL: URL
-		saveURL = _openedFile!
-		
-		// convert story to json
-		let jsonString = NVStoryManager.shared.toJSON()
-		if jsonString == "" {
-			alertError(message: "Failed to save.", info: "Unable to convert Story to JSON.")
-			_openedFile = nil
-			return false
-		}
-		
-		// write json string to file
-		do { try jsonString.write(to: saveURL, atomically: true, encoding: .utf8) } catch {
-			alertError(message: "Failed to save.", info: "Unable to write JSON to file.")
-			_openedFile = nil
-			return false
-		}
-		
-		let toastSettings = ToastSettings()
-		self.view.showToast(message: "Saved", userSettings: toastSettings)
-		
-		return true
-	}
-	fileprivate func createEmptyStory() {
-		// close existing tabs
-		closeAllTabs()
-		// create a new story
-		NVStoryManager.shared.reset()
-		NVStoryManager.shared.addDelegate(_storyDelegate!)
 	}
 	
 	// MARK: - - Tabs/TabView Functions -
@@ -315,11 +169,11 @@ class MainViewController: NSViewController {
 	fileprivate func addNewTab(forGraph: NVGraph) -> TabItem? {
 		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
 		let id = NSStoryboard.SceneIdentifier(rawValue: "GraphTab")
-		guard let vc =  sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
+		guard let vc = sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
 			print("Failed to initialize GraphTabViewController.")
 			return nil
 		}
-		vc.setup(graph: forGraph, delegate: self)
+		vc.setup(manager: _manager!, graph: forGraph, delegate: self)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -341,6 +195,7 @@ class MainViewController: NSViewController {
 			print("Failed to initialize VariableTabViewController.")
 			return nil
 		}
+		vc.Manager = _manager
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -430,7 +285,7 @@ class MainViewController: NSViewController {
 	}
 	
 	@IBAction func onEditedStoryName(_ sender: NSTextField) {
-		NVStoryManager.shared.Story.Name = sender.stringValue
+		_manager?.Story.Name = sender.stringValue
 	}
 	
 	// MARK: - - Outliner Functions -

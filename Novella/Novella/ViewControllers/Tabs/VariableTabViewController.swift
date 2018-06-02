@@ -79,7 +79,13 @@ class VariableTabViewController: NSViewController {
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
 	
 	// MARK: - Variables -
+	private var _manager: NVStoryManager?
 	fileprivate var _variableTypeIndices: [String:Int] = [:]
+	
+	var Manager: NVStoryManager? {
+		get{ return _manager }
+		set{ _manager = newValue }
+	}
 	
 	// MARK: - Functions -
 	override func viewDidLoad() {
@@ -124,18 +130,18 @@ class VariableTabViewController: NSViewController {
 	
 	@IBAction fileprivate func onAddVariable(_ sender: NSButton) {
 		if let parent = getSelectedFolder() {
-			let variable = NVStoryManager.shared.makeVariable(name: NSUUID().uuidString, type: .boolean)
+			let variable = _manager!.makeVariable(name: NSUUID().uuidString, type: .boolean)
 			try! parent.add(variable: variable)
 			_outlineView.reloadData()
 		}
 	}
 	
 	@IBAction fileprivate func onAddFolder(_ sender: NSButton) {
-		let folder = NVStoryManager.shared.makeFolder(name: NSUUID().uuidString)
+		let folder = _manager!.makeFolder(name: NSUUID().uuidString)
 		if let parent = getSelectedFolder() {
 			try! parent.add(folder: folder)
 		} else {
-			try! NVStoryManager.shared.Story.add(folder: folder)
+			try! _manager!.Story.add(folder: folder)
 		}
 		
 		_outlineView.reloadData()
@@ -145,10 +151,10 @@ class VariableTabViewController: NSViewController {
 		if let selectedItem = _outlineView.item(atRow: _outlineView.selectedRow) {
 			switch selectedItem {
 			case is NVFolder:
-				NVStoryManager.shared.delete(folder: selectedItem as! NVFolder, deleteContents: true)
+				_manager!.delete(folder: selectedItem as! NVFolder, deleteContents: true)
 				
 			case is NVVariable:
-				NVStoryManager.shared.delete(variable: selectedItem as! NVVariable)
+				_manager!.delete(variable: selectedItem as! NVVariable)
 				
 			default:
 				break
@@ -300,7 +306,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return 0
 			
 		default:
-			return NVStoryManager.shared.Story.Folders.count
+			return _manager!.Story.Folders.count
 		}
 	}
 	
@@ -314,7 +320,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return asFolder.Variables[index - asFolder.Folders.count]
 			
 		default:
-			return NVStoryManager.shared.Story.Folders[index]
+			return _manager!.Story.Folders[index]
 		}
 	}
 	
@@ -328,7 +334,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return false
 			
 		default:
-			return NVStoryManager.shared.Story.Folders.count > 0
+			return _manager!.Story.Folders.count > 0
 		}
 	}
 }

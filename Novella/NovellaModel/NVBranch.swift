@@ -9,16 +9,16 @@
 import Foundation
 
 public class NVBranch : NVBaseLink {
-	fileprivate var _condition: NVCondition
-	fileprivate var _trueTransfer: NVTransfer
-	fileprivate var _falseTransfer: NVTransfer
+	private var _condition: NVCondition
+	private var _trueTransfer: NVTransfer
+	private var _falseTransfer: NVTransfer
 	
-	override init(uuid: NSUUID, origin: NVLinkable) {
-		self._condition = NVCondition()
+	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVLinkable) {
+		self._condition = NVCondition(manager: manager)
 		self._trueTransfer = NVTransfer()
 		self._falseTransfer = NVTransfer()
 		
-		super.init(uuid: uuid, origin: origin)
+		super.init(manager: manager, uuid: uuid, origin: origin)
 	}
 	
 	public var Condition: NVCondition {
@@ -33,11 +33,11 @@ public class NVBranch : NVBaseLink {
 	
 	public func setTrueDestination(dest: NVLinkable?) {
 		_trueTransfer._destination = dest
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryBranchSetTrueDestination(branch: self, dest: dest)}
+		_manager.Delegates.forEach{$0.onStoryBranchSetTrueDestination(branch: self, dest: dest)}
 	}
 	
 	public func setFalseDestination(dest: NVLinkable?) {
 		_falseTransfer._destination = dest
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryBranchSetFalseDestination(branch: self, dest: dest)}
+		_manager.Delegates.forEach{$0.onStoryBranchSetFalseDestination(branch: self, dest: dest)}
 	}
 }

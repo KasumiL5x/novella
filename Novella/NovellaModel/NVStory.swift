@@ -10,11 +10,13 @@ import Foundation
 import JavaScriptCore
 
 public class NVStory {
-	fileprivate var _folders: [NVFolder]
-	fileprivate var _graphs: [NVGraph]
-	fileprivate var _name: String
+	private let _manager: NVStoryManager
+	private var _folders: [NVFolder]
+	private var _graphs: [NVGraph]
+	private var _name: String
 	
-	init() {
+	init(manager: NVStoryManager) {
+		self._manager = manager
 		self._folders = []
 		self._graphs = []
 		self._name = ""
@@ -31,7 +33,7 @@ public class NVStory {
 		get{ return _name }
 		set{
 			_name = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryNameChanged(story: self, name: _name)}
+			_manager.Delegates.forEach{$0.onStoryNameChanged(story: self, name: _name)}
 		}
 	}
 }
@@ -56,7 +58,7 @@ extension NVStory {
 		// now add
 		_folders.append(folder)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryAddFolder(folder: folder)}
+		_manager.Delegates.forEach{$0.onStoryAddFolder(folder: folder)}
 		return folder
 	}
 	
@@ -66,7 +68,7 @@ extension NVStory {
 		}
 		_folders.remove(at: idx)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryRemoveFolder(folder: folder)}
+		_manager.Delegates.forEach{$0.onStoryRemoveFolder(folder: folder)}
 	}
 	
 	// MARK: Graphs
@@ -92,7 +94,7 @@ extension NVStory {
 		graph._parent = nil
 		_graphs.append(graph)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryAddGraph(graph: graph)}
+		_manager.Delegates.forEach{$0.onStoryAddGraph(graph: graph)}
 		return graph
 	}
 	
@@ -102,6 +104,6 @@ extension NVStory {
 		}
 		_graphs.remove(at: idx)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryRemoveGraph(graph: graph)}
+		_manager.Delegates.forEach{$0.onStoryRemoveGraph(graph: graph)}
 	}
 }

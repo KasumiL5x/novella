@@ -9,16 +9,18 @@
 import Foundation
 
 public class NVVariable {
-	fileprivate let _uuid: NSUUID
-	fileprivate var _name: String
-	fileprivate var _synopsis: String
-	fileprivate var _type: NVDataType
-	fileprivate var _value: Any
-	fileprivate var _initialValue: Any
-	fileprivate var _constant: Bool
+	private let _manager: NVStoryManager
+	private let _uuid: NSUUID
+	private var _name: String
+	private var _synopsis: String
+	private var _type: NVDataType
+	private var _value: Any
+	private var _initialValue: Any
+	private var _constant: Bool
 	internal var _folder: NVFolder?
 	
-	init(uuid: NSUUID, name: String, type: NVDataType) {
+	init(manager: NVStoryManager, uuid: NSUUID, name: String, type: NVDataType) {
+		self._manager = manager
 		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
@@ -33,14 +35,14 @@ public class NVVariable {
 		get{ return _name }
 		set{
 			_name = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryVariableNameChanged(variable: self, name: _name)}
+			_manager.Delegates.forEach{$0.onStoryVariableNameChanged(variable: self, name: _name)}
 		}
 	}
 	public var Synopsis: String {
 		get{ return _synopsis }
 		set{
 			_synopsis = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryVariableSynopsisChanged(variable: self, synopsis: _synopsis)}
+			_manager.Delegates.forEach{$0.onStoryVariableSynopsisChanged(variable: self, synopsis: _synopsis)}
 		}
 	}
 	public var DataType: NVDataType {
@@ -56,7 +58,7 @@ public class NVVariable {
 		get{ return _constant }
 		set{
 			_constant = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryVariableConstantChanged(variable: self, constant: _constant)}
+			_manager.Delegates.forEach{$0.onStoryVariableConstantChanged(variable: self, constant: _constant)}
 		}
 	}
 	public var Folder: NVFolder? {
@@ -70,7 +72,7 @@ public class NVVariable {
 		_initialValue = type.defaultValue
 		// TODO: Can I somehow convert existing data safely or revert to defaults otherwise?
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryVariableTypeChanged(variable: self, type: _type)}
+		_manager.Delegates.forEach{$0.onStoryVariableTypeChanged(variable: self, type: _type)}
 	}
 
 	public func setValue(_ val: Any) {
@@ -84,7 +86,7 @@ public class NVVariable {
 		}
 		
 		_value = val
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryVariableValueChanged(variable: self, value: _value)}
+		_manager.Delegates.forEach{$0.onStoryVariableValueChanged(variable: self, value: _value)}
 	}
 	
 	public func setInitialValue(_ val: Any) {
@@ -94,7 +96,7 @@ public class NVVariable {
 		}
 		_initialValue = val
 		_value = val
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryVariableInitialValueChanged(variable: self, value: _initialValue)}
+		_manager.Delegates.forEach{$0.onStoryVariableInitialValueChanged(variable: self, value: _initialValue)}
 	}
 }
 
