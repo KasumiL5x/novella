@@ -40,7 +40,12 @@ class AllGraphsOutlineView: NSOutlineView {
 		let p = self.convert(event.locationInWindow, from: nil)
 		let row = self.row(at: p)
 		
-		return (row == -1) ? _blankMenu : _itemMenu
+		if row == -1 {
+			return _blankMenu
+		}
+		
+		self.selectRowIndexes([row], byExtendingSelection: false)
+		return _itemMenu
 	}
 	
 	@objc private func onBlankAdd() {
@@ -57,6 +62,7 @@ class AllGraphsOutlineView: NSOutlineView {
 class SelectedGraphOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
+	private var _itemMenu: NSMenu!
 	
 	var MVC: MainViewController? {
 		get{ return _mvc }
@@ -75,6 +81,9 @@ class SelectedGraphOutlineView: NSOutlineView {
 	private func setup() {
 		_blankMenu = NSMenu()
 		_blankMenu.addItem(withTitle: "Add...", action: nil, keyEquivalent: "")
+		
+		_itemMenu = NSMenu()
+		_itemMenu.addItem(withTitle: "Toggle Trash", action: #selector(SelectedGraphOutlineView.onItemTrash), keyEquivalent: "")
 	}
 	
 	override func menu(for event: NSEvent) -> NSMenu? {
@@ -85,7 +94,15 @@ class SelectedGraphOutlineView: NSOutlineView {
 			return _blankMenu
 		}
 		
-		return nil
+		self.selectRowIndexes([row], byExtendingSelection: false)
+		return _itemMenu
+	}
+	
+	@objc private func onItemTrash() {
+		if var item = self.item(atRow: self.selectedRow) as? NVLinkable {
+			let inTrash = item.Trashed
+			item.Trashed = !inTrash
+		}
 	}
 }
 
@@ -158,20 +175,24 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		
 		switch item {
 		case is NVGraph:
-			view?.textField?.stringValue = (item as! NVGraph).Name
+			let asGraph = (item as! NVGraph)
+			view?.textField?.stringValue = (asGraph.Trashed ? "🗑 " : "") + asGraph.Name
 			
 		case is NVNode:
-			view?.textField?.stringValue = (item as! NVNode).Name
+			let asNode = (item as! NVNode)
+			view?.textField?.stringValue = (asNode.Trashed ? "🗑 " : "") + asNode.Name
 			
 		case is NVLink:
-			let from = NVStoryManager.shared.nameOf(linkable: (item as! NVLink).Origin)
-			let to = NVStoryManager.shared.nameOf(linkable: (item as! NVLink).Transfer.Destination)
+			let asLink = (item as! NVLink)
+			let from = NVStoryManager.shared.nameOf(linkable: asLink.Origin)
+			let to = NVStoryManager.shared.nameOf(linkable: asLink.Transfer.Destination)
 			view?.textField?.stringValue = "\(from) => \(to)"
 			
 		case is NVBranch:
-			let from = NVStoryManager.shared.nameOf(linkable: (item as! NVBranch).Origin)
-			let toTrue = NVStoryManager.shared.nameOf(linkable: (item as! NVBranch).TrueTransfer.Destination)
-			let toFalse = NVStoryManager.shared.nameOf(linkable: (item as! NVBranch).FalseTransfer.Destination)
+			let asBranch = (item as! NVBranch)
+			let from = NVStoryManager.shared.nameOf(linkable: asBranch.Origin)
+			let toTrue = NVStoryManager.shared.nameOf(linkable: asBranch.TrueTransfer.Destination)
+			let toFalse = NVStoryManager.shared.nameOf(linkable: asBranch.FalseTransfer.Destination)
 			view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
 			
 		default:
