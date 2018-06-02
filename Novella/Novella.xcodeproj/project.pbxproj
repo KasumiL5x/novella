@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65040A4120ADCA0400BC57FE /* StoryBrowserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4020ADCA0400BC57FE /* StoryBrowserDataSource.swift */; };
-		65040A4320ADCCF400BC57FE /* StoryBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4220ADCCF400BC57FE /* StoryBrowserDelegate.swift */; };
 		65040A4520ADCED600BC57FE /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4420ADCED600BC57FE /* TabItem.swift */; };
 		65040A4720ADCEFF00BC57FE /* SaveAlertResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */; };
 		65040A4920ADD05500BC57FE /* TabsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65040A4820ADD05500BC57FE /* TabsDataSource.swift */; };
@@ -135,8 +133,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		65040A4020ADCA0400BC57FE /* StoryBrowserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoryBrowserDataSource.swift; path = Novella/ViewControllers/Main/StoryBrowserDataSource.swift; sourceTree = SOURCE_ROOT; };
-		65040A4220ADCCF400BC57FE /* StoryBrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoryBrowserDelegate.swift; path = Novella/ViewControllers/Main/StoryBrowserDelegate.swift; sourceTree = SOURCE_ROOT; };
 		65040A4420ADCED600BC57FE /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabItem.swift; path = Novella/ViewControllers/Main/TabItem.swift; sourceTree = SOURCE_ROOT; };
 		65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SaveAlertResult.swift; path = Novella/ViewControllers/Main/SaveAlertResult.swift; sourceTree = SOURCE_ROOT; };
 		65040A4820ADD05500BC57FE /* TabsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabsDataSource.swift; path = Novella/ViewControllers/Main/TabsDataSource.swift; sourceTree = SOURCE_ROOT; };
@@ -265,8 +261,6 @@
 			children = (
 				65040A5220AF558500BC57FE /* MainViewController.swift */,
 				65040A4620ADCEFF00BC57FE /* SaveAlertResult.swift */,
-				65040A4020ADCA0400BC57FE /* StoryBrowserDataSource.swift */,
-				65040A4220ADCCF400BC57FE /* StoryBrowserDelegate.swift */,
 				65040A4A20ADD36200BC57FE /* StoryDelegate.swift */,
 				65040A5320AF558500BC57FE /* InspectorDataSource.swift */,
 				65040A4820ADD05500BC57FE /* TabsDataSource.swift */,
@@ -742,7 +736,6 @@
 				65040A5B20AF82BA00BC57FE /* PreferencesViewController.swift in Sources */,
 				65040A5D20AF838A00BC57FE /* PreferencesWindowController.swift in Sources */,
 				65B0700C20B2BE6500C0694F /* UserDefaults+Color.swift in Sources */,
-				65040A4320ADCCF400BC57FE /* StoryBrowserDelegate.swift in Sources */,
 				65264CAF20A76EC3002BF136 /* PinViewLink.swift in Sources */,
 				65AFA6AC20A739E200B9C5E5 /* MarqueeView.swift in Sources */,
 				657F147120B4B4F700322516 /* String+FromAny.swift in Sources */,
@@ -765,7 +758,6 @@
 				65040A4920ADD05500BC57FE /* TabsDataSource.swift in Sources */,
 				65B0701020B2EDA900C0694F /* DeliveryPopoverViewController.swift in Sources */,
 				65AC951C20B8755E00372D74 /* GenericPopover.swift in Sources */,
-				65040A4120ADCA0400BC57FE /* StoryBrowserDataSource.swift in Sources */,
 				65B2282E20BB469D00DFB0B0 /* FunctionPopoverViewController.swift in Sources */,
 				65F5DFA9207EC1090041FB0D /* VariableFolderTestViewController.swift in Sources */,
 				65B0700E20B2E8FD00C0694F /* DeliveryLinkableView.swift in Sources */,

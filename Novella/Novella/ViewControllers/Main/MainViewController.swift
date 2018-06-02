@@ -23,10 +23,6 @@ class MainViewController: NSViewController {
 	// MARK: - - Variables -
 	fileprivate var _openedFile: URL?
 	fileprivate var _selectedTab: TabItem?
-	fileprivate var _browserTopLevel: [String] = [
-		"Graphs",
-		"Variables"
-	]
 	
 	// MARK: - - Outlets -
 	@IBOutlet fileprivate weak var _splitView: NSSplitView!
@@ -444,28 +440,6 @@ class MainViewController: NSViewController {
 	func reloadSelectedGraph() {
 		_selectedGraphOutline.reloadData()
 	}
-}
-
-// MARK: - - Story Browser -
-extension MainViewController {
-//	@objc fileprivate func onStoryBrowserDoubleClick() {
-//		let clickedRow = _storyBrowser.clickedRow
-//		if -1 == clickedRow {
-//			return
-//		}
-//
-//		let clickedItem = _storyBrowser.item(atRow: clickedRow)
-//
-//		if let asGraph = clickedItem as? NVGraph {
-//			// if graph is open, switch to it
-//			if let tab = getTabForGraph(graph: asGraph) {
-//				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
-//			} else {
-//				_ = addNewTab(forGraph: asGraph)
-//				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
-//			}
-//		}
-//	}
 }
 
 // MARK: - - Tabs -
