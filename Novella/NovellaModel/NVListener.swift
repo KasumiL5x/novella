@@ -9,13 +9,13 @@
 import Foundation
 
 public class NVListener: NVNode {
-	fileprivate let _condition: NVCondition
-	fileprivate let _transfer: NVTransfer
+	private let _condition: NVCondition
+	private let _transfer: NVTransfer
 	
-	override init(uuid: NSUUID) {
-		self._condition = NVCondition()
+	override init(manager: NVStoryManager, uuid: NSUUID) {
+		self._condition = NVCondition(manager: manager)
 		self._transfer = NVTransfer()
 		
-		super.init(uuid: uuid)
+		super.init(manager: manager, uuid: uuid)
 	}
 }

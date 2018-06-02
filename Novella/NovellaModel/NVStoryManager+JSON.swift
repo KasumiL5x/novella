@@ -179,18 +179,18 @@ extension NVStoryManager {
 
 // MARK: - - Load -
 extension NVStoryManager {
-	public static func fromJSON(str: String) -> Bool {
+	public static func fromJSON(str: String) -> NVStoryManager? {
 		// get Data from string
 		guard let data = str.data(using: .utf8)  else {
 			print("NVStoryManager::fromJSON(): Failed to get Data from JSON string.")
-			return false
+			return nil
 		}
 		
 		// parse using SwiftyJSON
 		let json: JSON
 		do { json = try JSON(data: data) } catch {
 			print("NVStoryManager::fromJSON(): Failed to parse JSON.")
-			return false
+			return nil
 		}
 		
 		// test against schema
@@ -199,11 +199,10 @@ extension NVStoryManager {
 		if !validated.valid {
 			print("NVStoryManager::fromJSON(): Failed to validate JSON against schema.")
 			validated.errors?.forEach({print($0)})
-			return false
+			return nil
 		}
 		
-		let storyManager = NVStoryManager.shared
-		storyManager.reset()
+		let storyManager = NVStoryManager()
 		
 		// 1. read all variables
 		for curr in json["variables"].arrayValue {
@@ -496,7 +495,7 @@ extension NVStoryManager {
 			storyManager.Story.Name = storyName
 		}
 		
-		return true
+		return storyManager
 	}
 }
 

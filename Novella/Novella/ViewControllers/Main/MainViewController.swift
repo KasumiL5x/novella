@@ -21,6 +21,7 @@ class MainViewController: NSViewController {
 	fileprivate static let MAX_ZOOM: CGFloat = 4.0
 	
 	// MARK: - - Variables -
+	private var _manager: NVStoryManager?
 	fileprivate var _selectedTab: TabItem?
 	
 	// MARK: - - Outlets -
@@ -40,12 +41,35 @@ class MainViewController: NSViewController {
 	fileprivate var _selectedGraphDelegate: SelectedGraphDelegate?
 	
 	// MARK: - - Properties -
+	var Manager: NVStoryManager? {
+		get{ return _manager }
+	}
 	var InspectorDelegate: InspectorDataSource? {
 		get{ return _inspectorDataDelegate }
 	}
 	
 	
 	// MARK: - _TESTING_ -
+	func setManager(manager: NVStoryManager) {
+		_manager = manager
+		
+		// close any tabs
+		closeAllTabs()
+		
+		// add a new graph tab for each subgraph of the story
+		for curr in _manager!.Story.Graphs {
+			addNewTab(forGraph: curr)
+		}
+		// select first tab
+		if _tabsDataSource!.Tabs.count > 0 {
+			_tabController.reloadTabs()
+			selectTab(item: _tabsDataSource!.Tabs[0])
+		}
+		
+		reloadAllGraphs()
+		setSelectedGraph(graph: nil)
+		reloadInspector()
+	}
 	func setSelectedGraph(graph: NVGraph?) {
 		_selectedGraphDelegate?.Graph = graph
 		_selectedGraphName.stringValue = graph?.Name ?? ""
@@ -126,18 +150,18 @@ class MainViewController: NSViewController {
 	
 	// MARK: - - Story Helpers -
 	func addGraph(parent: NVGraph?) {
-		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
-		
-		if parent == nil {
-			try! NVStoryManager.shared.Story.add(graph: graph)
-		} else {
-			try! parent!.add(graph: graph)
+		if let graph = _manager?.makeGraph(name: NSUUID().uuidString) {
+			if parent == nil {
+				try! _manager?.Story.add(graph: graph)
+			} else {
+				try! parent!.add(graph: graph)
+			}
+			let newTab = addNewTab(forGraph: graph)
+			selectTab(item: newTab)
+			
+			reloadAllGraphs()
+			reloadSelectedGraph()
 		}
-		let newTab = addNewTab(forGraph: graph)
-		selectTab(item: newTab)
-		
-		reloadAllGraphs()
-		reloadSelectedGraph()
 	}
 	
 	// MARK: - - Tabs/TabView Functions -
@@ -145,11 +169,11 @@ class MainViewController: NSViewController {
 	fileprivate func addNewTab(forGraph: NVGraph) -> TabItem? {
 		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
 		let id = NSStoryboard.SceneIdentifier(rawValue: "GraphTab")
-		guard let vc =  sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
+		guard let vc = sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
 			print("Failed to initialize GraphTabViewController.")
 			return nil
 		}
-		vc.setup(graph: forGraph, delegate: self)
+		vc.setup(manager: _manager!, graph: forGraph, delegate: self)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -171,6 +195,7 @@ class MainViewController: NSViewController {
 			print("Failed to initialize VariableTabViewController.")
 			return nil
 		}
+		vc.Manager = _manager
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -260,7 +285,7 @@ class MainViewController: NSViewController {
 	}
 	
 	@IBAction func onEditedStoryName(_ sender: NSTextField) {
-		NVStoryManager.shared.Story.Name = sender.stringValue
+		_manager?.Story.Name = sender.stringValue
 	}
 	
 	// MARK: - - Outliner Functions -

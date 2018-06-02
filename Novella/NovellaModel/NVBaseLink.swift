@@ -9,10 +9,12 @@
 import Foundation
 
 public class NVBaseLink {
-	fileprivate let _uuid: NSUUID
-	fileprivate var _origin: NVLinkable
+	internal let _manager: NVStoryManager
+	private let _uuid: NSUUID
+	private var _origin: NVLinkable
 	
-	init(uuid: NSUUID, origin: NVLinkable) {
+	init(manager: NVStoryManager, uuid: NSUUID, origin: NVLinkable) {
+		self._manager = manager
 		self._uuid = uuid
 		self._origin = origin
 	}

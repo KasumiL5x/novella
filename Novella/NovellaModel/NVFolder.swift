@@ -9,14 +9,16 @@
 import Foundation
 
 public class NVFolder {
-	fileprivate let _uuid: NSUUID
-	fileprivate var _name: String
-	fileprivate var _synopsis: String
-	fileprivate var _folders: [NVFolder]
-	fileprivate var _variables: [NVVariable]
+	private let _manager: NVStoryManager
+	private let _uuid: NSUUID
+	private var _name: String
+	private var _synopsis: String
+	private var _folders: [NVFolder]
+	private var _variables: [NVVariable]
 	internal var _parent: NVFolder?
 	
-	init(uuid: NSUUID, name: String) {
+	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
+		self._manager = manager
 		self._uuid = uuid
 		self._name = name
 		self._synopsis = ""
@@ -30,14 +32,14 @@ public class NVFolder {
 		get{ return _name }
 		set{
 			_name = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryFolderNameChanged(folder: self, name: _name)}
+			_manager.Delegates.forEach{$0.onStoryFolderNameChanged(folder: self, name: _name)}
 		}
 	}
 	public var Synopsis: String {
 		get{ return _synopsis }
 		set{
 			_synopsis = newValue
-			NVStoryManager.shared.Delegates.forEach{$0.onStoryFolderSynopsisChanged(folder: self, synopsis: _synopsis)}
+			_manager.Delegates.forEach{$0.onStoryFolderSynopsisChanged(folder: self, synopsis: _synopsis)}
 		}
 	}
 	public var Folders: [NVFolder] {
@@ -77,7 +79,7 @@ public class NVFolder {
 		folder._parent = self
 		_folders.append(folder)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryFolderAddFolder(parent: self, child: folder)}
+		_manager.Delegates.forEach{$0.onStoryFolderAddFolder(parent: self, child: folder)}
 		return folder
 	}
 	
@@ -88,7 +90,7 @@ public class NVFolder {
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryFolderRemoveFolder(parent: self, child: folder)}
+		_manager.Delegates.forEach{$0.onStoryFolderRemoveFolder(parent: self, child: folder)}
 	}
 	
 	public func hasDescendant(folder: NVFolder) -> Bool {
@@ -128,7 +130,7 @@ public class NVFolder {
 		variable._folder = self
 		_variables.append(variable)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryFolderAddVariable(parent: self, child: variable)}
+		_manager.Delegates.forEach{$0.onStoryFolderAddVariable(parent: self, child: variable)}
 		return variable
 	}
 	
@@ -139,7 +141,7 @@ public class NVFolder {
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
 		
-		NVStoryManager.shared.Delegates.forEach{$0.onStoryFolderRemoveVariable(parent: self, child: variable)}
+		_manager.Delegates.forEach{$0.onStoryFolderRemoveVariable(parent: self, child: variable)}
 	}
 	
 	

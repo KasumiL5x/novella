@@ -7,7 +7,7 @@
 //
 
 public class NVFunction {
-	fileprivate var _javascript: String
+	private var _javascript: String
 	
 	init() {
 		self._javascript = ""

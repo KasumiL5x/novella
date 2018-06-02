@@ -9,19 +9,16 @@
 import JavaScriptCore
 
 public class NVStoryManager {
-	// MARK: - Singleton Instance -
-	public static let shared = NVStoryManager()
-	
 	// MARK: - - Variables -
-	fileprivate var _story: NVStory!
-	fileprivate var _identifiables: [NVIdentifiable]
-	fileprivate var _folders: [NVFolder]
-	fileprivate var _variables: [NVVariable]
-	fileprivate var _graphs: [NVGraph]
-	fileprivate var _links: [NVBaseLink]
-	fileprivate var _nodes: [NVNode]
-	fileprivate var _trashed: [NVLinkable]
-	fileprivate var _delegates: [NVStoryDelegate]
+	private var _story: NVStory!
+	private var _identifiables: [NVIdentifiable]
+	private var _folders: [NVFolder]
+	private var _variables: [NVVariable]
+	private var _graphs: [NVGraph]
+	private var _links: [NVBaseLink]
+	private var _nodes: [NVNode]
+	private var _trashed: [NVLinkable]
+	private var _delegates: [NVStoryDelegate]
 	internal var _jsContext: JSContext
 	
 	// MARK: - - Properties -
@@ -48,7 +45,7 @@ public class NVStoryManager {
 	}
 	
 	// MARK: - - Initialization -
-	private init() {
+	public init() {
 		self._identifiables = []
 		self._folders = []
 		self._variables = []
@@ -58,7 +55,7 @@ public class NVStoryManager {
 		self._trashed = []
 		self._delegates = []
 		self._jsContext = JSContext()
-		self._story = NVStory()
+		self._story = NVStory(manager: self)
 		
 		setupJavascript()
 	}
@@ -69,7 +66,7 @@ public class NVStoryManager {
 	}
 	
 	public func reset() {
-		self._story = NVStory()
+		self._story = NVStory(manager: self)
 		self._identifiables = []
 		self._folders = []
 		self._variables = []
@@ -150,7 +147,7 @@ public class NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
-		let folder = NVFolder(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
+		let folder = NVFolder(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), name: name)
 		_folders.append(folder)
 		_identifiables.append(folder)
 		
@@ -191,7 +188,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
-		let variable = NVVariable(uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
+		let variable = NVVariable(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), name: name, type: type)
 		_variables.append(variable)
 		_identifiables.append(variable)
 		
@@ -212,7 +209,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
-		let graph = NVGraph(uuid: uuid != nil ? uuid! : NSUUID(), name: name)
+		let graph = NVGraph(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), name: name)
 		_graphs.append(graph)
 		_identifiables.append(graph)
 		
@@ -225,7 +222,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
-		let link = NVLink(uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
+		let link = NVLink(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
 		_links.append(link)
 		_identifiables.append(link)
 		
@@ -235,7 +232,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeBranch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVBranch {
-		let branch = NVBranch(uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
+		let branch = NVBranch(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
 		_links.append(branch)
 		_identifiables.append(branch)
 		
@@ -245,7 +242,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeSwitch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVSwitch {
-		let swtch = NVSwitch(uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
+		let swtch = NVSwitch(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
 		_links.append(swtch)
 		_identifiables.append(swtch)
 		
@@ -275,7 +272,7 @@ extension NVStoryManager {
 extension NVStoryManager {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
-		let dialog = NVDialog(uuid: uuid != nil ? uuid! : NSUUID())
+		let dialog = NVDialog(manager: self, uuid: uuid != nil ? uuid! : NSUUID())
 		_nodes.append(dialog)
 		_identifiables.append(dialog)
 		
@@ -285,7 +282,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
-		let delivery = NVDelivery(uuid: uuid != nil ? uuid! : NSUUID())
+		let delivery = NVDelivery(manager: self, uuid: uuid != nil ? uuid! : NSUUID())
 		_nodes.append(delivery)
 		_identifiables.append(delivery)
 		
@@ -295,7 +292,7 @@ extension NVStoryManager {
 	
 	@discardableResult
 	public func makeContext(uuid: NSUUID?=nil) -> NVContext {
-		let context = NVContext(uuid: uuid != nil ? uuid! : NSUUID())
+		let context = NVContext(manager: self, uuid: uuid != nil ? uuid! : NSUUID())
 		_nodes.append(context)
 		_identifiables.append(context)
 		

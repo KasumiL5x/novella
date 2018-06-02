@@ -9,7 +9,7 @@
 import Foundation
 
 public class NVContext: NVNode {
-	override init(uuid: NSUUID) {
-		super.init(uuid: uuid)
+	override init(manager: NVStoryManager, uuid: NSUUID) {
+		super.init(manager: manager, uuid: uuid)
 	}
 }

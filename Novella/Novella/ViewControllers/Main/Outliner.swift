@@ -184,15 +184,15 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			
 		case is NVLink:
 			let asLink = (item as! NVLink)
-			let from = NVStoryManager.shared.nameOf(linkable: asLink.Origin)
-			let to = NVStoryManager.shared.nameOf(linkable: asLink.Transfer.Destination)
+			let from = _mvc.Manager!.nameOf(linkable: asLink.Origin)
+			let to = _mvc.Manager!.nameOf(linkable: asLink.Transfer.Destination)
 			view?.textField?.stringValue = "\(from) => \(to)"
 			
 		case is NVBranch:
 			let asBranch = (item as! NVBranch)
-			let from = NVStoryManager.shared.nameOf(linkable: asBranch.Origin)
-			let toTrue = NVStoryManager.shared.nameOf(linkable: asBranch.TrueTransfer.Destination)
-			let toFalse = NVStoryManager.shared.nameOf(linkable: asBranch.FalseTransfer.Destination)
+			let from = _mvc.Manager!.nameOf(linkable: asBranch.Origin)
+			let toTrue = _mvc.Manager!.nameOf(linkable: asBranch.TrueTransfer.Destination)
+			let toFalse = _mvc.Manager!.nameOf(linkable: asBranch.FalseTransfer.Destination)
 			view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
 			
 		default:
@@ -218,14 +218,18 @@ class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegat
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		if _mvc.Manager == nil {
+			return 0
+		}
+		
 		if item == nil {
-			return NVStoryManager.shared.Graphs.count
+			return _mvc.Manager!.Graphs.count
 		}
 		return 0
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		return NVStoryManager.shared.Graphs[index]
+		return _mvc.Manager!.Graphs[index]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {

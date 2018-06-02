@@ -17,6 +17,7 @@ class ReaderViewController: NSViewController {
 	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
 	var _simulator: NVSimulator?
+	var _manager: NVStoryManager?
 	
 	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
 	
@@ -61,14 +62,15 @@ class ReaderViewController: NSViewController {
 		}
 		
 		// parse contents into a Story
-		if !NVStoryManager.fromJSON(str: contents) {
+		_manager = NVStoryManager.fromJSON(str: contents)
+		if _manager == nil {
 			print("Failed to parse JSON.")
 			return
 		}
 		
 		
 		// open the simulator
-		_simulator = NVSimulator(controller: self)
+		_simulator = NVSimulator(manager: _manager!, controller: self)
 		outlineView.reloadData()
 	}
 	
@@ -144,7 +146,7 @@ extension ReaderViewController: NSOutlineViewDataSource {
 				)
 		}
 		
-		return NVStoryManager.shared.Story.Folders.count + NVStoryManager.shared.Story.Graphs.count
+		return _manager!.Story.Folders.count + _manager!.Story.Graphs.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
@@ -174,10 +176,10 @@ extension ReaderViewController: NSOutlineViewDataSource {
 			return graph.Entry
 		}
 		
-		if index < NVStoryManager.shared.Story.Graphs.count {
-			return NVStoryManager.shared.Story.Graphs[index]
+		if index < _manager!.Story.Graphs.count {
+			return _manager!.Story.Graphs[index]
 		}
-		return NVStoryManager.shared.Story.Folders[index - NVStoryManager.shared.Story.Graphs.count]
+		return _manager!.Story.Folders[index - _manager!.Story.Graphs.count]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
