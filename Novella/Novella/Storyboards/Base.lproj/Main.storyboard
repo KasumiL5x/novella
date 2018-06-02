@@ -367,28 +367,22 @@
                                     <constraint firstAttribute="bottom" secondItem="nmP-Ef-Z6a" secondAttribute="bottom" id="zzV-LF-b00"/>
                                 </constraints>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-Fw-GNM" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="0.0" width="1512" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Q13-ba-BAO"/>
-                                </constraints>
-                            </customView>
                             <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgM-Cu-kjf">
-                                <rect key="frame" x="0.0" y="35" width="1512" height="830"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1512" height="865"/>
                                 <subviews>
                                     <customView id="8BE-E8-TlO" userLabel="Outliner">
-                                        <rect key="frame" x="0.0" y="0.0" width="191" height="830"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="191" height="865"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <splitView arrangesAllSubviews="NO" dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="NLR-86-ASr">
-                                                <rect key="frame" x="0.0" y="0.0" width="191" height="830"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="865"/>
                                                 <subviews>
                                                     <customView id="bcf-hI-XdN" userLabel="Top">
-                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="405"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="422"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="vq8-1r-1wC" userLabel="Header" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="380" width="191" height="25"/>
+                                                                <rect key="frame" x="0.0" y="397" width="191" height="25"/>
                                                                 <subviews>
                                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="t8N-nP-Vqh">
                                                                         <rect key="frame" x="166" y="0.0" width="25" height="25"/>
@@ -428,13 +422,13 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nX-vB-Fg6" userLabel="All Graphs Outline View">
-                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="380"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="397"/>
                                                                 <clipView key="contentView" copiesOnScroll="NO" id="6eh-Ln-jhg">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="380"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="397"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="oLZ-o5-7yD" id="Ge4-cD-v3R" customClass="AllGraphsOutlineView" customModule="Novella" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="380"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="397"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                             <color key="gridColor" red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
@@ -497,11 +491,11 @@
                                                         </constraints>
                                                     </customView>
                                                     <customView id="V1j-iJ-mTA" userLabel="Bottom">
-                                                        <rect key="frame" x="0.0" y="406" width="191" height="424"/>
+                                                        <rect key="frame" x="0.0" y="423" width="191" height="442"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Mxr-eH-L6K" userLabel="Header" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="399" width="191" height="25"/>
+                                                                <rect key="frame" x="0.0" y="417" width="191" height="25"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fz9-pb-LEV">
                                                                         <rect key="frame" x="8" y="4" width="37" height="17"/>
@@ -525,13 +519,13 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcV-pZ-M5C" userLabel="Selected Graph Outline View">
-                                                                <rect key="frame" x="0.0" y="25" width="191" height="374"/>
+                                                                <rect key="frame" x="0.0" y="25" width="191" height="392"/>
                                                                 <clipView key="contentView" id="Mc0-9L-X1A">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="374"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="392"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="NDr-r2-3jP" id="IfO-oi-Z19" customClass="SelectedGraphOutlineView" customModule="Novella" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="374"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="392"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                                             <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
@@ -632,15 +626,15 @@
                                         </constraints>
                                     </customView>
                                     <customView id="XDB-4Q-yfT" userLabel="Tabs">
-                                        <rect key="frame" x="192" y="0.0" width="1082" height="830"/>
+                                        <rect key="frame" x="192" y="0.0" width="1082" height="865"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="Hr9-R1-huE" userLabel="TabView">
-                                                <rect key="frame" x="0.0" y="0.0" width="1082" height="795"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="1082" height="830"/>
                                                 <font key="font" metaFont="system"/>
                                             </tabView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="vEJ-7e-YwK" customClass="TabsControl" customModule="KPCTabsControl">
-                                                <rect key="frame" x="0.0" y="795" width="1082" height="35"/>
+                                                <rect key="frame" x="0.0" y="830" width="1082" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="fuI-MI-mzA"/>
                                                 </constraints>
@@ -657,17 +651,17 @@
                                         </constraints>
                                     </customView>
                                     <customView id="dNQ-9G-nf5" userLabel="Inspector">
-                                        <rect key="frame" x="1275" y="0.0" width="237" height="830"/>
+                                        <rect key="frame" x="1275" y="0.0" width="237" height="865"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95A-tl-FkR" userLabel="InspectorTableView">
-                                                <rect key="frame" x="0.0" y="0.0" width="237" height="830"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="237" height="865"/>
                                                 <clipView key="contentView" id="FzZ-QM-llh">
-                                                    <rect key="frame" x="1" y="0.0" width="235" height="829"/>
+                                                    <rect key="frame" x="1" y="0.0" width="235" height="864"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="N8G-yE-HJ7" viewBased="YES" id="87G-pV-soQ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="235" height="806"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="235" height="841"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -776,12 +770,9 @@
                             <constraint firstItem="lAI-62-NHd" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="2Jp-qn-BGF"/>
                             <constraint firstItem="mgM-Cu-kjf" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="bottom" id="462-yM-86b"/>
                             <constraint firstAttribute="trailing" secondItem="lAI-62-NHd" secondAttribute="trailing" id="8bj-Kb-5MO"/>
-                            <constraint firstItem="aTZ-Fw-GNM" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Eax-An-ny6"/>
-                            <constraint firstItem="aTZ-Fw-GNM" firstAttribute="top" secondItem="mgM-Cu-kjf" secondAttribute="bottom" id="Ecv-bN-qB3"/>
-                            <constraint firstAttribute="trailing" secondItem="aTZ-Fw-GNM" secondAttribute="trailing" id="MRc-X3-LN3"/>
                             <constraint firstItem="lAI-62-NHd" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ms6-8U-X9H"/>
                             <constraint firstItem="mgM-Cu-kjf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Y5T-eg-ft5"/>
-                            <constraint firstAttribute="bottom" secondItem="aTZ-Fw-GNM" secondAttribute="bottom" id="q1o-XY-ef4"/>
+                            <constraint firstAttribute="bottom" secondItem="mgM-Cu-kjf" secondAttribute="bottom" id="oUD-rN-nER"/>
                             <constraint firstAttribute="trailing" secondItem="mgM-Cu-kjf" secondAttribute="trailing" id="xar-DD-1Xa"/>
                         </constraints>
                     </view>
