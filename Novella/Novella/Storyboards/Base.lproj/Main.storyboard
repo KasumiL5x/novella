@@ -548,33 +548,13 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
-                                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="q7X-Lc-9rR" userLabel="Filter">
-                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
-                                                                <subviews>
-                                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XOn-F6-cUO">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
-                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Filter" bezelStyle="round" id="G4P-m2-gnn">
-                                                                            <font key="font" metaFont="system"/>
-                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                    </textField>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="trailing" secondItem="XOn-F6-cUO" secondAttribute="trailing" id="4ce-Qv-Cla"/>
-                                                                    <constraint firstAttribute="height" constant="25" id="ESs-SY-0PX"/>
-                                                                    <constraint firstItem="XOn-F6-cUO" firstAttribute="top" secondItem="q7X-Lc-9rR" secondAttribute="top" id="QtF-AS-ImM"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="XOn-F6-cUO" secondAttribute="bottom" id="w6H-uy-Gpq"/>
-                                                                    <constraint firstItem="XOn-F6-cUO" firstAttribute="leading" secondItem="q7X-Lc-9rR" secondAttribute="leading" id="yDZ-O1-LIh"/>
-                                                                </constraints>
-                                                            </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcV-pZ-M5C" userLabel="Selected Graph Outline View">
                                                                 <rect key="frame" x="0.0" y="25" width="191" height="374"/>
                                                                 <clipView key="contentView" id="Mc0-9L-X1A">
                                                                     <rect key="frame" x="0.0" y="0.0" width="191" height="374"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="NDr-r2-3jP" id="IfO-oi-Z19">
+                                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="NDr-r2-3jP" id="IfO-oi-Z19" customClass="SelectedGraphOutlineView" customModule="Novella" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="191" height="374"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -627,6 +607,26 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
+                                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="q7X-Lc-9rR" userLabel="Filter">
+                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
+                                                                <subviews>
+                                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XOn-F6-cUO">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
+                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Filter" bezelStyle="round" id="G4P-m2-gnn">
+                                                                            <font key="font" metaFont="system"/>
+                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="trailing" secondItem="XOn-F6-cUO" secondAttribute="trailing" id="4ce-Qv-Cla"/>
+                                                                    <constraint firstAttribute="height" constant="25" id="ESs-SY-0PX"/>
+                                                                    <constraint firstItem="XOn-F6-cUO" firstAttribute="top" secondItem="q7X-Lc-9rR" secondAttribute="top" id="QtF-AS-ImM"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="XOn-F6-cUO" secondAttribute="bottom" id="w6H-uy-Gpq"/>
+                                                                    <constraint firstItem="XOn-F6-cUO" firstAttribute="leading" secondItem="q7X-Lc-9rR" secondAttribute="leading" id="yDZ-O1-LIh"/>
+                                                                </constraints>
+                                                            </customView>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="Mxr-eH-L6K" firstAttribute="top" secondItem="V1j-iJ-mTA" secondAttribute="top" id="4qU-cX-shd"/>
@@ -813,7 +813,7 @@
                         <outlet property="_allGraphsOutline" destination="Ge4-cD-v3R" id="gZw-gI-XSm"/>
                         <outlet property="_inspector" destination="87G-pV-soQ" id="mSu-MB-12h"/>
                         <outlet property="_selectedGraphName" destination="Fz9-pb-LEV" id="yWZ-Fj-4IP"/>
-                        <outlet property="_selectedGraphOutline" destination="IfO-oi-Z19" id="QgG-lL-9YP"/>
+                        <outlet property="_selectedGraphOutline" destination="IfO-oi-Z19" id="LiJ-vi-beQ"/>
                         <outlet property="_splitView" destination="mgM-Cu-kjf" id="U55-7R-EPX"/>
                         <outlet property="_storyName" destination="eJg-1b-Gs4" id="Pf1-eP-wR8"/>
                         <outlet property="_tabController" destination="vEJ-7e-YwK" id="ryl-kE-bBA"/>

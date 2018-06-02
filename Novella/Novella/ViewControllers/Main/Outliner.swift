@@ -10,9 +10,9 @@ import Cocoa
 import NovellaModel
 
 class AllGraphsOutlineView: NSOutlineView {
+	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
 	private var _itemMenu: NSMenu!
-	private var _mvc: MainViewController?
 	
 	var MVC: MainViewController? {
 		get{ return _mvc }
@@ -51,6 +51,41 @@ class AllGraphsOutlineView: NSOutlineView {
 		if let parent = self.item(atRow: self.selectedRow) as? NVGraph {
 			_mvc?.addGraph(parent: parent)
 		}
+	}
+}
+
+class SelectedGraphOutlineView: NSOutlineView {
+	private var _mvc: MainViewController?
+	private var _blankMenu: NSMenu!
+	
+	var MVC: MainViewController? {
+		get{ return _mvc }
+		set{ _mvc = newValue }
+	}
+	
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		setup()
+	}
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		setup()
+	}
+	
+	private func setup() {
+		_blankMenu = NSMenu()
+		_blankMenu.addItem(withTitle: "Add...", action: nil, keyEquivalent: "")
+	}
+	
+	override func menu(for event: NSEvent) -> NSMenu? {
+		let p = self.convert(event.locationInWindow, from: nil)
+		let row = self.row(at: p)
+		
+		if row == -1 {
+			return _blankMenu
+		}
+		
+		return nil
 	}
 }
 

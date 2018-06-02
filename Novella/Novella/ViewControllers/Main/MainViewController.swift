@@ -35,7 +35,7 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
 	@IBOutlet private weak var _inspector: NSTableView!
 	@IBOutlet private weak var _allGraphsOutline: AllGraphsOutlineView!
-	@IBOutlet fileprivate weak var _selectedGraphOutline: NSOutlineView!
+	@IBOutlet private weak var _selectedGraphOutline: SelectedGraphOutlineView!
 	@IBOutlet fileprivate weak var _selectedGraphName: NSTextField!
 	
 	// MARK: - - Delegates & Data Sources -
@@ -98,6 +98,7 @@ class MainViewController: NSViewController {
 		_allGraphsOutline.MVC = self
 		_allGraphsOutline.dataSource = _allGraphsDelegate
 		_allGraphsOutline.delegate = _allGraphsDelegate
+		_selectedGraphOutline.MVC = self
 		_selectedGraphOutline.delegate = _selectedGraphDelegate
 		_selectedGraphOutline.dataSource = _selectedGraphDelegate
 		
