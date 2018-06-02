@@ -43,6 +43,7 @@
 		655F9FF720C30EAA00B20EFE /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 655F9FF520C30EAA00B20EFE /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65F7F83120C313F6004663D6 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F83020C313F6004663D6 /* SwiftyJSON.framework */; };
 		65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83420C31636004663D6 /* String+FromAny.swift */; };
 		65F7F83B20C31637004663D6 /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83520C31636004663D6 /* UserDefaults+Color.swift */; };
@@ -164,6 +165,7 @@
 		655F9FF320C30EAA00B20EFE /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65F7F83020C313F6004663D6 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65F7F83420C31636004663D6 /* String+FromAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
 		65F7F83520C31636004663D6 /* UserDefaults+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				65F7F8B620C319D6004663D6 /* Storyboards */,
 				65F7F84020C31676004663D6 /* Utilities */,
 				65F7F87020C31722004663D6 /* ViewControllers */,
+				65DD6CC720C3412B0078CB28 /* MainWindowController.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */,
 				65F7F8A520C3182F004663D6 /* VariableTabViewController.swift in Sources */,
 				65F7F86F20C31714004663D6 /* GraphViewCommands.swift in Sources */,
+				65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */,
 				655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */,
 				65F7F83E20C31637004663D6 /* NSBezierPath+CGPath.swift in Sources */,
 				65F7F86420C31714004663D6 /* GraphLinkableView.swift in Sources */,

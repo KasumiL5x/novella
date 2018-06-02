@@ -36,5 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			_preferencesController!.showWindow(sender)
 		}
 	}
+	
+	
 }
 

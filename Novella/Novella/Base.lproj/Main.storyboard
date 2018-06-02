@@ -678,17 +678,77 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="76" y="-66"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController storyboardIdentifier="Document Window Controller" id="jGA-0Y-lOj" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="Document Window Controller" id="jGA-0Y-lOj" customClass="MainWindowController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ckk-yw-fiv">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="71430144-8345-4A6C-9188-A69D4DB95689" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="10k-Dj-p76">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Nca-3h-nPb"/>
+                                <toolbarItem implicitItemIdentifier="0FF14C92-E6CE-480B-9457-F2964B120605" label="Undo" paletteLabel="Undo" image="NSGoBackTemplate" id="6I3-JS-OQD">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="30"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="0Kb-Wn-Rmk">
+                                        <rect key="frame" x="3" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSGoBackTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="6jg-dO-NEZ">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarUndo:" target="jGA-0Y-lOj" id="lUJ-wn-kT7"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="FC154050-1921-43C7-953C-D660EA6EB241" label="Redo" paletteLabel="Redo" image="NSGoForwardTemplate" id="7tY-vX-D3Q">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="30"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="hil-qb-rLZ">
+                                        <rect key="frame" x="2" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSGoForwardTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="xJx-o3-KFB">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarRedo:" target="jGA-0Y-lOj" id="X3U-by-6ge"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="AB2A8C1E-5255-4EB9-B938-34DE11F5A75C" label="Variable Editor" paletteLabel="Variable Editor" image="Variable" id="RAx-tK-frb">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="30"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="uPX-M4-Wcp">
+                                        <rect key="frame" x="27" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Variable" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ESh-K2-gEl">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarVariableEditor:" target="jGA-0Y-lOj" id="ukQ-IG-Bp7"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="yGj-rV-Scg"/>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="6I3-JS-OQD"/>
+                                <toolbarItem reference="7tY-vX-D3Q"/>
+                                <toolbarItem reference="yGj-rV-Scg"/>
+                                <toolbarItem reference="RAx-tK-frb"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="jGA-0Y-lOj" id="98r-iN-zZc"/>
                         </connections>
@@ -709,67 +769,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="1512" height="900"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="BrI-Tb-ABd" userLabel="Header">
-                                <rect key="frame" x="0.0" y="865" width="1512" height="35"/>
-                                <subviews>
-                                    <button horizontalHuggingPriority="253" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mp0-pk-9FZ">
-                                        <rect key="frame" x="1469" y="-7" width="49" height="46"/>
-                                        <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Mxl-lu-nk9">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onRedo:" target="SBf-Of-AwL" id="yrh-9U-jba"/>
-                                        </connections>
-                                    </button>
-                                    <button horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lcu-HH-mT5">
-                                        <rect key="frame" x="1432" y="-7" width="49" height="46"/>
-                                        <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B0s-yW-mzD">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onUndo:" target="SBf-Of-AwL" id="XDa-mV-tJh"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cHs-Lk-UHZ">
-                                        <rect key="frame" x="1181" y="0.0" width="129" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Variable Editor" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Bpg-uP-nO3">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onVariableEditor:" target="SBf-Of-AwL" id="ReQ-Tp-bDO"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="lcu-HH-mT5" firstAttribute="top" secondItem="BrI-Tb-ABd" secondAttribute="top" id="2V5-IV-N2Z"/>
-                                    <constraint firstItem="mp0-pk-9FZ" firstAttribute="leading" secondItem="lcu-HH-mT5" secondAttribute="trailing" id="3iH-IM-bbR"/>
-                                    <constraint firstAttribute="bottom" secondItem="mp0-pk-9FZ" secondAttribute="bottom" id="MmH-0s-bTH"/>
-                                    <constraint firstItem="cHs-Lk-UHZ" firstAttribute="centerY" secondItem="BrI-Tb-ABd" secondAttribute="centerY" id="U5n-pY-ObQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="lcu-HH-mT5" secondAttribute="bottom" id="W2q-3H-JWC"/>
-                                    <constraint firstItem="mp0-pk-9FZ" firstAttribute="top" secondItem="BrI-Tb-ABd" secondAttribute="top" id="oJH-BF-GO8"/>
-                                    <constraint firstAttribute="trailing" secondItem="mp0-pk-9FZ" secondAttribute="trailing" id="qLU-HO-4Wa"/>
-                                    <constraint firstAttribute="height" constant="35" id="sUt-Mx-BSr"/>
-                                </constraints>
-                            </customView>
                             <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="laV-cu-c6V">
-                                <rect key="frame" x="0.0" y="0.0" width="1512" height="865"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1512" height="900"/>
                                 <subviews>
                                     <customView id="sZN-bM-fJm" userLabel="Outliner">
-                                        <rect key="frame" x="0.0" y="0.0" width="191" height="865"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="191" height="900"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <splitView arrangesAllSubviews="NO" dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="1Ku-5H-mtD">
-                                                <rect key="frame" x="0.0" y="0.0" width="191" height="865"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="900"/>
                                                 <subviews>
                                                     <customView id="M88-EO-CKm" userLabel="Top">
-                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="422"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="439"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="woM-eH-biv" userLabel="Header" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="397" width="191" height="25"/>
+                                                                <rect key="frame" x="0.0" y="414" width="191" height="25"/>
                                                                 <subviews>
                                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="lz4-2u-MlS">
                                                                         <rect key="frame" x="166" y="0.0" width="25" height="25"/>
@@ -809,13 +824,13 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clj-nZ-WMm" userLabel="All Graphs Outline View">
-                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="397"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="414"/>
                                                                 <clipView key="contentView" copiesOnScroll="NO" id="9gh-hS-EL3">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="397"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="414"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="iPD-PA-AEG" id="Iae-N4-kdz" customClass="AllGraphsOutlineView" customModule="Novella" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="397"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="414"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                             <color key="gridColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -878,11 +893,11 @@
                                                         </constraints>
                                                     </customView>
                                                     <customView id="csj-n4-2kT" userLabel="Bottom">
-                                                        <rect key="frame" x="0.0" y="423" width="191" height="442"/>
+                                                        <rect key="frame" x="0.0" y="440" width="191" height="460"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ja1-bg-8xk" userLabel="Header" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="417" width="191" height="25"/>
+                                                                <rect key="frame" x="0.0" y="435" width="191" height="25"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oCJ-jE-X2M">
                                                                         <rect key="frame" x="8" y="4" width="37" height="17"/>
@@ -906,13 +921,13 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30o-Ti-svs" userLabel="Selected Graph Outline View">
-                                                                <rect key="frame" x="0.0" y="25" width="191" height="392"/>
+                                                                <rect key="frame" x="0.0" y="25" width="191" height="410"/>
                                                                 <clipView key="contentView" id="q3h-9m-4Z4">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="392"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="410"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="ACt-xa-Eq5" id="3eJ-sj-RS2" customClass="SelectedGraphOutlineView" customModule="Novella" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="392"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="410"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                                             <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1013,15 +1028,15 @@
                                         </constraints>
                                     </customView>
                                     <customView id="j7Y-PI-hmd" userLabel="Tabs">
-                                        <rect key="frame" x="192" y="0.0" width="1082" height="865"/>
+                                        <rect key="frame" x="192" y="0.0" width="1082" height="900"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="Zi9-gZ-g8T" userLabel="TabView">
-                                                <rect key="frame" x="0.0" y="0.0" width="1082" height="830"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="1082" height="865"/>
                                                 <font key="font" metaFont="system"/>
                                             </tabView>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="k3d-n9-SIG" customClass="TabsControl" customModule="KPCTabsControl">
-                                                <rect key="frame" x="0.0" y="830" width="1082" height="35"/>
+                                                <rect key="frame" x="0.0" y="865" width="1082" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="guy-Mg-wQh"/>
                                                 </constraints>
@@ -1038,17 +1053,17 @@
                                         </constraints>
                                     </customView>
                                     <customView id="feN-D1-KrZ" userLabel="Inspector">
-                                        <rect key="frame" x="1275" y="0.0" width="237" height="865"/>
+                                        <rect key="frame" x="1275" y="0.0" width="237" height="900"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyT-sh-V4a" userLabel="InspectorTableView">
-                                                <rect key="frame" x="0.0" y="0.0" width="237" height="865"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="237" height="900"/>
                                                 <clipView key="contentView" id="dUy-7B-I8T">
-                                                    <rect key="frame" x="1" y="0.0" width="235" height="864"/>
+                                                    <rect key="frame" x="1" y="0.0" width="235" height="899"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" headerView="br9-k3-k3P" viewBased="YES" id="t7K-tx-EVx">
-                                                            <rect key="frame" x="0.0" y="0.0" width="235" height="841"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="235" height="876"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1154,12 +1169,9 @@
                             </splitView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="BrI-Tb-ABd" firstAttribute="top" secondItem="Fu0-9H-tr8" secondAttribute="top" id="58P-gO-Gxm"/>
-                            <constraint firstItem="BrI-Tb-ABd" firstAttribute="leading" secondItem="Fu0-9H-tr8" secondAttribute="leading" id="7BU-CT-SpW"/>
                             <constraint firstAttribute="trailing" secondItem="laV-cu-c6V" secondAttribute="trailing" id="HAb-NQ-VF1"/>
-                            <constraint firstAttribute="trailing" secondItem="BrI-Tb-ABd" secondAttribute="trailing" id="WCb-Jb-PUy"/>
-                            <constraint firstItem="laV-cu-c6V" firstAttribute="top" secondItem="BrI-Tb-ABd" secondAttribute="bottom" id="XUJ-nm-Irp"/>
                             <constraint firstAttribute="bottom" secondItem="laV-cu-c6V" secondAttribute="bottom" id="b7E-SU-lnC"/>
+                            <constraint firstItem="laV-cu-c6V" firstAttribute="top" secondItem="Fu0-9H-tr8" secondAttribute="top" id="jDF-XW-aoX"/>
                             <constraint firstItem="laV-cu-c6V" firstAttribute="leading" secondItem="Fu0-9H-tr8" secondAttribute="leading" id="n1e-84-ylu"/>
                         </constraints>
                     </view>
@@ -1179,6 +1191,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NSGoBackTemplate" width="9" height="12"/>
+        <image name="NSGoForwardTemplate" width="9" height="12"/>
         <image name="NSTouchBarAddTemplate" width="14" height="30"/>
+        <image name="Variable" width="512" height="512"/>
     </resources>
 </document>

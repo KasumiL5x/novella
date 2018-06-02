@@ -267,7 +267,7 @@ class MainViewController: NSViewController {
 		addGraph(parent: nil)
 	}
 	
-	@IBAction func onVariableEditor(_ sender: NSButton) {
+	func openVariableEditor() {
 		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
 			selectTab(item: existing)
 		} else {
@@ -276,11 +276,11 @@ class MainViewController: NSViewController {
 		}
 	}
 	
-	@IBAction func onUndo(_ sender: NSButton) {
+	func undo() {
 		getActiveGraph()?.undo()
 	}
 	
-	@IBAction func onRedo(_ sender: NSButton) {
+	func redo() {
 		getActiveGraph()?.redo()
 	}
 	
