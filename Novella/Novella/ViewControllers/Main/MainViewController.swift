@@ -389,6 +389,19 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Interface Buttons -
+	
+	@IBAction func onAddGraph(_ sender: NSButton) {
+		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
+		do { try NVStoryManager.shared.Story.add(graph: graph) } catch {
+			alertError(message: "Could not add Graph!", info: "Adding a graph to the Story failed.")
+			return // TODO: Remove graph
+		}
+		let newTab = addNewTab(forGraph: graph)
+		selectTab(item: newTab)		
+		
+		reloadAllGraphs()
+	}
+	
 	@IBAction func onTrashItem(_ sender: NSButton) {
 		print("Need to reimplement this.")
 //		let selectedRow = _storyBrowser.selectedRow
@@ -421,18 +434,6 @@ class MainViewController: NSViewController {
 		if let item = _selectedTab {
 			closeTab(tab: item)
 		}
-	}
-	
-	@IBAction func onAddGraph(_ sender: NSButton) {
-		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
-		do { try NVStoryManager.shared.Story.add(graph: graph) } catch {
-			alertError(message: "Could not add Graph!", info: "Adding a graph to the Story failed.")
-			return // TODO: Remove graph
-		}
-		let newTab = addNewTab(forGraph: graph)
-		selectTab(item: newTab)
-		
-		reloadAllGraphs()
 	}
 	
 	@IBAction func onUndo(_ sender: NSButton) {

@@ -294,7 +294,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="lAI-62-NHd" userLabel="Header">
                                 <rect key="frame" x="0.0" y="865" width="1512" height="35"/>
                                 <subviews>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eJg-1b-Gs4">
                                         <rect key="frame" x="18" y="0.0" width="1221" height="35"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" alignment="left" placeholderString="Untitled" id="KTj-OS-o4p">
                                             <font key="font" metaFont="systemThin" size="28"/>
@@ -326,7 +326,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nmP-Ef-Z6a">
-                                        <rect key="frame" x="1231" y="-7" width="100" height="46"/>
+                                        <rect key="frame" x="1310" y="-7" width="100" height="46"/>
                                         <buttonCell key="cell" type="push" title="Close Tab" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kqe-eB-QB0">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -335,19 +335,8 @@
                                             <action selector="onCloseTab:" target="XfG-lQ-9wD" id="Pnc-Xy-k2i"/>
                                         </connections>
                                     </button>
-                                    <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Tq-XK-EPs">
-                                        <rect key="frame" x="1319" y="-7" width="105" height="46"/>
-                                        <buttonCell key="cell" type="push" title="Add Graph" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QLv-Jj-n72">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onAddGraph:" target="XfG-lQ-9wD" id="CW6-am-Xi1"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-4j-0da">
-                                        <rect key="frame" x="1102" y="0.0" width="129" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Iei-4j-0da">
+                                        <rect key="frame" x="1181" y="0.0" width="129" height="32"/>
                                         <buttonCell key="cell" type="push" title="Variable Editor" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Uad-71-ixU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -361,21 +350,19 @@
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="4wc-7t-6FX"/>
                                     <constraint firstItem="kTQ-zk-6WD" firstAttribute="leading" secondItem="RQa-hL-Ngk" secondAttribute="trailing" id="5zY-43-GJG"/>
                                     <constraint firstAttribute="bottom" secondItem="RQa-hL-Ngk" secondAttribute="bottom" id="6qR-wb-54r"/>
-                                    <constraint firstItem="RQa-hL-Ngk" firstAttribute="leading" secondItem="4Tq-XK-EPs" secondAttribute="trailing" constant="20" id="99y-wr-4zK"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eJg-1b-Gs4" secondAttribute="trailing" constant="20" symbolic="YES" id="DeH-Gg-5nO"/>
                                     <constraint firstItem="nmP-Ef-Z6a" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="Ew0-iL-VBU"/>
                                     <constraint firstAttribute="trailing" secondItem="kTQ-zk-6WD" secondAttribute="trailing" id="RDO-dH-8Zh"/>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="SSb-i1-UEY"/>
                                     <constraint firstItem="kTQ-zk-6WD" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="SZp-uu-kxC"/>
                                     <constraint firstAttribute="bottom" secondItem="eJg-1b-Gs4" secondAttribute="bottom" id="TZJ-K2-I27"/>
-                                    <constraint firstItem="nmP-Ef-Z6a" firstAttribute="leading" secondItem="eJg-1b-Gs4" secondAttribute="trailing" id="U3s-wr-ILw"/>
                                     <constraint firstAttribute="height" constant="35" id="Wx1-Ec-wQJ"/>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="XlG-8f-9Pi"/>
-                                    <constraint firstItem="4Tq-XK-EPs" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="boL-mD-epD"/>
-                                    <constraint firstAttribute="bottom" secondItem="4Tq-XK-EPs" secondAttribute="bottom" id="g0h-h1-bl2"/>
+                                    <constraint firstItem="nmP-Ef-Z6a" firstAttribute="leading" secondItem="Iei-4j-0da" secondAttribute="trailing" constant="12" id="cnN-eg-2da"/>
                                     <constraint firstItem="eJg-1b-Gs4" firstAttribute="leading" secondItem="lAI-62-NHd" secondAttribute="leading" constant="20" id="hAq-9C-UN0"/>
+                                    <constraint firstItem="Iei-4j-0da" firstAttribute="centerY" secondItem="lAI-62-NHd" secondAttribute="centerY" id="jM2-Dw-qjM"/>
+                                    <constraint firstItem="RQa-hL-Ngk" firstAttribute="leading" secondItem="nmP-Ef-Z6a" secondAttribute="trailing" constant="34" id="lOs-C6-KX2"/>
                                     <constraint firstItem="RQa-hL-Ngk" firstAttribute="top" secondItem="lAI-62-NHd" secondAttribute="top" id="mB6-8F-peY"/>
-                                    <constraint firstItem="4Tq-XK-EPs" firstAttribute="leading" secondItem="nmP-Ef-Z6a" secondAttribute="trailing" id="nBt-aR-TSH"/>
                                     <constraint firstAttribute="bottom" secondItem="kTQ-zk-6WD" secondAttribute="bottom" id="tRy-IE-3bk"/>
                                     <constraint firstAttribute="bottom" secondItem="nmP-Ef-Z6a" secondAttribute="bottom" id="zzV-LF-b00"/>
                                 </constraints>
@@ -436,6 +423,9 @@
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                             <font key="font" metaFont="system"/>
                                                                         </buttonCell>
+                                                                        <connections>
+                                                                            <action selector="onAddGraph:" target="XfG-lQ-9wD" id="fx8-NG-2g1"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qif-Dv-R8w">
                                                                         <rect key="frame" x="8" y="4" width="48" height="17"/>
