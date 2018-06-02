@@ -276,12 +276,20 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="tg1-M7-Uiu"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
+        </scene>
+        <!--NewMainVC-->
+        <scene sceneID="EUc-QP-Msu">
+            <objects>
+                <controllerPlaceholder storyboardName="NewMain" referencedIdentifier="NewMainVC" id="TFL-lB-DIH" sceneMemberID="viewController"/>
+                <customObject id="iKy-kq-L8p" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="184" y="492"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
