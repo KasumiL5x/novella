@@ -9,6 +9,51 @@
 import Cocoa
 import NovellaModel
 
+class AllGraphsOutlineView: NSOutlineView {
+	private var _blankMenu: NSMenu!
+	private var _itemMenu: NSMenu!
+	private var _mvc: MainViewController?
+	
+	var MVC: MainViewController? {
+		get{ return _mvc }
+		set{ _mvc = newValue }
+	}
+	
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		setup()
+	}
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		setup()
+	}
+	
+	private func setup() {
+		_blankMenu = NSMenu()
+		_blankMenu.addItem(withTitle: "Add Story Graph", action: #selector(AllGraphsOutlineView.onBlankAdd), keyEquivalent: "")
+		
+		_itemMenu = NSMenu()
+		_itemMenu.addItem(withTitle: "Add Sub Graph", action: #selector(AllGraphsOutlineView.onItemAdd), keyEquivalent: "")
+	}
+	
+	override func menu(for event: NSEvent) -> NSMenu? {
+		let p = self.convert(event.locationInWindow, from: nil)
+		let row = self.row(at: p)
+		
+		return (row == -1) ? _blankMenu : _itemMenu
+	}
+	
+	@objc private func onBlankAdd() {
+		_mvc?.addGraph(parent: nil)
+	}
+	
+	@objc private func onItemAdd() {
+		if let parent = self.item(atRow: self.selectedRow) as? NVGraph {
+			_mvc?.addGraph(parent: parent)
+		}
+	}
+}
+
 class OutlinerTableRowView: NSTableRowView {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)

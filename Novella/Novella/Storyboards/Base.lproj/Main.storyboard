@@ -457,7 +457,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="191" height="380"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="oLZ-o5-7yD" id="Ge4-cD-v3R">
+                                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="oLZ-o5-7yD" id="Ge4-cD-v3R" customClass="AllGraphsOutlineView" customModule="Novella" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="191" height="380"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -810,7 +810,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_allGraphsOutline" destination="Ge4-cD-v3R" id="kxj-wW-VhC"/>
+                        <outlet property="_allGraphsOutline" destination="Ge4-cD-v3R" id="gZw-gI-XSm"/>
                         <outlet property="_inspector" destination="87G-pV-soQ" id="mSu-MB-12h"/>
                         <outlet property="_selectedGraphName" destination="Fz9-pb-LEV" id="yWZ-Fj-4IP"/>
                         <outlet property="_selectedGraphOutline" destination="IfO-oi-Z19" id="QgG-lL-9YP"/>

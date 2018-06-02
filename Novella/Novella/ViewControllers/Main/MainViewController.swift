@@ -33,8 +33,8 @@ class MainViewController: NSViewController {
 	@IBOutlet fileprivate weak var _tabView: NSTabView!
 	@IBOutlet fileprivate weak var _storyName: NSTextField!
 	@IBOutlet fileprivate weak var _tabController: TabsControl!
-	@IBOutlet weak var _inspector: NSTableView!
-	@IBOutlet fileprivate weak var _allGraphsOutline: NSOutlineView!
+	@IBOutlet private weak var _inspector: NSTableView!
+	@IBOutlet private weak var _allGraphsOutline: AllGraphsOutlineView!
 	@IBOutlet fileprivate weak var _selectedGraphOutline: NSOutlineView!
 	@IBOutlet fileprivate weak var _selectedGraphName: NSTextField!
 	
@@ -95,6 +95,7 @@ class MainViewController: NSViewController {
 		_inspector.delegate = _inspectorDataDelegate
 		
 		// outliners
+		_allGraphsOutline.MVC = self
 		_allGraphsOutline.dataSource = _allGraphsDelegate
 		_allGraphsOutline.delegate = _allGraphsDelegate
 		_selectedGraphOutline.delegate = _selectedGraphDelegate
@@ -253,6 +254,21 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Story Helpers -
+	func addGraph(parent: NVGraph?) {
+		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
+		
+		if parent == nil {
+			try! NVStoryManager.shared.Story.add(graph: graph)
+		} else {
+			try! parent!.add(graph: graph)
+		}
+		let newTab = addNewTab(forGraph: graph)
+		selectTab(item: newTab)
+		
+		reloadAllGraphs()
+		reloadSelectedGraph()
+	}
+	
 	fileprivate func saveStory(_ forcePrompt: Bool) -> Bool {
 		if _openedFile == nil || forcePrompt {
 			let sfd = NSSavePanel()
@@ -389,17 +405,8 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - - Interface Buttons -
-	
 	@IBAction func onAddGraph(_ sender: NSButton) {
-		let graph = NVStoryManager.shared.makeGraph(name: NSUUID().uuidString)
-		do { try NVStoryManager.shared.Story.add(graph: graph) } catch {
-			alertError(message: "Could not add Graph!", info: "Adding a graph to the Story failed.")
-			return // TODO: Remove graph
-		}
-		let newTab = addNewTab(forGraph: graph)
-		selectTab(item: newTab)		
-		
-		reloadAllGraphs()
+		addGraph(parent: nil)
 	}
 	
 	@IBAction func onTrashItem(_ sender: NSButton) {
