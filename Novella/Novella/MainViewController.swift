@@ -15,32 +15,32 @@ import struct KPCTabsControl.ChromeStyle
 import protocol KPCTabsControl.TabsControlDelegate
 
 class MainViewController: NSViewController {
-	// MARK: - - Constants -
-	fileprivate static let SCROLL_SIZE: CGFloat = 6000.0
-	fileprivate static let MIN_ZOOM: CGFloat = 0.2
-	fileprivate static let MAX_ZOOM: CGFloat = 4.0
+	// MARK: - Constants -
+	private static let SCROLL_SIZE: CGFloat = 6000.0
+	private static let MIN_ZOOM: CGFloat = 0.2
+	private static let MAX_ZOOM: CGFloat = 4.0
 	
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _manager: NVStoryManager?
-	fileprivate var _selectedTab: TabItem?
+	private var _selectedTab: TabItem?
 	
-	// MARK: - - Outlets -
-	@IBOutlet fileprivate weak var _splitView: NSSplitView!
-	@IBOutlet fileprivate weak var _tabView: NSTabView!
-	@IBOutlet fileprivate weak var _tabController: TabsControl!
+	// MARK: - Outlets -
+	@IBOutlet private weak var _splitView: NSSplitView!
+	@IBOutlet private weak var _tabView: NSTabView!
+	@IBOutlet private weak var _tabController: TabsControl!
 	@IBOutlet private weak var _inspector: NSTableView!
 	@IBOutlet private weak var _allGraphsOutline: AllGraphsOutlineView!
 	@IBOutlet private weak var _selectedGraphOutline: SelectedGraphOutlineView!
-	@IBOutlet fileprivate weak var _selectedGraphName: NSTextField!
+	@IBOutlet private weak var _selectedGraphName: NSTextField!
 	
-	// MARK: - - Delegates & Data Sources -
-	fileprivate var _storyDelegate: StoryDelegate?
-	fileprivate var _tabsDataSource: TabsDataSource?
-	fileprivate var _inspectorDataDelegate: InspectorDataSource?
-	fileprivate var _allGraphsDelegate: AllGraphsDelegate?
-	fileprivate var _selectedGraphDelegate: SelectedGraphDelegate?
+	// MARK: - Delegates & Data Sources -
+	private var _storyDelegate: StoryDelegate?
+	private var _tabsDataSource: TabsDataSource?
+	private var _inspectorDataDelegate: InspectorDataSource?
+	private var _allGraphsDelegate: AllGraphsDelegate?
+	private var _selectedGraphDelegate: SelectedGraphDelegate?
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
 	var Manager: NVStoryManager? {
 		get{ return _manager }
 	}
@@ -48,10 +48,10 @@ class MainViewController: NSViewController {
 		get{ return _inspectorDataDelegate }
 	}
 	
-	
 	// MARK: - _TESTING_ -
 	func setManager(manager: NVStoryManager) {
 		_manager = manager
+		_manager!.addDelegate(_storyDelegate!)
 		
 		// close any tabs
 		closeAllTabs()
@@ -87,7 +87,7 @@ class MainViewController: NSViewController {
 		}
 	}
 	
-	// MARK: - - Initialization -
+	// MARK: - Initialization -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -120,35 +120,33 @@ class MainViewController: NSViewController {
 		_selectedGraphOutline.delegate = _selectedGraphDelegate
 		_selectedGraphOutline.dataSource = _selectedGraphDelegate
 	}
-
-	// MARK: - - Alerts -
-	fileprivate func alertError(message: String, info: String) {
-		let alert = NSAlert()
-		alert.messageText = message
-		alert.informativeText = info
-		alert.alertStyle = .critical
-		alert.addButton(withTitle: "OK")
-		alert.runModal()
+	
+	@IBAction func onOutlinerAddGraph(_ sender: NSButton) {
+		addGraph(parent: nil)
 	}
-	fileprivate func alertSave(message: String, info: String) -> SaveAlertResult {
-		let alert = NSAlert()
-		alert.messageText = message
-		alert.informativeText = info
-		alert.alertStyle = .critical
-		alert.addButton(withTitle: "Save")
-		alert.addButton(withTitle: "Don't Save")
-		alert.addButton(withTitle: "Cancel")
-		switch alert.runModal() {
-		case NSApplication.ModalResponse.alertFirstButtonReturn:
-			return .save
-		case NSApplication.ModalResponse.alertSecondButtonReturn:
-			return .dontsave
-		default:
-			return .cancel
-		}
+}
+
+// MARK: - Outliner -
+extension MainViewController {
+	func reloadAllGraphs() {
+		_allGraphsOutline.reloadData()
 	}
 	
-	// MARK: - - Story Helpers -
+	func reloadSelectedGraph() {
+		_selectedGraphOutline.reloadData()
+	}
+}
+
+// MARK: - Inspector -
+extension MainViewController {
+	func reloadInspector() {
+		_inspectorDataDelegate!.refresh()
+		_inspector.reloadData()
+	}
+}
+
+// MARK: - Helper Functions -
+extension MainViewController {
 	func addGraph(parent: NVGraph?) {
 		if let graph = _manager?.makeGraph(name: NSUUID().uuidString) {
 			if parent == nil {
@@ -164,9 +162,20 @@ class MainViewController: NSViewController {
 		}
 	}
 	
-	// MARK: - - Tabs/TabView Functions -
+	func openVariableEditor() {
+		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
+			selectTab(item: existing)
+		} else {
+			let varTab = addVariableTabEditor()
+			selectTab(item: varTab)
+		}
+	}
+}
+
+// MARK: - - Tabs -
+extension MainViewController {
 	@discardableResult
-	fileprivate func addNewTab(forGraph: NVGraph) -> TabItem? {
+	private func addNewTab(forGraph: NVGraph) -> TabItem? {
 		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
 		let id = NSStoryboard.SceneIdentifier(rawValue: "GraphTab")
 		guard let vc = sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
@@ -188,7 +197,7 @@ class MainViewController: NSViewController {
 	}
 	
 	@discardableResult
-	fileprivate func addVariableTabEditor() -> TabItem? {
+	private func addVariableTabEditor() -> TabItem? {
 		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
 		let id = NSStoryboard.SceneIdentifier(rawValue: "VariableTab")
 		guard let vc =  sb.instantiateController(withIdentifier: id) as? VariableTabViewController else {
@@ -209,7 +218,7 @@ class MainViewController: NSViewController {
 		return tabItem
 	}
 	
-	fileprivate func closeTab(tab: TabItem) {
+	private func closeTab(tab: TabItem) {
 		guard let index = _tabsDataSource!.Tabs.index(of: tab) else { return }
 		
 		// re-assign selected tab if this tab was selected
@@ -228,7 +237,7 @@ class MainViewController: NSViewController {
 		_tabView.removeTabViewItem(tab.tabItem)
 	}
 	
-	fileprivate func closeAllTabs() {
+	private func closeAllTabs() {
 		_tabsDataSource!.Tabs = []
 		_selectedTab = nil
 		_tabController.reloadTabs()
@@ -238,68 +247,7 @@ class MainViewController: NSViewController {
 		}
 	}
 	
-	fileprivate func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
-		// must have correct VC
-		guard let vc = tab.viewController as? GraphTabViewController else {
-			return nil
-		}
-		return vc.Graph
-	}
-	
-	fileprivate func getActiveGraph() -> GraphView? {
-		if let selectedTab = _selectedTab {
-			return getGraphViewFromTab(tab: selectedTab.tabItem)
-		}
-		return nil
-	}
-	
-	fileprivate func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
-		return _tabsDataSource!.Tabs.first(where: {
-			guard let graphView = getGraphViewFromTab(tab: $0.tabItem) else {
-				return false
-			}
-			return graphView.NovellaGraph == graph
-		})?.tabItem
-	}
-	
-	// MARK: - - Interface Buttons -
-	@IBAction func onAddGraph(_ sender: NSButton) {
-		addGraph(parent: nil)
-	}
-	
-	func openVariableEditor() {
-		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
-			selectTab(item: existing)
-		} else {
-			let varTab = addVariableTabEditor()
-			selectTab(item: varTab)
-		}
-	}
-	
-	func undo() {
-		getActiveGraph()?.undo()
-	}
-	
-	func redo() {
-		getActiveGraph()?.redo()
-	}
-	
-	@IBAction func onEditedStoryName(_ sender: NSTextField) {
-		_manager?.Story.Name = sender.stringValue
-	}
-	
-	// MARK: - - Outliner Functions -
-	func reloadAllGraphs() {
-		_allGraphsOutline.reloadData()
-	}
-	func reloadSelectedGraph() {
-		_selectedGraphOutline.reloadData()
-	}
-}
-
-// MARK: - - Tabs -
-extension MainViewController {
-	func selectTab(item: TabItem?) {
+	private func selectTab(item: TabItem?) {
 		// update selected tab
 		_selectedTab = item
 		// get index
@@ -311,8 +259,40 @@ extension MainViewController {
 		}
 	}
 	
-	func onSelectedTabChanged() {
+	private func onSelectedTabChanged() {
 		_tabView.selectTabViewItem(_selectedTab?.tabItem)
+	}
+	
+	private func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
+		// must have correct VC
+		guard let vc = tab.viewController as? GraphTabViewController else {
+			return nil
+		}
+		return vc.Graph
+	}
+	
+	private func getActiveGraph() -> GraphView? {
+		if let selectedTab = _selectedTab {
+			return getGraphViewFromTab(tab: selectedTab.tabItem)
+		}
+		return nil
+	}
+	
+	private func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
+		return _tabsDataSource!.Tabs.first(where: {
+			guard let graphView = getGraphViewFromTab(tab: $0.tabItem) else {
+				return false
+			}
+			return graphView.NovellaGraph == graph
+		})?.tabItem
+	}
+	
+	func undo() {
+		getActiveGraph()?.undo()
+	}
+	
+	func redo() {
+		getActiveGraph()?.redo()
 	}
 }
 extension MainViewController: TabsControlDelegate {
@@ -357,10 +337,9 @@ extension MainViewController: TabsControlDelegate {
 		_selectedTab = (item as! TabItem)
 		onSelectedTabChanged()
 	}
-	
 }
 
-// MARK: - - NSSplitViewDelegate -
+// MARK: - NSSplitViewDelegate -
 extension MainViewController: NSSplitViewDelegate {
 	func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
 		let subviews = splitView.subviews
@@ -394,13 +373,8 @@ extension MainViewController: NSSplitViewDelegate {
 	}
 }
 
-// MARK: - - GraphViewDelegate -
+// MARK: - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
-	func reloadInspector() {
-		_inspectorDataDelegate!.refresh()
-		_inspector.reloadData()
-	}
-	
 	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
 		if selection.isEmpty {
 			_inspectorDataDelegate!.setTarget(target: nil)

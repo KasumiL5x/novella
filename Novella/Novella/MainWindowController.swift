@@ -13,6 +13,7 @@ class MainWindowController: NSWindowController {
 		super.windowDidLoad()
 	}
 	
+	// MARK: - Toolbar Callbacks -
 	@IBAction func onToolbarUndo(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.undo()
 	}
