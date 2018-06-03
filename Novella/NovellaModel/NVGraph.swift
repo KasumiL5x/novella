@@ -260,7 +260,11 @@ extension NVGraph: NVLinkable {
 	
 	public var EditorPosition: CGPoint {
 		get { return _editorPos }
-		set { _editorPos = newValue }
+		set {
+			let oldPos = _editorPos
+			_editorPos = newValue
+			_manager.Delegates.forEach{$0.onStoryGraphPositionChanged(graph: self, oldPos: oldPos, newPos: _editorPos)}
+		}
 	}
 }
 

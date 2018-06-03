@@ -57,8 +57,8 @@
     },
     {
       "position" : {
-        "y" : 349.4765625,
-        "x" : 368.44921875
+        "y" : 361.03515625,
+        "x" : 368.93359375
       },
       "name" : "choice_a",
       "content" : "",
@@ -102,6 +102,18 @@
       "nodetype" : "dialog",
       "preview" : "",
       "uuid" : "3DC75211-79C3-4EA0-AED9-EC85A00C7640"
+    },
+    {
+      "position" : {
+        "y" : 499.52734375,
+        "x" : 605.16796875
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "7EC43DF0-8AEF-486D-A7D8-6EBF29F42A21"
     }
   ],
   "graphs" : [
@@ -114,7 +126,8 @@
       "nodes" : [
         "D454552F-066A-491C-BAC3-A6AB92084DA4",
         "37BBF94C-2A12-4D35-879B-F9CD4192A652",
-        "D78ACFFA-7722-4296-9C1D-8CC45B7AD6F5"
+        "D78ACFFA-7722-4296-9C1D-8CC45B7AD6F5",
+        "7EC43DF0-8AEF-486D-A7D8-6EBF29F42A21"
       ],
       "links" : [
         "638F8A4A-2D59-4B4E-8D6B-581486FEDB15"

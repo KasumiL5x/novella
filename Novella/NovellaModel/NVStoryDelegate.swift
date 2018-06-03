@@ -29,6 +29,11 @@ public protocol NVStoryDelegate {
 	// Called when a NVContext is created using StoryManager.makeContext().
 	func onStoryMakeContext(context: NVContext)
 	
+	// Called when an NVNode's EditorPosition is set using NVNode.EditorPosition.
+	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint)
+	// Called when an NVGraph's EditorPosition is set using NVGraph.EditorPosition.
+	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint)
+	
 	// Called when a NVTrashable is added to the trash using the internal StoryManager.trash().
 	func onStoryTrashItem(item: NVLinkable)
 	// Called when a NVTrashable is removed from the trash using the internal StoryManager().
@@ -148,6 +153,11 @@ public extension NVStoryDelegate {
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 	}
 	func onStoryMakeContext(context: NVContext) {
+	}
+	
+	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint) {
+	}
+	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint) {
 	}
 	
 	func onStoryTrashItem(item: NVLinkable) {

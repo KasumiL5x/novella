@@ -59,7 +59,11 @@ extension NVNode: NVLinkable {
 	
 	public var EditorPosition: CGPoint {
 		get { return _editorPos }
-		set { _editorPos = newValue }
+		set {
+			let oldPos = _editorPos
+			_editorPos = newValue
+			_manager.Delegates.forEach{$0.onStoryNodePositionChanged(node: self, oldPos: oldPos, newPos: _editorPos)}
+		}
 	}
 }
 

@@ -44,6 +44,13 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadSelectedGraph()
 	}
 	
+	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint) {
+		_mvc.reloadInspector()
+	}
+	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint) {
+		_mvc.reloadInspector()
+	}
+	
 	func onStoryTrashItem(item: NVLinkable) {
 		_mvc.reloadSelectedGraph()
 		_mvc.reloadInspector()
