@@ -24,11 +24,11 @@ class MarqueeView: NSView {
 		self._origin = NSPoint.zero
 		self._marquee = NSRect.zero
 		self._inMarquee = false
-		self._roundness = 2.0
+		self._roundness = 3.0
 		self._width = 2.0
 		self._dashPattern = [5.0, 5.0]
 		self._dashPhase = 0.0
-		self._color = NSColor.fromHex("#F8F9FC")
+		self._color = NSColor.fromHex("#D6D6D6")
 		
 		super.init(frame: frameRect)
 	}
@@ -69,7 +69,12 @@ class MarqueeView: NSView {
 			
 			let path = NSBezierPath(roundedRect: _marquee, xRadius: _roundness, yRadius: _roundness)
 			path.lineWidth = _width
-			path.setLineDash(_dashPattern, count: _dashPattern.count, phase: _dashPhase)
+			
+			// fill
+			NSColor(calibratedWhite: 0.8, alpha: 0.2).setFill()
+			path.fill()
+			
+			// outline
 			_color.setStroke()
 			path.stroke()
 			
