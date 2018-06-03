@@ -10,24 +10,13 @@ import Cocoa
 import NovellaModel
 
 class GraphLinkableView: LinkableView {
-	// MARK: - - Variables -
-	fileprivate let _nameLabel: NSTextField
-	
 	// MARK: - - Initialization -
 	init(node: NVGraph, graphView: GraphView) {
-		self._nameLabel = NSTextField(labelWithString: "G")
-		self._nameLabel.tag = LinkableView.HIT_IGNORE_TAG
-		
 		let rect = NSMakeRect(node.EditorPosition.x, node.EditorPosition.y, 1.0, 1.0)
 		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
 		self.frame.size = widgetRect().size
 		
-		// set up name label
-		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
-		self._nameLabel.font = NSFont.systemFont(ofSize: 42.0, weight: .ultraLight)
-		self._nameLabel.sizeToFit()
-		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
-		self.addSubview(self._nameLabel)
+		setLabelString(str: "G")
 		
 		// add shadow
 		wantsLayer = true

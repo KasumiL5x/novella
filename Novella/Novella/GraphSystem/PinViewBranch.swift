@@ -11,12 +11,12 @@ import NovellaModel
 
 class PinViewBranch: PinView {
 	// MARK: - - Variables -
-	fileprivate let _pinLayer: CAShapeLayer
-	fileprivate var _pinPath: NSBezierPath
-	fileprivate let _trueCurveLayer: CAShapeLayer
-	fileprivate let _trueCurvePath: NSBezierPath
-	fileprivate let _falseCurveLayer: CAShapeLayer
-	fileprivate let _falseCurvePath: NSBezierPath
+	private let _pinLayer: CAShapeLayer
+	private var _pinPath: NSBezierPath
+	private let _trueCurveLayer: CAShapeLayer
+	private let _trueCurvePath: NSBezierPath
+	private let _falseCurveLayer: CAShapeLayer
+	private let _falseCurvePath: NSBezierPath
 	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {

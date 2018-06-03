@@ -11,10 +11,10 @@ import NovellaModel
 
 class PinViewLink: PinView {
 	// MARK: - - Variables -
-	fileprivate let _pinLayer: CAShapeLayer
-	fileprivate var _pinPath: NSBezierPath
-	fileprivate let _curveLayer: CAShapeLayer
-	fileprivate let _curvePath: NSBezierPath
+	private let _pinLayer: CAShapeLayer
+	private var _pinPath: NSBezierPath
+	private let _curveLayer: CAShapeLayer
+	private let _curvePath: NSBezierPath
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {

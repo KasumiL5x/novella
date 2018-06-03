@@ -10,21 +10,21 @@ import Cocoa
 
 class GraphBGView: NSView {
 	// color
-	fileprivate var _backgroundColor: NSColor
-	fileprivate var _lineColor: NSColor
+	private var _backgroundColor: NSColor
+	private var _lineColor: NSColor
 	// opacity
-	fileprivate var _majorOpacity: CGFloat
-	fileprivate var _minorOpacity: CGFloat
-	fileprivate var _opacity: CGFloat
+	private var _majorOpacity: CGFloat
+	private var _minorOpacity: CGFloat
+	private var _opacity: CGFloat
 	// thickness
-	fileprivate var _majorThickness: CGFloat
-	fileprivate var _minorThickness: CGFloat
-	fileprivate var _thickness: CGFloat
+	private var _majorThickness: CGFloat
+	private var _minorThickness: CGFloat
+	private var _thickness: CGFloat
 	// divisors
-	fileprivate var _majorDivisor: Int
-	fileprivate var _minorDivisor: Int
+	private var _majorDivisor: Int
+	private var _minorDivisor: Int
 	// depth
-	fileprivate var _density: CGFloat
+	private var _density: CGFloat
 	
 	override init(frame frameRect: NSRect) {
 		self._backgroundColor = NSColor.fromHex("#36363d")

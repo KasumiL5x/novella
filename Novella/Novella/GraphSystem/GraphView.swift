@@ -12,41 +12,41 @@ import NovellaModel
 class GraphView: NSView {
 	// MARK: - - Variables -
 	private let _manager: NVStoryManager
-	fileprivate let _nvGraph: NVGraph
-	fileprivate let _bg: GraphBGView
-	fileprivate let _undoRedo: UndoRedo
-	fileprivate let _graphBounds: GraphBoundsView
+	private let _nvGraph: NVGraph
+	private let _bg: GraphBGView
+	private let _undoRedo: UndoRedo
+	private let _graphBounds: GraphBoundsView
 	//
-	fileprivate var _allLinkableViews: [LinkableView]
-	fileprivate var _allPinViews: [PinView]
+	private var _allLinkableViews: [LinkableView]
+	private var _allPinViews: [PinView]
 	// MARK: Selection
-	fileprivate var _marquee: MarqueeView
+	private var _marquee: MarqueeView
 
-	fileprivate var _selectionHandler: SelectionHandler?
+	private var _selectionHandler: SelectionHandler?
 	// MARK: Gestures
-	fileprivate var _panGesture: NSPanGestureRecognizer?
-	fileprivate var _contextGesture: NSClickGestureRecognizer?
+	private var _panGesture: NSPanGestureRecognizer?
+	private var _contextGesture: NSClickGestureRecognizer?
 	// MARK: Linkable Function Variables
-	fileprivate var _lastLinkablePanPos: CGPoint
+	private var _lastLinkablePanPos: CGPoint
 	// MARK: Pin Dropping
-	fileprivate var _pinDropTarget: LinkableView?
-	fileprivate var _pinDragged: PinView?
-	fileprivate var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
+	private var _pinDropTarget: LinkableView?
+	private var _pinDragged: PinView?
+	private var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
 	// MARK: Node Context Menu
-	fileprivate var _linkableMenu: NSMenu // context menu for linkable widgets
-	fileprivate var _contextClickedLinkable: LinkableView?
+	private var _linkableMenu: NSMenu // context menu for linkable widgets
+	private var _contextClickedLinkable: LinkableView?
 	// MARK: GraphView Context Menu
-	fileprivate var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
-	fileprivate var _lastContextLocation: CGPoint // last point right clicked on graph view
+	private var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
+	private var _lastContextLocation: CGPoint // last point right clicked on graph view
 	// MARK: Pin Context Menus
-	fileprivate var _linkPinMenu: NSMenu // context menu for clicking on a NVLink pin
-	fileprivate var _branchPinMenu: NSMenu // context menu for clicking on a NVBranch pin
+	private var _linkPinMenu: NSMenu // context menu for clicking on a NVLink pin
+	private var _branchPinMenu: NSMenu // context menu for clicking on a NVBranch pin
 	// MARK: Delegate
-	fileprivate var _delegate: GraphViewDelegate?
+	private var _delegate: GraphViewDelegate?
 	// MARK: Popovers
-	fileprivate var _nodePopovers: [GenericPopover]
-	fileprivate var _pinPopovers: [GenericPopover]
-	fileprivate var _pinClicked: PinView?
+	private var _nodePopovers: [GenericPopover]
+	private var _pinPopovers: [GenericPopover]
+	private var _pinClicked: PinView?
 	
 	// MARK: - - Initialization -
 	init(manager: NVStoryManager, graph: NVGraph, frameRect: NSRect, visibleRect: NSRect) {
@@ -143,7 +143,7 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Setup -
-	fileprivate func rootFor(graph: NVGraph) {
+	private func rootFor(graph: NVGraph) {
 		// remove existing views
 		self.subviews.removeAll()
 		
@@ -255,7 +255,7 @@ class GraphView: NSView {
 // MARK: - - Gestures -
 extension GraphView {
 	// MARK: GraphView Callbacks
-	@objc fileprivate func onPan(gesture: NSGestureRecognizer) {
+	@objc private func onPan(gesture: NSGestureRecognizer) {
 		switch gesture.state {
 		case .began:
 			if !_marquee.InMarquee {
@@ -303,7 +303,7 @@ extension GraphView {
 			break
 		}
 	}
-	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
+	@objc private func onContextClick(gesture: NSGestureRecognizer) {
 		if let event = NSApp.currentEvent {
 			_lastContextLocation = gesture.location(in: self)
 			NSMenu.popUpContextMenu(_graphViewMenu, with: event, for: self)
@@ -508,31 +508,31 @@ extension GraphView {
 // MARK: - - Context Menu Callbacks -
 extension GraphView {
 	// MARK: GraphView Menu
-	@objc fileprivate func onGraphViewMenuAddDialog() {
+	@objc private func onGraphViewMenuAddDialog() {
 		makeDialog(at: _lastContextLocation)
 	}
-	@objc fileprivate func onGraphViewMenuAddDelivery() {
+	@objc private func onGraphViewMenuAddDelivery() {
 		makeDelivery(at: _lastContextLocation)
 	}
-	@objc fileprivate func onGraphViewMenuAddContext() {
+	@objc private func onGraphViewMenuAddContext() {
 		makeContext(at: _lastContextLocation)
 	}
-	@objc fileprivate func onGraphViewMenuAddGraph() {
+	@objc private func onGraphViewMenuAddGraph() {
 		makeGraph(at: _lastContextLocation)
 	}
-	@objc fileprivate func onGraphViewMenuTrashSelection() {
+	@objc private func onGraphViewMenuTrashSelection() {
 		for curr in _selectionHandler!.Selection {
 			let inTrash = curr.Linkable.Trashed
 			var linkable = curr.Linkable
 			linkable.Trashed = !inTrash
 		}
 	}
-	@objc fileprivate func onGraphViewMenuEmptyTrash() {
+	@objc private func onGraphViewMenuEmptyTrash() {
 		_manager.emptyTrash()
 	}
 	
 	// MARK: Linkable Menu
-	@objc fileprivate func onLinkableMenuAddLink() {
+	@objc private func onLinkableMenuAddLink() {
 		guard let clicked = _contextClickedLinkable else {
 			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
 			return
@@ -544,7 +544,7 @@ extension GraphView {
 		}
 		clicked.addOutput(pin: makePinViewLink(baseLink: nvLink, forNode: clicked))
 	}
-	@objc fileprivate func onLinkableMenuAddBranch() {
+	@objc private func onLinkableMenuAddBranch() {
 		guard let clicked = _contextClickedLinkable else {
 			print("Tried to add a branch to a linkable via context but _contextClickedLinkable was nil.")
 			return
@@ -558,7 +558,7 @@ extension GraphView {
 	}
 	
 	// MARK: PinView Dropping Menu
-	@objc fileprivate func onPinDropBranchTrue() {
+	@objc private func onPinDropBranchTrue() {
 		guard let draggedPin = _pinDragged else {
 			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
 			return
@@ -571,7 +571,7 @@ extension GraphView {
 			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
 		}
 	}
-	@objc fileprivate func onPinDropBranchFalse() {
+	@objc private func onPinDropBranchFalse() {
 		guard let draggedPin = _pinDragged else {
 			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
 			return
@@ -586,7 +586,7 @@ extension GraphView {
 	}
 	
 	// MARK: - - Pin Popovers -
-	@objc fileprivate func onLinkPinCondition() {
+	@objc private func onLinkPinCondition() {
 		guard let pin = _pinClicked else {
 			print("Tried to open Condition for a pin but _pinClicked was nil.")
 			return
@@ -602,7 +602,7 @@ extension GraphView {
 			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVLink).Condition)
 		}
 	}
-	@objc fileprivate func onLinkPinFunction() {
+	@objc private func onLinkPinFunction() {
 		guard let pin = _pinClicked else {
 			print("Tried to open Function for a pin but _pinClicked was nil.")
 			return
@@ -618,7 +618,7 @@ extension GraphView {
 			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVLink).Transfer.Function)
 		}
 	}
-	@objc fileprivate func onBranchPinCondition() {
+	@objc private func onBranchPinCondition() {
 		guard let pin = _pinClicked else {
 			print("Tried to open Condition for a pin but _pinClicked was nil.")
 			return
@@ -634,7 +634,7 @@ extension GraphView {
 			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVBranch).Condition)
 		}
 	}
-	@objc fileprivate func onBranchPinFunctionTrue() {
+	@objc private func onBranchPinFunctionTrue() {
 		guard let pin = _pinClicked else {
 			print("Tried to open Condition for a pin but _pinClicked was nil.")
 			return
@@ -650,7 +650,7 @@ extension GraphView {
 			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVBranch).TrueTransfer.Function)
 		}
 	}
-	@objc fileprivate func onBranchPinFunctionFalse() {
+	@objc private func onBranchPinFunctionFalse() {
 		guard let pin = _pinClicked else {
 			print("Tried to open Condition for a pin but _pinClicked was nil.")
 			return
@@ -670,11 +670,11 @@ extension GraphView {
 
 // MARK: - - Selection -
 extension GraphView {
-	fileprivate func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
+	private func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
 		return NSIntersectsRect(node.frame, rect)
 	}
 	
-	fileprivate func allNodesIn(rect: NSRect) -> [LinkableView] {
+	private func allNodesIn(rect: NSRect) -> [LinkableView] {
 		var nodes: [LinkableView] = []
 		for curr in _allLinkableViews {
 			if nodeIn(node: curr, rect: rect) {
@@ -722,12 +722,12 @@ extension GraphView {
 		do { try _nvGraph.add(graph: nvGraph) } catch {
 			fatalError("Tried to add a new graph but couldn't add it to this graph.")
 		}
-		return makeGraphLinkableView(nvGraph: nvGraph, at: _lastContextLocation)
+		return makeGraphLinkableView(nvGraph: nvGraph, at: at)
 	}
 	
 	// MARK: LinkableViews
 	@discardableResult
-	fileprivate func makeDialogLinkableView(nvDialog: NVDialog, at: CGPoint) -> DialogLinkableView {
+	private func makeDialogLinkableView(nvDialog: NVDialog, at: CGPoint) -> DialogLinkableView {
 		let node = DialogLinkableView(node: nvDialog, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
@@ -741,7 +741,7 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	fileprivate func makeDeliveryLinkableView(nvDelivery: NVDelivery, at: CGPoint) -> DeliveryLinkableView {
+	private func makeDeliveryLinkableView(nvDelivery: NVDelivery, at: CGPoint) -> DeliveryLinkableView {
 		let node = DeliveryLinkableView(node: nvDelivery, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
@@ -755,7 +755,7 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	fileprivate func makeContextLinkableView(nvContext: NVContext, at: CGPoint) -> ContextLinkableView {
+	private func makeContextLinkableView(nvContext: NVContext, at: CGPoint) -> ContextLinkableView {
 		let node = ContextLinkableView(node: nvContext, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
@@ -769,7 +769,7 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	fileprivate func makeGraphLinkableView(nvGraph: NVGraph, at: CGPoint) -> GraphLinkableView {
+	private func makeGraphLinkableView(nvGraph: NVGraph, at: CGPoint) -> GraphLinkableView {
 		let node = GraphLinkableView(node: nvGraph, graphView: self)
 		_allLinkableViews.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
@@ -782,7 +782,7 @@ extension GraphView {
 		return node
 	}
 	
-	fileprivate func deleteLinkableView(node: LinkableView) {
+	private func deleteLinkableView(node: LinkableView) {
 		// 1. remove from parent view
 		node.removeFromSuperview()
 		
@@ -799,20 +799,20 @@ extension GraphView {
 	}
 	
 	// MARK: PinViews
-	fileprivate func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
+	private func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		
 		return pin
 	}
-	fileprivate func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
+	private func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
 		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		
 		return pin
 	}
 	
-	fileprivate func deletePinView(pin: PinView) {
+	private func deletePinView(pin: PinView) {
 		// 1. remove from parent view
 		pin.removeFromSuperview()
 		

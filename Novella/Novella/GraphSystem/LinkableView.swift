@@ -14,19 +14,20 @@ class LinkableView: NSView {
 	static let HIT_IGNORE_TAG: Int = 10
 	
 	// MARK: - - Variables -
-	fileprivate var _nvLinkable: NVLinkable
-	fileprivate var _graphView: GraphView
-	fileprivate var _isPrimed: Bool
-	fileprivate var _isSelected: Bool
+	private var _nvLinkable: NVLinkable
+	private var _graphView: GraphView
+	private var _isPrimed: Bool
+	private var _isSelected: Bool
+	private let _nameLabel: NSTextField
 	//
-	fileprivate var _clickGesture: NSClickGestureRecognizer?
-	fileprivate var _doubleClickGesture: NSClickGestureRecognizer?
-	fileprivate var _ctxGesture: NSClickGestureRecognizer?
-	fileprivate var _panGesture: NSPanGestureRecognizer?
+	private var _clickGesture: NSClickGestureRecognizer?
+	private var _doubleClickGesture: NSClickGestureRecognizer?
+	private var _ctxGesture: NSClickGestureRecognizer?
+	private var _panGesture: NSPanGestureRecognizer?
 	//
-	fileprivate var _outputs: [PinView]
+	private var _outputs: [PinView]
 	//
-	fileprivate var _trashMode: Bool
+	private var _trashMode: Bool
 	
 	// MARK: - - Properties -
 	public var Outputs: [PinView] {
@@ -49,6 +50,11 @@ class LinkableView: NSView {
 		self._isPrimed = false
 		self._isSelected = false
 		//
+		self._nameLabel = NSTextField(labelWithString: "?")
+		self._nameLabel.tag = LinkableView.HIT_IGNORE_TAG
+		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
+		self._nameLabel.font = NSFont.systemFont(ofSize: 42.0, weight: .ultraLight)
+		//
 		self._clickGesture = nil
 		self._doubleClickGesture = nil
 		self._ctxGesture = nil
@@ -58,6 +64,10 @@ class LinkableView: NSView {
 		//
 		self._trashMode = false
 		super.init(frame: frameRect)
+		
+		// name label
+		setLabelString(str: "?")
+		self.addSubview(self._nameLabel)
 		
 		// primary click recognizer
 		_clickGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onClick))
@@ -105,6 +115,12 @@ class LinkableView: NSView {
 		print("LinkableView::onTrashed() should be overridden.")
 	}
 	
+	func setLabelString(str: String) {
+		_nameLabel.stringValue = str
+		self._nameLabel.sizeToFit()
+		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
+	}
+	
 	func redraw() {
 		setNeedsDisplay(bounds)
 	}
@@ -133,18 +149,18 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: Gesture Callbacks
-	@objc fileprivate func onClick(gesture: NSGestureRecognizer) {
+	@objc private func onClick(gesture: NSGestureRecognizer) {
 		_graphView.onClickLinkable(node: self, gesture: gesture)
 	}
-	@objc fileprivate func onDoubleClick(gesture: NSGestureRecognizer) {
+	@objc private func onDoubleClick(gesture: NSGestureRecognizer) {
 		if _trashMode { return }
 		_graphView.onDoubleClickLinkable(node: self, gesture: gesture)
 	}
-	@objc fileprivate func onContextClick(gesture: NSGestureRecognizer) {
+	@objc private func onContextClick(gesture: NSGestureRecognizer) {
 		if _trashMode { return }
 		_graphView.onContextLinkable(node: self, gesture: gesture)
 	}
-	@objc fileprivate func onPan(gesture: NSPanGestureRecognizer) {
+	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		_graphView.onPanLinkable(node: self, gesture: gesture)
 	}
 	

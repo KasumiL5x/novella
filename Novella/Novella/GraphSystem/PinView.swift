@@ -11,19 +11,19 @@ import NovellaModel
 
 class PinView: NSView {
 	// MARK: - - Variables -
-	fileprivate var _nvBaseLink: NVBaseLink
+	private var _nvBaseLink: NVBaseLink
 	var _graphView: GraphView
-	fileprivate var _owner: LinkableView
+	private var _owner: LinkableView
 	//
-	fileprivate var _panGesture: NSPanGestureRecognizer?
-	fileprivate var _isDragging: Bool
-	fileprivate var _dragPosition: CGPoint
-	fileprivate var _dragLayer: CAShapeLayer
-	fileprivate var _dragPath: NSBezierPath
+	private var _panGesture: NSPanGestureRecognizer?
+	private var _isDragging: Bool
+	private var _dragPosition: CGPoint
+	private var _dragLayer: CAShapeLayer
+	private var _dragPath: NSBezierPath
 	//
-	fileprivate var _contextGesture: NSClickGestureRecognizer?
+	private var _contextGesture: NSClickGestureRecognizer?
 	//
-	fileprivate var _trashMode: Bool
+	private var _trashMode: Bool
 	
 	// MARK: - - Initialization -
 	init(link: NVBaseLink, graphView: GraphView, owner: LinkableView) {
@@ -104,12 +104,12 @@ class PinView: NSView {
 	}
 	
 	// MARK: Gesture Callbacks
-	@objc fileprivate func onPan(gesture: NSPanGestureRecognizer) {
+	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		if _trashMode { return }
 		_graphView.onPanPin(pin: self, gesture: gesture)
 	}
 	
-	@objc fileprivate func onContext(gesture: NSClickGestureRecognizer) {
+	@objc private func onContext(gesture: NSClickGestureRecognizer) {
 		if _trashMode { return }
 		_graphView.onContextPin(pin: self, gesture: gesture)
 	}

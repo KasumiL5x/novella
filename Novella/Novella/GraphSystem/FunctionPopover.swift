@@ -9,7 +9,7 @@
 import Cocoa
 
 class FunctionPopover: GenericPopover {
-	fileprivate var _trueFalse: Bool
+	private var _trueFalse: Bool
 	
 	var TrueFalse: Bool {
 		get{ return _trueFalse }

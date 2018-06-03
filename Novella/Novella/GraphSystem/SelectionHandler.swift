@@ -10,9 +10,9 @@ import Foundation
 
 class SelectionHandler {
 	// MARK: - - Variables -
-	fileprivate var _selectedNodes: [LinkableView]
-	fileprivate var _delegate: GraphViewDelegate?
-	fileprivate var _graph: GraphView
+	private var _selectedNodes: [LinkableView]
+	private var _delegate: GraphViewDelegate?
+	private var _graph: GraphView
 	
 	// MARK: - - Initialization -
 	init(graph: GraphView) {

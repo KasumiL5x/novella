@@ -10,10 +10,10 @@ import Cocoa
 
 class GenericPopover: NSObject {
 	// MARK: - - Variables -
-	fileprivate var _view: NSView?
-	fileprivate var _popover: NSPopover?
+	private var _view: NSView?
+	private var _popover: NSPopover?
 	var _viewController: NSViewController? // PROTECTED
-	fileprivate var _window: NSWindow?
+	private var _window: NSWindow?
 	
 	// MARK: - - Initialization -
 	override init() {

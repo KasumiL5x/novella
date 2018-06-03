@@ -9,7 +9,7 @@
 import Cocoa
 
 class GraphBoundsView: NSView {
-	fileprivate var _boundary: CGSize
+	private var _boundary: CGSize
 	
 	init(initialBounds: CGSize) {
 		self._boundary = initialBounds

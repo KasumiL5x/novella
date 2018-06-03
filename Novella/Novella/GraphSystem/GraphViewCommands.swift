@@ -10,8 +10,8 @@ import Cocoa
 import NovellaModel
 
 class SelectNodesCmd: UndoableCommand {
-	fileprivate let _selection: [LinkableView]
-	fileprivate let _handler: SelectionHandler
+	private let _selection: [LinkableView]
+	private let _handler: SelectionHandler
 	
 	init(selection: [LinkableView], handler: SelectionHandler) {
 		self._selection = selection
@@ -27,9 +27,9 @@ class SelectNodesCmd: UndoableCommand {
 	}
 }
 class ReplacedSelectedNodesCmd: UndoableCommand {
-	fileprivate let _selection: [LinkableView]
-	fileprivate let _oldSelection: [LinkableView]
-	fileprivate let _handler: SelectionHandler
+	private let _selection: [LinkableView]
+	private let _oldSelection: [LinkableView]
+	private let _handler: SelectionHandler
 	
 	init(selection: [LinkableView], handler: SelectionHandler) {
 		self._selection = selection
@@ -46,8 +46,8 @@ class ReplacedSelectedNodesCmd: UndoableCommand {
 	}
 }
 class DeselectNodesCmd: UndoableCommand {
-	fileprivate let _selection: [LinkableView]
-	fileprivate let _handler: SelectionHandler
+	private let _selection: [LinkableView]
+	private let _handler: SelectionHandler
 	
 	init(selection: [LinkableView], handler: SelectionHandler) {
 		self._selection = selection
@@ -64,9 +64,9 @@ class DeselectNodesCmd: UndoableCommand {
 }
 
 class MoveLinkableViewCmd: UndoableCommand {
-	fileprivate let _node: LinkableView
-	fileprivate let _from: CGPoint
-	fileprivate let _to: CGPoint
+	private let _node: LinkableView
+	private let _from: CGPoint
+	private let _to: CGPoint
 	
 	init(node: LinkableView, from: CGPoint, to: CGPoint) {
 		self._node = node
@@ -84,9 +84,9 @@ class MoveLinkableViewCmd: UndoableCommand {
 }
 
 class SetPinLinkDestinationCmd: UndoableCommand {
-	fileprivate let _pin: PinViewLink
-	fileprivate let _prevDest: NVLinkable?
-	fileprivate let _newDest: NVLinkable?
+	private let _pin: PinViewLink
+	private let _prevDest: NVLinkable?
+	private let _newDest: NVLinkable?
 	
 	init(pin: PinViewLink, destination: NVLinkable?) {
 		self._pin = pin
@@ -104,10 +104,10 @@ class SetPinLinkDestinationCmd: UndoableCommand {
 }
 
 class SetPinBranchDestinationCmd: UndoableCommand {
-	fileprivate let _pin: PinViewBranch
-	fileprivate let _prevDest: NVLinkable?
-	fileprivate let _newDest: NVLinkable?
-	fileprivate let _forTrue: Bool
+	private let _pin: PinViewBranch
+	private let _prevDest: NVLinkable?
+	private let _newDest: NVLinkable?
+	private let _forTrue: Bool
 	
 	init(pin: PinViewBranch, destination: NVLinkable?, forTrue: Bool) {
 		self._pin = pin

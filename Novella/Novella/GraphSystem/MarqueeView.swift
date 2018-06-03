@@ -10,14 +10,14 @@ import Cocoa
 
 class MarqueeView: NSView {
 	// MARK: - - Variables -
-	fileprivate var _origin: NSPoint
-	fileprivate var _marquee: NSRect
-	fileprivate var _inMarquee: Bool
-	fileprivate var _roundness: CGFloat
-	fileprivate var _width: CGFloat
-	fileprivate var _dashPattern: [CGFloat]
-	fileprivate var _dashPhase: CGFloat
-	fileprivate var _color: NSColor
+	private var _origin: NSPoint
+	private var _marquee: NSRect
+	private var _inMarquee: Bool
+	private var _roundness: CGFloat
+	private var _width: CGFloat
+	private var _dashPattern: [CGFloat]
+	private var _dashPhase: CGFloat
+	private var _color: NSColor
 	
 	// MARK: - - Initializers -
 	override init(frame frameRect: NSRect) {
