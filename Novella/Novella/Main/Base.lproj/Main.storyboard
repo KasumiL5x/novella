@@ -987,26 +987,21 @@
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="rDQ-vh-wUD" userLabel="Filter">
                                                                 <rect key="frame" x="0.0" y="0.0" width="191" height="30"/>
                                                                 <subviews>
-                                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3EH-xb-kZZ">
+                                                                    <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkl-Ai-Cp0">
                                                                         <rect key="frame" x="5" y="5" width="181" height="20"/>
-                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Filter" bezelStyle="round" id="NK6-Jd-FBK" customClass="RoundedTextFieldCell" customModule="Novella" customModuleProvider="target">
+                                                                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Filter" usesSingleLineMode="YES" bezelStyle="round" id="qOj-AH-ZH0">
                                                                             <font key="font" metaFont="system"/>
-                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="number" keyPath="_radius">
-                                                                                    <real key="value" value="5"/>
-                                                                                </userDefinedRuntimeAttribute>
-                                                                            </userDefinedRuntimeAttributes>
-                                                                        </textFieldCell>
-                                                                    </textField>
+                                                                        </searchFieldCell>
+                                                                    </searchField>
                                                                 </subviews>
                                                                 <constraints>
+                                                                    <constraint firstAttribute="trailing" secondItem="wkl-Ai-Cp0" secondAttribute="trailing" constant="5" id="4vR-zT-Men"/>
+                                                                    <constraint firstItem="wkl-Ai-Cp0" firstAttribute="leading" secondItem="rDQ-vh-wUD" secondAttribute="leading" constant="5" id="DIt-jL-bBe"/>
                                                                     <constraint firstAttribute="height" constant="30" id="GU1-vI-7Fv"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="3EH-xb-kZZ" secondAttribute="trailing" constant="5" id="Ty1-K8-L97"/>
-                                                                    <constraint firstItem="3EH-xb-kZZ" firstAttribute="top" secondItem="rDQ-vh-wUD" secondAttribute="top" constant="5" id="UDr-VR-9iV"/>
-                                                                    <constraint firstItem="3EH-xb-kZZ" firstAttribute="leading" secondItem="rDQ-vh-wUD" secondAttribute="leading" constant="5" id="evm-rd-Xd7"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="3EH-xb-kZZ" secondAttribute="bottom" constant="5" id="uPF-ta-rSf"/>
+                                                                    <constraint firstItem="wkl-Ai-Cp0" firstAttribute="top" secondItem="rDQ-vh-wUD" secondAttribute="top" constant="5" id="eb4-Va-KKE"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="wkl-Ai-Cp0" secondAttribute="bottom" constant="5" id="gx0-xu-95B"/>
                                                                 </constraints>
                                                             </customView>
                                                         </subviews>
