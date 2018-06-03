@@ -1,7 +1,10 @@
 # Novella
 > An authoring framework for interactive storytelling.
 
-![license](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![Platform](http://img.shields.io/badge/platform-macOS-red.svg?style=flat)](https://developer.apple.com/macos/)
+[![Swift 4](https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Twitter](https://img.shields.io/badge/twitter-@KasumiL5x-blue.svg?style=flat)](http://twitter.com/KasumiL5x)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/KasumiL5x/novella/raw/master/LICENSE)
 
 Novella is a model and framework for authoring interactive narrative experiences.  It is developed by Daniel Green as part of his PhD project at Bournemouth University, UK.
 
