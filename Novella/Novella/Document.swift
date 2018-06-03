@@ -29,10 +29,6 @@ class Document: NSDocument {
 		let vc = windowController.contentViewController as! MainViewController
 		vc.setManager(manager: _manager)
 		self.addWindowController(windowController)
-		
-
-		
-		// for some reason i cannot have Manager set here thus a crash w/o open
 	}
 
 	override func data(ofType typeName: String) throws -> Data {
