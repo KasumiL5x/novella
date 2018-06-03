@@ -276,7 +276,7 @@ extension MainViewController {
 		return vc.Graph
 	}
 	
-	private func getActiveGraph() -> GraphView? {
+	func getActiveGraph() -> GraphView? {
 		if let selectedTab = _selectedTab {
 			return getGraphViewFromTab(tab: selectedTab.tabItem)
 		}

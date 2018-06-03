@@ -135,6 +135,16 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		self._dialogImage = NSImage(named: NSImage.Name(rawValue: "Dialog"))
 	}
 	
+	func outlineViewSelectionDidChange(_ notification: Notification) {
+		let outlineView = (notification.object as! NSOutlineView)
+		if let linkableItem = outlineView.item(atRow: outlineView.selectedRow) as? NVLinkable {
+			_mvc.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
+			
+			// TODO: Add bool to the above select function to allow auto-moving of camera (i.e. center on node)
+			//       or add a function internally that simply centers on selection (and expose that too?).
+		}
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
 		if row % 2 == 0 {
 			rowView.backgroundColor = NSColor.fromHex("#EBEBEB")

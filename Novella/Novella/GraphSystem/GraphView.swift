@@ -670,6 +670,12 @@ extension GraphView {
 
 // MARK: - - Selection -
 extension GraphView {
+	func selectNVLinkable(linkable: NVLinkable) {
+		if let view = getLinkableViewFrom(linkable: linkable) {
+			_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
+		}
+	}
+	
 	private func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
 		return NSIntersectsRect(node.frame, rect)
 	}
