@@ -91,6 +91,8 @@ class VariableTabViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		_outlineView.backgroundColor = NSColor.fromHex("#F4F5F7")
+		
 		// map the variable data types to an index in the popup's menu set
 		self._variableTypeIndices = [
 			NVDataType.boolean.stringValue: 0,
@@ -201,6 +203,19 @@ class VariableTabViewController: NSViewController {
 
 // MARK: - NSOutlineViewDelegate -
 extension VariableTabViewController: NSOutlineViewDelegate {
+	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+		let customRow = OutlinerTableRowView(frame: NSRect.zero)
+		return customRow
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
+		if row % 2 == 0 {
+			rowView.backgroundColor = NSColor.fromHex("#FEFEFE")
+		} else {
+			rowView.backgroundColor = NSColor.fromHex("#F9F9F9")
+		}
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSView?
 		
