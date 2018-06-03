@@ -44,7 +44,7 @@ struct Settings {
 	}
 	
 	struct graph {
-		static var trashedSaturation: CGFloat = 0.1
+		static var trashedSaturation: CGFloat = 0.0
 		struct nodes {
 			static var roundness:          CGFloat = 10.0
 			static var endColor:           NSColor = NSColor.fromHex("#222222").withAlphaComponent(0.6)
@@ -73,7 +73,7 @@ struct Settings {
 	
 	static func resetToApp() {
 		// graph
-		Settings.graph.trashedSaturation = 0.1
+		Settings.graph.trashedSaturation = 0.0
 		
 		// graph.nodes
 		Settings.graph.nodes.roundness = 10.0
