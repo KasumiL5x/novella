@@ -45,6 +45,7 @@
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC920C345390078CB28 /* Alerts.swift */; };
+		65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */; };
 		65F7F83120C313F6004663D6 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F83020C313F6004663D6 /* SwiftyJSON.framework */; };
 		65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83420C31636004663D6 /* String+FromAny.swift */; };
 		65F7F83B20C31637004663D6 /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83520C31636004663D6 /* UserDefaults+Color.swift */; };
@@ -167,6 +168,7 @@
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedTextFieldCell.swift; path = Utilities/RoundedTextFieldCell.swift; sourceTree = "<group>"; };
 		65F7F83020C313F6004663D6 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65F7F83420C31636004663D6 /* String+FromAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
 		65F7F83520C31636004663D6 /* UserDefaults+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				65F7F87020C31722004663D6 /* ViewControllers */,
 				65DD6CC720C3412B0078CB28 /* MainWindowController.swift */,
 				65F7F88620C317DD004663D6 /* MainViewController.swift */,
+				65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 				65F7F87720C3174B004663D6 /* ReaderViewController.swift in Sources */,
 				65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */,
 				65F7F88A20C317DD004663D6 /* InspectorDataSource.swift in Sources */,
+				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
 				65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */,
 				65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */,
 				65F7F83F20C31637004663D6 /* NSView+Toast.swift in Sources */,
@@ -933,6 +937,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.Novella;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -956,6 +961,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.dgreen.Novella;
 				PRODUCT_NAME = "$(TARGET_NAME)";

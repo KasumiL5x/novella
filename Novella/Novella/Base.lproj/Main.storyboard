@@ -921,18 +921,18 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30o-Ti-svs" userLabel="Selected Graph Outline View">
-                                                                <rect key="frame" x="0.0" y="25" width="191" height="410"/>
+                                                                <rect key="frame" x="0.0" y="30" width="191" height="405"/>
                                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="q3h-9m-4Z4">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="410"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="191" height="405"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="ACt-xa-Eq5" id="3eJ-sj-RS2" customClass="SelectedGraphOutlineView" customModule="Novella" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="410"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="405"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <color key="gridColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <tableColumns>
-                                                                                <tableColumn identifier="" width="188" minWidth="40" maxWidth="1000" id="ACt-xa-Eq5" userLabel="Main Column">
+                                                                                <tableColumn identifier="" width="191" minWidth="40" maxWidth="1000" id="ACt-xa-Eq5" userLabel="Main Column">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                                         <font key="font" metaFont="smallSystem"/>
                                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -946,7 +946,7 @@
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                     <prototypeCellViews>
                                                                                         <tableCellView identifier="FancyCell" id="XlW-KR-4ce" userLabel="Fancy Cell">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="188" height="25"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
                                                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-aj-k04">
@@ -955,7 +955,7 @@
                                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="qoB-r4-Mbk"/>
                                                                                                 </imageView>
                                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8u-PU-2JN">
-                                                                                                    <rect key="frame" x="25" y="4" width="163" height="17"/>
+                                                                                                    <rect key="frame" x="25" y="4" width="166" height="17"/>
                                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="CvR-4f-i4U">
                                                                                                         <font key="font" metaFont="system"/>
@@ -985,23 +985,28 @@
                                                                 </scroller>
                                                             </scrollView>
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="rDQ-vh-wUD" userLabel="Filter">
-                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="191" height="30"/>
                                                                 <subviews>
                                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3EH-xb-kZZ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
-                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Filter" bezelStyle="round" id="NK6-Jd-FBK">
+                                                                        <rect key="frame" x="5" y="5" width="181" height="20"/>
+                                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Filter" bezelStyle="round" id="NK6-Jd-FBK" customClass="RoundedTextFieldCell" customModule="Novella" customModuleProvider="target">
                                                                             <font key="font" metaFont="system"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="number" keyPath="_radius">
+                                                                                    <real key="value" value="10"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                            </userDefinedRuntimeAttributes>
                                                                         </textFieldCell>
                                                                     </textField>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="25" id="GU1-vI-7Fv"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="3EH-xb-kZZ" secondAttribute="trailing" id="Ty1-K8-L97"/>
-                                                                    <constraint firstItem="3EH-xb-kZZ" firstAttribute="top" secondItem="rDQ-vh-wUD" secondAttribute="top" id="UDr-VR-9iV"/>
-                                                                    <constraint firstItem="3EH-xb-kZZ" firstAttribute="leading" secondItem="rDQ-vh-wUD" secondAttribute="leading" id="evm-rd-Xd7"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="3EH-xb-kZZ" secondAttribute="bottom" id="uPF-ta-rSf"/>
+                                                                    <constraint firstAttribute="height" constant="30" id="GU1-vI-7Fv"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="3EH-xb-kZZ" secondAttribute="trailing" constant="5" id="Ty1-K8-L97"/>
+                                                                    <constraint firstItem="3EH-xb-kZZ" firstAttribute="top" secondItem="rDQ-vh-wUD" secondAttribute="top" constant="5" id="UDr-VR-9iV"/>
+                                                                    <constraint firstItem="3EH-xb-kZZ" firstAttribute="leading" secondItem="rDQ-vh-wUD" secondAttribute="leading" constant="5" id="evm-rd-Xd7"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="3EH-xb-kZZ" secondAttribute="bottom" constant="5" id="uPF-ta-rSf"/>
                                                                 </constraints>
                                                             </customView>
                                                         </subviews>
