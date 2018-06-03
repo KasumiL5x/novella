@@ -78,7 +78,7 @@
 		65F7F86F20C31714004663D6 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85A20C31714004663D6 /* GraphViewCommands.swift */; };
 		65F7F87720C3174B004663D6 /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F87120C3174A004663D6 /* ReaderViewController.swift */; };
 		65F7F88920C317DD004663D6 /* Outliner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88120C317DD004663D6 /* Outliner.swift */; };
-		65F7F88A20C317DD004663D6 /* InspectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88220C317DD004663D6 /* InspectorDataSource.swift */; };
+		65F7F88A20C317DD004663D6 /* Inspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88220C317DD004663D6 /* Inspector.swift */; };
 		65F7F88C20C317DD004663D6 /* ColoredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88420C317DD004663D6 /* ColoredView.swift */; };
 		65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88520C317DD004663D6 /* StoryDelegate.swift */; };
 		65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88620C317DD004663D6 /* MainViewController.swift */; };
@@ -168,7 +168,7 @@
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedTextFieldCell.swift; path = Utilities/RoundedTextFieldCell.swift; sourceTree = "<group>"; };
+		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextFieldCell.swift; sourceTree = "<group>"; };
 		65F7F83020C313F6004663D6 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65F7F83420C31636004663D6 /* String+FromAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
 		65F7F83520C31636004663D6 /* UserDefaults+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 		65F7F85A20C31714004663D6 /* GraphViewCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
 		65F7F87120C3174A004663D6 /* ReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		65F7F88120C317DD004663D6 /* Outliner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outliner.swift; sourceTree = "<group>"; };
-		65F7F88220C317DD004663D6 /* InspectorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorDataSource.swift; sourceTree = "<group>"; };
+		65F7F88220C317DD004663D6 /* Inspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inspector.swift; sourceTree = "<group>"; };
 		65F7F88420C317DD004663D6 /* ColoredView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredView.swift; sourceTree = "<group>"; };
 		65F7F88520C317DD004663D6 /* StoryDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryDelegate.swift; sourceTree = "<group>"; };
 		65F7F88620C317DD004663D6 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +248,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		655B0D0220C42C6C00CDE92F /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				655F9FB620C3087400B20EFE /* Main.storyboard */,
+				65DD6CC720C3412B0078CB28 /* MainWindowController.swift */,
+				65F7F88620C317DD004663D6 /* MainViewController.swift */,
+				65F7F88220C317DD004663D6 /* Inspector.swift */,
+				65F7F88120C317DD004663D6 /* Outliner.swift */,
+				65F7F88520C317DD004663D6 /* StoryDelegate.swift */,
+				65F7F88720C317DD004663D6 /* TabItem.swift */,
+				65F7F88820C317DD004663D6 /* TabsDataSource.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		655F9FA220C3087300B20EFE = {
 			isa = PBXGroup;
 			children = (
@@ -271,20 +286,16 @@
 			isa = PBXGroup;
 			children = (
 				655F9FAE20C3087300B20EFE /* AppDelegate.swift */,
-				655F9FB420C3087400B20EFE /* Assets.xcassets */,
 				655F9FB220C3087300B20EFE /* Document.swift */,
-				65F7F83320C31611004663D6 /* Extensions */,
-				65F7F84520C31707004663D6 /* GraphSystem */,
-				655F9FB920C3087400B20EFE /* Info.plist */,
-				655F9FB620C3087400B20EFE /* Main.storyboard */,
 				655F9FBA20C3087400B20EFE /* Novella.entitlements */,
-				65F7F8AD20C3187E004663D6 /* Settings.swift */,
-				65F7F8B620C319D6004663D6 /* Storyboards */,
+				655F9FB920C3087400B20EFE /* Info.plist */,
+				655F9FB420C3087400B20EFE /* Assets.xcassets */,
+				65F7F83320C31611004663D6 /* Extensions */,
 				65F7F84020C31676004663D6 /* Utilities */,
+				655B0D0220C42C6C00CDE92F /* Main */,
+				65F7F84520C31707004663D6 /* GraphSystem */,
+				65F7F8B620C319D6004663D6 /* Storyboards */,
 				65F7F87020C31722004663D6 /* ViewControllers */,
-				65DD6CC720C3412B0078CB28 /* MainWindowController.swift */,
-				65F7F88620C317DD004663D6 /* MainViewController.swift */,
-				65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -438,10 +449,12 @@
 		65F7F84020C31676004663D6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				65DD6CC920C345390078CB28 /* Alerts.swift */,
 				65F7F88420C317DD004663D6 /* ColoredView.swift */,
 				65F7F84120C3168A004663D6 /* CommandSystem.swift */,
 				65F7F84220C3168A004663D6 /* CurveHelper.swift */,
-				65DD6CC920C345390078CB28 /* Alerts.swift */,
+				65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */,
+				65F7F8AD20C3187E004663D6 /* Settings.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -452,11 +465,11 @@
 				65F7F85020C31713004663D6 /* GraphView.swift */,
 				65F7F85A20C31714004663D6 /* GraphViewCommands.swift */,
 				65F7F85420C31713004663D6 /* GraphViewDelegate.swift */,
+				65F7F84A20C31713004663D6 /* SelectionHandler.swift */,
 				65AE16CE20C32586006A921F /* LinkableViews */,
 				65AE16CF20C325AB006A921F /* OtherViews */,
 				65AE16CC20C32579006A921F /* PinViews */,
 				65AE16CA20C32544006A921F /* Popovers */,
-				65F7F84A20C31713004663D6 /* SelectionHandler.swift */,
 			);
 			path = GraphSystem;
 			sourceTree = "<group>";
@@ -464,25 +477,12 @@
 		65F7F87020C31722004663D6 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				65F7F8A120C3181C004663D6 /* Tabs */,
-				65F7F89C20C31806004663D6 /* Preferences */,
 				65F7F89120C317E6004663D6 /* Popovers */,
-				65F7F88020C317CC004663D6 /* Main */,
+				65F7F89C20C31806004663D6 /* Preferences */,
+				65F7F8A120C3181C004663D6 /* Tabs */,
 				65F7F87120C3174A004663D6 /* ReaderViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		65F7F88020C317CC004663D6 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				65F7F88220C317DD004663D6 /* InspectorDataSource.swift */,
-				65F7F88120C317DD004663D6 /* Outliner.swift */,
-				65F7F88520C317DD004663D6 /* StoryDelegate.swift */,
-				65F7F88720C317DD004663D6 /* TabItem.swift */,
-				65F7F88820C317DD004663D6 /* TabsDataSource.swift */,
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		65F7F89120C317E6004663D6 /* Popovers */ = {
@@ -702,7 +702,7 @@
 				65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */,
 				65F7F87720C3174B004663D6 /* ReaderViewController.swift in Sources */,
 				65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */,
-				65F7F88A20C317DD004663D6 /* InspectorDataSource.swift in Sources */,
+				65F7F88A20C317DD004663D6 /* Inspector.swift in Sources */,
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
 				65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */,
 				65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */,
