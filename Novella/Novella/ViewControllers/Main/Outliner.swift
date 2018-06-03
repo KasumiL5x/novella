@@ -143,6 +143,11 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		}
 	}
 	
+	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+		let customRow = OutlinerTableRowView(frame: NSRect.zero)
+		return customRow
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if nil == _graph {
 			return 0

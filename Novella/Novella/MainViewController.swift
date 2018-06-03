@@ -56,19 +56,20 @@ class MainViewController: NSViewController {
 		// close any tabs
 		closeAllTabs()
 		
-		// add a new graph tab for each subgraph of the story
-		for curr in _manager!.Story.Graphs {
-			addNewTab(forGraph: curr)
-		}
-		// select first tab
-		if _tabsDataSource!.Tabs.count > 0 {
-			_tabController.reloadTabs()
-			selectTab(item: _tabsDataSource!.Tabs[0])
-		}
-		
 		reloadAllGraphs()
 		setSelectedGraph(graph: nil)
 		reloadInspector()
+		
+		// if there are any graphs, open the first one and select it
+		if _manager!.Story.Graphs.count > 0 {
+			let first = _manager!.Story.Graphs[0]
+			let tab = addNewTab(forGraph: first)
+			_tabController.reloadTabs()
+			selectTab(item: tab)
+			
+			_selectedGraphOutline.selectRowIndexes([0], byExtendingSelection: false)
+			setSelectedGraph(graph: first)
+		}
 	}
 	func setSelectedGraph(graph: NVGraph?) {
 		_selectedGraphDelegate?.Graph = graph
