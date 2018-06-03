@@ -119,6 +119,10 @@ class MainViewController: NSViewController {
 		_selectedGraphOutline.MVC = self
 		_selectedGraphOutline.delegate = _selectedGraphDelegate
 		_selectedGraphOutline.dataSource = _selectedGraphDelegate
+		
+		// set outline view BG colors as there seems to be an IB bug where the color is just *slightly* not maintained
+		_allGraphsOutline.backgroundColor = NSColor.fromHex("#ECECEC")
+		_selectedGraphOutline.backgroundColor = NSColor.fromHex("#ECECEC")
 	}
 	
 	@IBAction func onOutlinerAddGraph(_ sender: NSButton) {

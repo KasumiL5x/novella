@@ -117,8 +117,10 @@ class OutlinerTableRowView: NSTableRowView {
 }
 
 class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
-	fileprivate var _graph: NVGraph?
-	fileprivate var _mvc: MainViewController
+	private var _graph: NVGraph?
+	private var _mvc: MainViewController
+	
+	private var _dialogImage: NSImage?
 	
 	var Graph: NVGraph? {
 		get{ return _graph }
@@ -129,6 +131,16 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	
 	init(mvc: MainViewController) {
 		self._mvc = mvc
+		
+		self._dialogImage = NSImage(named: NSImage.Name(rawValue: "Dialog"))
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
+		if row % 2 == 0 {
+			rowView.backgroundColor = NSColor.fromHex("#EBEBEB")
+		} else {
+			rowView.backgroundColor = NSColor.fromHex("#F0F0F0")
+		}
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
@@ -171,7 +183,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? NSTableCellView
 		
 		switch item {
 		case is NVGraph:
@@ -181,6 +193,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		case is NVNode:
 			let asNode = (item as! NVNode)
 			view?.textField?.stringValue = (asNode.Trashed ? "🗑 " : "") + asNode.Name
+			view?.imageView?.image = _dialogImage
 			
 		case is NVLink:
 			let asLink = (item as! NVLink)

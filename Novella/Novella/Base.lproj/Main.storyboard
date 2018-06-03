@@ -825,14 +825,14 @@
                                                             </customView>
                                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clj-nZ-WMm" userLabel="All Graphs Outline View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="191" height="414"/>
-                                                                <clipView key="contentView" copiesOnScroll="NO" id="9gh-hS-EL3">
+                                                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9gh-hS-EL3">
                                                                     <rect key="frame" x="0.0" y="0.0" width="191" height="414"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="iPD-PA-AEG" id="Iae-N4-kdz" customClass="AllGraphsOutlineView" customModule="Novella" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="191" height="414"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
-                                                                            <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                            <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <color key="gridColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <tableColumns>
                                                                                 <tableColumn identifier="" width="191" minWidth="40" maxWidth="1000" id="iPD-PA-AEG" userLabel="Main Column">
@@ -920,18 +920,17 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </customView>
-                                                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30o-Ti-svs" userLabel="Selected Graph Outline View">
+                                                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30o-Ti-svs" userLabel="Selected Graph Outline View">
                                                                 <rect key="frame" x="0.0" y="25" width="191" height="410"/>
-                                                                <clipView key="contentView" id="q3h-9m-4Z4">
+                                                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="q3h-9m-4Z4">
                                                                     <rect key="frame" x="0.0" y="0.0" width="191" height="410"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="ACt-xa-Eq5" id="3eJ-sj-RS2" customClass="SelectedGraphOutlineView" customModule="Novella" customModuleProvider="target">
+                                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" indentationPerLevel="16" outlineTableColumn="ACt-xa-Eq5" id="3eJ-sj-RS2" customClass="SelectedGraphOutlineView" customModule="Novella" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="191" height="410"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
-                                                                            <size key="intercellSpacing" width="3" height="2"/>
-                                                                            <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <color key="gridColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <tableColumns>
                                                                                 <tableColumn identifier="" width="188" minWidth="40" maxWidth="1000" id="ACt-xa-Eq5" userLabel="Main Column">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
@@ -946,14 +945,19 @@
                                                                                     </textFieldCell>
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                     <prototypeCellViews>
-                                                                                        <tableCellView identifier="TextCell" id="hCy-ne-uOz" userLabel="Text Cell">
-                                                                                            <rect key="frame" x="1" y="1" width="188" height="17"/>
+                                                                                        <tableCellView identifier="FancyCell" id="XlW-KR-4ce" userLabel="Fancy Cell">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="188" height="25"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
-                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3yC-Mw-U0b">
-                                                                                                    <rect key="frame" x="0.0" y="0.0" width="188" height="17"/>
+                                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-aj-k04">
+                                                                                                    <rect key="frame" x="3" y="4" width="17" height="17"/>
+                                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="qoB-r4-Mbk"/>
+                                                                                                </imageView>
+                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8u-PU-2JN">
+                                                                                                    <rect key="frame" x="25" y="4" width="163" height="17"/>
                                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="iGm-Qn-Sdz">
+                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="CvR-4f-i4U">
                                                                                                         <font key="font" metaFont="system"/>
                                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -961,7 +965,8 @@
                                                                                                 </textField>
                                                                                             </subviews>
                                                                                             <connections>
-                                                                                                <outlet property="textField" destination="3yC-Mw-U0b" id="z0X-Ax-CtF"/>
+                                                                                                <outlet property="imageView" destination="8x5-aj-k04" id="JrX-as-fKH"/>
+                                                                                                <outlet property="textField" destination="y8u-PU-2JN" id="LR2-2u-mIm"/>
                                                                                             </connections>
                                                                                         </tableCellView>
                                                                                     </prototypeCellViews>
@@ -1191,6 +1196,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSGoBackTemplate" width="9" height="12"/>
         <image name="NSGoForwardTemplate" width="9" height="12"/>
         <image name="NSTouchBarAddTemplate" width="14" height="30"/>
