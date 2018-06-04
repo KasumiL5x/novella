@@ -443,7 +443,6 @@ extension GraphView {
 			pin.DragPosition = gesture.location(in: pin)
 			pin.redraw()
 			_pinDragged = pin
-			break
 			
 		case .changed:
 			pin.DragPosition = gesture.location(in: pin)
@@ -470,8 +469,6 @@ extension GraphView {
 				curr.prime()
 			}
 			
-			break
-			
 		case .cancelled, .ended:
 			pin.IsDragging = false
 			pin.redraw()
@@ -479,28 +476,26 @@ extension GraphView {
 			// unprime as we're done
 			_pinDropTarget?.unprime()
 			
-			// since _pinDropTarget could be nil, this automatically detaches if dragged onto a non-valid node.
-			// if i want to change that behavior, i'd just have to manually check nil here
-			if let asLink = pin as? PinViewLink {
+			switch pin {
+			case is PinViewLink:
+				let asLink = pin as! PinViewLink
 				_undoRedo.execute(cmd: SetPinLinkDestinationCmd(pin: asLink, destination: _pinDropTarget?.Linkable))
 				_pinDragged = nil // no longer dragging anything
-			} else
-				if let _ = pin as? PinViewBranch {
-					if let event = NSApp.currentEvent {
-						let forView = _pinDropTarget ?? self
-						NSMenu.popUpContextMenu(_pinDropBranchMenu, with: event, for: forView)
-					} else {
-						print("Tried to open a context menu for dropping a Branch but there was no event available to use.")
-					}
+				
+			case is PinViewBranch:
+				if let event = NSApp.currentEvent {
+					let forView = _pinDropTarget ?? self
+					NSMenu.popUpContextMenu(_pinDropBranchMenu, with: event, for: forView)
 				} else {
-					print("dropped an unhandled pin type")
+					print("Tried to open a context menu for dropping a Branch but there was no event available to use.")
+				}
+				
+			default:
+				break
 			}
-			
-			break
 			
 		default:
 			print("onPanPin found unexpected gesture state.")
-			break
 		}
 	}
 	
