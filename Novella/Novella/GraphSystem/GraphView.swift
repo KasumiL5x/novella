@@ -32,6 +32,7 @@ class GraphView: NSView {
 	private var _pinDropTarget: LinkableView?
 	private var _pinDragged: PinView?
 	private var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
+	private var _pinDropGraphMenu: NSMenu // context menu dropping pins on GRAPH nods
 	// MARK: Node Context Menu
 	private var _linkableMenu: NSMenu // context menu for linkable widgets
 	private var _contextClickedLinkable: LinkableView?
@@ -68,6 +69,7 @@ class GraphView: NSView {
 		//
 		self._lastLinkablePanPos = CGPoint.zero
 		self._pinDropBranchMenu = NSMenu()
+		self._pinDropGraphMenu = NSMenu()
 		//
 		self._linkableMenu = NSMenu()
 		self._contextClickedLinkable = nil
@@ -476,6 +478,18 @@ extension GraphView {
 			// unprime as we're done
 			_pinDropTarget?.unprime()
 			
+			if _pinDropTarget is GraphLinkableView {
+				_pinDropGraphMenu.removeAllItems()
+				let nvGraph = ((_pinDropTarget as! GraphLinkableView).Linkable as! NVGraph)
+				for currNode in nvGraph.Nodes {
+					let menuItem = NSMenuItem(title: "Link to: " + (currNode.Name.isEmpty ? "Unnamed" : currNode.Name), action: #selector(GraphView.onPinDropGraph), keyEquivalent: "")
+					menuItem.representedObject = currNode
+					_pinDropGraphMenu.addItem(menuItem)
+				}
+				NSMenu.popUpContextMenu(_pinDropGraphMenu, with: NSApp.currentEvent!, for: _pinDropTarget!)
+				break // don't continue the linking as we raised an element here
+			}
+			
 			switch pin {
 			case is PinViewLink:
 				let asLink = pin as! PinViewLink
@@ -572,6 +586,21 @@ extension GraphView {
 	}
 	
 	// MARK: PinView Dropping Menu
+	@objc private func onPinDropGraph(sender: NSMenuItem) {
+		let nvNode = sender.representedObject as! NVNode
+		
+		switch _pinDragged {
+		case is PinViewLink:
+			(_pinDragged as! PinViewLink).setDestination(dest: nvNode)
+		case is PinViewBranch:
+			print("NOT YET IMPLEMENTED: NEED TO FIGURE OUT HOW TO SHOW ANOTHER TRUE/FALSE MENU ETC.")
+		default:
+			print("Unhandled pin drop on graph.")
+		}
+		
+		_pinDragged = nil
+		_pinDropTarget = nil
+	}
 	@objc private func onPinDropBranchTrue() {
 		guard let draggedPin = _pinDragged else {
 			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
