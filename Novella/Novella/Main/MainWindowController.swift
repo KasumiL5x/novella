@@ -22,6 +22,10 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.redo()
 	}
 	
+	@IBAction func onToolbarZoomSelected(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.zoomActiveGraph()
+	}
+	
 	@IBAction func onToolbarVariableEditor(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.openVariableEditor()
 	}

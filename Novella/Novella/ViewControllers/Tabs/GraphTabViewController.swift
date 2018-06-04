@@ -58,6 +58,11 @@ class GraphTabViewController: NSViewController {
 		}
 	}
 	
+	func zoomSelected() {
+		guard let selectedRect = _graphView?.selectedBounds() else { return }
+		_scrollView.magnify(toFit: selectedRect)
+	}
+	
 	fileprivate func centerOfGraph() -> CGPoint {
 		let centerSelf = NSMakePoint(self.view.frame.width/2, self.view.frame.height/2)
 		return _graphView?.convert(centerSelf, from: self.view) ?? CGPoint.zero
