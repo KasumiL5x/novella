@@ -295,11 +295,6 @@ class LinkableView: NSView {
 			w = max(w, sw)
 			h = max(h, sh)
 		}
-		
-//		 adjust for _outputsRect
-//		w = _outputsRect.width > w ? _outputsRect.width : w
-//		h = _outputsRect.height > h ? _outputsRect.height : h
-		
 		self.frame.size = NSMakeSize(w, h)
 	}
 	

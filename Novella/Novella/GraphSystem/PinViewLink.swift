@@ -11,22 +11,28 @@ import NovellaModel
 
 class PinViewLink: PinView {
 	// MARK: - - Variables -
-	private let _pinLayer: CAShapeLayer
-	private var _pinPath: NSBezierPath
+	private let _pinStrokeLayer: CAShapeLayer
+	private let _pinFillLayer: CAShapeLayer
 	private let _curveLayer: CAShapeLayer
 	private let _curvePath: NSBezierPath
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
-		self._pinLayer = CAShapeLayer()
-		self._pinPath = NSBezierPath()
+		self._pinStrokeLayer = CAShapeLayer()
+		self._pinFillLayer = CAShapeLayer()
 		self._curveLayer = CAShapeLayer()
 		self._curvePath = NSBezierPath()
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
 		layer!.addSublayer(_curveLayer)
-		layer!.addSublayer(_pinLayer)
+		layer!.addSublayer(_pinStrokeLayer)
+		layer!.addSublayer(_pinFillLayer)
+		
+		// configure stroke layer
+		_pinStrokeLayer.lineWidth = 1.0
+		_pinStrokeLayer.fillColor = CGColor.clear
+		_pinStrokeLayer.strokeColor = NSColor.red.cgColor
 		
 		// configure curve layer
 		_curveLayer.fillColor = nil
@@ -59,11 +65,22 @@ class PinViewLink: PinView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
-			// MARK: Pin Drawing
-			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
-			_pinLayer.path = _pinPath.cgPath
-			_pinLayer.fillColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor
+			context.resetClip()
 			
+			// MARK: Pin Drawing
+			let strokePath = NSBezierPath(ovalIn: bounds)
+			_pinStrokeLayer.path = strokePath.cgPath
+			_pinStrokeLayer.strokeColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor
+			
+			let fillPath = NSBezierPath(ovalIn: bounds.insetBy(dx: 2.0, dy: 2.0))
+			_pinFillLayer.path = fillPath.cgPath
+			if getDestination() != nil {
+				_pinFillLayer.fillColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor
+			} else {
+				_pinFillLayer.fillColor = CGColor.clear
+			}
+			
+			context.resetClip()
 			// MARK: Curve Drawing
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
 			var end = CGPoint.zero
