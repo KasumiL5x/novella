@@ -25,6 +25,7 @@ class PinView: NSView {
 	private var _dragPosition: CGPoint
 	private var _dragLayer: CAShapeLayer
 	private var _dragPath: NSBezierPath
+	private var _panTarget: LinkableView?
 	//
 	private var _contextGesture: NSClickGestureRecognizer?
 	//
@@ -41,6 +42,7 @@ class PinView: NSView {
 		self._dragPosition = CGPoint.zero
 		self._dragLayer = CAShapeLayer()
 		self._dragPath = NSBezierPath()
+		self._panTarget = nil
 		//
 		self._contextGesture = nil
 		//
@@ -114,16 +116,75 @@ class PinView: NSView {
 		print("PinView::setBounds() should be overridden.")
 		return NSSize.zero
 	}
+	func onPanStarted(_ gesture: NSPanGestureRecognizer) {
+		print("PinView::onPanStarted() should be overridden.")
+	}
+	func onPanFinished(_ target: LinkableView?) {
+		print("PinView::onPanFinished() should be overridden.")
+	}
+	func onContextInternal(_ gesture: NSClickGestureRecognizer) {
+		print("PinView::onContextInternal() should be overridden.")
+	}
 	
 	// MARK: Gesture Callbacks
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		if _trashMode { return }
-		_graphView.onPanPin(pin: self, gesture: gesture)
+		
+		switch gesture.state {
+		case .began:
+			IsDragging = true
+			DragPosition = gesture.location(in: self)
+			redraw()
+			onPanStarted(gesture)
+			
+		case .changed:
+			DragPosition = gesture.location(in: self)
+			redraw()
+			
+			// what is under the cursor in the graph?
+			if let target = _graphView.linkableViewAtPoint(gesture.location(in: _graphView)) {
+				// ignore trashed objects
+				if target.Trashed {
+					_panTarget?.unprime()
+					_panTarget = nil
+					break
+				}
+				// ignore parent
+				if target == _owner {
+					_panTarget?.unprime()
+					_panTarget = nil
+					break
+				}
+				// unprime previous target (in case moved without hitting empty space)
+				_panTarget?.unprime()
+				// set as new target
+				_panTarget = target
+				// prime selection
+				_panTarget?.prime()
+			} else {
+				// not touching anything, so attempt to unprime last and then clear it
+				_panTarget?.unprime()
+				_panTarget = nil
+			}
+			
+		case .cancelled, .ended:
+			IsDragging = false
+			redraw()
+			
+			// unprime, as we're done
+			_panTarget?.unprime()
+			
+			onPanFinished(_panTarget)
+			_panTarget = nil
+			
+		default:
+			break
+		}
 	}
 	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
 		if _trashMode { return }
-		_graphView.onContextPin(pin: self, gesture: gesture)
+		onContextInternal(gesture)
 	}
 	
 	// MARK: - - Drawing -

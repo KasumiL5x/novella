@@ -23,6 +23,14 @@ class PinViewBranch: PinView {
 	private var _falsePinRect: NSRect
 	private var _truePinRect: NSRect
 	
+	private var _pannedPin: Bool // true = true pin, false = false pin
+	
+	private let _trueContextMenu: NSMenu
+	private let _falseContextMenu: NSMenu
+	private let _conditionPopover: ConditionPopover
+	private let _trueFunctionPopover: FunctionPopover
+	private let _falseFunctionPopover: FunctionPopover
+	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
 		self._pinStrokeLayer = CAShapeLayer()
@@ -35,6 +43,12 @@ class PinViewBranch: PinView {
 		self._outlineRect = NSRect.zero
 		self._falsePinRect = NSRect.zero
 		self._truePinRect = NSRect.zero
+		self._pannedPin = false
+		self._trueContextMenu = NSMenu()
+		self._falseContextMenu = NSMenu()
+		self._conditionPopover = ConditionPopover()
+		self._trueFunctionPopover = FunctionPopover(true)
+		self._falseFunctionPopover = FunctionPopover(false)
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		layer!.addSublayer(_pinStrokeLayer)
@@ -69,6 +83,12 @@ class PinViewBranch: PinView {
 		_outlineRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
 		_falsePinRect = NSMakeRect(PinView.PIN_INSET*0.5, PinView.PIN_SPACING, actualPinSize, actualPinSize)
 		_truePinRect = NSMakeRect(_falsePinRect.origin.x, _falsePinRect.maxY + PinView.PIN_SPACING, _falsePinRect.width, _falsePinRect.height)
+		
+		// configure menus
+		_trueContextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewBranch.onContextCondition), keyEquivalent: "")
+		_trueContextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewBranch.onContextTrueFunction), keyEquivalent: "")
+		_falseContextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewBranch.onContextCondition), keyEquivalent: "")
+		_falseContextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewBranch.onContextFalseFunction), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinViewBranch::init(coder:) not implemented.")
@@ -81,6 +101,47 @@ class PinViewBranch: PinView {
 		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
 		return NSMakeSize(PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
 	}
+
+	override func onPanStarted(_ gesture: NSPanGestureRecognizer) {
+		let point = gesture.location(in: self)
+		if _truePinRect.contains(point) {
+			_pannedPin = true
+		} else if _falsePinRect.contains(point) {
+			_pannedPin = false
+		}
+	}
+	override func onPanFinished(_ target: LinkableView?) {
+		switch target {
+		case is GraphLinkableView:
+			fatalError("Implementing this soon. Just need to spawn a menu from GraphView @ the target w/ this view.")
+			
+		default:
+			_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: target?.Linkable, forTrue: _pannedPin))
+		}
+	}
+	override func onContextInternal(_ gesture: NSClickGestureRecognizer) {
+		let point = gesture.location(in: self)
+		if _truePinRect.contains(point) {
+			NSMenu.popUpContextMenu(_trueContextMenu, with: NSApp.currentEvent!, for: self)
+		} else if _falsePinRect.contains(point) {
+			NSMenu.popUpContextMenu(_falseContextMenu, with: NSApp.currentEvent!, for: self)
+		}
+	}
+	
+	// MARK: Context Menu Callbacks
+	@objc private func onContextCondition() {
+		_conditionPopover.show(forView: self, at: .maxX)
+		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVBranch).Condition)
+	}
+	@objc private func onContextTrueFunction() {
+		_trueFunctionPopover.show(forView: self, at: .maxX)
+		(_trueFunctionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVBranch).TrueTransfer.Function)
+	}
+	@objc private func onContextFalseFunction() {
+		_falseFunctionPopover.show(forView: self, at: .maxX)
+		(_falseFunctionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVBranch).FalseTransfer.Function)
+	}
+	
 	// MARK: Destination
 	func setTrueDestination(dest: NVLinkable?) {
 		(BaseLink as! NVBranch).setTrueDestination(dest: dest)

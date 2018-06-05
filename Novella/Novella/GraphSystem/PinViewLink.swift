@@ -15,6 +15,9 @@ class PinViewLink: PinView {
 	private let _pinFillLayer: CAShapeLayer
 	private let _curveLayer: CAShapeLayer
 	private let _curvePath: NSBezierPath
+	private let _contextMenu: NSMenu
+	private let _conditionPopover: ConditionPopover
+	private let _functionPopover: FunctionPopover
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
@@ -22,6 +25,9 @@ class PinViewLink: PinView {
 		self._pinFillLayer = CAShapeLayer()
 		self._curveLayer = CAShapeLayer()
 		self._curvePath = NSBezierPath()
+		self._contextMenu = NSMenu()
+		self._conditionPopover = ConditionPopover()
+		self._functionPopover = FunctionPopover(true)
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
@@ -41,6 +47,10 @@ class PinViewLink: PinView {
 		_curveLayer.lineDashPattern = nil
 		_curveLayer.lineJoin = kCALineJoinRound
 		_curveLayer.lineWidth = 2.0
+		
+		// configure context menu
+		_contextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewLink.onContextCondition), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewLink.onContextFunction), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinViewLink::init(coder:) not implemented.")
@@ -52,6 +62,31 @@ class PinViewLink: PinView {
 	override func getFrameSize() -> NSSize {
 		return NSMakeSize(PinView.PIN_SIZE, PinView.PIN_SIZE)
 	}
+	override func onPanStarted(_ gesture: NSPanGestureRecognizer) {
+	}
+	override func onPanFinished(_ target: LinkableView?) {
+		switch target {
+		case is GraphLinkableView:
+			fatalError("Implementing this soon. Just need to spawn a menu from GraphView @ the target w/ this view.")
+			
+		default:
+			_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: target?.Linkable))
+		}
+	}
+	override func onContextInternal(_ gesture: NSClickGestureRecognizer) {
+		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+	}
+	
+	// MARK: Context Menu Callbacks
+	@objc private func onContextCondition() {
+		_conditionPopover.show(forView: self, at: .maxX)
+		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVLink).Condition)
+	}
+	@objc private func onContextFunction() {
+		_functionPopover.show(forView: self, at: .maxX)
+		(_functionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVLink).Transfer.Function)
+	}
+	
 	// MARK: Destination
 	func setDestination(dest: NVLinkable?) {
 		(BaseLink as! NVLink).setDestination(dest: dest)

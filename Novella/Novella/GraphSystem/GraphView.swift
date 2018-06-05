@@ -28,26 +28,16 @@ class GraphView: NSView {
 	private var _contextGesture: NSClickGestureRecognizer?
 	// MARK: Linkable Function Variables
 	private var _lastLinkablePanPos: CGPoint
-	// MARK: Pin Dropping
-	private var _pinDropTarget: LinkableView?
-	private var _pinDragged: PinView?
-	private var _pinDropBranchMenu: NSMenu // context menu dropping pins for branch pins
-	private var _pinDropGraphMenu: NSMenu // context menu dropping pins on GRAPH nods
 	// MARK: Node Context Menu
 	private var _linkableMenu: NSMenu // context menu for linkable widgets
 	private var _contextClickedLinkable: LinkableView?
 	// MARK: GraphView Context Menu
 	private var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
 	private var _lastContextLocation: CGPoint // last point right clicked on graph view
-	// MARK: Pin Context Menus
-	private var _linkPinMenu: NSMenu // context menu for clicking on a NVLink pin
-	private var _branchPinMenu: NSMenu // context menu for clicking on a NVBranch pin
 	// MARK: Delegate
 	private var _delegate: GraphViewDelegate?
 	// MARK: Popovers
 	private var _nodePopovers: [GenericPopover]
-	private var _pinPopovers: [GenericPopover]
-	private var _pinClicked: PinView?
 	
 	// MARK: - - Initialization -
 	init(manager: NVStoryManager, graph: NVGraph, frameRect: NSRect, visibleRect: NSRect) {
@@ -68,8 +58,6 @@ class GraphView: NSView {
 		self._contextGesture = nil
 		//
 		self._lastLinkablePanPos = CGPoint.zero
-		self._pinDropBranchMenu = NSMenu()
-		self._pinDropGraphMenu = NSMenu()
 		//
 		self._linkableMenu = NSMenu()
 		self._contextClickedLinkable = nil
@@ -77,11 +65,7 @@ class GraphView: NSView {
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
 		//
-		self._linkPinMenu = NSMenu()
-		self._branchPinMenu = NSMenu()
-		//
 		self._nodePopovers = []
-		self._pinPopovers = []
 		
 		super.init(frame: frameRect)
 		
@@ -100,9 +84,6 @@ class GraphView: NSView {
 		self._contextGesture!.numberOfClicksRequired = 1
 		self.addGestureRecognizer(self._contextGesture!)
 		
-		// configure pin branch menu
-		_pinDropBranchMenu.addItem(withTitle: "True", action: #selector(GraphView.onPinDropBranchTrue), keyEquivalent: "")
-		_pinDropBranchMenu.addItem(withTitle: "False", action: #selector(GraphView.onPinDropBranchFalse), keyEquivalent: "")
 		// configure linkable menu
 		_linkableMenu.addItem(withTitle: "Add Link", action: #selector(GraphView.onLinkableMenuAddLink), keyEquivalent: "")
 		_linkableMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.onLinkableMenuAddBranch), keyEquivalent: "")
@@ -118,13 +99,6 @@ class GraphView: NSView {
 		_graphViewMenu.addItem(withTitle: "Un/Trash Selection", action: #selector(GraphView.onGraphViewMenuTrashSelection), keyEquivalent: "")
 		_graphViewMenu.addItem(withTitle: "Empty Trash", action: #selector(GraphView.onGraphViewMenuEmptyTrash), keyEquivalent: "")
 		_graphViewMenu.addItem(addMenu)
-		
-		// configure pin context menus
-		_linkPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onLinkPinCondition), keyEquivalent: "")
-		_linkPinMenu.addItem(withTitle: "Function...", action: #selector(GraphView.onLinkPinFunction), keyEquivalent: "")
-		_branchPinMenu.addItem(withTitle: "Condition...", action: #selector(GraphView.onBranchPinCondition), keyEquivalent: "")
-		_branchPinMenu.addItem(withTitle: "Function (true)...", action: #selector(GraphView.onBranchPinFunctionTrue), keyEquivalent: "")
-		_branchPinMenu.addItem(withTitle: "Function (false)...", action: #selector(GraphView.onBranchPinFunctionFalse), keyEquivalent: "")
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -142,6 +116,9 @@ class GraphView: NSView {
 			_delegate = newValue
 			_selectionHandler?.Delegate = Delegate
 		}
+	}
+	var Undo: UndoRedo {
+		get{ return _undoRedo }
 	}
 	
 	// MARK: - - Setup -
@@ -161,9 +138,6 @@ class GraphView: NSView {
 		
 		// reset some other things
 		_lastLinkablePanPos = CGPoint.zero
-		_pinDropTarget = nil
-		_pinDragged = nil
-		_pinClicked = nil
 		_contextClickedLinkable = nil
 		_lastContextLocation = CGPoint.zero
 		
@@ -177,7 +151,6 @@ class GraphView: NSView {
 		
 		// clear all popovers
 		self._nodePopovers = []
-		self._pinPopovers = []
 		
 		// load all nodes
 		for curr in graph.Nodes {
@@ -438,98 +411,18 @@ extension GraphView {
 	}
 	
 	// MARK: From PinView
-	func onPanPin(pin: PinView, gesture: NSPanGestureRecognizer) {
-		switch gesture.state {
-		case .began:
-			pin.IsDragging = true
-			pin.DragPosition = gesture.location(in: pin)
-			pin.redraw()
-			_pinDragged = pin
-			
-		case .changed:
-			pin.DragPosition = gesture.location(in: pin)
-			pin.redraw()
-			
-			// figure out which VALID linkable we are hovering - not efficient but it works
-			_pinDropTarget = nil
-			for curr in _allLinkableViews {
-				let pos = gesture.location(in: self) // must be in graph view space as hitTest() is based on superview, which is this
-				let hit = curr.hitTest(pos)
-				
-				// cannot connect to trashed objects
-				if curr.Trashed {
-					continue
-				}
-				
-				// didn't hit, or hit subview (such as a pin)
-				if hit != curr || hit == pin.Owner {
-					curr.unprime() // bit hacky but disables priming if not valid
-					continue
-				}
-				
-				_pinDropTarget = curr
-				curr.prime()
+	func linkableViewAtPoint(_ point: CGPoint) -> LinkableView? {
+		for curr in _allLinkableViews {
+			let hit = curr.hitTest(point)
+		
+			// didn't hit or hit a subview
+			if hit != curr {
+				continue
 			}
 			
-		case .cancelled, .ended:
-			pin.IsDragging = false
-			pin.redraw()
-			
-			// unprime as we're done
-			_pinDropTarget?.unprime()
-			
-			if _pinDropTarget is GraphLinkableView {
-				_pinDropGraphMenu.removeAllItems()
-				let nvGraph = ((_pinDropTarget as! GraphLinkableView).Linkable as! NVGraph)
-				for currNode in nvGraph.Nodes {
-					let menuItem = NSMenuItem(title: "Link to: " + (currNode.Name.isEmpty ? "Unnamed" : currNode.Name), action: #selector(GraphView.onPinDropGraph), keyEquivalent: "")
-					menuItem.representedObject = currNode
-					_pinDropGraphMenu.addItem(menuItem)
-				}
-				NSMenu.popUpContextMenu(_pinDropGraphMenu, with: NSApp.currentEvent!, for: _pinDropTarget!)
-				break // don't continue the linking as we raised an element here
-			}
-			
-			switch pin {
-			case is PinViewLink:
-				let asLink = pin as! PinViewLink
-				_undoRedo.execute(cmd: SetPinLinkDestinationCmd(pin: asLink, destination: _pinDropTarget?.Linkable))
-				_pinDragged = nil // no longer dragging anything
-				
-			case is PinViewBranch:
-				if let event = NSApp.currentEvent {
-					let forView = _pinDropTarget ?? self
-					NSMenu.popUpContextMenu(_pinDropBranchMenu, with: event, for: forView)
-				} else {
-					print("Tried to open a context menu for dropping a Branch but there was no event available to use.")
-				}
-				
-			default:
-				break
-			}
-			
-		default:
-			print("onPanPin found unexpected gesture state.")
+			return curr
 		}
-	}
-	
-	func onContextPin(pin: PinView, gesture: NSClickGestureRecognizer) {
-		if let event = NSApp.currentEvent {
-			switch pin.BaseLink {
-			case is NVLink:
-				_pinClicked = pin
-				NSMenu.popUpContextMenu(_linkPinMenu, with: event, for: pin)
-				
-			case is NVBranch:
-				_pinClicked = pin
-				NSMenu.popUpContextMenu(_branchPinMenu, with: event, for: pin)
-				
-			default:
-				print("Attempted to context click a Pin that doesn't handle context clicking!")
-			}
-		} else {
-			print("Tried to open a context menu for a pin but there was no event available to use.")
-		}
+		return nil
 	}
 }
 
@@ -583,131 +476,6 @@ extension GraphView {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
 		}
 		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
-	}
-	
-	// MARK: PinView Dropping Menu
-	@objc private func onPinDropGraph(sender: NSMenuItem) {
-		let nvNode = sender.representedObject as! NVNode
-		
-		switch _pinDragged {
-		case is PinViewLink:
-			(_pinDragged as! PinViewLink).setDestination(dest: nvNode)
-		case is PinViewBranch:
-			print("NOT YET IMPLEMENTED: NEED TO FIGURE OUT HOW TO SHOW ANOTHER TRUE/FALSE MENU ETC.")
-		default:
-			print("Unhandled pin drop on graph.")
-		}
-		
-		_pinDragged = nil
-		_pinDropTarget = nil
-	}
-	@objc private func onPinDropBranchTrue() {
-		guard let draggedPin = _pinDragged else {
-			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
-			return
-		}
-		// should never happen but just in case
-		if let asBranchPin = draggedPin as? PinViewBranch {
-			_undoRedo.execute(cmd: SetPinBranchDestinationCmd(pin: asBranchPin, destination: _pinDropTarget?.Linkable, forTrue: true))
-			_pinDragged = nil // no longer dragging anything
-		} else {
-			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
-		}
-	}
-	@objc private func onPinDropBranchFalse() {
-		guard let draggedPin = _pinDragged else {
-			print("Tried to use context menu for dragging a pin but there was no dragged pin found.")
-			return
-		}
-		// should never happen but just in case
-		if let asBranchPin = draggedPin as? PinViewBranch {
-			_undoRedo.execute(cmd: SetPinBranchDestinationCmd(pin: asBranchPin, destination: _pinDropTarget?.Linkable, forTrue: false))
-			_pinDragged = nil // no longer dragging anything
-		} else {
-			print("Tried to use a context menu dragging a BRANCH pin but the pin wasn't of this type.")
-		}
-	}
-	
-	// MARK: - - Pin Popovers -
-	@objc private func onLinkPinCondition() {
-		guard let pin = _pinClicked else {
-			print("Tried to open Condition for a pin but _pinClicked was nil.")
-			return
-		}
-		
-		// open popover
-		if let existing = _pinPopovers.first(where: {$0 is ConditionPopover && $0.View == _pinClicked}) {
-			existing.show(forView: pin, at: .maxX)
-		} else {
-			let popover = ConditionPopover()
-			_pinPopovers.append(popover)
-			popover.show(forView: pin, at: .maxX)
-			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVLink).Condition)
-		}
-	}
-	@objc private func onLinkPinFunction() {
-		guard let pin = _pinClicked else {
-			print("Tried to open Function for a pin but _pinClicked was nil.")
-			return
-		}
-		
-		// open popover
-		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked}) {
-			existing.show(forView: pin, at: .maxX)
-		} else {
-			let popover = FunctionPopover(true)
-			_pinPopovers.append(popover)
-			popover.show(forView: pin, at: .maxX)
-			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVLink).Transfer.Function)
-		}
-	}
-	@objc private func onBranchPinCondition() {
-		guard let pin = _pinClicked else {
-			print("Tried to open Condition for a pin but _pinClicked was nil.")
-			return
-		}
-		
-		// open popover
-		if let existing = _pinPopovers.first(where: {$0 is ConditionPopover && $0.View == _pinClicked}) {
-			existing.show(forView: pin, at: .maxX)
-		} else {
-			let popover = ConditionPopover()
-			_pinPopovers.append(popover)
-			popover.show(forView: pin, at: .maxX)
-			(popover.ViewController as! ConditionPopoverViewController).setCondition(condition: (pin.BaseLink as! NVBranch).Condition)
-		}
-	}
-	@objc private func onBranchPinFunctionTrue() {
-		guard let pin = _pinClicked else {
-			print("Tried to open Condition for a pin but _pinClicked was nil.")
-			return
-		}
-		
-		// open popover
-		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked && ($0 as! FunctionPopover).TrueFalse}) {
-			existing.show(forView: pin, at: .maxX)
-		} else {
-			let popover = FunctionPopover(true)
-			_pinPopovers.append(popover)
-			popover.show(forView: pin, at: .maxX)
-			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVBranch).TrueTransfer.Function)
-		}
-	}
-	@objc private func onBranchPinFunctionFalse() {
-		guard let pin = _pinClicked else {
-			print("Tried to open Condition for a pin but _pinClicked was nil.")
-			return
-		}
-		
-		// open popover
-		if let existing = _pinPopovers.first(where: {$0 is FunctionPopover && $0.View == _pinClicked && !($0 as! FunctionPopover).TrueFalse}) {
-			existing.show(forView: pin, at: .maxX)
-		} else {
-			let popover = FunctionPopover(false)
-			_pinPopovers.append(popover)
-			popover.show(forView: pin, at: .maxX)
-			(popover.ViewController as! FunctionPopoverViewController).setFunction(function: (pin.BaseLink as! NVBranch).FalseTransfer.Function)
-		}
 	}
 }
 
