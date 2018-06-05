@@ -30,6 +30,7 @@ class PinViewBranch: PinView {
 	private let _conditionPopover: ConditionPopover
 	private let _trueFunctionPopover: FunctionPopover
 	private let _falseFunctionPopover: FunctionPopover
+	private let _graphDropMenu: NSMenu
 	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
@@ -49,6 +50,7 @@ class PinViewBranch: PinView {
 		self._conditionPopover = ConditionPopover()
 		self._trueFunctionPopover = FunctionPopover(true)
 		self._falseFunctionPopover = FunctionPopover(false)
+		self._graphDropMenu = NSMenu()
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		layer!.addSublayer(_pinStrokeLayer)
@@ -113,7 +115,15 @@ class PinViewBranch: PinView {
 	override func onPanFinished(_ target: LinkableView?) {
 		switch target {
 		case is GraphLinkableView:
-			fatalError("Implementing this soon. Just need to spawn a menu from GraphView @ the target w/ this view.")
+			_graphDropMenu.removeAllItems()
+			let asGraph = (target?.Linkable as! NVGraph)
+			for child in asGraph.Nodes {
+				let menuItem = NSMenuItem(title: "Link to " + (child.Name.isEmpty ? "Unnamed" : child.Name), action: #selector(PinViewBranch.onGraphContextItem), keyEquivalent: "")
+				menuItem.target = self
+				menuItem.representedObject = child
+				_graphDropMenu.addItem(menuItem)
+			}
+			NSMenu.popUpContextMenu(_graphDropMenu, with: NSApp.currentEvent!, for: target!)
 			
 		default:
 			_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: target?.Linkable, forTrue: _pannedPin))
@@ -122,8 +132,10 @@ class PinViewBranch: PinView {
 	override func onContextInternal(_ gesture: NSClickGestureRecognizer) {
 		let point = gesture.location(in: self)
 		if _truePinRect.contains(point) {
+			_pannedPin = true
 			NSMenu.popUpContextMenu(_trueContextMenu, with: NSApp.currentEvent!, for: self)
 		} else if _falsePinRect.contains(point) {
+			_pannedPin = false
 			NSMenu.popUpContextMenu(_falseContextMenu, with: NSApp.currentEvent!, for: self)
 		}
 	}
@@ -140,6 +152,9 @@ class PinViewBranch: PinView {
 	@objc private func onContextFalseFunction() {
 		_falseFunctionPopover.show(forView: self, at: .maxX)
 		(_falseFunctionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVBranch).FalseTransfer.Function)
+	}
+	@objc private func onGraphContextItem(sender: NSMenuItem) {
+		_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: sender.representedObject as? NVLinkable, forTrue: _pannedPin))
 	}
 	
 	// MARK: Destination

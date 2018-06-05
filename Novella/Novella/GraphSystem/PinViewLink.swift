@@ -18,6 +18,7 @@ class PinViewLink: PinView {
 	private let _contextMenu: NSMenu
 	private let _conditionPopover: ConditionPopover
 	private let _functionPopover: FunctionPopover
+	private let _graphDropMenu: NSMenu
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
@@ -28,6 +29,7 @@ class PinViewLink: PinView {
 		self._contextMenu = NSMenu()
 		self._conditionPopover = ConditionPopover()
 		self._functionPopover = FunctionPopover(true)
+		self._graphDropMenu = NSMenu()
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
@@ -67,7 +69,15 @@ class PinViewLink: PinView {
 	override func onPanFinished(_ target: LinkableView?) {
 		switch target {
 		case is GraphLinkableView:
-			fatalError("Implementing this soon. Just need to spawn a menu from GraphView @ the target w/ this view.")
+			_graphDropMenu.removeAllItems()
+			let asGraph = (target?.Linkable as! NVGraph)
+			for child in asGraph.Nodes {
+				let menuItem = NSMenuItem(title: "Link to " + (child.Name.isEmpty ? "Unnamed" : child.Name), action: #selector(PinViewLink.onGraphContextItem), keyEquivalent: "")
+				menuItem.target = self
+				menuItem.representedObject = child
+				_graphDropMenu.addItem(menuItem)
+			}
+			NSMenu.popUpContextMenu(_graphDropMenu, with: NSApp.currentEvent!, for: target!)
 			
 		default:
 			_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: target?.Linkable))
@@ -85,6 +95,9 @@ class PinViewLink: PinView {
 	@objc private func onContextFunction() {
 		_functionPopover.show(forView: self, at: .maxX)
 		(_functionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVLink).Transfer.Function)
+	}
+	@objc private func onGraphContextItem(sender: NSMenuItem) {
+		_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: sender.representedObject as? NVLinkable))
 	}
 	
 	// MARK: Destination
