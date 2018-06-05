@@ -10,6 +10,9 @@ import Cocoa
 import NovellaModel
 
 class LinkableView: NSView {
+	// MARK: - - Constants -
+	static let OUTPUTS_OFFSET_X: CGFloat = 2.0
+	
 	// MARK: - - Identifiers -
 	static let HIT_IGNORE_TAG: Int = 10
 	
@@ -26,6 +29,7 @@ class LinkableView: NSView {
 	private var _panGesture: NSPanGestureRecognizer?
 	//
 	private var _outputs: [PinView]
+//	private var _outputsRect: NSRect
 	//
 	private var _trashMode: Bool
 	
@@ -41,6 +45,10 @@ class LinkableView: NSView {
 			onTrashed()
 			redraw()
 		}
+	}
+	
+	override var wantsDefaultClipping: Bool {
+		return false
 	}
 	
 	// MARK: - - Initialization -
@@ -61,6 +69,7 @@ class LinkableView: NSView {
 		self._panGesture = nil
 		//
 		self._outputs = []
+//		self._outputsRect = NSRect.zero
 		//
 		self._trashMode = false
 		super.init(frame: frameRect)
@@ -212,21 +221,61 @@ class LinkableView: NSView {
 	
 	// MARK: Outputs
 	func addOutput(pin: PinView) {
-		// auto-position
-		let wrect = widgetRect()
-		var pos = CGPoint.zero
-		pos.x = wrect.width - (pin.frame.width * 0.5)
-		pos.y = wrect.height - (pin.frame.height * 2.0)
-		pos.y -= CGFloat(_outputs.count) * (pin.frame.height * 1.5)
-		pin.frame.origin = pos
-		
 		_outputs.append(pin)
 		self.addSubview(pin)
+		layoutPins()
+		sizeToFitSubviews() // subviews cannot be interacted with if they are out of the bounds of the superview, so resize
 		
-		// subviews cannot be interacted with if they are out of the bounds of the superview, so resize
-		sizeToFitSubviews()
+		setNeedsDisplay(bounds)
 	}
-	func sizeToFitSubviews() {
+	private func layoutPins() {
+		if _outputs.isEmpty {
+			return
+		}
+		
+		// set first pin at origin
+		_outputs[0].frame.origin = CGPoint.zero
+		
+		// align all other views accordingly
+		let spacing: CGFloat = 5.0
+		var lastY = _outputs[0].bounds.height
+		if _outputs.count > 1 {
+			for i in 1..<_outputs.count {
+				_outputs[i].frame.origin = NSMakePoint(0.0, lastY + spacing)
+				lastY += _outputs[i].bounds.height + spacing
+			}
+		}
+		
+		// calculate center Y (since at origin can just half height of stack, i.e. last element)
+		let centerY = _outputs.last!.frame.maxY * 0.5
+		
+		// calculate difference between the stack's center and the widget's rect's center
+		let wRect = widgetRect()
+		let yDiff = (wRect.height*0.5) - centerY
+		
+		// move all views up by the diff and set fixed X
+		for curr in _outputs {
+			curr.frame.origin.y += yDiff
+			curr.frame.origin.x = wRect.width + LinkableView.OUTPUTS_OFFSET_X
+		}
+		
+//		_outputsRect = boundsOf(views: _outputs).insetBy(dx: -5.0, dy: -5.0)
+//		_outputsRect.origin = NSMakePoint(0.0, -10.0)
+	}
+	private func boundsOf(views: [NSView]) -> NSRect {
+		var minX = CGFloat.infinity
+		var maxX = -CGFloat.infinity
+		var minY = CGFloat.infinity
+		var maxY = -CGFloat.infinity
+		for curr in views {
+			minX = curr.frame.minX < minX ? curr.frame.minX : minX
+			maxX = curr.frame.maxX > maxX ? curr.frame.maxX : maxX
+			minY = curr.frame.minY < minY ? curr.frame.minY : minY
+			maxY = curr.frame.maxY > maxY ? curr.frame.maxY : maxY
+		}
+		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
+	}
+	private func sizeToFitSubviews() {
 		var w: CGFloat = frame.width
 		var h: CGFloat = frame.height
 		for sub in subviews {
@@ -235,6 +284,11 @@ class LinkableView: NSView {
 			w = max(w, sw)
 			h = max(h, sh)
 		}
+		
+//		 adjust for _outputsRect
+//		w = _outputsRect.width > w ? _outputsRect.width : w
+//		h = _outputsRect.height > h ? _outputsRect.height : h
+		
 		self.frame.size = NSMakeSize(w, h)
 	}
 	
@@ -286,6 +340,12 @@ class LinkableView: NSView {
 				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
 				path.stroke()
 			}
+			
+			// draw background for pins
+//			if !_outputs.isEmpty {
+//				NSColor.fromHex("#FF00FF").setFill()
+//				_outputsRect.fill()
+//			}
 			
 			context.restoreGState()
 		}
