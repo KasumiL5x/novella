@@ -11,10 +11,11 @@ import NovellaModel
 
 class LinkableView: NSView {
 	// MARK: - - Constants -
-	static let OUTPUTS_OFFSET_X: CGFloat = 2.0
+	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
 	
 	// MARK: - - Identifiers -
 	static let HIT_IGNORE_TAG: Int = 10
+	static let HIT_NIL_TAG: Int = 11
 	
 	// MARK: - - Variables -
 	private var _nvLinkable: NVLinkable
@@ -29,7 +30,7 @@ class LinkableView: NSView {
 	private var _panGesture: NSPanGestureRecognizer?
 	//
 	private var _outputs: [PinView]
-//	private var _outputsRect: NSRect
+	private var _outputsBoard: PinBoard
 	//
 	private var _trashMode: Bool
 	
@@ -69,10 +70,12 @@ class LinkableView: NSView {
 		self._panGesture = nil
 		//
 		self._outputs = []
-//		self._outputsRect = NSRect.zero
+		self._outputsBoard = PinBoard()
 		//
 		self._trashMode = false
 		super.init(frame: frameRect)
+		
+		self.addSubview(_outputsBoard)
 		
 		// name label
 		setLabelString(str: "?")
@@ -144,6 +147,9 @@ class LinkableView: NSView {
 				if sub.tag == LinkableView.HIT_IGNORE_TAG {
 					return self
 				}
+				if sub.tag == LinkableView.HIT_NIL_TAG {
+					continue // just don't do anything with the view
+				}
 				return sub
 			}
 		}
@@ -175,8 +181,7 @@ class LinkableView: NSView {
 	
 	// MARK: Virtual Functions
 	func widgetRect() -> NSRect {
-		print("LinkableView::widgetRect() should be overridden.")
-		return NSRect.zero
+		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
 	}
 	func onMove() {
 		print("LinkableView::onMove() should be overridden.")
@@ -259,8 +264,14 @@ class LinkableView: NSView {
 			curr.frame.origin.x = wRect.width + LinkableView.OUTPUTS_OFFSET_X
 		}
 		
-//		_outputsRect = boundsOf(views: _outputs).insetBy(dx: -5.0, dy: -5.0)
-//		_outputsRect.origin = NSMakePoint(0.0, -10.0)
+		// set bounds frame and adjust it for the offset
+		_outputsBoard.frame = boundsOf(views: _outputs)
+		_outputsBoard.setNeedsDisplay(_outputsBoard.frame)
+		let border: CGFloat = 5.0
+		_outputsBoard.frame.size.width += border
+		_outputsBoard.frame.size.height += border
+		_outputsBoard.frame.origin.x -= border * 0.5
+		_outputsBoard.frame.origin.y -= border * 0.5
 	}
 	private func boundsOf(views: [NSView]) -> NSRect {
 		var minX = CGFloat.infinity

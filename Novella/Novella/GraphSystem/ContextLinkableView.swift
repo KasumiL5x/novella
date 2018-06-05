@@ -34,9 +34,6 @@ class ContextLinkableView: LinkableView {
 	// MARK: Virtual Functions
 	override func onTrashed() {
 	}
-	override func widgetRect() -> NSRect {
-		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
-	}
 	override func onMove() {
 		(Linkable as! NVContext).EditorPosition = frame.origin
 	}

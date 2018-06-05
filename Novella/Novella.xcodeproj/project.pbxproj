@@ -36,6 +36,7 @@
 		6513105E20C30F050078C30C /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104220C30F050078C30C /* NVStory.swift */; };
 		6513105F20C30F050078C30C /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104320C30F050078C30C /* NVDelivery.swift */; };
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
+		65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65223B5220C68D4E008E8A95 /* PinBoard.swift */; };
 		655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F9FAE20C3087300B20EFE /* AppDelegate.swift */; };
 		655F9FB320C3087300B20EFE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F9FB220C3087300B20EFE /* Document.swift */; };
 		655F9FB520C3087400B20EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB420C3087400B20EFE /* Assets.xcassets */; };
@@ -156,6 +157,7 @@
 		6513104220C30F050078C30C /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
 		6513104320C30F050078C30C /* NVDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
+		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
 		655F9FAB20C3087300B20EFE /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FAE20C3087300B20EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		655F9FB220C3087300B20EFE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 		65AE16CE20C32586006A921F /* LinkableViews */ = {
 			isa = PBXGroup;
 			children = (
+				65223B5220C68D4E008E8A95 /* PinBoard.swift */,
 				65F7F84B20C31713004663D6 /* ContextLinkableView.swift */,
 				65F7F85520C31713004663D6 /* DeliveryLinkableView.swift */,
 				65F7F85820C31714004663D6 /* DialogLinkableView.swift */,
@@ -711,6 +714,7 @@
 				65F7F86520C31714004663D6 /* GraphView.swift in Sources */,
 				65F7F83D20C31637004663D6 /* NSColor+Hex.swift in Sources */,
 				65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */,
+				65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */,
 				65F7F86B20C31714004663D6 /* GenericPopover.swift in Sources */,
 				65F7F85E20C31714004663D6 /* GraphBGView.swift in Sources */,
 				65F7F85F20C31714004663D6 /* SelectionHandler.swift in Sources */,
