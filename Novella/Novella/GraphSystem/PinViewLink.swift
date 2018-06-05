@@ -49,6 +49,9 @@ class PinViewLink: PinView {
 	// MARK: - - Functions -
 	override func onTrashed() {
 	}
+	override func getFrameSize() -> NSSize {
+		return NSMakeSize(PinView.PIN_SIZE, PinView.PIN_SIZE)
+	}
 	// MARK: Destination
 	func setDestination(dest: NVLinkable?) {
 		(BaseLink as! NVLink).setDestination(dest: dest)
@@ -68,11 +71,11 @@ class PinViewLink: PinView {
 			context.resetClip()
 			
 			// MARK: Pin Drawing
-			let strokePath = NSBezierPath(ovalIn: bounds)
+			let strokePath = NSBezierPath(ovalIn: NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, PinView.PIN_SIZE))
 			_pinStrokeLayer.path = strokePath.cgPath
-			_pinStrokeLayer.strokeColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor
+			_pinStrokeLayer.strokeColor = CGColor.white
 			
-			let fillPath = NSBezierPath(ovalIn: bounds.insetBy(dx: 2.0, dy: 2.0))
+			let fillPath = NSBezierPath(ovalIn: bounds.insetBy(dx: PinView.PIN_INSET, dy: PinView.PIN_INSET))
 			_pinFillLayer.path = fillPath.cgPath
 			if getDestination() != nil {
 				_pinFillLayer.fillColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor

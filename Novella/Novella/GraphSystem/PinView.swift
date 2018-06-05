@@ -10,6 +10,11 @@ import Cocoa
 import NovellaModel
 
 class PinView: NSView {
+	// MARK: - - Statics -
+	static let PIN_SIZE: CGFloat = 15.0
+	static let PIN_INSET: CGFloat = 2.0
+	static let PIN_SPACING: CGFloat = 2.0
+	
 	// MARK: - - Variables -
 	private var _nvBaseLink: NVBaseLink
 	var _graphView: GraphView
@@ -41,6 +46,9 @@ class PinView: NSView {
 		//
 		self._trashMode = false
 		super.init(frame: NSMakeRect(0.0, 0.0, 15.0, 15.0))
+		
+		// force child to set bounds to size accordingly
+		self.frame.size = getFrameSize()
 		
 		// setup layers
 		wantsLayer = true
@@ -101,6 +109,10 @@ class PinView: NSView {
 	}
 	func onTrashed() {
 		print("PinView::onTrashed() should be overridden.")
+	}
+	func getFrameSize() -> NSSize {
+		print("PinView::setBounds() should be overridden.")
+		return NSSize.zero
 	}
 	
 	// MARK: Gesture Callbacks

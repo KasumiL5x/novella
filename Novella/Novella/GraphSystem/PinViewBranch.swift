@@ -11,8 +11,9 @@ import NovellaModel
 
 class PinViewBranch: PinView {
 	// MARK: - - Variables -
-	private let _pinLayer: CAShapeLayer
-	private var _pinPath: NSBezierPath
+	private let _pinStrokeLayer: CAShapeLayer
+	private let _pinFillLayerTrue: CAShapeLayer
+	private let _pinFillLayerFalse: CAShapeLayer
 	private let _trueCurveLayer: CAShapeLayer
 	private let _trueCurvePath: NSBezierPath
 	private let _falseCurveLayer: CAShapeLayer
@@ -20,17 +21,25 @@ class PinViewBranch: PinView {
 	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
-		self._pinLayer = CAShapeLayer()
-		self._pinPath = NSBezierPath()
+		self._pinStrokeLayer = CAShapeLayer()
+		self._pinFillLayerTrue = CAShapeLayer()
+		self._pinFillLayerFalse = CAShapeLayer()
 		self._trueCurveLayer = CAShapeLayer()
 		self._trueCurvePath = NSBezierPath()
 		self._falseCurveLayer = CAShapeLayer()
 		self._falseCurvePath = NSBezierPath()
 		super.init(link: link, graphView: graphView, owner: owner)
 		
+		layer!.addSublayer(_pinStrokeLayer)
+		layer!.addSublayer(_pinFillLayerTrue)
+		layer!.addSublayer(_pinFillLayerFalse)
 		layer!.addSublayer(_trueCurveLayer)
 		layer!.addSublayer(_falseCurveLayer)
-		layer!.addSublayer(_pinLayer)
+		
+		// configure stroke layer
+		_pinStrokeLayer.lineWidth = 1.0
+		_pinStrokeLayer.fillColor = CGColor.clear
+		_pinStrokeLayer.strokeColor = NSColor.red.cgColor
 		
 		// configure true curve layer
 		_trueCurveLayer.fillColor = nil
@@ -55,6 +64,10 @@ class PinViewBranch: PinView {
 	// MARK: - - Functions -
 	override func onTrashed() {
 	}
+	override func getFrameSize() -> NSSize {
+		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
+		return NSMakeSize(PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
+	}
 	// MARK: Destination
 	func setTrueDestination(dest: NVLinkable?) {
 		(BaseLink as! NVBranch).setTrueDestination(dest: dest)
@@ -78,10 +91,35 @@ class PinViewBranch: PinView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
-			// draw pin
-			_pinPath = NSBezierPath(roundedRect: bounds, xRadius: 2.5, yRadius: 2.5)
-			_pinLayer.path = _pinPath.cgPath
-			_pinLayer.fillColor = TrashMode ? Settings.graph.pins.branchPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchPinColor.cgColor
+			
+			// draw pin stroke
+			let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
+			let strokeRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
+			let strokePath = NSBezierPath(roundedRect: strokeRect, xRadius: 5.0, yRadius: 5.0)
+			_pinStrokeLayer.path = strokePath.cgPath
+			_pinStrokeLayer.strokeColor = NSColor.white.cgColor
+			// draw true pin
+			let fillPathTrue = NSBezierPath(ovalIn: NSMakeRect(PinView.PIN_INSET*0.5, PinView.PIN_SPACING, actualPinSize, actualPinSize))
+			_pinFillLayerTrue.path = fillPathTrue.cgPath
+			if getTrueDestination() != nil {
+				_pinFillLayerTrue.fillColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+				_pinFillLayerTrue.strokeColor = nil
+			} else {
+				_pinFillLayerTrue.fillColor = nil
+				_pinFillLayerTrue.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+			}
+			// draw false pin
+			let truePinOffset = PinView.PIN_SPACING + actualPinSize + PinView.PIN_SPACING
+			let fillPathFalse = NSBezierPath(ovalIn: NSMakeRect(PinView.PIN_INSET*0.5, truePinOffset, actualPinSize, actualPinSize))
+			_pinFillLayerFalse.path = fillPathFalse.cgPath
+			if getFalseDestination() != nil {
+				_pinFillLayerFalse.fillColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+				_pinFillLayerFalse.strokeColor = nil
+			} else {
+				_pinFillLayerFalse.fillColor = nil
+				_pinFillLayerFalse.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+			}
+			
 			
 			// draw curves
 			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
