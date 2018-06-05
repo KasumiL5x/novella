@@ -962,7 +962,7 @@
                                                                                     </textFieldCell>
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                     <prototypeCellViews>
-                                                                                        <tableCellView identifier="FancyCell" id="XlW-KR-4ce" userLabel="Fancy Cell">
+                                                                                        <tableCellView identifier="FancyCell" id="XlW-KR-4ce" userLabel="Fancy Cell" customClass="SelectedGraphFancyCell" customModule="Novella" customModuleProvider="target">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
@@ -972,7 +972,7 @@
                                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="qoB-r4-Mbk"/>
                                                                                                 </imageView>
                                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8u-PU-2JN">
-                                                                                                    <rect key="frame" x="25" y="4" width="166" height="17"/>
+                                                                                                    <rect key="frame" x="25" y="4" width="147" height="17"/>
                                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Unnamed" id="CvR-4f-i4U">
                                                                                                         <font key="font" metaFont="system"/>
@@ -980,8 +980,27 @@
                                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                                     </textFieldCell>
                                                                                                 </textField>
+                                                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="5d3-zn-cHv">
+                                                                                                    <rect key="frame" x="171" y="2" width="20" height="20"/>
+                                                                                                    <constraints>
+                                                                                                        <constraint firstAttribute="height" constant="20" id="Keb-0x-nSr"/>
+                                                                                                        <constraint firstAttribute="width" constant="20" id="ZRc-g7-IB8"/>
+                                                                                                    </constraints>
+                                                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTrashEmpty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="hso-fC-Y8L">
+                                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                                        <font key="font" metaFont="system"/>
+                                                                                                    </buttonCell>
+                                                                                                    <connections>
+                                                                                                        <action selector="onTrash:" target="XlW-KR-4ce" id="0m8-JJ-50U"/>
+                                                                                                    </connections>
+                                                                                                </button>
                                                                                             </subviews>
+                                                                                            <constraints>
+                                                                                                <constraint firstAttribute="trailing" secondItem="5d3-zn-cHv" secondAttribute="trailing" id="8hs-h8-mbI"/>
+                                                                                                <constraint firstItem="5d3-zn-cHv" firstAttribute="centerY" secondItem="XlW-KR-4ce" secondAttribute="centerY" id="bFM-d6-0VP"/>
+                                                                                            </constraints>
                                                                                             <connections>
+                                                                                                <outlet property="_trashButton" destination="5d3-zn-cHv" id="qF1-Dk-L1B"/>
                                                                                                 <outlet property="imageView" destination="8x5-aj-k04" id="JrX-as-fKH"/>
                                                                                                 <outlet property="textField" destination="y8u-PU-2JN" id="LR2-2u-mIm"/>
                                                                                             </connections>
@@ -1218,6 +1237,7 @@
         <image name="NSGoForwardTemplate" width="9" height="12"/>
         <image name="NSTouchBarAddTemplate" width="14" height="30"/>
         <image name="NSTouchBarEnterFullScreenTemplate" width="18" height="30"/>
+        <image name="NSTrashEmpty" width="32" height="32"/>
         <image name="Variable" width="512" height="512"/>
     </resources>
 </document>

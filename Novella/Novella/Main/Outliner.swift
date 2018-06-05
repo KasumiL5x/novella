@@ -59,6 +59,38 @@ class AllGraphsOutlineView: NSOutlineView {
 	}
 }
 
+class SelectedGraphFancyCell: NSTableCellView {
+	@IBOutlet weak var _trashButton: NSButton!
+	private var _trashEmptyImage: NSImage?
+	private var _trashFullImage: NSImage?
+	var _linkable: NVLinkable?
+	
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		setup()
+	}
+	required init?(coder decoder: NSCoder) {
+		super.init(coder: decoder)
+		setup()
+	}
+	
+	private func setup() {
+		_trashEmptyImage = NSImage(named: NSImage.Name.trashEmpty)
+		_trashFullImage = NSImage(named: NSImage.Name.trashFull)
+	}
+	
+	private func setTrashIcon(_ trash: Bool) {
+		_trashButton.image = trash ? _trashFullImage : _trashEmptyImage
+	}
+	
+	@IBAction func onTrash(_ sender: NSButton) {
+		if let inTrash = _linkable?.Trashed {
+			_linkable!.Trashed = !inTrash
+			setTrashIcon(_linkable!.Trashed)
+		}
+	}
+}
+
 class SelectedGraphOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
@@ -198,15 +230,17 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? NSTableCellView
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? SelectedGraphFancyCell
 		
 		switch item {
 		case is NVGraph:
 			let asGraph = (item as! NVGraph)
+			(view as! SelectedGraphFancyCell)._linkable = asGraph
 			view?.textField?.stringValue = (asGraph.Trashed ? "🗑 " : "") + asGraph.Name
 			
 		case is NVNode:
 			let asNode = (item as! NVNode)
+			(view as! SelectedGraphFancyCell)._linkable = asNode
 			view?.textField?.stringValue = (asNode.Trashed ? "🗑 " : "") + asNode.Name
 			view?.imageView?.image = _dialogImage
 			
