@@ -122,12 +122,12 @@ class PinViewBranch: PinView {
 			
 			
 			// draw curves
-			let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
 			var end = CGPoint.zero
 			//
 			_trueCurveLayer.path = nil
 			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination()) {
 				_trueCurvePath.removeAllPoints()
+				let origin = NSMakePoint(frame.width * 0.5, PinView.PIN_SPACING + actualPinSize*0.5)
 				// convert local from destination into local of self and make curve
 				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
@@ -137,6 +137,8 @@ class PinViewBranch: PinView {
 			_falseCurveLayer.path = nil
 			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination()) {
 				_falseCurvePath.removeAllPoints()
+				let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
+				let origin = NSMakePoint(frame.width * 0.5, PinView.PIN_SPACING + actualPinSize + PinView.PIN_SPACING + actualPinSize*0.5)
 				// convert local from destination into local of self and make curve
 				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
