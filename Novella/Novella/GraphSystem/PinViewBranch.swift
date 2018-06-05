@@ -19,6 +19,10 @@ class PinViewBranch: PinView {
 	private let _falseCurveLayer: CAShapeLayer
 	private let _falseCurvePath: NSBezierPath
 	
+	private var _outlineRect: NSRect
+	private var _falsePinRect: NSRect
+	private var _truePinRect: NSRect
+	
 	// MARK: - - Initialization -
 	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
 		self._pinStrokeLayer = CAShapeLayer()
@@ -28,6 +32,9 @@ class PinViewBranch: PinView {
 		self._trueCurvePath = NSBezierPath()
 		self._falseCurveLayer = CAShapeLayer()
 		self._falseCurvePath = NSBezierPath()
+		self._outlineRect = NSRect.zero
+		self._falsePinRect = NSRect.zero
+		self._truePinRect = NSRect.zero
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		layer!.addSublayer(_pinStrokeLayer)
@@ -56,6 +63,12 @@ class PinViewBranch: PinView {
 		_falseCurveLayer.lineDashPattern = nil
 		_falseCurveLayer.lineJoin = kCALineJoinRound
 		_falseCurveLayer.lineWidth = 2.0
+		
+		// calculate rects
+		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
+		_outlineRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
+		_falsePinRect = NSMakeRect(PinView.PIN_INSET*0.5, PinView.PIN_SPACING, actualPinSize, actualPinSize)
+		_truePinRect = NSMakeRect(_falsePinRect.origin.x, _falsePinRect.maxY + PinView.PIN_SPACING, _falsePinRect.width, _falsePinRect.height)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinViewBranch::init(coder:) not implemented.")
@@ -93,14 +106,10 @@ class PinViewBranch: PinView {
 			
 			
 			// draw pin stroke
-			let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
-			let strokeRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
-			let strokePath = NSBezierPath(roundedRect: strokeRect, xRadius: 5.0, yRadius: 5.0)
-			_pinStrokeLayer.path = strokePath.cgPath
-			_pinStrokeLayer.strokeColor = NSColor.white.cgColor
+			_pinStrokeLayer.path = NSBezierPath(roundedRect: _outlineRect, xRadius: 5.0, yRadius: 5.0).cgPath
+			_pinStrokeLayer.strokeColor = CGColor.white
 			// draw true pin
-			let fillPathTrue = NSBezierPath(ovalIn: NSMakeRect(PinView.PIN_INSET*0.5, PinView.PIN_SPACING, actualPinSize, actualPinSize))
-			_pinFillLayerTrue.path = fillPathTrue.cgPath
+			_pinFillLayerTrue.path = NSBezierPath(ovalIn: _truePinRect).cgPath
 			if getTrueDestination() != nil {
 				_pinFillLayerTrue.fillColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
 				_pinFillLayerTrue.strokeColor = nil
@@ -109,9 +118,7 @@ class PinViewBranch: PinView {
 				_pinFillLayerTrue.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
 			}
 			// draw false pin
-			let truePinOffset = PinView.PIN_SPACING + actualPinSize + PinView.PIN_SPACING
-			let fillPathFalse = NSBezierPath(ovalIn: NSMakeRect(PinView.PIN_INSET*0.5, truePinOffset, actualPinSize, actualPinSize))
-			_pinFillLayerFalse.path = fillPathFalse.cgPath
+			_pinFillLayerFalse.path = NSBezierPath(ovalIn: _falsePinRect).cgPath
 			if getFalseDestination() != nil {
 				_pinFillLayerFalse.fillColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
 				_pinFillLayerFalse.strokeColor = nil
@@ -120,14 +127,13 @@ class PinViewBranch: PinView {
 				_pinFillLayerFalse.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
 			}
 			
-			
 			// draw curves
 			var end = CGPoint.zero
 			//
 			_trueCurveLayer.path = nil
 			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination()) {
 				_trueCurvePath.removeAllPoints()
-				let origin = NSMakePoint(frame.width * 0.5, PinView.PIN_SPACING + actualPinSize*0.5)
+				let origin = NSMakePoint(_truePinRect.midX, _truePinRect.midY)
 				// convert local from destination into local of self and make curve
 				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
@@ -137,8 +143,7 @@ class PinViewBranch: PinView {
 			_falseCurveLayer.path = nil
 			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination()) {
 				_falseCurvePath.removeAllPoints()
-				let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
-				let origin = NSMakePoint(frame.width * 0.5, PinView.PIN_SPACING + actualPinSize + PinView.PIN_SPACING + actualPinSize*0.5)
+				let origin = NSMakePoint(_falsePinRect.midX, _falsePinRect.midY)
 				// convert local from destination into local of self and make curve
 				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
