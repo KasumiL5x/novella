@@ -96,9 +96,9 @@ class GraphView: NSView {
 		let addMenu = NSMenuItem()
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
+		_graphViewMenu.addItem(addMenu)
 		_graphViewMenu.addItem(withTitle: "Un/Trash Selection", action: #selector(GraphView.onGraphViewMenuTrashSelection), keyEquivalent: "")
 		_graphViewMenu.addItem(withTitle: "Empty Trash", action: #selector(GraphView.onGraphViewMenuEmptyTrash), keyEquivalent: "")
-		_graphViewMenu.addItem(addMenu)
 		
 		rootFor(graph: _nvGraph)
 	}
