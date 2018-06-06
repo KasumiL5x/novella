@@ -163,6 +163,7 @@ extension MainViewController {
 			selectTab(item: newTab)
 			
 			reloadAllGraphs()
+			_allGraphsOutline.selectRowIndexes([_manager!.Graphs.count-1], byExtendingSelection: false)
 			reloadSelectedGraph()
 		}
 	}
