@@ -21,8 +21,9 @@ class GraphBGView: NSView {
 	private var _minorThickness: CGFloat
 	private var _thickness: CGFloat
 	// divisors
-	private var _majorDivisor: Int
-	private var _minorDivisor: Int
+	private var _primaryDivisor: Int
+	private var _secondaryDivisor: Int
+	private var _tertiaryDivisor: Int
 	// depth
 	private var _density: CGFloat
 	
@@ -38,8 +39,9 @@ class GraphBGView: NSView {
 		self._minorThickness = CGFloat(1.5)
 		self._thickness = CGFloat(1.0)
 		//
-		self._majorDivisor = 10
-		self._minorDivisor = 5
+		self._primaryDivisor = 64
+		self._secondaryDivisor = 32
+		self._tertiaryDivisor = 16
 		//
 		self._density = CGFloat(10.0)
 		
@@ -62,42 +64,50 @@ class GraphBGView: NSView {
 			// solid fill
 			_backgroundColor.setFill()
 			context.fill(dirtyRect)
-			
+
 			let linePath = NSBezierPath()
 			
 			// horizontal lines
-			for i in 1..<Int(bounds.size.height / _density) {
-				if i % _majorDivisor == 0 {
-				 _lineColor.withAlphaComponent(_majorOpacity).set()
-					linePath.lineWidth = _majorThickness
-				} else if i % _minorDivisor == 0 {
-					_lineColor.withAlphaComponent(_minorOpacity).set()
-					linePath.lineWidth = _minorThickness
-				} else {
-					_lineColor.withAlphaComponent(_opacity).set()
-					linePath.lineWidth = _thickness
+			for i in stride(from: Int(dirtyRect.minY), through: Int(dirtyRect.maxY), by: 1) {
+				if i % _primaryDivisor == 0 {
+					 _lineColor.withAlphaComponent(_majorOpacity).set()
+						linePath.lineWidth = _majorThickness
+				} else if i % _secondaryDivisor == 0 {
+						_lineColor.withAlphaComponent(_minorOpacity).set()
+						linePath.lineWidth = _minorThickness
+				} else if i % _tertiaryDivisor == 0 {
+						_lineColor.withAlphaComponent(_opacity).set()
+						linePath.lineWidth = _thickness
+				}	else {
+					continue
 				}
+				
+				let asFloat = CGFloat(i)
 				linePath.removeAllPoints()
-				linePath.move(to: NSPoint(x: 0, y: CGFloat(i) * _density - 0.5))
-				linePath.line(to: NSPoint(x: bounds.size.width, y: CGFloat(i) * _density - 0.5))
+				linePath.move(to: NSMakePoint(dirtyRect.minX, asFloat))
+				linePath.line(to: NSMakePoint(dirtyRect.maxX, asFloat))
 				linePath.stroke()
 			}
 			
 			// vertical lines
-			for i in 1..<Int(bounds.size.height / _density) {
-				if i % _majorDivisor == 0 {
+			for i in stride(from: Int(dirtyRect.minX), through: Int(dirtyRect.maxX), by: 1) {
+				if i % _primaryDivisor == 0 {
 					_lineColor.withAlphaComponent(_majorOpacity).set()
 					linePath.lineWidth = _majorThickness
-				} else if i % _minorDivisor == 0 {
+				} else if i % _secondaryDivisor == 0 {
 					_lineColor.withAlphaComponent(_minorOpacity).set()
 					linePath.lineWidth = _minorThickness
-				} else {
+				} else if i % _tertiaryDivisor == 0 {
 					_lineColor.withAlphaComponent(_opacity).set()
 					linePath.lineWidth = _thickness
+				}	else {
+					continue
 				}
+				
+				let asFloat = CGFloat(i)
 				linePath.removeAllPoints()
-				linePath.move(to: NSPoint(x: CGFloat(i) * _density - 0.5, y: 0))
-				linePath.line(to: NSPoint(x: CGFloat(i) * _density - 0.5, y: bounds.size.height))
+				linePath.move(to: NSMakePoint(asFloat, dirtyRect.minY))
+				linePath.line(to: NSMakePoint(asFloat, dirtyRect.maxY))
 				linePath.stroke()
 			}
 			
