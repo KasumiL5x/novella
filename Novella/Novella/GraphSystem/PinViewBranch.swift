@@ -81,9 +81,9 @@ class PinViewBranch: PinView {
 		_falseCurveLayer.lineWidth = 2.0
 		
 		// calculate rects
-		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
+		let actualPinSize = PinView.PIN_SIZE - (PinView.PIN_INSET*2.0) // inset from both sides
 		_outlineRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
-		_falsePinRect = NSMakeRect(PinView.PIN_INSET*0.5, PinView.PIN_SPACING, actualPinSize, actualPinSize)
+		_falsePinRect = NSMakeRect(PinView.PIN_INSET, PinView.PIN_SPACING, actualPinSize, actualPinSize)
 		_truePinRect = NSMakeRect(_falsePinRect.origin.x, _falsePinRect.maxY + PinView.PIN_SPACING, _falsePinRect.width, _falsePinRect.height)
 		
 		// configure menus

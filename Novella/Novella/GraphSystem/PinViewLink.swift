@@ -19,6 +19,7 @@ class PinViewLink: PinView {
 	private let _conditionPopover: ConditionPopover
 	private let _functionPopover: FunctionPopover
 	private let _graphDropMenu: NSMenu
+	private var _outlineRect: NSRect
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
@@ -30,6 +31,7 @@ class PinViewLink: PinView {
 		self._conditionPopover = ConditionPopover()
 		self._functionPopover = FunctionPopover(true)
 		self._graphDropMenu = NSMenu()
+		self._outlineRect = NSRect.zero
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
@@ -53,6 +55,9 @@ class PinViewLink: PinView {
 		// configure context menu
 		_contextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewLink.onContextCondition), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewLink.onContextFunction), keyEquivalent: "")
+		
+		// calculate rect
+		_outlineRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, PinView.PIN_SIZE)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinViewLink::init(coder:) not implemented.")
@@ -119,11 +124,11 @@ class PinViewLink: PinView {
 			context.resetClip()
 			
 			// MARK: Pin Drawing
-			let strokePath = NSBezierPath(ovalIn: NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, PinView.PIN_SIZE))
+			let strokePath = NSBezierPath(ovalIn: _outlineRect)
 			_pinStrokeLayer.path = strokePath.cgPath
 			_pinStrokeLayer.strokeColor = CGColor.white
 			
-			let fillPath = NSBezierPath(ovalIn: bounds.insetBy(dx: PinView.PIN_INSET, dy: PinView.PIN_INSET))
+			let fillPath = NSBezierPath(ovalIn: _outlineRect.insetBy(dx: PinView.PIN_INSET, dy: PinView.PIN_INSET))
 			_pinFillLayer.path = fillPath.cgPath
 			if getDestination() != nil {
 				_pinFillLayer.fillColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor
