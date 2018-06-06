@@ -60,7 +60,9 @@ class GraphTabViewController: NSViewController {
 	
 	func zoomSelected() {
 		guard let selectedRect = _graphView?.selectedBounds() else { return }
-		_scrollView.magnify(toFit: selectedRect)
+		if selectedRect != NSRect.zero {
+			_scrollView.magnify(toFit: selectedRect)
+		}
 	}
 	
 	fileprivate func centerOfGraph() -> CGPoint {
