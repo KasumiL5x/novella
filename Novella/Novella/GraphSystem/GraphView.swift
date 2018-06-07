@@ -203,6 +203,19 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Graph Functions / Helpers -
+	func screenshot() -> NSImage? {
+		
+		let img = NSImage(size: visibleRect.size)
+		img.lockFocus()
+		if lockFocusIfCanDraw() {
+			displayIgnoringOpacity(visibleRect, in: NSGraphicsContext.current!)
+			unlockFocus()
+		}
+		img.unlockFocus()
+		
+		return img
+	}
+	
 	func selectedBounds() -> NSRect {
 		if _selectionHandler!.Selection.isEmpty {
 			return NSRect.zero

@@ -26,6 +26,10 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.zoomActiveGraph()
 	}
 	
+	@IBAction func onToolbarScreenshot(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.screenshot()
+	}
+	
 	@IBAction func onToolbarVariableEditor(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.openVariableEditor()
 	}

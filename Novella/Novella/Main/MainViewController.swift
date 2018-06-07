@@ -49,6 +49,23 @@ class MainViewController: NSViewController {
 	}
 	
 	// MARK: - _TESTING_ -
+	func screenshot() {
+		if let img = getActiveGraph()?.screenshot(), let imageData = img.tiffRepresentation {
+			let imageRep = NSBitmapImageRep(data: imageData)
+			let imageProps = [NSBitmapImageRep.PropertyKey.compressionFactor: 1.0]
+			let finalData = imageRep?.representation(using: .jpeg, properties: imageProps)
+			
+			let sp = NSSavePanel()
+			sp.allowedFileTypes = ["jpg"]
+			if sp.runModal() != NSApplication.ModalResponse.OK {
+				return
+			}
+			
+			do { try finalData?.write(to: sp.url!, options: []) } catch {
+				print("Failed to write file.")
+			}
+		}
+	}
 	func setManager(manager: NVStoryManager) {
 		_manager = manager
 		_manager!.addDelegate(_storyDelegate!)
