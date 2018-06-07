@@ -65,6 +65,13 @@ class GraphTabViewController: NSViewController {
 		}
 	}
 	
+	func centerView() {
+		var center = NSMakePoint(_graphView!.bounds.width/2, _graphView!.bounds.height/2)
+		center.x -= _graphView!.visibleRect.width/2
+		center.y -= _graphView!.visibleRect.height/2
+		_scrollView.documentView?.scroll(center)
+	}
+	
 	fileprivate func centerOfGraph() -> CGPoint {
 		let centerSelf = NSMakePoint(self.view.frame.width/2, self.view.frame.height/2)
 		return _graphView?.convert(centerSelf, from: self.view) ?? CGPoint.zero

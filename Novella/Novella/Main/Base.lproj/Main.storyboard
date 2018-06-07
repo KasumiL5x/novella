@@ -773,11 +773,28 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="CB110508-FF71-46BF-8546-BF9CB8BD6963" label="Center View" paletteLabel="Center View" image="NSTouchBarExitFullScreenTemplate" id="T62-ZT-jVU">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="48" height="48"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="Ms0-N2-Bp0">
+                                        <rect key="frame" x="12" y="14" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarExitFullScreenTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="g2c-70-Wre">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarCenterView:" target="jGA-0Y-lOj" id="KzL-Uj-69L"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="6I3-JS-OQD"/>
                                 <toolbarItem reference="7tY-vX-D3Q"/>
                                 <toolbarItem reference="LSu-mw-2cP"/>
+                                <toolbarItem reference="T62-ZT-jVU"/>
                                 <toolbarItem reference="yGj-rV-Scg"/>
                                 <toolbarItem reference="y16-IP-bVg"/>
                                 <toolbarItem reference="RAx-tK-frb"/>
@@ -1259,6 +1276,7 @@
         <image name="NSGoForwardTemplate" width="9" height="12"/>
         <image name="NSTouchBarAddTemplate" width="14" height="30"/>
         <image name="NSTouchBarEnterFullScreenTemplate" width="18" height="30"/>
+        <image name="NSTouchBarExitFullScreenTemplate" width="18" height="30"/>
         <image name="NSTouchBarFolderMoveToTemplate" width="22" height="30"/>
         <image name="NSTrashEmpty" width="32" height="32"/>
         <image name="Variable" width="512" height="512"/>

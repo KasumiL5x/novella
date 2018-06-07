@@ -26,6 +26,10 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.zoomActiveGraph()
 	}
 	
+	@IBAction func onToolbarCenterView(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.centerActiveGraph()
+	}
+	
 	@IBAction func onToolbarScreenshot(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.screenshot()
 	}
