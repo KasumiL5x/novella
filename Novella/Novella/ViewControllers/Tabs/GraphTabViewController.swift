@@ -69,7 +69,13 @@ class GraphTabViewController: NSViewController {
 		var center = NSMakePoint(_graphView!.bounds.width/2, _graphView!.bounds.height/2)
 		center.x -= _graphView!.visibleRect.width/2
 		center.y -= _graphView!.visibleRect.height/2
-		_scrollView.documentView?.scroll(center)
+		
+		NSAnimationContext.runAnimationGroup({ (context) in
+			context.duration = 0.3
+			_scrollView.contentView.animator().setBoundsOrigin(center)
+			_scrollView.reflectScrolledClipView(_scrollView.contentView)
+		}, completionHandler: {
+		})
 	}
 	
 	fileprivate func centerOfGraph() -> CGPoint {
