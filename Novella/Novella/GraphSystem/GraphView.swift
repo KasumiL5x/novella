@@ -183,7 +183,7 @@ class GraphView: NSView {
 		}
 		// load all links
 		for curr in graph.Links {
-			guard let node = getLinkableViewFrom(linkable: curr.Origin) else {
+			guard let node = getLinkableViewFrom(linkable: curr.Origin, includeParentGraphs: false) else {
 				print("Received a link with an origin that could not be found!")
 				continue
 			}
@@ -235,12 +235,20 @@ class GraphView: NSView {
 		_undoRedo.redo(levels: levels)
 	}
 	
-	func getLinkableViewFrom(linkable: NVLinkable?) -> LinkableView? {
+	func getLinkableViewFrom(linkable: NVLinkable?, includeParentGraphs: Bool) -> LinkableView? {
 		if nil == linkable {
 			return nil
 		}
 		
 		return _allLinkableViews.first(where: {
+			if includeParentGraphs && $0 is GraphLinkableView {
+				let asGraph = (($0 as! GraphLinkableView).Linkable as! NVGraph)
+				for child in asGraph.Nodes {
+					if child.UUID == linkable?.UUID {
+						return true
+					}
+				}
+			}
 			return $0.Linkable.UUID == linkable?.UUID
 		})
 	}
@@ -482,7 +490,7 @@ extension GraphView {
 // MARK: - - Selection -
 extension GraphView {
 	func selectNVLinkable(linkable: NVLinkable) {
-		if let view = getLinkableViewFrom(linkable: linkable) {
+		if let view = getLinkableViewFrom(linkable: linkable, includeParentGraphs: false) {
 			_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
 		}
 	}
@@ -678,7 +686,7 @@ extension GraphView: NVStoryDelegate {
 		case is NVDelivery:
 			fallthrough
 		case is NVContext:
-			if let lv = getLinkableViewFrom(linkable: item) {
+			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
 				lv.Trashed = true
 			}
 			
@@ -699,7 +707,7 @@ extension GraphView: NVStoryDelegate {
 		case is NVDelivery:
 			fallthrough
 		case is NVContext:
-			if let lv = getLinkableViewFrom(linkable: item) {
+			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
 				lv.Trashed = false
 			}
 			

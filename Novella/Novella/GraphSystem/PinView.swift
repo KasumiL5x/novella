@@ -14,6 +14,7 @@ class PinView: NSView {
 	static let PIN_SIZE: CGFloat = 15.0
 	static let PIN_INSET: CGFloat = 2.0
 	static let PIN_SPACING: CGFloat = 2.0
+	static let EXT_CURVE_PATTERN: [NSNumber] = [10, 10]
 	
 	// MARK: - - Variables -
 	private var _nvBaseLink: NVBaseLink

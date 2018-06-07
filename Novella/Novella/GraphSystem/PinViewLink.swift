@@ -143,12 +143,13 @@ class PinViewLink: PinView {
 			_curveLayer.path = nil
 			_curvePath.removeAllPoints()
 			// draw link curve
-			if let destination = _graphView.getLinkableViewFrom(linkable: getDestination()) {
+			if let destination = _graphView.getLinkableViewFrom(linkable: getDestination(), includeParentGraphs: true) {
 				// convert local from destination into local of self and make curve
 				end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
 				CurveHelper.smooth(start: origin, end: end, path: _curvePath)
 				_curveLayer.strokeColor = TrashMode ? Settings.graph.pins.linkCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkCurveColor.cgColor
 				_curveLayer.path = _curvePath.cgPath
+				_curveLayer.lineDashPattern = (destination is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			
 			context.restoreGState()

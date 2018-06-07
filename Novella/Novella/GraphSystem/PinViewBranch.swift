@@ -207,7 +207,7 @@ class PinViewBranch: PinView {
 			var end = CGPoint.zero
 			//
 			_trueCurveLayer.path = nil
-			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination()) {
+			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination(), includeParentGraphs: true) {
 				_trueCurvePath.removeAllPoints()
 				let origin = NSMakePoint(_truePinRect.midX, _truePinRect.midY)
 				// convert local from destination into local of self and make curve
@@ -215,9 +215,11 @@ class PinViewBranch: PinView {
 				CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
 				_trueCurveLayer.path = _trueCurvePath.cgPath
 				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+				// make it dotted if it's a graph connection
+				_trueCurveLayer.lineDashPattern = (trueDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			_falseCurveLayer.path = nil
-			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination()) {
+			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination(), includeParentGraphs: true) {
 				_falseCurvePath.removeAllPoints()
 				let origin = NSMakePoint(_falsePinRect.midX, _falsePinRect.midY)
 				// convert local from destination into local of self and make curve
@@ -225,6 +227,8 @@ class PinViewBranch: PinView {
 				CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
 				_falseCurveLayer.path = _falseCurvePath.cgPath
 				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+				// make it dotted if it's a graph connection
+				_falseCurveLayer.lineDashPattern = (falseDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			
 			context.restoreGState()
