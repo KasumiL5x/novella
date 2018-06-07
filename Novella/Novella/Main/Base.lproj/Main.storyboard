@@ -983,9 +983,12 @@
                                                                                             <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
-                                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-aj-k04">
-                                                                                                    <rect key="frame" x="3" y="4" width="17" height="17"/>
-                                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-aj-k04">
+                                                                                                    <rect key="frame" x="0.0" y="3" width="20" height="20"/>
+                                                                                                    <constraints>
+                                                                                                        <constraint firstAttribute="height" constant="20" id="Tnf-OH-5Sy"/>
+                                                                                                        <constraint firstAttribute="width" constant="20" id="n0s-oT-xh6"/>
+                                                                                                    </constraints>
                                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="qoB-r4-Mbk"/>
                                                                                                 </imageView>
                                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8u-PU-2JN">
@@ -1014,6 +1017,8 @@
                                                                                             </subviews>
                                                                                             <constraints>
                                                                                                 <constraint firstAttribute="trailing" secondItem="5d3-zn-cHv" secondAttribute="trailing" id="8hs-h8-mbI"/>
+                                                                                                <constraint firstItem="8x5-aj-k04" firstAttribute="centerY" secondItem="XlW-KR-4ce" secondAttribute="centerY" id="QfU-p8-LMu"/>
+                                                                                                <constraint firstItem="8x5-aj-k04" firstAttribute="leading" secondItem="XlW-KR-4ce" secondAttribute="leading" id="b6s-nb-hZ3"/>
                                                                                                 <constraint firstItem="5d3-zn-cHv" firstAttribute="centerY" secondItem="XlW-KR-4ce" secondAttribute="centerY" id="bFM-d6-0VP"/>
                                                                                             </constraints>
                                                                                             <connections>
