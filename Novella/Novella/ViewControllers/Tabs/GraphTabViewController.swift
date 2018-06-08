@@ -45,7 +45,7 @@ class GraphTabViewController: NSViewController {
 	
 	override func viewWillAppear() {
 		if _firstAppear {
-			centerView()
+			centerView(animated: false)
 			_firstAppear = false
 		}
 	}
@@ -74,17 +74,21 @@ class GraphTabViewController: NSViewController {
 		}
 	}
 	
-	func centerView() {
+	func centerView(animated: Bool) {
 		var center = NSMakePoint(_graphView!.bounds.width/2, _graphView!.bounds.height/2)
 		center.x -= _graphView!.visibleRect.width/2
 		center.y -= _graphView!.visibleRect.height/2
 		
-		NSAnimationContext.runAnimationGroup({ (context) in
-			context.duration = 0.3
-			_scrollView.contentView.animator().setBoundsOrigin(center)
-		}, completionHandler: {
-			self._scrollView.reflectScrolledClipView(self._scrollView.contentView)
-		})
+		if !animated {
+			_scrollView.contentView.setBoundsOrigin(center)
+		} else {
+			NSAnimationContext.runAnimationGroup({ (context) in
+				context.duration = 0.3
+				_scrollView.contentView.animator().setBoundsOrigin(center)
+			}, completionHandler: {
+				self._scrollView.reflectScrolledClipView(self._scrollView.contentView)
+			})
+		}
 	}
 	
 	fileprivate func centerOfGraph() -> CGPoint {

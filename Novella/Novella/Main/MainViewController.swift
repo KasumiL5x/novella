@@ -318,7 +318,7 @@ extension MainViewController {
 	
 	func centerActiveGraph() {
 		if let selectedTab = _selectedTab, let graphVC = selectedTab.tabItem.viewController as? GraphTabViewController {
-			graphVC.centerView()
+			graphVC.centerView(animated: true)
 		}
 	}
 	
