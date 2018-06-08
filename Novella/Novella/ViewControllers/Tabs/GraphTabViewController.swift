@@ -11,17 +11,19 @@ import NovellaModel
 
 class GraphTabViewController: NSViewController {
 	// MARK: - - Outlets -
-	@IBOutlet fileprivate weak var _scrollView: NSScrollView!
-	@IBOutlet fileprivate weak var _toolbarView: NSView!
+	@IBOutlet private weak var _scrollView: NSScrollView!
+	@IBOutlet private weak var _toolbarView: NSView!
 	
 	
 	// MARK: - - Variables -
 	private var _manager: NVStoryManager?
-	fileprivate static let GRAPH_SIZE: CGFloat = 6000.0
-	fileprivate var _graphView: GraphView?
+	private static let GRAPH_SIZE: CGFloat = 600000
+	private var _graphView: GraphView?
 	//
-	fileprivate var _graph: NVGraph?
-	fileprivate var _delegate: GraphViewDelegate?
+	private var _graph: NVGraph?
+	private var _delegate: GraphViewDelegate?
+	//
+	private var _firstAppear: Bool = true
 	
 	// MARK: - - Properties -
 	var Graph: GraphView? {
@@ -41,8 +43,15 @@ class GraphTabViewController: NSViewController {
 		_toolbarView.layer?.backgroundColor = NSColor.fromHex("#252525").cgColor
 	}
 	
+	override func viewWillAppear() {
+		if _firstAppear {
+			centerView()
+			_firstAppear = false
+		}
+	}
+	
 	fileprivate func configure() {
-		_graphView = GraphView(manager: _manager!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE), visibleRect: NSRect.zero)
+		_graphView = GraphView(manager: _manager!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE))
 		_graphView?.Delegate = _delegate
 		_scrollView.documentView = _graphView!
 	}
@@ -73,8 +82,8 @@ class GraphTabViewController: NSViewController {
 		NSAnimationContext.runAnimationGroup({ (context) in
 			context.duration = 0.3
 			_scrollView.contentView.animator().setBoundsOrigin(center)
-			_scrollView.reflectScrolledClipView(_scrollView.contentView)
 		}, completionHandler: {
+			self._scrollView.reflectScrolledClipView(self._scrollView.contentView)
 		})
 	}
 	

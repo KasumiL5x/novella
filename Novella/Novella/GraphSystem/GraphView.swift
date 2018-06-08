@@ -15,7 +15,6 @@ class GraphView: NSView {
 	private let _nvGraph: NVGraph
 	private let _bg: GraphBGView
 	private let _undoRedo: UndoRedo
-	private let _graphBounds: GraphBoundsView
 	//
 	private var _allLinkableViews: [LinkableView]
 	private var _allPinViews: [PinView]
@@ -40,13 +39,11 @@ class GraphView: NSView {
 	private var _nodePopovers: [GenericPopover]
 	
 	// MARK: - - Initialization -
-	init(manager: NVStoryManager, graph: NVGraph, frameRect: NSRect, visibleRect: NSRect) {
+	init(manager: NVStoryManager, graph: NVGraph, frameRect: NSRect) {
 		self._manager = manager
 		self._nvGraph = graph
 		self._bg = GraphBGView(frame: frameRect)
 		self._undoRedo = UndoRedo()
-		self._graphBounds = GraphBoundsView(initialBounds: NSMakeSize(visibleRect.width * 0.75, visibleRect.height * 0.75))
-		self._graphBounds.frame.origin = NSMakePoint((visibleRect.width - self._graphBounds.Boundary.width)/2, (visibleRect.height - self._graphBounds.Boundary.height)/2)
 		//
 		self._allLinkableViews = []
 		self._allPinViews = []
