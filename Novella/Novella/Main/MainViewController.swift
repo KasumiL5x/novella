@@ -312,7 +312,9 @@ extension MainViewController {
 	
 	func zoomActiveGraph() {
 		if let selectedTab = _selectedTab, let graphVC = selectedTab.tabItem.viewController as? GraphTabViewController {
-			graphVC.zoomSelected()
+			if !graphVC.zoomSelected() {
+				_ = graphVC.zoomAll()
+			}
 		}
 	}
 	

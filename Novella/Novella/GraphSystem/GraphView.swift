@@ -237,6 +237,24 @@ class GraphView: NSView {
 		}
 		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
 	}
+	func contentBounds() -> NSRect {
+		if _allLinkableViews.isEmpty {
+			return NSRect.zero
+		}
+		
+		// get bounds of selection as a rect
+		var minX = CGFloat.infinity
+		var minY = CGFloat.infinity
+		var maxX = -CGFloat.infinity
+		var maxY = -CGFloat.infinity
+		for curr in _allLinkableViews {
+			minX = curr.frame.minX < minX ? curr.frame.minX : minX
+			maxX = curr.frame.maxX > maxX ? curr.frame.maxX : maxX
+			minY = curr.frame.minY < minY ? curr.frame.minY : minY
+			maxY = curr.frame.maxY > maxY ? curr.frame.maxY : maxY
+		}
+		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
+	}
 	
 	func updateCurves() {
 		for child in _allPinViews {

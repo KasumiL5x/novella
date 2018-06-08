@@ -45,7 +45,7 @@ class GraphTabViewController: NSViewController {
 	
 	override func viewWillAppear() {
 		if _firstAppear {
-			centerView(animated: false)
+			_ = zoomAll()
 			_firstAppear = false
 		}
 	}
@@ -67,11 +67,21 @@ class GraphTabViewController: NSViewController {
 		}
 	}
 	
-	func zoomSelected() {
-		guard let selectedRect = _graphView?.selectedBounds() else { return }
+	func zoomSelected() -> Bool {
+		guard let selectedRect = _graphView?.selectedBounds() else { return false }
 		if selectedRect != NSRect.zero {
 			_scrollView.magnify(toFit: selectedRect)
+			return true
 		}
+		return false
+	}
+	func zoomAll() -> Bool {
+		guard let allRect = _graphView?.contentBounds() else { return false }
+		if allRect != NSRect.zero {
+			_scrollView.magnify(toFit: allRect)
+			return true
+		}
+		return false
 	}
 	
 	func centerView(animated: Bool) {
