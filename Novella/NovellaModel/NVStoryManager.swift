@@ -20,6 +20,7 @@ public class NVStoryManager {
 	private var _trashed: [NVLinkable]
 	private var _delegates: [NVStoryDelegate]
 	internal var _jsContext: JSContext
+	private var _positionOffset: CGPoint // +/- from the EditorPosition values to 'center at 0,0' for the viewport
 	
 	// MARK: - - Properties -
 	public var Story: NVStory {
@@ -43,6 +44,10 @@ public class NVStoryManager {
 	public var Nodes: [NVNode] {
 		get{ return _nodes }
 	}
+	public var PositionOffset: CGPoint {
+		get{ return _positionOffset }
+		set{ _positionOffset = newValue }
+	}
 	
 	// MARK: - - Initialization -
 	public init() {
@@ -55,6 +60,7 @@ public class NVStoryManager {
 		self._trashed = []
 		self._delegates = []
 		self._jsContext = JSContext()
+		self._positionOffset = CGPoint.zero
 		self._story = NVStory(manager: self)
 		
 		setupJavascript()

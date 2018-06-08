@@ -10,6 +10,7 @@ import Foundation
 
 public protocol NVLinkable: NVIdentifiable {
 	var EditorPosition: CGPoint {get set}
+	var RawEditorPosition: CGPoint {get set}
 	
 	var Trashed: Bool {get set}
 }

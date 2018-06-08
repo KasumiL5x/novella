@@ -51,8 +51,8 @@ extension NVStoryManager {
 			entry["uuid"] = curr.UUID.uuidString
 			entry["entry"] = curr._entry?.UUID.uuidString ?? ""
 			entry["position"] = [
-				"x": curr.EditorPosition.x,
-				"y": curr.EditorPosition.y
+				"x": curr.RawEditorPosition.x,
+				"y": curr.RawEditorPosition.y
 			]
 			entry["subgraphs"] = curr._graphs.map({$0.UUID.uuidString})
 			entry["nodes"] = curr._nodes.map({$0.UUID.uuidString})
@@ -119,8 +119,8 @@ extension NVStoryManager {
 			entry["name"] = curr.Name
 			
 			entry["position"] = [
-				"x": curr.EditorPosition.x,
-				"y": curr.EditorPosition.y
+				"x": curr.RawEditorPosition.x,
+				"y": curr.RawEditorPosition.y
 			]
 			
 			if let asDialog = curr as? NVDialog {
@@ -291,7 +291,7 @@ extension NVStoryManager {
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = storyManager.makeDialog(uuid: uuid)
-				dialog.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				dialog.RawEditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					dialog.Name = name!
 				}
@@ -307,7 +307,7 @@ extension NVStoryManager {
 				
 			case "delivery":
 				let delivery = storyManager.makeDelivery(uuid: uuid)
-				delivery.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				delivery.RawEditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					delivery.Name = name!
 				}
@@ -326,7 +326,7 @@ extension NVStoryManager {
 				
 			case "context":
 				let context = storyManager.makeContext(uuid: uuid)
-				context.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				context.RawEditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					context.Name = name!
 				}
@@ -350,7 +350,7 @@ extension NVStoryManager {
 			// position
 			let posX = curr["position"]["x"].float!
 			let posY = curr["position"]["y"].float!
-			graph.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+			graph.RawEditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {

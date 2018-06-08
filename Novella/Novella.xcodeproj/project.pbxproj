@@ -44,6 +44,7 @@
 		655F9FF720C30EAA00B20EFE /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 655F9FF520C30EAA00B20EFE /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		658C9EF320CA5D7C00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
 		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC920C345390078CB28 /* Alerts.swift */; };
 		65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */; };
@@ -168,6 +169,7 @@
 		655F9FF320C30EAA00B20EFE /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextFieldCell.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 		655F9FF420C30EAA00B20EFE /* NovellaModel */ = {
 			isa = PBXGroup;
 			children = (
+				658C9EF220CA5D7100D82145 /* Extensions */,
 				65AE16D420C32624006A921F /* Variables */,
 				65AE16D320C32614006A921F /* Simulation */,
 				65AE16D220C32603006A921F /* Nodes */,
@@ -332,6 +335,14 @@
 				655F9FF620C30EAA00B20EFE /* Info.plist */,
 			);
 			path = NovellaModel;
+			sourceTree = "<group>";
+		};
+		658C9EF220CA5D7100D82145 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		65AE16CA20C32544006A921F /* Popovers */ = {
@@ -787,6 +798,7 @@
 				6513104C20C30F050078C30C /* NVBaseLink.swift in Sources */,
 				6513104F20C30F050078C30C /* NVContext.swift in Sources */,
 				6513105720C30F050078C30C /* NVIdentifiable.swift in Sources */,
+				658C9EF320CA5D7C00D82145 /* CGPoint+Math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

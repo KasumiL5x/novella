@@ -49,6 +49,7 @@ class GraphTabViewController: NSViewController {
 	
 	func setup(manager: NVStoryManager, graph: NVGraph, delegate: GraphViewDelegate) {
 		_manager = manager
+		_manager!.PositionOffset = NSMakePoint(GraphTabViewController.GRAPH_SIZE*0.5, GraphTabViewController.GRAPH_SIZE*0.5)
 		_graph = graph
 		_delegate = delegate
 		
