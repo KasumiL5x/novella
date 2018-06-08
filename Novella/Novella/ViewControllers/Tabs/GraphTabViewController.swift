@@ -43,7 +43,7 @@ class GraphTabViewController: NSViewController {
 		_toolbarView.layer?.backgroundColor = NSColor.fromHex("#252525").cgColor
 	}
 	
-	override func viewWillAppear() {
+	override func viewDidAppear() {
 		if _firstAppear {
 			_ = zoomAll()
 			_firstAppear = false
