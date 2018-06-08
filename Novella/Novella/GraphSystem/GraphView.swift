@@ -203,8 +203,14 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Graph Functions / Helpers -
+	func offsetToEditorPosition(pos: CGPoint) -> CGPoint {
+		return pos - NSMakePoint(bounds.width*0.5, bounds.height*0.5)
+	}
+	func offsetFromEditorPosition(pos: CGPoint) -> CGPoint {
+		return pos + NSMakePoint(bounds.width*0.5, bounds.height*0.5)
+	}
+	
 	func screenshot() -> NSImage? {
-		
 		let img = NSImage(size: visibleRect.size)
 		img.lockFocus()
 		if lockFocusIfCanDraw() {

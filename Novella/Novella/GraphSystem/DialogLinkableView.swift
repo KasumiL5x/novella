@@ -12,8 +12,9 @@ import NovellaModel
 class DialogLinkableView: LinkableView {
 	// MARK: - - Initialization -
 	init(node: NVDialog, graphView: GraphView) {
-		let rect = NSMakeRect(node.EditorPosition.x, node.EditorPosition.y, 1.0, 1.0)
+		let rect = NSMakeRect(0.0, 0.0, 1.0, 1.0)
 		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
+		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.EditorPosition)
 		self.frame.size = widgetRect().size
 		
 		setLabelString(str: "D")
@@ -35,7 +36,7 @@ class DialogLinkableView: LinkableView {
 	override func onTrashed() {
 	}
 	override func onMove() {
-		(Linkable as! NVDialog).EditorPosition = frame.origin
+		(Linkable as! NVDialog).EditorPosition = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
 	override func bgTopColor() -> NSColor {
 		return Settings.graph.nodes.dialogStartColor

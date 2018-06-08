@@ -19,7 +19,7 @@ class LinkableView: NSView {
 	
 	// MARK: - - Variables -
 	private var _nvLinkable: NVLinkable
-	private var _graphView: GraphView
+	internal var _graphView: GraphView
 	private var _isPrimed: Bool
 	private var _isSelected: Bool
 	private let _nameLabel: NSTextField
