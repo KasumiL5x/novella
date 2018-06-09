@@ -285,17 +285,21 @@ class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegat
 		}
 		
 		if item == nil {
-			return _mvc.Manager!.Graphs.count
+			return _mvc.Manager!.Story.Graphs.count
 		}
-		return 0
+		
+		return (item as! NVGraph).Graphs.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		return _mvc.Manager!.Graphs[index]
+		if item == nil {
+			return _mvc.Manager!.Story.Graphs[index]
+		}
+		return (item as! NVGraph).Graphs[index]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		return false
+		return (item as! NVGraph).Graphs.count > 0
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {

@@ -178,7 +178,7 @@ extension MainViewController {
 			selectTab(item: newTab)
 			
 			reloadAllGraphs()
-			_allGraphsOutline.selectRowIndexes([_manager!.Graphs.count-1], byExtendingSelection: false)
+			_allGraphsOutline.selectRowIndexes([_allGraphsOutline.row(forItem: graph)], byExtendingSelection: false)
 			reloadSelectedGraph()
 		}
 	}
