@@ -15,11 +15,6 @@ import struct KPCTabsControl.ChromeStyle
 import protocol KPCTabsControl.TabsControlDelegate
 
 class MainViewController: NSViewController {
-	// MARK: - Constants -
-	private static let SCROLL_SIZE: CGFloat = 6000.0
-	private static let MIN_ZOOM: CGFloat = 0.2
-	private static let MAX_ZOOM: CGFloat = 4.0
-	
 	// MARK: - Variables -
 	private var _manager: NVStoryManager?
 	private var _selectedTab: TabItem?
@@ -46,63 +41,6 @@ class MainViewController: NSViewController {
 	}
 	var InspectorDelegate: InspectorDataSource? {
 		get{ return _inspectorDataDelegate }
-	}
-	
-	// MARK: - _TESTING_ -
-	func screenshot() {
-		if let img = getActiveGraph()?.screenshot(), let imageData = img.tiffRepresentation {
-			let imageRep = NSBitmapImageRep(data: imageData)
-			let imageProps = [NSBitmapImageRep.PropertyKey.compressionFactor: 1.0]
-			let finalData = imageRep?.representation(using: .jpeg, properties: imageProps)
-			
-			let sp = NSSavePanel()
-			sp.allowedFileTypes = ["jpg"]
-			if sp.runModal() != NSApplication.ModalResponse.OK {
-				return
-			}
-			
-			do { try finalData?.write(to: sp.url!, options: []) } catch {
-				print("Failed to write file.")
-			}
-		}
-	}
-	func setManager(manager: NVStoryManager) {
-		_manager = manager
-		_manager!.addDelegate(_storyDelegate!)
-		
-		// close any tabs
-		closeAllTabs()
-		
-		reloadAllGraphs()
-		setSelectedGraph(graph: nil)
-		reloadInspector()
-		
-		// if there are any graphs, open the first one and select it
-		if _manager!.Story.Graphs.count > 0 {
-			let first = _manager!.Story.Graphs[0]
-			let tab = addNewTab(forGraph: first)
-			_tabController.reloadTabs()
-			selectTab(item: tab)
-			
-			_selectedGraphOutline.selectRowIndexes([0], byExtendingSelection: false)
-			setSelectedGraph(graph: first)
-		}
-	}
-	func setSelectedGraph(graph: NVGraph?) {
-		_selectedGraphDelegate?.Graph = graph
-		_selectedGraphName.stringValue = graph?.Name ?? ""
-		_selectedGraphOutline.reloadData()
-		
-		// handle opening of graph view
-		if let graph = graph {
-			// if a tab is open, switch to it
-			if let tab = getTabForGraph(graph: graph) {
-				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
-			} else {
-				_ = addNewTab(forGraph: graph)
-				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
-			}
-		}
 	}
 	
 	// MARK: - Initialization -
@@ -143,8 +81,51 @@ class MainViewController: NSViewController {
 		_selectedGraphOutline.backgroundColor = NSColor.fromHex("#ECECEC")
 	}
 	
+	// MARK: Interface Callbacks
 	@IBAction func onOutlinerAddGraph(_ sender: NSButton) {
 		addGraph(parent: nil)
+	}
+	
+	// MARK: Functions
+	func setManager(manager: NVStoryManager) {
+		_manager = manager
+		_manager!.addDelegate(_storyDelegate!)
+		
+		// close any tabs
+		closeAllTabs()
+		
+		reloadAllGraphs()
+		setSelectedGraph(graph: nil)
+		reloadInspector()
+		
+		// if there are any graphs, open the first one and select it
+		if _manager!.Story.Graphs.count > 0 {
+			let first = _manager!.Story.Graphs[0]
+			let tab = addNewTab(forGraph: first)
+			_tabController.reloadTabs()
+			selectTab(item: tab)
+			
+			_selectedGraphOutline.selectRowIndexes([0], byExtendingSelection: false)
+			setSelectedGraph(graph: first)
+		}
+	}
+	
+	func screenshot() {
+		if let img = getActiveGraph()?.screenshot(), let imageData = img.tiffRepresentation {
+			let imageRep = NSBitmapImageRep(data: imageData)
+			let imageProps = [NSBitmapImageRep.PropertyKey.compressionFactor: 1.0]
+			let finalData = imageRep?.representation(using: .jpeg, properties: imageProps)
+			
+			let sp = NSSavePanel()
+			sp.allowedFileTypes = ["jpg"]
+			if sp.runModal() != NSApplication.ModalResponse.OK {
+				return
+			}
+			
+			do { try finalData?.write(to: sp.url!, options: []) } catch {
+				print("MainViewController::screenshot(): Failed to write file.")
+			}
+		}
 	}
 }
 
@@ -156,6 +137,23 @@ extension MainViewController {
 	
 	func reloadSelectedGraph() {
 		_selectedGraphOutline.reloadData()
+	}
+	
+	func setSelectedGraph(graph: NVGraph?) {
+		_selectedGraphDelegate?.Graph = graph
+		_selectedGraphName.stringValue = graph?.Name ?? ""
+		_selectedGraphOutline.reloadData()
+		
+		// handle opening of graph view
+		if let graph = graph {
+			// if a tab is open, switch to it
+			if let tab = getTabForGraph(graph: graph) {
+				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
+			} else {
+				_ = addNewTab(forGraph: graph)
+				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
+			}
+		}
 	}
 }
 
