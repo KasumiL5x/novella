@@ -208,15 +208,18 @@ class GraphView: NSView {
 	}
 	
 	func screenshot() -> NSImage? {
-		let img = NSImage(size: visibleRect.size)
-		img.lockFocus()
-		if lockFocusIfCanDraw() {
-			displayIgnoringOpacity(visibleRect, in: NSGraphicsContext.current!)
-			unlockFocus()
-		}
-		img.unlockFocus()
-		
-		return img
+			let rect = NSMakeRect(visibleRect.origin.x, visibleRect.origin.y, visibleRect.width, visibleRect.height)
+			let img = NSImage(size: rect.size)
+			img.lockFocus()
+			if lockFocusIfCanDraw() {
+				NSGraphicsContext.saveGraphicsState()
+				NSGraphicsContext.current?.cgContext.translateBy(x: -visibleRect.origin.x, y: -visibleRect.origin.y)
+				displayIgnoringOpacity(rect, in: NSGraphicsContext.current!)
+				NSGraphicsContext.restoreGraphicsState()
+				unlockFocus()
+			}
+			img.unlockFocus()
+			return img
 	}
 	
 	func selectedBounds() -> NSRect {
