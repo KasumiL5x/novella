@@ -120,6 +120,9 @@ class LinkableView: NSView {
 	func removeOutput(pin: PinView) {
 		if let idx = _outputs.index(of: pin) {
 			_outputs.remove(at: idx)
+			pin.removeFromSuperview()
+			
+			layoutPins()
 		}
 	}
 	
@@ -235,6 +238,8 @@ class LinkableView: NSView {
 	}
 	private func layoutPins() {
 		if _outputs.isEmpty {
+			_outputsBoard.frame = NSRect.zero // remove outputs board (size to zero)
+			_outputsBoard.setNeedsDisplay(_outputsBoard.bounds)
 			return
 		}
 		

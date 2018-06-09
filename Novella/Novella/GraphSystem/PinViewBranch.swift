@@ -89,8 +89,12 @@ class PinViewBranch: PinView {
 		// configure menus
 		_trueContextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewBranch.onContextCondition), keyEquivalent: "")
 		_trueContextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewBranch.onContextTrueFunction), keyEquivalent: "")
+		_trueContextMenu.addItem(NSMenuItem.separator())
+		_trueContextMenu.addItem(withTitle: "Delete", action: #selector(PinView.onContextDelete), keyEquivalent: "")
 		_falseContextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewBranch.onContextCondition), keyEquivalent: "")
 		_falseContextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewBranch.onContextFalseFunction), keyEquivalent: "")
+		_falseContextMenu.addItem(NSMenuItem.separator())
+		_falseContextMenu.addItem(withTitle: "Delete", action: #selector(PinView.onContextDelete), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinViewBranch::init(coder:) not implemented.")

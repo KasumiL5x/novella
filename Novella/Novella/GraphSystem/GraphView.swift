@@ -117,6 +117,9 @@ class GraphView: NSView {
 	var Undo: UndoRedo {
 		get{ return _undoRedo }
 	}
+	var Manager: NVStoryManager {
+		get{ return _manager }
+	}
 	
 	// MARK: - - Setup -
 	private func rootFor(graph: NVGraph) {
@@ -675,10 +678,7 @@ extension GraphView {
 	}
 	
 	private func deletePinView(pin: PinView) {
-		// 1. remove from parent view
-		pin.removeFromSuperview()
-		
-		// 2. remove from linkable's list
+		// !. remove from linkables
 		_allLinkableViews.forEach { (lview) in
 			if lview.Outputs.contains(pin) {
 				lview.removeOutput(pin: pin)
