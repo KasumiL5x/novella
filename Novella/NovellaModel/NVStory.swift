@@ -9,7 +9,7 @@
 import Foundation
 import JavaScriptCore
 
-public class NVStory {
+public class NVStory: NSObject, NSCoding {
 	private let _manager: NVStoryManager
 	private var _folders: [NVFolder]
 	private var _graphs: [NVGraph]
@@ -20,6 +20,20 @@ public class NVStory {
 		self._folders = []
 		self._graphs = []
 		self._name = ""
+	}
+	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._manager = aDecoder.decodeObject(forKey: "_manager") as! NVStoryManager
+		self._folders = aDecoder.decodeObject(forKey: "_folders") as! [NVFolder]
+		self._graphs = aDecoder.decodeObject(forKey: "_graphs") as! [NVGraph]
+		self._name = aDecoder.decodeObject(forKey: "_name") as! String
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_manager, forKey: "_manager")
+		aCoder.encode(_folders, forKey: "_folders")
+		aCoder.encode(_graphs, forKey: "_graphs")
+		aCoder.encode(_name, forKey: "_name")
 	}
 	
 	// MARK: Properties

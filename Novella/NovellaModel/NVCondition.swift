@@ -8,13 +8,24 @@
 
 import JavaScriptCore
 
-public class NVCondition {
+public class NVCondition: NSObject, NSCoding {
 	private let _manager: NVStoryManager
 	private var _javascript: String
 	
 	init(manager: NVStoryManager) {
 		self._manager = manager
 		_javascript = ""
+		super.init()
+	}
+	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._manager = aDecoder.decodeObject(forKey: "_manager") as! NVStoryManager
+		self._javascript = aDecoder.decodeObject(forKey: "_javascript") as! String
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_manager, forKey: "_manager")
+		aCoder.encode(_javascript, forKey: "_javascript")
 	}
 	
 	public var Javascript: String {

@@ -12,4 +12,7 @@ public class NVCutscene: NVNode {
 	override init(manager: NVStoryManager, uuid: NSUUID) {
 		super.init(manager: manager, uuid: uuid)
 	}
+	public required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
 }

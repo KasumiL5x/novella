@@ -6,11 +6,20 @@
 //  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
-public class NVFunction {
+public class NVFunction: NSObject, NSCoding {
 	private var _javascript: String
 	
-	init() {
+	override init() {
 		self._javascript = ""
+		super.init()
+	}
+	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._javascript = aDecoder.decodeObject(forKey: "_javascript") as! String
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_javascript, forKey: "_javascript")
 	}
 	
 	public var Javascript: String {

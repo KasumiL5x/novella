@@ -37,4 +37,14 @@ class MainWindowController: NSWindowController {
 	@IBAction func onToolbarVariableEditor(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.openVariableEditor()
 	}
+	
+	@IBAction func onToolbarSnapshot(_ sender: NSButton) {
+		(document as? Document)?.snapshot()
+	}
+	
+	@IBAction func onToolbarRestore(_ sender: NSButton) {
+		(document as? Document)?.restore()
+	}
+	
+	
 }

@@ -21,6 +21,20 @@ public class NVBranch : NVBaseLink {
 		super.init(manager: manager, uuid: uuid, origin: origin)
 	}
 	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._condition = aDecoder.decodeObject(forKey: "_condition") as! NVCondition
+		self._trueTransfer = aDecoder.decodeObject(forKey: "_trueTransfer") as! NVTransfer
+		self._falseTransfer = aDecoder.decodeObject(forKey: "_falseTransfer") as! NVTransfer
+		super.init(coder: aDecoder)
+	}
+	public override func encode(with aCoder: NSCoder) {
+		super.encode(with: aCoder)
+		aCoder.encode(_condition, forKey: "_condition")
+		aCoder.encode(_trueTransfer, forKey: "_trueTransfer")
+		aCoder.encode(_falseTransfer, forKey: "_falseTransfer")
+	}
+	
 	public var Condition: NVCondition {
 		get{ return _condition }
 	}

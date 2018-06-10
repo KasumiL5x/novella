@@ -20,4 +20,18 @@ public class NVSwitch : NVBaseLink {
 		
 		super.init(manager: manager, uuid: uuid, origin: origin)
 	}
+	
+	// MARK: Coding
+	required public init?(coder aDecoder: NSCoder) {
+		self._variable = aDecoder.decodeObject(forKey: "_variable") as? NVVariable
+		self._defaultTransfer = aDecoder.decodeObject(forKey: "_defaultTransfer") as! NVTransfer
+		self._values = aDecoder.decodeObject(forKey: "_values") as! [AnyHashable:NVTransfer]
+		super.init(coder: aDecoder)
+	}
+	public override func encode(with aCoder: NSCoder) {
+		super.encode(with: aCoder)
+		aCoder.encode(_variable, forKey: "_variable")
+		aCoder.encode(_defaultTransfer, forKey: "_defaultTransfer")
+		aCoder.encode(_values, forKey: "_values")
+	}
 }

@@ -11,15 +11,28 @@ import NovellaModel
 
 class Document: NSDocument {
 	var _manager: NVStoryManager
+	var _snapshot: NVStoryManager?
 
 	override init() {
 		_manager = NVStoryManager()
+		_snapshot = nil
 		super.init()
 		_manager.addDelegate(self)
 	}
 
 	override class var autosavesInPlace: Bool {
 		return true
+	}
+	
+	func snapshot() {
+		_snapshot = _manager.snapshot()
+	}
+	
+	func restore() {
+		if _snapshot != nil {
+			_manager.restore(snapshot: _snapshot!)
+			_snapshot = nil
+		}
 	}
 
 	override func makeWindowControllers() {

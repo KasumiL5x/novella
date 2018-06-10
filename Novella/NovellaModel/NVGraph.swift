@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NVGraph {
+public class NVGraph: NSObject, NSCoding {
 	private let _manager: NVStoryManager
 	private let _uuid: NSUUID
 	private var _inTrash: Bool
@@ -38,6 +38,40 @@ public class NVGraph {
 		self._exits = []
 		self._entry = nil
 		self._parent = nil
+		super.init()
+	}
+	
+	// MARK: Coding
+	public override func isEqual(_ object: Any?) -> Bool {
+		return self._uuid == (object as? NVGraph)?._uuid
+	}
+	public required init?(coder aDecoder: NSCoder) {
+		self._manager = aDecoder.decodeObject(forKey: "_manager") as! NVStoryManager
+		self._uuid = aDecoder.decodeObject(forKey: "_uuid") as! NSUUID
+		self._inTrash = aDecoder.decodeObject(forKey: "_inTrash") as! Bool
+		self._editorPos = aDecoder.decodeObject(forKey: "_editorPos") as! CGPoint
+		self._name = aDecoder.decodeObject(forKey: "_name") as! String
+		self._graphs = aDecoder.decodeObject(forKey: "_graphs") as! [NVGraph]
+		self._nodes = aDecoder.decodeObject(forKey: "_nodes") as! [NVNode]
+		self._links = aDecoder.decodeObject(forKey: "_links") as! [NVBaseLink]
+		self._listeners = aDecoder.decodeObject(forKey: "_listeners") as! [NVListener]
+		self._exits = aDecoder.decodeObject(forKey: "_exits") as! [NVExitNode]
+		self._entry = aDecoder.decodeObject(forKey: "_entry") as? NVLinkable
+		self._parent = aDecoder.decodeObject(forKey: "_parent") as? NVGraph
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_manager, forKey: "_manager")
+		aCoder.encode(_uuid, forKey: "_uuid")
+		aCoder.encode(_inTrash, forKey: "_inTrash")
+		aCoder.encode(_editorPos, forKey: "_editorPos")
+		aCoder.encode(_name, forKey: "_name")
+		aCoder.encode(_graphs, forKey: "_graphs")
+		aCoder.encode(_nodes, forKey: "_nodes")
+		aCoder.encode(_links, forKey: "_links")
+		aCoder.encode(_listeners, forKey: "_listeners")
+		aCoder.encode(_exits, forKey: "_exits")
+		aCoder.encode(_entry, forKey: "_entry")
+		aCoder.encode(_parent, forKey: "_parent")
 	}
 	
 	// MARK:  Properties
@@ -267,12 +301,5 @@ extension NVGraph: NVLinkable {
 			_editorPos = newValue
 			_manager.Delegates.forEach{$0.onStoryGraphPositionChanged(graph: self, oldPos: oldPos, newPos: _editorPos)}
 		}
-	}
-}
-
-// MARK: Equatable
-extension NVGraph: Equatable {
-	public static func == (lhs: NVGraph, rhs: NVGraph) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }

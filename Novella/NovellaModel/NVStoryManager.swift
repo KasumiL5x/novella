@@ -8,7 +8,7 @@
 
 import JavaScriptCore
 
-public class NVStoryManager {
+public class NVStoryManager: NSObject, NSCoding {
 	// MARK: - - Variables -
 	private var _story: NVStory!
 	private var _identifiables: [NVIdentifiable]
@@ -45,7 +45,7 @@ public class NVStoryManager {
 	}
 	
 	// MARK: - - Initialization -
-	public init() {
+	public override init() {
 		self._identifiables = []
 		self._folders = []
 		self._variables = []
@@ -55,9 +55,45 @@ public class NVStoryManager {
 		self._trashed = []
 		self._delegates = []
 		self._jsContext = JSContext()
+		self._story = nil
+		super.init()
 		self._story = NVStory(manager: self)
-		
 		setupJavascript()
+	}
+	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._story = aDecoder.decodeObject(forKey: "_story") as! NVStory
+		self._identifiables = aDecoder.decodeObject(forKey: "_identifiables") as! [NVIdentifiable]
+		self._folders = aDecoder.decodeObject(forKey: "_folders") as! [NVFolder]
+		self._variables = aDecoder.decodeObject(forKey: "_variables") as! [NVVariable]
+		self._graphs = aDecoder.decodeObject(forKey: "_graphs") as! [NVGraph]
+		self._links = aDecoder.decodeObject(forKey: "_links") as! [NVBaseLink]
+		self._nodes = aDecoder.decodeObject(forKey: "_nodes") as! [NVNode]
+		self._trashed = aDecoder.decodeObject(forKey: "_trashed") as! [NVLinkable]
+		self._delegates = aDecoder.decodeObject(forKey: "_delegates") as! [NVStoryDelegate]
+		self._jsContext = aDecoder.decodeObject(forKey: "_jsContext") as! JSContext
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_story, forKey: "_story")
+		aCoder.encode(_identifiables, forKey: "_identifiables")
+		aCoder.encode(_folders, forKey: "_folders")
+		aCoder.encode(_variables, forKey: "_variables")
+		aCoder.encode(_graphs, forKey: "_graphs")
+		aCoder.encode(_links, forKey: "_links")
+		aCoder.encode(_nodes, forKey: "_nodes")
+		aCoder.encode(_trashed, forKey: "_trashed")
+		aCoder.encode(_delegates, forKey: "_delegates")
+		aCoder.encode(_jsContext, forKey: "_jsContext")
+	}
+	
+	// MARK: Snapshotting
+	public func snapshot() -> NVStoryManager {
+		let archive = NSKeyedArchiver.archivedData(withRootObject: self)
+		return NSKeyedUnarchiver.unarchiveObject(with: archive) as! NVStoryManager
+	}
+	public func restore(snapshot: NVStoryManager) {
+		fatalError("Not yet implemented.")
 	}
 	
 	// MARK: - - Generic Functions -

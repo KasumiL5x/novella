@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NVVariable {
+public class NVVariable: NSObject, NSCoding {
 	private let _manager: NVStoryManager
 	private let _uuid: NSUUID
 	private var _name: String
@@ -29,6 +29,34 @@ public class NVVariable {
 		self._initialValue = type.defaultValue
 		self._constant = false
 		self._folder = nil
+		super.init()
+	}
+	
+	// MARK: Coding
+	public override func isEqual(_ object: Any?) -> Bool {
+		return self._uuid == (object as? NVVariable)?.UUID
+	}
+	public required init?(coder aDecoder: NSCoder) {
+		self._manager = aDecoder.decodeObject(forKey: "_manager") as! NVStoryManager
+		self._uuid = aDecoder.decodeObject(forKey: "_uuid") as! NSUUID
+		self._name = aDecoder.decodeObject(forKey: "_name") as! String
+		self._synopsis = aDecoder.decodeObject(forKey: "_synopsis") as! String
+		self._type = aDecoder.decodeObject(forKey: "_type") as! NVDataType
+		self._value = aDecoder.decodeObject(forKey: "_value") as Any
+		self._initialValue = aDecoder.decodeObject(forKey: "_initialValue") as Any
+		self._constant = aDecoder.decodeObject(forKey: "_constant") as! Bool
+		self._folder = aDecoder.decodeObject(forKey: "_folder") as? NVFolder
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_manager, forKey: "_manager")
+		aCoder.encode(_uuid, forKey: "_uuid")
+		aCoder.encode(_name, forKey: "_name")
+		aCoder.encode(_synopsis, forKey: "_synopsis")
+		aCoder.encode(_type, forKey: "_type")
+		aCoder.encode(_value, forKey: "_value")
+		aCoder.encode(_initialValue, forKey: "_initialValue")
+		aCoder.encode(_constant, forKey: "_constant")
+		aCoder.encode(_folder, forKey: "_folder")
 	}
 	
 	public var Name: String {
@@ -115,12 +143,5 @@ extension NVVariable: NVPathable {
 	
 	public func parentPath() -> NVPathable? {
 		return _folder
-	}
-}
-
-// MARK: - Equatable -
-extension NVVariable: Equatable {
-	public static func == (lhs: NVVariable, rhs: NVVariable) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }

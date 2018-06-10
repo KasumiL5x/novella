@@ -789,6 +789,38 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="E4B970F7-24D1-4DE2-B147-6C0DB4ABA989" label="Snapshot" paletteLabel="Snapshot" image="NSTouchBarHistoryTemplate" id="kON-EN-NO0">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="48" height="48"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="r8r-TT-VZj">
+                                        <rect key="frame" x="5" y="14" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarHistoryTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Zsj-5v-E1H">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarSnapshot:" target="jGA-0Y-lOj" id="fYC-e1-dVS"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="775C2959-D18A-4CDD-82AB-4B3DE920F58E" label="Restore" paletteLabel="Restore" image="NSTouchBarHistoryTemplate" id="TIv-Za-HgS">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="48" height="48"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="fyO-cR-Yxz">
+                                        <rect key="frame" x="0.0" y="14" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarHistoryTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="nuI-Vr-Rz7">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarRestore:" target="jGA-0Y-lOj" id="VUV-IR-zzy"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="6I3-JS-OQD"/>
@@ -798,6 +830,8 @@
                                 <toolbarItem reference="yGj-rV-Scg"/>
                                 <toolbarItem reference="y16-IP-bVg"/>
                                 <toolbarItem reference="RAx-tK-frb"/>
+                                <toolbarItem reference="kON-EN-NO0"/>
+                                <toolbarItem reference="TIv-Za-HgS"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -926,7 +960,7 @@
                                                                         </outlineView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="iHS-nl-aqN">
+                                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="iHS-nl-aqN">
                                                                     <rect key="frame" x="0.0" y="398" width="186" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -1053,7 +1087,7 @@
                                                                         </outlineView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="FwL-7H-fIj">
+                                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="FwL-7H-fIj">
                                                                     <rect key="frame" x="0.0" y="389" width="186" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -1222,7 +1256,7 @@
                                                         </tableView>
                                                     </subviews>
                                                 </clipView>
-                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="IzZ-Gl-her">
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="IzZ-Gl-her">
                                                     <rect key="frame" x="1" y="883" width="229" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
@@ -1281,6 +1315,7 @@
         <image name="NSTouchBarEnterFullScreenTemplate" width="18" height="30"/>
         <image name="NSTouchBarExitFullScreenTemplate" width="18" height="30"/>
         <image name="NSTouchBarFolderMoveToTemplate" width="22" height="30"/>
+        <image name="NSTouchBarHistoryTemplate" width="18" height="30"/>
         <image name="NSTrashEmpty" width="32" height="32"/>
         <image name="Variable" width="512" height="512"/>
     </resources>

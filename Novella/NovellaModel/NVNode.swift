@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NVNode {
+public class NVNode: NSObject, NSCoding {
 	internal let _manager: NVStoryManager
 	private let _uuid: NSUUID
 	private var _inTrash: Bool
@@ -21,8 +21,27 @@ public class NVNode {
 		self._uuid = uuid
 		self._inTrash = false
 		self._editorPos = CGPoint.zero
-		
 		self._name = ""
+		super.init()
+	}
+	
+	// MARK: Coding
+	public override func isEqual(_ object: Any?) -> Bool {
+		return self._uuid == (object as? NVNode)?._uuid
+	}
+	public required init?(coder aDecoder: NSCoder) {
+		self._manager = aDecoder.decodeObject(forKey: "_manager") as! NVStoryManager
+		self._uuid = aDecoder.decodeObject(forKey: "_uuid") as! NSUUID
+		self._inTrash = aDecoder.decodeObject(forKey: "_inTrash") as! Bool
+		self._editorPos = aDecoder.decodeObject(forKey: "_editorPos") as! CGPoint
+		self._name = aDecoder.decodeObject(forKey: "_name") as! String
+	}
+	public func encode(with aCoder: NSCoder) {
+		aCoder.encode(_manager, forKey: "_manager")
+		aCoder.encode(_uuid, forKey: "_uuid")
+		aCoder.encode(_inTrash, forKey: "_inTrash")
+		aCoder.encode(_editorPos, forKey: "_editorPos")
+		aCoder.encode(_name, forKey: "_name")
 	}
 	
 	public var Name: String {
@@ -66,12 +85,5 @@ extension NVNode: NVLinkable {
 			_editorPos = newValue
 			_manager.Delegates.forEach{$0.onStoryNodePositionChanged(node: self, oldPos: oldPos, newPos: _editorPos)}
 		}
-	}
-}
-
-// MARK: - Equatable -
-extension NVNode: Equatable {
-	public static func == (lhs: NVNode, rhs: NVNode) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }

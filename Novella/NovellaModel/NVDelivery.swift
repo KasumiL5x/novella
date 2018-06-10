@@ -21,6 +21,20 @@ public class NVDelivery: NVNode {
 		super.init(manager: manager, uuid: uuid)
 	}
 	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._content = aDecoder.decodeObject(forKey: "_content") as! String
+		self._preview = aDecoder.decodeObject(forKey: "_preview") as! String
+		self._directions = aDecoder.decodeObject(forKey: "_directions") as! String
+		super.init(coder: aDecoder)
+	}
+	public override func encode(with aCoder: NSCoder) {
+		super.encode(with: aCoder)
+		aCoder.encode(_content, forKey: "_content")
+		aCoder.encode(_preview, forKey: "_preview")
+		aCoder.encode(_directions, forKey: "_directions")
+	}
+	
 	public var Content: String {
 		get { return _content }
 		set {

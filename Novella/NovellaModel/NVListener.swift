@@ -18,4 +18,16 @@ public class NVListener: NVNode {
 		
 		super.init(manager: manager, uuid: uuid)
 	}
+	
+	// MARK: Coding
+	public required init?(coder aDecoder: NSCoder) {
+		self._condition = aDecoder.decodeObject(forKey: "_condition") as! NVCondition
+		self._transfer = aDecoder.decodeObject(forKey: "_transfer") as! NVTransfer
+		super.init(coder: aDecoder)
+	}
+	public override func encode(with aCoder: NSCoder) {
+		super.encode(with: aCoder)
+		aCoder.encode(_condition, forKey: "_condition")
+		aCoder.encode(_transfer, forKey: "_transfer")
+	}
 }
