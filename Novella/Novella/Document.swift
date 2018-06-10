@@ -30,7 +30,10 @@ class Document: NSDocument {
 	
 	func restore() {
 		if _snapshot != nil {
-			_manager.restore(snapshot: _snapshot!)
+			_manager = _snapshot!
+			
+			// todo: VC changed manager - reset it.
+			
 			_snapshot = nil
 		}
 	}

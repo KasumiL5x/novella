@@ -92,9 +92,6 @@ public class NVStoryManager: NSObject, NSCoding {
 		let archive = NSKeyedArchiver.archivedData(withRootObject: self)
 		return NSKeyedUnarchiver.unarchiveObject(with: archive) as! NVStoryManager
 	}
-	public func restore(snapshot: NVStoryManager) {
-		fatalError("Not yet implemented.")
-	}
 	
 	// MARK: - - Generic Functions -
 	public func addDelegate(_ delegate: NVStoryDelegate) {
