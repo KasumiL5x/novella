@@ -85,6 +85,15 @@ class MainViewController: NSViewController {
 	@IBAction func onOutlinerAddGraph(_ sender: NSButton) {
 		addGraph(parent: nil)
 	}
+	@IBAction func onAllGraphsNameChanged(_ sender: NSTextField) {
+		guard let graph = _allGraphsOutline.item(atRow: _allGraphsOutline.selectedRow) as? NVGraph else {
+			return
+		}
+		graph.Name = sender.stringValue
+		reloadSelectedGraph()
+		getTabItemFor(graph: graph)?.title = graph.Name
+		_tabController.reloadTabs()
+	}
 	
 	// MARK: Functions
 	func setManager(manager: NVStoryManager) {
@@ -105,6 +114,7 @@ class MainViewController: NSViewController {
 			_tabController.reloadTabs()
 			selectTab(item: tab)
 			
+			_allGraphsOutline.selectRowIndexes([0], byExtendingSelection: false)
 			_selectedGraphOutline.selectRowIndexes([0], byExtendingSelection: false)
 			setSelectedGraph(graph: first)
 		}
@@ -137,12 +147,12 @@ extension MainViewController {
 	
 	func reloadSelectedGraph() {
 		_selectedGraphOutline.reloadData()
+		_selectedGraphName.stringValue = _selectedGraphDelegate?.Graph?.Name ?? ""
 	}
 	
 	func setSelectedGraph(graph: NVGraph?) {
 		_selectedGraphDelegate?.Graph = graph
-		_selectedGraphName.stringValue = graph?.Name ?? ""
-		_selectedGraphOutline.reloadData()
+		reloadSelectedGraph()
 		
 		// handle opening of graph view
 		if let graph = graph {
@@ -299,13 +309,17 @@ extension MainViewController {
 		return nil
 	}
 	
-	private func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
+	private func getTabItemFor(graph: NVGraph) -> TabItem? {
 		return _tabsDataSource!.Tabs.first(where: {
 			guard let graphView = getGraphViewFromTab(tab: $0.tabItem) else {
 				return false
 			}
 			return graphView.NovellaGraph == graph
-		})?.tabItem
+		})
+	}
+	
+	private func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
+		return getTabItemFor(graph: graph)?.tabItem
 	}
 	
 	func zoomActiveGraph() {
