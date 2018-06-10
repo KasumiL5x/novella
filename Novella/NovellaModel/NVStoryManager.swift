@@ -62,7 +62,10 @@ public class NVStoryManager: NSObject, NSCoding {
 	}
 	
 	// MARK: Coding
-	public required init?(coder aDecoder: NSCoder) {
+	public required convenience init?(coder aDecoder: NSCoder) {
+		// HACK: Made this convenience so that it can call the regular init first, setting up the JSContext for me since it cannot be en/decoded.
+		self.init()
+		
 		self._story = aDecoder.decodeObject(forKey: "_story") as! NVStory
 		self._identifiables = aDecoder.decodeObject(forKey: "_identifiables") as! [NVIdentifiable]
 		self._folders = aDecoder.decodeObject(forKey: "_folders") as! [NVFolder]
@@ -71,8 +74,7 @@ public class NVStoryManager: NSObject, NSCoding {
 		self._links = aDecoder.decodeObject(forKey: "_links") as! [NVBaseLink]
 		self._nodes = aDecoder.decodeObject(forKey: "_nodes") as! [NVNode]
 		self._trashed = aDecoder.decodeObject(forKey: "_trashed") as! [NVLinkable]
-		self._delegates = aDecoder.decodeObject(forKey: "_delegates") as! [NVStoryDelegate]
-		self._jsContext = aDecoder.decodeObject(forKey: "_jsContext") as! JSContext
+		self._delegates = [] // cannot en/decode elements that *may* not conform to NSCoding (it's likely that user delegates won't), so they must be RE-ADDED upon coding.
 	}
 	public func encode(with aCoder: NSCoder) {
 		aCoder.encode(_story, forKey: "_story")
@@ -83,8 +85,6 @@ public class NVStoryManager: NSObject, NSCoding {
 		aCoder.encode(_links, forKey: "_links")
 		aCoder.encode(_nodes, forKey: "_nodes")
 		aCoder.encode(_trashed, forKey: "_trashed")
-		aCoder.encode(_delegates, forKey: "_delegates")
-		aCoder.encode(_jsContext, forKey: "_jsContext")
 	}
 	
 	// MARK: Snapshotting

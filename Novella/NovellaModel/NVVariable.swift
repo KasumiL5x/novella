@@ -41,10 +41,10 @@ public class NVVariable: NSObject, NSCoding {
 		self._uuid = aDecoder.decodeObject(forKey: "_uuid") as! NSUUID
 		self._name = aDecoder.decodeObject(forKey: "_name") as! String
 		self._synopsis = aDecoder.decodeObject(forKey: "_synopsis") as! String
-		self._type = aDecoder.decodeObject(forKey: "_type") as! NVDataType
+		self._type = NVDataType.fromString(str: aDecoder.decodeObject(forKey: "_type") as! String)
 		self._value = aDecoder.decodeObject(forKey: "_value") as Any
 		self._initialValue = aDecoder.decodeObject(forKey: "_initialValue") as Any
-		self._constant = aDecoder.decodeObject(forKey: "_constant") as! Bool
+		self._constant = aDecoder.decodeBool(forKey: "_constant")
 		self._folder = aDecoder.decodeObject(forKey: "_folder") as? NVFolder
 	}
 	public func encode(with aCoder: NSCoder) {
@@ -52,7 +52,7 @@ public class NVVariable: NSObject, NSCoding {
 		aCoder.encode(_uuid, forKey: "_uuid")
 		aCoder.encode(_name, forKey: "_name")
 		aCoder.encode(_synopsis, forKey: "_synopsis")
-		aCoder.encode(_type, forKey: "_type")
+		aCoder.encode(_type.stringValue, forKey: "_type")
 		aCoder.encode(_value, forKey: "_value")
 		aCoder.encode(_initialValue, forKey: "_initialValue")
 		aCoder.encode(_constant, forKey: "_constant")

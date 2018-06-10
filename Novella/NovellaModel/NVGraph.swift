@@ -48,8 +48,8 @@ public class NVGraph: NSObject, NSCoding {
 	public required init?(coder aDecoder: NSCoder) {
 		self._manager = aDecoder.decodeObject(forKey: "_manager") as! NVStoryManager
 		self._uuid = aDecoder.decodeObject(forKey: "_uuid") as! NSUUID
-		self._inTrash = aDecoder.decodeObject(forKey: "_inTrash") as! Bool
-		self._editorPos = aDecoder.decodeObject(forKey: "_editorPos") as! CGPoint
+		self._inTrash = aDecoder.decodeBool(forKey: "_inTrash")
+		self._editorPos = aDecoder.decodePoint(forKey: "_editorPos")
 		self._name = aDecoder.decodeObject(forKey: "_name") as! String
 		self._graphs = aDecoder.decodeObject(forKey: "_graphs") as! [NVGraph]
 		self._nodes = aDecoder.decodeObject(forKey: "_nodes") as! [NVNode]
