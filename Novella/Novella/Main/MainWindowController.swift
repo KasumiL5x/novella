@@ -30,6 +30,23 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.centerActiveGraph()
 	}
 	
+	@IBAction func onToolbarCurveType(_ sender: NSSegmentedControl) {
+		switch sender.selectedSegment {
+		case 0:
+			(document as? NovellaDocument)?.CurveType = .line
+		case 1:
+			(document as? NovellaDocument)?.CurveType = .smooth
+		case 2:
+			(document as? NovellaDocument)?.CurveType = .curve
+		case 3:
+			(document as? NovellaDocument)?.CurveType = .square
+		default:
+			break
+		}
+		(contentViewController as? MainViewController)?.refreshOpenGraphs()
+	}
+	
+	
 	@IBAction func onToolbarScreenshot(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.screenshot()
 	}

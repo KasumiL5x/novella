@@ -98,20 +98,7 @@ class MainViewController: NSViewController {
 		}
 	}
 	
-	// MARK: Interface Callbacks
-	@IBAction func onOutlinerAddGraph(_ sender: NSButton) {
-		addGraph(parent: nil)
-	}
-	@IBAction func onAllGraphsNameChanged(_ sender: NSTextField) {
-		guard let graph = _allGraphsOutline.item(atRow: _allGraphsOutline.selectedRow) as? NVGraph else {
-			return
-		}
-		graph.Name = sender.stringValue
-		reloadSelectedGraph()
-		getTabItemFor(graph: graph)?.title = graph.Name
-		_tabController.reloadTabs()
-	}
-	
+	// MARK: Functions
 	func screenshot() {
 		if let img = getActiveGraph()?.screenshot(), let imageData = img.tiffRepresentation {
 			let imageRep = NSBitmapImageRep(data: imageData)
@@ -128,6 +115,26 @@ class MainViewController: NSViewController {
 				print("MainViewController::screenshot(): Failed to write file.")
 			}
 		}
+	}
+	
+	func refreshOpenGraphs() {
+		for t in _tabsDataSource!.Tabs {
+			getGraphViewFromTab(tab: t.tabItem)?.redrawAll()
+		}
+	}
+	
+	// MARK: Interface Callbacks
+	@IBAction func onOutlinerAddGraph(_ sender: NSButton) {
+		addGraph(parent: nil)
+	}
+	@IBAction func onAllGraphsNameChanged(_ sender: NSTextField) {
+		guard let graph = _allGraphsOutline.item(atRow: _allGraphsOutline.selectedRow) as? NVGraph else {
+			return
+		}
+		graph.Name = sender.stringValue
+		reloadSelectedGraph()
+		getTabItemFor(graph: graph)?.title = graph.Name
+		_tabController.reloadTabs()
 	}
 }
 

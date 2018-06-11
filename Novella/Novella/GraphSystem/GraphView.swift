@@ -118,6 +118,9 @@ class GraphView: NSView {
 	var Manager: NVStoryManager {
 		get{ return _document.Manager }
 	}
+	var Document: NovellaDocument {
+		get{ return _document }
+	}
 	
 	// MARK: - - Setup -
 	private func rootFor(graph: NVGraph) {
@@ -201,6 +204,11 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Graph Functions / Helpers -
+	func redrawAll() {
+		self.setNeedsDisplay(bounds) // does this redraw children?
+		_allLinkableViews.forEach{$0.redraw()}
+		_allPinViews.forEach{$0.redraw()}
+	}
 	func offsetToEditorPosition(pos: CGPoint) -> CGPoint {
 		return pos - NSMakePoint(bounds.width*0.5, bounds.height*0.5)
 	}

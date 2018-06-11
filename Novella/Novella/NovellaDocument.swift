@@ -12,6 +12,7 @@ import NovellaModel
 class NovellaDocument: NSDocument {
 	private var _manager: NVStoryManager
 	private var _undoRedo: UndoRedo
+	private var _curveType: CurveHelper.CurveType
 	
 	var Manager: NVStoryManager {
 		get{ return _manager }
@@ -19,10 +20,15 @@ class NovellaDocument: NSDocument {
 	var Undo: UndoRedo {
 		get{ return _undoRedo }
 	}
+	var CurveType: CurveHelper.CurveType {
+		get{ return _curveType }
+		set{ _curveType = newValue }
+	}
 
 	override init() {
 		_manager = NVStoryManager()
 		_undoRedo = UndoRedo()
+		_curveType = .smooth
 		super.init()
 		_manager.addDelegate(self)
 	}

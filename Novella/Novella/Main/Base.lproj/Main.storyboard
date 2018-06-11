@@ -789,6 +789,27 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="ED7B1765-D6A8-4D54-821F-C1D2ACC4AD97" label="Curve Type" paletteLabel="Curve Type" id="u6g-ls-Hhq">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="99" height="23"/>
+                                    <size key="maxSize" width="133" height="27"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="ZKe-81-cCS">
+                                        <rect key="frame" x="0.0" y="14" width="132" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectOne" id="3Ow-3u-XM9">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment width="32"/>
+                                                <segment width="32" selected="YES" tag="1"/>
+                                                <segment width="32"/>
+                                                <segment width="32"/>
+                                            </segments>
+                                        </segmentedCell>
+                                        <connections>
+                                            <action selector="onToolbarCurveType:" target="jGA-0Y-lOj" id="gAc-F0-95B"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="6I3-JS-OQD"/>
@@ -796,6 +817,7 @@
                                 <toolbarItem reference="LSu-mw-2cP"/>
                                 <toolbarItem reference="T62-ZT-jVU"/>
                                 <toolbarItem reference="yGj-rV-Scg"/>
+                                <toolbarItem reference="u6g-ls-Hhq"/>
                                 <toolbarItem reference="y16-IP-bVg"/>
                                 <toolbarItem reference="RAx-tK-frb"/>
                             </defaultToolbarItems>
@@ -926,7 +948,7 @@
                                                                         </outlineView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="iHS-nl-aqN">
+                                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="iHS-nl-aqN">
                                                                     <rect key="frame" x="0.0" y="398" width="186" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -1053,7 +1075,7 @@
                                                                         </outlineView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="FwL-7H-fIj">
+                                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="FwL-7H-fIj">
                                                                     <rect key="frame" x="0.0" y="389" width="186" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -1222,7 +1244,7 @@
                                                         </tableView>
                                                     </subviews>
                                                 </clipView>
-                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="IzZ-Gl-her">
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="IzZ-Gl-her">
                                                     <rect key="frame" x="1" y="883" width="229" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
@@ -1270,7 +1292,7 @@
                 </viewController>
                 <customObject id="AdQ-fQ-RMe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="95.5" y="1086"/>
+            <point key="canvasLocation" x="76" y="1008"/>
         </scene>
     </scenes>
     <resources>

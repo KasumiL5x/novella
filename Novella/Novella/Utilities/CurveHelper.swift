@@ -9,6 +9,13 @@
 import AppKit
 
 class CurveHelper {
+	enum CurveType {
+		case line
+		case smooth
+		case curve
+		case square
+	}
+	
 	static func line(start: NSPoint, end: NSPoint, path: NSBezierPath) {
 		path.move(to: start)
 		path.line(to: end)

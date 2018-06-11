@@ -216,7 +216,18 @@ class PinViewBranch: PinView {
 				let origin = NSMakePoint(_truePinRect.midX, _truePinRect.midY)
 				// convert local from destination into local of self and make curve
 				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
-				CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
+				
+				switch _graphView.Document.CurveType {
+				case .line:
+					CurveHelper.line(start: origin, end: end, path: _trueCurvePath)
+				case .smooth:
+					CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
+				case .curve:
+					CurveHelper.curve(start: origin, end: end, path: _trueCurvePath)
+				case .square:
+					CurveHelper.square(start: origin, end: end, path: _trueCurvePath)
+				}
+				
 				_trueCurveLayer.path = _trueCurvePath.cgPath
 				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
 				// make it dotted if it's a graph connection
@@ -228,7 +239,18 @@ class PinViewBranch: PinView {
 				let origin = NSMakePoint(_falsePinRect.midX, _falsePinRect.midY)
 				// convert local from destination into local of self and make curve
 				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
-				CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
+				
+				switch _graphView.Document.CurveType {
+				case .line:
+					CurveHelper.line(start: origin, end: end, path: _falseCurvePath)
+				case .smooth:
+					CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
+				case .curve:
+					CurveHelper.curve(start: origin, end: end, path: _falseCurvePath)
+				case .square:
+					CurveHelper.square(start: origin, end: end, path: _falseCurvePath)
+				}
+				
 				_falseCurveLayer.path = _falseCurvePath.cgPath
 				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
 				// make it dotted if it's a graph connection
