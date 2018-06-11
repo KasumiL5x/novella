@@ -9,6 +9,8 @@
 import Cocoa
 
 class MainWindowController: NSWindowController {
+	private var _previewWindowController: NSWindowController? = nil
+	
 	override func windowDidLoad() {
 		super.windowDidLoad()
 	}
@@ -46,6 +48,13 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.refreshOpenGraphs()
 	}
 	
+	@IBAction func onToolbarPreview(_ sender: NSButton) {
+		if _previewWindowController == nil {
+			let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
+			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as! NSWindowController
+		}
+		_previewWindowController?.showWindow(self)
+	}
 	
 	@IBAction func onToolbarScreenshot(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.screenshot()

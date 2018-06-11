@@ -205,7 +205,7 @@ class GraphView: NSView {
 	
 	// MARK: - - Graph Functions / Helpers -
 	func redrawAll() {
-		self.setNeedsDisplay(bounds) // does this redraw children?
+		self.setNeedsDisplay(bounds)
 		_allLinkableViews.forEach{$0.redraw()}
 		_allPinViews.forEach{$0.redraw()}
 	}
