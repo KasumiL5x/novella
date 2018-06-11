@@ -79,13 +79,8 @@ class VariableTabViewController: NSViewController {
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
 	
 	// MARK: - Variables -
-	private var _manager: NVStoryManager?
+	private var _document: NovellaDocument?
 	fileprivate var _variableTypeIndices: [String:Int] = [:]
-	
-	var Manager: NVStoryManager? {
-		get{ return _manager }
-		set{ _manager = newValue }
-	}
 	
 	// MARK: - Functions -
 	override func viewDidLoad() {
@@ -103,6 +98,10 @@ class VariableTabViewController: NSViewController {
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
 		_outlineView.reloadData()
+	}
+	
+	func setup(doc: NovellaDocument) {
+		self._document = doc
 	}
 	
 	func getSelectedFolder() -> NVFolder? {
@@ -131,32 +130,34 @@ class VariableTabViewController: NSViewController {
 	}
 	
 	@IBAction fileprivate func onAddVariable(_ sender: NSButton) {
-		if let parent = getSelectedFolder() {
-			let variable = _manager!.makeVariable(name: NSUUID().uuidString, type: .boolean)
+		if let manager = _document?.Manager, let parent = getSelectedFolder() {
+			let variable = manager.makeVariable(name: NSUUID().uuidString, type: .boolean)
 			try! parent.add(variable: variable)
 			_outlineView.reloadData()
 		}
 	}
 	
 	@IBAction fileprivate func onAddFolder(_ sender: NSButton) {
-		let folder = _manager!.makeFolder(name: NSUUID().uuidString)
-		if let parent = getSelectedFolder() {
-			try! parent.add(folder: folder)
-		} else {
-			try! _manager!.Story.add(folder: folder)
+		if let manager = _document?.Manager {
+			let folder = manager.makeFolder(name: NSUUID().uuidString)
+			if let parent = getSelectedFolder() {
+				try! parent.add(folder: folder)
+			} else {
+				try! manager.Story.add(folder: folder)
+			}
+			
+			_outlineView.reloadData()
 		}
-		
-		_outlineView.reloadData()
 	}
 	
 	@IBAction fileprivate func onRemoveSelected(_ sender: NSButton) {
-		if let selectedItem = _outlineView.item(atRow: _outlineView.selectedRow) {
+		if let manager = _document?.Manager, let selectedItem = _outlineView.item(atRow: _outlineView.selectedRow) {
 			switch selectedItem {
 			case is NVFolder:
-				_manager!.delete(folder: selectedItem as! NVFolder, deleteContents: true)
+				manager.delete(folder: selectedItem as! NVFolder, deleteContents: true)
 				
 			case is NVVariable:
-				_manager!.delete(variable: selectedItem as! NVVariable)
+				manager.delete(variable: selectedItem as! NVVariable)
 				
 			default:
 				break
@@ -321,7 +322,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return 0
 			
 		default:
-			return _manager!.Story.Folders.count
+			return _document?.Manager.Story.Folders.count ?? 0
 		}
 	}
 	
@@ -335,7 +336,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return asFolder.Variables[index - asFolder.Folders.count]
 			
 		default:
-			return _manager!.Story.Folders[index]
+			return _document!.Manager.Story.Folders[index]
 		}
 	}
 	
@@ -349,7 +350,7 @@ extension VariableTabViewController: NSOutlineViewDataSource {
 			return false
 			
 		default:
-			return _manager!.Story.Folders.count > 0
+			return _document!.Manager.Story.Folders.count > 0
 		}
 	}
 }

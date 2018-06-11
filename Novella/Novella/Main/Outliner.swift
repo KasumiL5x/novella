@@ -171,9 +171,6 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		let outlineView = (notification.object as! NSOutlineView)
 		if let linkableItem = outlineView.item(atRow: outlineView.selectedRow) as? NVLinkable {
 			_mvc.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
-			
-			// TODO: Add bool to the above select function to allow auto-moving of camera (i.e. center on node)
-			//       or add a function internally that simply centers on selection (and expose that too?).
 		}
 	}
 	
@@ -246,15 +243,15 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			
 		case is NVLink:
 			let asLink = (item as! NVLink)
-			let from = _mvc.Manager!.nameOf(linkable: asLink.Origin)
-			let to = _mvc.Manager!.nameOf(linkable: asLink.Transfer.Destination)
+			let from = _mvc.Document.Manager.nameOf(linkable: asLink.Origin)
+			let to = _mvc.Document.Manager.nameOf(linkable: asLink.Transfer.Destination)
 			view?.textField?.stringValue = "\(from) => \(to)"
 			
 		case is NVBranch:
 			let asBranch = (item as! NVBranch)
-			let from = _mvc.Manager!.nameOf(linkable: asBranch.Origin)
-			let toTrue = _mvc.Manager!.nameOf(linkable: asBranch.TrueTransfer.Destination)
-			let toFalse = _mvc.Manager!.nameOf(linkable: asBranch.FalseTransfer.Destination)
+			let from = _mvc.Document.Manager.nameOf(linkable: asBranch.Origin)
+			let toTrue = _mvc.Document.Manager.nameOf(linkable: asBranch.TrueTransfer.Destination)
+			let toFalse = _mvc.Document.Manager.nameOf(linkable: asBranch.FalseTransfer.Destination)
 			view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
 			
 		default:
@@ -280,12 +277,8 @@ class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegat
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if _mvc.Manager == nil {
-			return 0
-		}
-		
 		if item == nil {
-			return _mvc.Manager!.Story.Graphs.count
+			return _mvc.Document.Manager.Story.Graphs.count
 		}
 		
 		return (item as! NVGraph).Graphs.count
@@ -293,7 +286,7 @@ class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegat
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if item == nil {
-			return _mvc.Manager!.Story.Graphs[index]
+			return _mvc.Document.Manager.Story.Graphs[index]
 		}
 		return (item as! NVGraph).Graphs[index]
 	}

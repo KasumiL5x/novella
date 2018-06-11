@@ -16,7 +16,7 @@ class GraphTabViewController: NSViewController {
 	
 	
 	// MARK: - - Variables -
-	private var _manager: NVStoryManager?
+	private var _document: NovellaDocument?
 	private static let GRAPH_SIZE: CGFloat = 600000
 	private var _graphView: GraphView?
 	//
@@ -51,13 +51,13 @@ class GraphTabViewController: NSViewController {
 	}
 	
 	fileprivate func configure() {
-		_graphView = GraphView(manager: _manager!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE))
+		_graphView = GraphView(doc: _document!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE))
 		_graphView?.Delegate = _delegate
 		_scrollView.documentView = _graphView!
 	}
 	
-	func setup(manager: NVStoryManager, graph: NVGraph, delegate: GraphViewDelegate) {
-		_manager = manager
+	func setup(doc: NovellaDocument, graph: NVGraph, delegate: GraphViewDelegate) {
+		self._document = doc
 		_graph = graph
 		_delegate = delegate
 		

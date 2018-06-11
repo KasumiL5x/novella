@@ -16,7 +16,8 @@ import protocol KPCTabsControl.TabsControlDelegate
 
 class MainViewController: NSViewController {
 	// MARK: - Variables -
-	private var _manager: NVStoryManager?
+	private var _appeared: Bool = false
+	private var _document: NovellaDocument!
 	private var _selectedTab: TabItem?
 	
 	// MARK: - Outlets -
@@ -36,11 +37,14 @@ class MainViewController: NSViewController {
 	private var _selectedGraphDelegate: SelectedGraphDelegate?
 	
 	// MARK: - Properties -
-	var Manager: NVStoryManager? {
-		get{ return _manager }
+	var Document: NovellaDocument {
+		get{ return _document }
 	}
 	var InspectorDelegate: InspectorDataSource? {
 		get{ return _inspectorDataDelegate }
+	}
+	var Undo: UndoRedo? {
+		get{ return _document?.Undo }
 	}
 	
 	// MARK: - Initialization -
@@ -64,21 +68,34 @@ class MainViewController: NSViewController {
 		_tabController.dataSource = _tabsDataSource
 		_tabController.reloadTabs()
 		
-		// inspector
-		_inspector.dataSource = _inspectorDataDelegate
-		_inspector.delegate = _inspectorDataDelegate
-		
-		// outliners
-		_allGraphsOutline.MVC = self
-		_allGraphsOutline.dataSource = _allGraphsDelegate
-		_allGraphsOutline.delegate = _allGraphsDelegate
-		_selectedGraphOutline.MVC = self
-		_selectedGraphOutline.delegate = _selectedGraphDelegate
-		_selectedGraphOutline.dataSource = _selectedGraphDelegate
-		
 		// set outline view BG colors as there seems to be an IB bug where the color is just *slightly* not maintained
 		_allGraphsOutline.backgroundColor = NSColor.fromHex("#ECECEC")
 		_selectedGraphOutline.backgroundColor = NSColor.fromHex("#ECECEC")
+	}
+	
+	override func viewWillAppear() {
+		if !_appeared {
+			// _document canNOT be used before this point
+			self._document = view.window?.windowController?.document as? NovellaDocument
+			self._document.Manager.addDelegate(_storyDelegate!)
+			
+			// outliners
+			_allGraphsOutline.MVC = self
+			_allGraphsOutline.dataSource = _allGraphsDelegate
+			_allGraphsOutline.delegate = _allGraphsDelegate
+			_selectedGraphOutline.MVC = self
+			_selectedGraphOutline.delegate = _selectedGraphDelegate
+			_selectedGraphOutline.dataSource = _selectedGraphDelegate
+			
+			// inspector
+			_inspector.dataSource = _inspectorDataDelegate
+			_inspector.delegate = _inspectorDataDelegate
+			
+			reloadAllGraphs()
+			reloadSelectedGraph()
+			
+			_appeared = true
+		}
 	}
 	
 	// MARK: Interface Callbacks
@@ -93,31 +110,6 @@ class MainViewController: NSViewController {
 		reloadSelectedGraph()
 		getTabItemFor(graph: graph)?.title = graph.Name
 		_tabController.reloadTabs()
-	}
-	
-	// MARK: Functions
-	func setManager(manager: NVStoryManager) {
-		_manager = manager
-		_manager!.addDelegate(_storyDelegate!)
-		
-		// close any tabs
-		closeAllTabs()
-		
-		reloadAllGraphs()
-		setSelectedGraph(graph: nil)
-		reloadInspector()
-		
-		// if there are any graphs, open the first one and select it
-		if _manager!.Story.Graphs.count > 0 {
-			let first = _manager!.Story.Graphs[0]
-			let tab = addNewTab(forGraph: first)
-			_tabController.reloadTabs()
-			selectTab(item: tab)
-			
-			_allGraphsOutline.selectRowIndexes([0], byExtendingSelection: false)
-			_selectedGraphOutline.selectRowIndexes([0], byExtendingSelection: false)
-			setSelectedGraph(graph: first)
-		}
 	}
 	
 	func screenshot() {
@@ -178,19 +170,18 @@ extension MainViewController {
 // MARK: - Helper Functions -
 extension MainViewController {
 	func addGraph(parent: NVGraph?) {
-		if let graph = _manager?.makeGraph(name: NSUUID().uuidString) {
-			if parent == nil {
-				try! _manager?.Story.add(graph: graph)
-			} else {
-				try! parent!.add(graph: graph)
-			}
-			let newTab = addNewTab(forGraph: graph)
-			selectTab(item: newTab)
-			
-			reloadAllGraphs()
-			_allGraphsOutline.selectRowIndexes([_allGraphsOutline.row(forItem: graph)], byExtendingSelection: false)
-			reloadSelectedGraph()
+		let graph = _document.Manager.makeGraph(name: NSUUID().uuidString)
+		if parent == nil {
+			try! _document.Manager.Story.add(graph: graph)
+		} else {
+			try! parent!.add(graph: graph)
 		}
+		let newTab = addNewTab(forGraph: graph)
+		selectTab(item: newTab)
+		
+		reloadAllGraphs()
+		_allGraphsOutline.selectRowIndexes([_allGraphsOutline.row(forItem: graph)], byExtendingSelection: false)
+		reloadSelectedGraph()
 	}
 	
 	func openVariableEditor() {
@@ -213,7 +204,7 @@ extension MainViewController {
 			print("Failed to initialize GraphTabViewController.")
 			return nil
 		}
-		vc.setup(manager: _manager!, graph: forGraph, delegate: self)
+		vc.setup(doc: _document, graph: forGraph, delegate: self)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		
@@ -235,7 +226,7 @@ extension MainViewController {
 			print("Failed to initialize VariableTabViewController.")
 			return nil
 		}
-		vc.Manager = _manager
+		vc.setup(doc: _document)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		

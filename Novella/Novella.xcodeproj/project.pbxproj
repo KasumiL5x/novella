@@ -38,13 +38,13 @@
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
 		65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65223B5220C68D4E008E8A95 /* PinBoard.swift */; };
 		655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F9FAE20C3087300B20EFE /* AppDelegate.swift */; };
-		655F9FB320C3087300B20EFE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F9FB220C3087300B20EFE /* Document.swift */; };
 		655F9FB520C3087400B20EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB420C3087400B20EFE /* Assets.xcassets */; };
 		655F9FB820C3087400B20EFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB620C3087400B20EFE /* Main.storyboard */; };
 		655F9FF720C30EAA00B20EFE /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 655F9FF520C30EAA00B20EFE /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
+		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
 		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC920C345390078CB28 /* Alerts.swift */; };
 		65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */; };
@@ -161,7 +161,6 @@
 		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
 		655F9FAB20C3087300B20EFE /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FAE20C3087300B20EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		655F9FB220C3087300B20EFE /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		655F9FB420C3087400B20EFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		655F9FB720C3087400B20EFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		655F9FB920C3087400B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -170,6 +169,7 @@
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
+		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextFieldCell.swift; sourceTree = "<group>"; };
@@ -289,8 +289,8 @@
 		655F9FAD20C3087300B20EFE /* Novella */ = {
 			isa = PBXGroup;
 			children = (
+				65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */,
 				655F9FAE20C3087300B20EFE /* AppDelegate.swift */,
-				655F9FB220C3087300B20EFE /* Document.swift */,
 				655F9FBA20C3087400B20EFE /* Novella.entitlements */,
 				655F9FB920C3087400B20EFE /* Info.plist */,
 				655F9FB420C3087400B20EFE /* Assets.xcassets */,
@@ -749,9 +749,9 @@
 				65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */,
 				65F7F89020C317DD004663D6 /* TabsDataSource.swift in Sources */,
 				65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */,
-				655F9FB320C3087300B20EFE /* Document.swift in Sources */,
 				65F7F86A20C31714004663D6 /* DeliveryLinkableView.swift in Sources */,
 				65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */,
+				65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */,
 				65F7F88F20C317DD004663D6 /* TabItem.swift in Sources */,
 				65F7F85B20C31714004663D6 /* MarqueeView.swift in Sources */,
 				65F7F89A20C317F4004663D6 /* DeliveryPopoverViewController.swift in Sources */,

@@ -11,10 +11,9 @@ import NovellaModel
 
 class GraphView: NSView {
 	// MARK: - - Variables -
-	private let _manager: NVStoryManager
+	private let _document: NovellaDocument
 	private let _nvGraph: NVGraph
 	private let _bg: GraphBGView
-	private let _undoRedo: UndoRedo
 	//
 	private var _allLinkableViews: [LinkableView]
 	private var _allPinViews: [PinView]
@@ -39,11 +38,10 @@ class GraphView: NSView {
 	private var _nodePopovers: [GenericPopover]
 	
 	// MARK: - - Initialization -
-	init(manager: NVStoryManager, graph: NVGraph, frameRect: NSRect) {
-		self._manager = manager
+	init(doc: NovellaDocument, graph: NVGraph, frameRect: NSRect) {
+		self._document = doc
 		self._nvGraph = graph
 		self._bg = GraphBGView(frame: frameRect)
-		self._undoRedo = UndoRedo()
 		//
 		self._allLinkableViews = []
 		self._allPinViews = []
@@ -66,7 +64,7 @@ class GraphView: NSView {
 		
 		super.init(frame: frameRect)
 		
-		_manager.addDelegate(self)
+		_document.Manager.addDelegate(self)
 		
 		// selection handler
 		self._selectionHandler = SelectionHandler(graph: self)
@@ -115,10 +113,10 @@ class GraphView: NSView {
 		}
 	}
 	var Undo: UndoRedo {
-		get{ return _undoRedo }
+		get{ return _document.Undo }
 	}
 	var Manager: NVStoryManager {
-		get{ return _manager }
+		get{ return _document.Manager }
 	}
 	
 	// MARK: - - Setup -
@@ -141,8 +139,8 @@ class GraphView: NSView {
 		_contextClickedLinkable = nil
 		_lastContextLocation = CGPoint.zero
 		
-		// clear undo/redo
-		_undoRedo.clear()
+		// clear undo/redo TODO: Not sure if this should still be done since it's not graph-based now.
+		_document.Undo.clear()
 		
 		// clear existing linkable views
 		_allLinkableViews = []
@@ -269,10 +267,10 @@ class GraphView: NSView {
 	}
 	
 	func undo(levels: Int=1) {
-		_undoRedo.undo(levels: levels)
+		_document.Undo.undo(levels: levels)
 	}
 	func redo(levels: Int=1) {
-		_undoRedo.redo(levels: levels)
+		_document.Undo.redo(levels: levels)
 	}
 	
 	func getLinkableViewFrom(linkable: NVLinkable?, includeParentGraphs: Bool) -> LinkableView? {
@@ -331,9 +329,9 @@ extension GraphView {
 		case .cancelled, .ended:
 			if _marquee.InMarquee {
 				if NSApp.currentEvent!.modifierFlags.contains(.shift) {
-					_undoRedo.execute(cmd: SelectNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
+					_document.Undo.execute(cmd: SelectNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
 				} else {
-					_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
+					_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
 				}
 				_marquee.Marquee = NSRect.zero
 				_marquee.InMarquee = false
@@ -359,12 +357,12 @@ extension GraphView {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
 		if append {
 			if node.IsSelected {
-				_undoRedo.execute(cmd: DeselectNodesCmd(selection: [node], handler: _selectionHandler!))
+				_document.Undo.execute(cmd: DeselectNodesCmd(selection: [node], handler: _selectionHandler!))
 			} else {
-				_undoRedo.execute(cmd: SelectNodesCmd(selection: [node], handler: _selectionHandler!))
+				_document.Undo.execute(cmd: SelectNodesCmd(selection: [node], handler: _selectionHandler!))
 			}
 		} else {
-			_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
+			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
 		}
 	}
 	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
@@ -402,14 +400,14 @@ extension GraphView {
 		case .began:
 			// if node is not selected but we dragged it, replace selection and then start dragging
 			if !node.IsSelected {
-				_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
+				_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
 			}
 			
 			_lastLinkablePanPos = gesture.location(in: self)
-			if _undoRedo.inCompound() {
+			if _document.Undo.inCompound() {
 				print("Tried to begin pan LinkableView but UndoRedo was already in a Compound!")
 			} else {
-				_undoRedo.beginCompound(executeOnAdd: true)
+				_document.Undo.beginCompound(executeOnAdd: true)
 			}
 			break
 		case .changed:
@@ -432,16 +430,16 @@ extension GraphView {
 				if (pos.x + $0.frame.width) > bounds.width {
 					pos.x = bounds.width - $0.frame.width
 				}
-				_undoRedo.execute(cmd: MoveLinkableViewCmd(node: $0, from: $0.frame.origin, to: pos))
+				_document.Undo.execute(cmd: MoveLinkableViewCmd(node: $0, from: $0.frame.origin, to: pos))
 			})
 			
 			_lastLinkablePanPos = curr
 			break
 		case .cancelled, .ended:
-			if !_undoRedo.inCompound() {
+			if !_document.Undo.inCompound() {
 				print("Tried to end pan LinkableView but UndoRedo was not in a Compound!")
 			} else {
-				_undoRedo.endCompound()
+				_document.Undo.endCompound()
 			}
 			break
 		default:
@@ -497,7 +495,7 @@ extension GraphView {
 		}
 	}
 	@objc private func onGraphViewMenuEmptyTrash() {
-		_manager.emptyTrash()
+		_document.Manager.emptyTrash()
 	}
 	
 	// MARK: Linkable Menu
@@ -506,7 +504,7 @@ extension GraphView {
 			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
 			return
 		}
-		let nvLink = _manager.makeLink(origin: clicked.Linkable)
+		let nvLink = _document.Manager.makeLink(origin: clicked.Linkable)
 		// add it to this graph
 		do { try _nvGraph.add(link: nvLink) } catch {
 			fatalError("Tried to add a new link but couldn't add it to this graph.")
@@ -518,7 +516,7 @@ extension GraphView {
 			print("Tried to add a branch to a linkable via context but _contextClickedLinkable was nil.")
 			return
 		}
-		let nvBranch = _manager.makeBranch(origin: clicked.Linkable)
+		let nvBranch = _document.Manager.makeBranch(origin: clicked.Linkable)
 		// add it to this graph
 		do{ try _nvGraph.add(link: nvBranch) } catch {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
@@ -531,7 +529,7 @@ extension GraphView {
 extension GraphView {
 	func selectNVLinkable(linkable: NVLinkable) {
 		if let view = getLinkableViewFrom(linkable: linkable, includeParentGraphs: false) {
-			_undoRedo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
+			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
 		}
 	}
 	
@@ -555,7 +553,7 @@ extension GraphView {
 	// MARK: LinkableView Conveniences
 	@discardableResult
 	func makeDialog(at: CGPoint) -> DialogLinkableView {
-		let nvDialog = _manager.makeDialog()
+		let nvDialog = _document.Manager.makeDialog()
 		do { try _nvGraph.add(node: nvDialog) } catch {
 			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
 			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
@@ -565,7 +563,7 @@ extension GraphView {
 	
 	@discardableResult
 	func makeDelivery(at: CGPoint) -> DeliveryLinkableView {
-		let nvDelivery = _manager.makeDelivery()
+		let nvDelivery = _document.Manager.makeDelivery()
 		do { try _nvGraph.add(node: nvDelivery) } catch {
 			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
 		}
@@ -574,7 +572,7 @@ extension GraphView {
 	
 	@discardableResult
 	func makeContext(at: CGPoint) -> ContextLinkableView {
-		let nvContext = _manager.makeContext()
+		let nvContext = _document.Manager.makeContext()
 		do { try _nvGraph.add(node: nvContext) } catch {
 			fatalError("Tried to add a new context but couldn't add it to this graph.")
 		}
@@ -583,7 +581,7 @@ extension GraphView {
 	
 	@discardableResult
 	func makeGraph(at: CGPoint) -> GraphLinkableView {
-		let nvGraph = _manager.makeGraph(name: NSUUID().uuidString)
+		let nvGraph = _document.Manager.makeGraph(name: NSUUID().uuidString)
 		do { try _nvGraph.add(graph: nvGraph) } catch {
 			fatalError("Tried to add a new graph but couldn't add it to this graph.")
 		}
@@ -732,7 +730,7 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	func onStoryUntrashItem(item: NVLinkable) {
-		for linkTo in _manager.getLinksTo(item) {
+		for linkTo in _document.Manager.getLinksTo(item) {
 			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
 				pin.TrashMode = false
 			}
