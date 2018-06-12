@@ -154,6 +154,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	
 	private var _dialogImage: NSImage?
 	private var _graphImage: NSImage?
+	private var _deliveryImage: NSImage?
 	
 	var Graph: NVGraph? {
 		get{ return _graph }
@@ -167,6 +168,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		
 		self._dialogImage = NSImage(named: NSImage.Name(rawValue: "Dialog"))
 		self._graphImage = NSImage(named: NSImage.Name(rawValue: "Graph"))
+		self._deliveryImage = NSImage(named: NSImage.Name(rawValue: "Delivery"))
 	}
 	
 	func outlineViewSelectionDidChange(_ notification: Notification) {
@@ -242,7 +244,15 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			let asNode = (item as! NVNode)
 			(view as! SelectedGraphFancyCell)._linkable = asNode
 			view?.textField?.stringValue = (asNode.Trashed ? "🗑 " : "") + asNode.Name
-			view?.imageView?.image = _dialogImage
+			switch item {
+			case is NVDialog:
+				view?.imageView?.image = _dialogImage
+			case is NVDelivery:
+				view?.imageView?.image = _deliveryImage
+			default:
+				break
+			}
+			
 			
 		case is NVLink:
 			let asLink = (item as! NVLink)
