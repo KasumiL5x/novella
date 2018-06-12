@@ -1126,7 +1126,7 @@
                                                                                                         <constraint firstAttribute="height" constant="20" id="Tnf-OH-5Sy"/>
                                                                                                         <constraint firstAttribute="width" constant="20" id="n0s-oT-xh6"/>
                                                                                                     </constraints>
-                                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="qoB-r4-Mbk"/>
+                                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="qoB-r4-Mbk"/>
                                                                                                 </imageView>
                                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8u-PU-2JN">
                                                                                                     <rect key="frame" x="25" y="4" width="142" height="17"/>
@@ -1391,7 +1391,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSCaution" width="32" height="32"/>
         <image name="NSGoBackTemplate" width="9" height="12"/>
         <image name="NSGoForwardTemplate" width="9" height="12"/>
         <image name="NSTouchBarAddTemplate" width="14" height="30"/>
