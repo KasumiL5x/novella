@@ -129,8 +129,6 @@ class GraphView: NSView {
 		
 		// add background
 		self.addSubview(_bg)
-		// add graph bounds above bg but below everything else
-//		self.addSubview(_graphBounds)
 		// add marquee view (must be last; others add after it)
 		self.addSubview(_marquee)
 		

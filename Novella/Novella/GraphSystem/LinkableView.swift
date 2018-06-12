@@ -75,6 +75,15 @@ class LinkableView: NSView {
 		self._trashMode = false
 		super.init(frame: frameRect)
 		
+		// add shadow
+		wantsLayer = true
+		layer?.masksToBounds = false
+		self.shadow = NSShadow()
+		self.layer?.shadowOpacity = 0.6
+		self.layer?.shadowColor = NSColor.black.cgColor
+		self.layer?.shadowOffset = NSMakeSize(3, -1)
+		self.layer?.shadowRadius = 5.0
+		
 		self.addSubview(_outputsBoard)
 		
 		// name label
@@ -323,40 +332,35 @@ class LinkableView: NSView {
 			let bgEnd = CGPoint.zero
 			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
 			
+			
 			// draw outline (inset)
-			let outlineInset = Settings.graph.nodes.outlineInset
-			let selectedRect = drawingRect.insetBy(dx: outlineInset, dy: outlineInset)
+			let selectedRect = drawingRect
 			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
-			context.resetClip()
+			path.addClip() // clip to avoid edge artifacting
 			path.lineWidth = Settings.graph.nodes.outlineWidth
 			Trashed ? Settings.graph.nodes.outlineColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.outlineColor.setStroke()
 			path.stroke()
 			
 			// draw primed indicator
 			if IsPrimed {
-				let selectedInset = Settings.graph.nodes.primedInset
-				let insetRect = drawingRect.insetBy(dx: selectedInset, dy: selectedInset)
+				let insetRect = drawingRect
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = Settings.graph.nodes.primedWidth
 				Trashed ? Settings.graph.nodes.primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.primedColor.setStroke()
+				path.lineJoinStyle = .miterLineJoinStyle
 				path.stroke()
 			}
 			
 			// draw selection indicator
 			if IsSelected {
-				let selectedInset = Settings.graph.nodes.selectedInset
-				let insetRect = drawingRect.insetBy(dx: selectedInset, dy: selectedInset)
+				let insetRect = drawingRect
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = Settings.graph.nodes.selectedWidth
 				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
 				path.stroke()
 			}
-			
-			// draw background for pins
-//			if !_outputs.isEmpty {
-//				NSColor.fromHex("#FF00FF").setFill()
-//				_outputsRect.fill()
-//			}
 			
 			context.restoreGState()
 		}

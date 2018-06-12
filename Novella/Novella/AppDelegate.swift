@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		Settings.resetToApp()
-//				Settings.saveDefaults() // uncomment to force write of settings
+//		Settings.saveDefaults() // uncomment to force write of settings
 		Settings.loadDefaults()
 	}
 	

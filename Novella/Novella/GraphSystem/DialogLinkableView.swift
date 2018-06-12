@@ -18,14 +18,6 @@ class DialogLinkableView: LinkableView {
 		self.frame.size = widgetRect().size
 		
 		setLabelString(str: "D")
-		
-		// add shadow
-		wantsLayer = true
-		self.shadow = NSShadow()
-		self.layer?.shadowOpacity = 0.6
-		self.layer?.shadowColor = NSColor.black.cgColor
-		self.layer?.shadowOffset = NSMakeSize(3, -1)
-		self.layer?.shadowRadius = 5.0
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("DialogLinkableView::init(coder:) not implemented.")
