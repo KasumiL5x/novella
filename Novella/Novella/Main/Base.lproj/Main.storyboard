@@ -854,8 +854,8 @@
         <!--Window Controller-->
         <scene sceneID="Kfw-21-9Xi">
             <objects>
-                <windowController storyboardIdentifier="ReaderWindowController" id="xSF-Wq-GEi" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="bD3-ZH-lZa">
+                <windowController storyboardIdentifier="ReaderWindowController" id="xSF-Wq-GEi" customClass="NewReaderWindowController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Reader" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="bD3-ZH-lZa">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="294" y="362" width="480" height="270"/>
@@ -872,14 +872,58 @@
             </objects>
             <point key="canvasLocation" x="1390" y="75"/>
         </scene>
-        <!--View Controller-->
+        <!--New Reader View Controller-->
         <scene sceneID="xeX-0n-Rrb">
             <objects>
-                <viewController id="1AZ-wJ-jTz" sceneMemberID="viewController">
+                <viewController id="1AZ-wJ-jTz" customClass="NewReaderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="jS5-jg-9Oa">
                         <rect key="frame" x="0.0" y="0.0" width="750" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="cFF-Kb-N2n" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="465" width="750" height="35"/>
+                                <subviews>
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qrJ-ZC-21v" userLabel="Graph Pop Up Button">
+                                        <rect key="frame" x="62" y="4" width="681" height="26"/>
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Q2v-sX-Zb6">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="KL3-IE-LhY"/>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EcA-4m-Yli">
+                                        <rect key="frame" x="8" y="9" width="48" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Graph:" id="bLi-PZ-zks">
+                                            <font key="font" metaFont="systemBold"/>
+                                            <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="915-FP-NSS"/>
+                                    <constraint firstItem="qrJ-ZC-21v" firstAttribute="leading" secondItem="EcA-4m-Yli" secondAttribute="trailing" constant="10" id="Dub-vN-Pi8"/>
+                                    <constraint firstItem="qrJ-ZC-21v" firstAttribute="centerY" secondItem="cFF-Kb-N2n" secondAttribute="centerY" id="ei1-RE-S2Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="qrJ-ZC-21v" secondAttribute="trailing" constant="10" id="yZQ-kv-P07"/>
+                                    <constraint firstItem="EcA-4m-Yli" firstAttribute="leading" secondItem="cFF-Kb-N2n" secondAttribute="leading" constant="10" id="zS2-qr-Q7o"/>
+                                    <constraint firstItem="EcA-4m-Yli" firstAttribute="centerY" secondItem="cFF-Kb-N2n" secondAttribute="centerY" id="zf7-fM-tJR"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="_color">
+                                        <color key="value" red="0.27843137254901962" green="0.27843137254901962" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cFF-Kb-N2n" secondAttribute="trailing" id="5bf-7W-XKe"/>
+                            <constraint firstItem="cFF-Kb-N2n" firstAttribute="leading" secondItem="jS5-jg-9Oa" secondAttribute="leading" id="qj7-H0-9qN"/>
+                            <constraint firstItem="cFF-Kb-N2n" firstAttribute="top" secondItem="jS5-jg-9Oa" secondAttribute="top" id="vpT-vw-XRv"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_graphPopup" destination="qrJ-ZC-21v" id="3jy-3E-jeD"/>
+                    </connections>
                 </viewController>
                 <customObject id="2xD-yn-PIg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

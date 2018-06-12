@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650864A520D001C300201542 /* NewReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650864A420D001C300201542 /* NewReaderViewController.swift */; };
+		650864A720D0024F00201542 /* NewReaderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650864A620D0024F00201542 /* NewReaderWindowController.swift */; };
 		6513104420C30F050078C30C /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513102820C30F030078C30C /* NVSwitch.swift */; };
 		6513104520C30F050078C30C /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513102920C30F030078C30C /* NVPath.swift */; };
 		6513104620C30F050078C30C /* NVStoryManager+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513102A20C30F030078C30C /* NVStoryManager+JSON.swift */; };
@@ -129,6 +131,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		650864A420D001C300201542 /* NewReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReaderViewController.swift; sourceTree = "<group>"; };
+		650864A620D0024F00201542 /* NewReaderWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReaderWindowController.swift; sourceTree = "<group>"; };
 		6513102820C30F030078C30C /* NVSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
 		6513102920C30F030078C30C /* NVPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
 		6513102A20C30F030078C30C /* NVStoryManager+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NVStoryManager+JSON.swift"; sourceTree = "<group>"; };
@@ -487,6 +491,8 @@
 				65F7F89C20C31806004663D6 /* Preferences */,
 				65F7F8A120C3181C004663D6 /* Tabs */,
 				65F7F87120C3174A004663D6 /* ReaderViewController.swift */,
+				650864A420D001C300201542 /* NewReaderViewController.swift */,
+				650864A620D0024F00201542 /* NewReaderWindowController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -708,8 +714,10 @@
 				65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */,
 				65F7F87720C3174B004663D6 /* ReaderViewController.swift in Sources */,
 				65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */,
+				650864A520D001C300201542 /* NewReaderViewController.swift in Sources */,
 				65F7F88A20C317DD004663D6 /* Inspector.swift in Sources */,
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
+				650864A720D0024F00201542 /* NewReaderWindowController.swift in Sources */,
 				65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */,
 				65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */,
 				65F7F83F20C31637004663D6 /* NSView+Toast.swift in Sources */,
