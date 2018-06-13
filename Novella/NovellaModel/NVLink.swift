@@ -9,16 +9,11 @@
 import Foundation
 
 public class NVLink : NVBaseLink {
+	// MARK: - Variables -
 	private var _condition: NVCondition
 	private var _transfer: NVTransfer
 	
-	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVLinkable) {
-		self._condition = NVCondition(manager: manager)
-		self._transfer = NVTransfer()
-		
-		super.init(manager: manager, uuid: uuid, origin: origin)
-	}
-	
+	// MARK: - Properties -
 	public var Transfer: NVTransfer {
 		get{ return _transfer }
 	}
@@ -26,7 +21,19 @@ public class NVLink : NVBaseLink {
 		get{ return _condition }
 	}
 	
-	public func setDestination(dest: NVLinkable?) {
+	// MARK: - Initialization -
+	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
+		self._condition = NVCondition(manager: manager)
+		self._transfer = NVTransfer()
+		super.init(manager: manager, uuid: uuid, origin: origin)
+	}
+	
+	// MARK: - Functions -
+	public func setDestination(dest: NVObject?) {
+		if dest != nil && !(dest!.isLinkable()) {
+			print("NVLink.setDestination was given a non-linkable NVObject.  The request was ignored.")
+			return
+		}
 		_transfer._destination = dest
 		_manager.Delegates.forEach{$0.onStoryLinkSetDestination(link: self, dest: dest)}
 	}

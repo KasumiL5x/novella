@@ -16,7 +16,7 @@ class ReaderViewController: NSViewController {
 	@IBOutlet weak var currentNodeInfo: NSTextField!
 	@IBOutlet weak var currNodeOutlineView: NSOutlineView!
 	
-	var _simulator: NVSimulator?
+//	var _simulator: NVSimulator?
 	var _manager: NVStoryManager?
 	
 	var _currNodeLinksCallback = CurrentNodeLinksCallbacks()
@@ -70,7 +70,7 @@ class ReaderViewController: NSViewController {
 		
 		
 		// open the simulator
-		_simulator = NVSimulator(manager: _manager!, controller: self)
+//		_simulator = NVSimulator(manager: _manager!, controller: self)
 		outlineView.reloadData()
 	}
 	
@@ -84,10 +84,10 @@ class ReaderViewController: NSViewController {
 			return
 		}
 		
-		if !_simulator!.start(graph) {
-			print("Graph is not configured for simulation.")
-			return
-		}
+//		if !_simulator!.start(graph) {
+//			print("Graph is not configured for simulation.")
+//			return
+//		}
 		print("Simulation started...")
 	}
 	
@@ -96,38 +96,38 @@ class ReaderViewController: NSViewController {
 			return
 		}
 		let link = currNodeOutlineView.item(atRow: currNodeOutlineView.selectedRow) as! NVBaseLink
-		do {
-			try _simulator?.proceed(link)
-		} catch {
-			print("Failed to proceed in Simulator.")
-		}
+//		do {
+//			try _simulator?.proceed(link)
+//		} catch {
+//			print("Failed to proceed in Simulator.")
+//		}
 	}
 }
-
-extension ReaderViewController: NVSimulatorController {
-	func currentNode(node: NVNode, outputs: [NVBaseLink]) {
-		_currNodeLinksCallback.setLinks(links: outputs)
-		currNodeOutlineView.reloadData()
-		
-		var text = "<b>UUID:</b><br/>\(node.UUID.uuidString)<br/><br/>"
-		if let dialog = node as? NVDialog {
-			text += "<b>Preview:</b><br/>\(dialog.Preview.isEmpty ? "none" : dialog.Preview)<br/><br/>"
-			text += "<b>Content:</b><br/>\(dialog.Content.isEmpty ? "none" : dialog.Content)<br/><br/>"
-			text += "<b>Directions:</b><br/>\(dialog.Directions.isEmpty ? "none" : dialog.Directions)"
-		}
-		
-		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
-		guard let data = html.data(using: .utf8, allowLossyConversion: false) else {
-			print("Couldn't get text data.")
-			return
-		}
-		guard let attrString = try? NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
-			print("Could not initialize attributed string.")
-			return
-		}
-		currentNodeInfo.attributedStringValue = attrString
-	}
-}
+//
+//extension ReaderViewController: NVSimulatorController {
+//	func currentNode(node: NVNode, outputs: [NVBaseLink]) {
+//		_currNodeLinksCallback.setLinks(links: outputs)
+//		currNodeOutlineView.reloadData()
+//
+//		var text = "<b>UUID:</b><br/>\(node.UUID.uuidString)<br/><br/>"
+//		if let dialog = node as? NVDialog {
+//			text += "<b>Preview:</b><br/>\(dialog.Preview.isEmpty ? "none" : dialog.Preview)<br/><br/>"
+//			text += "<b>Content:</b><br/>\(dialog.Content.isEmpty ? "none" : dialog.Content)<br/><br/>"
+//			text += "<b>Directions:</b><br/>\(dialog.Directions.isEmpty ? "none" : dialog.Directions)"
+//		}
+//
+//		let html = "<html><head><style>*{font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}</style></head><body>\n" + text + "\n</body></html>"
+//		guard let data = html.data(using: .utf8, allowLossyConversion: false) else {
+//			print("Couldn't get text data.")
+//			return
+//		}
+//		guard let attrString = try? NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
+//			print("Could not initialize attributed string.")
+//			return
+//		}
+//		currentNodeInfo.attributedStringValue = attrString
+//	}
+//}
 
 extension ReaderViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {

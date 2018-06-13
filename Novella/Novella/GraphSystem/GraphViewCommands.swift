@@ -85,10 +85,10 @@ class MoveLinkableViewCmd: UndoableCommand {
 
 class SetPinLinkDestinationCmd: UndoableCommand {
 	private let _pin: PinViewLink
-	private let _prevDest: NVLinkable?
-	private let _newDest: NVLinkable?
+	private let _prevDest: NVObject?
+	private let _newDest: NVObject?
 	
-	init(pin: PinViewLink, destination: NVLinkable?) {
+	init(pin: PinViewLink, destination: NVObject?) {
 		self._pin = pin
 		self._prevDest = pin.getDestination()
 		self._newDest = destination
@@ -105,11 +105,11 @@ class SetPinLinkDestinationCmd: UndoableCommand {
 
 class SetPinBranchDestinationCmd: UndoableCommand {
 	private let _pin: PinViewBranch
-	private let _prevDest: NVLinkable?
-	private let _newDest: NVLinkable?
+	private let _prevDest: NVObject?
+	private let _newDest: NVObject?
 	private let _forTrue: Bool
 	
-	init(pin: PinViewBranch, destination: NVLinkable?, forTrue: Bool) {
+	init(pin: PinViewBranch, destination: NVObject?, forTrue: Bool) {
 		self._pin = pin
 		self._prevDest = forTrue ? pin.getTrueDestination() : pin.getFalseDestination()
 		self._newDest = destination

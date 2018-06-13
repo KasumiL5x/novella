@@ -44,18 +44,15 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadSelectedGraph()
 	}
 	
-	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint) {
-		_mvc.reloadInspector()
-	}
-	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint) {
+	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
 		_mvc.reloadInspector()
 	}
 	
-	func onStoryTrashItem(item: NVLinkable) {
+	func onStoryTrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
 		_mvc.reloadInspector()
 	}
-	func onStoryUntrashItem(item: NVLinkable) {
+	func onStoryUntrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
 		_mvc.reloadInspector()
 	}
@@ -130,7 +127,7 @@ class StoryDelegate: NVStoryDelegate {
 		print("Changed graph's name from (\(oldName)) to (\(newName)).")
 		_mvc.reloadSelectedGraph()
 	}
-	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
+	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 		print("Changed graph's entry to \(entry.UUID).")
 		_mvc.reloadSelectedGraph()
 	}

@@ -8,39 +8,19 @@
 
 import Foundation
 
-public class NVGraph {
-	private let _manager: NVStoryManager
-	private let _uuid: NSUUID
-	private var _inTrash: Bool
-	private var _editorPos: CGPoint
+public class NVGraph: NVObject {
+	// MARK: - Variables -
 	private var _name: String
-	
-	var _graphs: [NVGraph]
-	var _nodes: [NVNode]
-	var _links: [NVBaseLink]
-	var _listeners: [NVListener]
-	var _exits: [NVExitNode]
-	var _entry: NVLinkable?
-	
+	internal var _graphs: [NVGraph]
+	internal var _nodes: [NVNode]
+	internal var _links: [NVBaseLink]
+	internal var _listeners: [NVListener]
+	internal var _exits: [NVExitNode]
+	internal var _entry: NVObject?
 	// parent graph is valid unless as a direct child of the story
-	var _parent: NVGraph?
+	internal var _parent: NVGraph?
 	
-	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
-		self._manager = manager
-		self._uuid = uuid
-		self._inTrash = false
-		self._editorPos = CGPoint.zero
-		self._name = name
-		self._graphs = []
-		self._nodes = []
-		self._links = []
-		self._listeners = []
-		self._exits = []
-		self._entry = nil
-		self._parent = nil
-	}
-	
-	// MARK:  Properties
+	// MARK: - Properties -
 	public var Name: String {
 		get{ return _name }
 		set {
@@ -49,16 +29,50 @@ public class NVGraph {
 			_manager.Delegates.forEach{$0.onStoryGraphSetName(oldName: oldName, newName: newValue, graph: self)}
 		}
 	}
-	public var Graphs:    [NVGraph]    {get{ return _graphs }}
-	public var Nodes:     [NVNode]     {get{ return _nodes }}
-	public var Links:     [NVBaseLink] {get{ return _links }}
-	public var Listeners: [NVListener] {get{ return _listeners }}
-	public var Exits:     [NVExitNode] {get{ return _exits }}
-	public var Entry:     NVLinkable?  {get{ return _entry }}
-	public var Parent:    NVGraph?     {get{ return _parent }}
+	public var Graphs: [NVGraph] {
+		get{ return _graphs }
+	}
+	public var Nodes: [NVNode] {
+		get{ return _nodes }
+	}
+	public var Links: [NVBaseLink] {
+		get{ return _links }
+	}
+	public var Listeners: [NVListener] {
+		get{ return _listeners }
+	}
+	public var Exits: [NVExitNode] {
+		get{ return _exits }
+	}
+	public var Entry: NVObject? {
+		get{ return _entry }
+	}
+	public var Parent: NVGraph? {
+		get{ return _parent }
+	}
+	
+	// MARK: - Initialization -
+	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
+		self._name = name
+		self._graphs = []
+		self._nodes = []
+		self._links = []
+		self._listeners = []
+		self._exits = []
+		self._entry = nil
+		self._parent = nil
+		super.init(manager: manager, uuid: uuid)
+	}
+	
+	// MARK: - Functions -
+	
+	// MARK: Virtual
+	public override func isLinkable() -> Bool {
+		return true
+	}
 	
 	// MARK: Setters
-	public func setEntry(_ entry: NVLinkable) throws {
+	public func setEntry(_ entry: NVObject) throws {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
 				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(_name)).")
@@ -233,46 +247,5 @@ extension NVGraph: NVPathable {
 	
 	public func parentPath() -> NVPathable? {
 		return _parent
-	}
-}
-
-// MARK: NVIdentifiable
-extension NVGraph: NVIdentifiable {
-	public var UUID: NSUUID {
-		return _uuid
-	}
-}
-
-// MARK: NVLinkable
-extension NVGraph: NVLinkable {
-	public var Trashed: Bool {
-		get { return _inTrash }
-		set {
-			if newValue {
-				_inTrash = true
-				_manager.trash(self)
-			} else {
-				_inTrash = false
-				_manager.untrash(self)
-			}
-		}
-	}
-	
-	public var EditorPosition: CGPoint {
-		get {
-			return _editorPos
-		}
-		set {
-			let oldPos = _editorPos
-			_editorPos = newValue
-			_manager.Delegates.forEach{$0.onStoryGraphPositionChanged(graph: self, oldPos: oldPos, newPos: _editorPos)}
-		}
-	}
-}
-
-// MARK: Equatable
-extension NVGraph: Equatable {
-	public static func == (lhs: NVGraph, rhs: NVGraph) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }

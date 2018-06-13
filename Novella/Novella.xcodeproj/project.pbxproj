@@ -28,10 +28,8 @@
 		6513105420C30F050078C30C /* NVStoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103820C30F040078C30C /* NVStoryManager.swift */; };
 		6513105520C30F050078C30C /* NVDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103920C30F040078C30C /* NVDialog.swift */; };
 		6513105620C30F050078C30C /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103A20C30F040078C30C /* NVLink.swift */; };
-		6513105720C30F050078C30C /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103B20C30F040078C30C /* NVIdentifiable.swift */; };
 		6513105820C30F050078C30C /* NVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103C20C30F040078C30C /* NVListener.swift */; };
 		6513105920C30F050078C30C /* NVGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103D20C30F040078C30C /* NVGraph.swift */; };
-		6513105A20C30F050078C30C /* NVLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103E20C30F040078C30C /* NVLinkable.swift */; };
 		6513105B20C30F050078C30C /* NVBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103F20C30F040078C30C /* NVBranch.swift */; };
 		6513105C20C30F050078C30C /* NVSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104020C30F050078C30C /* NVSimulation.swift */; };
 		6513105D20C30F050078C30C /* NVSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104120C30F050078C30C /* NVSimulator.swift */; };
@@ -46,6 +44,7 @@
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
+		65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2180E20D13FC900EA4594 /* NVObject.swift */; };
 		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
 		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC920C345390078CB28 /* Alerts.swift */; };
@@ -152,10 +151,8 @@
 		6513103820C30F040078C30C /* NVStoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStoryManager.swift; sourceTree = "<group>"; };
 		6513103920C30F040078C30C /* NVDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDialog.swift; sourceTree = "<group>"; };
 		6513103A20C30F040078C30C /* NVLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
-		6513103B20C30F040078C30C /* NVIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
 		6513103C20C30F040078C30C /* NVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVListener.swift; sourceTree = "<group>"; };
 		6513103D20C30F040078C30C /* NVGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVGraph.swift; sourceTree = "<group>"; };
-		6513103E20C30F040078C30C /* NVLinkable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLinkable.swift; sourceTree = "<group>"; };
 		6513103F20C30F040078C30C /* NVBranch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVBranch.swift; sourceTree = "<group>"; };
 		6513104020C30F050078C30C /* NVSimulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSimulation.swift; sourceTree = "<group>"; };
 		6513104120C30F050078C30C /* NVSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSimulator.swift; sourceTree = "<group>"; };
@@ -173,6 +170,7 @@
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
+		65A2180E20D13FC900EA4594 /* NVObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVObject.swift; sourceTree = "<group>"; };
 		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
@@ -328,7 +326,6 @@
 				65AE16D120C325EA006A921F /* Links */,
 				65AE16D020C325D4006A921F /* Graphs */,
 				6513103620C30F040078C30C /* NVError.swift */,
-				6513103B20C30F040078C30C /* NVIdentifiable.swift */,
 				6513102920C30F030078C30C /* NVPath.swift */,
 				6513104220C30F050078C30C /* NVStory.swift */,
 				6513103720C30F040078C30C /* NVStoryDelegate.swift */,
@@ -336,6 +333,7 @@
 				6513102A20C30F030078C30C /* NVStoryManager+JSON.swift */,
 				655F9FF520C30EAA00B20EFE /* NovellaModel.h */,
 				655F9FF620C30EAA00B20EFE /* Info.plist */,
+				65A2180E20D13FC900EA4594 /* NVObject.swift */,
 			);
 			path = NovellaModel;
 			sourceTree = "<group>";
@@ -391,7 +389,6 @@
 			children = (
 				6513102C20C30F030078C30C /* NVExitNode.swift */,
 				6513103D20C30F040078C30C /* NVGraph.swift */,
-				6513103C20C30F040078C30C /* NVListener.swift */,
 			);
 			name = Graphs;
 			sourceTree = "<group>";
@@ -404,7 +401,6 @@
 				6513103420C30F040078C30C /* NVCondition.swift */,
 				6513103520C30F040078C30C /* NVFunction.swift */,
 				6513103A20C30F040078C30C /* NVLink.swift */,
-				6513103E20C30F040078C30C /* NVLinkable.swift */,
 				6513102820C30F030078C30C /* NVSwitch.swift */,
 				6513103120C30F030078C30C /* NVTransfer.swift */,
 			);
@@ -414,6 +410,7 @@
 		65AE16D220C32603006A921F /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				6513103C20C30F040078C30C /* NVListener.swift */,
 				6513103320C30F040078C30C /* NVContext.swift */,
 				6513102E20C30F030078C30C /* NVCutscene.swift */,
 				6513104320C30F050078C30C /* NVDelivery.swift */,
@@ -784,6 +781,7 @@
 				6513105B20C30F050078C30C /* NVBranch.swift in Sources */,
 				6513105C20C30F050078C30C /* NVSimulation.swift in Sources */,
 				6513105420C30F050078C30C /* NVStoryManager.swift in Sources */,
+				65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */,
 				6513105920C30F050078C30C /* NVGraph.swift in Sources */,
 				6513105E20C30F050078C30C /* NVStory.swift in Sources */,
 				6513105820C30F050078C30C /* NVListener.swift in Sources */,
@@ -793,11 +791,9 @@
 				6513105D20C30F050078C30C /* NVSimulator.swift in Sources */,
 				6513104E20C30F050078C30C /* NVVariable.swift in Sources */,
 				6513104820C30F050078C30C /* NVExitNode.swift in Sources */,
-				6513105A20C30F050078C30C /* NVLinkable.swift in Sources */,
 				6513105620C30F050078C30C /* NVLink.swift in Sources */,
 				6513104C20C30F050078C30C /* NVBaseLink.swift in Sources */,
 				6513104F20C30F050078C30C /* NVContext.swift in Sources */,
-				6513105720C30F050078C30C /* NVIdentifiable.swift in Sources */,
 				658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

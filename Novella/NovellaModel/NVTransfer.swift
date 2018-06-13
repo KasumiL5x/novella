@@ -7,18 +7,21 @@
 //
 
 public class NVTransfer {
-	internal var _destination: NVLinkable?
+	// MARK: - Variables -
+	internal var _destination: NVObject?
 	private var _function: NVFunction
 	
-	init() {
-		self._destination = nil
-		self._function = NVFunction()
-	}
-	
-	public var Destination: NVLinkable? {
+	// MARK: - Properties -
+	public var Destination: NVObject? {
 		get{ return _destination }
 	}
 	public var Function: NVFunction {
 		get{ return _function }
+	}
+	
+	// MARK: - Initialization -
+	init() {
+		self._destination = nil
+		self._function = NVFunction()
 	}
 }

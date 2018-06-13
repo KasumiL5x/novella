@@ -92,17 +92,14 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint) {
-		self.updateChangeCount(.changeDone)
-	}
-	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint) {
+	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryTrashItem(item: NVLinkable) {
+	func onStoryTrashItem(item: NVObject) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryUntrashItem(item: NVLinkable) {
+	func onStoryUntrashItem(item: NVObject) {
 		self.updateChangeCount(.changeDone)
 	}
 	
@@ -165,7 +162,7 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
+	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
 	
@@ -191,13 +188,13 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryLinkSetDestination(link: NVLink, dest: NVLinkable?) {
+	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVLinkable?) {
+	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVLinkable?) {
+	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
 		self.updateChangeCount(.changeDone)
 	}
 	

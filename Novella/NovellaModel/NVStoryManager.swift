@@ -9,19 +9,19 @@
 import JavaScriptCore
 
 public class NVStoryManager {
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _story: NVStory!
-	private var _identifiables: [NVIdentifiable]
+	private var _identifiables: [NVObject]
 	private var _folders: [NVFolder]
 	private var _variables: [NVVariable]
 	private var _graphs: [NVGraph]
 	private var _links: [NVBaseLink]
 	private var _nodes: [NVNode]
-	private var _trashed: [NVLinkable]
+	private var _trashed: [NVObject]
 	private var _delegates: [NVStoryDelegate]
 	internal var _jsContext: JSContext
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
 	public var Story: NVStory {
 		get{ return _story }
 	}
@@ -44,7 +44,7 @@ public class NVStoryManager {
 		get{ return _nodes }
 	}
 	
-	// MARK: - - Initialization -
+	// MARK: - Initialization -
 	public init() {
 		self._identifiables = []
 		self._folders = []
@@ -60,7 +60,9 @@ public class NVStoryManager {
 		setupJavascript()
 	}
 	
-	// MARK: - - Generic Functions -
+	// MARK: - Functions -
+	
+	// MARK: Generic
 	public func addDelegate(_ delegate: NVStoryDelegate) {
 		_delegates.append(delegate)
 	}
@@ -80,11 +82,11 @@ public class NVStoryManager {
 		setupJavascript()
 	}
 	
-	func find(uuid: String) -> NVIdentifiable? {
+	func find(uuid: String) -> NVObject? {
 		return _identifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
 	
-	public func nameOf(linkable: NVLinkable?) -> String {
+	public func nameOf(linkable: NVObject?) -> String {
 		switch linkable {
 		case is NVNode:
 			return (linkable as!  NVNode).Name
@@ -95,11 +97,11 @@ public class NVStoryManager {
 		}
 	}
 	
-	public func getLinksFrom(_ linkable: NVLinkable) -> [NVBaseLink] {
+	public func getLinksFrom(_ linkable: NVObject) -> [NVBaseLink] {
 		return _links.filter({$0.Origin.UUID == linkable.UUID})
 	}
 	
-	public func getLinksTo(_ linkable: NVLinkable) -> [NVBaseLink] {
+	public func getLinksTo(_ linkable: NVObject) -> [NVBaseLink] {
 		return _links.filter({
 			
 			switch $0 {
@@ -124,7 +126,7 @@ public class NVStoryManager {
 		})
 	}
 	
-	// MARK: - - JavaScript Stuff -
+	// MARK: JavaScript Stuff
 	func setupJavascript() {
 		// javascript runtime error handling
 		_jsContext.exceptionHandler = { (ctx, ex) in
@@ -221,7 +223,7 @@ extension NVStoryManager {
 // MARK: - - Links -
 extension NVStoryManager {
 	@discardableResult
-	public func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
+	public func makeLink(origin: NVObject, uuid: NSUUID?=nil) -> NVLink {
 		let link = NVLink(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
 		_links.append(link)
 		_identifiables.append(link)
@@ -231,7 +233,7 @@ extension NVStoryManager {
 	}
 	
 	@discardableResult
-	public func makeBranch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVBranch {
+	public func makeBranch(origin: NVObject, uuid: NSUUID?=nil) -> NVBranch {
 		let branch = NVBranch(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
 		_links.append(branch)
 		_identifiables.append(branch)
@@ -241,7 +243,7 @@ extension NVStoryManager {
 	}
 	
 	@discardableResult
-	public func makeSwitch(origin: NVLinkable, uuid: NSUUID?=nil) -> NVSwitch {
+	public func makeSwitch(origin: NVObject, uuid: NSUUID?=nil) -> NVSwitch {
 		let swtch = NVSwitch(manager: self, uuid: uuid != nil ? uuid! : NSUUID(), origin: origin)
 		_links.append(swtch)
 		_identifiables.append(swtch)
@@ -347,14 +349,14 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - NVTrashable Stuff -
+// MARK: - - Trashing Stuff -
 extension NVStoryManager {
-	func trash(_ item: NVLinkable) {
+	func trash(_ item: NVObject) {
 		_trashed.append(item)
 		_delegates.forEach{$0.onStoryTrashItem(item: item)}
 	}
 	
-	func untrash(_ item: NVLinkable) {
+	func untrash(_ item: NVObject) {
 		if let idx = _trashed.index(where: {$0.UUID == item.UUID}) {
 			_trashed.remove(at: idx)
 			_delegates.forEach{$0.onStoryUntrashItem(item: item)}

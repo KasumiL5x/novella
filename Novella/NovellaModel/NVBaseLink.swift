@@ -8,32 +8,28 @@
 
 import Foundation
 
-public class NVBaseLink {
-	internal let _manager: NVStoryManager
-	private let _uuid: NSUUID
-	private var _origin: NVLinkable
+public class NVBaseLink: NVObject {
+	// MARK: - Variables -
+	private var _origin: NVObject
 	
-	init(manager: NVStoryManager, uuid: NSUUID, origin: NVLinkable) {
-		self._manager = manager
-		self._uuid = uuid
-		self._origin = origin
-	}
-	
-	public var Origin: NVLinkable {
+	// MARK: - Properties -
+	public var Origin: NVObject {
 		get{ return _origin }
 	}
-}
-
-// MARK: - NVIdentifiable -
-extension NVBaseLink: NVIdentifiable {
-	public var UUID: NSUUID {
-		return _uuid
+	
+	// MARK: - Initialization -
+	init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
+		if !origin.isLinkable() {
+			fatalError("NVBaseLink::init was passed a non-linkable NVObject.  This should never happen.  Contact your local programmer and DON'T PANIC!")
+		}
+		self._origin = origin
+		super.init(manager: manager, uuid: uuid)
 	}
-}
-
-// MARK: - Equatable -
-extension NVBaseLink: Equatable {
-	public static func == (lhs: NVBaseLink, rhs: NVBaseLink) -> Bool {
-		return lhs.UUID == rhs.UUID
+	
+	// MARK: - Functions -
+	
+	// MARK: Virtual
+	public override func isLinkable() -> Bool {
+		return false
 	}
 }

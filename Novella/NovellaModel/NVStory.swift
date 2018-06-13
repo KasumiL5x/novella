@@ -10,19 +10,13 @@ import Foundation
 import JavaScriptCore
 
 public class NVStory {
+	// MARK: - Variables -
 	private let _manager: NVStoryManager
 	private var _folders: [NVFolder]
 	private var _graphs: [NVGraph]
 	private var _name: String
 	
-	init(manager: NVStoryManager) {
-		self._manager = manager
-		self._folders = []
-		self._graphs = []
-		self._name = ""
-	}
-	
-	// MARK: Properties
+	// MARK: - Properties -
 	public var Folders: [NVFolder] {
 		get{ return _folders }
 	}
@@ -36,10 +30,16 @@ public class NVStory {
 			_manager.Delegates.forEach{$0.onStoryNameChanged(story: self, name: _name)}
 		}
 	}
-}
-
-// MARK: Story Functions
-extension NVStory {
+	
+	// MARK: - Initialization -
+	init(manager: NVStoryManager) {
+		self._manager = manager
+		self._folders = []
+		self._graphs = []
+		self._name = ""
+	}
+	
+	// MARK: - Functions -
 	// MARK: Folders
 	public func contains(folder: NVFolder) -> Bool {
 		return _folders.contains(folder)

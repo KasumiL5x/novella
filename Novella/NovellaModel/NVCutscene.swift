@@ -9,6 +9,7 @@
 import Foundation
 
 public class NVCutscene: NVNode {
+	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID) {
 		super.init(manager: manager, uuid: uuid)
 	}

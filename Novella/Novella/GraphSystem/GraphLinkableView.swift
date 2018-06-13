@@ -14,7 +14,7 @@ class GraphLinkableView: LinkableView {
 	init(node: NVGraph, graphView: GraphView) {
 		let rect = NSMakeRect(0.0, 0.0, 1.0, 1.0)
 		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
-		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.EditorPosition)
+		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
 		setLabelString(str: "G")
@@ -28,7 +28,7 @@ class GraphLinkableView: LinkableView {
 	override func onTrashed() {
 	}
 	override func onMove() {
-		(Linkable as? NVGraph)?.EditorPosition = _graphView.offsetToEditorPosition(pos: frame.origin)
+		(Linkable as? NVGraph)?.Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
 	override func bgTopColor() -> NSColor {
 		return Settings.graph.nodes.graphStartColor
