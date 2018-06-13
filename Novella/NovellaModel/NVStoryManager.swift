@@ -289,7 +289,7 @@ extension NVStoryManager {
 		return swtch
 	}
 	
-	public func delete(link: NVBaseLink) {
+	func delete(link: NVBaseLink) {
 		// 1. remove from all graphs containing it
 		_graphs.forEach { (graph) in
 			if graph.contains(link: link) {

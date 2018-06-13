@@ -130,8 +130,8 @@ class PinView: NSView {
 	func onContextInternal(_ gesture: NSClickGestureRecognizer) {
 		print("PinView::onContextInternal() should be overridden.")
 	}
-	@objc func onContextDelete() {		
-		_graphView.Manager.delete(link: self.BaseLink)
+	@objc func onContextDelete() {
+		BaseLink.InTrash ? BaseLink.untrash() : BaseLink.trash()
 	}
 	
 	// MARK: Gesture Callbacks
@@ -191,7 +191,6 @@ class PinView: NSView {
 	}
 	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
-		if _trashMode { return }
 		onContextInternal(gesture)
 	}
 	

@@ -722,6 +722,11 @@ extension GraphView: NVStoryDelegate {
 				lv.Trashed = true
 			}
 			
+		case is NVBaseLink:
+			if let pin = _allPinViews.first(where: {$0.BaseLink == item}) {
+				pin.TrashMode = true
+			}
+			
 		default:
 			print("Trashed unsupported item: \(item)")
 		}
@@ -743,6 +748,11 @@ extension GraphView: NVStoryDelegate {
 		case is NVGraph:
 			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
 				lv.Trashed = false
+			}
+			
+		case is NVBaseLink:
+			if let pin = _allPinViews.first(where: {$0.BaseLink == item}) {
+				pin.TrashMode = false
 			}
 			
 		default:

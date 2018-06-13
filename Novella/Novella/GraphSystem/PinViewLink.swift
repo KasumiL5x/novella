@@ -56,7 +56,7 @@ class PinViewLink: PinView {
 		_contextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewLink.onContextCondition), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewLink.onContextFunction), keyEquivalent: "")
 		_contextMenu.addItem(NSMenuItem.separator())
-		_contextMenu.addItem(withTitle: "Delete", action: #selector(PinView.onContextDelete), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Un/Trash", action: #selector(PinView.onContextDelete), keyEquivalent: "")
 		
 		// calculate rect
 		_outlineRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, PinView.PIN_SIZE)
