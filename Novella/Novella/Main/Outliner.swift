@@ -116,6 +116,14 @@ class SelectedGraphOutlineView: NSOutlineView {
 		
 		_itemMenu = NSMenu()
 		_itemMenu.addItem(withTitle: "Toggle Trash", action: #selector(SelectedGraphOutlineView.onItemTrash), keyEquivalent: "")
+		
+		self.doubleAction = #selector(SelectedGraphOutlineView.onDoubleAction)
+	}
+	
+	@objc private func onDoubleAction() {
+		if let linkableItem = self.item(atRow: self.selectedRow) as? NVLinkable {
+			_mvc?.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
+		}
 	}
 	
 	override func menu(for event: NSEvent) -> NSMenu? {
@@ -171,13 +179,6 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		self._graphImage = NSImage(named: NSImage.Name(rawValue: "Graph"))
 		self._deliveryImage = NSImage(named: NSImage.Name(rawValue: "Delivery"))
 		self._linkImage = NSImage(named: NSImage.Name(rawValue: "Link"))
-	}
-	
-	func outlineViewSelectionDidChange(_ notification: Notification) {
-		let outlineView = (notification.object as! NSOutlineView)
-		if let linkableItem = outlineView.item(atRow: outlineView.selectedRow) as? NVLinkable {
-			_mvc.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
-		}
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
