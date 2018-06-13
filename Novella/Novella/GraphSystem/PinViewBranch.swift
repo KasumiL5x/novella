@@ -105,7 +105,7 @@ class PinViewBranch: PinView {
 	}
 	override func getFrameSize() -> NSSize {
 		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
-		return NSMakeSize(PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING*3.0)
+		return NSMakeSize(PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING)
 	}
 
 	override func onPanStarted(_ gesture: NSPanGestureRecognizer) {

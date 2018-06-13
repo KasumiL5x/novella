@@ -280,12 +280,12 @@ class LinkableView: NSView {
 		
 		// set bounds frame and adjust it for the offset
 		_outputsBoard.frame = boundsOf(views: _outputs)
+		let border = NSMakeSize(6.0, 8.0)
+		_outputsBoard.frame.size.width += border.width
+		_outputsBoard.frame.size.height += border.height
+		_outputsBoard.frame.origin.x -= border.width * 0.5
+		_outputsBoard.frame.origin.y -= border.height * 0.5
 		_outputsBoard.setNeedsDisplay(_outputsBoard.frame)
-		let border: CGFloat = 5.0
-		_outputsBoard.frame.size.width += border
-		_outputsBoard.frame.size.height += border
-		_outputsBoard.frame.origin.x -= border * 0.5
-		_outputsBoard.frame.origin.y -= border * 0.5
 	}
 	private func boundsOf(views: [NSView]) -> NSRect {
 		var minX = CGFloat.infinity
