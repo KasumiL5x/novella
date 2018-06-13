@@ -45,6 +45,7 @@ public protocol NVStoryDelegate {
 	func onStoryDeleteNode(node: NVNode)
 	// Called when an NVBaseLink is deleted using StoryManager.delete(link).
 	func onStoryDeleteLink(link: NVBaseLink)
+	func onStoryDeleteGraph(graph: NVGraph)
 	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
@@ -162,6 +163,8 @@ public extension NVStoryDelegate {
 	func onStoryDeleteNode(node: NVNode) {
 	}
 	func onStoryDeleteLink(link: NVBaseLink) {
+	}
+	func onStoryDeleteGraph(graph: NVGraph) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {

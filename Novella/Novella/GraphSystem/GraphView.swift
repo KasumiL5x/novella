@@ -716,6 +716,8 @@ extension GraphView: NVStoryDelegate {
 		case is NVDelivery:
 			fallthrough
 		case is NVContext:
+			fallthrough
+		case is NVGraph:
 			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
 				lv.Trashed = true
 			}
@@ -737,6 +739,8 @@ extension GraphView: NVStoryDelegate {
 		case is NVDelivery:
 			fallthrough
 		case is NVContext:
+			fallthrough
+		case is NVGraph:
 			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
 				lv.Trashed = false
 			}
@@ -752,8 +756,13 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	func onStoryDeleteNode(node: NVNode) {
-		if let node = _allLinkableViews.first(where: {$0.Linkable.UUID == node.UUID}) {
+		if let node = _allLinkableViews.first(where: {$0.Linkable == node}) {
 			deleteLinkableView(node: node)
+		}
+	}
+	func onStoryDeleteGraph(graph: NVGraph) {
+		if let graph = _allLinkableViews.first(where: {$0.Linkable == graph}) {
+			deleteLinkableView(node: graph)
 		}
 	}
 }

@@ -175,12 +175,12 @@ extension NVStoryManager {
 
 		// remove from story
 		if self._folders.contains(folder) {
-			self._folders.remove(at: self._folders.index(where: {$0 == folder})!)
+			self._folders.remove(at: self._folders.index(of: folder)!)
 		}
 
 		// actual remove
-		_folders.remove(at: _folders.index(where: {$0 == folder})!)
-		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == folder.UUID})!)
+		_folders.remove(at: _folders.index(of: folder)!)
+		_identifiables.remove(at: _identifiables.index(of: folder)!)
 
 		_delegates.forEach{$0.onStoryDeleteFolder(folder: folder, contents: deleteContents)}
 	}
@@ -200,8 +200,8 @@ extension NVStoryManager {
 	
 	public func delete(variable: NVVariable) {
 		try! _folders.first(where: {$0.Variables.contains(variable)})?.remove(variable: variable)
-		_variables.remove(at: _variables.index(where: {$0 == variable})!)
-		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == variable.UUID})!)
+		_variables.remove(at: _variables.index(of: variable)!)
+		_identifiables.remove(at: _identifiables.index(of: variable)!)
 		
 		_delegates.forEach{$0.onStoryDeleteVariable(variable: variable)}
 	}
@@ -217,6 +217,43 @@ extension NVStoryManager {
 		
 		_delegates.forEach{$0.onStoryMakeGraph(graph: graph)}
 		return graph
+	}
+	
+	func delete(graph: NVGraph) {
+		// note: duplicating lists as delete function modifies the internal lists
+		
+		// 1. remove from either story or its parent
+		if _story.contains(graph: graph) {
+			try! _story.remove(graph: graph)
+		}
+		try! graph.Parent?.remove(graph: graph)
+		
+		// 2. delete all of its nodes
+		let nodes = graph.Nodes
+		nodes.forEach{delete(node: $0)}
+		
+		// 3. delete all of its links
+		let links = graph.Links
+		links.forEach{delete(link: $0)}
+		
+		// 4. delete all listeners
+		//TODO: Handle delete of listeners (technically NVNodes but in different lists).
+		
+		// 5. delete all exits
+		// TODO: Handle delete of exits.
+		
+		// 6. delete all child graphs
+		let graphs = graph.Graphs
+		graphs.forEach{delete(graph: $0)}
+		
+		// 7. remove from graphs
+		_graphs.remove(at: _graphs.index(of: graph)!)
+		
+		// 8. remove from identifiables
+		_identifiables.remove(at: _identifiables.index(of: graph)!)
+	
+		// delegate
+		_delegates.forEach{$0.onStoryDeleteGraph(graph: graph)}
 	}
 }
 
@@ -264,7 +301,7 @@ extension NVStoryManager {
 		_links.remove(at: _links.index(of: link)!)
 		
 		// 3. remove from all identifiables
-		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == link.UUID})!)
+		_identifiables.remove(at: _identifiables.index(of: link)!)
 		
 		_delegates.forEach{$0.onStoryDeleteLink(link: link)}
 	}
@@ -343,7 +380,7 @@ extension NVStoryManager {
 		_nodes.remove(at: _nodes.index(of: node)!)
 		
 		// 5. remove from all identifiables
-		_identifiables.remove(at: _identifiables.index(where: {$0.UUID == node.UUID})!)
+		_identifiables.remove(at: _identifiables.index(of: node)!)
 		
 		_delegates.forEach{$0.onStoryDeleteNode(node: node)}
 	}
@@ -357,7 +394,7 @@ extension NVStoryManager {
 	}
 	
 	func untrash(_ item: NVObject) {
-		if let idx = _trashed.index(where: {$0.UUID == item.UUID}) {
+		if let idx = _trashed.index(of: item) {
 			_trashed.remove(at: idx)
 			_delegates.forEach{$0.onStoryUntrashItem(item: item)}
 		}
@@ -373,6 +410,10 @@ extension NVStoryManager {
 				
 			case is NVNode:
 				delete(node: curr as! NVNode)
+				_trashed.remove(at: i)
+				
+			case is NVGraph:
+				delete(graph: curr as! NVGraph)
 				_trashed.remove(at: i)
 				
 			default:

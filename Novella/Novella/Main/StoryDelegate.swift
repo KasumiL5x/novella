@@ -73,6 +73,10 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryDeleteNode(node: NVNode) {
 		_mvc.reloadSelectedGraph()
 	}
+	func onStoryDeleteGraph(graph: NVGraph) {
+		_mvc.reloadAllGraphs()
+		_mvc.reloadSelectedGraph()
+	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
 		_mvc.reloadSelectedGraph()

@@ -118,6 +118,9 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryDeleteLink(link: NVBaseLink) {
 		self.updateChangeCount(.changeDone)
 	}
+	func onStoryDeleteGraph(graph: NVGraph) {
+		self.updateChangeCount(.changeDone)
+	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
 		self.updateChangeCount(.changeDone)
