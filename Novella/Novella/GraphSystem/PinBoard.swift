@@ -24,7 +24,7 @@ class PinBoard: NSView {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
-		NSColor.fromHex("#d2d2d2").withAlphaComponent(0.6).setFill()
+		NSColor.fromHex("#1A1A1A").withAlphaComponent(0.9).setFill()
 		
 		let path = NSBezierPath(roundedRect: bounds, xRadius: 5.0, yRadius: 5.0)
 		path.fill()

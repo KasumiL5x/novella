@@ -78,11 +78,11 @@ class LinkableView: NSView {
 		// add shadow
 		wantsLayer = true
 		layer?.masksToBounds = false
-		self.shadow = NSShadow()
-		self.layer?.shadowOpacity = 0.6
-		self.layer?.shadowColor = NSColor.black.cgColor
-		self.layer?.shadowOffset = NSMakeSize(3, -1)
-		self.layer?.shadowRadius = 5.0
+//		self.shadow = NSShadow()
+//		self.layer?.shadowOpacity = 0.6
+//		self.layer?.shadowColor = NSColor.black.cgColor
+//		self.layer?.shadowOffset = NSMakeSize(3, -1)
+//		self.layer?.shadowRadius = 5.0
 		
 		self.addSubview(_outputsBoard)
 		
