@@ -9,18 +9,12 @@
 import Foundation
 
 public class NVBranch : NVBaseLink {
+	// MARK: - Variables -
 	private var _condition: NVCondition
 	private var _trueTransfer: NVTransfer
 	private var _falseTransfer: NVTransfer
 	
-	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVLinkable) {
-		self._condition = NVCondition(manager: manager)
-		self._trueTransfer = NVTransfer()
-		self._falseTransfer = NVTransfer()
-		
-		super.init(manager: manager, uuid: uuid, origin: origin)
-	}
-	
+	// MARK: - Properties -
 	public var Condition: NVCondition {
 		get{ return _condition }
 	}
@@ -31,12 +25,29 @@ public class NVBranch : NVBaseLink {
 		get{ return _falseTransfer }
 	}
 	
-	public func setTrueDestination(dest: NVLinkable?) {
+	// MARK: - Initialization -
+	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
+		self._condition = NVCondition(manager: manager)
+		self._trueTransfer = NVTransfer()
+		self._falseTransfer = NVTransfer()
+		super.init(manager: manager, uuid: uuid, origin: origin)
+	}
+	
+	// MARK: - Functions -
+	public func setTrueDestination(dest: NVObject?) {
+		if dest != nil && !(dest!.isLinkable()) {
+			print("NVBranch.setTrueDestination was given a non-linkable NVObject.  The request was ignored.")
+			return
+		}
 		_trueTransfer._destination = dest
 		_manager.Delegates.forEach{$0.onStoryBranchSetTrueDestination(branch: self, dest: dest)}
 	}
 	
-	public func setFalseDestination(dest: NVLinkable?) {
+	public func setFalseDestination(dest: NVObject?) {
+		if dest != nil && !(dest!.isLinkable()) {
+			print("NVBranch.setFalseDestination was given a non-linkable NVObject.  The request was ignored.")
+			return
+		}
 		_falseTransfer._destination = dest
 		_manager.Delegates.forEach{$0.onStoryBranchSetFalseDestination(branch: self, dest: dest)}
 	}

@@ -104,15 +104,15 @@ class PinViewLink: PinView {
 		(_functionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVLink).Transfer.Function)
 	}
 	@objc private func onGraphContextItem(sender: NSMenuItem) {
-		_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: sender.representedObject as? NVLinkable))
+		_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: sender.representedObject as? NVObject))
 	}
 	
 	// MARK: Destination
-	func setDestination(dest: NVLinkable?) {
+	func setDestination(dest: NVObject?) {
 		(BaseLink as! NVLink).setDestination(dest: dest)
 		_graphView.updateCurves()
 	}
-	func getDestination() -> NVLinkable? {
+	func getDestination() -> NVObject? {
 		return (BaseLink as! NVLink).Transfer.Destination
 	}
 	

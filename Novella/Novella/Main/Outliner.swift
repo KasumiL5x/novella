@@ -63,7 +63,7 @@ class SelectedGraphFancyCell: NSTableCellView {
 	@IBOutlet weak var _trashButton: NSButton!
 	private var _trashEmptyImage: NSImage?
 	private var _trashFullImage: NSImage?
-	var _linkable: NVLinkable?
+	var _linkable: NVObject?
 	
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -84,9 +84,9 @@ class SelectedGraphFancyCell: NSTableCellView {
 	}
 	
 	@IBAction func onTrash(_ sender: NSButton) {
-		if let inTrash = _linkable?.Trashed {
-			_linkable!.Trashed = !inTrash
-			setTrashIcon(_linkable!.Trashed)
+		if let obj = _linkable {
+			obj.InTrash ? obj.untrash() : obj.trash()
+			setTrashIcon(obj.InTrash)
 		}
 	}
 }
@@ -121,7 +121,7 @@ class SelectedGraphOutlineView: NSOutlineView {
 	}
 	
 	@objc private func onDoubleAction() {
-		if let linkableItem = self.item(atRow: self.selectedRow) as? NVLinkable {
+		if let linkableItem = self.item(atRow: self.selectedRow) as? NVObject {
 			_mvc?.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
 		}
 	}
@@ -139,9 +139,8 @@ class SelectedGraphOutlineView: NSOutlineView {
 	}
 	
 	@objc private func onItemTrash() {
-		if var item = self.item(atRow: self.selectedRow) as? NVLinkable {
-			let inTrash = item.Trashed
-			item.Trashed = !inTrash
+		if let item = self.item(atRow: self.selectedRow) as? NVObject {
+			item.InTrash ? item.untrash() : item.trash()
 		}
 	}
 }
@@ -240,13 +239,13 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		case is NVGraph:
 			let asGraph = (item as! NVGraph)
 			(view as! SelectedGraphFancyCell)._linkable = asGraph
-			view?.textField?.stringValue = (asGraph.Trashed ? "🗑 " : "") + asGraph.Name
+			view?.textField?.stringValue = (asGraph.InTrash ? "🗑 " : "") + asGraph.Name
 			view?.imageView?.image = _graphImage
 			
 		case is NVNode:
 			let asNode = (item as! NVNode)
 			(view as! SelectedGraphFancyCell)._linkable = asNode
-			view?.textField?.stringValue = (asNode.Trashed ? "🗑 " : "") + asNode.Name
+			view?.textField?.stringValue = (asNode.InTrash ? "🗑 " : "") + asNode.Name
 			switch item {
 			case is NVDialog:
 				view?.imageView?.image = _dialogImage

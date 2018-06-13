@@ -1,13 +1,13 @@
+////
+////  NVSimulation.swift
+////  Novella
+////
+////  Created by Daniel Green on 02/05/2018.
+////  Copyright © 2018 Daniel Green. All rights reserved.
+////
 //
-//  NVSimulation.swift
-//  Novella
+//import Foundation
 //
-//  Created by Daniel Green on 02/05/2018.
-//  Copyright © 2018 Daniel Green. All rights reserved.
-//
-
-import Foundation
-
-public class NVSimulation {
-	
-}
+//public class NVSimulation {
+//	
+//}

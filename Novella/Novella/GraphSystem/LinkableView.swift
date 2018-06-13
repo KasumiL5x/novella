@@ -18,7 +18,7 @@ class LinkableView: NSView {
 	static let HIT_NIL_TAG: Int = 11
 	
 	// MARK: - - Variables -
-	private var _nvLinkable: NVLinkable
+	private var _nvLinkable: NVObject
 	internal var _graphView: GraphView
 	private var _isPrimed: Bool
 	private var _isSelected: Bool
@@ -53,7 +53,7 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - - Initialization -
-	init(frameRect: NSRect, nvLinkable: NVLinkable, graphView: GraphView) {
+	init(frameRect: NSRect, nvLinkable: NVObject, graphView: GraphView) {
 		self._nvLinkable = nvLinkable
 		self._graphView = graphView
 		self._isPrimed = false
@@ -115,7 +115,7 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - - Properties -
-	var Linkable: NVLinkable {
+	var Linkable: NVObject {
 		get{ return _nvLinkable }
 	}
 	var IsPrimed: Bool {

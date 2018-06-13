@@ -51,7 +51,7 @@ class MainWindowController: NSWindowController {
 	@IBAction func onToolbarPreview(_ sender: NSButton) {
 		if _previewWindowController == nil {
 			let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as! NewReaderWindowController
+			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as? NewReaderWindowController
 			_previewWindowController!.document = self.document
 		}
 		_previewWindowController?.showWindow(self)

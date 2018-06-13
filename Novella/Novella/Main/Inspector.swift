@@ -54,7 +54,7 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 				("Preview", dialog.Preview),
 				("Content", dialog.Content),
 				("Directions", dialog.Directions),
-				("Position", "(\(dialog.EditorPosition.x), \(dialog.EditorPosition.y))")
+				("Position", "(\(dialog.Position.x), \(dialog.Position.y))")
 			]
 			
 		case is NVDelivery:
@@ -64,21 +64,21 @@ class InspectorDataSource: NSObject, NSTableViewDataSource, NSTableViewDelegate 
 				("Preview", delivery.Preview),
 				("Content", delivery.Content),
 				("Directions", delivery.Directions),
-				("Position", "(\(delivery.EditorPosition.x), \(delivery.EditorPosition.y))")
+				("Position", "(\(delivery.Position.x), \(delivery.Position.y))")
 			]
 			
 		case is NVContext:
 			let context = target as! NVContext
 			_contextDict = [
 				("Name", context.Name),
-				("Position", "(\(context.EditorPosition.x), \(context.EditorPosition.y))")
+				("Position", "(\(context.Position.x), \(context.Position.y))")
 			]
 			
 		case is NVGraph:
 			let graph = target as! NVGraph
 			_graphDict = [
 				("Name", graph.Name),
-				("Position", "(\(graph.EditorPosition.x), \(graph.EditorPosition.y))"),
+				("Position", "(\(graph.Position.x), \(graph.Position.y))"),
 				("Subgraphs", "\(graph.Graphs.count)"),
 				("Nodes", "\(graph.Nodes.count)"),
 				("Links", "\(graph.Links.count)")

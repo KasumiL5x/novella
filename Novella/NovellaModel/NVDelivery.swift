@@ -9,18 +9,12 @@
 import Foundation
 
 public class NVDelivery: NVNode {
+	// MARK: - Variables -
 	private var _content: String
 	private var _preview: String
 	private var _directions: String
 	
-	override init(manager: NVStoryManager, uuid: NSUUID) {
-		self._content = ""
-		self._preview = ""
-		self._directions = ""
-		
-		super.init(manager: manager, uuid: uuid)
-	}
-	
+	// MARK: - Properties -
 	public var Content: String {
 		get { return _content }
 		set {
@@ -41,5 +35,13 @@ public class NVDelivery: NVNode {
 			_directions = newValue
 			_manager.Delegates.forEach{$0.onStoryDeliveryDirectionsChanged(directions: _directions, node: self)}
 		}
+	}
+	
+	// MARK: - Initialization -
+	override init(manager: NVStoryManager, uuid: NSUUID) {
+		self._content = ""
+		self._preview = ""
+		self._directions = ""
+		super.init(manager: manager, uuid: uuid)
 	}
 }

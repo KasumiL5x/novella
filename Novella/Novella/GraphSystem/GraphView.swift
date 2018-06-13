@@ -279,7 +279,7 @@ class GraphView: NSView {
 		_document.Undo.redo(levels: levels)
 	}
 	
-	func getLinkableViewFrom(linkable: NVLinkable?, includeParentGraphs: Bool) -> LinkableView? {
+	func getLinkableViewFrom(linkable: NVObject?, includeParentGraphs: Bool) -> LinkableView? {
 		if nil == linkable {
 			return nil
 		}
@@ -495,9 +495,7 @@ extension GraphView {
 	}
 	@objc private func onGraphViewMenuTrashSelection() {
 		for curr in _selectionHandler!.Selection {
-			let inTrash = curr.Linkable.Trashed
-			var linkable = curr.Linkable
-			linkable.Trashed = !inTrash
+			curr.Linkable.InTrash ? curr.Linkable.untrash() : curr.Linkable.trash()
 		}
 	}
 	@objc private func onGraphViewMenuEmptyTrash() {
@@ -533,7 +531,7 @@ extension GraphView {
 
 // MARK: - - Selection -
 extension GraphView {
-	func selectNVLinkable(linkable: NVLinkable) {
+	func selectNVLinkable(linkable: NVObject) {
 		if let view = getLinkableViewFrom(linkable: linkable, includeParentGraphs: false) {
 			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
 		}
@@ -711,16 +709,7 @@ extension GraphView: NSPopoverDelegate {
 
 // MARK: - - NVStoryDelegate -
 extension GraphView: NVStoryDelegate {
-	func onStoryTrashItem(item: NVLinkable) {
-
-		/* decided not to trash incoming links as you may want to reuse them
-		for linkTo in NVStoryManager.shared.getLinksTo(item) {
-			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
-				pin.TrashMode = true
-			}
-		}
-		*/
-		
+	func onStoryTrashItem(item: NVObject) {
 		switch item {
 		case is NVDialog:
 			fallthrough
@@ -735,7 +724,7 @@ extension GraphView: NVStoryDelegate {
 			print("Trashed unsupported item: \(item)")
 		}
 	}
-	func onStoryUntrashItem(item: NVLinkable) {
+	func onStoryUntrashItem(item: NVObject) {
 		for linkTo in _document.Manager.getLinksTo(item) {
 			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
 				pin.TrashMode = false

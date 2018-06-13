@@ -158,22 +158,22 @@ class PinViewBranch: PinView {
 		(_falseFunctionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVBranch).FalseTransfer.Function)
 	}
 	@objc private func onGraphContextItem(sender: NSMenuItem) {
-		_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: sender.representedObject as? NVLinkable, forTrue: _pannedPin))
+		_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: sender.representedObject as? NVObject, forTrue: _pannedPin))
 	}
 	
 	// MARK: Destination
-	func setTrueDestination(dest: NVLinkable?) {
+	func setTrueDestination(dest: NVObject?) {
 		(BaseLink as! NVBranch).setTrueDestination(dest: dest)
 		_graphView.updateCurves()
 	}
-	func getTrueDestination() -> NVLinkable? {
+	func getTrueDestination() -> NVObject? {
 		return (BaseLink as! NVBranch).TrueTransfer.Destination
 	}
-	func setFalseDestination(dest: NVLinkable?) {
+	func setFalseDestination(dest: NVObject?) {
 		(BaseLink as! NVBranch).setFalseDestination(dest: dest)
 		_graphView.updateCurves()
 	}
-	func getFalseDestination() -> NVLinkable? {
+	func getFalseDestination() -> NVObject? {
 		return (BaseLink as! NVBranch).FalseTransfer.Destination
 	}
 	

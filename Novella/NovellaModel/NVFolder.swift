@@ -8,26 +8,15 @@
 
 import Foundation
 
-public class NVFolder {
-	private let _manager: NVStoryManager
-	private let _uuid: NSUUID
+public class NVFolder: NVObject {
+	// MARK: - Variables -
 	private var _name: String
 	private var _synopsis: String
 	private var _folders: [NVFolder]
 	private var _variables: [NVVariable]
 	internal var _parent: NVFolder?
 	
-	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
-		self._manager = manager
-		self._uuid = uuid
-		self._name = name
-		self._synopsis = ""
-		self._folders = []
-		self._variables = []
-		self._parent = nil
-	}
-	
-	// MARK: Properties
+	// MARK: - Properties -
 	public var Name: String {
 		get{ return _name }
 		set{
@@ -50,6 +39,23 @@ public class NVFolder {
 	}
 	public var Parent: NVFolder? {
 		get{ return _parent }
+	}
+	
+	// MARK: - Initialization -
+	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
+		self._name = name
+		self._synopsis = ""
+		self._folders = []
+		self._variables = []
+		self._parent = nil
+		super.init(manager: manager, uuid: uuid)
+	}
+	
+	// MARK: - Functions -
+	
+	// MARK: Virtual
+	public override func isLinkable() -> Bool {
+		return false
 	}
 	
 	// MARK: Folders
@@ -174,13 +180,6 @@ public class NVFolder {
 	}
 }
 
-// MARK: - NVIdentifiable -
-extension NVFolder: NVIdentifiable {
-	public var UUID: NSUUID {
-		return _uuid
-	}
-}
-
 // MARK: - NVPathable -
 extension NVFolder: NVPathable {
 	public func localPath() -> String {
@@ -189,12 +188,5 @@ extension NVFolder: NVPathable {
 	
 	public func parentPath() -> NVPathable? {
 		return _parent
-	}
-}
-
-// MARK: - Equatable -
-extension NVFolder: Equatable {
-	public static func == (lhs: NVFolder, rhs: NVFolder) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }

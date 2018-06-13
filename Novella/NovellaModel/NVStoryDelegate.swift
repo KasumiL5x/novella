@@ -29,15 +29,12 @@ public protocol NVStoryDelegate {
 	// Called when a NVContext is created using StoryManager.makeContext().
 	func onStoryMakeContext(context: NVContext)
 	
-	// Called when an NVNode's EditorPosition is set using NVNode.EditorPosition.
-	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint)
-	// Called when an NVGraph's EditorPosition is set using NVGraph.EditorPosition.
-	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint)
+	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint)
 	
 	// Called when a NVTrashable is added to the trash using the internal StoryManager.trash().
-	func onStoryTrashItem(item: NVLinkable)
+	func onStoryTrashItem(item: NVObject)
 	// Called when a NVTrashable is removed from the trash using the internal StoryManager().
-	func onStoryUntrashItem(item: NVLinkable)
+	func onStoryUntrashItem(item: NVObject)
 	
 	// Called when an NVFolder is deleted using StoryManager.deleteFolder().
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool)
@@ -80,7 +77,7 @@ public protocol NVStoryDelegate {
 	// Called when an NVGraph's name is changed using NVGraph.setName().
 	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph)
 	// Called when an NVGraph's entry is set using NVGraph.setEntry().
-	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph)
+	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph)
 	
 	// Called when an NVNode's name is changed using NVNode.Name.
 	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode)
@@ -98,11 +95,11 @@ public protocol NVStoryDelegate {
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery)
 	
 	// Called when an NVLink's transfer's destination is set using NVLink.SetDestination().
-	func onStoryLinkSetDestination(link: NVLink, dest: NVLinkable?)
+	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?)
 	// Called when an NVBranch's true transfer's destination is set using NVBranch.SetTrueDestination().
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVLinkable?)
+	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?)
 	// Called when an NVBranch's false transfer's destination is set using NVBranch.SetTrueDestination().
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVLinkable?)
+	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?)
 	
 	// Called when an NVVariable's name is changed using NVVariable.Name.
 	func onStoryVariableNameChanged(variable: NVVariable, name: String)
@@ -155,14 +152,12 @@ public extension NVStoryDelegate {
 	func onStoryMakeContext(context: NVContext) {
 	}
 	
-	func onStoryNodePositionChanged(node: NVNode, oldPos: CGPoint, newPos: CGPoint) {
-	}
-	func onStoryGraphPositionChanged(graph: NVGraph, oldPos: CGPoint, newPos: CGPoint) {
+	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
 	}
 	
-	func onStoryTrashItem(item: NVLinkable) {
+	func onStoryTrashItem(item: NVObject) {
 	}
-	func onStoryUntrashItem(item: NVLinkable) {
+	func onStoryUntrashItem(item: NVObject) {
 	}
 	
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
@@ -205,7 +200,7 @@ public extension NVStoryDelegate {
 	}
 	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
 	}
-	func onStoryGraphSetEntry(entry: NVLinkable, graph: NVGraph) {
+	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 	}
 	
 	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
@@ -223,11 +218,11 @@ public extension NVStoryDelegate {
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 	}
 	
-	func onStoryLinkSetDestination(link: NVLink, dest: NVLinkable?) {
+	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
 	}
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVLinkable?) {
+	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
 	}
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVLinkable?) {
+	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
 	}
 	
 	func onStoryVariableNameChanged(variable: NVVariable, name: String) {

@@ -7,17 +7,21 @@
 //
 
 public class NVFunction {
+	// MARK: - Variables -
 	private var _javascript: String
 	
-	init() {
-		self._javascript = ""
-	}
-	
+	// MARK: - Properties -
 	public var Javascript: String {
 		get{ return _javascript }
 		set{ _javascript = newValue } // TODO: Make this a function and validate the JS upon change?
 	}
 	
+	// MARK: - Initialization -
+	init() {
+		self._javascript = ""
+	}
+	
+	// MARK: - Functions -
 	func execute() {
 		// TODO: Execute some kind of user-provided code etc.
 	}

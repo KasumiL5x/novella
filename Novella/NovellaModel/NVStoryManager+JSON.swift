@@ -51,8 +51,8 @@ extension NVStoryManager {
 			entry["uuid"] = curr.UUID.uuidString
 			entry["entry"] = curr._entry?.UUID.uuidString ?? ""
 			entry["position"] = [
-				"x": curr.EditorPosition.x,
-				"y": curr.EditorPosition.y
+				"x": curr.Position.x,
+				"y": curr.Position.y
 			]
 			entry["subgraphs"] = curr._graphs.map({$0.UUID.uuidString})
 			entry["nodes"] = curr._nodes.map({$0.UUID.uuidString})
@@ -119,8 +119,8 @@ extension NVStoryManager {
 			entry["name"] = curr.Name
 			
 			entry["position"] = [
-				"x": curr.EditorPosition.x,
-				"y": curr.EditorPosition.y
+				"x": curr.Position.x,
+				"y": curr.Position.y
 			]
 			
 			if let asDialog = curr as? NVDialog {
@@ -291,7 +291,7 @@ extension NVStoryManager {
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = storyManager.makeDialog(uuid: uuid)
-				dialog.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				dialog.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					dialog.Name = name!
 				}
@@ -307,7 +307,7 @@ extension NVStoryManager {
 				
 			case "delivery":
 				let delivery = storyManager.makeDelivery(uuid: uuid)
-				delivery.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				delivery.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					delivery.Name = name!
 				}
@@ -326,7 +326,7 @@ extension NVStoryManager {
 				
 			case "context":
 				let context = storyManager.makeContext(uuid: uuid)
-				context.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				context.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					context.Name = name!
 				}
@@ -350,7 +350,7 @@ extension NVStoryManager {
 			// position
 			let posX = curr["position"]["x"].float!
 			let posY = curr["position"]["y"].float!
-			graph.EditorPosition = NSMakePoint(CGFloat(posX), CGFloat(posY))
+			graph.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
 			
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {
@@ -385,7 +385,7 @@ extension NVStoryManager {
 			let graph = storyManager.find(uuid: curr["uuid"].string!) as! NVGraph
 			if let entry = curr["entry"].string {
 				if !entry.isEmpty {
-					if let linkable = storyManager.find(uuid: entry) as? NVLinkable {
+					if let linkable = storyManager.find(uuid: entry) {
 						try! graph.setEntry(linkable)
 					} else {
 						print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph.UUID.uuidString)).")
@@ -399,7 +399,7 @@ extension NVStoryManager {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
 			
 			let originID = curr["origin"].string!
-			guard let origin = storyManager.find(uuid: originID) as? NVLinkable else {
+			guard let origin = storyManager.find(uuid: originID) else {
 				print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(originID)) when creating BaseLink (\(uuid.uuidString)).  Link will NOT be created.")
 				continue // skips the link entirely if this error occurs
 			}
@@ -415,7 +415,7 @@ extension NVStoryManager {
 				if let transfer = curr["transfer"].dictionary {
 					let transferDestination = transfer["destination"]!.string!
 					if !transferDestination.isEmpty {
-						if let destination = storyManager.find(uuid: transferDestination) as? NVLinkable {
+						if let destination = storyManager.find(uuid: transferDestination) {
 							link.setDestination(dest: destination)
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
@@ -433,7 +433,7 @@ extension NVStoryManager {
 				if let trueTransfer = curr["ttransfer"].dictionary {
 					let transferDestination = trueTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
-						if let destination = storyManager.find(uuid: transferDestination) as? NVLinkable {
+						if let destination = storyManager.find(uuid: transferDestination) {
 							branch.setTrueDestination(dest: destination)
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
@@ -444,7 +444,7 @@ extension NVStoryManager {
 				if let falseTransfer = curr["ftransfer"].dictionary {
 					let transferDestination = falseTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
-						if let destination = storyManager.find(uuid: transferDestination) as? NVLinkable {
+						if let destination = storyManager.find(uuid: transferDestination) {
 							branch.setFalseDestination(dest: destination)
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")

@@ -8,9 +8,8 @@
 
 import Foundation
 
-public class NVVariable {
-	private let _manager: NVStoryManager
-	private let _uuid: NSUUID
+public class NVVariable: NVObject {
+	// MARK: - Variables -
 	private var _name: String
 	private var _synopsis: String
 	private var _type: NVDataType
@@ -19,18 +18,7 @@ public class NVVariable {
 	private var _constant: Bool
 	internal var _folder: NVFolder?
 	
-	init(manager: NVStoryManager, uuid: NSUUID, name: String, type: NVDataType) {
-		self._manager = manager
-		self._uuid = uuid
-		self._name = name
-		self._synopsis = ""
-		self._type = type
-		self._value = type.defaultValue
-		self._initialValue = type.defaultValue
-		self._constant = false
-		self._folder = nil
-	}
-	
+	// MARK: - Properties -
 	public var Name: String {
 		get{ return _name }
 		set{
@@ -63,6 +51,25 @@ public class NVVariable {
 	}
 	public var Folder: NVFolder? {
 		get{ return _folder }
+	}
+	
+	// MARK: - Initialization -
+	init(manager: NVStoryManager, uuid: NSUUID, name: String, type: NVDataType) {
+		self._name = name
+		self._synopsis = ""
+		self._type = type
+		self._value = type.defaultValue
+		self._initialValue = type.defaultValue
+		self._constant = false
+		self._folder = nil
+		super.init(manager: manager, uuid: uuid)
+	}
+	
+	// MARK: - Functions -
+	
+	// MARK: Virtual
+	public override func isLinkable() -> Bool {
+		return false
 	}
 	
 	// MARK: Setters
@@ -100,13 +107,6 @@ public class NVVariable {
 	}
 }
 
-// MARK: - NVIdentifiable -
-extension NVVariable: NVIdentifiable {
-	public var UUID: NSUUID {
-		return _uuid
-	}
-}
-
 // MARK: - NVPathable -
 extension NVVariable: NVPathable {
 	public func localPath() -> String {
@@ -115,12 +115,5 @@ extension NVVariable: NVPathable {
 	
 	public func parentPath() -> NVPathable? {
 		return _folder
-	}
-}
-
-// MARK: - Equatable -
-extension NVVariable: Equatable {
-	public static func == (lhs: NVVariable, rhs: NVVariable) -> Bool {
-		return lhs.UUID == rhs.UUID
 	}
 }
