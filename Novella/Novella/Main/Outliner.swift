@@ -155,6 +155,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	private var _dialogImage: NSImage?
 	private var _graphImage: NSImage?
 	private var _deliveryImage: NSImage?
+	private var _linkImage: NSImage?
 	
 	var Graph: NVGraph? {
 		get{ return _graph }
@@ -169,6 +170,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		self._dialogImage = NSImage(named: NSImage.Name(rawValue: "Dialog"))
 		self._graphImage = NSImage(named: NSImage.Name(rawValue: "Graph"))
 		self._deliveryImage = NSImage(named: NSImage.Name(rawValue: "Delivery"))
+		self._linkImage = NSImage(named: NSImage.Name(rawValue: "Link"))
 	}
 	
 	func outlineViewSelectionDidChange(_ notification: Notification) {
@@ -259,6 +261,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			let from = _mvc.Document.Manager.nameOf(linkable: asLink.Origin)
 			let to = _mvc.Document.Manager.nameOf(linkable: asLink.Transfer.Destination)
 			view?.textField?.stringValue = "\(from) => \(to)"
+			view?.imageView?.image = _linkImage
 			
 		case is NVBranch:
 			let asBranch = (item as! NVBranch)
@@ -266,6 +269,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			let toTrue = _mvc.Document.Manager.nameOf(linkable: asBranch.TrueTransfer.Destination)
 			let toFalse = _mvc.Document.Manager.nameOf(linkable: asBranch.FalseTransfer.Destination)
 			view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
+			view?.imageView?.image = _linkImage
 			
 		default:
 			view?.textField?.stringValue = "ERROR"
