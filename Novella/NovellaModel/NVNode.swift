@@ -9,22 +9,8 @@
 import Foundation
 
 public class NVNode: NVObject {
-	// MARK: - Variables -
-	private var _name: String
-	
-	// MARK: - Properties -
-	public var Name: String {
-		get { return _name }
-		set {
-			let oldName = _name
-			_name = newValue
-			_manager.Delegates.forEach{$0.onStoryNodeNameChanged(oldName: oldName, newName: _name, node: self)}
-		}
-	}
-	
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID) {
-		self._name = ""
 		super.init(manager: manager, uuid: uuid)
 	}
 	

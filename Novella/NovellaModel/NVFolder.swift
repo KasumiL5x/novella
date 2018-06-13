@@ -10,20 +10,12 @@ import Foundation
 
 public class NVFolder: NVObject {
 	// MARK: - Variables -
-	private var _name: String
 	private var _synopsis: String
 	private var _folders: [NVFolder]
 	private var _variables: [NVVariable]
 	internal var _parent: NVFolder?
 	
 	// MARK: - Properties -
-	public var Name: String {
-		get{ return _name }
-		set{
-			_name = newValue
-			_manager.Delegates.forEach{$0.onStoryFolderNameChanged(folder: self, name: _name)}
-		}
-	}
 	public var Synopsis: String {
 		get{ return _synopsis }
 		set{
@@ -43,12 +35,12 @@ public class NVFolder: NVObject {
 	
 	// MARK: - Initialization -
 	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
-		self._name = name
 		self._synopsis = ""
 		self._folders = []
 		self._variables = []
 		self._parent = nil
 		super.init(manager: manager, uuid: uuid)
+		self.Name = name
 	}
 	
 	// MARK: - Functions -
@@ -64,18 +56,18 @@ public class NVFolder: NVObject {
 	}
 	
 	public func containsFolderName(_ name: String) -> Bool {
-		return _folders.contains(where: {$0._name == name})
+		return _folders.contains(where: {$0.Name == name})
 	}
 	
 	@discardableResult
 	public func add(folder: NVFolder) throws -> NVFolder {
 		// cannot add self
 		if folder == self {
-			throw NVError.invalid("Tried to add Folder to self (\(_name)).")
+			throw NVError.invalid("Tried to add Folder to self (\(Name)).")
 		}
 		// already a child
 		if contains(folder: folder) {
-			throw NVError.invalid("Tried to add Folder but it already exists (\(folder._name) to \(_name)).")
+			throw NVError.invalid("Tried to add Folder but it already exists (\(folder.Name) to \(Name)).")
 		}
 		// unparent first
 		if folder._parent != nil {
@@ -91,7 +83,7 @@ public class NVFolder: NVObject {
 	
 	public func remove(folder: NVFolder) throws {
 		guard let idx = _folders.index(of: folder) else {
-			throw NVError.invalid("Tried to remove Folder (\(folder._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Folder (\(folder.Name)) from (\(Name)) but it was not a child.")
 		}
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
@@ -126,7 +118,7 @@ public class NVFolder: NVObject {
 	public func add(variable: NVVariable) throws -> NVVariable {
 		// already a child
 		if contains(variable: variable) {
-			throw NVError.invalid("Tried to add Variable but it already exists (\(variable.Name) to \(_name)).")
+			throw NVError.invalid("Tried to add Variable but it already exists (\(variable.Name) to \(Name)).")
 		}
 		// unparent first
 		if variable.Folder != nil {
@@ -142,7 +134,7 @@ public class NVFolder: NVObject {
 	
 	public func remove(variable: NVVariable) throws {
 		guard let idx = _variables.index(of: variable) else {
-			throw NVError.invalid("Tried to remove Variable (\(variable.Name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Variable (\(variable.Name)) from (\(Name)) but it was not a child.")
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
@@ -160,7 +152,7 @@ public class NVFolder: NVObject {
 		for _ in 0...(indent <= 0 ? 0 : indent-1) {
 			str += "-"
 		}
-		str += "[\(self._name)](\(self._folders.count) subfolders; \(self._variables.count) variables)\n"
+		str += "[\(self.Name)](\(self._folders.count) subfolders; \(self._variables.count) variables)\n"
 		print(str, terminator: "")
 		
 		// all variables
@@ -183,7 +175,7 @@ public class NVFolder: NVObject {
 // MARK: - NVPathable -
 extension NVFolder: NVPathable {
 	public func localPath() -> String {
-		return _name
+		return Name
 	}
 	
 	public func parentPath() -> NVPathable? {

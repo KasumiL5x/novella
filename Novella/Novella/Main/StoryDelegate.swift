@@ -47,6 +47,10 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
 		_mvc.reloadInspector()
 	}
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
+		_mvc.reloadSelectedGraph()
+		_mvc.reloadInspector()
+	}
 	
 	func onStoryTrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
@@ -123,20 +127,11 @@ class StoryDelegate: NVStoryDelegate {
 		print("Removed exit \(exit.UUID) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
 	}
-	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
-		print("Changed graph's name from (\(oldName)) to (\(newName)).")
-		_mvc.reloadSelectedGraph()
-	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 		print("Changed graph's entry to \(entry.UUID).")
 		_mvc.reloadSelectedGraph()
 	}
 	
-	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
-		print("Changed node's name from \(oldName) to \(newName).")
-		_mvc.reloadSelectedGraph()
-		_mvc.reloadInspector()
-	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 		print("Changed dialog's content to \"\(content)\".")
 		_mvc.reloadInspector()

@@ -95,6 +95,9 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
 		self.updateChangeCount(.changeDone)
 	}
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
+		self.updateChangeCount(.changeDone)
+	}
 	
 	func onStoryTrashItem(item: NVObject) {
 		self.updateChangeCount(.changeDone)
@@ -159,16 +162,10 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
-		self.updateChangeCount(.changeDone)
-	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
-		self.updateChangeCount(.changeDone)
-	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 		self.updateChangeCount(.changeDone)
 	}
@@ -198,9 +195,6 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryVariableNameChanged(variable: NVVariable, name: String) {
-		self.updateChangeCount(.changeDone)
-	}
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String) {
 		self.updateChangeCount(.changeDone)
 	}
@@ -217,9 +211,6 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryFolderNameChanged(folder: NVFolder, name: String) {
-		self.updateChangeCount(.changeDone)
-	}
 	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String) {
 		self.updateChangeCount(.changeDone)
 	}

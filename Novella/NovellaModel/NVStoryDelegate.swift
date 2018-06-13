@@ -30,6 +30,7 @@ public protocol NVStoryDelegate {
 	func onStoryMakeContext(context: NVContext)
 	
 	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint)
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String)
 	
 	// Called when a NVTrashable is added to the trash using the internal StoryManager.trash().
 	func onStoryTrashItem(item: NVObject)
@@ -74,13 +75,9 @@ public protocol NVStoryDelegate {
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph)
 	// Called when an NVExitNode is removed from an NVGraph using NVGraph.remove(exit).
 	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph)
-	// Called when an NVGraph's name is changed using NVGraph.setName().
-	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph)
 	// Called when an NVGraph's entry is set using NVGraph.setEntry().
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph)
 	
-	// Called when an NVNode's name is changed using NVNode.Name.
-	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode)
 	// Called when an NVDialog's content is changed using NVDialog.Content.
 	func onStoryDialogContentChanged(content: String, node: NVDialog)
 	// Called when an NVDialog's preview is changed using NVDialog.Preview.
@@ -101,8 +98,6 @@ public protocol NVStoryDelegate {
 	// Called when an NVBranch's false transfer's destination is set using NVBranch.SetTrueDestination().
 	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?)
 	
-	// Called when an NVVariable's name is changed using NVVariable.Name.
-	func onStoryVariableNameChanged(variable: NVVariable, name: String)
 	// Called when an NVVariable's synopsis is changed using NVVariable.Synopsis.
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String)
 	// Called when an NVVariable's type is changed using NVVariable.setType().
@@ -114,8 +109,6 @@ public protocol NVStoryDelegate {
 	// Called when an NVVariable's constant is changed using NVVariable.Constant.
 	func onStoryVariableConstantChanged(variable: NVVariable, constant: Bool)
 	
-	// Called when an NVFolder's name is changed using NVFolder.Name.
-	func onStoryFolderNameChanged(folder: NVFolder, name: String)
 	// Called when an NVFolder's synopsis is changed using NVFolder.Synopsis.
 	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String)
 	// Called when an NVFolder is added to an NVFolder as a child.
@@ -153,6 +146,8 @@ public extension NVStoryDelegate {
 	}
 	
 	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
+	}
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
 	}
 	
 	func onStoryTrashItem(item: NVObject) {
@@ -198,13 +193,9 @@ public extension NVStoryDelegate {
 	}
 	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
 	}
-	func onStoryGraphSetName(oldName: String, newName: String, graph: NVGraph) {
-	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 	}
 	
-	func onStoryNodeNameChanged(oldName: String, newName: String, node: NVNode) {
-	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 	}
 	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
@@ -225,8 +216,6 @@ public extension NVStoryDelegate {
 	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
 	}
 	
-	func onStoryVariableNameChanged(variable: NVVariable, name: String) {
-	}
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String) {
 	}
 	func onStoryVariableTypeChanged(variable: NVVariable, type: NVDataType) {
@@ -238,8 +227,6 @@ public extension NVStoryDelegate {
 	func onStoryVariableConstantChanged(variable: NVVariable, constant: Bool) {
 	}
 	
-	func onStoryFolderNameChanged(folder: NVFolder, name: String) {
-	}
 	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String) {
 	}
 	func onStoryFolderAddFolder(parent: NVFolder, child: NVFolder) {

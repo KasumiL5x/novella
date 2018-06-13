@@ -10,7 +10,6 @@ import Foundation
 
 public class NVVariable: NVObject {
 	// MARK: - Variables -
-	private var _name: String
 	private var _synopsis: String
 	private var _type: NVDataType
 	private var _value: Any
@@ -19,13 +18,6 @@ public class NVVariable: NVObject {
 	internal var _folder: NVFolder?
 	
 	// MARK: - Properties -
-	public var Name: String {
-		get{ return _name }
-		set{
-			_name = newValue
-			_manager.Delegates.forEach{$0.onStoryVariableNameChanged(variable: self, name: _name)}
-		}
-	}
 	public var Synopsis: String {
 		get{ return _synopsis }
 		set{
@@ -55,7 +47,6 @@ public class NVVariable: NVObject {
 	
 	// MARK: - Initialization -
 	init(manager: NVStoryManager, uuid: NSUUID, name: String, type: NVDataType) {
-		self._name = name
 		self._synopsis = ""
 		self._type = type
 		self._value = type.defaultValue
@@ -63,6 +54,7 @@ public class NVVariable: NVObject {
 		self._constant = false
 		self._folder = nil
 		super.init(manager: manager, uuid: uuid)
+		self.Name = name
 	}
 	
 	// MARK: - Functions -
@@ -110,7 +102,7 @@ public class NVVariable: NVObject {
 // MARK: - NVPathable -
 extension NVVariable: NVPathable {
 	public func localPath() -> String {
-		return _name
+		return Name
 	}
 	
 	public func parentPath() -> NVPathable? {

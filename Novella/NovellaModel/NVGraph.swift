@@ -10,7 +10,6 @@ import Foundation
 
 public class NVGraph: NVObject {
 	// MARK: - Variables -
-	private var _name: String
 	internal var _graphs: [NVGraph]
 	internal var _nodes: [NVNode]
 	internal var _links: [NVBaseLink]
@@ -21,14 +20,6 @@ public class NVGraph: NVObject {
 	internal var _parent: NVGraph?
 	
 	// MARK: - Properties -
-	public var Name: String {
-		get{ return _name }
-		set {
-			let oldName = _name
-			_name = newValue
-			_manager.Delegates.forEach{$0.onStoryGraphSetName(oldName: oldName, newName: newValue, graph: self)}
-		}
-	}
 	public var Graphs: [NVGraph] {
 		get{ return _graphs }
 	}
@@ -53,7 +44,6 @@ public class NVGraph: NVObject {
 	
 	// MARK: - Initialization -
 	init(manager: NVStoryManager, uuid: NSUUID, name: String) {
-		self._name = name
 		self._graphs = []
 		self._nodes = []
 		self._links = []
@@ -62,6 +52,7 @@ public class NVGraph: NVObject {
 		self._entry = nil
 		self._parent = nil
 		super.init(manager: manager, uuid: uuid)
+		self.Name = name
 	}
 	
 	// MARK: - Functions -
@@ -75,12 +66,12 @@ public class NVGraph: NVObject {
 	public func setEntry(_ entry: NVObject) throws {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
-				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(_name)).")
+				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(Name)).")
 			}
 		}
 		if let fn = entry as? NVNode {
 			if !contains(node: fn) {
-				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(_name)).")
+				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(Name)).")
 			}
 		}
 		_entry = entry
@@ -94,18 +85,18 @@ public class NVGraph: NVObject {
 	}
 	
 	public func containsGraphName(_ name: String) -> Bool {
-		return _graphs.contains(where: {$0._name == name})
+		return _graphs.contains(where: {$0.Name == name})
 	}
 	
 	@discardableResult
 	public func add(graph: NVGraph) throws -> NVGraph {
 		// cannot add self
 		if graph == self {
-			throw NVError.invalid("Tried to add a Graph to self (\(_name)).")
+			throw NVError.invalid("Tried to add a Graph to self (\(Name)).")
 		}
 		// already a child
 		if contains(graph: graph) {
-			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph._name) to \(_name)).")
+			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph.Name) to \(Name)).")
 		}
 		// unparent first
 		if graph._parent != nil {
@@ -121,7 +112,7 @@ public class NVGraph: NVObject {
 	
 	public func remove(graph: NVGraph) throws {
 		guard let idx = _graphs.index(of: graph) else {
-			throw NVError.invalid("Tried to remove Graph (\(graph._name)) from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Graph (\(graph.Name)) from (\(Name)) but it was not a child.")
 		}
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
@@ -138,7 +129,7 @@ public class NVGraph: NVObject {
 	public func add(node: NVNode) throws -> NVNode {
 		// already a child
 		if contains(node: node) {
-			throw NVError.invalid("Tried to add a Node but it already exists (to \(_name)).")
+			throw NVError.invalid("Tried to add a Node but it already exists (to \(Name)).")
 		}
 		_nodes.append(node)
 		
@@ -148,7 +139,7 @@ public class NVGraph: NVObject {
 	
 	public func remove(node: NVNode) throws {
 		guard let idx = _nodes.index(of: node) else {
-			throw NVError.invalid("Tried to remove a Node from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove a Node from (\(Name)) but it was not a child.")
 		}
 		_nodes.remove(at: idx)
 		
@@ -164,7 +155,7 @@ public class NVGraph: NVObject {
 	public func add(link: NVBaseLink) throws -> NVBaseLink {
 		// already a child
 		if contains(link: link) {
-			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(_name)).")
+			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(Name)).")
 		}
 		_links.append(link)
 		
@@ -174,7 +165,7 @@ public class NVGraph: NVObject {
 	
 	public func remove(link: NVBaseLink) throws {
 		guard let idx = _links.index(of: link) else {
-			throw NVError.invalid("Tried to remove BaseLink from (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove BaseLink from (\(Name)) but it was not a child.")
 		}
 		_links.remove(at: idx)
 		
@@ -190,7 +181,7 @@ public class NVGraph: NVObject {
 	public func add(listener: NVListener) throws -> NVListener {
 		// already a child
 		if contains(listener: listener) {
-			throw NVError.invalid("Tried to add a Listener but it already exists (to Graph \(_name)).")
+			throw NVError.invalid("Tried to add a Listener but it already exists (to Graph \(Name)).")
 		}
 		_listeners.append(listener)
 		
@@ -200,7 +191,7 @@ public class NVGraph: NVObject {
 	
 	public func remove(listener: NVListener) throws {
 		guard let idx = _listeners.index(of: listener) else {
-			throw NVError.invalid("Tried to remove Listener from Graph (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove Listener from Graph (\(Name)) but it was not a child.")
 		}
 		_listeners.remove(at: idx)
 		
@@ -216,7 +207,7 @@ public class NVGraph: NVObject {
 	public func add(exit: NVExitNode) throws -> NVExitNode {
 		// already a child
 		if contains(exit: exit) {
-			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to Graph \(_name)).")
+			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to Graph \(Name)).")
 		}
 		_exits.append(exit)
 		
@@ -226,7 +217,7 @@ public class NVGraph: NVObject {
 	
 	public func remove(exit: NVExitNode) throws {
 		guard let idx = _exits.index(of: exit) else {
-			throw NVError.invalid("Tried to remove ExitNode from Graph (\(_name)) but it was not a child.")
+			throw NVError.invalid("Tried to remove ExitNode from Graph (\(Name)) but it was not a child.")
 		}
 		_exits.remove(at: idx)
 		
@@ -242,7 +233,7 @@ public class NVGraph: NVObject {
 // MARK: NVPathable
 extension NVGraph: NVPathable {
 	public func localPath() -> String {
-		return _name
+		return Name
 	}
 	
 	public func parentPath() -> NVPathable? {

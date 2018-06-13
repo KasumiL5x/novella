@@ -14,6 +14,7 @@ public class NVObject {
 	private var _uuid: NSUUID
 	private var _inTrash: Bool
 	private var _position: CGPoint
+	private var _name: String
 	
 	// MARK: - Properties -
 	public var Manager: NVStoryManager {
@@ -33,12 +34,21 @@ public class NVObject {
 			_manager.Delegates.forEach{$0.onStoryObjectPositionChanged(obj: self, oldPos: oldPos, newPos: _position)}
 		}
 	}
+	public var Name: String {
+		get { return _name }
+		set {
+			let oldName = _name
+			_name = newValue
+			_manager.Delegates.forEach{$0.onStoryObjectNameChanged(obj: self, oldName: oldName, newName: _name)}
+		}
+	}
 	
 	init(manager: NVStoryManager, uuid: NSUUID) {
 		self._manager = manager
 		self._uuid = uuid
 		self._inTrash = false
 		self._position = CGPoint.zero
+		self._name = ""
 	}
 	
 	// MARK: - Trashing -
