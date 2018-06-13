@@ -107,6 +107,13 @@ class PinViewBranch: PinView {
 		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
 		return NSMakeSize(PinView.PIN_SIZE, actualPinSize*2.0 + PinView.PIN_SPACING)
 	}
+	override func getDragOrigin() -> CGPoint {
+		if _pannedPin {
+			return NSMakePoint(_truePinRect.origin.x + _truePinRect.width*0.5, _truePinRect.origin.y + _truePinRect.height*0.5)
+		} else {
+			return NSMakePoint(_falsePinRect.origin.x + _falsePinRect.width*0.5, _falsePinRect.origin.y + _falsePinRect.height*0.5)
+		}
+	}
 
 	override func onPanStarted(_ gesture: NSPanGestureRecognizer) {
 		let point = gesture.location(in: self)

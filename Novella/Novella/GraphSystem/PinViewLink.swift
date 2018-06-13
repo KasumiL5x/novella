@@ -71,6 +71,9 @@ class PinViewLink: PinView {
 	override func getFrameSize() -> NSSize {
 		return NSMakeSize(PinView.PIN_SIZE, PinView.PIN_SIZE)
 	}
+	override func getDragOrigin() -> CGPoint {
+		return NSMakePoint(frame.width * 0.5, frame.height * 0.5)
+	}
 	override func onPanStarted(_ gesture: NSPanGestureRecognizer) {
 	}
 	override func onPanFinished(_ target: LinkableView?) {

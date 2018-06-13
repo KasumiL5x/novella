@@ -117,6 +117,10 @@ class PinView: NSView {
 		print("PinView::setBounds() should be overridden.")
 		return NSSize.zero
 	}
+	func getDragOrigin() -> CGPoint {
+		print("PinView::getDragOrigin() should be overridden.")
+		return CGPoint.zero
+	}
 	func onPanStarted(_ gesture: NSPanGestureRecognizer) {
 		print("PinView::onPanStarted() should be overridden.")
 	}
@@ -126,7 +130,7 @@ class PinView: NSView {
 	func onContextInternal(_ gesture: NSClickGestureRecognizer) {
 		print("PinView::onContextInternal() should be overridden.")
 	}
-	@objc func onContextDelete() {
+	@objc func onContextDelete() {		
 		_graphView.Manager.delete(link: self.BaseLink)
 	}
 	
@@ -199,7 +203,7 @@ class PinView: NSView {
 			context.saveGState()
 			
 			if _isDragging {
-				let origin = NSMakePoint(frame.width * 0.5, frame.height * 0.5)
+				let origin = getDragOrigin()
 				_dragPath.removeAllPoints()
 				let end = _dragPosition
 				CurveHelper.smooth(start: origin, end: end, path: _dragPath)
