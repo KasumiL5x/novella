@@ -826,12 +826,29 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="4BE54CC3-FAE2-4265-9B50-8FCAC06B18A9" label="Empty Trash" paletteLabel="Empty Trash" image="NSTrashEmpty" id="GXV-F2-TSv">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="48" height="48"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="ggu-3T-fNk">
+                                        <rect key="frame" x="13" y="14" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTrashEmpty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Qr0-pl-QfX">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarEmptyTrash:" target="jGA-0Y-lOj" id="YCA-8m-5Ev"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="6I3-JS-OQD"/>
                                 <toolbarItem reference="7tY-vX-D3Q"/>
                                 <toolbarItem reference="LSu-mw-2cP"/>
                                 <toolbarItem reference="T62-ZT-jVU"/>
+                                <toolbarItem reference="GXV-F2-TSv"/>
                                 <toolbarItem reference="yGj-rV-Scg"/>
                                 <toolbarItem reference="u6g-ls-Hhq"/>
                                 <toolbarItem reference="pcE-BH-ol5"/>
@@ -844,6 +861,7 @@
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="_emptyTrashButton" destination="ggu-3T-fNk" id="HX5-go-Djz"/>
                         <segue destination="SBf-Of-AwL" kind="relationship" relationship="window.shadowedContentViewController" id="spr-qN-OVS"/>
                     </connections>
                 </windowController>

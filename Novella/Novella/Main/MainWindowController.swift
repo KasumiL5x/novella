@@ -10,6 +10,13 @@ import Cocoa
 
 class MainWindowController: NSWindowController {
 	private var _previewWindowController: NewReaderWindowController? = nil
+	@IBOutlet private weak var _emptyTrashButton: NSButton!
+	private lazy var _trashEmptyImage: NSImage? = {
+		return NSImage(named: NSImage.Name.trashEmpty)
+	}()
+	private lazy var _trashFullImage: NSImage? = {
+		return NSImage(named: NSImage.Name.trashFull)
+	}()
 	
 	override func windowDidLoad() {
 		super.windowDidLoad()
@@ -30,6 +37,14 @@ class MainWindowController: NSWindowController {
 	
 	@IBAction func onToolbarCenterView(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.centerActiveGraph()
+	}
+	
+	@IBAction func onToolbarEmptyTrash(_ sender: NSButton) {
+		(self.document as? NovellaDocument)?.Manager.emptyTrash()
+		setTrashIcon(false)
+	}
+	func setTrashIcon(_ full: Bool) {
+		_emptyTrashButton.image = full ? _trashFullImage : _trashEmptyImage
 	}
 	
 	@IBAction func onToolbarCurveType(_ sender: NSSegmentedControl) {

@@ -55,10 +55,14 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryTrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
 		_mvc.reloadInspector()
+		
+		(_mvc.view.window?.windowController as? MainWindowController)?.setTrashIcon(true)
 	}
 	func onStoryUntrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
 		_mvc.reloadInspector()
+		
+		(_mvc.view.window?.windowController as? MainWindowController)?.setTrashIcon(_mvc.Document.Manager.TrashedItems.count > 0)
 	}
 	
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {

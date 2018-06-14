@@ -43,6 +43,9 @@ public class NVStoryManager {
 	public var Nodes: [NVNode] {
 		get{ return _nodes }
 	}
+	public var TrashedItems: [NVObject] {
+		get{ return _trashed }
+	}
 	
 	// MARK: - Initialization -
 	public init() {
