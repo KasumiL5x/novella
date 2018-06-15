@@ -555,35 +555,31 @@ extension GraphView {
 // MARK: - - Creation -
 extension GraphView {
 	// MARK: LinkableView Conveniences
-	@discardableResult
-	func makeDialog(at: CGPoint) -> DialogLinkableView {
+	func makeDialog(at: CGPoint) {
 		let nvDialog = _document.Manager.makeDialog()
+		nvDialog.Position = at
 		do { try _nvGraph.add(node: nvDialog) } catch {
 			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
 			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
 		}
-		return makeDialogLinkableView(nvDialog: nvDialog, at: at)
 	}
 	
-	@discardableResult
-	func makeDelivery(at: CGPoint) -> DeliveryLinkableView {
+	func makeDelivery(at: CGPoint) {
 		let nvDelivery = _document.Manager.makeDelivery()
+		nvDelivery.Position = at
 		do { try _nvGraph.add(node: nvDelivery) } catch {
 			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
 		}
-		return makeDeliveryLinkableView(nvDelivery: nvDelivery, at: at)
 	}
 	
-	@discardableResult
-	func makeContext(at: CGPoint) -> ContextLinkableView {
+	func makeContext(at: CGPoint) {
 		let nvContext = _document.Manager.makeContext()
+		nvContext.Position = at
 		do { try _nvGraph.add(node: nvContext) } catch {
 			fatalError("Tried to add a new context but couldn't add it to this graph.")
 		}
-		return makeContextLinkableView(nvContext: nvContext, at: at)
 	}
 	
-	@discardableResult
 	func makeGraph(at: CGPoint) {
 		let nvGraph = _document.Manager.makeGraph(name: NSUUID().uuidString)
 		nvGraph.Position = at
@@ -696,8 +692,35 @@ extension GraphView {
 }
 
 
-// MARK: - - NVStoryDelegate -
+// MARK: - NVStoryDelegate -
 extension GraphView: NVStoryDelegate {
+	func onStoryGraphAddNode(node: NVNode, parent: NVGraph) {
+		if parent != self.NovellaGraph {
+			return
+		}
+		
+		let pos: CGPoint
+		if node.Position == CGPoint.zero {
+			pos = NSMakePoint(visibleRect.midX, visibleRect.midY)
+		} else {
+			pos = node.Position
+		}
+		
+		switch node {
+		case is NVDialog:
+			makeDialogLinkableView(nvDialog: node as! NVDialog, at: pos)
+			
+		case is NVDelivery:
+			makeDeliveryLinkableView(nvDelivery: node as! NVDelivery, at: pos)
+			
+		case is NVContext:
+			makeContextLinkableView(nvContext: node as! NVContext, at: pos)
+			
+		default:
+			print("Added node to GraphView but it is not yet handled: \(node)")
+		}
+	}
+	
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
 		if parent == self.NovellaGraph {
 			if self.getLinkableViewFrom(linkable: graph, includeParentGraphs: false) != nil {
