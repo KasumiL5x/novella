@@ -695,17 +695,6 @@ extension GraphView {
 	}
 }
 
-// MARK: - - NSPopoverDelegate -
-extension GraphView: NSPopoverDelegate {
-	func detachableWindow(for popover: NSPopover) -> NSWindow? {
-		return nil // this uses the default window; if i return my own NSWindow here it will use that instead.
-	}
-	
-	func popoverShouldDetach(_ popover: NSPopover) -> Bool {
-		return true
-	}
-}
-
 
 // MARK: - - NVStoryDelegate -
 extension GraphView: NVStoryDelegate {
