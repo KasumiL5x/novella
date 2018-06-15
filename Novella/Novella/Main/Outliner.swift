@@ -79,7 +79,7 @@ class SelectedGraphFancyCell: NSTableCellView {
 		_trashFullImage = NSImage(named: NSImage.Name.trashFull)
 	}
 	
-	private func setTrashIcon(_ trash: Bool) {
+	func setTrashIcon(_ trash: Bool) {
 		_trashButton.image = trash ? _trashFullImage : _trashEmptyImage
 	}
 	
@@ -239,13 +239,15 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		case is NVGraph:
 			let asGraph = (item as! NVGraph)
 			(view as! SelectedGraphFancyCell)._linkable = asGraph
-			view?.textField?.stringValue = (asGraph.InTrash ? "🗑 " : "") + asGraph.Name
+			(view as! SelectedGraphFancyCell).setTrashIcon(asGraph.InTrash)
+			view?.textField?.stringValue = asGraph.Name
 			view?.imageView?.image = _graphImage
 			
 		case is NVNode:
 			let asNode = (item as! NVNode)
 			(view as! SelectedGraphFancyCell)._linkable = asNode
-			view?.textField?.stringValue = (asNode.InTrash ? "🗑 " : "") + asNode.Name
+			(view as! SelectedGraphFancyCell).setTrashIcon(asNode.InTrash)
+			view?.textField?.stringValue = asNode.Name
 			switch item {
 			case is NVDialog:
 				view?.imageView?.image = _dialogImage
@@ -258,6 +260,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			
 		case is NVLink:
 			let asLink = (item as! NVLink)
+			(view as! SelectedGraphFancyCell).setTrashIcon(asLink.InTrash)
 			let from = _mvc.Document.Manager.nameOf(linkable: asLink.Origin)
 			let to = _mvc.Document.Manager.nameOf(linkable: asLink.Transfer.Destination)
 			view?.textField?.stringValue = "\(from) => \(to)"
@@ -265,6 +268,7 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			
 		case is NVBranch:
 			let asBranch = (item as! NVBranch)
+			(view as! SelectedGraphFancyCell).setTrashIcon(asBranch.InTrash)
 			let from = _mvc.Document.Manager.nameOf(linkable: asBranch.Origin)
 			let toTrue = _mvc.Document.Manager.nameOf(linkable: asBranch.TrueTransfer.Destination)
 			let toFalse = _mvc.Document.Manager.nameOf(linkable: asBranch.FalseTransfer.Destination)
