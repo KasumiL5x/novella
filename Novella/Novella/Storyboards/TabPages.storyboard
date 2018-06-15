@@ -343,7 +343,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="ConstantBoolCell" id="QY7-xN-9Ta" userLabel="BoolCell" customClass="VariableConstantBoolCell" customModule="Novella" customModuleProvider="target">
-                                                            <rect key="frame" x="605.5" y="1" width="99" height="30"/>
+                                                            <rect key="frame" x="605.5" y="1" width="100" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mSX-5A-WJm" userLabel="PopUp Button">
@@ -369,11 +369,11 @@
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="ConstantTextCell" id="GRh-I4-Mil" userLabel="TextCell">
-                                                            <rect key="frame" x="605.5" y="33" width="99" height="30"/>
+                                                            <rect key="frame" x="605.5" y="33" width="100" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FLd-oc-gGN">
-                                                                    <rect key="frame" x="1" y="6" width="97" height="17"/>
+                                                                    <rect key="frame" x="1" y="6" width="98" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="yU6-mh-eqF">
                                                                         <font key="font" metaFont="system"/>

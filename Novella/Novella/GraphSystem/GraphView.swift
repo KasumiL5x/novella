@@ -709,6 +709,16 @@ extension GraphView: NSPopoverDelegate {
 
 // MARK: - - NVStoryDelegate -
 extension GraphView: NVStoryDelegate {
+	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
+		if parent == self.NovellaGraph {
+			if self.getLinkableViewFrom(linkable: graph, includeParentGraphs: false) != nil {
+				print("Tried to add graph as a linkable but it already exists!")
+				return
+			}
+			makeGraphLinkableView(nvGraph: graph, at: NSMakePoint(visibleRect.midX, visibleRect.midY))
+		}
+	}
+	
 	func onStoryTrashItem(item: NVObject) {
 		switch item {
 		case is NVDialog:
