@@ -491,7 +491,7 @@ extension GraphView {
 		makeContext(at: _lastContextLocation)
 	}
 	@objc private func onGraphViewMenuAddGraph() {
-		makeGraph(at: _lastContextLocation)
+		makeGraph()
 	}
 	@objc private func onGraphViewMenuTrashSelection() {
 		for curr in _selectionHandler!.Selection {
@@ -584,12 +584,11 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	func makeGraph(at: CGPoint) -> GraphLinkableView {
+	func makeGraph() {
 		let nvGraph = _document.Manager.makeGraph(name: NSUUID().uuidString)
 		do { try _nvGraph.add(graph: nvGraph) } catch {
 			fatalError("Tried to add a new graph but couldn't add it to this graph.")
 		}
-		return makeGraphLinkableView(nvGraph: nvGraph, at: at)
 	}
 	
 	// MARK: LinkableViews

@@ -120,6 +120,6 @@ class GraphTabViewController: NSViewController {
 	}
 	
 	@IBAction func onToolbarGraph(_ sender: NSButton) {
-		_graphView?.makeGraph(at: centerOfGraph())
+		_graphView?.makeGraph()
 	}
 }
