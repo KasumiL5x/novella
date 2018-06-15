@@ -491,7 +491,7 @@ extension GraphView {
 		makeContext(at: _lastContextLocation)
 	}
 	@objc private func onGraphViewMenuAddGraph() {
-		makeGraph()
+		makeGraph(at: _lastContextLocation)
 	}
 	@objc private func onGraphViewMenuTrashSelection() {
 		for curr in _selectionHandler!.Selection {
@@ -584,8 +584,9 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	func makeGraph() {
+	func makeGraph(at: CGPoint) {
 		let nvGraph = _document.Manager.makeGraph(name: NSUUID().uuidString)
+		nvGraph.Position = at
 		do { try _nvGraph.add(graph: nvGraph) } catch {
 			fatalError("Tried to add a new graph but couldn't add it to this graph.")
 		}
@@ -714,7 +715,14 @@ extension GraphView: NVStoryDelegate {
 				print("Tried to add graph as a linkable but it already exists!")
 				return
 			}
-			makeGraphLinkableView(nvGraph: graph, at: NSMakePoint(visibleRect.midX, visibleRect.midY))
+			
+			let pos: CGPoint
+			if graph.Position == CGPoint.zero {
+				pos = NSMakePoint(visibleRect.midX, visibleRect.midY)
+			} else {
+				pos = graph.Position
+			}
+			makeGraphLinkableView(nvGraph: graph, at: pos)
 		}
 	}
 	
