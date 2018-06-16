@@ -10,14 +10,12 @@ import Cocoa
 import NovellaModel
 
 class LinkableView: NSView {
-	// MARK: - - Constants -
+	// MARK: - Constants -
 	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
-	
-	// MARK: - - Identifiers -
 	static let HIT_IGNORE_TAG: Int = 10
 	static let HIT_NIL_TAG: Int = 11
 	
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _nvLinkable: NVObject
 	internal var _graphView: GraphView
 	private var _isPrimed: Bool
@@ -39,7 +37,16 @@ class LinkableView: NSView {
 	private var _contextItemAddBranch: NSMenuItem
 	private var _contextItemTrash: NSMenuItem
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
+	var Linkable: NVObject {
+		get{ return _nvLinkable }
+	}
+	var IsPrimed: Bool {
+		get{ return _isPrimed }
+	}
+	var IsSelected: Bool {
+		get{ return _isSelected }
+	}
 	public var Outputs: [PinView] {
 		get{ return _outputs }
 	}
@@ -52,12 +59,11 @@ class LinkableView: NSView {
 			redraw()
 		}
 	}
-	
 	override var wantsDefaultClipping: Bool {
 		return false
 	}
 	
-	// MARK: - - Initialization -
+	// MARK: - Initialization -
 	init(frameRect: NSRect, nvLinkable: NVObject, graphView: GraphView) {
 		self._nvLinkable = nvLinkable
 		self._graphView = graphView
@@ -131,58 +137,7 @@ class LinkableView: NSView {
 		fatalError("LinkableView::init(coder) not implemented.")
 	}
 	
-	// MARK: - - Properties -
-	var Linkable: NVObject {
-		get{ return _nvLinkable }
-	}
-	var IsPrimed: Bool {
-		get{ return _isPrimed }
-	}
-	var IsSelected: Bool {
-		get{ return _isSelected }
-	}
-	
-	// MARK: - - Functions -
-	@objc private func onContextAddLink() {
-		let link = _graphView.Manager.makeLink(origin: self.Linkable)
-		do { try _graphView.NovellaGraph.add(link: link) } catch {
-			fatalError("Tried to add a new link but couldn't add it to this graph.")
-		}
-	}
-	@objc private func onContextAddBranch() {
-		let link = _graphView.Manager.makeBranch(origin: self.Linkable)
-		do{ try _graphView.NovellaGraph.add(link: link) } catch {
-			fatalError("Tried to add a new branch but couldn't add it to this graph.")
-		}
-	}
-	@objc private func onContextTrash() {
-		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
-	}
-	
-	func removeOutput(pin: PinView) {
-		if let idx = _outputs.index(of: pin) {
-			_outputs.remove(at: idx)
-			pin.removeFromSuperview()
-			
-			layoutPins()
-		}
-	}
-	
-	private func onTrashed() {
-		_contextItemAddLink.isEnabled = !_trashMode
-		_contextItemAddBranch.isEnabled = !_trashMode
-		_contextItemTrash.title = _trashMode ? "Untrash" : "Trash"
-	}
-	
-	func setLabelString(str: String) {
-		_nameLabel.stringValue = str
-		self._nameLabel.sizeToFit()
-		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
-	}
-	
-	func redraw() {
-		setNeedsDisplay(bounds)
-	}
+	// MARK: - Functions -
 	
 	// MARK: Hit Test
 	override func hitTest(_ point: NSPoint) -> NSView? {
@@ -223,6 +178,40 @@ class LinkableView: NSView {
 	}
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		_graphView.onPanLinkable(node: self, gesture: gesture)
+	}
+	
+	// MARK: Context Menu Callbacks
+	@objc private func onContextAddLink() {
+		let link = _graphView.Manager.makeLink(origin: self.Linkable)
+		do { try _graphView.NovellaGraph.add(link: link) } catch {
+			fatalError("Tried to add a new link but couldn't add it to this graph.")
+		}
+	}
+	@objc private func onContextAddBranch() {
+		let link = _graphView.Manager.makeBranch(origin: self.Linkable)
+		do{ try _graphView.NovellaGraph.add(link: link) } catch {
+			fatalError("Tried to add a new branch but couldn't add it to this graph.")
+		}
+	}
+	@objc private func onContextTrash() {
+		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
+	}
+	
+	// MARK: Object Functions
+	private func onTrashed() {
+		_contextItemAddLink.isEnabled = !_trashMode
+		_contextItemAddBranch.isEnabled = !_trashMode
+		_contextItemTrash.title = _trashMode ? "Untrash" : "Trash"
+	}
+	
+	func setLabelString(str: String) {
+		_nameLabel.stringValue = str
+		self._nameLabel.sizeToFit()
+		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
+	}
+	
+	func redraw() {
+		setNeedsDisplay(bounds)
 	}
 	
 	// MARK: Virtual Functions
@@ -278,6 +267,13 @@ class LinkableView: NSView {
 		sizeToFitSubviews() // subviews cannot be interacted with if they are out of the bounds of the superview, so resize
 		
 		setNeedsDisplay(bounds)
+	}
+	func removeOutput(pin: PinView) {
+		if let idx = _outputs.index(of: pin) {
+			_outputs.remove(at: idx)
+			pin.removeFromSuperview()
+			layoutPins()
+		}
 	}
 	private func layoutPins() {
 		if _outputs.isEmpty {
@@ -346,7 +342,7 @@ class LinkableView: NSView {
 		self.frame.size = NSMakeSize(w, h)
 	}
 	
-	// MARK: - - Drawing -
+	// MARK: - Drawing -
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
