@@ -513,7 +513,6 @@ extension GraphView {
 		do { try _nvGraph.add(link: nvLink) } catch {
 			fatalError("Tried to add a new link but couldn't add it to this graph.")
 		}
-		clicked.addOutput(pin: makePinViewLink(baseLink: nvLink, forNode: clicked))
 	}
 	@objc private func onLinkableMenuAddBranch() {
 		guard let clicked = _contextClickedLinkable else {
@@ -525,7 +524,6 @@ extension GraphView {
 		do{ try _nvGraph.add(link: nvBranch) } catch {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
 		}
-		clicked.addOutput(pin: makePinViewBranch(baseLink: nvBranch, forNode: clicked))
 	}
 }
 
@@ -735,6 +733,29 @@ extension GraphView: NVStoryDelegate {
 				pos = graph.Position
 			}
 			makeGraphLinkableView(nvGraph: graph, at: pos)
+		}
+	}
+	
+	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph) {
+		if parent != self.NovellaGraph {
+			return
+		}
+		
+		guard let originView = getLinkableViewFrom(linkable: link.Origin, includeParentGraphs: false) else {
+			print("Tried to add link to graph but its origin node wasn't in the GraphView yet.")
+			return
+		}
+		
+		switch link {
+		case is NVLink:
+			originView.addOutput(pin: makePinViewLink(baseLink: link as! NVLink, forNode: originView))
+			
+		case is NVBranch:
+			originView.addOutput(pin: makePinViewBranch(baseLink: link as! NVBranch, forNode: originView))
+			
+		default:
+			print("GraphView::onStoryGraphAddLink() encountered unsupported link (\(link)).")
+			break
 		}
 	}
 	
