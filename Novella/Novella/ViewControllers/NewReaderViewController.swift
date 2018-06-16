@@ -11,13 +11,15 @@ import Cocoa
 class NewReaderViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet weak var _graphPopup: NSPopUpButton!
+	internal var _document: NovellaDocument?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		_document = nil
 	}
 	
 	override func viewWillAppear() {
-		guard let document = view.window?.windowController?.document as? NovellaDocument else {
+		guard let document = _document else {
 			print("Document was nil when reader VC appeared.")
 			return
 		}

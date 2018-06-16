@@ -67,8 +67,9 @@ class MainWindowController: NSWindowController {
 		if _previewWindowController == nil {
 			let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
 			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as? NewReaderWindowController
-			_previewWindowController!.document = self.document
+			_previewWindowController!.setDocument(doc: self.document as! NovellaDocument)
 		}
+		
 		_previewWindowController?.showWindow(self)
 	}
 	
