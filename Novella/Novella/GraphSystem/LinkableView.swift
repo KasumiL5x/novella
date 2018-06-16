@@ -37,6 +37,7 @@ class LinkableView: NSView {
 	private var _contextMenu: NSMenu
 	private var _contextItemAddLink: NSMenuItem
 	private var _contextItemAddBranch: NSMenuItem
+	private var _contextItemTrash: NSMenuItem
 	
 	// MARK: - - Properties -
 	public var Outputs: [PinView] {
@@ -81,12 +82,15 @@ class LinkableView: NSView {
 		self._contextMenu = NSMenu()
 		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
 		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
+		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(LinkableView.onContextTrash), keyEquivalent: "")
 		super.init(frame: frameRect)
 		
 		// set up context menu
 		_contextMenu.autoenablesItems = false
 		_contextMenu.addItem(_contextItemAddLink)
 		_contextMenu.addItem(_contextItemAddBranch)
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(_contextItemTrash)
 		
 		// add shadow
 		wantsLayer = true
@@ -151,7 +155,9 @@ class LinkableView: NSView {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
 		}
 	}
-	
+	@objc private func onContextTrash() {
+		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
+	}
 	
 	func removeOutput(pin: PinView) {
 		if let idx = _outputs.index(of: pin) {
@@ -165,6 +171,7 @@ class LinkableView: NSView {
 	private func onTrashed() {
 		_contextItemAddLink.isEnabled = !_trashMode
 		_contextItemAddBranch.isEnabled = !_trashMode
+		_contextItemTrash.title = _trashMode ? "Untrash" : "Trash"
 	}
 	
 	func setLabelString(str: String) {
