@@ -25,8 +25,6 @@ class DialogLinkableView: LinkableView {
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
-	override func onTrashed() {
-	}
 	override func onMove() {
 		(Linkable as! NVDialog).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}

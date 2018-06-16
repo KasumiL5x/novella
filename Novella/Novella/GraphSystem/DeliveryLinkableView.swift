@@ -25,8 +25,6 @@ class DeliveryLinkableView: LinkableView {
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
-	override func onTrashed() {
-	}
 	override func onMove() {
 		(Linkable as! NVDelivery).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}

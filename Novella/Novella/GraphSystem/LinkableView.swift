@@ -35,6 +35,8 @@ class LinkableView: NSView {
 	private var _trashMode: Bool
 	//
 	private var _contextMenu: NSMenu
+	private var _contextItemAddLink: NSMenuItem
+	private var _contextItemAddBranch: NSMenuItem
 	
 	// MARK: - - Properties -
 	public var Outputs: [PinView] {
@@ -77,11 +79,14 @@ class LinkableView: NSView {
 		self._trashMode = false
 		//
 		self._contextMenu = NSMenu()
+		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
+		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
 		super.init(frame: frameRect)
 		
 		// set up context menu
-		_contextMenu.addItem(withTitle: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
+		_contextMenu.autoenablesItems = false
+		_contextMenu.addItem(_contextItemAddLink)
+		_contextMenu.addItem(_contextItemAddBranch)
 		
 		// add shadow
 		wantsLayer = true
@@ -157,8 +162,9 @@ class LinkableView: NSView {
 		}
 	}
 	
-	func onTrashed() {
-		print("LinkableView::onTrashed() should be overridden.")
+	private func onTrashed() {
+		_contextItemAddLink.isEnabled = !_trashMode
+		_contextItemAddBranch.isEnabled = !_trashMode
 	}
 	
 	func setLabelString(str: String) {
@@ -206,7 +212,6 @@ class LinkableView: NSView {
 		_graphView.onDoubleClickLinkable(node: self, gesture: gesture)
 	}
 	@objc private func onContextClick(gesture: NSGestureRecognizer) {
-		if _trashMode { return }
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {

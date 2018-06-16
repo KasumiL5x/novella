@@ -25,8 +25,6 @@ class GraphLinkableView: LinkableView {
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
-	override func onTrashed() {
-	}
 	override func onMove() {
 		(Linkable as? NVGraph)?.Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
