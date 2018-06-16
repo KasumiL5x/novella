@@ -26,9 +26,6 @@ class GraphView: NSView {
 	private var _contextGesture: NSClickGestureRecognizer?
 	// MARK: Linkable Function Variables
 	private var _lastLinkablePanPos: CGPoint
-	// MARK: Node Context Menu
-	private var _linkableMenu: NSMenu // context menu for linkable widgets
-	private var _contextClickedLinkable: LinkableView?
 	// MARK: GraphView Context Menu
 	private var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
 	private var _lastContextLocation: CGPoint // last point right clicked on graph view
@@ -54,9 +51,6 @@ class GraphView: NSView {
 		//
 		self._lastLinkablePanPos = CGPoint.zero
 		//
-		self._linkableMenu = NSMenu()
-		self._contextClickedLinkable = nil
-		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
 		//
@@ -79,9 +73,6 @@ class GraphView: NSView {
 		self._contextGesture!.numberOfClicksRequired = 1
 		self.addGestureRecognizer(self._contextGesture!)
 		
-		// configure linkable menu
-		_linkableMenu.addItem(withTitle: "Add Link", action: #selector(GraphView.onLinkableMenuAddLink), keyEquivalent: "")
-		_linkableMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.onLinkableMenuAddBranch), keyEquivalent: "")
 		// configure graphview menu
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(GraphView.onGraphViewMenuAddDialog), keyEquivalent: "")
@@ -137,7 +128,6 @@ class GraphView: NSView {
 		
 		// reset some other things
 		_lastLinkablePanPos = CGPoint.zero
-		_contextClickedLinkable = nil
 		_lastContextLocation = CGPoint.zero
 		
 		// clear undo/redo TODO: Not sure if this should still be done since it's not graph-based now.
@@ -453,14 +443,6 @@ extension GraphView {
 			break
 		}
 	}
-	func onContextLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
-		if let event = NSApp.currentEvent {
-			_contextClickedLinkable = node
-			NSMenu.popUpContextMenu(_linkableMenu, with: event, for: node)
-		} else {
-			print("Tried to open a context menu for a linkable but there was no event available to use.")
-		}
-	}
 	
 	// MARK: From PinView
 	func linkableViewAtPoint(_ point: CGPoint) -> LinkableView? {
@@ -500,30 +482,6 @@ extension GraphView {
 	}
 	@objc private func onGraphViewMenuEmptyTrash() {
 		_document.Manager.emptyTrash()
-	}
-	
-	// MARK: Linkable Menu
-	@objc private func onLinkableMenuAddLink() {
-		guard let clicked = _contextClickedLinkable else {
-			print("Tried to add a link to a linkable via context but _contextClickedLinkable was nil.")
-			return
-		}
-		let nvLink = _document.Manager.makeLink(origin: clicked.Linkable)
-		// add it to this graph
-		do { try _nvGraph.add(link: nvLink) } catch {
-			fatalError("Tried to add a new link but couldn't add it to this graph.")
-		}
-	}
-	@objc private func onLinkableMenuAddBranch() {
-		guard let clicked = _contextClickedLinkable else {
-			print("Tried to add a branch to a linkable via context but _contextClickedLinkable was nil.")
-			return
-		}
-		let nvBranch = _document.Manager.makeBranch(origin: clicked.Linkable)
-		// add it to this graph
-		do{ try _nvGraph.add(link: nvBranch) } catch {
-			fatalError("Tried to add a new branch but couldn't add it to this graph.")
-		}
 	}
 }
 

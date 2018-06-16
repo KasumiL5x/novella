@@ -33,6 +33,8 @@ class LinkableView: NSView {
 	private var _outputsBoard: PinBoard
 	//
 	private var _trashMode: Bool
+	//
+	private var _contextMenu: NSMenu
 	
 	// MARK: - - Properties -
 	public var Outputs: [PinView] {
@@ -73,7 +75,13 @@ class LinkableView: NSView {
 		self._outputsBoard = PinBoard()
 		//
 		self._trashMode = false
+		//
+		self._contextMenu = NSMenu()
 		super.init(frame: frameRect)
+		
+		// set up context menu
+		_contextMenu.addItem(withTitle: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
 		
 		// add shadow
 		wantsLayer = true
@@ -126,6 +134,20 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - - Functions -
+	@objc private func onContextAddLink() {
+		let link = _graphView.Manager.makeLink(origin: self.Linkable)
+		do { try _graphView.NovellaGraph.add(link: link) } catch {
+			fatalError("Tried to add a new link but couldn't add it to this graph.")
+		}
+	}
+	@objc private func onContextAddBranch() {
+		let link = _graphView.Manager.makeBranch(origin: self.Linkable)
+		do{ try _graphView.NovellaGraph.add(link: link) } catch {
+			fatalError("Tried to add a new branch but couldn't add it to this graph.")
+		}
+	}
+	
+	
 	func removeOutput(pin: PinView) {
 		if let idx = _outputs.index(of: pin) {
 			_outputs.remove(at: idx)
@@ -185,7 +207,7 @@ class LinkableView: NSView {
 	}
 	@objc private func onContextClick(gesture: NSGestureRecognizer) {
 		if _trashMode { return }
-		_graphView.onContextLinkable(node: self, gesture: gesture)
+		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		_graphView.onPanLinkable(node: self, gesture: gesture)
