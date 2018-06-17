@@ -21,6 +21,7 @@ class LinkableView: NSView {
 	private var _isPrimed: Bool
 	private var _isSelected: Bool
 	private let _nameLabel: NSTextField
+	private let _entryLabel: NSTextField
 	//
 	private var _clickGesture: NSClickGestureRecognizer?
 	private var _doubleClickGesture: NSClickGestureRecognizer?
@@ -35,6 +36,7 @@ class LinkableView: NSView {
 	private var _contextMenu: NSMenu
 	private var _contextItemAddLink: NSMenuItem
 	private var _contextItemAddBranch: NSMenuItem
+	private var _contextItemEntry: NSMenuItem
 	private var _contextItemTrash: NSMenuItem
 	
 	// MARK: - Properties -
@@ -75,6 +77,11 @@ class LinkableView: NSView {
 		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
 		self._nameLabel.font = NSFont.systemFont(ofSize: 42.0, weight: .ultraLight)
 		//
+		self._entryLabel = NSTextField(labelWithString: "Entry")
+		self._entryLabel.tag = LinkableView.HIT_IGNORE_TAG
+		self._entryLabel.textColor = NSColor.fromHex("#f2f2f2")
+		self._entryLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .bold)
+		//
 		self._clickGesture = nil
 		self._doubleClickGesture = nil
 		self._ctxGesture = nil
@@ -88,6 +95,7 @@ class LinkableView: NSView {
 		self._contextMenu = NSMenu()
 		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
 		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
+		self._contextItemEntry = NSMenuItem(title: "Set as Entry", action: #selector(LinkableView.onContextSetEntry), keyEquivalent: "")
 		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(LinkableView.onContextTrash), keyEquivalent: "")
 		super.init(frame: frameRect)
 		
@@ -95,6 +103,8 @@ class LinkableView: NSView {
 		_contextMenu.autoenablesItems = false
 		_contextMenu.addItem(_contextItemAddLink)
 		_contextMenu.addItem(_contextItemAddBranch)
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(_contextItemEntry)
 		_contextMenu.addItem(NSMenuItem.separator())
 		_contextMenu.addItem(_contextItemTrash)
 		
@@ -112,6 +122,12 @@ class LinkableView: NSView {
 		// name label
 		setLabelString(str: "?")
 		self.addSubview(self._nameLabel)
+		
+		// entry label
+		self.addSubview(self._entryLabel)
+		self._entryLabel.sizeToFit()
+		self._entryLabel.frame.origin = NSMakePoint(3.0, 1.0)
+		updateEntryLabel()
 		
 		// primary click recognizer
 		_clickGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onClick))
@@ -193,6 +209,9 @@ class LinkableView: NSView {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
 		}
 	}
+	@objc private func onContextSetEntry() {
+		try! _graphView.NovellaGraph.setEntry(self.Linkable)
+	}
 	@objc private func onContextTrash() {
 		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
 	}
@@ -201,6 +220,7 @@ class LinkableView: NSView {
 	private func onTrashed() {
 		_contextItemAddLink.isEnabled = !_trashMode
 		_contextItemAddBranch.isEnabled = !_trashMode
+		_contextItemEntry.isEnabled = !_trashMode
 		_contextItemTrash.title = _trashMode ? "Untrash" : "Trash"
 	}
 	
@@ -208,6 +228,10 @@ class LinkableView: NSView {
 		_nameLabel.stringValue = str
 		self._nameLabel.sizeToFit()
 		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
+	}
+	
+	func updateEntryLabel() {
+		self._entryLabel.isHidden = _graphView.NovellaGraph.Entry != self.Linkable
 	}
 	
 	func redraw() {
@@ -391,6 +415,9 @@ class LinkableView: NSView {
 				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
 				path.stroke()
 			}
+			
+			// draw the entry point somewhere on the widget rect
+			
 			
 			context.restoreGState()
 		}

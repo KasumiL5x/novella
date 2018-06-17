@@ -717,6 +717,16 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	
+	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
+		if graph != self.NovellaGraph {
+			return
+		}
+		
+		for x in _allLinkableViews {
+			x.updateEntryLabel()
+		}
+	}
+	
 	func onStoryTrashItem(item: NVObject) {
 		switch item {
 		case is NVDialog:
