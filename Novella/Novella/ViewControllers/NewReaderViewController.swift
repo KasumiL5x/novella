@@ -11,10 +11,14 @@ import NovellaModel
 
 class NewReaderViewController: NSViewController {
 	// MARK: - Outlets -
-	@IBOutlet weak var _graphPopup: NSPopUpButton!
+	@IBOutlet private weak var _graphPopup: NSPopUpButton!
+	@IBOutlet private weak var _choiceWheel: ChoiceWheelView!
 	internal var _document: NovellaDocument?
 	private var _reader: NVReader?
 	
+	// MARK: - Functions -
+	
+	// MARK: ViewController
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		_document = nil
@@ -32,12 +36,21 @@ class NewReaderViewController: NSViewController {
 		
 		// set up reader
 		_reader = NVReader(manager: document.Manager, delegate: self)
+		
+		if let startGraph = document.Manager.Story.Graphs.first {
+			_reader?.start(startGraph, atNode: nil)
+		}
+	}
+	
+	// MARK: Interface Callbacks
+	@IBAction func onGraphPopupChanged(_ sender: NSPopUpButton) {
+		print("changed to \(sender.selectedItem!.title)")
 	}
 }
 
 extension NewReaderViewController: NVReaderDelegate {
 	func readerNodeWillConsume(node: NVNode, outputs: [NVBaseLink]) {
-		
+		_choiceWheel.setup(count: outputs.count)
 	}
 	
 	func readerLinkWillFollow(outputs: [NVBaseLink]) -> NVBaseLink {

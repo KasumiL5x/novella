@@ -909,6 +909,9 @@
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="KL3-IE-LhY"/>
                                         </popUpButtonCell>
+                                        <connections>
+                                            <action selector="onGraphPopupChanged:" target="1AZ-wJ-jTz" id="ma9-iA-dmH"/>
+                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EcA-4m-Yli">
                                         <rect key="frame" x="8" y="9" width="48" height="17"/>
@@ -969,6 +972,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_choiceWheel" destination="FW2-Zr-uz4" id="Wmq-fs-XuQ"/>
                         <outlet property="_graphPopup" destination="qrJ-ZC-21v" id="3jy-3E-jeD"/>
                     </connections>
                 </viewController>

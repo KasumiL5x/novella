@@ -10,10 +10,17 @@ import Cocoa
 
 @IBDesignable
 class ChoiceWheelView: NSView {
+	// MARK: - Variables -
 	@IBInspectable var _itemCount: Int = 3
 	private var _activeItem: Int = -1
 	private var _spacing: CGFloat = 10.0
 	private var _trackingArea: NSTrackingArea?
+	
+	// MARK: - Functions -
+	func setup(count: Int) {
+		_itemCount = count
+		setNeedsDisplay(bounds)
+	}
 	
 	override func updateTrackingAreas() {
 		if _trackingArea != nil {
@@ -22,10 +29,16 @@ class ChoiceWheelView: NSView {
 		
 		let options: NSTrackingArea.Options = [
 			NSTrackingArea.Options.activeInKeyWindow,
-			NSTrackingArea.Options.mouseMoved
+			NSTrackingArea.Options.mouseMoved,
+			NSTrackingArea.Options.mouseEnteredAndExited
 		]
 		_trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
 		self.addTrackingArea(_trackingArea!)
+	}
+	
+	override func mouseExited(with event: NSEvent) {
+		_activeItem = -1
+		setNeedsDisplay(bounds)
 	}
 	
 	override func mouseMoved(with event: NSEvent) {
@@ -69,6 +82,7 @@ class ChoiceWheelView: NSView {
 				let startAngle = itemAngle * CGFloat(idx) + _spacing
 				let endAngle = startAngle + itemAngle - _spacing
 
+				// draw ring segment
 				context.beginPath()
 				context.addArc(center: center, radius: radius, startAngle: toRadians(90.0 - startAngle), endAngle: toRadians(90.0 - endAngle), clockwise: true)
 				colors[idx % colors.count].setStroke()
@@ -77,7 +91,18 @@ class ChoiceWheelView: NSView {
 				} else {
 					context.setLineWidth(10.0)
 				}
-
+				context.strokePath()
+				
+				// draw angle line
+				let centerAngle = startAngle + ((endAngle - startAngle)/2)
+				let angleDir = CGPoint(angle: toRadians(90.0-centerAngle))
+				let lineStart = center + angleDir * radius
+				let lineEnd = lineStart + angleDir * 25.0
+				context.setLineWidth(1.5)
+				context.move(to: lineStart)
+				context.addLine(to: lineEnd)
+//				let underlineEnd = lineEnd + NSMakePoint(centerAngle > 180.0 ? -100.0	: 100.0, 0.0)
+//				context.addLine(to: underlineEnd)
 				context.strokePath()
 			}
 			
@@ -85,6 +110,7 @@ class ChoiceWheelView: NSView {
 		}
 	}
 	
+	// MARK: - Helpers -
 	private func toRadians(_ degrees: CGFloat) -> CGFloat {
 		return degrees * 0.0174533
 	}
