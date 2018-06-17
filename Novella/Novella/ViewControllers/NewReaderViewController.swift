@@ -50,7 +50,12 @@ class NewReaderViewController: NSViewController {
 
 extension NewReaderViewController: NVReaderDelegate {
 	func readerNodeWillConsume(node: NVNode, outputs: [NVBaseLink]) {
-		_choiceWheel.setup(count: outputs.count)
+		// TODO: Grab this from the destinations of the outputs.
+		var options: [String] = []
+		options.append("Option 1")
+		options.append("Option 2")
+		options.append("Option 3")
+		_choiceWheel.setup(options: options)
 	}
 	
 	func readerLinkWillFollow(outputs: [NVBaseLink]) -> NVBaseLink {

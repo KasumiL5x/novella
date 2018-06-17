@@ -956,7 +956,7 @@
                                 </textFieldCell>
                             </textField>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FW2-Zr-uz4" customClass="ChoiceWheelView" customModule="Novella" customModuleProvider="target">
-                                <rect key="frame" x="241" y="20" width="269" height="191"/>
+                                <rect key="frame" x="20" y="20" width="710" height="191"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="_itemCount">
