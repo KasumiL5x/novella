@@ -38,6 +38,8 @@
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
 		65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65223B5220C68D4E008E8A95 /* PinBoard.swift */; };
 		654918E320D42165008467FF /* NVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E220D42165008467FF /* NVReader.swift */; };
+		654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E420D6946B008467FF /* ChoiceWheelView.swift */; };
+		654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
 		655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F9FAE20C3087300B20EFE /* AppDelegate.swift */; };
 		655F9FB520C3087400B20EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB420C3087400B20EFE /* Assets.xcassets */; };
 		655F9FB820C3087400B20EFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB620C3087400B20EFE /* Main.storyboard */; };
@@ -162,6 +164,7 @@
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
 		654918E220D42165008467FF /* NVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReader.swift; sourceTree = "<group>"; };
+		654918E420D6946B008467FF /* ChoiceWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWheelView.swift; sourceTree = "<group>"; };
 		655F9FAB20C3087300B20EFE /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FAE20C3087300B20EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		655F9FB420C3087400B20EFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -304,6 +307,7 @@
 				65F7F84520C31707004663D6 /* GraphSystem */,
 				65F7F8B620C319D6004663D6 /* Storyboards */,
 				65F7F87020C31722004663D6 /* ViewControllers */,
+				654918E420D6946B008467FF /* ChoiceWheelView.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -735,6 +739,7 @@
 				65F7F84420C3168A004663D6 /* CurveHelper.swift in Sources */,
 				65F7F86320C31714004663D6 /* PinView.swift in Sources */,
 				65F7F89B20C317F4004663D6 /* ConditionPopoverViewController.swift in Sources */,
+				654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */,
 				65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */,
 				65F7F8A520C3182F004663D6 /* VariableTabViewController.swift in Sources */,
 				65F7F86F20C31714004663D6 /* GraphViewCommands.swift in Sources */,
@@ -746,6 +751,7 @@
 				65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */,
 				65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */,
 				65F7F83C20C31637004663D6 /* NSColor+Saturation.swift in Sources */,
+				654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */,
 				65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */,
 				65F7F8A420C3182F004663D6 /* GraphTabViewController.swift in Sources */,
 				65F7F86220C31714004663D6 /* GraphBoundsView.swift in Sources */,

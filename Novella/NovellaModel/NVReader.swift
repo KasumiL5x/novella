@@ -24,7 +24,7 @@ public class NVReader {
 	private var _currentNode: NVNode?
 	
 	// MARK: - Initialization -
-	init(manager: NVStoryManager, delegate: NVReaderDelegate) {
+	public init(manager: NVStoryManager, delegate: NVReaderDelegate) {
 		self._manager = manager
 		self._delegate = delegate
 		self._graph = nil

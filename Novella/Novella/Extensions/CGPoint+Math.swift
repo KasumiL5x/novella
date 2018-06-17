@@ -8,6 +8,25 @@
 
 import Foundation
 
+public extension CGPoint {
+	public func length() -> CGFloat {
+		return sqrt(x*x + y*y)
+	}
+	
+	func normalized() -> CGPoint {
+		let len = length()
+		return len>0 ? self / len : CGPoint.zero
+	}
+	
+	public var angle: CGFloat {
+		return atan2(y, x)
+	}
+}
+
+public func / (point: CGPoint, scalar: CGFloat) -> CGPoint {
+	return CGPoint(x: point.x / scalar, y: point.y / scalar)
+}
+
 public func + (left: CGPoint, right: CGPoint) -> CGPoint {
 	return CGPoint(x: left.x + right.x, y: left.y + right.y)
 }
