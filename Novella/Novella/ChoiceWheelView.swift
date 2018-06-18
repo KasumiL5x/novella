@@ -224,7 +224,10 @@ class ChoiceWheelView: NSView {
 		if _activeItem != -1 {
 			_arrowLayer.fillColor = ChoiceWheelView.ActiveColor.cgColor
 		}
+		CATransaction.begin()
+		CATransaction.setAnimationDuration(0.1)
 		_arrowLayer.transform = CATransform3DMakeRotation(toRadians(-degrees), 0.0, 0.0, 1.0)
+		CATransaction.commit()
 	}
 	
 	// MARK: - Helpers -
