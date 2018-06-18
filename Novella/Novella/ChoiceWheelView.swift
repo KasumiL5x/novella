@@ -26,6 +26,7 @@ class ChoiceWheelView: NSView {
 	static let InactiveThicknessModifier: CGFloat = 0.5
 	static let Radius: CGFloat = 50.0
 	static let Spacing: CGFloat = 2.0
+	static let CenterRadius: CGFloat = 30.0
 	
 	// MARK: - Variables -
 	private var _items: [String] = [
@@ -42,6 +43,7 @@ class ChoiceWheelView: NSView {
 	
 	private var _segments: [ChoiceSegment] = []
 	private var _backgroundLayer: CAShapeLayer = CAShapeLayer()
+	private var _centerLayer: CAShapeLayer = CAShapeLayer()
 	private var _arrowLayer: CAShapeLayer = CAShapeLayer()
 	
 	// MARK: - Functions -
@@ -66,6 +68,16 @@ class ChoiceWheelView: NSView {
 		_backgroundLayer.lineWidth = ChoiceWheelView.Thickness
 		_backgroundLayer.strokeColor = ChoiceWheelView.BackgroundColor.cgColor
 		layer?.addSublayer(_backgroundLayer)
+		
+		// center circle
+		_centerLayer.path = NSBezierPath(ovalIn: NSMakeRect(
+			bounds.midX - ChoiceWheelView.CenterRadius*0.5,
+			bounds.midY - ChoiceWheelView.CenterRadius*0.5,
+			ChoiceWheelView.CenterRadius,
+			ChoiceWheelView.CenterRadius)
+		).cgPath
+		_centerLayer.fillColor = ChoiceWheelView.BackgroundColor.cgColor
+		layer?.addSublayer(_centerLayer)
 		
 		// all items
 		let itemAngle: CGFloat = 360.0 / CGFloat(_items.count)
@@ -128,23 +140,22 @@ class ChoiceWheelView: NSView {
 			segment.lineLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
 			layer?.addSublayer(segment.lineLayer)
 		}
-		
-		// arrow layer
-		let arrowSize: CGFloat = 40.0
-		let arrowPath = NSBezierPath()//ovalIn: NSMakeRect(0, 0, arrowSize, arrowSize))
-		arrowPath.appendRoundedRect(NSMakeRect(0, 0, arrowSize, arrowSize), xRadius: 5.0, yRadius: 5.0)
-//		arrowPath.appendOval(in: NSMakeRect(0, 0, arrowSize, arrowSize))
-		arrowPath.move(to: NSMakePoint(0.0, arrowSize*0.5))
-		arrowPath.line(to: NSMakePoint(arrowSize*0.5, arrowSize * 1.2))
-		arrowPath.line(to: NSMakePoint(arrowSize, arrowSize*0.5))
+	
+		// arrow
+		let arrowWidth = ChoiceWheelView.CenterRadius * 0.5
+		let arrowHeight = ChoiceWheelView.CenterRadius * 0.5
+		_arrowLayer.anchorPoint = NSMakePoint(0.5, 0.0) // must come before origin change
+		_arrowLayer.frame.origin = center - NSMakePoint(arrowWidth*0.5, 0.0)
+		_arrowLayer.frame.size = NSMakeSize(arrowWidth, ChoiceWheelView.CenterRadius + arrowHeight)
+		let arrowPath = NSBezierPath()
+		let arrowOffset = ChoiceWheelView.CenterRadius*0.4
+		arrowPath.move(to: NSPoint(x: 0, y: arrowOffset))
+		arrowPath.line(to: NSPoint(x: arrowWidth*0.5, y: arrowOffset+arrowHeight))
+		arrowPath.line(to: NSPoint(x: arrowWidth, y: arrowOffset))
+		arrowPath.line(to: NSPoint(x: 0, y: arrowOffset))
 		arrowPath.close()
 		_arrowLayer.path = arrowPath.cgPath
-		_arrowLayer.frame.origin = center - NSMakePoint(arrowSize*0.5, arrowSize*0.5)
-		_arrowLayer.frame.size = NSMakeSize(arrowSize, arrowSize)
-		_arrowLayer.fillColor = NSColor.red.cgColor
-		_arrowLayer.fillRule = kCAFillRuleNonZero // how to make this not hollowed?
-		_arrowLayer.lineCap = kCALineCapRound
-		_arrowLayer.lineJoin = kCALineJoinRound
+		_arrowLayer.fillColor = ChoiceWheelView.BackgroundColor.cgColor
 		layer?.addSublayer(_arrowLayer)
 	}
 	
@@ -177,6 +188,7 @@ class ChoiceWheelView: NSView {
 			segment.lineLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
 		}
 		
+		_arrowLayer.fillColor = ChoiceWheelView.BackgroundColor.cgColor
 		_arrowLayer.transform = CATransform3DMakeRotation(0.0, 0.0, 0.0, 1.0)
 		
 		setNeedsDisplay(bounds)
@@ -209,6 +221,9 @@ class ChoiceWheelView: NSView {
 			}
 		}
 		
+		if _activeItem != -1 {
+			_arrowLayer.fillColor = ChoiceWheelView.ActiveColor.cgColor
+		}
 		_arrowLayer.transform = CATransform3DMakeRotation(toRadians(-degrees), 0.0, 0.0, 1.0)
 	}
 	
