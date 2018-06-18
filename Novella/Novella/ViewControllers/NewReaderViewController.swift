@@ -12,9 +12,12 @@ import NovellaModel
 class NewReaderViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet private weak var _graphPopup: NSPopUpButton!
+	@IBOutlet private weak var _titleLabel: NSTextField!
+	@IBOutlet private weak var _contentLabel: NSTextField!
 	@IBOutlet private weak var _choiceWheel: ChoiceWheelView!
 	internal var _document: NovellaDocument?
 	private var _reader: NVReader?
+	private var _chosenLinkIndex: Int = -1
 	
 	// MARK: - Functions -
 	
@@ -40,6 +43,13 @@ class NewReaderViewController: NSViewController {
 		if let startGraph = document.Manager.Story.Graphs.first {
 			_reader?.start(startGraph, atNode: nil)
 		}
+		
+		_choiceWheel.ClickHandler = { (idx: Int) in
+			if idx != -1 {
+				self._chosenLinkIndex = idx
+				self._reader?.next()
+			}
+		}
 	}
 	
 	// MARK: Interface Callbacks
@@ -50,15 +60,49 @@ class NewReaderViewController: NSViewController {
 
 extension NewReaderViewController: NVReaderDelegate {
 	func readerNodeWillConsume(node: NVNode, outputs: [NVBaseLink]) {
-		// TODO: Grab this from the destinations of the outputs.
+		switch node {
+		case is NVDialog:
+			_titleLabel.stringValue = "Dialog"
+			_contentLabel.stringValue = (node as! NVDialog).Content
+			
+		case is NVDelivery:
+			_titleLabel.stringValue = "Delivery"
+			_contentLabel.stringValue = (node as! NVDelivery).Content
+			
+		case is NVContext:
+			_titleLabel.stringValue = "Context"
+			_contentLabel.stringValue = ""
+			
+		default:
+			_titleLabel.stringValue = "INVALID"
+			_contentLabel.stringValue = ""
+		}
+		
 		var options: [String] = []
-		options.append("Option 1")
-		options.append("Option 2")
-		options.append("Option 3")
+		for base in outputs {
+			switch base {
+			case is NVLink:
+				if let dest = (base as! NVLink).Transfer.Destination {
+					options.append(dest.Name)
+				} else {
+					options.append("Invalid Link")
+				}
+				
+			case is NVBranch:
+				if let trueDest = (base as! NVBranch).TrueTransfer.Destination, let falseDest = (base as! NVBranch).FalseTransfer.Destination {
+					options.append(trueDest.Name + "/" + falseDest.Name)
+				} else {
+					options.append("Invalid Branch")
+				}
+				
+			default:
+				break
+			}
+		}
 		_choiceWheel.setup(options: options)
 	}
 	
 	func readerLinkWillFollow(outputs: [NVBaseLink]) -> NVBaseLink {
-		return outputs[0]
+		return outputs[_chosenLinkIndex]
 	}
 }

@@ -45,16 +45,25 @@ class ChoiceWheelView: NSView {
 	private var _backgroundLayer: CAShapeLayer = CAShapeLayer()
 	private var _centerLayer: CAShapeLayer = CAShapeLayer()
 	private var _arrowLayer: CAShapeLayer = CAShapeLayer()
+	var ClickHandler: ((Int) -> Void)?
 	
 	// MARK: - Functions -
 	func setup(options: [String]) {
-//		_items = options
-		setNeedsDisplay(bounds)
-		
+		_items = options
+		_activeItem = -1
 		createLayers()
+		
+		setNeedsDisplay(bounds)
 	}
 	
 	private func createLayers() {
+		// make sure everything is fully cleaned first
+		_segments = []
+		_backgroundLayer = CAShapeLayer()
+		_centerLayer = CAShapeLayer()
+		_arrowLayer = CAShapeLayer()
+		
+		// request layers and remove existing ones
 		wantsLayer = true
 		layer?.sublayers?.removeAll()
 		
@@ -142,6 +151,7 @@ class ChoiceWheelView: NSView {
 		}
 	
 		// arrow
+		
 		let arrowWidth = ChoiceWheelView.CenterRadius * 0.5
 		let arrowHeight = ChoiceWheelView.CenterRadius * 0.5
 		_arrowLayer.anchorPoint = NSMakePoint(0.5, 0.0) // must come before origin change
@@ -228,6 +238,10 @@ class ChoiceWheelView: NSView {
 		CATransaction.setAnimationDuration(0.1)
 		_arrowLayer.transform = CATransform3DMakeRotation(toRadians(-degrees), 0.0, 0.0, 1.0)
 		CATransaction.commit()
+	}
+	
+	override func mouseDown(with event: NSEvent) {
+		ClickHandler?(_activeItem)
 	}
 	
 	// MARK: - Helpers -
