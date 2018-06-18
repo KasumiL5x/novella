@@ -42,6 +42,8 @@ class ConditionPopoverViewController: NSViewController {
 		_codeTextbox.translatesAutoresizingMaskIntoConstraints = false
 		_codeTextbox.backgroundColor = (_textStorage.highlightr.theme.themeBackgroundColor)
 		_codeTextbox.insertionPointColor = NSColor.white
+		_codeTextbox.isAutomaticQuoteSubstitutionEnabled = false
+		_codeTextbox.isAutomaticDashSubstitutionEnabled = false
 		_codeTextbox.delegate = self
 		_textView.addSubview(_codeTextbox)
 		_textView.addConstraints([
