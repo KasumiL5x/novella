@@ -78,17 +78,15 @@ public protocol NVStoryDelegate {
 	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph)
 	// Called when an NVGraph's entry is set using NVGraph.setEntry().
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph)
-	
+
+	// Called when an NVNode's preview is changed using NVDialog.Preview.
+	func onStoryNodePreviewChanged(preview: String, node: NVNode)
 	// Called when an NVDialog's content is changed using NVDialog.Content.
 	func onStoryDialogContentChanged(content: String, node: NVDialog)
-	// Called when an NVDialog's preview is changed using NVDialog.Preview.
-	func onStoryDialogPreviewChanged(preview: String, node: NVDialog)
 	// Called when an NVDialog's directions are changed using NVDialog.Directions.
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog)
 	// Called when an NVDelivery's content is changed using NVDelivery.Content.
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery)
-	// Called when an NVDelivery's preview is changed using NVDeliveryPreview.
-	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery)
 	// Called when an NVDelivery's directions are changed using NVDelivery.Directions.
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery)
 	
@@ -199,15 +197,13 @@ public extension NVStoryDelegate {
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 	}
 	
-	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
 	}
-	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
+	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
 	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
-	}
-	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery) {
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 	}

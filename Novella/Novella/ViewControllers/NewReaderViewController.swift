@@ -82,17 +82,26 @@ extension NewReaderViewController: NVReaderDelegate {
 		for base in outputs {
 			switch base {
 			case is NVLink:
+				var str = "Invalid Link"
 				if let dest = (base as! NVLink).Transfer.Destination {
-					options.append(dest.Name)
-				} else {
-					options.append("Invalid Link")
+					if let asNode = dest as? NVNode {
+						str = asNode.Preview.isEmpty ? asNode.Name : asNode.Preview
+					} else {
+						str = "Non-NVNode: " + dest.Name
+					}
 				}
+				options.append(str)
 				
 			case is NVBranch:
+				var str = "Invalid Branch"
 				if let trueDest = (base as! NVBranch).TrueTransfer.Destination, let falseDest = (base as! NVBranch).FalseTransfer.Destination {
-					options.append(trueDest.Name + "/" + falseDest.Name)
+					if let trueAsNode = trueDest as? NVNode, let falseAsNode = falseDest as? NVNode {
+						str = (trueAsNode.Preview.isEmpty ? trueAsNode.Name : trueAsNode.Preview) + "/" + (falseAsNode.Preview.isEmpty ? falseAsNode.Name : falseAsNode.Preview)
+					} else {
+						str = "Non-NVNode: \(trueDest.Name) / Non-NVNode: \(falseDest.Name)"
+					}
 				} else {
-					options.append("Invalid Branch")
+					options.append(str)
 				}
 				
 			default:

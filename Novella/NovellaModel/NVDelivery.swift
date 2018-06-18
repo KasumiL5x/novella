@@ -11,7 +11,6 @@ import Foundation
 public class NVDelivery: NVNode {
 	// MARK: - Variables -
 	private var _content: String
-	private var _preview: String
 	private var _directions: String
 	
 	// MARK: - Properties -
@@ -20,13 +19,6 @@ public class NVDelivery: NVNode {
 		set {
 			_content = newValue
 			_manager.Delegates.forEach{$0.onStoryDeliveryContentChanged(content: _content, node: self)}
-		}
-	}
-	public var Preview: String {
-		get { return _preview }
-		set {
-			_preview = newValue
-			_manager.Delegates.forEach{$0.onStoryDeliveryPreviewChanged(preview: _preview, node: self)}
 		}
 	}
 	public var Directions: String {
@@ -40,7 +32,6 @@ public class NVDelivery: NVNode {
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID) {
 		self._content = ""
-		self._preview = ""
 		self._directions = ""
 		super.init(manager: manager, uuid: uuid)
 	}

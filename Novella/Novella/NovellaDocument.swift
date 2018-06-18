@@ -169,19 +169,16 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
+	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
-		self.updateChangeCount(.changeDone)
-	}
-	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery) {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {

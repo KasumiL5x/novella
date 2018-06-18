@@ -140,12 +140,12 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadSelectedGraph()
 	}
 	
-	func onStoryDialogContentChanged(content: String, node: NVDialog) {
-		print("Changed dialog's content to \"\(content)\".")
+	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
+		print("Changed node's preview to \"\(preview)\".")
 		_mvc.reloadInspector()
 	}
-	func onStoryDialogPreviewChanged(preview: String, node: NVDialog) {
-		print("Changed dialog's preview to \"\(preview)\".")
+	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+		print("Changed dialog's content to \"\(content)\".")
 		_mvc.reloadInspector()
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
@@ -155,11 +155,6 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
 		print("Changed delivery's content to \"\(content)\".")
 		_mvc.reloadInspector()
-	}
-	func onStoryDeliveryPreviewChanged(preview: String, node: NVDelivery) {
-		print("Changed delivery's preview to \"\(preview)\".")
-		_mvc.reloadInspector()
-
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 		print("Changed delivery's directions to \"\(directions)\".")
