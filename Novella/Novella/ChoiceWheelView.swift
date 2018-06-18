@@ -113,43 +113,41 @@ class ChoiceWheelView: NSView {
 				}
 				context.strokePath()
 				
-				// draw angle line
-				let centerAngle = startAngle + ((endAngle - startAngle)/2)
-				let angleDir = CGPoint(angle: toRadians(90.0-centerAngle))
-				let lineStart = center + angleDir * radius
-				let lineEnd = lineStart + angleDir * 25.0
-				context.setLineWidth(1.5)
-				context.move(to: lineStart)
-				context.addLine(to: lineEnd)
-//				let underlineEnd = lineEnd + NSMakePoint(centerAngle > 180.0 ? -100.0	: 100.0, 0.0)
-//				context.addLine(to: underlineEnd)
-				context.strokePath()
-				
-				// render text
-				let asNSString = NSString(string: _items[idx])
-				let drawingOptions: NSString.DrawingOptions = [
+				// calculate rect of text
+				let textDrawingOptions: NSString.DrawingOptions = [
 					NSString.DrawingOptions.usesLineFragmentOrigin,
 					NSString.DrawingOptions.usesFontLeading
 				]
+				let asNSString = NSString(string: _items[idx])
 				var textRect = asNSString.boundingRect(
 					with: NSMakeSize(500.0, CGFloat.infinity),
-					options: drawingOptions,
+					options: textDrawingOptions,
 					attributes: nil,
 					context: nil
 				)
-				textRect.origin = lineEnd
-//				textRect.origin.y -= textRect.height/2
+				let centerAngle = startAngle + ((endAngle - startAngle)/2)
+				let angleDir = CGPoint(angle: toRadians(90.0-centerAngle))
+				textRect.origin = (center + angleDir * radius) + (angleDir * 25.0)
 				if centerAngle > 180.0 {
 					textRect.origin.x -= textRect.width + 2.0
 				} else {
 					textRect.origin.x += 2.0
 				}
-				asNSString.draw(with: textRect, options: drawingOptions, attributes: nil, context: nil)
 				
-				// underline
-				context.move(to: lineEnd)
-				context.addLine(to: NSMakePoint(centerAngle > 180.0 ? textRect.minX : textRect.maxX, lineEnd.y))
+				// line around text
+				context.move(to: center + angleDir * radius)
+				if centerAngle > 180.0 {
+					context.addLine(to: NSMakePoint(textRect.maxX, textRect.minY))
+					context.addLine(to: NSMakePoint(textRect.minX, textRect.minY))
+				} else {
+					context.addLine(to: NSMakePoint(textRect.minX, textRect.minY))
+					context.addLine(to: NSMakePoint(textRect.maxX, textRect.minY))
+				}
+				context.setLineWidth(1.5)
 				context.strokePath()
+				
+				// draw text
+				asNSString.draw(with: textRect, options: textDrawingOptions, attributes: nil, context: nil)
 			}
 			
 			context.restoreGState()
