@@ -100,9 +100,8 @@ extension NewReaderViewController: NVReaderDelegate {
 					} else {
 						str = "Non-NVNode: \(trueDest.Name) / Non-NVNode: \(falseDest.Name)"
 					}
-				} else {
-					options.append(str)
 				}
+				options.append(str)
 				
 			default:
 				break
