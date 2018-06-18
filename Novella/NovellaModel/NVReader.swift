@@ -65,6 +65,10 @@ public class NVReader {
 		case is NVLink:
 			nextNode = (chosenLink as! NVLink).Transfer._destination as? NVNode
 			
+		case is NVBranch:
+			let asBranch = (chosenLink as! NVBranch)
+			nextNode = asBranch.Condition.execute() ? asBranch.TrueTransfer._destination as? NVNode : asBranch.FalseTransfer._destination as? NVNode
+			
 		default:
 			print("NVReader::next() requested link isn't yet implemented in reading, sorry!")
 			return
