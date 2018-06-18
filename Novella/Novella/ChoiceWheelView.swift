@@ -8,8 +8,25 @@
 
 import Cocoa
 
+class ChoiceSegment {
+	var startAngle: CGFloat = 0.0
+	var endAngle: CGFloat = 0.0
+	var shapeLayer: CAShapeLayer = CAShapeLayer()
+	var textLayer: CATextLayer = CATextLayer()
+	var lineLayer: CAShapeLayer = CAShapeLayer()
+}
+
 @IBDesignable
 class ChoiceWheelView: NSView {
+	// MARK: Statics
+	static let BackgroundColor: NSColor = NSColor.fromHex("#3E4048")
+	static let InactiveColor: NSColor = NSColor.fromHex("#606470")
+	static let ActiveColor: NSColor = NSColor.fromHex("#ff570c")
+	static let Thickness: CGFloat = 20.0
+	static let InactiveThicknessModifier: CGFloat = 0.5
+	static let Radius: CGFloat = 50.0
+	static let Spacing: CGFloat = 2.0
+	
 	// MARK: - Variables -
 	private var _items: [String] = [
 		"This is the preview of segment A.",
@@ -21,14 +38,119 @@ class ChoiceWheelView: NSView {
 	]
 //	@IBInspectable var _itemCount: Int = 3
 	private var _activeItem: Int = 0
-	private var _spacing: CGFloat = 2.0
 	private var _trackingArea: NSTrackingArea?
+	
+	private var _segments: [ChoiceSegment] = []
+	private var _backgroundLayer: CAShapeLayer = CAShapeLayer()
+	private var _arrowLayer: CAShapeLayer = CAShapeLayer()
 	
 	// MARK: - Functions -
 	func setup(options: [String]) {
 //		_items = options
-//		_itemCount = options.count
 		setNeedsDisplay(bounds)
+		
+		createLayers()
+	}
+	
+	private func createLayers() {
+		wantsLayer = true
+		layer?.sublayers?.removeAll()
+		
+		let center = NSMakePoint(bounds.midX, bounds.midY)
+		
+		// background circle
+		let backgroundPath = NSBezierPath()
+		backgroundPath.appendArc(withCenter: center, radius: ChoiceWheelView.Radius, startAngle: 0.0, endAngle: 360.0, clockwise: false)
+		_backgroundLayer.path = backgroundPath.cgPath
+		_backgroundLayer.fillColor = nil
+		_backgroundLayer.lineWidth = ChoiceWheelView.Thickness
+		_backgroundLayer.strokeColor = ChoiceWheelView.BackgroundColor.cgColor
+		layer?.addSublayer(_backgroundLayer)
+		
+		// all items
+		let itemAngle: CGFloat = 360.0 / CGFloat(_items.count)
+		for idx in 0..<_items.count {
+			let segment = ChoiceSegment()
+			_segments.append(segment)
+			
+			segment.startAngle = itemAngle * CGFloat(idx) + ChoiceWheelView.Spacing
+			segment.endAngle = segment.startAngle + itemAngle - ChoiceWheelView.Spacing
+			
+			// arc layer
+			let path = NSBezierPath()
+			path.appendArc(withCenter: center, radius: ChoiceWheelView.Radius, startAngle: 90.0 - segment.startAngle, endAngle: 90.0 - segment.endAngle, clockwise: true)
+			segment.shapeLayer.path = path.cgPath
+			segment.shapeLayer.fillColor = nil
+			segment.shapeLayer.lineWidth = ChoiceWheelView.Thickness * ChoiceWheelView.InactiveThicknessModifier
+			segment.shapeLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
+			layer?.addSublayer(segment.shapeLayer)
+			
+			// text layer
+			segment.textLayer.string = _items[idx]
+			segment.textLayer.foregroundColor = ChoiceWheelView.InactiveColor.cgColor
+			segment.textLayer.fontSize = 14.0
+			layer?.addSublayer(segment.textLayer)
+			segment.textLayer.frame.size = segment.textLayer.preferredFrameSize()
+			// move text into place
+			let avgAngle = segment.startAngle + ((segment.endAngle - segment.startAngle) * 0.5)
+			let avgDir = CGPoint(angle: toRadians(90.0 - avgAngle))
+			let textOffset: CGFloat = 25.0
+			segment.textLayer.frame.origin = (center + avgDir * ChoiceWheelView.Radius) + (avgDir * textOffset)
+			// move left half to right anchor
+			if avgAngle > 180.0 {
+				segment.textLayer.frame.origin.x -= segment.textLayer.frame.width
+			}
+			// move bottom half to top anchor
+			if avgAngle >= 90.0 && avgAngle <= 270.0 {
+				segment.textLayer.frame.origin.y -= segment.textLayer.frame.height
+			}
+			
+			// line layer
+			let linePath = NSBezierPath()
+			linePath.move(to: center + avgDir * ChoiceWheelView.Radius)
+			// choose roughly where to go based on 60-degree segments
+			if inRange(avgAngle, min: 0.0, max: 60.0, inclusiveMin: true, inclusiveMax: false) {
+				linePath.line(to: NSMakePoint(segment.textLayer.frame.minX, segment.textLayer.frame.minY))
+			} else if inRange(avgAngle, min: 60.0, max: 120.0, inclusiveMin: true, inclusiveMax: false) {
+				linePath.line(to: NSMakePoint(segment.textLayer.frame.minX, segment.textLayer.frame.midY))
+			} else if inRange(avgAngle, min: 120.0, max: 180.0, inclusiveMin: true, inclusiveMax: false) {
+				linePath.line(to: NSMakePoint(segment.textLayer.frame.minX, segment.textLayer.frame.maxY))
+			} else if inRange(avgAngle, min: 180.0, max: 240.0, inclusiveMin: true, inclusiveMax: false) {
+				linePath.line(to: NSMakePoint(segment.textLayer.frame.maxX, segment.textLayer.frame.maxY))
+			} else if inRange(avgAngle, min: 240.0, max: 300.0, inclusiveMin: true, inclusiveMax: false) {
+				linePath.line(to: NSMakePoint(segment.textLayer.frame.maxX, segment.textLayer.frame.midY))
+			} else if inRange(avgAngle, min: 300.0, max: 360.0, inclusiveMin: true, inclusiveMax: false) {
+				linePath.line(to: NSMakePoint(segment.textLayer.frame.maxX, segment.textLayer.frame.minY))
+			}
+			segment.lineLayer.path = linePath.cgPath
+			segment.lineLayer.fillColor = nil
+			segment.lineLayer.lineWidth = 2.0
+			segment.lineLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
+			layer?.addSublayer(segment.lineLayer)
+		}
+		
+		// arrow layer
+		let arrowSize: CGFloat = 40.0
+		let arrowPath = NSBezierPath()//ovalIn: NSMakeRect(0, 0, arrowSize, arrowSize))
+		arrowPath.appendRoundedRect(NSMakeRect(0, 0, arrowSize, arrowSize), xRadius: 5.0, yRadius: 5.0)
+//		arrowPath.appendOval(in: NSMakeRect(0, 0, arrowSize, arrowSize))
+		arrowPath.move(to: NSMakePoint(0.0, arrowSize*0.5))
+		arrowPath.line(to: NSMakePoint(arrowSize*0.5, arrowSize * 1.2))
+		arrowPath.line(to: NSMakePoint(arrowSize, arrowSize*0.5))
+		arrowPath.close()
+		_arrowLayer.path = arrowPath.cgPath
+		_arrowLayer.frame.origin = center - NSMakePoint(arrowSize*0.5, arrowSize*0.5)
+		_arrowLayer.frame.size = NSMakeSize(arrowSize, arrowSize)
+		_arrowLayer.fillColor = NSColor.red.cgColor
+		_arrowLayer.fillRule = kCAFillRuleNonZero // how to make this not hollowed?
+		_arrowLayer.lineCap = kCALineCapRound
+		_arrowLayer.lineJoin = kCALineJoinRound
+		layer?.addSublayer(_arrowLayer)
+	}
+	
+	override func prepareForInterfaceBuilder() {
+		createLayers()
+		print("TODO: Delete this function.")
 	}
 	
 	override func updateTrackingAreas() {
@@ -47,13 +169,21 @@ class ChoiceWheelView: NSView {
 	
 	override func mouseExited(with event: NSEvent) {
 		_activeItem = -1
+		
+		_segments.forEach { (segment) in
+			segment.shapeLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
+			segment.shapeLayer.lineWidth = ChoiceWheelView.Thickness * ChoiceWheelView.InactiveThicknessModifier
+			segment.textLayer.foregroundColor = ChoiceWheelView.InactiveColor.cgColor
+			segment.lineLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
+		}
+		
+		_arrowLayer.transform = CATransform3DMakeRotation(0.0, 0.0, 0.0, 1.0)
+		
 		setNeedsDisplay(bounds)
 	}
 	
 	override func mouseMoved(with event: NSEvent) {
 		if _items.isEmpty {
-			_activeItem = -1
-			setNeedsDisplay(bounds)
 			return
 		}
 		
@@ -63,158 +193,23 @@ class ChoiceWheelView: NSView {
 			degrees += 360.0
 		}
 		
-		let itemAngle: CGFloat = 360.0 / CGFloat(_items.count)
-		for idx in 0..<_items.count {
-			let startAngle = itemAngle * CGFloat(idx) + _spacing
-			let endAngle = startAngle + itemAngle - _spacing
-			
-			if degrees >= startAngle && degrees <= endAngle {
+		for idx in 0..<_segments.count {
+			let segment = _segments[idx]
+			if inRange(degrees, min: segment.startAngle, max: segment.endAngle, inclusiveMin: true, inclusiveMax: true) {
 				_activeItem = idx
-				setNeedsDisplay(bounds)
-				break
+				segment.shapeLayer.strokeColor = ChoiceWheelView.ActiveColor.cgColor
+				segment.shapeLayer.lineWidth = ChoiceWheelView.Thickness
+				segment.textLayer.foregroundColor = ChoiceWheelView.ActiveColor.cgColor
+				segment.lineLayer.strokeColor = ChoiceWheelView.ActiveColor.cgColor
+			} else {
+				segment.shapeLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
+				segment.shapeLayer.lineWidth = ChoiceWheelView.Thickness * ChoiceWheelView.InactiveThicknessModifier
+				segment.textLayer.foregroundColor = ChoiceWheelView.InactiveColor.cgColor
+				segment.lineLayer.strokeColor = ChoiceWheelView.InactiveColor.cgColor
 			}
 		}
-	}
-	
-	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
 		
-		if _items.isEmpty {
-			return
-		}
-		
-		if let context = NSGraphicsContext.current?.cgContext {
-			context.saveGState()
-
-			// draw background
-			let center = NSMakePoint(bounds.midX, bounds.midY)
-			let radius: CGFloat = 50.0
-			let width: CGFloat = 20.0
-			context.beginPath()
-			context.addArc(center: center, radius: radius, startAngle: 0.0, endAngle: toRadians(360.0), clockwise: true)
-			NSColor.fromHex("#3E4048").setStroke()
-			context.setLineWidth(width)
-			context.strokePath()
-			
-			// draw items and labels
-			let itemAngle: CGFloat = 360.0 / CGFloat(_items.count)
-			for idx in 0..<_items.count {
-				let startAngle = itemAngle * CGFloat(idx) + _spacing
-				let endAngle = startAngle + itemAngle - (_spacing*2)
-				
-				// draw segment arc
-				context.beginPath()
-				context.addArc(center: center, radius: radius, startAngle: toRadians(90.0 - startAngle), endAngle: toRadians(90.0 - endAngle), clockwise: true)
-				if _activeItem == idx {
-					context.setLineWidth(width)
-					NSColor.fromHex("#ff570c").setStroke()
-				} else {
-					NSColor.fromHex("#606470").setStroke()
-					context.setLineWidth(width*0.5)
-				}
-				context.strokePath()
-				
-				// calculate text rectangle
-				let maxWidth: CGFloat = 500.0
-				let textOptions: NSString.DrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
-				let textAttrs = [
-					NSAttributedStringKey.foregroundColor: (_activeItem != idx) ? NSColor.black : NSColor.fromHex("#ff570c")
-				]
-				let asString = NSString(string: _items[idx])
-				var textRect = asString.boundingRect(with: NSMakeSize(maxWidth, CGFloat.infinity), options: textOptions, attributes: textAttrs, context: nil)
-				// move text outside of the ring
-				let avgAngle = startAngle + ((endAngle - startAngle) / 2)
-				let avgDir = CGPoint(angle: toRadians(90.0 - avgAngle))
-				let textOffset: CGFloat = 25.0
-				textRect.origin = (center + avgDir * radius) + (avgDir * textOffset)
-				// move left half to right anchor
-				if avgAngle > 180.0 {
-					textRect.origin.x -= textRect.width
-				}
-				// move bottom half to top anchor
-				if avgAngle > 90.0 && avgAngle < 270.0 {
-					textRect.origin.y -= textRect.height
-				}
-				
-				// draw line for text from arc segments
-				let lineStart = (center + avgDir * radius)
-				context.move(to: lineStart)
-				// choose roughly where to go based on 60-degree segments
-				if inRange(avgAngle, min: 0.0, max: 60.0, inclusiveMin: true, inclusiveMax: false) {
-					context.addLine(to: NSMakePoint(textRect.minX, textRect.minY))
-				} else if inRange(avgAngle, min: 60.0, max: 120.0, inclusiveMin: true, inclusiveMax: false) {
-					context.addLine(to: NSMakePoint(textRect.minX, textRect.midY))
-				} else if inRange(avgAngle, min: 120.0, max: 180.0, inclusiveMin: true, inclusiveMax: false) {
-					context.addLine(to: NSMakePoint(textRect.minX, textRect.maxY))
-				} else if inRange(avgAngle, min: 180.0, max: 240.0, inclusiveMin: true, inclusiveMax: false) {
-					context.addLine(to: NSMakePoint(textRect.maxX, textRect.maxY))
-				} else if inRange(avgAngle, min: 240.0, max: 300.0, inclusiveMin: true, inclusiveMax: false) {
-					context.addLine(to: NSMakePoint(textRect.maxX, textRect.midY))
-				} else if inRange(avgAngle, min: 300.0, max: 360.0, inclusiveMin: true, inclusiveMax: false) {
-					context.addLine(to: NSMakePoint(textRect.maxX, textRect.minY))
-				}
-				context.setLineWidth(2.0)
-				context.strokePath()
-				
-				// draw text
-				asString.draw(with: textRect, options: textOptions, attributes: textAttrs, context: nil)
-			}
-			
-//			let itemAngle: CGFloat = 360.0 / CGFloat(_items.count)
-//			for idx in 0..<_items.count {
-//				let startAngle = itemAngle * CGFloat(idx) + _spacing
-//				let endAngle = startAngle + itemAngle - _spacing
-//
-//				// draw ring segment
-//				context.beginPath()
-//				context.addArc(center: center, radius: radius, startAngle: toRadians(90.0 - startAngle), endAngle: toRadians(90.0 - endAngle), clockwise: true)
-//				colors[idx % colors.count].setStroke()
-//				if _activeItem == idx {
-//					context.setLineWidth(15.0)
-//				} else {
-//					context.setLineWidth(10.0)
-//				}
-//				context.strokePath()
-//
-//				// calculate rect of text
-//				let textDrawingOptions: NSString.DrawingOptions = [
-//					NSString.DrawingOptions.usesLineFragmentOrigin,
-//					NSString.DrawingOptions.usesFontLeading
-//				]
-//				let asNSString = NSString(string: _items[idx])
-//				var textRect = asNSString.boundingRect(
-//					with: NSMakeSize(500.0, CGFloat.infinity),
-//					options: textDrawingOptions,
-//					attributes: nil,
-//					context: nil
-//				)
-//				let centerAngle = startAngle + ((endAngle - startAngle)/2)
-//				let angleDir = CGPoint(angle: toRadians(90.0-centerAngle))
-//				textRect.origin = (center + angleDir * radius) + (angleDir * 25.0)
-//				if centerAngle > 180.0 {
-//					textRect.origin.x -= textRect.width + 2.0
-//				} else {
-//					textRect.origin.x += 2.0
-//				}
-//
-//				// line around text
-//				context.move(to: center + angleDir * radius)
-//				if centerAngle > 180.0 {
-//					context.addLine(to: NSMakePoint(textRect.maxX, textRect.minY))
-//					context.addLine(to: NSMakePoint(textRect.minX, textRect.minY))
-//				} else {
-//					context.addLine(to: NSMakePoint(textRect.minX, textRect.minY))
-//					context.addLine(to: NSMakePoint(textRect.maxX, textRect.minY))
-//				}
-//				context.setLineWidth(1.5)
-//				context.strokePath()
-//
-//				// draw text
-//				asNSString.draw(with: textRect, options: textDrawingOptions, attributes: nil, context: nil)
-//			}
-			
-			context.restoreGState()
-		}
+		_arrowLayer.transform = CATransform3DMakeRotation(toRadians(-degrees), 0.0, 0.0, 1.0)
 	}
 	
 	// MARK: - Helpers -
