@@ -1,0 +1,190 @@
+{
+  "folders" : [
+    {
+      "name" : "root",
+      "variables" : [
+        "D9D6AA9B-013D-40EF-8D06-033EB526E096"
+      ],
+      "uuid" : "899B05B8-8F04-4A79-A29A-261EE82FBD51",
+      "subfolders" : [
+
+      ]
+    }
+  ],
+  "variables" : [
+    {
+      "synopsis" : "",
+      "name" : "decision",
+      "value" : true,
+      "constant" : false,
+      "uuid" : "D9D6AA9B-013D-40EF-8D06-033EB526E096",
+      "datatype" : "boolean",
+      "initialValue" : true
+    }
+  ],
+  "links" : [
+    {
+      "linktype" : "link",
+      "origin" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
+      "uuid" : "43682DAF-39E3-465F-8E49-9461218CBA8F",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "FC23DACC-6433-46F6-B421-8CF34A4CCBF4"
+      }
+    },
+    {
+      "linktype" : "branch",
+      "origin" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
+      "uuid" : "C11D765F-D597-4F21-81A3-AC2C5C59E93B",
+      "condition" : {
+        "jscode" : "return getvar2(\"root.decision\");\n\n\/\/nvlog(\"test\");\n\/\/nvlog(getvar(\"root.decision\"));\n\/\/nvlog(getvar(\"decision\"));\nreturn true;"
+      },
+      "ftransfer" : {
+        "destination" : "85718C17-40A3-4839-B65B-00201BCEC428"
+      },
+      "ttransfer" : {
+        "destination" : "35CE1121-DC88-45CC-9F75-C161B8C7499A"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "35CE1121-DC88-45CC-9F75-C161B8C7499A",
+      "uuid" : "39BB98D1-6C40-4892-8BBC-9BF80C0D302F",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "63A11BBC-7E17-4C1E-97BD-83636BD899B2"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "85718C17-40A3-4839-B65B-00201BCEC428",
+      "uuid" : "A4AA9C16-83AF-4117-B16D-406849BAD120",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "63A11BBC-7E17-4C1E-97BD-83636BD899B2"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "FC23DACC-6433-46F6-B421-8CF34A4CCBF4",
+      "uuid" : "3548EE2E-8576-465B-B51E-BFD953C2FF66",
+      "condition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "63A11BBC-7E17-4C1E-97BD-83636BD899B2"
+      }
+    }
+  ],
+  "story" : {
+    "graphs" : [
+      "662D74C5-DCDA-44A6-898F-42C0F4574B25"
+    ],
+    "name" : "",
+    "folders" : [
+      "899B05B8-8F04-4A79-A29A-261EE82FBD51"
+    ]
+  },
+  "nodes" : [
+    {
+      "position" : {
+        "y" : -299521.375,
+        "x" : -299870.4375
+      },
+      "name" : "Start",
+      "content" : "This is the initial node.  The branch has a condition.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "1F41C069-0037-4AE9-85D1-21A6878EEA03"
+    },
+    {
+      "position" : {
+        "y" : -299618.40625,
+        "x" : -299664.625
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "link path",
+      "uuid" : "FC23DACC-6433-46F6-B421-8CF34A4CCBF4"
+    },
+    {
+      "position" : {
+        "y" : -299400.4375,
+        "x" : -299672.4375
+      },
+      "name" : "TrueChoice",
+      "content" : "This is the true choice.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "True",
+      "uuid" : "35CE1121-DC88-45CC-9F75-C161B8C7499A"
+    },
+    {
+      "position" : {
+        "y" : -299508.1875,
+        "x" : -299671.84375
+      },
+      "name" : "FalseChoice",
+      "content" : "This is the false choice.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "False",
+      "uuid" : "85718C17-40A3-4839-B65B-00201BCEC428"
+    },
+    {
+      "position" : {
+        "y" : -299443.25,
+        "x" : -299481.71875
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "join",
+      "uuid" : "63A11BBC-7E17-4C1E-97BD-83636BD899B2"
+    }
+  ],
+  "graphs" : [
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "450B4E6A-7E4E-418B-AFA7-613DB3040E2A",
+      "nodes" : [
+        "1F41C069-0037-4AE9-85D1-21A6878EEA03",
+        "FC23DACC-6433-46F6-B421-8CF34A4CCBF4",
+        "35CE1121-DC88-45CC-9F75-C161B8C7499A",
+        "85718C17-40A3-4839-B65B-00201BCEC428",
+        "63A11BBC-7E17-4C1E-97BD-83636BD899B2"
+      ],
+      "links" : [
+        "43682DAF-39E3-465F-8E49-9461218CBA8F",
+        "C11D765F-D597-4F21-81A3-AC2C5C59E93B",
+        "39BB98D1-6C40-4892-8BBC-9BF80C0D302F",
+        "A4AA9C16-83AF-4117-B16D-406849BAD120",
+        "3548EE2E-8576-465B-B51E-BFD953C2FF66"
+      ],
+      "entry" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
+      "uuid" : "662D74C5-DCDA-44A6-898F-42C0F4574B25",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ]
+}

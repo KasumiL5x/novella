@@ -8,6 +8,9 @@
 
 import JavaScriptCore
 
+typealias JavascriptClosure = (JSContext) -> Void
+typealias ObjectivecCompletionBlockString = @convention(block) () -> String
+
 public class NVStoryManager {
 	// MARK: - Variables -
 	private var _story: NVStory!
@@ -141,6 +144,21 @@ public class NVStoryManager {
 		// function to print to the console from JS
 		let nvLogObject = unsafeBitCast(self.js_nvlog, to: AnyObject.self)
 		_jsContext.setObject(nvLogObject, forKeyedSubscript: "nvlog" as (NSCopying & NSObjectProtocol))
+		
+		// get variables by (first appearance of) name
+		let js_getvar2: @convention(block) (String) -> Any? = { [weak self](name) in
+			for v in self!._variables {
+				if name == NVPath.fullPathTo(v) {
+					print("JS requested variable: \(name).  Found and returning value: \(v.Value).")
+					return v.Value
+				}
+			}
+			
+			print("JS requested variable: \(name).  Could not find varible; returning nil.")
+			return nil
+		}
+		_jsContext.setObject(js_getvar2, forKeyedSubscript: "getvar2" as (NSCopying & NSObjectProtocol))
+		
 	}
 	
 	let js_nvlog: @convention(block) (String) -> Void = { msg in
