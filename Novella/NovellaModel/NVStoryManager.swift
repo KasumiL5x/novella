@@ -159,6 +159,28 @@ public class NVStoryManager {
 		}
 		_jsContext.setObject(js_getvar2, forKeyedSubscript: "getvar2" as (NSCopying & NSObjectProtocol))
 		
+		// set variables by (first appearange of) name
+		let js_setvar: @convention(block) (String, Any) -> Void = { [weak self](name, value) in
+			// find the given variable by name
+			var variable: NVVariable? = nil
+			for v in self!._variables {
+				if name == NVPath.fullPathTo(v) {
+					variable = v
+				}
+			}
+			
+			// safety check
+			if variable == nil {
+				print("JS requested setting variable \"\(name)\" but was not found.")
+				return
+			}
+			
+			if !variable!.setValue(value) {
+				print("JS requested setting variable \"\(name)\" to value \"\(value)\" but it failed to do so.")
+			}
+		}
+		_jsContext.setObject(js_setvar, forKeyedSubscript: "setvar" as (NSCopying & NSObjectProtocol))
+		
 	}
 	
 	let js_nvlog: @convention(block) (String) -> Void = { msg in

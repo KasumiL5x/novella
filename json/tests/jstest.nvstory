@@ -19,7 +19,7 @@
       "constant" : false,
       "uuid" : "D9D6AA9B-013D-40EF-8D06-033EB526E096",
       "datatype" : "boolean",
-      "initialValue" : true
+      "initialValue" : false
     }
   ],
   "links" : [
@@ -39,7 +39,7 @@
       "origin" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
       "uuid" : "C11D765F-D597-4F21-81A3-AC2C5C59E93B",
       "condition" : {
-        "jscode" : "return getvar2(\"root.decision\");\n\n\/\/nvlog(\"test\");\n\/\/nvlog(getvar(\"root.decision\"));\n\/\/nvlog(getvar(\"decision\"));\nreturn true;"
+        "jscode" : "\/\/let result = getvar2(\"root.decision\");\n\nlet name = \"root.decision\";\nnvlog(getvar2(name));\nsetvar(\"root.decision\", true);\nnvlog(getvar2(name));\n\nreturn getvar2(\"root.decision\");"
       },
       "ftransfer" : {
         "destination" : "85718C17-40A3-4839-B65B-00201BCEC428"
