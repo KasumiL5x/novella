@@ -44,6 +44,7 @@ class ConditionPopoverViewController: NSViewController {
 		_codeTextbox.insertionPointColor = NSColor.white
 		_codeTextbox.isAutomaticQuoteSubstitutionEnabled = false
 		_codeTextbox.isAutomaticDashSubstitutionEnabled = false
+		_codeTextbox.allowsUndo = true
 		_codeTextbox.delegate = self
 		_textView.addSubview(_codeTextbox)
 		_textView.addConstraints([
