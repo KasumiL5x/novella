@@ -86,6 +86,20 @@ public class NVReader {
 			return
 		}
 		
+		// run the link's function
+		switch chosenLink {
+		case is NVLink:
+			(chosenLink as! NVLink).Transfer.Function.execute()
+			
+		case is NVBranch:
+			let asBranch = (chosenLink as! NVBranch)
+			asBranch.Condition.execute() ? asBranch.TrueTransfer.Function.execute() : asBranch.FalseTransfer.Function.execute()
+			
+		default:
+			print("NVReader::next() requested link isn't yet implemented in reading, sorry!")
+			return
+		}
+		
 		// update and send to user
 		_currentNode = nextNode
 		_delegate.readerNodeWillConsume(node: _currentNode!, outputs: getNodeLinks(_currentNode!))

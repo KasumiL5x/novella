@@ -222,11 +222,22 @@
 		},
 		// END link
 
+		// MARK: function
+		"function": {
+			"type": "object",
+			"properties": {
+				"jscode": { "type": "string" }
+			},
+			"required": ["jscode"]
+		},
+		// END function
+
 		// MARK: transfer
 		"transfer": {
 			"type": "object",
 			"properties": {
-				"destination": { "$ref": "#/definitions/uuid" }
+				"destination": { "$ref": "#/definitions/uuid" },
+				"function": { "$ref": "#/definitions/function" }
 			},
 			"required": ["destination"]
 		},

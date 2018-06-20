@@ -79,6 +79,9 @@ extension NVStoryManager {
 				
 				var transfer: JSONDict = [:]
 				transfer["destination"] = asLink.Transfer.Destination?.UUID.uuidString ?? ""
+					var function: JSONDict = [:]
+					function["jscode"] = asLink.Transfer.Function.Javascript
+					transfer["function"] = function
 				entry["transfer"] = transfer
 			}
 			else if let asBranch = curr as? NVBranch {
@@ -90,10 +93,16 @@ extension NVStoryManager {
 				
 				var ttransfer: JSONDict = [:]
 				ttransfer["destination"] = asBranch.TrueTransfer.Destination?.UUID.uuidString ?? ""
+					var tfunction: JSONDict = [:]
+					tfunction["jscode"] = asBranch.TrueTransfer.Function.Javascript
+					ttransfer["function"] = tfunction
 				entry["ttransfer"] = ttransfer
 				
 				var ftransfer: JSONDict = [:]
 				ftransfer["destination"] = asBranch.FalseTransfer.Destination?.UUID.uuidString ?? ""
+					var ffunction: JSONDict = [:]
+					ffunction["jscode"] = asBranch.FalseTransfer.Function.Javascript
+					ftransfer["function"] = ffunction
 				entry["ftransfer"] = ftransfer
 			}
 			else if curr is NVSwitch {
@@ -421,6 +430,10 @@ extension NVStoryManager {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
 						}
 					}
+					
+					if let function = transfer["function"]?.dictionary {
+						link.Transfer.Function.Javascript = function["jscode"]!.string!
+					}
 				}
 				break
 			case "branch":
@@ -439,6 +452,10 @@ extension NVStoryManager {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
 						}
 					}
+					
+					if let function = trueTransfer["function"]?.dictionary {
+						branch.TrueTransfer.Function.Javascript = function["jscode"]!.string!
+					}
 				}
 				
 				if let falseTransfer = curr["ftransfer"].dictionary {
@@ -449,6 +466,10 @@ extension NVStoryManager {
 						} else {
 							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
 						}
+					}
+					
+					if let function = falseTransfer["function"]?.dictionary {
+						branch.FalseTransfer.Function.Javascript = function["jscode"]!.string!
 					}
 				}
 				break
@@ -725,11 +746,22 @@ extension NVStoryManager {
 			],
 			// END link
 			
+			// MARK: function
+			"function": [
+				"type": "object",
+				"properties": [
+					"jscode": [ "type": "string" ]
+				],
+				"required": ["jscode"]
+			],
+			// END function
+			
 			// MARK: transfer
 			"transfer": [
 				"type": "object",
 				"properties": [
-					"destination": [ "$ref": "#/definitions/uuid" ]
+					"destination": [ "$ref": "#/definitions/uuid" ],
+					"function": [ "$ref": "#/definitions/function" ]
 				],
 				"required": ["destination"]
 			],

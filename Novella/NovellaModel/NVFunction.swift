@@ -28,6 +28,23 @@ public class NVFunction {
 	
 	// MARK: - Functions -
 	func execute() {
-		// TODO: Execute some kind of user-provided code etc.
+		var funcCode = "function executeFunction() {\n"
+		funcCode += _javascript
+		funcCode += "\n}"
+		
+		print(funcCode)
+		
+		// evaluate the script so JS knows about it
+		_manager._jsContext.evaluateScript(funcCode)
+		
+		// get a reference to the function
+		guard let execFunc = _manager._jsContext.objectForKeyedSubscript("executeFunction") else {
+			fatalError("Could not find JavaScript function executeFunction().")
+		}
+		
+		// call the function so we can get its value back
+		guard let result = execFunc.call(withArguments: []) else {
+			fatalError("Could not execute JavaScript function executeFunction().")
+		}
 	}
 }
