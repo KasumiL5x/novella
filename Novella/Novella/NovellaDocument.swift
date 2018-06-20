@@ -195,6 +195,13 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
+	func onStoryFunctionUpdated(function: NVFunction) {
+		self.updateChangeCount(.changeDone)
+	}
+	func onStoryConditionUpdated(condition: NVCondition) {
+		self.updateChangeCount(.changeDone)
+	}
+	
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String) {
 		self.updateChangeCount(.changeDone)
 	}

@@ -28,8 +28,8 @@ public class NVBranch : NVBaseLink {
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
 		self._condition = NVCondition(manager: manager)
-		self._trueTransfer = NVTransfer()
-		self._falseTransfer = NVTransfer()
+		self._trueTransfer = NVTransfer(manager: manager)
+		self._falseTransfer = NVTransfer(manager: manager)
 		super.init(manager: manager, uuid: uuid, origin: origin)
 	}
 	

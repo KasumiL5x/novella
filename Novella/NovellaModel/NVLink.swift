@@ -24,7 +24,7 @@ public class NVLink : NVBaseLink {
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
 		self._condition = NVCondition(manager: manager)
-		self._transfer = NVTransfer()
+		self._transfer = NVTransfer(manager: manager)
 		super.init(manager: manager, uuid: uuid, origin: origin)
 	}
 	

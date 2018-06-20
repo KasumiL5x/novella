@@ -16,7 +16,10 @@ public class NVCondition {
 	// MARK: - Properties -
 	public var Javascript: String {
 		get{ return _javascript }
-		set{ _javascript = newValue } // TODO: Make this a function and validate the JS upon change?
+		set{
+			_javascript = newValue
+			_manager.Delegates.forEach{$0.onStoryConditionUpdated(condition: self)}
+		} // TODO: Make this a function and validate the JS upon change?
 	}
 	
 	// MARK: - Initialization -

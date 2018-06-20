@@ -16,7 +16,7 @@ public class NVListener: NVNode {
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID) {
 		self._condition = NVCondition(manager: manager)
-		self._transfer = NVTransfer()
+		self._transfer = NVTransfer(manager: manager)
 		super.init(manager: manager, uuid: uuid)
 	}
 	

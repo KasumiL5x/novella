@@ -8,16 +8,21 @@
 
 public class NVFunction {
 	// MARK: - Variables -
+	private let _manager: NVStoryManager
 	private var _javascript: String
 	
 	// MARK: - Properties -
 	public var Javascript: String {
 		get{ return _javascript }
-		set{ _javascript = newValue } // TODO: Make this a function and validate the JS upon change?
+		set{
+			_javascript = newValue
+			_manager.Delegates.forEach{$0.onStoryFunctionUpdated(function: self)}
+		} // TODO: Make this a function and validate the JS upon change?
 	}
 	
 	// MARK: - Initialization -
-	init() {
+	init(manager: NVStoryManager) {
+		self._manager = manager
 		self._javascript = ""
 	}
 	

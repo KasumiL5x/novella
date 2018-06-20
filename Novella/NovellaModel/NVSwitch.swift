@@ -17,7 +17,7 @@ public class NVSwitch : NVBaseLink {
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
 		self._variable = nil
-		self._defaultTransfer = NVTransfer()
+		self._defaultTransfer = NVTransfer(manager: manager)
 		self._values = [:]
 		super.init(manager: manager, uuid: uuid, origin: origin)
 	}

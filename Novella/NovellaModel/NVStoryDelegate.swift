@@ -97,6 +97,9 @@ public protocol NVStoryDelegate {
 	// Called when an NVBranch's false transfer's destination is set using NVBranch.SetTrueDestination().
 	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?)
 	
+	func onStoryFunctionUpdated(function: NVFunction)
+	func onStoryConditionUpdated(condition: NVCondition)
+	
 	// Called when an NVVariable's synopsis is changed using NVVariable.Synopsis.
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String)
 	// Called when an NVVariable's type is changed using NVVariable.setType().
@@ -213,6 +216,11 @@ public extension NVStoryDelegate {
 	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
 	}
 	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
+	}
+	
+	func onStoryFunctionUpdated(function: NVFunction) {
+	}
+	func onStoryConditionUpdated(condition: NVCondition) {
 	}
 	
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String) {

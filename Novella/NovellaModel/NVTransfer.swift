@@ -20,8 +20,8 @@ public class NVTransfer {
 	}
 	
 	// MARK: - Initialization -
-	init() {
+	init(manager: NVStoryManager) {
 		self._destination = nil
-		self._function = NVFunction()
+		self._function = NVFunction(manager: manager)
 	}
 }
