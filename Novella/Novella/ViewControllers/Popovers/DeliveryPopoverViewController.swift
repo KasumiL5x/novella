@@ -38,7 +38,7 @@ class DeliveryPopoverViewController: NSViewController {
 		let name = delivery.Name
 		_nameTextField.stringValue = name.isEmpty ? "" : name
 		
-		let dirs = delivery.Preview
+		let dirs = delivery.Directions
 		_directionsTextField.stringValue = dirs.isEmpty ? "" : dirs
 		
 		let prev = delivery.Preview

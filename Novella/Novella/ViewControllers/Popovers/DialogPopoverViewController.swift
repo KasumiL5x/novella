@@ -38,7 +38,7 @@ class DialogPopoverViewController: NSViewController {
 		let name = dlg.Name
 		_nameTextField.stringValue = name.isEmpty ? "" : name
 		
-		let dirs = dlg.Preview
+		let dirs = dlg.Directions
 		_directionsTextField.stringValue = dirs.isEmpty ? "" : dirs
 		
 		let prev = dlg.Preview
