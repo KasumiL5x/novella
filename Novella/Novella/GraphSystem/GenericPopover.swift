@@ -8,12 +8,19 @@
 
 import Cocoa
 
+class GenericPopoverWindow: NSWindow {
+	override var canBecomeKey: Bool {
+		return true
+	}
+	
+}
+
 class GenericPopover: NSObject {
 	// MARK: - - Variables -
 	private var _view: NSView?
 	private var _popover: NSPopover?
 	var _viewController: NSViewController? // PROTECTED
-	private var _window: NSWindow?
+	private var _window: GenericPopoverWindow?
 	
 	// MARK: - - Initialization -
 	override init() {
@@ -54,7 +61,7 @@ class GenericPopover: NSObject {
 			let frame = _viewController!.view.bounds
 			let styleMask = NSWindow.StyleMask(rawValue: NSWindow.StyleMask.titled.rawValue | NSWindow.StyleMask.closable.rawValue)
 			let rect = NSWindow.contentRect(forFrameRect: frame, styleMask: styleMask)
-			_window = NSWindow(contentRect: rect, styleMask: styleMask, backing: .buffered, defer: true)
+			_window = GenericPopoverWindow(contentRect: rect, styleMask: styleMask, backing: .buffered, defer: true)
 			_window!.contentViewController = _viewController!
 			_window!.isReleasedWhenClosed = false
 			_window!.hidesOnDeactivate = true

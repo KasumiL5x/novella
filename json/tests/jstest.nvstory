@@ -15,7 +15,7 @@
     {
       "synopsis" : "",
       "name" : "decision",
-      "value" : true,
+      "value" : false,
       "constant" : false,
       "uuid" : "D9D6AA9B-013D-40EF-8D06-033EB526E096",
       "datatype" : "boolean",
@@ -39,7 +39,7 @@
       "origin" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
       "uuid" : "C11D765F-D597-4F21-81A3-AC2C5C59E93B",
       "condition" : {
-        "jscode" : "\/\/let result = getvar2(\"root.decision\");\n\nlet name = \"root.decision\";\nnvlog(getvar2(name));\nsetvar(\"root.decision\", true);\nnvlog(getvar2(name));\n\nreturn getvar2(\"root.decision\");"
+        "jscode" : "\/\/let result = getvar2(\"root.decision\");\n\nlet name = \"root.decision\";\nnvlog(getvar2(name));\nsetvar(\"root.decision\", true);\nnvlog(getvar2(name));\n\nreturn getvar2(\"root.decision\");\n\nhi"
       },
       "ftransfer" : {
         "destination" : "85718C17-40A3-4839-B65B-00201BCEC428"
@@ -84,7 +84,8 @@
   ],
   "story" : {
     "graphs" : [
-      "662D74C5-DCDA-44A6-898F-42C0F4574B25"
+      "662D74C5-DCDA-44A6-898F-42C0F4574B25",
+      "F54F0CA3-FDDF-445A-9738-004BB4EBE9FD"
     ],
     "name" : "",
     "folders" : [
@@ -159,7 +160,7 @@
         "y" : 0,
         "x" : 0
       },
-      "name" : "450B4E6A-7E4E-418B-AFA7-613DB3040E2A",
+      "name" : "test_1",
       "nodes" : [
         "1F41C069-0037-4AE9-85D1-21A6878EEA03",
         "FC23DACC-6433-46F6-B421-8CF34A4CCBF4",
@@ -176,6 +177,30 @@
       ],
       "entry" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
       "uuid" : "662D74C5-DCDA-44A6-898F-42C0F4574B25",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "test_2",
+      "nodes" : [
+
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "F54F0CA3-FDDF-445A-9738-004BB4EBE9FD",
       "subgraphs" : [
 
       ],
