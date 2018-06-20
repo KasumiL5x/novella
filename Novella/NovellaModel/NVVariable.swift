@@ -85,7 +85,14 @@ public class NVVariable: NVObject {
 			return false
 		}
 		
-		_value = val
+		switch _type {
+		case .boolean:
+			_value = val as! Bool
+		case .double:
+			_value = val as! Double
+		case .integer:
+			_value = val as! Int
+		}
 		_manager.Delegates.forEach{$0.onStoryVariableValueChanged(variable: self, value: _value)}
 		return true
 	}
@@ -96,8 +103,17 @@ public class NVVariable: NVObject {
 			print("NVVariable::setInitial(): Variable datatype mismatch (expected \(_type.stringValue), received \(type(of: val))).")
 			return false
 		}
-		_initialValue = val
-		_value = val
+		switch _type {
+		case .boolean:
+			_initialValue = val as! Bool
+			_value = val as! Bool
+		case .double:
+			_initialValue = val as! Double
+			_value = val as! Double
+		case .integer:
+			_initialValue = val as! Int
+			_value = val as! Int
+		}
 		_manager.Delegates.forEach{$0.onStoryVariableInitialValueChanged(variable: self, value: _initialValue)}
 		return true
 	}
