@@ -13,6 +13,7 @@ class NewReaderViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet private weak var _graphPopup: NSPopUpButton!
 	@IBOutlet private weak var _titleLabel: NSTextField!
+	@IBOutlet private weak var _directionsLabel: NSTextField!
 	@IBOutlet private weak var _contentLabel: NSTextField!
 	@IBOutlet private weak var _choiceWheel: ChoiceWheelView!
 	internal var _document: NovellaDocument?
@@ -63,18 +64,22 @@ extension NewReaderViewController: NVReaderDelegate {
 		switch node {
 		case is NVDialog:
 			_titleLabel.stringValue = "Dialog"
+			_directionsLabel.stringValue = (node as! NVDialog).Directions
 			_contentLabel.stringValue = (node as! NVDialog).Content
 			
 		case is NVDelivery:
 			_titleLabel.stringValue = "Delivery"
+			_directionsLabel.stringValue = (node as! NVDelivery).Directions
 			_contentLabel.stringValue = (node as! NVDelivery).Content
 			
 		case is NVContext:
 			_titleLabel.stringValue = "Context"
+			_directionsLabel.stringValue = ""
 			_contentLabel.stringValue = ""
 			
 		default:
 			_titleLabel.stringValue = "INVALID"
+			_directionsLabel.stringValue = ""
 			_contentLabel.stringValue = ""
 		}
 		

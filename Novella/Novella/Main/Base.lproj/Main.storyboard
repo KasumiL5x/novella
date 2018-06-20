@@ -896,11 +896,11 @@
             <objects>
                 <viewController id="1AZ-wJ-jTz" customClass="NewReaderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="jS5-jg-9Oa">
-                        <rect key="frame" x="0.0" y="0.0" width="750" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="532"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="cFF-Kb-N2n" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="465" width="750" height="35"/>
+                                <rect key="frame" x="0.0" y="497" width="750" height="35"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qrJ-ZC-21v" userLabel="Graph Pop Up Button">
                                         <rect key="frame" x="62" y="4" width="681" height="26"/>
@@ -941,7 +941,25 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="TJy-Ic-pkS">
                                     <font key="font" metaFont="system" size="16"/>
-                                    <mutableString key="placeholderString">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et nunc dapibus, ullamcorper purus vitae, volutpat magna. Maecenas vitae nulla scelerisque, iaculis eros non, molestie justo. Nulla feugiat eu nulla quis molestie. Donec aliquet porttitor velit ut ullamcorper. Pellentesque at lobortis magna. Maecenas non justo venenatis, viverra urna eget, fermentum quam. Cras feugiat urna arcu, id egestas libero interdum vitae. Duis condimentum, eros in ullamcorper malesuada, purus purus imperdiet odio, ac consectetur felis magna id neque. Nullam pharetra condimentum consectetur. Donec sit amet porta ante, et tincidunt quam. Cras sit amet turpis sed mauris varius feugiat quis a nisi.</mutableString>
+                                    <string key="placeholderString">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et nunc dapibus, ullamcorper purus vitae, volutpat magna. Maecenas vitae nulla scelerisque, iaculis eros non, molestie justo. Nulla feugiat eu nulla quis molestie. Donec aliquet porttitor velit ut ullamcorper. Pellentesque at lobortis magna. Maecenas non justo venenatis, viverra urna eget, fermentum quam. Cras feugiat urna arcu, id egestas libero interdum vitae. Duis condimentum, eros in ullamcorper malesuada, purus purus imperdiet odio, ac consectetur felis magna id neque. Nullam pharetra condimentum consectetur. Donec sit amet porta ante, et tincidunt quam. Cras sit amet turpis sed mauris varius feugiat quis a nisi.</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UxT-6a-f5d">
+                                <rect key="frame" x="199" y="438" width="352" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="rWH-Ym-Xce">
+                                    <font key="font" metaFont="systemThin" size="42"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woL-WF-QcS">
+                                <rect key="frame" x="199" y="406" width="352" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Directions" id="iTB-Oq-wUA">
+                                    <font key="font" metaFont="systemBold" size="20"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -955,15 +973,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UxT-6a-f5d">
-                                <rect key="frame" x="199" y="406" width="352" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="rWH-Ym-Xce">
-                                    <font key="font" metaFont="systemThin" size="42"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cFF-Kb-N2n" secondAttribute="trailing" id="5bf-7W-XKe"/>
@@ -974,13 +983,14 @@
                     <connections>
                         <outlet property="_choiceWheel" destination="FW2-Zr-uz4" id="Wmq-fs-XuQ"/>
                         <outlet property="_contentLabel" destination="Bde-Pd-foH" id="uwp-fO-j7H"/>
+                        <outlet property="_directionsLabel" destination="woL-WF-QcS" id="Opz-8L-LL6"/>
                         <outlet property="_graphPopup" destination="qrJ-ZC-21v" id="3jy-3E-jeD"/>
                         <outlet property="_titleLabel" destination="UxT-6a-f5d" id="8UM-MW-gUY"/>
                     </connections>
                 </viewController>
                 <customObject id="2xD-yn-PIg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1383" y="652"/>
+            <point key="canvasLocation" x="1383" y="668"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="TFQ-UK-qvb">
