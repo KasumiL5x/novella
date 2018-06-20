@@ -106,7 +106,25 @@ public class NVReader {
 	}
 	
 	private func getNodeLinks(_ node: NVNode) -> [NVBaseLink] {
-		// TODO: Eventually be smarter about this by not including links that are invalid (no destination or false condition).
-		return _manager.getLinksFrom(node)
+		var links: [NVBaseLink] = []
+		for x in _manager.getLinksFrom(node) {
+			switch x {
+			case is NVLink:
+				let asLink = x as! NVLink
+				if asLink.Transfer._destination != nil && asLink.Condition.execute() {
+					links.append(x)
+				}
+				
+			case is NVBranch:
+				let asBranch = x as! NVBranch
+				if asBranch.TrueTransfer._destination != nil && asBranch.FalseTransfer._destination != nil && asBranch.Condition.execute() {
+					links.append(x)
+				}
+				
+			default:
+				print("NVReader::getNodeLinks() encountered an unhandled link.")
+			}
+		}
+		return links
 	}
 }

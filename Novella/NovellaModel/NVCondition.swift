@@ -32,7 +32,7 @@ public class NVCondition {
 	func execute() -> Bool {
 		// create function (TODO: What happens if I redefine this function more than once?)
 		var boolFunc = "function executeCondition() {\n"
-		boolFunc += _javascript
+		boolFunc += _javascript.isEmpty ? "return true;" : _javascript
 		boolFunc += "\n}"
 		
 		print(boolFunc)
