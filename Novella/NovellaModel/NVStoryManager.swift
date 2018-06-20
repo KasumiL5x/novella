@@ -146,7 +146,7 @@ public class NVStoryManager {
 		_jsContext.setObject(nvLogObject, forKeyedSubscript: "nvlog" as (NSCopying & NSObjectProtocol))
 		
 		// get variables by (first appearance of) name
-		let js_getvar2: @convention(block) (String) -> Any? = { [weak self](name) in
+		let js_getvar: @convention(block) (String) -> Any? = { [weak self](name) in
 			for v in self!._variables {
 				if name == NVPath.fullPathTo(v) {
 					print("JS requested variable: \(name).  Found and returning value: \(v.Value).")
@@ -157,7 +157,7 @@ public class NVStoryManager {
 			print("JS requested variable: \(name).  Could not find varible; returning nil.")
 			return nil
 		}
-		_jsContext.setObject(js_getvar2, forKeyedSubscript: "getvar2" as (NSCopying & NSObjectProtocol))
+		_jsContext.setObject(js_getvar, forKeyedSubscript: "getvar" as (NSCopying & NSObjectProtocol))
 		
 		// set variables by (first appearange of) name
 		let js_setvar: @convention(block) (String, Any) -> Void = { [weak self](name, value) in
