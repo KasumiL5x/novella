@@ -74,28 +74,32 @@ public class NVVariable: NVObject {
 		_manager.Delegates.forEach{$0.onStoryVariableTypeChanged(variable: self, type: _type)}
 	}
 
-	public func setValue(_ val: Any) {
+	@discardableResult
+	public func setValue(_ val: Any) -> Bool {
 		if self._constant {
 			print("NVVariable::setValue(): Variable is constant.")
-			return
+			return false
 		}
 		if !_type.matches(value: val) {
-			print("NVVariable::setValue(): Variable datatype mismatch (\(_type.stringValue) vs \(_type.stringValue)).")
-			return
+			print("NVVariable::setValue(): Variable datatype mismatch (expected \(_type.stringValue), received \(type(of: val))).")
+			return false
 		}
 		
 		_value = val
 		_manager.Delegates.forEach{$0.onStoryVariableValueChanged(variable: self, value: _value)}
+		return true
 	}
 	
-	public func setInitialValue(_ val: Any) {
+	@discardableResult
+	public func setInitialValue(_ val: Any) -> Bool {
 		if !_type.matches(value: val) {
-			print("NVVariable::setInitial(): Variable datatype mismatch (\(_type.stringValue) vs \(_type.stringValue)).")
-			return
+			print("NVVariable::setInitial(): Variable datatype mismatch (expected \(_type.stringValue), received \(type(of: val))).")
+			return false
 		}
 		_initialValue = val
 		_value = val
 		_manager.Delegates.forEach{$0.onStoryVariableInitialValueChanged(variable: self, value: _initialValue)}
+		return true
 	}
 }
 
