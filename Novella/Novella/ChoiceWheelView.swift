@@ -88,14 +88,17 @@ class ChoiceWheelView: NSView {
 		_centerLayer.fillColor = ChoiceWheelView.BackgroundColor.cgColor
 		layer?.addSublayer(_centerLayer)
 		
+		// spacing (+ zeroing if only one item)
+		let spacing = _items.count > 1 ? ChoiceWheelView.Spacing : 0.0
+		
 		// all items
 		let itemAngle: CGFloat = 360.0 / CGFloat(_items.count)
 		for idx in 0..<_items.count {
 			let segment = ChoiceSegment()
 			_segments.append(segment)
 			
-			segment.startAngle = itemAngle * CGFloat(idx) + ChoiceWheelView.Spacing
-			segment.endAngle = segment.startAngle + itemAngle - ChoiceWheelView.Spacing
+			segment.startAngle = itemAngle * CGFloat(idx) + spacing
+			segment.endAngle = segment.startAngle + itemAngle - spacing
 			
 			// arc layer
 			let path = NSBezierPath()
@@ -118,7 +121,7 @@ class ChoiceWheelView: NSView {
 			let textOffset: CGFloat = 25.0
 			segment.textLayer.frame.origin = (center + avgDir * ChoiceWheelView.Radius) + (avgDir * textOffset)
 			// move left half to right anchor
-			if avgAngle > 180.0 {
+			if avgAngle >= 180.0 {
 				segment.textLayer.frame.origin.x -= segment.textLayer.frame.width
 			}
 			// move bottom half to top anchor
