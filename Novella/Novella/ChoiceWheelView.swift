@@ -117,7 +117,7 @@ class ChoiceWheelView: NSView {
 			segment.textLayer.frame.size = segment.textLayer.preferredFrameSize()
 			// move text into place
 			let avgAngle = segment.startAngle + ((segment.endAngle - segment.startAngle) * 0.5)
-			let avgDir = CGPoint(angle: toRadians(90.0 - avgAngle))
+			let avgDir = CGPoint(angle: toRadians(90.0 - avgAngle)).normalized()
 			let textOffset: CGFloat = 25.0
 			segment.textLayer.frame.origin = (center + avgDir * ChoiceWheelView.Radius) + (avgDir * textOffset)
 			// move left half to right anchor
