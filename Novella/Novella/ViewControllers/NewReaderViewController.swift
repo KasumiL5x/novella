@@ -14,7 +14,7 @@ class NewReaderViewController: NSViewController {
 	@IBOutlet private weak var _graphPopup: NSPopUpButton!
 	@IBOutlet private weak var _titleLabel: NSTextField!
 	@IBOutlet private weak var _directionsLabel: NSTextField!
-	@IBOutlet private weak var _contentLabel: NSTextField!
+	@IBOutlet private weak var _contentLabel: CLTypingLabel!
 	@IBOutlet private weak var _choiceWheel: ChoiceWheelView!
 	internal var _document: NovellaDocument?
 	private var _reader: NVReader?

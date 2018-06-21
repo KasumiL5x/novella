@@ -46,6 +46,7 @@
 		655F9FF720C30EAA00B20EFE /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 655F9FF520C30EAA00B20EFE /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		65834FC620DBD53D006F6A35 /* CLTypingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65834FC520DBD53D006F6A35 /* CLTypingLabel.swift */; };
 		658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
 		65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2180E20D13FC900EA4594 /* NVObject.swift */; };
 		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
@@ -174,6 +175,7 @@
 		655F9FF320C30EAA00B20EFE /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65834FC520DBD53D006F6A35 /* CLTypingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTypingLabel.swift; sourceTree = "<group>"; };
 		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
 		65A2180E20D13FC900EA4594 /* NVObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVObject.swift; sourceTree = "<group>"; };
 		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				65F7F8B620C319D6004663D6 /* Storyboards */,
 				65F7F87020C31722004663D6 /* ViewControllers */,
 				654918E420D6946B008467FF /* ChoiceWheelView.swift */,
+				65834FC520DBD53D006F6A35 /* CLTypingLabel.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -750,6 +753,7 @@
 				65F7F85D20C31714004663D6 /* ConditionPopover.swift in Sources */,
 				65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */,
 				65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */,
+				65834FC620DBD53D006F6A35 /* CLTypingLabel.swift in Sources */,
 				65F7F83C20C31637004663D6 /* NSColor+Saturation.swift in Sources */,
 				654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */,
 				65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */,
