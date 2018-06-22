@@ -20,6 +20,7 @@ class PinViewLink: PinView {
 	private let _functionPopover: FunctionPopover
 	private let _graphDropMenu: NSMenu
 	private var _outlineRect: NSRect
+	private var _controlPoint: PinControlPoint?
 	
 	// MARK: - - Initialization -
 	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
@@ -33,6 +34,8 @@ class PinViewLink: PinView {
 		self._graphDropMenu = NSMenu()
 		self._outlineRect = NSRect.zero
 		super.init(link: link, graphView: graphView, owner: owner)
+		
+		self._controlPoint = PinControlPoint(owner: self)
 		
 		// add layers
 		layer!.addSublayer(_curveLayer)
@@ -96,6 +99,25 @@ class PinViewLink: PinView {
 	override func onContextInternal(_ gesture: NSClickGestureRecognizer) {
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
+	override func setupControlPoints() {
+		guard let destination = _graphView.getLinkableViewFrom(linkable: getDestination(), includeParentGraphs: true) else {
+			if let idx = subviews.index(of: _controlPoint!) {
+				subviews.remove(at: idx)
+			}
+			return
+		}
+		
+		let start = NSMakePoint(frame.width*0.5, frame.height*0.5)
+		let end =  destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
+		let cp1 = NSPoint(x: start.x + (end.x - start.x) * 0.5, y: start.y)
+		let cp2 = NSPoint(x: start.x + (end.x - start.x) * 0.5, y: end.y)
+		let middle = (cp1 + cp2) * 0.5
+		
+		_controlPoint!.frame.origin = NSMakePoint(middle.x - _controlPoint!.frame.width*0.5, middle.y - _controlPoint!.frame.height*0.5)
+		if subviews.index(of: _controlPoint!) == nil {
+			addSubview(_controlPoint!)
+		}
+	}
 	
 	// MARK: Context Menu Callbacks
 	@objc private func onContextCondition() {
@@ -114,6 +136,8 @@ class PinViewLink: PinView {
 	func setDestination(dest: NVObject?) {
 		(BaseLink as! NVLink).setDestination(dest: dest)
 		_graphView.updateCurves()
+		
+		setupControlPoints()
 	}
 	func getDestination() -> NVObject? {
 		return (BaseLink as! NVLink).Transfer.Destination
@@ -156,7 +180,12 @@ class PinViewLink: PinView {
 				case .line:
 					CurveHelper.line(start: origin, end: end, path: _curvePath)
 				case .smooth:
-					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
+//					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
+					let middle = (origin + end) * 0.5 - NSMakePoint(_controlPoint!.frame.width*0.5, _controlPoint!.frame.height*0.5)
+					let cp = _controlPoint!.frame.origin
+					let cpOffset = cp - middle
+					print(cpOffset)
+					CurveHelper.smoothOffset(start: origin, end: end, path: _curvePath, offset: cpOffset)
 				case .curve:
 					CurveHelper.curve(start: origin, end: end, path: _curvePath)
 				case .square:

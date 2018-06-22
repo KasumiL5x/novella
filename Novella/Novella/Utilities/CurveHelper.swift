@@ -29,6 +29,14 @@ class CurveHelper {
 		path.move(to: a)
 		path.curve(to: d, controlPoint1: b, controlPoint2: c)
 	}
+	static func smoothOffset(start: NSPoint, end: NSPoint, path: NSBezierPath, offset: NSPoint) {
+		let a = start
+		let d = end
+		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.y) + offset
+		let c = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: d.y) + offset
+		path.move(to: a)
+		path.curve(to: d, controlPoint1: b, controlPoint2: c)
+	}
 	
 	static func curve(start: NSPoint, end: NSPoint, path: NSBezierPath) {
 		let offset = abs(start.x - end.x)  * 0.75

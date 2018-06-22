@@ -157,28 +157,50 @@ class LinkableView: NSView {
 	
 	// MARK: Hit Test
 	override func hitTest(_ point: NSPoint) -> NSView? {
-		// point is in the superview's coordinate system
-		// manually check each subview's bounds (if i want to do something similar i'd need to override their hittest and call it here)
-		for sub in subviews {
-			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
-				// return the node itself if a subview has the ignore tag (this is used for things like overlaying labels)
-				if sub.tag == LinkableView.HIT_IGNORE_TAG {
-					return self
-				}
-				if sub.tag == LinkableView.HIT_NIL_TAG {
-					continue // just don't do anything with the view
-				}
-				return sub
+		
+		// check all children
+		for sub in subviews.reversed() {
+			if sub.tag == LinkableView.HIT_IGNORE_TAG || sub.tag == LinkableView.HIT_NIL_TAG {
+				continue
 			}
+//			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
+				if let result = sub.hitTest(superview!.convert(point, to: self)) {
+					return result
+				}
+//				return sub
+//			}
 		}
 		
-		// check out local widget's bounds for a mouse click
+		// check local widget bounds
 		if NSPointInRect(superview!.convert(point, to: self), widgetRect()) {
 			return self
 		}
-		
-		// nuttin'
 		return nil
+		
+		
+		
+//		// point is in the superview's coordinate system
+//		// manually check each subview's bounds (if i want to do something similar i'd need to override their hittest and call it here)
+//		for sub in subviews {
+//			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
+//				// return the node itself if a subview has the ignore tag (this is used for things like overlaying labels)
+//				if sub.tag == LinkableView.HIT_IGNORE_TAG {
+//					return self
+//				}
+//				if sub.tag == LinkableView.HIT_NIL_TAG {
+//					continue // just don't do anything with the view
+//				}
+//				return sub
+//			}
+//		}
+//
+//		// check out local widget's bounds for a mouse click
+//		if NSPointInRect(superview!.convert(point, to: self), widgetRect()) {
+//			return self
+//		}
+//
+//		// nuttin'
+//		return nil
 	}
 	
 	// MARK: Gesture Callbacks
@@ -331,6 +353,10 @@ class LinkableView: NSView {
 			curr.frame.origin.y += yDiff
 			curr.frame.origin.x = wRect.width + LinkableView.OUTPUTS_OFFSET_X
 		}
+		
+		// setup all all output control points now that they have been positioned
+		_outputs.forEach{$0.setupControlPoints()}
+		
 		
 		// set bounds frame and adjust it for the offset
 		_outputsBoard.frame = boundsOf(views: _outputs)

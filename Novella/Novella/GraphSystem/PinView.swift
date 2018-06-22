@@ -9,6 +9,63 @@
 import Cocoa
 import NovellaModel
 
+class PinControlPoint: NSView, NSGestureRecognizerDelegate {
+	private var _panGesture: NSPanGestureRecognizer? = nil
+	private var _previousLocation: CGPoint
+	private var _owner: PinView?
+	
+	init(owner: PinView) {
+		self._owner = owner
+		self._previousLocation = CGPoint.zero
+		super.init(frame: NSMakeRect(0.0, 0.0, 20.0, 20.0))
+		
+		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(PinControlPoint.onPan))
+		_panGesture!.delegate = self
+		self.addGestureRecognizer(_panGesture!)
+	}
+	required init?(coder decoder: NSCoder) {
+		fatalError()
+	}
+	
+	@objc private func onPan(gesture: NSPanGestureRecognizer) {
+		print("Dragged \(self)")
+		
+		switch gesture.state {
+		case .began:
+			_previousLocation = gesture.location(in: self)
+			
+		case .changed:
+			let currLocation = gesture.location(in: self)
+			let delta = currLocation - _previousLocation
+			
+			frame.origin.x += delta.x
+			frame.origin.y += delta.y
+			
+			_owner?.redraw()
+			
+		default:
+			break
+		}
+	}
+	
+	override func draw(_ dirtyRect: NSRect) {
+		super.draw(dirtyRect)
+		
+		if let context = NSGraphicsContext.current?.cgContext {
+			context.saveGState()
+			
+			NSColor.red.setFill()
+			NSBezierPath(ovalIn: bounds).fill()
+			
+			context.restoreGState()
+		}
+	}
+	
+//	func gestureRecognizer(_ gestureRecognizer: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
+//		return true
+//	}
+}
+
 class PinView: NSView {
 	// MARK: - - Statics -
 	static let PIN_SIZE: CGFloat = 15.0
@@ -31,6 +88,8 @@ class PinView: NSView {
 	private var _contextGesture: NSClickGestureRecognizer?
 	//
 	private var _trashMode: Bool
+	//
+//	private let _controlPoint: PinControlPoint
 	
 	// MARK: - - Initialization -
 	init(link: NVBaseLink, graphView: GraphView, owner: LinkableView) {
@@ -48,6 +107,8 @@ class PinView: NSView {
 		self._contextGesture = nil
 		//
 		self._trashMode = false
+		//
+//		self._controlPoint = PinControlPoint(frame: NSMakeRect(0.0, 0.0, 20.0, 20.0))
 		super.init(frame: NSMakeRect(0.0, 0.0, 15.0, 15.0))
 		
 		// force child to set bounds to size accordingly
@@ -77,6 +138,10 @@ class PinView: NSView {
 		_dragLayer.lineWidth = 2.0
 		_dragLayer.strokeColor = NSColor.red.cgColor
 		layer!.addSublayer(_dragLayer)
+		
+		// test
+//		_controlPoint.frame.origin = NSMakePoint(20.0, 20.0)
+//		subviews.append(_controlPoint)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinView::init(coder) not implemented.")
@@ -106,9 +171,28 @@ class PinView: NSView {
 		}
 	}
 	
+	override func hitTest(_ point: NSPoint) -> NSView? {
+//		return super.hitTest(point)
+		for x in subviews.reversed() {
+			let subPoint = x.convert(point, from: superview!)
+			if x.bounds.contains(subPoint) {
+				return x
+			}
+		}
+		
+		// seems to function now but i need to possibly remove the pan for the CP and be able to differentiate between them
+		// in the pan for this object... possibly?  idk.  Also, need to experiment with not resizing the linkable view as the hittest has changed.
+		// also don't forget to start removing the old reader portion.
+		
+		return super.hitTest(point)
+	}
+	
 	// MARK: - - Functions -
 	func redraw() {
 		setNeedsDisplay(bounds)
+	}
+	func setupControlPoints() {
+		print("PinView::setupControlPoints() should be overridden.")
 	}
 	func onTrashed() {
 		print("PinView::onTrashed() should be overridden.")
