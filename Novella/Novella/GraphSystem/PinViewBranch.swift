@@ -233,6 +233,8 @@ class PinViewBranch: PinView {
 					CurveHelper.curve(start: origin, end: end, path: _trueCurvePath)
 				case .square:
 					CurveHelper.square(start: origin, end: end, path: _trueCurvePath)
+				case .test:
+					CurveHelper.test(points: [origin, end], tension: 1.0, path: _trueCurvePath)
 				}
 				
 				_trueCurveLayer.path = _trueCurvePath.cgPath
@@ -256,6 +258,8 @@ class PinViewBranch: PinView {
 					CurveHelper.curve(start: origin, end: end, path: _falseCurvePath)
 				case .square:
 					CurveHelper.square(start: origin, end: end, path: _falseCurvePath)
+				case .test:
+					CurveHelper.test(points: [origin, end], tension: 1.0, path: _falseCurvePath)
 				}
 				
 				_falseCurveLayer.path = _falseCurvePath.cgPath

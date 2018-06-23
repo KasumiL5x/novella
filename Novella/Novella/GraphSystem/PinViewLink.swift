@@ -176,20 +176,25 @@ class PinViewLink: PinView {
 				// convert local from destination into local of self and make curve
 				end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
 				
+				_graphView.Document.CurveType = .test
+				let middle = (origin + end) * 0.5 - NSMakePoint(_controlPoint!.frame.width*0.5, _controlPoint!.frame.height*0.5)
+				let cp = _controlPoint!.frame.origin + NSMakePoint(_controlPoint!.frame.size.width/2, _controlPoint!.frame.size.height/2)
+				let cpOffset = cp - middle
 				switch _graphView.Document.CurveType {
 				case .line:
 					CurveHelper.line(start: origin, end: end, path: _curvePath)
 				case .smooth:
 //					CurveHelper.smooth(start: origin, end: end, path: _curvePath)
-					let middle = (origin + end) * 0.5 - NSMakePoint(_controlPoint!.frame.width*0.5, _controlPoint!.frame.height*0.5)
-					let cp = _controlPoint!.frame.origin
-					let cpOffset = cp - middle
+
 					print(cpOffset)
 					CurveHelper.smoothOffset(start: origin, end: end, path: _curvePath, offset: cpOffset)
 				case .curve:
 					CurveHelper.curve(start: origin, end: end, path: _curvePath)
 				case .square:
 					CurveHelper.square(start: origin, end: end, path: _curvePath)
+				case .test:
+					CurveHelper.hermite(points: [origin, cp, end], closed: false, path: _curvePath)
+//					CurveHelper.test(points: [origin, middle, end], tension: 1.0, path: _curvePath)
 				}
 				
 				_curveLayer.strokeColor = TrashMode ? Settings.graph.pins.linkCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkCurveColor.cgColor
