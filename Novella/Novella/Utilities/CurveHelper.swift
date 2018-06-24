@@ -86,15 +86,24 @@ class CurveHelper {
 	}
 	
 	static func square(start: NSPoint, end: NSPoint, path: NSBezierPath) {
-		let a = start
-		let d = end
-		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.y)
-		let c = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: d.y)
-		path.move(to: a)
-		path.line(to: b)
-		path.move(to: b)
-		path.line(to: c)
-		path.move(to: c)
-		path.line(to: d)
+		let spacing: CGFloat = 20.0
+		let diff = end.x - start.x
+		
+		path.move(to: start)
+		
+		// on the right side
+		if diff > 0.0 {
+			let gap = diff <= spacing ? diff : spacing // anything below spacing, just use the diff
+			path.line(to: start + NSMakePoint(gap, 0.0))
+			path.line(to: NSMakePoint(start.x + gap, end.y))
+			path.line(to: end)
+		} else {
+			let midY = (start.y + end.y) * 0.5
+			path.line(to: start + NSMakePoint(spacing, 0.0))
+			path.line(to: NSMakePoint(start.x + spacing, midY))
+			path.line(to: NSMakePoint(end.x - spacing, midY))
+			path.line(to: NSMakePoint(end.x - spacing, end.y))
+			path.line(to: end)
+		}
 	}
 }
