@@ -20,10 +20,13 @@ class CurveHelper {
 		
 		// supplement 2 points if only start and end provided
 		if points.count == 2 {
-			let cp1 = points[0] + NSMakePoint(10, 0)
-			let cp2 = points[1] - NSMakePoint(10,0)
-			points.insert(cp1, at: 1)
-			points.insert(cp2, at: 2)
+			let spacing: CGFloat = 20.0
+			let start = points[0], end = points[1]
+			let diff = fabs(end.x - start.x)
+			let gap = diff <= spacing ? diff : spacing // anything below spacing, just use the diff
+			
+			points.insert(start + NSMakePoint(gap, 0.0), at: 1)
+			points.insert(end - NSMakePoint(gap, 0.0), at: 2)
 		}
 		
 		if points.count < 4 {
