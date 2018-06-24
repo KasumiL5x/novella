@@ -55,6 +55,7 @@ Call conitinueTyping() to continue paused animation;
 	private var attributes: [NSAttributedStringKey: Any]?
 	private var currentDispatchID: Int = 320
 	private let dispatchSerialQ = DispatchQueue(label: "CLTypingLableQueue")
+	private var desiredText: String = ""
 	/*
 	Setting the text will trigger animation automatically
 	*/
@@ -72,6 +73,7 @@ Call conitinueTyping() to continue paused animation;
 			typingOver = false
 			stoppedSubstring = nil
 			
+			desiredText = newValue
 			attributes = nil
 			setTextWithTypingAnimation(newValue, attributes,charInterval, true, currentDispatchID)
 		}
@@ -94,6 +96,7 @@ Call conitinueTyping() to continue paused animation;
 			typingOver = false
 			stoppedSubstring = nil
 			
+			desiredText = newValue.string
 			attributes = newValue.attributes(at: 0, effectiveRange: nil)
 			setTextWithTypingAnimation(newValue.string, attributes,charInterval, true, currentDispatchID)
 		}
@@ -106,6 +109,14 @@ Call conitinueTyping() to continue paused animation;
 		if typingOver == false {
 			typingStopped = true
 		}
+	}
+	
+	// MARK: -
+	// MARK: Skip Typing Animation
+	open func skipTyping() {
+		typingOver = true
+		typingStopped = true
+		super.stringValue = desiredText
 	}
 	
 	// MARK: -

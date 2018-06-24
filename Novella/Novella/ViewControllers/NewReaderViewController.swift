@@ -57,6 +57,10 @@ class NewReaderViewController: NSViewController {
 	@IBAction func onGraphPopupChanged(_ sender: NSPopUpButton) {
 		print("changed to \(sender.selectedItem!.title)")
 	}
+	
+	@IBAction func onSkipPressed(_ sender: NSButton) {
+		_contentLabel.skipTyping()
+	}
 }
 
 extension NewReaderViewController: NVReaderDelegate {
