@@ -259,21 +259,25 @@ class LinkableView: NSView {
 		_isSelected = true
 		_isPrimed = false
 		setNeedsDisplay(bounds)
+		_outputs.forEach{$0.redraw()}
 	}
 	func deselect() {
 		_isSelected = false
 		_isPrimed = false
 		setNeedsDisplay(bounds)
+		_outputs.forEach{$0.redraw()}
 	}
 	func prime() {
 		_isSelected = false
 		_isPrimed = true
 		setNeedsDisplay(bounds)
+		_outputs.forEach{$0.redraw()}
 	}
 	func unprime() {
 		_isSelected = false
 		_isPrimed = false
 		setNeedsDisplay(bounds)
+		_outputs.forEach{$0.redraw()}
 	}
 	
 	// MARK: Movement

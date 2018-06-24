@@ -233,9 +233,12 @@ class PinViewBranch: PinView {
 					CurveHelper.line(start: origin, end: end, path: _trueCurvePath)
 				}
 				
+				if Owner.IsSelected || Owner.IsPrimed {
+					_trueCurveLayer.strokeColor = NSColor.red.cgColor
+				} else {
+					_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+				}
 				_trueCurveLayer.path = _trueCurvePath.cgPath
-				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
-				// make it dotted if it's a graph connection
 				_trueCurveLayer.lineDashPattern = (trueDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			_falseCurveLayer.path = nil
@@ -254,9 +257,12 @@ class PinViewBranch: PinView {
 					CurveHelper.line(start: origin, end: end, path: _falseCurvePath)
 				}
 				
+				if Owner.IsSelected || Owner.IsPrimed {
+					_falseCurveLayer.strokeColor = NSColor.red.cgColor
+				} else {
+					_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+				}
 				_falseCurveLayer.path = _falseCurvePath.cgPath
-				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
-				// make it dotted if it's a graph connection
 				_falseCurveLayer.lineDashPattern = (falseDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			

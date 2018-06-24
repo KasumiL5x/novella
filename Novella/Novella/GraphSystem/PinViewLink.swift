@@ -161,7 +161,11 @@ class PinViewLink: PinView {
 					CurveHelper.line(start: origin, end: end, path: _curvePath)
 				}
 				
-				_curveLayer.strokeColor = TrashMode ? Settings.graph.pins.linkCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkCurveColor.cgColor
+				if Owner.IsSelected || Owner.IsPrimed {
+					_curveLayer.strokeColor = NSColor.red.cgColor
+				} else {
+					_curveLayer.strokeColor = TrashMode ? Settings.graph.pins.linkCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkCurveColor.cgColor
+				}
 				_curveLayer.path = _curvePath.cgPath
 				_curveLayer.lineDashPattern = (destination is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
