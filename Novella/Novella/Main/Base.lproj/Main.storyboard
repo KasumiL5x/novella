@@ -800,8 +800,8 @@
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectOne" id="3Ow-3u-XM9">
                                             <font key="font" metaFont="system"/>
                                             <segments>
-                                                <segment label="CR" width="32"/>
-                                                <segment label="SQ" width="32" selected="YES" tag="1"/>
+                                                <segment label="CR" width="32" selected="YES"/>
+                                                <segment label="SQ" width="32" tag="1"/>
                                                 <segment label="LN" width="32"/>
                                             </segments>
                                         </segmentedCell>
