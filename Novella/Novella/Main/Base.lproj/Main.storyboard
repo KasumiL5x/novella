@@ -872,7 +872,7 @@
         <!--Window Controller-->
         <scene sceneID="Kfw-21-9Xi">
             <objects>
-                <windowController storyboardIdentifier="ReaderWindowController" id="xSF-Wq-GEi" customClass="NewReaderWindowController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="ReaderWindowController" id="xSF-Wq-GEi" customClass="ReaderWindowController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Reader" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="bD3-ZH-lZa">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -890,10 +890,10 @@
             </objects>
             <point key="canvasLocation" x="1390" y="75"/>
         </scene>
-        <!--New Reader View Controller-->
+        <!--Reader View Controller-->
         <scene sceneID="xeX-0n-Rrb">
             <objects>
-                <viewController id="1AZ-wJ-jTz" customClass="NewReaderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1AZ-wJ-jTz" customClass="ReaderViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="jS5-jg-9Oa">
                         <rect key="frame" x="0.0" y="0.0" width="750" height="532"/>
                         <autoresizingMask key="autoresizingMask"/>

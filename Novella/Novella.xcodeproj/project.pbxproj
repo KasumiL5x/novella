@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		650864A520D001C300201542 /* NewReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650864A420D001C300201542 /* NewReaderViewController.swift */; };
-		650864A720D0024F00201542 /* NewReaderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650864A620D0024F00201542 /* NewReaderWindowController.swift */; };
+		650864A520D001C300201542 /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650864A420D001C300201542 /* ReaderViewController.swift */; };
+		650864A720D0024F00201542 /* ReaderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650864A620D0024F00201542 /* ReaderWindowController.swift */; };
 		6513104420C30F050078C30C /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513102820C30F030078C30C /* NVSwitch.swift */; };
 		6513104520C30F050078C30C /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513102920C30F030078C30C /* NVPath.swift */; };
 		6513104620C30F050078C30C /* NVStoryManager+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513102A20C30F030078C30C /* NVStoryManager+JSON.swift */; };
@@ -31,8 +31,6 @@
 		6513105820C30F050078C30C /* NVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103C20C30F040078C30C /* NVListener.swift */; };
 		6513105920C30F050078C30C /* NVGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103D20C30F040078C30C /* NVGraph.swift */; };
 		6513105B20C30F050078C30C /* NVBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513103F20C30F040078C30C /* NVBranch.swift */; };
-		6513105C20C30F050078C30C /* NVSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104020C30F050078C30C /* NVSimulation.swift */; };
-		6513105D20C30F050078C30C /* NVSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104120C30F050078C30C /* NVSimulator.swift */; };
 		6513105E20C30F050078C30C /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104220C30F050078C30C /* NVStory.swift */; };
 		6513105F20C30F050078C30C /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104320C30F050078C30C /* NVDelivery.swift */; };
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
@@ -83,7 +81,6 @@
 		65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85820C31714004663D6 /* DialogLinkableView.swift */; };
 		65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85920C31714004663D6 /* FunctionPopover.swift */; };
 		65F7F86F20C31714004663D6 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85A20C31714004663D6 /* GraphViewCommands.swift */; };
-		65F7F87720C3174B004663D6 /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F87120C3174A004663D6 /* ReaderViewController.swift */; };
 		65F7F88920C317DD004663D6 /* Outliner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88120C317DD004663D6 /* Outliner.swift */; };
 		65F7F88A20C317DD004663D6 /* Inspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88220C317DD004663D6 /* Inspector.swift */; };
 		65F7F88C20C317DD004663D6 /* ColoredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88420C317DD004663D6 /* ColoredView.swift */; };
@@ -106,7 +103,6 @@
 		65F7F8BD20C31A07004663D6 /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B720C31A06004663D6 /* Popovers.storyboard */; };
 		65F7F8BE20C31A07004663D6 /* TabPages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B820C31A06004663D6 /* TabPages.storyboard */; };
 		65F7F8BF20C31A07004663D6 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B920C31A06004663D6 /* Preferences.storyboard */; };
-		65F7F8C020C31A07004663D6 /* Reader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8BA20C31A06004663D6 /* Reader.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,8 +130,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		650864A420D001C300201542 /* NewReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReaderViewController.swift; sourceTree = "<group>"; };
-		650864A620D0024F00201542 /* NewReaderWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReaderWindowController.swift; sourceTree = "<group>"; };
+		650864A420D001C300201542 /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
+		650864A620D0024F00201542 /* ReaderWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderWindowController.swift; sourceTree = "<group>"; };
 		6513102820C30F030078C30C /* NVSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
 		6513102920C30F030078C30C /* NVPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
 		6513102A20C30F030078C30C /* NVStoryManager+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NVStoryManager+JSON.swift"; sourceTree = "<group>"; };
@@ -158,8 +154,6 @@
 		6513103C20C30F040078C30C /* NVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVListener.swift; sourceTree = "<group>"; };
 		6513103D20C30F040078C30C /* NVGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVGraph.swift; sourceTree = "<group>"; };
 		6513103F20C30F040078C30C /* NVBranch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVBranch.swift; sourceTree = "<group>"; };
-		6513104020C30F050078C30C /* NVSimulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSimulation.swift; sourceTree = "<group>"; };
-		6513104120C30F050078C30C /* NVSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSimulator.swift; sourceTree = "<group>"; };
 		6513104220C30F050078C30C /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
 		6513104320C30F050078C30C /* NVDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
@@ -212,7 +206,6 @@
 		65F7F85820C31714004663D6 /* DialogLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogLinkableView.swift; sourceTree = "<group>"; };
 		65F7F85920C31714004663D6 /* FunctionPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionPopover.swift; sourceTree = "<group>"; };
 		65F7F85A20C31714004663D6 /* GraphViewCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
-		65F7F87120C3174A004663D6 /* ReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		65F7F88120C317DD004663D6 /* Outliner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outliner.swift; sourceTree = "<group>"; };
 		65F7F88220C317DD004663D6 /* Inspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inspector.swift; sourceTree = "<group>"; };
 		65F7F88420C317DD004663D6 /* ColoredView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredView.swift; sourceTree = "<group>"; };
@@ -235,7 +228,6 @@
 		65F7F8B720C31A06004663D6 /* Popovers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
 		65F7F8B820C31A06004663D6 /* TabPages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TabPages.storyboard; sourceTree = "<group>"; };
 		65F7F8B920C31A06004663D6 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
-		65F7F8BA20C31A06004663D6 /* Reader.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Reader.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,7 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				65AE16D420C32624006A921F /* Variables */,
-				65AE16D320C32614006A921F /* Simulation */,
+				65AE16D320C32614006A921F /* Reading */,
 				65AE16D220C32603006A921F /* Nodes */,
 				65AE16D120C325EA006A921F /* Links */,
 				65AE16D020C325D4006A921F /* Graphs */,
@@ -429,14 +421,12 @@
 			name = Nodes;
 			sourceTree = "<group>";
 		};
-		65AE16D320C32614006A921F /* Simulation */ = {
+		65AE16D320C32614006A921F /* Reading */ = {
 			isa = PBXGroup;
 			children = (
-				6513104020C30F050078C30C /* NVSimulation.swift */,
-				6513104120C30F050078C30C /* NVSimulator.swift */,
 				654918E220D42165008467FF /* NVReader.swift */,
 			);
-			name = Simulation;
+			name = Reading;
 			sourceTree = "<group>";
 		};
 		65AE16D420C32624006A921F /* Variables */ = {
@@ -497,9 +487,8 @@
 				65F7F89120C317E6004663D6 /* Popovers */,
 				65F7F89C20C31806004663D6 /* Preferences */,
 				65F7F8A120C3181C004663D6 /* Tabs */,
-				65F7F87120C3174A004663D6 /* ReaderViewController.swift */,
-				650864A420D001C300201542 /* NewReaderViewController.swift */,
-				650864A620D0024F00201542 /* NewReaderWindowController.swift */,
+				650864A420D001C300201542 /* ReaderViewController.swift */,
+				650864A620D0024F00201542 /* ReaderWindowController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -539,7 +528,6 @@
 			children = (
 				65F7F8B720C31A06004663D6 /* Popovers.storyboard */,
 				65F7F8B920C31A06004663D6 /* Preferences.storyboard */,
-				65F7F8BA20C31A06004663D6 /* Reader.storyboard */,
 				65F7F8B820C31A06004663D6 /* TabPages.storyboard */,
 			);
 			path = Storyboards;
@@ -647,7 +635,6 @@
 				655F9FB820C3087400B20EFE /* Main.storyboard in Resources */,
 				65F7F8BF20C31A07004663D6 /* Preferences.storyboard in Resources */,
 				65F7F8BD20C31A07004663D6 /* Popovers.storyboard in Resources */,
-				65F7F8C020C31A07004663D6 /* Reader.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,13 +706,12 @@
 				65F7F89920C317F4004663D6 /* FunctionPopoverViewController.swift in Sources */,
 				65F7F88920C317DD004663D6 /* Outliner.swift in Sources */,
 				65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */,
-				65F7F87720C3174B004663D6 /* ReaderViewController.swift in Sources */,
 				65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */,
-				650864A520D001C300201542 /* NewReaderViewController.swift in Sources */,
+				650864A520D001C300201542 /* ReaderViewController.swift in Sources */,
 				65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */,
 				65F7F88A20C317DD004663D6 /* Inspector.swift in Sources */,
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
-				650864A720D0024F00201542 /* NewReaderWindowController.swift in Sources */,
+				650864A720D0024F00201542 /* ReaderWindowController.swift in Sources */,
 				65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */,
 				65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */,
 				65F7F83F20C31637004663D6 /* NSView+Toast.swift in Sources */,
@@ -793,7 +779,6 @@
 				654918E320D42165008467FF /* NVReader.swift in Sources */,
 				6513104420C30F050078C30C /* NVSwitch.swift in Sources */,
 				6513105B20C30F050078C30C /* NVBranch.swift in Sources */,
-				6513105C20C30F050078C30C /* NVSimulation.swift in Sources */,
 				6513105420C30F050078C30C /* NVStoryManager.swift in Sources */,
 				65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */,
 				6513105920C30F050078C30C /* NVGraph.swift in Sources */,
@@ -802,7 +787,6 @@
 				6513104D20C30F050078C30C /* NVTransfer.swift in Sources */,
 				6513104A20C30F050078C30C /* NVCutscene.swift in Sources */,
 				6513105F20C30F050078C30C /* NVDelivery.swift in Sources */,
-				6513105D20C30F050078C30C /* NVSimulator.swift in Sources */,
 				6513104E20C30F050078C30C /* NVVariable.swift in Sources */,
 				6513104820C30F050078C30C /* NVExitNode.swift in Sources */,
 				6513105620C30F050078C30C /* NVLink.swift in Sources */,

@@ -9,7 +9,7 @@
 import Cocoa
 
 class MainWindowController: NSWindowController {
-	private var _previewWindowController: NewReaderWindowController? = nil
+	private var _previewWindowController: ReaderWindowController? = nil
 	@IBOutlet private weak var _emptyTrashButton: NSButton!
 	private lazy var _trashEmptyImage: NSImage? = {
 		return NSImage(named: NSImage.Name.trashEmpty)
@@ -64,7 +64,7 @@ class MainWindowController: NSWindowController {
 	@IBAction func onToolbarPreview(_ sender: NSButton) {
 		if _previewWindowController == nil {
 			let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as? NewReaderWindowController
+			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as? ReaderWindowController
 			_previewWindowController!.setDocument(doc: self.document as! NovellaDocument)
 		}
 		

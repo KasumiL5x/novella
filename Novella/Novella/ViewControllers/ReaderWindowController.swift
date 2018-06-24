@@ -8,12 +8,12 @@
 
 import Cocoa
 
-class NewReaderWindowController: NSWindowController {
+class ReaderWindowController: NSWindowController {
 	override func windowDidLoad() {
 		super.windowDidLoad()
 	}
 	
 	func setDocument(doc: NovellaDocument) {
-		(contentViewController as? NewReaderViewController)?._document = doc
+		(contentViewController as? ReaderViewController)?._document = doc
 	}
 }
