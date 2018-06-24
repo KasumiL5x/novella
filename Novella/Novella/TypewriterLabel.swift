@@ -14,7 +14,7 @@ import AppKit
 public class TypewriterLabel: NSTextField {
 	
 	/// Interval (time gap) between each character being animated on screen.
-	public var typingTimeInterval: TimeInterval = 0.1
+	public var typingTimeInterval: TimeInterval = 0.05
 	
 	/// Timer instance that control's the animation.
 	private var animationTimer: Timer?
