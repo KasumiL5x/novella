@@ -14,7 +14,7 @@ class NewReaderViewController: NSViewController {
 	@IBOutlet private weak var _graphPopup: NSPopUpButton!
 	@IBOutlet private weak var _titleLabel: NSTextField!
 	@IBOutlet private weak var _directionsLabel: NSTextField!
-	@IBOutlet private weak var _contentLabel: CLTypingLabel!
+	@IBOutlet private weak var _contentLabel: TypewriterLabel!
 	@IBOutlet private weak var _choiceWheel: ChoiceWheelView!
 	internal var _document: NovellaDocument?
 	private var _reader: NVReader?
@@ -59,7 +59,7 @@ class NewReaderViewController: NSViewController {
 	}
 	
 	@IBAction func onSkipPressed(_ sender: NSButton) {
-		_contentLabel.skipTyping()
+		_contentLabel.skipTypewritingAnimation()
 	}
 }
 
@@ -70,11 +70,13 @@ extension NewReaderViewController: NVReaderDelegate {
 			_titleLabel.stringValue = "Dialog"
 			_directionsLabel.stringValue = (node as! NVDialog).Directions
 			_contentLabel.stringValue = (node as! NVDialog).Content
+			_contentLabel.startTypewritingAnimation(completion: {print("done")})
 			
 		case is NVDelivery:
 			_titleLabel.stringValue = "Delivery"
 			_directionsLabel.stringValue = (node as! NVDelivery).Directions
 			_contentLabel.stringValue = (node as! NVDelivery).Content
+			_contentLabel.startTypewritingAnimation(completion: {print("done")})
 			
 		case is NVContext:
 			_titleLabel.stringValue = "Context"

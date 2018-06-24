@@ -935,7 +935,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bde-Pd-foH" customClass="CLTypingLabel" customModule="Novella" customModuleProvider="target">
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bde-Pd-foH" customClass="TypewriterLabel" customModule="Novella" customModuleProvider="target">
                                 <rect key="frame" x="18" y="219" width="714" height="179"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="TJy-Ic-pkS">
