@@ -795,15 +795,14 @@
                                     <size key="minSize" width="99" height="23"/>
                                     <size key="maxSize" width="133" height="27"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="ZKe-81-cCS">
-                                        <rect key="frame" x="0.0" y="14" width="132" height="23"/>
+                                        <rect key="frame" x="0.0" y="14" width="99" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectOne" id="3Ow-3u-XM9">
                                             <font key="font" metaFont="system"/>
                                             <segments>
-                                                <segment width="32"/>
-                                                <segment width="32" selected="YES" tag="1"/>
-                                                <segment width="32"/>
-                                                <segment width="32"/>
+                                                <segment label="CR" width="32"/>
+                                                <segment label="SQ" width="32" selected="YES" tag="1"/>
+                                                <segment label="LN" width="32"/>
                                             </segments>
                                         </segmentedCell>
                                         <connections>

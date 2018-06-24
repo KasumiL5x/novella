@@ -50,13 +50,11 @@ class MainWindowController: NSWindowController {
 	@IBAction func onToolbarCurveType(_ sender: NSSegmentedControl) {
 		switch sender.selectedSegment {
 		case 0:
-			(document as? NovellaDocument)?.CurveType = .line
+			(document as? NovellaDocument)?.CurveType = .catmullRom
 		case 1:
-			(document as? NovellaDocument)?.CurveType = .smooth
-		case 2:
-			(document as? NovellaDocument)?.CurveType = .curve
-		case 3:
 			(document as? NovellaDocument)?.CurveType = .square
+		case 2:
+			(document as? NovellaDocument)?.CurveType = .line
 		default:
 			break
 		}

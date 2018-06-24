@@ -205,7 +205,7 @@ class PinView: NSView {
 				let origin = getDragOrigin()
 				_dragPath.removeAllPoints()
 				let end = _dragPosition
-				CurveHelper.smooth(start: origin, end: end, path: _dragPath)
+				CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false, path: _dragPath)
 				_dragLayer.path = _dragPath.cgPath
 			} else {
 				_dragLayer.path = nil

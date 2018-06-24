@@ -28,7 +28,7 @@ class NovellaDocument: NSDocument {
 	override init() {
 		_manager = NVStoryManager()
 		_undoRedo = UndoRedo()
-		_curveType = .smooth
+		_curveType = .catmullRom
 		super.init()
 		_manager.addDelegate(self)
 	}

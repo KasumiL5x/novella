@@ -225,14 +225,12 @@ class PinViewBranch: PinView {
 				end = trueDest.convert(NSMakePoint(0.0, trueDest.frame.height * 0.5), to: self)
 				
 				switch _graphView.Document.CurveType {
-				case .line:
-					CurveHelper.line(start: origin, end: end, path: _trueCurvePath)
-				case .smooth:
-					CurveHelper.smooth(start: origin, end: end, path: _trueCurvePath)
-				case .curve:
-					CurveHelper.curve(start: origin, end: end, path: _trueCurvePath)
+				case .catmullRom:
+					CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false, path: _trueCurvePath)
 				case .square:
 					CurveHelper.square(start: origin, end: end, path: _trueCurvePath)
+				case .line:
+					CurveHelper.line(start: origin, end: end, path: _trueCurvePath)
 				}
 				
 				_trueCurveLayer.path = _trueCurvePath.cgPath
@@ -248,14 +246,12 @@ class PinViewBranch: PinView {
 				end = falseDest.convert(NSMakePoint(0.0, falseDest.frame.height * 0.5), to: self)
 				
 				switch _graphView.Document.CurveType {
-				case .line:
-					CurveHelper.line(start: origin, end: end, path: _falseCurvePath)
-				case .smooth:
-					CurveHelper.smooth(start: origin, end: end, path: _falseCurvePath)
-				case .curve:
-					CurveHelper.curve(start: origin, end: end, path: _falseCurvePath)
+				case .catmullRom:
+					CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false, path: _falseCurvePath)
 				case .square:
 					CurveHelper.square(start: origin, end: end, path: _falseCurvePath)
+				case .line:
+					CurveHelper.line(start: origin, end: end, path: _falseCurvePath)
 				}
 				
 				_falseCurveLayer.path = _falseCurvePath.cgPath
