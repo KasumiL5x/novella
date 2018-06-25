@@ -67,7 +67,7 @@ public class NVReader {
 			
 		case is NVBranch:
 			let asBranch = (chosenLink as! NVBranch)
-			nextNode = asBranch.Condition.execute() ? asBranch.TrueTransfer._destination as? NVNode : asBranch.FalseTransfer._destination as? NVNode
+			nextNode = asBranch.PreCondition.execute() ? asBranch.TrueTransfer._destination as? NVNode : asBranch.FalseTransfer._destination as? NVNode
 			
 		default:
 			print("NVReader::next() requested link isn't yet implemented in reading, sorry!")
@@ -93,7 +93,7 @@ public class NVReader {
 			
 		case is NVBranch:
 			let asBranch = (chosenLink as! NVBranch)
-			asBranch.Condition.execute() ? asBranch.TrueTransfer.Function.execute() : asBranch.FalseTransfer.Function.execute()
+			asBranch.PreCondition.execute() ? asBranch.TrueTransfer.Function.execute() : asBranch.FalseTransfer.Function.execute()
 			
 		default:
 			print("NVReader::next() requested link isn't yet implemented in reading, sorry!")
@@ -111,7 +111,7 @@ public class NVReader {
 			switch x {
 			case is NVLink:
 				let asLink = x as! NVLink
-				if asLink.Transfer._destination != nil && asLink.Condition.execute() {
+				if asLink.Transfer._destination != nil && asLink.PreCondition.execute() {
 					links.append(x)
 				}
 				

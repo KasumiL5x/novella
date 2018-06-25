@@ -73,9 +73,9 @@ extension NVStoryManager {
 			if let asLink = curr as? NVLink {
 				entry["linktype"] = "link"
 				
-				var condition: JSONDict = [:]
-				condition["jscode"] = asLink.Condition.Javascript
-				entry["condition"] = condition
+				var precondition: JSONDict = [:]
+				precondition["jscode"] = asLink.PreCondition.Javascript
+				entry["precondition"] = precondition
 				
 				var transfer: JSONDict = [:]
 				transfer["destination"] = asLink.Transfer.Destination?.UUID.uuidString ?? ""
@@ -87,9 +87,9 @@ extension NVStoryManager {
 			else if let asBranch = curr as? NVBranch {
 				entry["linktype"] = "branch"
 				
-				var condition: JSONDict = [:]
-				condition["jscode"] = asBranch.Condition.Javascript
-				entry["condition"] = condition
+				var precondition: JSONDict = [:]
+				precondition["jscode"] = asBranch.PreCondition.Javascript
+				entry["precondition"] = precondition
 				
 				var ttransfer: JSONDict = [:]
 				ttransfer["destination"] = asBranch.TrueTransfer.Destination?.UUID.uuidString ?? ""
@@ -417,8 +417,8 @@ extension NVStoryManager {
 			case "link":
 				let link = storyManager.makeLink(origin: origin, uuid: uuid)
 				
-				if let condition = curr["condition"].dictionary {
-					link.Condition.Javascript = condition["jscode"]!.string!
+				if let precondition = curr["precondition"].dictionary {
+					link.PreCondition.Javascript = precondition["jscode"]!.string!
 				}
 				
 				if let transfer = curr["transfer"].dictionary {
@@ -439,8 +439,8 @@ extension NVStoryManager {
 			case "branch":
 				let branch = storyManager.makeBranch(origin: origin, uuid: uuid)
 				
-				if let condition = curr["condition"].dictionary {
-					branch.Condition.Javascript = condition["jscode"]!.string!
+				if let precondition = curr["precondition"].dictionary {
+					branch.PreCondition.Javascript = precondition["jscode"]!.string!
 				}
 				
 				if let trueTransfer = curr["ttransfer"].dictionary {
@@ -726,7 +726,7 @@ extension NVStoryManager {
 							[
 								"properties": [
 									"linktype": [ "enum": ["link"] ],
-									"condition": [ "$ref": "#/definitions/condition" ],
+									"precondition": [ "$ref": "#/definitions/condition" ],
 									"transfer": [ "$ref": "#/definitions/transfer" ]
 								]
 							],
@@ -734,7 +734,7 @@ extension NVStoryManager {
 							[
 								"properties": [
 									"linktype": [ "enum": ["branch"] ],
-									"condition": [ "$ref": "#/definitions/condition" ],
+									"precondition": [ "$ref": "#/definitions/condition" ],
 									"ttransfer": [ "$ref": "#/definitions/transfer" ],
 									"ftransfer": [ "$ref": "#/definitions/transfer" ]
 								]

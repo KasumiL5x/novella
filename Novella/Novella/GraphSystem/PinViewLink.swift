@@ -100,7 +100,7 @@ class PinViewLink: PinView {
 	// MARK: Context Menu Callbacks
 	@objc private func onContextCondition() {
 		_conditionPopover.show(forView: self, at: .maxX)
-		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVLink).Condition)
+		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVLink).PreCondition)
 	}
 	@objc private func onContextFunction() {
 		_functionPopover.show(forView: self, at: .maxX)

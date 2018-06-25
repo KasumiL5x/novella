@@ -10,7 +10,7 @@
       "linktype" : "branch",
       "origin" : "D454552F-066A-491C-BAC3-A6AB92084DA4",
       "uuid" : "638F8A4A-2D59-4B4E-8D6B-581486FEDB15",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "ftransfer" : {
@@ -24,7 +24,7 @@
       "linktype" : "link",
       "origin" : "6540FDFF-94AB-42C5-97E8-F66CDE7662B2",
       "uuid" : "A5A98013-2F71-4327-869A-F17197039B09",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {

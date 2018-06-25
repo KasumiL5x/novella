@@ -59,7 +59,7 @@
       "linktype" : "branch",
       "origin" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89",
       "uuid" : "4E40FF3A-F789-48B1-8EAB-2B6DFB6A0A0B",
-			"condition": {
+			"precondition": {
 				"jscode": ""
 			},
       "ftransfer" : {

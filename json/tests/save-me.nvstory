@@ -38,7 +38,7 @@
       "value" : 0,
       "constant" : false,
       "uuid" : "4E63C6C4-C6C5-47B0-99EF-F05A3207A636",
-      "datatype" : "double",
+      "datatype" : "integer",
       "initialValue" : 0
     },
     {
@@ -56,7 +56,7 @@
       "linktype" : "link",
       "origin" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
       "uuid" : "A9FD146F-37BA-4B06-9085-9451E4AB0A56",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -67,7 +67,7 @@
       "linktype" : "link",
       "origin" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
       "uuid" : "00A05984-12EC-4ED4-A4D3-3EF5DE99FE0C",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -78,43 +78,18 @@
       "linktype" : "link",
       "origin" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6",
       "uuid" : "64F701E0-CB1C-443B-ABFA-9AC4482C1BF1",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
-        "destination" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89"
-      }
-    },
-    {
-      "linktype" : "link",
-      "origin" : "B6973964-053C-46B5-81A9-C91EED867D47",
-      "uuid" : "370A5F9D-D75F-4993-911E-EDD43BF3A861",
-      "condition" : {
-        "jscode" : ""
-      },
-      "transfer" : {
-        "destination" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89"
-      }
-    },
-    {
-      "linktype" : "branch",
-      "origin" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89",
-      "uuid" : "4E40FF3A-F789-48B1-8EAB-2B6DFB6A0A0B",
-      "condition" : {
-        "jscode" : "return true;"
-      },
-      "ftransfer" : {
-        "destination" : "40F0E0B2-8398-4FCD-A890-5AC85519E618"
-      },
-      "ttransfer" : {
-        "destination" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0"
+        "destination" : ""
       }
     },
     {
       "linktype" : "link",
       "origin" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0",
       "uuid" : "4CD607E7-EBE7-4660-BDED-39B45E3F483B",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -125,17 +100,79 @@
       "linktype" : "link",
       "origin" : "40F0E0B2-8398-4FCD-A890-5AC85519E618",
       "uuid" : "83EC5F03-8970-460F-A748-5D936C38F0E2",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
         "destination" : "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
       }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6",
+      "uuid" : "10560921-08AA-4619-9344-F106E0937F63",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : ""
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "B6973964-053C-46B5-81A9-C91EED867D47",
+      "uuid" : "1AC8D079-2ABC-4827-9898-606E6642A641",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "40F0E0B2-8398-4FCD-A890-5AC85519E618"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "B6973964-053C-46B5-81A9-C91EED867D47",
+      "uuid" : "53C7CF90-5AEB-409F-A925-07D00087EA5C",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : ""
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "B3DF8040-E3F0-4913-983B-8DBC126E8364",
+      "uuid" : "AF3F5D0A-D9FD-4AEA-AEA2-4A6F7A44D741",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "destination" : "F126CC61-F4CD-4357-91F8-C6B88BFA67D6"
+      }
+    },
+    {
+      "linktype" : "branch",
+      "origin" : "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0",
+      "uuid" : "6668A4D2-55F4-477E-B95E-1D1F6B91F22A",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "ftransfer" : {
+        "destination" : ""
+      },
+      "ttransfer" : {
+        "destination" : ""
+      }
     }
   ],
   "story" : {
     "graphs" : [
-      "8E885248-DD43-4E95-B1B1-2CECD4520C6E"
+      "8E885248-DD43-4E95-B1B1-2CECD4520C6E",
+      "405864ED-79A4-4FC4-A4AC-DE1A66F5C942",
+      "CD9FBA3A-A929-4B07-A4FA-274E13DD0787",
+      "7C18031B-CD24-4DD0-B2B7-68C3C45BC854",
+      "3A176D40-4C2F-4FDE-95AC-5A5D7643037A"
     ],
     "name" : "Simplified Story",
     "folders" : [
@@ -145,8 +182,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : 365.9744873046875,
-        "x" : 88.175338745117188
+        "y" : 393.34295654296875,
+        "x" : 64.054649353027344
       },
       "name" : "A",
       "content" : "This node has two parallel choices of equal value.",
@@ -157,8 +194,8 @@
     },
     {
       "position" : {
-        "y" : 535.9744873046875,
-        "x" : 406.17532348632812
+        "y" : 286.68429565429688,
+        "x" : 349.94772338867188
       },
       "name" : "B",
       "content" : "This was choice 1.",
@@ -169,8 +206,8 @@
     },
     {
       "position" : {
-        "y" : 277.9744873046875,
-        "x" : 412.17532348632812
+        "y" : 439.27685411507264,
+        "x" : 311.27943366178079
       },
       "name" : "C",
       "content" : "This was choice 2.",
@@ -181,20 +218,8 @@
     },
     {
       "position" : {
-        "y" : 416.9744873046875,
-        "x" : 739.17535400390625
-      },
-      "name" : "D",
-      "content" : "This node resolves from B and C regardless of choice.  There is a branch here based on some condition.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "preview" : "",
-      "uuid" : "95CA958A-BB8A-4B05-893E-FD4B93CFFE89"
-    },
-    {
-      "position" : {
-        "y" : 518.9744873046875,
-        "x" : 1040.17529296875
+        "y" : 450.6151123046875,
+        "x" : 619.77294921875
       },
       "name" : "E",
       "content" : "This is the true result.",
@@ -205,8 +230,8 @@
     },
     {
       "position" : {
-        "y" : 318.9744873046875,
-        "x" : 1040.17529296875
+        "y" : 315.98040771484375,
+        "x" : 620.6070556640625
       },
       "name" : "F",
       "content" : "This is the false result.",
@@ -217,8 +242,8 @@
     },
     {
       "position" : {
-        "y" : 454.9744873046875,
-        "x" : 1383.17529296875
+        "y" : 384.2596435546875,
+        "x" : 766.52685546875
       },
       "name" : "G",
       "content" : "This is the final resolve from E and F regardless of chioce.",
@@ -226,6 +251,84 @@
       "nodetype" : "dialog",
       "preview" : "",
       "uuid" : "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
+    },
+    {
+      "position" : {
+        "y" : 624.75482177734375,
+        "x" : 452.04495239257812
+      },
+      "name" : "",
+      "uuid" : "80F1ACC0-D0F5-4469-B661-6C62C4CF89DE",
+      "nodetype" : "context"
+    },
+    {
+      "position" : {
+        "y" : 217.43048095703125,
+        "x" : 456.19140625
+      },
+      "name" : "",
+      "uuid" : "BD8C92E8-2CEE-48A5-BE67-B7CCB6B8BD96",
+      "nodetype" : "context"
+    },
+    {
+      "position" : {
+        "y" : 414.68344116210938,
+        "x" : 513.2437744140625
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "B4E306A9-96F9-47DC-A458-0BAF68D67477"
+    },
+    {
+      "position" : {
+        "y" : 507.62136840820312,
+        "x" : 512.19921875
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "F6884346-56EC-4586-81D8-FA4AFF2F5445"
+    },
+    {
+      "position" : {
+        "y" : -299758.25,
+        "x" : -299664.9375
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "26EC01C4-343D-4E95-AAC7-C3EFA99941E6"
+    },
+    {
+      "position" : {
+        "y" : 166.61279296875,
+        "x" : 180.61709594726562
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "delivery",
+      "preview" : "",
+      "uuid" : "B3DF8040-E3F0-4913-983B-8DBC126E8364"
+    },
+    {
+      "position" : {
+        "y" : -299433.3125,
+        "x" : -299796.0625
+      },
+      "name" : "hi",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "21865B25-8C01-4466-A13E-AE85AF7FB285"
     }
   ],
   "graphs" : [
@@ -239,22 +342,173 @@
         "989D8C7E-39FC-4300-8745-7919EF364C4C",
         "F126CC61-F4CD-4357-91F8-C6B88BFA67D6",
         "B6973964-053C-46B5-81A9-C91EED867D47",
-        "95CA958A-BB8A-4B05-893E-FD4B93CFFE89",
         "E75E9B01-607B-4EC6-9F58-C6C7C2956CE0",
         "40F0E0B2-8398-4FCD-A890-5AC85519E618",
-        "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0"
+        "A1AC9E20-AB79-46B9-B82A-6EE928A7E2D0",
+        "B3DF8040-E3F0-4913-983B-8DBC126E8364"
       ],
       "links" : [
         "A9FD146F-37BA-4B06-9085-9451E4AB0A56",
         "00A05984-12EC-4ED4-A4D3-3EF5DE99FE0C",
         "64F701E0-CB1C-443B-ABFA-9AC4482C1BF1",
-        "370A5F9D-D75F-4993-911E-EDD43BF3A861",
-        "4E40FF3A-F789-48B1-8EAB-2B6DFB6A0A0B",
         "4CD607E7-EBE7-4660-BDED-39B45E3F483B",
-        "83EC5F03-8970-460F-A748-5D936C38F0E2"
+        "83EC5F03-8970-460F-A748-5D936C38F0E2",
+        "10560921-08AA-4619-9344-F106E0937F63",
+        "1AC8D079-2ABC-4827-9898-606E6642A641",
+        "53C7CF90-5AEB-409F-A925-07D00087EA5C",
+        "AF3F5D0A-D9FD-4AEA-AEA2-4A6F7A44D741",
+        "6668A4D2-55F4-477E-B95E-1D1F6B91F22A"
       ],
       "entry" : "989D8C7E-39FC-4300-8745-7919EF364C4C",
       "uuid" : "8E885248-DD43-4E95-B1B1-2CECD4520C6E",
+      "subgraphs" : [
+        "C4D5207D-D6E1-4479-88FF-144246187F85",
+        "40842F20-AA73-4526-8D4E-11A96016E512"
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "lol",
+      "nodes" : [
+        "80F1ACC0-D0F5-4469-B661-6C62C4CF89DE",
+        "BD8C92E8-2CEE-48A5-BE67-B7CCB6B8BD96",
+        "B4E306A9-96F9-47DC-A458-0BAF68D67477",
+        "F6884346-56EC-4586-81D8-FA4AFF2F5445"
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "405864ED-79A4-4FC4-A4AC-DE1A66F5C942",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "gyufhidjsak",
+      "nodes" : [
+        "26EC01C4-343D-4E95-AAC7-C3EFA99941E6"
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "CD9FBA3A-A929-4B07-A4FA-274E13DD0787",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "414836E4-E311-41F7-9284-E83410156044",
+      "nodes" : [
+
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "7C18031B-CD24-4DD0-B2B7-68C3C45BC854",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "bgfhkejndm",
+      "nodes" : [
+
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "3A176D40-4C2F-4FDE-95AC-5A5D7643037A",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "C6AD9386-5AF4-47A1-9584-EAA79D0DCB00",
+      "nodes" : [
+        "21865B25-8C01-4466-A13E-AE85AF7FB285"
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "C4D5207D-D6E1-4479-88FF-144246187F85",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 142.1171875,
+        "x" : 634.34375
+      },
+      "name" : "4D4BDBB4-4EC6-4C3A-8E28-F0BB52C85782",
+      "nodes" : [
+
+      ],
+      "links" : [
+
+      ],
+      "entry" : "",
+      "uuid" : "40842F20-AA73-4526-8D4E-11A96016E512",
       "subgraphs" : [
 
       ],

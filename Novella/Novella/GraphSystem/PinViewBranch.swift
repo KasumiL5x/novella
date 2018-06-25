@@ -154,7 +154,7 @@ class PinViewBranch: PinView {
 	// MARK: Context Menu Callbacks
 	@objc private func onContextCondition() {
 		_conditionPopover.show(forView: self, at: .maxX)
-		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVBranch).Condition)
+		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVBranch).PreCondition)
 	}
 	@objc private func onContextTrueFunction() {
 		_trueFunctionPopover.show(forView: self, at: .maxX)

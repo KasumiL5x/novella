@@ -27,7 +27,7 @@
       "linktype" : "link",
       "origin" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
       "uuid" : "577EC340-5688-40B9-B137-A087CC8A7D3E",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -41,7 +41,7 @@
       "linktype" : "link",
       "origin" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA",
       "uuid" : "6628315E-7929-40F1-8BF6-F026EC031D6B",
-      "condition" : {
+      "precondition" : {
         "jscode" : "return getvar(\"juliet.knows_surname\");"
       },
       "transfer" : {
@@ -55,7 +55,7 @@
       "linktype" : "link",
       "origin" : "D0804EB8-E94B-4155-9C31-91DCA4A626DB",
       "uuid" : "952D9BDB-C8EF-444D-82BD-7A63933087BB",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -69,7 +69,7 @@
       "linktype" : "link",
       "origin" : "2721C72B-B0E8-491A-802B-3F0D780A02BB",
       "uuid" : "61193405-C863-4D5E-ABFE-EBF89F2EF5DF",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -83,7 +83,7 @@
       "linktype" : "link",
       "origin" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA",
       "uuid" : "8C190585-C58A-4F0B-B8E3-ED5A4655EA02",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -97,7 +97,7 @@
       "linktype" : "link",
       "origin" : "E7A30B3F-9342-4B34-A356-38C1D826FCD9",
       "uuid" : "4D862BBB-D69D-4D26-B01B-F82C451DEC67",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -111,7 +111,7 @@
       "linktype" : "link",
       "origin" : "E7AB59E7-8EB4-45D2-B3B5-099A8C90EA6F",
       "uuid" : "6B89897E-CD88-4D8A-A7CB-EF94419E8AA1",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -125,7 +125,7 @@
       "linktype" : "link",
       "origin" : "E86E0287-09BB-48AF-B14A-46230BBFE58A",
       "uuid" : "C7139069-CE3B-4A7F-8783-1A3C2F2FCC82",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -139,7 +139,7 @@
       "linktype" : "link",
       "origin" : "B5E312B1-92C8-4676-9B9D-D5EFD71B6930",
       "uuid" : "4AFE1AC7-5B9E-423C-ACC4-4D3A2D1E3ECD",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -153,7 +153,7 @@
       "linktype" : "link",
       "origin" : "9EB999FC-3311-4D6D-8C13-38F501AF2C9D",
       "uuid" : "1B2F4019-CDB8-4251-A984-0B9B42F13E55",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -167,7 +167,7 @@
       "linktype" : "link",
       "origin" : "D54A861D-C280-4080-9457-BA59EAD7DAF3",
       "uuid" : "05DF3D88-C32C-40AA-9B80-A95466DE3891",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -181,7 +181,7 @@
       "linktype" : "link",
       "origin" : "EF6D4383-9136-4B88-A9A8-34A7514BF355",
       "uuid" : "56D8931B-01FA-435D-B2F1-A5FD01CC3C58",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -195,7 +195,7 @@
       "linktype" : "link",
       "origin" : "EF6D4383-9136-4B88-A9A8-34A7514BF355",
       "uuid" : "2BB16F42-8644-47C4-B9B9-FE7EE0EE6BFE",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -209,7 +209,7 @@
       "linktype" : "link",
       "origin" : "EF6D4383-9136-4B88-A9A8-34A7514BF355",
       "uuid" : "75B480FB-56B8-4DE9-BA5B-0C262E279A39",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -223,7 +223,7 @@
       "linktype" : "link",
       "origin" : "EF6D4383-9136-4B88-A9A8-34A7514BF355",
       "uuid" : "5BCE7236-2116-4703-9CAD-0BB73A487DEB",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -237,7 +237,7 @@
       "linktype" : "link",
       "origin" : "D21835B4-F548-4950-8B1C-335FA786D0CC",
       "uuid" : "E6D3E2B3-AC0C-44D0-BDD1-B14D87BD9739",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -251,7 +251,7 @@
       "linktype" : "link",
       "origin" : "38FB6129-2D20-4FEA-91D9-839F63A2AB5B",
       "uuid" : "09DF9F2A-2677-4913-99CB-03A4D3690599",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -265,7 +265,7 @@
       "linktype" : "link",
       "origin" : "7277F3A1-6875-4527-87D0-803FFAC35DF5",
       "uuid" : "914D690E-1ACB-4C10-9F7C-5EAB25874E5B",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -279,7 +279,7 @@
       "linktype" : "link",
       "origin" : "3EC2EB16-4D94-4213-90D6-872161E5677F",
       "uuid" : "9458BD1C-AE3B-404A-B522-0B3CF2D04189",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -293,7 +293,7 @@
       "linktype" : "link",
       "origin" : "F08CAF94-680E-471A-90AC-EF8EF9976AB2",
       "uuid" : "2BA7680A-7A0C-4944-9656-E37870FE25D4",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -307,7 +307,7 @@
       "linktype" : "link",
       "origin" : "2A178593-A8DF-4AAB-857D-0B80FFAA2434",
       "uuid" : "355CB10B-9ADF-4936-BCCF-15AE6417613C",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -321,7 +321,7 @@
       "linktype" : "link",
       "origin" : "E0862791-F19D-4944-A214-945CE8D28BEB",
       "uuid" : "4090AD6E-F15B-40AF-B6F1-215EE2724C02",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -335,7 +335,7 @@
       "linktype" : "link",
       "origin" : "60E2AB2D-322B-46EC-8DF1-301EB592507A",
       "uuid" : "A1D11280-DAD3-455E-930B-FEEEB2E5595F",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -349,7 +349,7 @@
       "linktype" : "link",
       "origin" : "17B2BA0E-AA7E-4F45-A3A0-BA721BC07B4C",
       "uuid" : "BF36A550-53A2-4D4D-8423-3877EE456561",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -363,7 +363,7 @@
       "linktype" : "link",
       "origin" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA",
       "uuid" : "4F4F1519-6542-4804-81FC-9E661DD74A9A",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -377,7 +377,7 @@
       "linktype" : "link",
       "origin" : "10890E31-FCC3-42D7-8CA9-CE245F2D4C96",
       "uuid" : "58B5F5B5-07D0-4D7A-BA02-78143B549D50",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -391,7 +391,7 @@
       "linktype" : "link",
       "origin" : "1A057213-3AE1-4AC3-BF84-821F30A3985F",
       "uuid" : "3591141A-38CD-4677-9714-C97C3680D780",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -405,7 +405,7 @@
       "linktype" : "link",
       "origin" : "96568790-772F-4D68-A681-03FF6EA12D98",
       "uuid" : "D7C43AD5-9BE1-4A10-A2B9-1F3D8CF43AFD",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -419,7 +419,7 @@
       "linktype" : "link",
       "origin" : "CC51D119-E14E-470D-A41D-33D0AC0F84FA",
       "uuid" : "2F1D0498-F0F2-4132-8308-B56B30EBBAC8",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -433,7 +433,7 @@
       "linktype" : "link",
       "origin" : "CC51D119-E14E-470D-A41D-33D0AC0F84FA",
       "uuid" : "FAF6384F-EB66-4ED2-B74E-05A824F5C55D",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -447,7 +447,7 @@
       "linktype" : "link",
       "origin" : "D2AA3003-6509-487E-8DF2-87058D24C954",
       "uuid" : "93BA361D-8CBA-4CFD-ADC1-05295201420E",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -461,7 +461,7 @@
       "linktype" : "link",
       "origin" : "11058EEC-472A-4C0F-9F06-2DFDCA268DEC",
       "uuid" : "1D55B52F-757A-4B7C-B385-2B31762BE2AD",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -475,7 +475,7 @@
       "linktype" : "link",
       "origin" : "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
       "uuid" : "51AF3A7E-1CEE-4DBD-BE79-21C96558F953",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -489,7 +489,7 @@
       "linktype" : "link",
       "origin" : "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F",
       "uuid" : "77ABAC09-FD46-48F7-BBAE-397FB839B737",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -503,7 +503,7 @@
       "linktype" : "link",
       "origin" : "E8871D27-C6E4-40C2-A222-B49E374A9253",
       "uuid" : "B3AE2F9F-4ACE-461B-9882-E4ED4E54FF7D",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -526,8 +526,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : -30.912519454956055,
-        "x" : -228.17892456054688
+        "y" : 22.917682647705078,
+        "x" : -283.15216064453125
       },
       "name" : "",
       "content" : "Hey Juliet, is everything cool?",
@@ -550,8 +550,8 @@
     },
     {
       "position" : {
-        "y" : 97.798995971679688,
-        "x" : 30.420700073242188
+        "y" : 114.41702270507812,
+        "x" : 37.698753356933594
       },
       "name" : "",
       "content" : "What did she do?",
@@ -574,8 +574,8 @@
     },
     {
       "position" : {
-        "y" : 95.883125305175781,
-        "x" : 284.67593383789062
+        "y" : 98.327201843261719,
+        "x" : 286.9022216796875
       },
       "name" : "",
       "content" : "Ouch. How did you find out?",
@@ -586,8 +586,8 @@
     },
     {
       "position" : {
-        "y" : -31.156688690185547,
-        "x" : 29.843744277954102
+        "y" : -23.562898635864258,
+        "x" : 34.321895599365234
       },
       "name" : "",
       "content" : "She's your friend.",
@@ -598,8 +598,8 @@
     },
     {
       "position" : {
-        "y" : -30.733379364013672,
-        "x" : 160.8218994140625
+        "y" : -34.502948760986328,
+        "x" : 142.29005432128906
       },
       "name" : "",
       "content" : "Friends don't sext with their best friend's boyfriend...",
@@ -622,8 +622,8 @@
     },
     {
       "position" : {
-        "y" : 33.929462432861328,
-        "x" : 414.79806518554688
+        "y" : 30.396949768066406,
+        "x" : 407.18939208984375
       },
       "name" : "",
       "content" : "Uh, why do you care? Why are you even asking me? You never talk, just zone out with your camera.",
@@ -706,8 +706,8 @@
     },
     {
       "position" : {
-        "y" : 98.852561950683594,
-        "x" : 927.34405517578125
+        "y" : 96.376213073730469,
+        "x" : 930.58062744140625
       },
       "name" : "",
       "content" : "That was truly sad. Thanks for your concern, \"Max Caulfield.\" By the way, Juliet Watson.",
@@ -790,8 +790,8 @@
     },
     {
       "position" : {
-        "y" : -415.1796875,
-        "x" : 32.25390625
+        "y" : -413.99313354492188,
+        "x" : 31.771947860717773
       },
       "name" : "",
       "content" : "Juliet Watson, you be nice!",

@@ -27,7 +27,7 @@
       "linktype" : "link",
       "origin" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
       "uuid" : "43682DAF-39E3-465F-8E49-9461218CBA8F",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -38,7 +38,7 @@
       "linktype" : "branch",
       "origin" : "1F41C069-0037-4AE9-85D1-21A6878EEA03",
       "uuid" : "C11D765F-D597-4F21-81A3-AC2C5C59E93B",
-      "condition" : {
+      "precondition" : {
         "jscode" : "\/\/let result = getvar2(\"root.decision\");\n\nlet name = \"root.decision\";\nnvlog(getvar2(name));\nsetvar(\"root.decision\", true);\nnvlog(getvar2(name));\n\nreturn getvar2(\"root.decision\");\n\nhi"
       },
       "ftransfer" : {
@@ -52,7 +52,7 @@
       "linktype" : "link",
       "origin" : "35CE1121-DC88-45CC-9F75-C161B8C7499A",
       "uuid" : "39BB98D1-6C40-4892-8BBC-9BF80C0D302F",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -63,7 +63,7 @@
       "linktype" : "link",
       "origin" : "85718C17-40A3-4839-B65B-00201BCEC428",
       "uuid" : "A4AA9C16-83AF-4117-B16D-406849BAD120",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
@@ -74,7 +74,7 @@
       "linktype" : "link",
       "origin" : "FC23DACC-6433-46F6-B421-8CF34A4CCBF4",
       "uuid" : "3548EE2E-8576-465B-B51E-BFD953C2FF66",
-      "condition" : {
+      "precondition" : {
         "jscode" : ""
       },
       "transfer" : {
