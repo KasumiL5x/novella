@@ -68,7 +68,10 @@ class MainWindowController: NSWindowController {
 			_previewWindowController!.setDocument(doc: self.document as! NovellaDocument)
 		}
 		
-		_previewWindowController?.showWindow(self)
+		NSApplication.shared.runModal(for: _previewWindowController!.window!)
+		
+//		_previewWindowController?.showWindow(self)
+//		NSApp.runModal(for: _previewWindowController!.window!)
 	}
 	
 	@IBAction func onToolbarScreenshot(_ sender: NSButton) {

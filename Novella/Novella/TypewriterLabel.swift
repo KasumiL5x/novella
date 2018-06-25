@@ -79,6 +79,9 @@ public class TypewriterLabel: NSTextField {
 				self.stopTypewritingAnimation()
 			}
 		})
+		
+		// this function is used (mostly?) in a modal window which requires the timer to be added to the modal run loop
+		RunLoop.current.add(animationTimer!, forMode: RunLoopMode.modalPanelRunLoopMode)
 	}
 	
 	/**
