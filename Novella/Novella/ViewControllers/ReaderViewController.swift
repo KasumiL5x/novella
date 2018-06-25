@@ -36,7 +36,13 @@ class ReaderViewController: NSViewController {
 		
 		// make menu
 		_graphPopup.removeAllItems()
-		_graphPopup.addItems(withTitles: document.Manager.Story.Graphs.map{$0.Name})
+		for idx in 0..<document.Manager.Story.Graphs.count {
+			let graph = document.Manager.Story.Graphs[idx]
+			let menuItem = NSMenuItem()
+			menuItem.title = graph.Name
+			menuItem.tag = idx
+			_graphPopup.menu?.addItem(menuItem)
+		}
 		
 		// set up reader
 		_reader = NVReader(manager: document.Manager, delegate: self)
@@ -56,6 +62,14 @@ class ReaderViewController: NSViewController {
 	// MARK: Interface Callbacks
 	@IBAction func onGraphPopupChanged(_ sender: NSPopUpButton) {
 		print("changed to \(sender.selectedItem!.title)")
+		
+		guard let tag = sender.selectedItem?.tag, let graph = _document?.Manager.Story.Graphs[tag] else {
+			print("Could not find graph.")
+			return
+		}
+		
+		_chosenLinkIndex = -1
+		_reader?.start(graph, atNode: nil)
 	}
 	
 	@IBAction func onSkipPressed(_ sender: NSButton) {

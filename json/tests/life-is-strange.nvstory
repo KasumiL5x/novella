@@ -535,11 +535,40 @@
         },
         "destination" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
       }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
+      "uuid" : "317B1AB7-40E3-4AFA-B441-8E85CA70AFAF",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
+      "uuid" : "B786AD6D-86D8-42A7-A3BF-4CDE7FA5C4C2",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "A3C2017E-23B3-43AB-A980-A061785667D7"
+      }
     }
   ],
   "story" : {
     "graphs" : [
-      "3570BCBD-C95A-49B2-908E-BE5FC5DDC544"
+      "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
+      "FF48E307-BE3F-4563-B9BF-2667702AF6E0"
     ],
     "name" : "",
     "folders" : [
@@ -801,8 +830,8 @@
     },
     {
       "position" : {
-        "y" : -159.59615733631654,
-        "x" : 1566.2553080000216
+        "y" : -159.59616088867188,
+        "x" : 1566.2552490234375
       },
       "name" : "",
       "content" : "Max, I swear I didn't do ANYTHING! But I bet Victoria did! I know the proof is in her room!",
@@ -909,8 +938,8 @@
     },
     {
       "position" : {
-        "y" : -123.42745995294536,
-        "x" : 1752.2844476276077
+        "y" : -123.42745971679688,
+        "x" : 1752.284423828125
       },
       "name" : "",
       "content" : "Test Branch True",
@@ -921,8 +950,8 @@
     },
     {
       "position" : {
-        "y" : -212.79166571306996,
-        "x" : 1761.7801853793208
+        "y" : -212.79167175292969,
+        "x" : 1761.7801513671875
       },
       "name" : "",
       "content" : "Test Branch False",
@@ -930,6 +959,42 @@
       "nodetype" : "dialog",
       "preview" : "Test Branch False",
       "uuid" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
+    },
+    {
+      "position" : {
+        "y" : -299602.75390625,
+        "x" : -299509.01171875
+      },
+      "name" : "",
+      "content" : "Just checking this second graph works.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13"
+    },
+    {
+      "position" : {
+        "y" : -299659.2265625,
+        "x" : -299390.57421875
+      },
+      "name" : "",
+      "content" : "This is option 2.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Option 2",
+      "uuid" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
+    },
+    {
+      "position" : {
+        "y" : -299548.18359375,
+        "x" : -299384.30078125
+      },
+      "name" : "",
+      "content" : "This is option 1.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Option 1",
+      "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
     }
   ],
   "graphs" : [
@@ -1013,6 +1078,33 @@
       ],
       "entry" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
       "uuid" : "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "0B57F8E2-7D5B-499F-AF37-4FD99600A073",
+      "nodes" : [
+        "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
+        "3FAE24D5-DA41-46F5-B658-C81B1A0C1460",
+        "A3C2017E-23B3-43AB-A980-A061785667D7"
+      ],
+      "links" : [
+        "317B1AB7-40E3-4AFA-B441-8E85CA70AFAF",
+        "B786AD6D-86D8-42A7-A3BF-4CDE7FA5C4C2"
+      ],
+      "entry" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
+      "uuid" : "FF48E307-BE3F-4563-B9BF-2667702AF6E0",
       "subgraphs" : [
 
       ],
