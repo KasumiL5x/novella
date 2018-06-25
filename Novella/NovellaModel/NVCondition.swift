@@ -30,7 +30,6 @@ public class NVCondition {
 	
 	// MARK: - Functions -
 	func execute() -> Bool {
-		// create function (TODO: What happens if I redefine this function more than once?)
 		var boolFunc = "function executeCondition() {\n"
 		boolFunc += _javascript.isEmpty ? "return true;" : _javascript
 		boolFunc += "\n}"
@@ -50,7 +49,7 @@ public class NVCondition {
 			fatalError("Could not execute JavaScript function executeCondition().")
 		}
 		
-		// JS will always return somethign, so worst case we get false
+		// JS will always return something, so worst case we get false
 		return result.toBool()
 	}
 }

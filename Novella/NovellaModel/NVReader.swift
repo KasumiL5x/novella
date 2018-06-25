@@ -117,7 +117,7 @@ public class NVReader {
 				
 			case is NVBranch:
 				let asBranch = x as! NVBranch
-				if asBranch.TrueTransfer._destination != nil && asBranch.FalseTransfer._destination != nil && asBranch.Condition.execute() {
+				if asBranch.TrueTransfer._destination != nil && asBranch.FalseTransfer._destination != nil {
 					links.append(x)
 				}
 				
