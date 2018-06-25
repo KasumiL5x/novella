@@ -53,7 +53,7 @@ class PinViewLink: PinView {
 		_curveLayer.lineWidth = 2.0
 		
 		// configure context menu
-		_contextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewLink.onContextCondition), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Edit PreCondition", action: #selector(PinViewLink.onContextPreCondition), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewLink.onContextFunction), keyEquivalent: "")
 		_contextMenu.addItem(NSMenuItem.separator())
 		_contextMenu.addItem(withTitle: "Un/Trash", action: #selector(PinView.onContextDelete), keyEquivalent: "")
@@ -98,7 +98,7 @@ class PinViewLink: PinView {
 	}
 	
 	// MARK: Context Menu Callbacks
-	@objc private func onContextCondition() {
+	@objc private func onContextPreCondition() {
 		_conditionPopover.show(forView: self, at: .maxX)
 		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVLink).PreCondition)
 	}

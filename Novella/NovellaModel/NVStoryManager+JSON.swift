@@ -91,6 +91,10 @@ extension NVStoryManager {
 				precondition["jscode"] = asBranch.PreCondition.Javascript
 				entry["precondition"] = precondition
 				
+				var condition: JSONDict = [:]
+				condition["jscode"] = asBranch.Condition.Javascript
+				entry["condition"] = condition
+				
 				var ttransfer: JSONDict = [:]
 				ttransfer["destination"] = asBranch.TrueTransfer.Destination?.UUID.uuidString ?? ""
 					var tfunction: JSONDict = [:]
@@ -443,6 +447,10 @@ extension NVStoryManager {
 					branch.PreCondition.Javascript = precondition["jscode"]!.string!
 				}
 				
+				if let condition = curr["condition"].dictionary {
+					branch.Condition.Javascript = condition["jscode"]!.string!
+				}
+				
 				if let trueTransfer = curr["ttransfer"].dictionary {
 					let transferDestination = trueTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
@@ -735,6 +743,7 @@ extension NVStoryManager {
 								"properties": [
 									"linktype": [ "enum": ["branch"] ],
 									"precondition": [ "$ref": "#/definitions/condition" ],
+									"condition": [ "$ref": "#/definitions/condition" ],
 									"ttransfer": [ "$ref": "#/definitions/transfer" ],
 									"ftransfer": [ "$ref": "#/definitions/transfer" ]
 								]

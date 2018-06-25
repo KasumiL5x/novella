@@ -211,6 +211,7 @@
 							"properties": {
 								"linktype": { "enum": ["branch"] },
 								"precondition": { "$ref": "#/definitions/condition" },
+								"condition": { "$ref": "#/definitions/condition" },
 								"ttransfer": { "$ref": "#/definitions/transfer" },
 								"ftransfer": { "$ref": "#/definitions/transfer" }
 							}

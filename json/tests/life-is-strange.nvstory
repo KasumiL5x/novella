@@ -15,7 +15,7 @@
     {
       "synopsis" : "",
       "name" : "knows_surname",
-      "value" : true,
+      "value" : false,
       "constant" : false,
       "uuid" : "357B72BF-D54A-458D-B699-CB39C8ABC14F",
       "datatype" : "boolean",
@@ -512,6 +512,29 @@
         },
         "destination" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA"
       }
+    },
+    {
+      "origin" : "853E568A-37B6-4EE7-968D-A26F8E16F499",
+      "precondition" : {
+        "jscode" : "\/\/ precondition\nreturn true;"
+      },
+      "ttransfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2"
+      },
+      "linktype" : "branch",
+      "uuid" : "6FC76DCF-7453-4D28-9B1E-786C740D3F6F",
+      "condition" : {
+        "jscode" : "\/\/ condition"
+      },
+      "ftransfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
+      }
     }
   ],
   "story" : {
@@ -778,8 +801,8 @@
     },
     {
       "position" : {
-        "y" : -77.576469421386719,
-        "x" : 1665.9403076171875
+        "y" : -159.59615733631654,
+        "x" : 1566.2553080000216
       },
       "name" : "",
       "content" : "Max, I swear I didn't do ANYTHING! But I bet Victoria did! I know the proof is in her room!",
@@ -883,6 +906,30 @@
       "nodetype" : "dialog",
       "preview" : "Next",
       "uuid" : "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03"
+    },
+    {
+      "position" : {
+        "y" : -123.42745995294536,
+        "x" : 1752.2844476276077
+      },
+      "name" : "",
+      "content" : "Test Branch True",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Test Branch True",
+      "uuid" : "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2"
+    },
+    {
+      "position" : {
+        "y" : -212.79166571306996,
+        "x" : 1761.7801853793208
+      },
+      "name" : "",
+      "content" : "Test Branch False",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Test Branch False",
+      "uuid" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
     }
   ],
   "graphs" : [
@@ -922,7 +969,9 @@
         "D2AA3003-6509-487E-8DF2-87058D24C954",
         "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F",
         "11058EEC-472A-4C0F-9F06-2DFDCA268DEC",
-        "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03"
+        "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
+        "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2",
+        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
       ],
       "links" : [
         "577EC340-5688-40B9-B137-A087CC8A7D3E",
@@ -959,7 +1008,8 @@
         "1D55B52F-757A-4B7C-B385-2B31762BE2AD",
         "51AF3A7E-1CEE-4DBD-BE79-21C96558F953",
         "77ABAC09-FD46-48F7-BBAE-397FB839B737",
-        "B3AE2F9F-4ACE-461B-9882-E4ED4E54FF7D"
+        "B3AE2F9F-4ACE-461B-9882-E4ED4E54FF7D",
+        "6FC76DCF-7453-4D28-9B1E-786C740D3F6F"
       ],
       "entry" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
       "uuid" : "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
