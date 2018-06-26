@@ -264,6 +264,7 @@ extension MainViewController {
 			print("Failed to initialize EntityTabViewController.")
 			return nil
 		}
+		vc.setup(doc: _document)
 		let tabViewItem = NSTabViewItem(viewController: vc)
 		_tabView.addTabViewItem(tabViewItem)
 		

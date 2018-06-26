@@ -503,7 +503,7 @@
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="" width="175" minWidth="40" maxWidth="1000" id="1gI-9c-PG7">
+                                                        <tableColumn identifier="NameColumn" width="175" minWidth="40" maxWidth="1000" id="1gI-9c-PG7" userLabel="NameColumn">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -516,7 +516,7 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="YA0-eq-Qt8">
+                                                                <tableCellView identifier="NameTextCell" id="YA0-eq-Qt8" userLabel="TextCell">
                                                                     <rect key="frame" x="1" y="1" width="175" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
