@@ -37,6 +37,9 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryMakeDialog(dialog: NVDialog) {
 		_mvc.reloadSelectedGraph()
 	}
+	func onStoryMakeEntity(entity: NVEntity) {
+		_mvc.reloadSelectedGraph()
+	}
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 		_mvc.reloadSelectedGraph()
 	}
@@ -92,6 +95,9 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryRemoveGraph(graph: NVGraph) {
+		_mvc.reloadSelectedGraph()
+	}
+	func onStoryDeleteEntity(entity: NVEntity) {
 		_mvc.reloadSelectedGraph()
 	}
 	

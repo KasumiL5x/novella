@@ -20,6 +20,7 @@ public class NVStoryManager {
 	private var _graphs: [NVGraph]
 	private var _links: [NVBaseLink]
 	private var _nodes: [NVNode]
+	private var _entities: [NVEntity]
 	private var _trashed: [NVObject]
 	private var _delegates: [NVStoryDelegate]
 	internal var _jsContext: JSContext
@@ -46,6 +47,9 @@ public class NVStoryManager {
 	public var Nodes: [NVNode] {
 		get{ return _nodes }
 	}
+	public var Entities: [NVEntity] {
+		get{ return _entities }
+	}
 	public var TrashedItems: [NVObject] {
 		get{ return _trashed }
 	}
@@ -58,6 +62,7 @@ public class NVStoryManager {
 		self._graphs = []
 		self._links = []
 		self._nodes = []
+		self._entities = []
 		self._trashed = []
 		self._delegates = []
 		self._jsContext = JSContext()
@@ -81,6 +86,7 @@ public class NVStoryManager {
 		self._graphs = []
 		self._links = []
 		self._nodes = []
+		self._entities = []
 		self._trashed = []
 		self._delegates = []
 		self._jsContext = JSContext()
@@ -429,6 +435,31 @@ extension NVStoryManager {
 	}
 }
 
+// MARK: - Entities -
+extension NVStoryManager {
+	@discardableResult
+	public func makeEntity(name: String, uuid: NSUUID?=nil) -> NVEntity {
+		let entity = NVEntity(manager: self, uuid: uuid != nil ? uuid! : NSUUID())
+		entity.Name = name
+		_entities.append(entity)
+		_identifiables.append(entity)
+		
+		_delegates.forEach{$0.onStoryMakeEntity(entity: entity)}
+		return entity
+	}
+	
+	func delete(entity: NVEntity) {
+		// 1. remove from all entities
+		_entities.remove(at: _entities.index(of: entity)!)
+		
+		// 2. remove from all identifiables
+		_identifiables.remove(at: _identifiables.index(of: entity)!)
+		
+		_delegates.forEach{$0.onStoryDeleteEntity(entity: entity)}
+	}
+	// handle in trash below
+}
+
 // MARK: - - Trashing Stuff -
 extension NVStoryManager {
 	func trash(_ item: NVObject) {
@@ -457,6 +488,10 @@ extension NVStoryManager {
 				
 			case is NVGraph:
 				delete(graph: curr as! NVGraph)
+				_trashed.remove(at: i)
+				
+			case is NVEntity:
+				delete(entity: curr as! NVEntity)
 				_trashed.remove(at: i)
 				
 			default:

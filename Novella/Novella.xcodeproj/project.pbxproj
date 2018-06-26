@@ -45,6 +45,7 @@
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
+		65940AD720E19B2D00C777BF /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65940AD620E19B2D00C777BF /* NVEntity.swift */; };
 		65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2180E20D13FC900EA4594 /* NVObject.swift */; };
 		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
 		65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */; };
@@ -170,6 +171,7 @@
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
+		65940AD620E19B2D00C777BF /* NVEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
 		65A2180E20D13FC900EA4594 /* NVObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVObject.swift; sourceTree = "<group>"; };
 		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
 		65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypewriterLabel.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				655F9FF520C30EAA00B20EFE /* NovellaModel.h */,
 				655F9FF620C30EAA00B20EFE /* Info.plist */,
 				65A2180E20D13FC900EA4594 /* NVObject.swift */,
+				65940AD620E19B2D00C777BF /* NVEntity.swift */,
 			);
 			path = NovellaModel;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 			files = (
 				6513105320C30F050078C30C /* NVStoryDelegate.swift in Sources */,
 				6513105220C30F050078C30C /* NVError.swift in Sources */,
+				65940AD720E19B2D00C777BF /* NVEntity.swift in Sources */,
 				6513104620C30F050078C30C /* NVStoryManager+JSON.swift in Sources */,
 				6513105520C30F050078C30C /* NVDialog.swift in Sources */,
 				6513105120C30F050078C30C /* NVFunction.swift in Sources */,

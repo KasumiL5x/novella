@@ -85,6 +85,9 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryMakeDialog(dialog: NVDialog) {
 		self.updateChangeCount(.changeDone)
 	}
+	func onStoryMakeEntity(entity: NVEntity) {
+		self.updateChangeCount(.changeDone)
+	}
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 		self.updateChangeCount(.changeDone)
 	}
@@ -119,6 +122,9 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryDeleteGraph(graph: NVGraph) {
+		self.updateChangeCount(.changeDone)
+	}
+	func onStoryDeleteEntity(entity: NVEntity) {
 		self.updateChangeCount(.changeDone)
 	}
 	

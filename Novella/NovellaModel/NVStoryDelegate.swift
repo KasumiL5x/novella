@@ -24,6 +24,8 @@ public protocol NVStoryDelegate {
 	func onStoryMakeSwitch(switch: NVSwitch)
 	// Called when an NVDialog is created using StoryManager.makeDialog().
 	func onStoryMakeDialog(dialog: NVDialog)
+	//
+	func onStoryMakeEntity(entity: NVEntity)
 	// Called when an NVDelivery is created using StoryManager.makeDelivery().
 	func onStoryMakeDelivery(delivery: NVDelivery)
 	// Called when a NVContext is created using StoryManager.makeContext().
@@ -46,6 +48,7 @@ public protocol NVStoryDelegate {
 	// Called when an NVBaseLink is deleted using StoryManager.delete(link).
 	func onStoryDeleteLink(link: NVBaseLink)
 	func onStoryDeleteGraph(graph: NVGraph)
+	func onStoryDeleteEntity(entity: NVEntity)
 	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
@@ -142,6 +145,8 @@ public extension NVStoryDelegate {
 	}
 	func onStoryMakeDialog(dialog: NVDialog) {
 	}
+	func onStoryMakeEntity(entity: NVEntity) {
+	}
 	func onStoryMakeDelivery(delivery: NVDelivery) {
 	}
 	func onStoryMakeContext(context: NVContext) {
@@ -166,6 +171,8 @@ public extension NVStoryDelegate {
 	func onStoryDeleteLink(link: NVBaseLink) {
 	}
 	func onStoryDeleteGraph(graph: NVGraph) {
+	}
+	func onStoryDeleteEntity(entity: NVEntity) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {
