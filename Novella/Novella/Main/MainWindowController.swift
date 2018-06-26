@@ -81,4 +81,8 @@ class MainWindowController: NSWindowController {
 	@IBAction func onToolbarVariableEditor(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.openVariableEditor()
 	}
+	
+	@IBAction func onToolbarEntityEditor(_ sender: NSButton) {
+		(contentViewController as? MainViewController)?.openEntityEditor()
+	}
 }

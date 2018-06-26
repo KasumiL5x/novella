@@ -842,6 +842,22 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="5671C689-E999-4477-A909-671B0534F1E2" label="Entity Editor" paletteLabel="Entity Editor" image="NSTouchBarUserGroupTemplate" id="fuU-VX-Nf6">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="48" height="48"/>
+                                    <size key="maxSize" width="48" height="48"/>
+                                    <button key="view" id="uIh-8S-NTo">
+                                        <rect key="frame" x="12" y="14" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarUserGroupTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="CNw-eM-CuR">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarEntityEditor:" target="jGA-0Y-lOj" id="RnB-H0-bK5"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="6I3-JS-OQD"/>
@@ -854,6 +870,7 @@
                                 <toolbarItem reference="pcE-BH-ol5"/>
                                 <toolbarItem reference="y16-IP-bVg"/>
                                 <toolbarItem reference="RAx-tK-frb"/>
+                                <toolbarItem reference="fuU-VX-Nf6"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -1472,6 +1489,7 @@
         <image name="NSTouchBarExitFullScreenTemplate" width="18" height="30"/>
         <image name="NSTouchBarFolderMoveToTemplate" width="22" height="30"/>
         <image name="NSTouchBarPlayTemplate" width="14" height="30"/>
+        <image name="NSTouchBarUserGroupTemplate" width="24" height="30"/>
         <image name="NSTrashEmpty" width="32" height="32"/>
         <image name="Variable" width="512" height="512"/>
     </resources>

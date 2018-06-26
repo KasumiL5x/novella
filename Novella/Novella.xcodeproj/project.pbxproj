@@ -46,6 +46,7 @@
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
 		65940AD720E19B2D00C777BF /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65940AD620E19B2D00C777BF /* NVEntity.swift */; };
+		65940AD920E2323500C777BF /* EntityTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65940AD820E2323500C777BF /* EntityTabViewController.swift */; };
 		65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2180E20D13FC900EA4594 /* NVObject.swift */; };
 		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
 		65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */; };
@@ -172,6 +173,7 @@
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
 		65940AD620E19B2D00C777BF /* NVEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
+		65940AD820E2323500C777BF /* EntityTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTabViewController.swift; sourceTree = "<group>"; };
 		65A2180E20D13FC900EA4594 /* NVObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVObject.swift; sourceTree = "<group>"; };
 		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
 		65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypewriterLabel.swift; sourceTree = "<group>"; };
@@ -522,6 +524,7 @@
 			children = (
 				65F7F8A220C3182F004663D6 /* GraphTabViewController.swift */,
 				65F7F8A320C3182F004663D6 /* VariableTabViewController.swift */,
+				65940AD820E2323500C777BF /* EntityTabViewController.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */,
 				65F7F89020C317DD004663D6 /* TabsDataSource.swift in Sources */,
 				65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */,
+				65940AD920E2323500C777BF /* EntityTabViewController.swift in Sources */,
 				65F7F86A20C31714004663D6 /* DeliveryLinkableView.swift in Sources */,
 				65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */,
 				65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */,

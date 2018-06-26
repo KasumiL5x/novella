@@ -199,6 +199,15 @@ extension MainViewController {
 			selectTab(item: varTab)
 		}
 	}
+	
+	func openEntityEditor() {
+		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is EntityTabViewController}) {
+			selectTab(item: existing)
+		} else {
+			let entityTab = addEntityTabEditor()
+			selectTab(item: entityTab)
+		}
+	}
 }
 
 // MARK: - - Tabs -
@@ -238,6 +247,27 @@ extension MainViewController {
 		_tabView.addTabViewItem(tabViewItem)
 		
 		let tabItem = TabItem(title: "Variable Editor", icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
+		tabItem.closeFunc = { (item) in
+			self.closeTab(tab: item)
+		}
+		_tabsDataSource!.Tabs.append(tabItem)
+		_tabController.reloadTabs()
+		
+		return tabItem
+	}
+	
+	@discardableResult
+	private func addEntityTabEditor() -> TabItem? {
+		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
+		let id = NSStoryboard.SceneIdentifier(rawValue: "EntityTab")
+		guard let vc = sb.instantiateController(withIdentifier: id) as? EntityTabViewController else {
+			print("Failed to initialize EntityTabViewController.")
+			return nil
+		}
+		let tabViewItem = NSTabViewItem(viewController: vc)
+		_tabView.addTabViewItem(tabViewItem)
+		
+		let tabItem = TabItem(title: "Entity Editor", icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
 		tabItem.closeFunc = { (item) in
 			self.closeTab(tab: item)
 		}
