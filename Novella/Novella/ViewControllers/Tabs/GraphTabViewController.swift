@@ -45,7 +45,9 @@ class GraphTabViewController: NSViewController {
 	
 	override func viewDidAppear() {
 		if _firstAppear {
-			_ = zoomAll()
+			if !zoomAll() {
+				centerView(animated: false)
+			}
 			_firstAppear = false
 		}
 	}
