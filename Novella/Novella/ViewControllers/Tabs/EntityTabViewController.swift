@@ -9,7 +9,20 @@
 import Cocoa
 
 class EntityTabViewController: NSViewController {
+	// MARK: - Outlets -
+	@IBOutlet private weak var _tableView: NSTableView!
+	@IBOutlet private weak var _nameLabel: NSTextField!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+	}
+	
+	// MARK: - Interface Callbacks -
+	@IBAction func onAddEntity(_ sender: NSButton) {
+		print("Add entity.")
+	}
+	
+	@IBAction func onRemoveEntity(_ sender: NSButton) {
+		print("Remove entity.")
 	}
 }
