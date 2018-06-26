@@ -1,16 +1,4 @@
 {
-  "folders" : [
-    {
-      "name" : "juliet",
-      "variables" : [
-        "357B72BF-D54A-458D-B699-CB39C8ABC14F"
-      ],
-      "uuid" : "4B89AF2C-54DC-48D4-B37A-D5920A99B8AB",
-      "subfolders" : [
-
-      ]
-    }
-  ],
   "variables" : [
     {
       "synopsis" : "",
@@ -20,6 +8,571 @@
       "uuid" : "357B72BF-D54A-458D-B699-CB39C8ABC14F",
       "datatype" : "boolean",
       "initialValue" : false
+    }
+  ],
+  "story" : {
+    "graphs" : [
+      "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
+      "FF48E307-BE3F-4563-B9BF-2667702AF6E0"
+    ],
+    "name" : "",
+    "folders" : [
+      "4B89AF2C-54DC-48D4-B37A-D5920A99B8AB"
+    ]
+  },
+  "nodes" : [
+    {
+      "position" : {
+        "y" : 22.917682647705078,
+        "x" : -283.15216064453125
+      },
+      "name" : "",
+      "content" : "Hey Juliet, is everything cool?",
+      "directions" : "Max (concerned)",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981"
+    },
+    {
+      "position" : {
+        "y" : -29.482444763183594,
+        "x" : -95.995643615722656
+      },
+      "name" : "",
+      "content" : "Oh yes, Max. I've locked Dana in the room because we're \"cool.\"",
+      "directions" : "Juliet (sarcastic)",
+      "nodetype" : "dialog",
+      "preview" : "We're \"cool\"",
+      "uuid" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA"
+    },
+    {
+      "position" : {
+        "y" : 114.41702270507812,
+        "x" : 37.698753356933594
+      },
+      "name" : "",
+      "content" : "What did she do?",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "What did she do?",
+      "uuid" : "D0804EB8-E94B-4155-9C31-91DCA4A626DB"
+    },
+    {
+      "position" : {
+        "y" : 97.6923828125,
+        "x" : 161.16995239257812
+      },
+      "name" : "",
+      "content" : " What didn't she do? Dana's been sexting with my boyfriend.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "2721C72B-B0E8-491A-802B-3F0D780A02BB"
+    },
+    {
+      "position" : {
+        "y" : 98.327201843261719,
+        "x" : 286.9022216796875
+      },
+      "name" : "",
+      "content" : "Ouch. How did you find out?",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "E86E0287-09BB-48AF-B14A-46230BBFE58A"
+    },
+    {
+      "position" : {
+        "y" : -23.562898635864258,
+        "x" : 34.321895599365234
+      },
+      "name" : "",
+      "content" : "She's your friend.",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "She's your friend.",
+      "uuid" : "E7A30B3F-9342-4B34-A356-38C1D826FCD9"
+    },
+    {
+      "position" : {
+        "y" : -34.502948760986328,
+        "x" : 142.29005432128906
+      },
+      "name" : "",
+      "content" : "Friends don't sext with their best friend's boyfriend...",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "E7AB59E7-8EB4-45D2-B3B5-099A8C90EA6F"
+    },
+    {
+      "position" : {
+        "y" : -29.620233535766602,
+        "x" : 283.54083251953125
+      },
+      "name" : "",
+      "content" : "No, probably not... How did you find out?",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "B5E312B1-92C8-4676-9B9D-D5EFD71B6930"
+    },
+    {
+      "position" : {
+        "y" : 30.396949768066406,
+        "x" : 407.18939208984375
+      },
+      "name" : "",
+      "content" : "Uh, why do you care? Why are you even asking me? You never talk, just zone out with your camera.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next (join)",
+      "uuid" : "9EB999FC-3311-4D6D-8C13-38F501AF2C9D"
+    },
+    {
+      "position" : {
+        "y" : 32.327159881591797,
+        "x" : 544.4090576171875
+      },
+      "name" : "",
+      "content" : "That's why I'm talking to you now.",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "D54A861D-C280-4080-9457-BA59EAD7DAF3"
+    },
+    {
+      "position" : {
+        "y" : 31.681221008300781,
+        "x" : 671.10711669921875
+      },
+      "name" : "",
+      "content" : "What's my last name?",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "EF6D4383-9136-4B88-A9A8-34A7514BF355"
+    },
+    {
+      "position" : {
+        "y" : 224.28067016601562,
+        "x" : 799.22869873046875
+      },
+      "name" : "",
+      "content" : "Juliet Pats... Juliet Patson.",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Juliet Patson",
+      "uuid" : "D21835B4-F548-4950-8B1C-335FA786D0CC"
+    },
+    {
+      "position" : {
+        "y" : 97.472885131835938,
+        "x" : 799.7962646484375
+      },
+      "name" : "",
+      "content" : "Uh. Juliet... Mason.",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Juliet Mason",
+      "uuid" : "38FB6129-2D20-4FEA-91D9-839F63A2AB5B"
+    },
+    {
+      "position" : {
+        "y" : -30.761600494384766,
+        "x" : 800.890625
+      },
+      "name" : "",
+      "content" : "Juliet... Juliet... Olson.",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Juliet Olson",
+      "uuid" : "7277F3A1-6875-4527-87D0-803FFAC35DF5"
+    },
+    {
+      "position" : {
+        "y" : -155.91690063476562,
+        "x" : 799.70220947265625
+      },
+      "name" : "",
+      "content" : "Juliet Watson. Duh!",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Juliet Watson",
+      "uuid" : "3EC2EB16-4D94-4213-90D6-872161E5677F"
+    },
+    {
+      "position" : {
+        "y" : 96.376213073730469,
+        "x" : 930.58062744140625
+      },
+      "name" : "",
+      "content" : "That was truly sad. Thanks for your concern, \"Max Caulfield.\" By the way, Juliet Watson.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next (join)",
+      "uuid" : "E8871D27-C6E4-40C2-A222-B49E374A9253"
+    },
+    {
+      "position" : {
+        "y" : -157.98954772949219,
+        "x" : 928.79583740234375
+      },
+      "name" : "",
+      "content" : "I'm flattered. I didn't even think you knew my name at all.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "F08CAF94-680E-471A-90AC-EF8EF9976AB2"
+    },
+    {
+      "position" : {
+        "y" : -158.83303833007812,
+        "x" : 1053.97314453125
+      },
+      "name" : "",
+      "content" : "Of course I do. Just because I don't talk a lot doesn't mean I don't care. So, how did you find out about them?",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "2A178593-A8DF-4AAB-857D-0B80FFAA2434"
+    },
+    {
+      "position" : {
+        "y" : -157.95506286621094,
+        "x" : 1182.7030029296875
+      },
+      "name" : "",
+      "content" : "According to Victoria, Dana would do anything to date a quarterback.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "E0862791-F19D-4944-A214-945CE8D28BEB"
+    },
+    {
+      "position" : {
+        "y" : -158.56024169921875,
+        "x" : 1310.6898193359375
+      },
+      "name" : "",
+      "content" : "According to Victoria? Oh...",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "60E2AB2D-322B-46EC-8DF1-301EB592507A"
+    },
+    {
+      "position" : {
+        "y" : -160.07160949707031,
+        "x" : 1439.8775634765625
+      },
+      "name" : "",
+      "content" : "She saw the sext. And Zachary won't answer his phone. Once Dana admits it, she can go. Straight to Hell.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "17B2BA0E-AA7E-4F45-A3A0-BA721BC07B4C"
+    },
+    {
+      "position" : {
+        "y" : -159.59616088867188,
+        "x" : 1566.2552490234375
+      },
+      "name" : "",
+      "content" : "Max, I swear I didn't do ANYTHING! But I bet Victoria did! I know the proof is in her room!",
+      "directions" : "Dana (from inside her room)",
+      "nodetype" : "dialog",
+      "preview" : "Next (join all)",
+      "uuid" : "853E568A-37B6-4EE7-968D-A26F8E16F499"
+    },
+    {
+      "position" : {
+        "y" : -413.99313354492188,
+        "x" : 31.771947860717773
+      },
+      "name" : "",
+      "content" : "Juliet Watson, you be nice!",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Juliet Watson, you be nice! (after rewind)",
+      "uuid" : "10890E31-FCC3-42D7-8CA9-CE245F2D4C96"
+    },
+    {
+      "position" : {
+        "y" : -417.0390625,
+        "x" : 161.41015625
+      },
+      "name" : "",
+      "content" : "I'm flattered. I didn't even think you knew my name at all.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "1A057213-3AE1-4AC3-BF84-821F30A3985F"
+    },
+    {
+      "position" : {
+        "y" : -416.70703125,
+        "x" : 288.4921875
+      },
+      "name" : "",
+      "content" : "Uh. Of course I do.",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "96568790-772F-4D68-A681-03FF6EA12D98"
+    },
+    {
+      "position" : {
+        "y" : -415.7578125,
+        "x" : 418.4296875
+      },
+      "name" : "",
+      "content" : "Thanks... I locked Dana in because she was sexting Zach, my boyfriend. Unbelievable.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "CC51D119-E14E-470D-A41D-33D0AC0F84FA"
+    },
+    {
+      "position" : {
+        "y" : -353.23046875,
+        "x" : 542.95703125
+      },
+      "name" : "",
+      "content" : "How do you know?",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "How do you know?",
+      "uuid" : "D2AA3003-6509-487E-8DF2-87058D24C954"
+    },
+    {
+      "position" : {
+        "y" : -476.55859375,
+        "x" : 800.828125
+      },
+      "name" : "",
+      "content" : "Would Dana do that?",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Would Dana do that?",
+      "uuid" : "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F"
+    },
+    {
+      "position" : {
+        "y" : -349.57421875,
+        "x" : 671.1796875
+      },
+      "name" : "",
+      "content" : "Victoria Chase. You know her.",
+      "directions" : "Juliet",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "11058EEC-472A-4C0F-9F06-2DFDCA268DEC"
+    },
+    {
+      "position" : {
+        "y" : -351.2578125,
+        "x" : 798.203125
+      },
+      "name" : "",
+      "content" : "You could say that... But, why would Dana go after your boyfriend?",
+      "directions" : "Max",
+      "nodetype" : "dialog",
+      "preview" : "Next",
+      "uuid" : "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03"
+    },
+    {
+      "position" : {
+        "y" : -123.42745971679688,
+        "x" : 1752.284423828125
+      },
+      "name" : "",
+      "content" : "Test Branch True",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Test Branch True",
+      "uuid" : "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2"
+    },
+    {
+      "position" : {
+        "y" : -212.79167175292969,
+        "x" : 1761.7801513671875
+      },
+      "name" : "",
+      "content" : "Test Branch False",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Test Branch False",
+      "uuid" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
+    },
+    {
+      "position" : {
+        "y" : -299602.75,
+        "x" : -299509
+      },
+      "name" : "",
+      "content" : "Just checking this second graph works.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "",
+      "uuid" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13"
+    },
+    {
+      "position" : {
+        "y" : -299659.21875,
+        "x" : -299390.5625
+      },
+      "name" : "",
+      "content" : "This is option 2.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Option 2",
+      "uuid" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
+    },
+    {
+      "position" : {
+        "y" : -299548.1875,
+        "x" : -299384.3125
+      },
+      "name" : "",
+      "content" : "This is option 1.",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "preview" : "Option 1",
+      "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
+    }
+  ],
+  "graphs" : [
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "FE6981CD-19E8-434F-84FF-8B125BE09DA0",
+      "nodes" : [
+        "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
+        "0E492661-9F49-4E41-A1F8-0FCCD60531AA",
+        "D0804EB8-E94B-4155-9C31-91DCA4A626DB",
+        "2721C72B-B0E8-491A-802B-3F0D780A02BB",
+        "E86E0287-09BB-48AF-B14A-46230BBFE58A",
+        "E7A30B3F-9342-4B34-A356-38C1D826FCD9",
+        "E7AB59E7-8EB4-45D2-B3B5-099A8C90EA6F",
+        "B5E312B1-92C8-4676-9B9D-D5EFD71B6930",
+        "9EB999FC-3311-4D6D-8C13-38F501AF2C9D",
+        "D54A861D-C280-4080-9457-BA59EAD7DAF3",
+        "EF6D4383-9136-4B88-A9A8-34A7514BF355",
+        "D21835B4-F548-4950-8B1C-335FA786D0CC",
+        "38FB6129-2D20-4FEA-91D9-839F63A2AB5B",
+        "7277F3A1-6875-4527-87D0-803FFAC35DF5",
+        "3EC2EB16-4D94-4213-90D6-872161E5677F",
+        "E8871D27-C6E4-40C2-A222-B49E374A9253",
+        "F08CAF94-680E-471A-90AC-EF8EF9976AB2",
+        "2A178593-A8DF-4AAB-857D-0B80FFAA2434",
+        "E0862791-F19D-4944-A214-945CE8D28BEB",
+        "60E2AB2D-322B-46EC-8DF1-301EB592507A",
+        "17B2BA0E-AA7E-4F45-A3A0-BA721BC07B4C",
+        "853E568A-37B6-4EE7-968D-A26F8E16F499",
+        "10890E31-FCC3-42D7-8CA9-CE245F2D4C96",
+        "1A057213-3AE1-4AC3-BF84-821F30A3985F",
+        "96568790-772F-4D68-A681-03FF6EA12D98",
+        "CC51D119-E14E-470D-A41D-33D0AC0F84FA",
+        "D2AA3003-6509-487E-8DF2-87058D24C954",
+        "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F",
+        "11058EEC-472A-4C0F-9F06-2DFDCA268DEC",
+        "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
+        "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2",
+        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
+      ],
+      "links" : [
+        "577EC340-5688-40B9-B137-A087CC8A7D3E",
+        "6628315E-7929-40F1-8BF6-F026EC031D6B",
+        "952D9BDB-C8EF-444D-82BD-7A63933087BB",
+        "61193405-C863-4D5E-ABFE-EBF89F2EF5DF",
+        "8C190585-C58A-4F0B-B8E3-ED5A4655EA02",
+        "4D862BBB-D69D-4D26-B01B-F82C451DEC67",
+        "6B89897E-CD88-4D8A-A7CB-EF94419E8AA1",
+        "C7139069-CE3B-4A7F-8783-1A3C2F2FCC82",
+        "4AFE1AC7-5B9E-423C-ACC4-4D3A2D1E3ECD",
+        "1B2F4019-CDB8-4251-A984-0B9B42F13E55",
+        "05DF3D88-C32C-40AA-9B80-A95466DE3891",
+        "56D8931B-01FA-435D-B2F1-A5FD01CC3C58",
+        "2BB16F42-8644-47C4-B9B9-FE7EE0EE6BFE",
+        "75B480FB-56B8-4DE9-BA5B-0C262E279A39",
+        "5BCE7236-2116-4703-9CAD-0BB73A487DEB",
+        "E6D3E2B3-AC0C-44D0-BDD1-B14D87BD9739",
+        "09DF9F2A-2677-4913-99CB-03A4D3690599",
+        "914D690E-1ACB-4C10-9F7C-5EAB25874E5B",
+        "9458BD1C-AE3B-404A-B522-0B3CF2D04189",
+        "2BA7680A-7A0C-4944-9656-E37870FE25D4",
+        "355CB10B-9ADF-4936-BCCF-15AE6417613C",
+        "4090AD6E-F15B-40AF-B6F1-215EE2724C02",
+        "A1D11280-DAD3-455E-930B-FEEEB2E5595F",
+        "BF36A550-53A2-4D4D-8423-3877EE456561",
+        "4F4F1519-6542-4804-81FC-9E661DD74A9A",
+        "58B5F5B5-07D0-4D7A-BA02-78143B549D50",
+        "3591141A-38CD-4677-9714-C97C3680D780",
+        "D7C43AD5-9BE1-4A10-A2B9-1F3D8CF43AFD",
+        "2F1D0498-F0F2-4132-8308-B56B30EBBAC8",
+        "FAF6384F-EB66-4ED2-B74E-05A824F5C55D",
+        "93BA361D-8CBA-4CFD-ADC1-05295201420E",
+        "1D55B52F-757A-4B7C-B385-2B31762BE2AD",
+        "51AF3A7E-1CEE-4DBD-BE79-21C96558F953",
+        "77ABAC09-FD46-48F7-BBAE-397FB839B737",
+        "B3AE2F9F-4ACE-461B-9882-E4ED4E54FF7D",
+        "6FC76DCF-7453-4D28-9B1E-786C740D3F6F"
+      ],
+      "entry" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
+      "uuid" : "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    },
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "0B57F8E2-7D5B-499F-AF37-4FD99600A073",
+      "nodes" : [
+        "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
+        "3FAE24D5-DA41-46F5-B658-C81B1A0C1460",
+        "A3C2017E-23B3-43AB-A980-A061785667D7"
+      ],
+      "links" : [
+        "317B1AB7-40E3-4AFA-B441-8E85CA70AFAF",
+        "B786AD6D-86D8-42A7-A3BF-4CDE7FA5C4C2"
+      ],
+      "entry" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
+      "uuid" : "FF48E307-BE3F-4563-B9BF-2667702AF6E0",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ],
+  "entities" : [
+    {
+      "name" : "Max",
+      "uuid" : "124272CE-E3CC-42C6-842D-225AF45F0DE9"
+    },
+    {
+      "name" : "Juliet",
+      "uuid" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A"
+    },
+    {
+      "name" : "Dana",
+      "uuid" : "90E03588-638C-47E3-8F12-885E51D84D5A"
     }
   ],
   "links" : [
@@ -565,553 +1118,14 @@
       }
     }
   ],
-  "story" : {
-    "graphs" : [
-      "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
-      "FF48E307-BE3F-4563-B9BF-2667702AF6E0"
-    ],
-    "name" : "",
-    "folders" : [
-      "4B89AF2C-54DC-48D4-B37A-D5920A99B8AB"
-    ]
-  },
-  "nodes" : [
+  "folders" : [
     {
-      "position" : {
-        "y" : 22.917682647705078,
-        "x" : -283.15216064453125
-      },
-      "name" : "",
-      "content" : "Hey Juliet, is everything cool?",
-      "directions" : "Max (concerned)",
-      "nodetype" : "dialog",
-      "preview" : "",
-      "uuid" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981"
-    },
-    {
-      "position" : {
-        "y" : -29.482444763183594,
-        "x" : -95.995643615722656
-      },
-      "name" : "",
-      "content" : "Oh yes, Max. I've locked Dana in the room because we're \"cool.\"",
-      "directions" : "Juliet (sarcastic)",
-      "nodetype" : "dialog",
-      "preview" : "We're \"cool\"",
-      "uuid" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA"
-    },
-    {
-      "position" : {
-        "y" : 114.41702270507812,
-        "x" : 37.698753356933594
-      },
-      "name" : "",
-      "content" : "What did she do?",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "What did she do?",
-      "uuid" : "D0804EB8-E94B-4155-9C31-91DCA4A626DB"
-    },
-    {
-      "position" : {
-        "y" : 97.6923828125,
-        "x" : 161.16995239257812
-      },
-      "name" : "",
-      "content" : " What didn't she do? Dana's been sexting with my boyfriend.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "2721C72B-B0E8-491A-802B-3F0D780A02BB"
-    },
-    {
-      "position" : {
-        "y" : 98.327201843261719,
-        "x" : 286.9022216796875
-      },
-      "name" : "",
-      "content" : "Ouch. How did you find out?",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "E86E0287-09BB-48AF-B14A-46230BBFE58A"
-    },
-    {
-      "position" : {
-        "y" : -23.562898635864258,
-        "x" : 34.321895599365234
-      },
-      "name" : "",
-      "content" : "She's your friend.",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "She's your friend.",
-      "uuid" : "E7A30B3F-9342-4B34-A356-38C1D826FCD9"
-    },
-    {
-      "position" : {
-        "y" : -34.502948760986328,
-        "x" : 142.29005432128906
-      },
-      "name" : "",
-      "content" : "Friends don't sext with their best friend's boyfriend...",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "E7AB59E7-8EB4-45D2-B3B5-099A8C90EA6F"
-    },
-    {
-      "position" : {
-        "y" : -29.620233535766602,
-        "x" : 283.54083251953125
-      },
-      "name" : "",
-      "content" : "No, probably not... How did you find out?",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "B5E312B1-92C8-4676-9B9D-D5EFD71B6930"
-    },
-    {
-      "position" : {
-        "y" : 30.396949768066406,
-        "x" : 407.18939208984375
-      },
-      "name" : "",
-      "content" : "Uh, why do you care? Why are you even asking me? You never talk, just zone out with your camera.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next (join)",
-      "uuid" : "9EB999FC-3311-4D6D-8C13-38F501AF2C9D"
-    },
-    {
-      "position" : {
-        "y" : 32.327159881591797,
-        "x" : 544.4090576171875
-      },
-      "name" : "",
-      "content" : "That's why I'm talking to you now.",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "D54A861D-C280-4080-9457-BA59EAD7DAF3"
-    },
-    {
-      "position" : {
-        "y" : 31.681221008300781,
-        "x" : 671.10711669921875
-      },
-      "name" : "",
-      "content" : "What's my last name?",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "EF6D4383-9136-4B88-A9A8-34A7514BF355"
-    },
-    {
-      "position" : {
-        "y" : 224.28067016601562,
-        "x" : 799.22869873046875
-      },
-      "name" : "",
-      "content" : "Juliet Pats... Juliet Patson.",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Juliet Patson",
-      "uuid" : "D21835B4-F548-4950-8B1C-335FA786D0CC"
-    },
-    {
-      "position" : {
-        "y" : 97.472885131835938,
-        "x" : 799.7962646484375
-      },
-      "name" : "",
-      "content" : "Uh. Juliet... Mason.",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Juliet Mason",
-      "uuid" : "38FB6129-2D20-4FEA-91D9-839F63A2AB5B"
-    },
-    {
-      "position" : {
-        "y" : -30.761600494384766,
-        "x" : 800.890625
-      },
-      "name" : "",
-      "content" : "Juliet... Juliet... Olson.",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Juliet Olson",
-      "uuid" : "7277F3A1-6875-4527-87D0-803FFAC35DF5"
-    },
-    {
-      "position" : {
-        "y" : -155.91690063476562,
-        "x" : 799.70220947265625
-      },
-      "name" : "",
-      "content" : "Juliet Watson. Duh!",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Juliet Watson",
-      "uuid" : "3EC2EB16-4D94-4213-90D6-872161E5677F"
-    },
-    {
-      "position" : {
-        "y" : 96.376213073730469,
-        "x" : 930.58062744140625
-      },
-      "name" : "",
-      "content" : "That was truly sad. Thanks for your concern, \"Max Caulfield.\" By the way, Juliet Watson.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next (join)",
-      "uuid" : "E8871D27-C6E4-40C2-A222-B49E374A9253"
-    },
-    {
-      "position" : {
-        "y" : -157.98954772949219,
-        "x" : 928.79583740234375
-      },
-      "name" : "",
-      "content" : "I'm flattered. I didn't even think you knew my name at all.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "F08CAF94-680E-471A-90AC-EF8EF9976AB2"
-    },
-    {
-      "position" : {
-        "y" : -158.83303833007812,
-        "x" : 1053.97314453125
-      },
-      "name" : "",
-      "content" : "Of course I do. Just because I don't talk a lot doesn't mean I don't care. So, how did you find out about them?",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "2A178593-A8DF-4AAB-857D-0B80FFAA2434"
-    },
-    {
-      "position" : {
-        "y" : -157.95506286621094,
-        "x" : 1182.7030029296875
-      },
-      "name" : "",
-      "content" : "According to Victoria, Dana would do anything to date a quarterback.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "E0862791-F19D-4944-A214-945CE8D28BEB"
-    },
-    {
-      "position" : {
-        "y" : -158.56024169921875,
-        "x" : 1310.6898193359375
-      },
-      "name" : "",
-      "content" : "According to Victoria? Oh...",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "60E2AB2D-322B-46EC-8DF1-301EB592507A"
-    },
-    {
-      "position" : {
-        "y" : -160.07160949707031,
-        "x" : 1439.8775634765625
-      },
-      "name" : "",
-      "content" : "She saw the sext. And Zachary won't answer his phone. Once Dana admits it, she can go. Straight to Hell.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "17B2BA0E-AA7E-4F45-A3A0-BA721BC07B4C"
-    },
-    {
-      "position" : {
-        "y" : -159.59616088867188,
-        "x" : 1566.2552490234375
-      },
-      "name" : "",
-      "content" : "Max, I swear I didn't do ANYTHING! But I bet Victoria did! I know the proof is in her room!",
-      "directions" : "Dana (from inside her room)",
-      "nodetype" : "dialog",
-      "preview" : "Next (join all)",
-      "uuid" : "853E568A-37B6-4EE7-968D-A26F8E16F499"
-    },
-    {
-      "position" : {
-        "y" : -413.99313354492188,
-        "x" : 31.771947860717773
-      },
-      "name" : "",
-      "content" : "Juliet Watson, you be nice!",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Juliet Watson, you be nice! (after rewind)",
-      "uuid" : "10890E31-FCC3-42D7-8CA9-CE245F2D4C96"
-    },
-    {
-      "position" : {
-        "y" : -417.0390625,
-        "x" : 161.41015625
-      },
-      "name" : "",
-      "content" : "I'm flattered. I didn't even think you knew my name at all.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "1A057213-3AE1-4AC3-BF84-821F30A3985F"
-    },
-    {
-      "position" : {
-        "y" : -416.70703125,
-        "x" : 288.4921875
-      },
-      "name" : "",
-      "content" : "Uh. Of course I do.",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "96568790-772F-4D68-A681-03FF6EA12D98"
-    },
-    {
-      "position" : {
-        "y" : -415.7578125,
-        "x" : 418.4296875
-      },
-      "name" : "",
-      "content" : "Thanks... I locked Dana in because she was sexting Zach, my boyfriend. Unbelievable.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "CC51D119-E14E-470D-A41D-33D0AC0F84FA"
-    },
-    {
-      "position" : {
-        "y" : -353.23046875,
-        "x" : 542.95703125
-      },
-      "name" : "",
-      "content" : "How do you know?",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "How do you know?",
-      "uuid" : "D2AA3003-6509-487E-8DF2-87058D24C954"
-    },
-    {
-      "position" : {
-        "y" : -476.55859375,
-        "x" : 800.828125
-      },
-      "name" : "",
-      "content" : "Would Dana do that?",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Would Dana do that?",
-      "uuid" : "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F"
-    },
-    {
-      "position" : {
-        "y" : -349.57421875,
-        "x" : 671.1796875
-      },
-      "name" : "",
-      "content" : "Victoria Chase. You know her.",
-      "directions" : "Juliet",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "11058EEC-472A-4C0F-9F06-2DFDCA268DEC"
-    },
-    {
-      "position" : {
-        "y" : -351.2578125,
-        "x" : 798.203125
-      },
-      "name" : "",
-      "content" : "You could say that... But, why would Dana go after your boyfriend?",
-      "directions" : "Max",
-      "nodetype" : "dialog",
-      "preview" : "Next",
-      "uuid" : "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03"
-    },
-    {
-      "position" : {
-        "y" : -123.42745971679688,
-        "x" : 1752.284423828125
-      },
-      "name" : "",
-      "content" : "Test Branch True",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "preview" : "Test Branch True",
-      "uuid" : "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2"
-    },
-    {
-      "position" : {
-        "y" : -212.79167175292969,
-        "x" : 1761.7801513671875
-      },
-      "name" : "",
-      "content" : "Test Branch False",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "preview" : "Test Branch False",
-      "uuid" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
-    },
-    {
-      "position" : {
-        "y" : -299602.75390625,
-        "x" : -299509.01171875
-      },
-      "name" : "",
-      "content" : "Just checking this second graph works.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "preview" : "",
-      "uuid" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13"
-    },
-    {
-      "position" : {
-        "y" : -299659.2265625,
-        "x" : -299390.57421875
-      },
-      "name" : "",
-      "content" : "This is option 2.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "preview" : "Option 2",
-      "uuid" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
-    },
-    {
-      "position" : {
-        "y" : -299548.18359375,
-        "x" : -299384.30078125
-      },
-      "name" : "",
-      "content" : "This is option 1.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "preview" : "Option 1",
-      "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
-    }
-  ],
-  "graphs" : [
-    {
-      "position" : {
-        "y" : 0,
-        "x" : 0
-      },
-      "name" : "FE6981CD-19E8-434F-84FF-8B125BE09DA0",
-      "nodes" : [
-        "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
-        "0E492661-9F49-4E41-A1F8-0FCCD60531AA",
-        "D0804EB8-E94B-4155-9C31-91DCA4A626DB",
-        "2721C72B-B0E8-491A-802B-3F0D780A02BB",
-        "E86E0287-09BB-48AF-B14A-46230BBFE58A",
-        "E7A30B3F-9342-4B34-A356-38C1D826FCD9",
-        "E7AB59E7-8EB4-45D2-B3B5-099A8C90EA6F",
-        "B5E312B1-92C8-4676-9B9D-D5EFD71B6930",
-        "9EB999FC-3311-4D6D-8C13-38F501AF2C9D",
-        "D54A861D-C280-4080-9457-BA59EAD7DAF3",
-        "EF6D4383-9136-4B88-A9A8-34A7514BF355",
-        "D21835B4-F548-4950-8B1C-335FA786D0CC",
-        "38FB6129-2D20-4FEA-91D9-839F63A2AB5B",
-        "7277F3A1-6875-4527-87D0-803FFAC35DF5",
-        "3EC2EB16-4D94-4213-90D6-872161E5677F",
-        "E8871D27-C6E4-40C2-A222-B49E374A9253",
-        "F08CAF94-680E-471A-90AC-EF8EF9976AB2",
-        "2A178593-A8DF-4AAB-857D-0B80FFAA2434",
-        "E0862791-F19D-4944-A214-945CE8D28BEB",
-        "60E2AB2D-322B-46EC-8DF1-301EB592507A",
-        "17B2BA0E-AA7E-4F45-A3A0-BA721BC07B4C",
-        "853E568A-37B6-4EE7-968D-A26F8E16F499",
-        "10890E31-FCC3-42D7-8CA9-CE245F2D4C96",
-        "1A057213-3AE1-4AC3-BF84-821F30A3985F",
-        "96568790-772F-4D68-A681-03FF6EA12D98",
-        "CC51D119-E14E-470D-A41D-33D0AC0F84FA",
-        "D2AA3003-6509-487E-8DF2-87058D24C954",
-        "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F",
-        "11058EEC-472A-4C0F-9F06-2DFDCA268DEC",
-        "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
-        "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2",
-        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
+      "name" : "juliet",
+      "variables" : [
+        "357B72BF-D54A-458D-B699-CB39C8ABC14F"
       ],
-      "links" : [
-        "577EC340-5688-40B9-B137-A087CC8A7D3E",
-        "6628315E-7929-40F1-8BF6-F026EC031D6B",
-        "952D9BDB-C8EF-444D-82BD-7A63933087BB",
-        "61193405-C863-4D5E-ABFE-EBF89F2EF5DF",
-        "8C190585-C58A-4F0B-B8E3-ED5A4655EA02",
-        "4D862BBB-D69D-4D26-B01B-F82C451DEC67",
-        "6B89897E-CD88-4D8A-A7CB-EF94419E8AA1",
-        "C7139069-CE3B-4A7F-8783-1A3C2F2FCC82",
-        "4AFE1AC7-5B9E-423C-ACC4-4D3A2D1E3ECD",
-        "1B2F4019-CDB8-4251-A984-0B9B42F13E55",
-        "05DF3D88-C32C-40AA-9B80-A95466DE3891",
-        "56D8931B-01FA-435D-B2F1-A5FD01CC3C58",
-        "2BB16F42-8644-47C4-B9B9-FE7EE0EE6BFE",
-        "75B480FB-56B8-4DE9-BA5B-0C262E279A39",
-        "5BCE7236-2116-4703-9CAD-0BB73A487DEB",
-        "E6D3E2B3-AC0C-44D0-BDD1-B14D87BD9739",
-        "09DF9F2A-2677-4913-99CB-03A4D3690599",
-        "914D690E-1ACB-4C10-9F7C-5EAB25874E5B",
-        "9458BD1C-AE3B-404A-B522-0B3CF2D04189",
-        "2BA7680A-7A0C-4944-9656-E37870FE25D4",
-        "355CB10B-9ADF-4936-BCCF-15AE6417613C",
-        "4090AD6E-F15B-40AF-B6F1-215EE2724C02",
-        "A1D11280-DAD3-455E-930B-FEEEB2E5595F",
-        "BF36A550-53A2-4D4D-8423-3877EE456561",
-        "4F4F1519-6542-4804-81FC-9E661DD74A9A",
-        "58B5F5B5-07D0-4D7A-BA02-78143B549D50",
-        "3591141A-38CD-4677-9714-C97C3680D780",
-        "D7C43AD5-9BE1-4A10-A2B9-1F3D8CF43AFD",
-        "2F1D0498-F0F2-4132-8308-B56B30EBBAC8",
-        "FAF6384F-EB66-4ED2-B74E-05A824F5C55D",
-        "93BA361D-8CBA-4CFD-ADC1-05295201420E",
-        "1D55B52F-757A-4B7C-B385-2B31762BE2AD",
-        "51AF3A7E-1CEE-4DBD-BE79-21C96558F953",
-        "77ABAC09-FD46-48F7-BBAE-397FB839B737",
-        "B3AE2F9F-4ACE-461B-9882-E4ED4E54FF7D",
-        "6FC76DCF-7453-4D28-9B1E-786C740D3F6F"
-      ],
-      "entry" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
-      "uuid" : "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
-      "subgraphs" : [
-
-      ],
-      "listeners" : [
-
-      ],
-      "exits" : [
-
-      ]
-    },
-    {
-      "position" : {
-        "y" : 0,
-        "x" : 0
-      },
-      "name" : "0B57F8E2-7D5B-499F-AF37-4FD99600A073",
-      "nodes" : [
-        "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
-        "3FAE24D5-DA41-46F5-B658-C81B1A0C1460",
-        "A3C2017E-23B3-43AB-A980-A061785667D7"
-      ],
-      "links" : [
-        "317B1AB7-40E3-4AFA-B441-8E85CA70AFAF",
-        "B786AD6D-86D8-42A7-A3BF-4CDE7FA5C4C2"
-      ],
-      "entry" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
-      "uuid" : "FF48E307-BE3F-4563-B9BF-2667702AF6E0",
-      "subgraphs" : [
-
-      ],
-      "listeners" : [
-
-      ],
-      "exits" : [
+      "uuid" : "4B89AF2C-54DC-48D4-B37A-D5920A99B8AB",
+      "subfolders" : [
 
       ]
     }

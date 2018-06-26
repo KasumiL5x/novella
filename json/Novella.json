@@ -9,6 +9,10 @@
 			"type": "array",
 			"items": { "$ref": "#/definitions/variable" }
 		},
+		"entities": {
+			"type": "array",
+			"items": { "$ref": "#/definitions/entity" }
+		},
 		"folders": {
 			"type": "array",
 			"items": { "$ref": "#/definitions/folder" }
@@ -29,7 +33,7 @@
 			"$ref": "#/definitions/story"
 		}
 	},
-	"required": ["variables", "folders", "graphs", "links", "nodes", "story"],
+	"required": ["variables", "entities", "folders", "graphs", "links", "nodes", "story"],
 	// END top-level
 
 	// MARK: definitions
@@ -130,6 +134,16 @@
 			// END variable-dependencies
 		},
 		// END variable
+
+		// MARK: entity
+		"entity": {
+			"properties": {
+				"uuid": { "$ref": "#/definitions/uuid" },
+				"name": { "$ref": "#/definitions/name" }
+			},
+			"required": ["uuid", "name"]
+		},
+		// END entity
 
 		// MARK: folder
 		"folder": {

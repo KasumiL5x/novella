@@ -43,6 +43,16 @@ extension NVStoryManager {
 		}
 		root["variables"] = variables
 		
+		// add all entities
+		var entities: [JSONDict] = []
+		Entities.forEach { (curr) in
+			var entry: JSONDict = [:]
+			entry["name"] = curr.Name
+			entry["uuid"] = curr.UUID.uuidString
+			entities.append(entry)
+		}
+		root["entities"] = entities
+		
 		// add all graphs
 		var graphs: [JSONDict] = []
 		Graphs.forEach { (curr) in
@@ -259,6 +269,12 @@ extension NVStoryManager {
 				}
 				break
 			}
+		}
+		
+		// 2. read all entities
+		for curr in json["entities"].arrayValue {
+			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
+			_ = storyManager.makeEntity(name: curr["name"].string!, uuid: uuid)
 		}
 		
 		// 2. read all folders
@@ -541,6 +557,10 @@ extension NVStoryManager {
 				"type": "array",
 				"items": [ "$ref": "#/definitions/variable" ]
 			],
+			"entities": [
+				"type": "array",
+				"items": [ "$ref": "#/definitions/entity" ]
+			],
 			"folders": [
 				"type": "array",
 				"items": [ "$ref": "#/definitions/folder" ]
@@ -561,7 +581,7 @@ extension NVStoryManager {
 				"$ref": "#/definitions/story"
 			]
 		],
-		"required": ["variables", "folders", "graphs", "links", "nodes", "story"],
+		"required": ["variables", "entities", "folders", "graphs", "links", "nodes", "story"],
 		// END top-level
 		
 		// MARK: definitions
@@ -662,6 +682,16 @@ extension NVStoryManager {
 				// END variable-dependencies
 			],
 			// END variable
+			
+			// MARK: entity
+			"entity": [
+				"properties": [
+					"uuid": [ "$ref": "#/definitions/uuid" ],
+					"name": [ "$ref": "#/definitions/name" ]
+				],
+				"required": ["uuid", "name"]
+			],
+			// END entity
 			
 			// MARK: folder
 			"folder": [

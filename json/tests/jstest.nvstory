@@ -22,6 +22,8 @@
       "initialValue" : false
     }
   ],
+	"entities" : [
+	],
   "links" : [
     {
       "linktype" : "link",
