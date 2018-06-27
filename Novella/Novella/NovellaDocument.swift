@@ -45,6 +45,9 @@ class NovellaDocument: NSDocument {
 
 	override func data(ofType typeName: String) throws -> Data {
 		let jsonStr = _manager.toJSON()
+		if jsonStr.isEmpty {
+			throw NSError(domain: NSOSStatusErrorDomain, code: writErr, userInfo: nil)
+		}
 		if let data = jsonStr.data(using: .utf8) {
 			return data
 		}
