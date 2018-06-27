@@ -9,7 +9,6 @@
 import Cocoa
 
 class MainWindowController: NSWindowController {
-	private var _previewWindowController: ReaderWindowController? = nil
 	@IBOutlet private weak var _emptyTrashButton: NSButton!
 	private lazy var _trashEmptyImage: NSImage? = {
 		return NSImage(named: NSImage.Name.trashEmpty)
@@ -61,17 +60,12 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.refreshOpenGraphs()
 	}
 	
-	@IBAction func onToolbarPreview(_ sender: NSButton) {
-		if _previewWindowController == nil {
-			let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-			_previewWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ReaderWindowController")) as? ReaderWindowController
-			_previewWindowController!.setDocument(doc: self.document as! NovellaDocument)
+	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "PreviewSegue") {
+			if let vc = segue.destinationController as? ReaderWindowController {
+				vc.setDocument(doc: self.document as! NovellaDocument)
+			}
 		}
-		
-		NSApplication.shared.runModal(for: _previewWindowController!.window!)
-		
-//		_previewWindowController?.showWindow(self)
-//		NSApp.runModal(for: _previewWindowController!.window!)
 	}
 	
 	@IBAction func onToolbarScreenshot(_ sender: NSButton) {

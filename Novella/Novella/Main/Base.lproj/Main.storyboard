@@ -822,7 +822,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onToolbarPreview:" target="jGA-0Y-lOj" id="4Su-ZY-Nk9"/>
+                                            <segue destination="xSF-Wq-GEi" kind="modal" identifier="PreviewSegue" id="C0r-z4-6C2"/>
                                         </connections>
                                     </button>
                                 </toolbarItem>
