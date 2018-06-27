@@ -34,7 +34,7 @@ class EntityTabViewController: NSViewController {
 	// MARK: - Interface Callbacks -
 	@IBAction func onAddEntity(_ sender: NSButton) {
 		if let manager = _document?.Manager {
-			let entity = manager.makeEntity(name: NSUUID().uuidString)
+			manager.makeEntity(name: NSUUID().uuidString)
 		}
 		_tableView.reloadData()
 	}
@@ -60,6 +60,11 @@ class EntityTabViewController: NSViewController {
 		let entity = _document!.Manager.Entities[sender.selectedRow]
 		_nameLabel.stringValue = entity.Name
 	}
+	
+	@IBAction func onImageViewChanged(_ sender: CustomImageView) {
+		print("Changed to: \(sender.Filename)")
+	}
+	
 	
 }
 

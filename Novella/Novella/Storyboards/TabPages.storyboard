@@ -570,10 +570,13 @@
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="moS-uN-foi" customClass="ColoredView" customModule="Novella" customModuleProvider="target">
                                         <rect key="frame" x="60" y="110" width="400" height="200"/>
                                         <subviews>
-                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xEx-k4-c9D">
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xEx-k4-c9D" customClass="CustomImageView" customModule="Novella" customModuleProvider="target">
                                                 <rect key="frame" x="17" y="36" width="128" height="128"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <imageCell key="cell" selectable="YES" editable="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" image="NSUser" id="M55-gO-cfd"/>
+                                                <connections>
+                                                    <action selector="onImageViewChanged:" target="nay-nu-GgZ" id="PSr-yE-xpH"/>
+                                                </connections>
                                             </imageView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b7M-XJ-osz">
                                                 <rect key="frame" x="148" y="137" width="237" height="24"/>
