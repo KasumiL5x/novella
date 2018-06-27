@@ -1000,6 +1000,11 @@
                                     <action selector="onSkipPressed:" target="1AZ-wJ-jTz" id="aAH-Ng-RA6"/>
                                 </connections>
                             </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xWi-dw-unn">
+                                <rect key="frame" x="18" y="406" width="83" height="83"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="4DA-Ib-wTc"/>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cFF-Kb-N2n" secondAttribute="trailing" id="5bf-7W-XKe"/>
@@ -1012,6 +1017,7 @@
                         <outlet property="_contentLabel" destination="Bde-Pd-foH" id="uwp-fO-j7H"/>
                         <outlet property="_directionsLabel" destination="woL-WF-QcS" id="Opz-8L-LL6"/>
                         <outlet property="_graphPopup" destination="qrJ-ZC-21v" id="3jy-3E-jeD"/>
+                        <outlet property="_speakerImage" destination="xWi-dw-unn" id="66E-4s-4Jx"/>
                         <outlet property="_titleLabel" destination="UxT-6a-f5d" id="8UM-MW-gUY"/>
                     </connections>
                 </viewController>

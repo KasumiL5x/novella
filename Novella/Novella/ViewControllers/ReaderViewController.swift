@@ -16,6 +16,7 @@ class ReaderViewController: NSViewController {
 	@IBOutlet private weak var _directionsLabel: NSTextField!
 	@IBOutlet private weak var _contentLabel: TypewriterLabel!
 	@IBOutlet private weak var _choiceWheel: ChoiceWheelView!
+	@IBOutlet private weak var _speakerImage: NSImageView!
 	internal var _document: NovellaDocument?
 	private var _reader: NVReader?
 	private var _chosenLinkIndex: Int = -1
@@ -85,22 +86,26 @@ extension ReaderViewController: NVReaderDelegate {
 			_directionsLabel.stringValue = (node as! NVDialog).Directions
 			_contentLabel.stringValue = (node as! NVDialog).Content
 			_contentLabel.startTypewritingAnimation(completion: {print("done")})
+			_speakerImage.image = (node as! NVDialog).Speaker?.CachedImage
 			
 		case is NVDelivery:
 			_titleLabel.stringValue = "Delivery"
 			_directionsLabel.stringValue = (node as! NVDelivery).Directions
 			_contentLabel.stringValue = (node as! NVDelivery).Content
 			_contentLabel.startTypewritingAnimation(completion: {print("done")})
+			_speakerImage.image = nil
 			
 		case is NVContext:
 			_titleLabel.stringValue = "Context"
 			_directionsLabel.stringValue = ""
 			_contentLabel.stringValue = ""
+			_speakerImage.image = nil
 			
 		default:
 			_titleLabel.stringValue = "INVALID"
 			_directionsLabel.stringValue = ""
 			_contentLabel.stringValue = ""
+			_speakerImage.image = nil
 		}
 		
 		var options: [String] = []
