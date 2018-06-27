@@ -537,6 +537,9 @@
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <action selector="onTableSelectionChanged:" target="nay-nu-GgZ" id="C4a-0B-eTq"/>
+                                                    </connections>
                                                 </tableView>
                                             </subviews>
                                         </clipView>

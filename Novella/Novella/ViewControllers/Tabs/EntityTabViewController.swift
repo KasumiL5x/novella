@@ -49,6 +49,18 @@ class EntityTabViewController: NSViewController {
 		
 		_tableView.reloadData()
 	}
+	
+	@IBAction func onTableSelectionChanged(_ sender: NSTableView) {
+		let selectedRow = sender.selectedRow
+		if selectedRow == -1 {
+			_nameLabel.stringValue = ""
+			return
+		}
+		
+		let entity = _document!.Manager.Entities[sender.selectedRow]
+		_nameLabel.stringValue = entity.Name
+	}
+	
 }
 
 // MARK: - NSTableViewDelegate -
