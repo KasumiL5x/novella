@@ -139,7 +139,8 @@
 		"entity": {
 			"properties": {
 				"uuid": { "$ref": "#/definitions/uuid" },
-				"name": { "$ref": "#/definitions/name" }
+				"name": { "$ref": "#/definitions/name" },
+				"image": { "type": "string" }
 			},
 			"required": ["uuid", "name"]
 		},

@@ -23,8 +23,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : -32.392436177178752,
-        "x" : -286.97190874337684
+        "y" : -32.392436981201172,
+        "x" : -286.971923828125
       },
       "name" : "",
       "content" : "Hey Juliet, is everything cool?",
@@ -599,14 +599,17 @@
   "entities" : [
     {
       "name" : "Max",
+      "image" : "\/Users\/daniel\/Documents\/phd\/novella\/app\/json\/tests\/lis-max.png",
       "uuid" : "124272CE-E3CC-42C6-842D-225AF45F0DE9"
     },
     {
       "name" : "Juliet",
+      "image" : "\/Users\/daniel\/Documents\/phd\/novella\/app\/json\/tests\/lis-juliet.png",
       "uuid" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A"
     },
     {
       "name" : "Dana",
+      "image" : "\/Users\/daniel\/Documents\/phd\/novella\/app\/json\/tests\/lis-dana.png",
       "uuid" : "90E03588-638C-47E3-8F12-885E51D84D5A"
     }
   ],

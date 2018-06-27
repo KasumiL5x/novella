@@ -49,6 +49,7 @@ extension NVStoryManager {
 			var entry: JSONDict = [:]
 			entry["name"] = curr.Name
 			entry["uuid"] = curr.UUID.uuidString
+			entry["image"] = curr.ImageName
 			entities.append(entry)
 		}
 		root["entities"] = entities
@@ -275,7 +276,10 @@ extension NVStoryManager {
 		// 2. read all entities
 		for curr in json["entities"].arrayValue {
 			let uuid = NSUUID(uuidString: curr["uuid"].string!)!
-			_ = storyManager.makeEntity(name: curr["name"].string!, uuid: uuid)
+			let entity = storyManager.makeEntity(name: curr["name"].string!, uuid: uuid)
+			if let imageName = curr["image"].string {
+				entity.ImageName = imageName
+			}
 		}
 		
 		// 2. read all folders
@@ -695,7 +699,8 @@ extension NVStoryManager {
 			"entity": [
 				"properties": [
 					"uuid": [ "$ref": "#/definitions/uuid" ],
-					"name": [ "$ref": "#/definitions/name" ]
+					"name": [ "$ref": "#/definitions/name" ],
+					"image": [ "type": "string" ]
 				],
 				"required": ["uuid", "name"]
 			],

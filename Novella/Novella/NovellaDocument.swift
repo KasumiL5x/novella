@@ -112,6 +112,10 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
+	func onStoryEntityImageChanged(entity: NVEntity) {
+		self.updateChangeCount(.changeDone)
+	}
+	
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
 		self.updateChangeCount(.changeDone)
 	}

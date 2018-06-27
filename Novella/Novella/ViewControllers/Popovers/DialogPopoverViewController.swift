@@ -33,30 +33,42 @@ class DialogPopoverViewController: NSViewController {
 		return true
 	}
 	
+	override func viewDidAppear() {
+		refreshContent() // reload contents when the popover appears (can't rely on this alone as we must make it appear to set the dialog node)
+	}
+	
 	func setDialogNode(node: DialogLinkableView, manager: NVStoryManager) {
 		_dialogNode = node
 		_manager = manager
 		
-		let dlg = (_dialogNode!.Linkable as! NVDialog)
-		
-		let name = dlg.Name
-		_nameTextField.stringValue = name.isEmpty ? "" : name
-		
-		let dirs = dlg.Directions
-		_directionsTextField.stringValue = dirs.isEmpty ? "" : dirs
-		
-		let prev = dlg.Preview
-		_previewTextField.stringValue = prev.isEmpty ? "" : prev
-		
-		let content = dlg.Content
-		_contentTextField.stringValue = content.isEmpty ? "" : content
-		
-		_speakerMenu = NSMenu()
-		for idx in 0..<manager.Entities.count {
-			let entity = manager.Entities[idx]
-			let item = NSMenuItem(title: entity.Name, action: #selector(DialogPopoverViewController.onSpeakerMenuSelected), keyEquivalent: "")
-			item.tag = idx
-			_speakerMenu?.addItem(item)
+		refreshContent()
+	}
+	
+	func refreshContent() {
+		if let asDialog = (_dialogNode?.Linkable as? NVDialog), let manager = _manager {
+			let name = asDialog.Name
+			_nameTextField.stringValue = name.isEmpty ? "" : name
+			
+			let dirs = asDialog.Directions
+			_directionsTextField.stringValue = dirs.isEmpty ? "" : dirs
+			
+			let prev = asDialog.Preview
+			_previewTextField.stringValue = prev.isEmpty ? "" : prev
+			
+			let content = asDialog.Content
+			_contentTextField.stringValue = content.isEmpty ? "" : content
+			
+			_speakerMenu = NSMenu()
+			for idx in 0..<manager.Entities.count {
+				let entity = manager.Entities[idx]
+				let item = NSMenuItem(title: entity.Name, action: #selector(DialogPopoverViewController.onSpeakerMenuSelected), keyEquivalent: "")
+				item.tag = idx
+				_speakerMenu?.addItem(item)
+			}
+			
+			if let entityImage = asDialog.Speaker?.CachedImage {
+				_speakerButton.image = entityImage
+			}
 		}
 	}
 	
@@ -68,6 +80,8 @@ class DialogPopoverViewController: NSViewController {
 		
 		let speakerEntity = _manager!.Entities[speakerMenuItem.tag]
 		(_dialogNode!.Linkable as! NVDialog).Speaker = speakerEntity
+		
+		_speakerButton.image = speakerEntity.CachedImage
 	}
 	
 	// MARK: Interface Callbacks

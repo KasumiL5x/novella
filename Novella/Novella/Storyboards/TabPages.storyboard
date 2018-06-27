@@ -240,7 +240,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="InitialValueDoubleCell" id="M2w-YN-hkK" userLabel="DoubleCell" customClass="VariableInitialValueDoubleCell" customModule="Novella" customModuleProvider="target">
-                                                            <rect key="frame" x="487.5" y="1" width="115" height="30"/>
+                                                            <rect key="frame" x="488" y="1" width="115" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BtH-Ex-Drf">
@@ -262,7 +262,7 @@
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="InitialValueIntCell" id="NDf-R1-ba1" userLabel="IntCell" customClass="VariableInitialValueIntCell" customModule="Novella" customModuleProvider="target">
-                                                            <rect key="frame" x="487.5" y="33" width="115" height="30"/>
+                                                            <rect key="frame" x="488" y="33" width="115" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PSa-Wn-qIb">
@@ -284,7 +284,7 @@
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="InitialValueBoolCell" id="kpO-6V-bLZ" userLabel="BoolCell" customClass="VariableInitialValueBoolCell" customModule="Novella" customModuleProvider="target">
-                                                            <rect key="frame" x="487.5" y="65" width="115" height="30"/>
+                                                            <rect key="frame" x="488" y="65" width="115" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dFF-a7-KIT" userLabel="Popup Button">
@@ -310,7 +310,7 @@
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="InitialValueTextCell" id="IC9-Yp-xuB" userLabel="TextCell">
-                                                            <rect key="frame" x="487.5" y="97" width="115" height="30"/>
+                                                            <rect key="frame" x="488" y="97" width="115" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yl0-Xu-hwT">
@@ -343,7 +343,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="ConstantBoolCell" id="QY7-xN-9Ta" userLabel="BoolCell" customClass="VariableConstantBoolCell" customModule="Novella" customModuleProvider="target">
-                                                            <rect key="frame" x="605.5" y="1" width="100" height="30"/>
+                                                            <rect key="frame" x="606" y="1" width="100" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mSX-5A-WJm" userLabel="PopUp Button">
@@ -369,7 +369,7 @@
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="ConstantTextCell" id="GRh-I4-Mil" userLabel="TextCell">
-                                                            <rect key="frame" x="605.5" y="33" width="100" height="30"/>
+                                                            <rect key="frame" x="606" y="33" width="100" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FLd-oc-gGN">
@@ -616,6 +616,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_imageView" destination="xEx-k4-c9D" id="KTb-5R-WxM"/>
                         <outlet property="_nameLabel" destination="b7M-XJ-osz" id="hUy-SY-q4C"/>
                         <outlet property="_tableView" destination="IEj-kB-De8" id="D06-Co-avS"/>
                     </connections>

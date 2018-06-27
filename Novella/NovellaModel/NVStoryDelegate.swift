@@ -50,6 +50,8 @@ public protocol NVStoryDelegate {
 	func onStoryDeleteGraph(graph: NVGraph)
 	func onStoryDeleteEntity(entity: NVEntity)
 	
+	func onStoryEntityImageChanged(entity: NVEntity)
+	
 	// Called when an NVFolder is added to the Story using Story.add(folder).
 	func onStoryAddFolder(folder: NVFolder)
 	// Called when an NVFolder is removed from the Story using Story.remove(folder).
@@ -174,6 +176,9 @@ public extension NVStoryDelegate {
 	func onStoryDeleteGraph(graph: NVGraph) {
 	}
 	func onStoryDeleteEntity(entity: NVEntity) {
+	}
+	
+	func onStoryEntityImageChanged(entity: NVEntity) {
 	}
 	
 	func onStoryAddFolder(folder: NVFolder) {

@@ -13,6 +13,7 @@ class EntityTabViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet private weak var _tableView: NSTableView!
 	@IBOutlet private weak var _nameLabel: NSTextField!
+	@IBOutlet private weak var _imageView: CustomImageView!
 	
 	// MARK: - Variables -
 	private var _document: NovellaDocument?
@@ -54,18 +55,23 @@ class EntityTabViewController: NSViewController {
 		let selectedRow = sender.selectedRow
 		if selectedRow == -1 {
 			_nameLabel.stringValue = ""
+			_imageView.image = nil
 			return
 		}
 		
-		let entity = _document!.Manager.Entities[sender.selectedRow]
+		let entity = _document!.Manager.Entities[selectedRow]
 		_nameLabel.stringValue = entity.Name
+		_imageView.image = entity.CachedImage
 	}
 	
 	@IBAction func onImageViewChanged(_ sender: CustomImageView) {
-		print("Changed to: \(sender.Filename)")
+		let selectedRow = _tableView.selectedRow
+		if selectedRow == -1 {
+			return
+		}
+		let entity = _document!.Manager.Entities[selectedRow]
+		entity.ImageName = sender.Filename ?? ""
 	}
-	
-	
 }
 
 // MARK: - NSTableViewDelegate -
