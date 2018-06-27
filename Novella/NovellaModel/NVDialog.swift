@@ -12,6 +12,7 @@ public class NVDialog: NVNode {
 	// MARK: - Variables -
 	private var _content: String
 	private var _directions: String
+	private var _speaker: NVEntity?
 	
 	// MARK: - Properties -
 	public var Content: String {
@@ -28,11 +29,19 @@ public class NVDialog: NVNode {
 			_manager.Delegates.forEach{$0.onStoryDialogDirectionsChanged(directions: _directions, node: self)}
 		}
 	}
+	public var Speaker: NVEntity? {
+		get{ return _speaker }
+		set {
+			_speaker = newValue
+			_manager.Delegates.forEach{$0.onStoryDialogSpeakerChanged(speaker: _speaker, node: self)}
+		}
+	}
 	
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID) {
 		self._content = ""
 		self._directions = ""
+		self._speaker = nil
 		super.init(manager: manager, uuid: uuid)
 	}
 }

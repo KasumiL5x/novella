@@ -158,6 +158,10 @@ class StoryDelegate: NVStoryDelegate {
 		print("Changed dialog's directions to \"\(directions)\".")
 		_mvc.reloadInspector()
 	}
+	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog) {
+		print("Changed dialog's speaker to \"\(speaker?.Name ?? "none")\".")
+		_mvc.reloadInspector()
+	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
 		print("Changed delivery's content to \"\(content)\".")
 		_mvc.reloadInspector()

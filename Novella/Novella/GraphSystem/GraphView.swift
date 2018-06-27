@@ -373,7 +373,7 @@ extension GraphView {
 			let popover = DialogPopover()
 			_nodePopovers.append(popover)
 			popover.show(forView: node, at: .minY)
-			(popover.ViewController as! DialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView)
+			(popover.ViewController as! DialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView, manager: _document.Manager)
 			
 		case is DeliveryLinkableView:
 			let popover = DeliveryPopover()

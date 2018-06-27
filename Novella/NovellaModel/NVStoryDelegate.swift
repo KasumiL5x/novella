@@ -88,6 +88,7 @@ public protocol NVStoryDelegate {
 	func onStoryDialogContentChanged(content: String, node: NVDialog)
 	// Called when an NVDialog's directions are changed using NVDialog.Directions.
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog)
+	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog)
 	// Called when an NVDelivery's content is changed using NVDelivery.Content.
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery)
 	// Called when an NVDelivery's directions are changed using NVDelivery.Directions.
@@ -212,6 +213,8 @@ public extension NVStoryDelegate {
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
+	}
+	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog) {
 	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
 	}

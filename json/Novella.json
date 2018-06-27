@@ -291,10 +291,12 @@
 						{
 							"properties": {
 								"nodetype": { "enum": ["dialog"] },
+								"speaker": { "$ref": "#/definitions/uuid" },
 								"content": { "type": "string" },
 								"preview": { "type": "string" },
 								"directions": { "type": "string" }
-							}
+							},
+							"required": []
 						},
 						// delivery
 						{

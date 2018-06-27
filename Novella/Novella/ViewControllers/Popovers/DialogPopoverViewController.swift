@@ -10,28 +10,32 @@ import Cocoa
 import NovellaModel
 
 class DialogPopoverViewController: NSViewController {
-	// MARK: - - Outlets -
-	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
-	@IBOutlet fileprivate weak var _directionsTextField: NSTextField!
-	@IBOutlet fileprivate weak var _previewTextField: NSTextField!
-	@IBOutlet weak var _contentTextField: NSTextField!
+	// MARK: - Outlets -
+	@IBOutlet private weak var _speakerButton: NSButton!
+	@IBOutlet private weak var _nameTextField: NSTextField!
+	@IBOutlet private weak var _directionsTextField: NSTextField!
+	@IBOutlet private weak var _previewTextField: NSTextField!
+	@IBOutlet private weak var _contentTextField: NSTextField!
 	
-	// MARK: - - Variables -
-	fileprivate var _dialogNode: DialogLinkableView?
+	// MARK: - Variables -
+	private var _dialogNode: DialogLinkableView?
+	private var _manager: NVStoryManager?
+	private var _speakerMenu: NSMenu?
 	
+	// MARK: - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		_dialogNode = nil
-		
+		_manager = nil
 	}
 	
 	override var acceptsFirstResponder: Bool {
 		return true
 	}
 	
-	func setDialogNode(node: DialogLinkableView!) {
+	func setDialogNode(node: DialogLinkableView, manager: NVStoryManager) {
 		_dialogNode = node
+		_manager = manager
 		
 		let dlg = (_dialogNode!.Linkable as! NVDialog)
 		
@@ -46,6 +50,29 @@ class DialogPopoverViewController: NSViewController {
 		
 		let content = dlg.Content
 		_contentTextField.stringValue = content.isEmpty ? "" : content
+		
+		_speakerMenu = NSMenu()
+		for idx in 0..<manager.Entities.count {
+			let entity = manager.Entities[idx]
+			let item = NSMenuItem(title: entity.Name, action: #selector(DialogPopoverViewController.onSpeakerMenuSelected), keyEquivalent: "")
+			item.tag = idx
+			_speakerMenu?.addItem(item)
+		}
+	}
+	
+	// MARK: Menu Callbacks
+	@objc private func onSpeakerMenuSelected() {
+		guard let speakerMenuItem = _speakerMenu!.highlightedItem else {
+			return
+		}
+		
+		let speakerEntity = _manager!.Entities[speakerMenuItem.tag]
+		(_dialogNode!.Linkable as! NVDialog).Speaker = speakerEntity
+	}
+	
+	// MARK: Interface Callbacks
+	@IBAction func onSpeakerClicked(_ sender: NSButton) {
+		NSMenu.popUpContextMenu(_speakerMenu!, with: NSApp.currentEvent!, for: _speakerButton)
 	}
 	
 	@IBAction func onNameChanged(_ sender: NSTextField) {

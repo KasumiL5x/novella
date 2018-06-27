@@ -187,6 +187,9 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
 		self.updateChangeCount(.changeDone)
 	}
+	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog) {
+		self.updateChangeCount(.changeDone)
+	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
 		self.updateChangeCount(.changeDone)
 	}

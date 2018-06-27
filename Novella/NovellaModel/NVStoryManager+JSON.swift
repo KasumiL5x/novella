@@ -148,6 +148,7 @@ extension NVStoryManager {
 			
 			if let asDialog = curr as? NVDialog {
 				entry["nodetype"] = "dialog"
+				entry["speaker"] = asDialog.Speaker?.UUID.uuidString ?? ""
 				entry["content"] = asDialog.Content
 				entry["preview"] = asDialog.Preview
 				entry["directions"] = asDialog.Directions
@@ -323,6 +324,13 @@ extension NVStoryManager {
 				dialog.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					dialog.Name = name!
+				}
+				if let speakerUUID = curr["speaker"].string {
+					if let speakerEntity = storyManager.find(uuid: speakerUUID) as? NVEntity {
+						dialog.Speaker = speakerEntity
+					} else {
+						print("NVStoryManager::fromJSON(): Unable to find Entity by UUID (\(speakerUUID)) when setting Dialog's speaker (\(uuid.uuidString))")
+					}
 				}
 				if let content = curr["content"].string {
 					dialog.Content = content
@@ -839,10 +847,12 @@ extension NVStoryManager {
 							[
 								"properties": [
 									"nodetype": [ "enum": ["dialog"] ],
+									"speaker": [ "$ref": "#/definitions/uuid" ],
 									"content": [ "type": "string" ],
 									"preview": [ "type": "string" ],
 									"directions": [ "type": "string" ]
-								]
+								],
+								"required": []
 							],
 							// delivery
 							[
