@@ -32,4 +32,10 @@ class DialogLinkableView: LinkableView {
 	override func flagColor() -> NSColor {
 		return Settings.graph.nodes.dialogColor
 	}
+	override func onNameChanged() {
+		setLabelString(str: Linkable.Name)
+	}
+	override func onContentChanged() {
+		setContentString(str: (Linkable as! NVDialog).Content)
+	}
 }

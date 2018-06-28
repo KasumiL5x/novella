@@ -23,10 +23,10 @@
   "nodes" : [
     {
       "position" : {
-        "y" : -16.271988546592183,
-        "x" : -2018.1507915348047
+        "y" : -16.271987915039062,
+        "x" : -2018.1507568359375
       },
-      "name" : "Name",
+      "name" : "Rename",
       "content" : "Hey Juliet, is everything cool?",
       "directions" : "Concerned",
       "nodetype" : "dialog",

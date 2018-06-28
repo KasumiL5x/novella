@@ -280,6 +280,12 @@ class LinkableView: NSView {
 		print("LinkableView::flagColor() should be overridden.")
 		return NSColor.black
 	}
+	func onNameChanged() {
+		print("LinkableView::onNameChanged() should be overridden.")
+	}
+	func onContentChanged() {
+		print("LinkableView::onContentChanged() should be overridden.")
+	}
 	
 	// MARK: Priming/Selection
 	func select() {
@@ -406,54 +412,61 @@ class LinkableView: NSView {
 			let drawingRect = widgetRect()
 			
 			// draw background gradient
-			let bgRadius: CGFloat = Settings.graph.nodes.roundness
+			let bgRadius: CGFloat = 4.0 // TODO: Make this a percentage of the drawingRect's width?
 			var path = NSBezierPath(roundedRect: drawingRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Trashed ? Settings.graph.nodes.startColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.nodes.startColor.cgColor,
-											Trashed ? Settings.graph.nodes.endColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.nodes.endColor.cgColor]
+			let bgStartColor = NSColor.fromHex("#FAFAFA")
+			let bgEndColor = NSColor.fromHex("#FFFFFF")
+			let bgColors = [
+				Trashed ? bgStartColor.withSaturation(Settings.graph.trashedSaturation).cgColor : bgStartColor.cgColor,
+				Trashed ? bgEndColor.withSaturation(Settings.graph.trashedSaturation).cgColor : bgEndColor.cgColor
+			]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: drawingRect.height)
 			let bgEnd = CGPoint.zero
 			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
 			
 			// draw type triangle
-			let triangleSize: CGFloat = drawingRect.width * Settings.graph.nodes.flagSize
+			let triangleSize: CGFloat = drawingRect.width * 0.15 // as a percentage of width
 			context.move(to: NSMakePoint(drawingRect.minX, drawingRect.maxY))
 			context.addLine(to: NSMakePoint(drawingRect.minX, drawingRect.maxY - triangleSize))
 			context.addLine(to: NSMakePoint(drawingRect.minX + triangleSize, drawingRect.maxY))
 			Trashed ? flagColor().withSaturation(Settings.graph.trashedSaturation).setFill() : flagColor().setFill()
 			context.fillPath()
 			
-			
-//			// draw outline (inset)
-//			let selectedRect = drawingRect
-//			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
-//			path.addClip() // clip to avoid edge artifacting
-//			path.lineWidth = Settings.graph.nodes.outlineWidth
-//			Trashed ? Settings.graph.nodes.outlineColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.outlineColor.setStroke()
-//			path.stroke()
-			
 			// draw primed indicator
 			if IsPrimed {
+				let primedWidth: CGFloat = 4.5
+				let primedColor = NSColor.fromHex("#4B9CFD")
+				
 				let insetRect = drawingRect
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.addClip() // clip to avoid edge artifacting
-				path.lineWidth = Settings.graph.nodes.primedWidth
-				Trashed ? Settings.graph.nodes.primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.primedColor.setStroke()
+				path.lineWidth = primedWidth
+				Trashed ? primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : primedColor.setStroke()
 				path.lineJoinStyle = .miterLineJoinStyle
 				path.stroke()
 			}
 			
 			// draw selection indicator
 			if IsSelected {
+				let selectedWidth: CGFloat = 5.0
+				let selectedColor = NSColor.fromHex("#4B9CFD")
+				let selectedAlpha: CGFloat = 0.1
+				let selectedOutlineAlpha: CGFloat = 0.6
+				
 				let insetRect = drawingRect
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.addClip() // clip to avoid edge artifacting
-				path.lineWidth = Settings.graph.nodes.selectedWidth
-//				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
-				NSColor.fromHex("#4B9CFD").withAlphaComponent(0.1).setFill()
-				NSColor.fromHex("#4B9CFD").withAlphaComponent(0.6).setStroke()
+				path.lineWidth = selectedWidth
+				if Trashed {
+					selectedColor.withSaturation(Settings.graph.trashedSaturation).withAlphaComponent(selectedAlpha).setFill()
+					selectedColor.withSaturation(Settings.graph.trashedSaturation).withAlphaComponent(selectedOutlineAlpha).setStroke()
+				} else {
+					selectedColor.withAlphaComponent(selectedAlpha).setFill()
+					selectedColor.withAlphaComponent(selectedOutlineAlpha).setStroke()
+				}
 				path.fill()
 				path.stroke()
 			}

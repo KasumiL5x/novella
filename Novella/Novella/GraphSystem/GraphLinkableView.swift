@@ -17,7 +17,7 @@ class GraphLinkableView: LinkableView {
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
-		setLabelString(str: "G")
+		setLabelString(str: node.Name)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("GraphLinkableModel::init(coder) not implemented.")
@@ -30,5 +30,10 @@ class GraphLinkableView: LinkableView {
 	}
 	override func flagColor() -> NSColor {
 		return Settings.graph.nodes.graphColor
+	}
+	override func onNameChanged() {
+		setLabelString(str: Linkable.Name)
+	}
+	override func onContentChanged() {
 	}
 }

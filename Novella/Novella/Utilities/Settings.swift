@@ -15,16 +15,16 @@ struct Settings {
 			static let trashedSaturation = "trashedSaturation"
 			
 			struct nodes {
-				static let flagSize = "graph.nodes.flagSize"
-				static let roundness = "graph.nodes.roundness"
-				static let startColor = "graph.nodes.startColor"
-				static let endColor = "graph.nodes.endColor"
+//				static let flagSize = "graph.nodes.flagSize"
+//				static let roundness = "graph.nodes.roundness"
+//				static let startColor = "graph.nodes.startColor"
+//				static let endColor = "graph.nodes.endColor"
 //				static let outlineColor = "graph.nodes.outlineColor"
 //				static let outlineWidth = "graph.nodes.outlineWidth"
-				static let primedWidth = "graph.nodes.primedWidth"
-				static let primedColor = "graph.nodes.primedColor"
-				static let selectedWidth = "graph.nodes.selectedWidth"
-				static let selectedColor = "graph.nodes.selectedColor"
+//				static let primedWidth = "graph.nodes.primedWidth"
+//				static let primedColor = "graph.nodes.primedColor"
+//				static let selectedWidth = "graph.nodes.selectedWidth"
+//				static let selectedColor = "graph.nodes.selectedColor"
 				//
 				static let dialogColor = "graph.nodes.dialogColor"
 				static let graphColor = "graph.nodes.graphColor"
@@ -44,16 +44,16 @@ struct Settings {
 	struct graph {
 		static var trashedSaturation: CGFloat = 0.0
 		struct nodes {
-			static var flagSize:           CGFloat = 0.15
-			static var roundness:          CGFloat = 4.0
-			static var startColor:         NSColor = NSColor.fromHex("#FAFAFA")
-			static var endColor:           NSColor = NSColor.fromHex("#FFFFFF")//.withAlphaComponent(0.9)
+//			static var flagSize:           CGFloat = 0.15
+//			static var roundness:          CGFloat = 4.0
+//			static var startColor:         NSColor = NSColor.fromHex("#FAFAFA")
+//			static var endColor:           NSColor = NSColor.fromHex("#FFFFFF")//.withAlphaComponent(0.9)
 //			static var outlineColor:       NSColor = NSColor.fromHex("#AEB8C7")//.withAlphaComponent(0.7)
 //			static var outlineWidth:       CGFloat = 3.5
-			static var primedWidth:        CGFloat = 4.5
-			static var primedColor:        NSColor = NSColor.fromHex("#B3F865")
-			static var selectedWidth:      CGFloat = 5.0
-			static var selectedColor:      NSColor = NSColor.green
+//			static var primedWidth:        CGFloat = 4.5
+//			static var primedColor:        NSColor = NSColor.fromHex("#B3F865")
+//			static var selectedWidth:      CGFloat = 5.0
+//			static var selectedColor:      NSColor = NSColor.green
 			static var dialogColor:        NSColor = NSColor.fromHex("#A8E6CF")
 			static var graphColor:         NSColor = NSColor.fromHex("#BA78CD")
 			static var deliveryColor:      NSColor = NSColor.fromHex("#FFA35F")
@@ -72,16 +72,16 @@ struct Settings {
 		Settings.graph.trashedSaturation = 0.0
 		
 		// graph.nodes
-		Settings.graph.nodes.flagSize = 0.15
-		Settings.graph.nodes.roundness = 4.0
-		Settings.graph.nodes.startColor = NSColor.fromHex("#FAFAFA")
-		Settings.graph.nodes.endColor = NSColor.fromHex("#FFFFFF")//.withAlphaComponent(0.9)
+//		Settings.graph.nodes.flagSize = 0.15
+//		Settings.graph.nodes.roundness = 4.0
+//		Settings.graph.nodes.startColor = NSColor.fromHex("#FAFAFA")
+//		Settings.graph.nodes.endColor = NSColor.fromHex("#FFFFFF")//.withAlphaComponent(0.9)
 //		Settings.graph.nodes.outlineColor = NSColor.fromHex("#AEB8C7")//.withAlphaComponent(0.7)
 //		Settings.graph.nodes.outlineWidth = 3.5
-		Settings.graph.nodes.primedWidth = 4.5
-		Settings.graph.nodes.primedColor = NSColor.fromHex("#B3F865")
-		Settings.graph.nodes.selectedWidth = 5.0
-		Settings.graph.nodes.selectedColor = NSColor.green
+//		Settings.graph.nodes.primedWidth = 4.5
+//		Settings.graph.nodes.primedColor = NSColor.fromHex("#B3F865")
+//		Settings.graph.nodes.selectedWidth = 5.0
+//		Settings.graph.nodes.selectedColor = NSColor.green
 		Settings.graph.nodes.dialogColor = NSColor.fromHex("#A8E6CF")
 		Settings.graph.nodes.graphColor = NSColor.fromHex("#BA78CD")
 		Settings.graph.nodes.deliveryColor = NSColor.fromHex("#FFA35F")
@@ -102,18 +102,18 @@ struct Settings {
 		}
 		
 		// graph.nodes
-		if hasKey(key: Settings.keys.graph.nodes.flagSize) {
-			Settings.graph.nodes.flagSize = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.flagSize))
-		}
-		if hasKey(key: Settings.keys.graph.nodes.roundness) {
-			Settings.graph.nodes.roundness = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.roundness))
-		}
-		if hasKey(key: Settings.keys.graph.nodes.startColor) {
-			Settings.graph.nodes.startColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.startColor)!
-		}
-		if hasKey(key: Settings.keys.graph.nodes.endColor) {
-			Settings.graph.nodes.endColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.endColor)!
-		}
+//		if hasKey(key: Settings.keys.graph.nodes.flagSize) {
+//			Settings.graph.nodes.flagSize = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.flagSize))
+//		}
+//		if hasKey(key: Settings.keys.graph.nodes.roundness) {
+//			Settings.graph.nodes.roundness = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.roundness))
+//		}
+//		if hasKey(key: Settings.keys.graph.nodes.startColor) {
+//			Settings.graph.nodes.startColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.startColor)!
+//		}
+//		if hasKey(key: Settings.keys.graph.nodes.endColor) {
+//			Settings.graph.nodes.endColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.endColor)!
+//		}
 
 //		if hasKey(key: Settings.keys.graph.nodes.outlineColor) {
 //			Settings.graph.nodes.outlineColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.outlineColor)!
@@ -121,18 +121,18 @@ struct Settings {
 //		if hasKey(key: Settings.keys.graph.nodes.outlineWidth) {
 //			Settings.graph.nodes.outlineWidth = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.outlineWidth))
 //		}
-		if hasKey(key: Settings.keys.graph.nodes.primedWidth) {
-			Settings.graph.nodes.primedWidth = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.primedWidth))
-		}
-		if hasKey(key: Settings.keys.graph.nodes.primedColor) {
-			Settings.graph.nodes.primedColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.primedColor)!
-		}
-		if hasKey(key: Settings.keys.graph.nodes.selectedWidth) {
-			Settings.graph.nodes.selectedWidth = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.selectedWidth))
-		}
-		if hasKey(key: Settings.keys.graph.nodes.selectedColor) {
-			Settings.graph.nodes.selectedColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.selectedColor)!
-		}
+//		if hasKey(key: Settings.keys.graph.nodes.primedWidth) {
+//			Settings.graph.nodes.primedWidth = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.primedWidth))
+//		}
+//		if hasKey(key: Settings.keys.graph.nodes.primedColor) {
+//			Settings.graph.nodes.primedColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.primedColor)!
+//		}
+//		if hasKey(key: Settings.keys.graph.nodes.selectedWidth) {
+//			Settings.graph.nodes.selectedWidth = CGFloat(UserDefaults.standard.float(forKey: Settings.keys.graph.nodes.selectedWidth))
+//		}
+//		if hasKey(key: Settings.keys.graph.nodes.selectedColor) {
+//			Settings.graph.nodes.selectedColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.selectedColor)!
+//		}
 		if hasKey(key: Settings.keys.graph.nodes.dialogColor) {
 			Settings.graph.nodes.dialogColor = UserDefaults.standard.color(forKey: Settings.keys.graph.nodes.dialogColor)!
 		}
@@ -166,16 +166,16 @@ struct Settings {
 		UserDefaults.standard.set(Settings.graph.trashedSaturation, forKey: Settings.keys.graph.trashedSaturation)
 		
 		// graph.nodes
-		UserDefaults.standard.set(Settings.graph.nodes.flagSize, forKey: Settings.keys.graph.nodes.flagSize)
-		UserDefaults.standard.set(Settings.graph.nodes.roundness, forKey: Settings.keys.graph.nodes.roundness)
-		UserDefaults.standard.set(Settings.graph.nodes.startColor, forKey: Settings.keys.graph.nodes.startColor)
-		UserDefaults.standard.set(Settings.graph.nodes.endColor, forKey: Settings.keys.graph.nodes.endColor)
+//		UserDefaults.standard.set(Settings.graph.nodes.flagSize, forKey: Settings.keys.graph.nodes.flagSize)
+//		UserDefaults.standard.set(Settings.graph.nodes.roundness, forKey: Settings.keys.graph.nodes.roundness)
+//		UserDefaults.standard.set(Settings.graph.nodes.startColor, forKey: Settings.keys.graph.nodes.startColor)
+//		UserDefaults.standard.set(Settings.graph.nodes.endColor, forKey: Settings.keys.graph.nodes.endColor)
 //		UserDefaults.standard.set(Settings.graph.nodes.outlineColor, forKey: Settings.keys.graph.nodes.outlineColor)
 //		UserDefaults.standard.set(Settings.graph.nodes.outlineWidth, forKey: Settings.keys.graph.nodes.outlineWidth)
-		UserDefaults.standard.set(Settings.graph.nodes.primedWidth, forKey: Settings.keys.graph.nodes.primedWidth)
-		UserDefaults.standard.set(Settings.graph.nodes.primedColor, forKey: Settings.keys.graph.nodes.primedColor)
-		UserDefaults.standard.set(Settings.graph.nodes.selectedWidth, forKey: Settings.keys.graph.nodes.selectedWidth)
-		UserDefaults.standard.set(Settings.graph.nodes.selectedColor, forKey: Settings.keys.graph.nodes.selectedColor)
+//		UserDefaults.standard.set(Settings.graph.nodes.primedWidth, forKey: Settings.keys.graph.nodes.primedWidth)
+//		UserDefaults.standard.set(Settings.graph.nodes.primedColor, forKey: Settings.keys.graph.nodes.primedColor)
+//		UserDefaults.standard.set(Settings.graph.nodes.selectedWidth, forKey: Settings.keys.graph.nodes.selectedWidth)
+//		UserDefaults.standard.set(Settings.graph.nodes.selectedColor, forKey: Settings.keys.graph.nodes.selectedColor)
 		UserDefaults.standard.set(Settings.graph.nodes.dialogColor, forKey: Settings.keys.graph.nodes.dialogColor)
 		UserDefaults.standard.set(Settings.graph.nodes.graphColor, forKey: Settings.keys.graph.nodes.graphColor)
 		UserDefaults.standard.set(Settings.graph.nodes.deliveryColor, forKey: Settings.keys.graph.nodes.deliveryColor)

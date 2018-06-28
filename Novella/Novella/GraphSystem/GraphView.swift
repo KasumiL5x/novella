@@ -793,4 +793,15 @@ extension GraphView: NVStoryDelegate {
 			deleteLinkableView(node: graph)
 		}
 	}
+	
+	// name and content changes
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
+		_allLinkableViews.first(where: {$0.Linkable == obj})?.onNameChanged()
+	}
+	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+		_allLinkableViews.first(where: {$0.Linkable == node})?.onContentChanged()
+	}
+	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
+		_allLinkableViews.first(where: {$0.Linkable == node})?.onContentChanged()
+	}
 }

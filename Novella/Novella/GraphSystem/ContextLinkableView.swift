@@ -17,7 +17,7 @@ class ContextLinkableView: LinkableView {
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
-		setLabelString(str: "C")
+		setLabelString(str: node.Name)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("ContextLinkableView::init(coder:) not implemented.")
@@ -30,5 +30,10 @@ class ContextLinkableView: LinkableView {
 	}
 	override func flagColor() -> NSColor {
 		return Settings.graph.nodes.contextColor
+	}
+	override func onNameChanged() {
+		setLabelString(str: Linkable.Name)
+	}
+	override func onContentChanged() {
 	}
 }
