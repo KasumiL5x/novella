@@ -475,7 +475,7 @@ class LinkableView: NSView {
 			if self.Linkable == _graphView.NovellaGraph.Entry {
 				let entrySize = drawingRect.width * 0.075
 				let entryRect = NSMakeRect(drawingRect.maxX - entrySize*1.5, drawingRect.maxY - entrySize*1.5, entrySize, entrySize)
-				NSColor.green.setFill()
+				NSColor.fromHex("#ff5d5d").setFill()
 				NSBezierPath(ovalIn: entryRect).fill()
 			}
 			
