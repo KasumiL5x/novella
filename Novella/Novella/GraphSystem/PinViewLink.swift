@@ -128,15 +128,19 @@ class PinViewLink: PinView {
 			
 			context.resetClip()
 			
+			let normalColor = NSColor.fromHex("#535353")
+			let ownerSelectedColor = NSColor.fromHex("#f67280")
+			let pinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : normalColor
+			
 			// MARK: Pin Drawing
 			let strokePath = NSBezierPath(ovalIn: _outlineRect)
 			_pinStrokeLayer.path = strokePath.cgPath
-			_pinStrokeLayer.strokeColor = CGColor.white
+			_pinStrokeLayer.strokeColor = pinColor.cgColor
 			
 			let fillPath = NSBezierPath(ovalIn: _outlineRect.insetBy(dx: PinView.PIN_INSET, dy: PinView.PIN_INSET))
 			_pinFillLayer.path = fillPath.cgPath
 			if getDestination() != nil {
-				_pinFillLayer.fillColor = TrashMode ? Settings.graph.pins.linkPinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkPinColor.cgColor
+				_pinFillLayer.fillColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 			} else {
 				_pinFillLayer.fillColor = CGColor.clear
 			}
@@ -161,11 +165,7 @@ class PinViewLink: PinView {
 					CurveHelper.line(start: origin, end: end, path: _curvePath)
 				}
 				
-				if Owner.IsSelected || Owner.IsPrimed {
-					_curveLayer.strokeColor = NSColor.red.cgColor
-				} else {
-					_curveLayer.strokeColor = TrashMode ? Settings.graph.pins.linkCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.linkCurveColor.cgColor
-				}
+				_curveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				_curveLayer.path = _curvePath.cgPath
 				_curveLayer.lineDashPattern = (destination is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}

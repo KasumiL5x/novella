@@ -17,7 +17,7 @@ class DeliveryLinkableView: LinkableView {
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
-		setLabelString(str: "D")
+		setLabelString(str: node.Name)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("DeliveryLinkableView::init(coder:) not implemented.")
@@ -28,10 +28,13 @@ class DeliveryLinkableView: LinkableView {
 	override func onMove() {
 		(Linkable as! NVDelivery).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
-	override func bgTopColor() -> NSColor {
-		return Settings.graph.nodes.deliveryStartColor
+	override func flagColor() -> NSColor {
+		return Settings.graph.nodes.deliveryColor
 	}
-	override func bgBottomColor() -> NSColor {
-		return Settings.graph.nodes.endColor
+	override func onNameChanged() {
+		setLabelString(str: Linkable.Name)
+	}
+	override func onContentChanged() {
+		setLabelString(str: (Linkable as! NVDelivery).Content)
 	}
 }

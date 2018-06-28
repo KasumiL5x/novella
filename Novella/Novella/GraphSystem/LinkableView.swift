@@ -21,6 +21,7 @@ class LinkableView: NSView {
 	private var _isPrimed: Bool
 	private var _isSelected: Bool
 	private let _nameLabel: NSTextField
+	private let _contentLabel: NSTextField
 	private let _entryLabel: NSTextField
 	//
 	private var _clickGesture: NSClickGestureRecognizer?
@@ -72,10 +73,17 @@ class LinkableView: NSView {
 		self._isPrimed = false
 		self._isSelected = false
 		//
-		self._nameLabel = NSTextField(labelWithString: "?")
+		self._nameLabel = NSTextField(labelWithString: "")
 		self._nameLabel.tag = LinkableView.HIT_IGNORE_TAG
-		self._nameLabel.textColor = NSColor.fromHex("#f2f2f2")
-		self._nameLabel.font = NSFont.systemFont(ofSize: 42.0, weight: .ultraLight)
+		self._nameLabel.textColor = NSColor.fromHex("#3c3c3c")
+		self._nameLabel.font = NSFont.systemFont(ofSize: 16.0, weight: .bold)
+		self._nameLabel.placeholderString = "Unnamed"
+		//
+		self._contentLabel = NSTextField(wrappingLabelWithString: "")
+		self._contentLabel.tag = LinkableView.HIT_IGNORE_TAG
+		self._contentLabel.textColor = NSColor.fromHex("#3c3c3c")
+		self._contentLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .light)
+		self._contentLabel.placeholderString = "Your node's content will appear here."
 		//
 		self._entryLabel = NSTextField(labelWithString: "Entry")
 		self._entryLabel.tag = LinkableView.HIT_IGNORE_TAG
@@ -111,17 +119,20 @@ class LinkableView: NSView {
 		// add shadow
 		wantsLayer = true
 		layer?.masksToBounds = false
-//		self.shadow = NSShadow()
-//		self.layer?.shadowOpacity = 0.6
-//		self.layer?.shadowColor = NSColor.black.cgColor
-//		self.layer?.shadowOffset = NSMakeSize(3, -1)
-//		self.layer?.shadowRadius = 5.0
+		self.shadow = NSShadow()
+		self.layer?.shadowOpacity = 0.6
+		self.layer?.shadowColor = NSColor.fromHex("#AEB8C7").cgColor
+		self.layer?.shadowOffset = NSMakeSize(0.5, -1)
+		self.layer?.shadowRadius = 0.3
 		
 		self.addSubview(_outputsBoard)
 		
 		// name label
-		setLabelString(str: "?")
+		setLabelString(str: "")
 		self.addSubview(self._nameLabel)
+		// content label
+		setContentString(str: "")
+		self.addSubview(self._contentLabel)
 		
 		// entry label
 		self.addSubview(self._entryLabel)
@@ -227,7 +238,23 @@ class LinkableView: NSView {
 	func setLabelString(str: String) {
 		_nameLabel.stringValue = str
 		self._nameLabel.sizeToFit()
-		self._nameLabel.frame.origin = NSMakePoint(self.frame.width/2 - self._nameLabel.frame.width/2, self.frame.height/2 - self._nameLabel.frame.height/2)
+		let x = widgetRect().width * 0.15
+		self._nameLabel.frame.origin = NSMakePoint(x, widgetRect().maxY - x)
+		self._nameLabel.frame.size.width = widgetRect().width - self._nameLabel.frame.minX
+		self._nameLabel.lineBreakMode = .byTruncatingTail
+	}
+	
+	func setContentString(str: String) {
+		_contentLabel.stringValue = str
+		_contentLabel.sizeToFit()
+		let minX: CGFloat = 10.0
+		let maxX: CGFloat = widgetRect().maxX - 10.0
+		let minY: CGFloat = 10.0
+		let maxY: CGFloat = widgetRect().maxY - 50.0
+		_contentLabel.frame = NSMakeRect(minX, minY, maxX - minX, maxY - minY)
+		_contentLabel.usesSingleLineMode = false
+		
+		_contentLabel.lineBreakMode = .byWordWrapping
 	}
 	
 	func updateEntryLabel() {
@@ -240,18 +267,24 @@ class LinkableView: NSView {
 	
 	// MARK: Virtual Functions
 	func widgetRect() -> NSRect {
-		return NSMakeRect(0.0, 0.0, 64.0, 64.0)
+		// 40 = compact (w/o content label)
+		// 100 = small
+		// 150 = medium
+		// 200 = large
+		return NSMakeRect(0.0, 0.0, 200.0, 100.0)
 	}
 	func onMove() {
 		print("LinkableView::onMove() should be overridden.")
 	}
-	func bgTopColor() -> NSColor {
-		print("LinkableView::bgTopColor() should be overridden.")
+	func flagColor() -> NSColor {
+		print("LinkableView::flagColor() should be overridden.")
 		return NSColor.black
 	}
-	func bgBottomColor() -> NSColor {
-		print("LinkableView::bgBottomColor() should be overridden.")
-		return NSColor.black
+	func onNameChanged() {
+		print("LinkableView::onNameChanged() should be overridden.")
+	}
+	func onContentChanged() {
+		print("LinkableView::onContentChanged() should be overridden.")
 	}
 	
 	// MARK: Priming/Selection
@@ -379,49 +412,72 @@ class LinkableView: NSView {
 			let drawingRect = widgetRect()
 			
 			// draw background gradient
-			let bgRadius = Settings.graph.nodes.roundness
+			let bgRadius: CGFloat = 4.0 // TODO: Make this a percentage of the drawingRect's width?
 			var path = NSBezierPath(roundedRect: drawingRect, xRadius: bgRadius, yRadius: bgRadius)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
-			let bgColors = [Trashed ? bgTopColor().withSaturation(Settings.graph.trashedSaturation).cgColor : bgTopColor().cgColor,
-											Trashed ? bgBottomColor().withSaturation(Settings.graph.trashedSaturation).cgColor : bgBottomColor().cgColor]
+			let bgStartColor = NSColor.fromHex("#FAFAFA")
+			let bgEndColor = NSColor.fromHex("#FFFFFF")
+			let bgColors = [
+				Trashed ? bgStartColor.withSaturation(Settings.graph.trashedSaturation).cgColor : bgStartColor.cgColor,
+				Trashed ? bgEndColor.withSaturation(Settings.graph.trashedSaturation).cgColor : bgEndColor.cgColor
+			]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: drawingRect.height)
 			let bgEnd = CGPoint.zero
 			context.drawLinearGradient(bgGradient, start: bgStart, end: bgEnd, options: CGGradientDrawingOptions(rawValue: 0))
 			
-			
-			// draw outline (inset)
-			let selectedRect = drawingRect
-			path = NSBezierPath(roundedRect: selectedRect, xRadius: bgRadius, yRadius: bgRadius)
-			path.addClip() // clip to avoid edge artifacting
-			path.lineWidth = Settings.graph.nodes.outlineWidth
-			Trashed ? Settings.graph.nodes.outlineColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.outlineColor.setStroke()
-			path.stroke()
+			// draw type triangle
+			let triangleSize: CGFloat = drawingRect.width * 0.15 // as a percentage of width
+			context.move(to: NSMakePoint(drawingRect.minX, drawingRect.maxY))
+			context.addLine(to: NSMakePoint(drawingRect.minX, drawingRect.maxY - triangleSize))
+			context.addLine(to: NSMakePoint(drawingRect.minX + triangleSize, drawingRect.maxY))
+			Trashed ? flagColor().withSaturation(Settings.graph.trashedSaturation).setFill() : flagColor().setFill()
+			context.fillPath()
 			
 			// draw primed indicator
 			if IsPrimed {
+				let primedWidth: CGFloat = 4.5
+				let primedColor = NSColor.fromHex("#4B9CFD")
+				
 				let insetRect = drawingRect
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.addClip() // clip to avoid edge artifacting
-				path.lineWidth = Settings.graph.nodes.primedWidth
-				Trashed ? Settings.graph.nodes.primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.primedColor.setStroke()
+				path.lineWidth = primedWidth
+				Trashed ? primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : primedColor.setStroke()
 				path.lineJoinStyle = .miterLineJoinStyle
 				path.stroke()
 			}
 			
 			// draw selection indicator
 			if IsSelected {
+				let selectedWidth: CGFloat = 5.0
+				let selectedColor = NSColor.fromHex("#4B9CFD")
+				let selectedAlpha: CGFloat = 0.1
+				let selectedOutlineAlpha: CGFloat = 0.6
+				
 				let insetRect = drawingRect
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.addClip() // clip to avoid edge artifacting
-				path.lineWidth = Settings.graph.nodes.selectedWidth
-				Trashed ? Settings.graph.nodes.selectedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : Settings.graph.nodes.selectedColor.setStroke()
+				path.lineWidth = selectedWidth
+				if Trashed {
+					selectedColor.withSaturation(Settings.graph.trashedSaturation).withAlphaComponent(selectedAlpha).setFill()
+					selectedColor.withSaturation(Settings.graph.trashedSaturation).withAlphaComponent(selectedOutlineAlpha).setStroke()
+				} else {
+					selectedColor.withAlphaComponent(selectedAlpha).setFill()
+					selectedColor.withAlphaComponent(selectedOutlineAlpha).setStroke()
+				}
+				path.fill()
 				path.stroke()
 			}
 			
 			// draw the entry point somewhere on the widget rect
-			
+			if self.Linkable == _graphView.NovellaGraph.Entry {
+				let entrySize = drawingRect.width * 0.075
+				let entryRect = NSMakeRect(drawingRect.maxX - entrySize*1.5, drawingRect.maxY - entrySize*1.5, entrySize, entrySize)
+				NSColor.fromHex("#ff5d5d").setFill()
+				NSBezierPath(ovalIn: entryRect).fill()
+			}
 			
 			context.restoreGState()
 		}
