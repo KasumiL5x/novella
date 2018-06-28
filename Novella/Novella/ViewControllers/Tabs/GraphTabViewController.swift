@@ -40,7 +40,7 @@ class GraphTabViewController: NSViewController {
 		}
 		
 		_toolbarView.wantsLayer = true
-		_toolbarView.layer?.backgroundColor = NSColor.fromHex("#252525").cgColor
+		_toolbarView.layer?.backgroundColor = NSColor.fromHex("#fafafa").cgColor
 	}
 	
 	override func viewDidAppear() {
