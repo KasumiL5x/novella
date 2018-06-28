@@ -28,16 +28,16 @@ class GraphBGView: NSView {
 	private var _density: CGFloat
 	
 	override init(frame frameRect: NSRect) {
-		self._backgroundColor = NSColor.fromHex("#36363d")
-		self._lineColor = NSColor.fromHex("#787878")
+		self._backgroundColor = NSColor.fromHex("#dfedff")
+		self._lineColor = NSColor.fromHex("#acd3ff")
 		//
 		self._majorOpacity = CGFloat(0.5)
 		self._minorOpacity = CGFloat(0.4)
 		self._opacity = CGFloat(0.2)
 		//
-		self._majorThickness = CGFloat(2.0)
-		self._minorThickness = CGFloat(1.5)
-		self._thickness = CGFloat(1.0)
+		self._majorThickness = CGFloat(1.5)
+		self._minorThickness = CGFloat(1.0)
+		self._thickness = CGFloat(0.5)
 		//
 		self._primaryDivisor = 64
 		self._secondaryDivisor = 32

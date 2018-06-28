@@ -17,7 +17,8 @@ class DialogLinkableView: LinkableView {
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
-		setLabelString(str: "D")
+		setLabelString(str: node.Name.isEmpty ? "Unnamed" : node.Name)
+		setContentString(str: node.Content)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("DialogLinkableView::init(coder:) not implemented.")
