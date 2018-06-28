@@ -23,8 +23,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : -16.271987915039062,
-        "x" : -2018.1507568359375
+        "y" : -4.9011831283569336,
+        "x" : -2018.2021484375
       },
       "name" : "Rename",
       "content" : "Hey Juliet, is everything cool?",
@@ -36,8 +36,8 @@
     },
     {
       "position" : {
-        "y" : -6.4038395881652832,
-        "x" : -1679.234130859375
+        "y" : -3.2796046733856201,
+        "x" : -1760.443603515625
       },
       "name" : "",
       "content" : "Oh yes, Max. I've locked Dana in the room because we're \"cool.\"",
@@ -49,8 +49,8 @@
     },
     {
       "position" : {
-        "y" : 303.89202880859375,
-        "x" : -1221.990478515625
+        "y" : 222.53495788574219,
+        "x" : -1442.905029296875
       },
       "name" : "",
       "content" : "What did she do?",
@@ -62,8 +62,8 @@
     },
     {
       "position" : {
-        "y" : 326.10150146484375,
-        "x" : -856.47882080078125
+        "y" : 221.36418151855469,
+        "x" : -1182.771240234375
       },
       "name" : "",
       "content" : " What didn't she do? Dana's been sexting with my boyfriend.",
@@ -75,8 +75,8 @@
     },
     {
       "position" : {
-        "y" : 327.74505615234375,
-        "x" : -552.6376953125
+        "y" : 225.15373229980469,
+        "x" : -927.82073974609375
       },
       "name" : "",
       "content" : "Ouch. How did you find out?",
@@ -88,8 +88,8 @@
     },
     {
       "position" : {
-        "y" : -35.089550018310547,
-        "x" : -1224.6351318359375
+        "y" : -0.65117794275283813,
+        "x" : -1441.6988525390625
       },
       "name" : "",
       "content" : "She's your friend.",
@@ -101,8 +101,8 @@
     },
     {
       "position" : {
-        "y" : -48.475532531738281,
-        "x" : -859.4862060546875
+        "y" : -0.78735595941543579,
+        "x" : -1181.4912109375
       },
       "name" : "",
       "content" : "Friends don't sext with their best friend's boyfriend...",
@@ -114,8 +114,8 @@
     },
     {
       "position" : {
-        "y" : -46.362857818603516,
-        "x" : -540.04052734375
+        "y" : -1.4080449342727661,
+        "x" : -928.7747802734375
       },
       "name" : "",
       "content" : "No, probably not... How did you find out?",
@@ -127,8 +127,8 @@
     },
     {
       "position" : {
-        "y" : 99.770370483398438,
-        "x" : -251.10165405273438
+        "y" : 223.14173889160156,
+        "x" : -672.7796630859375
       },
       "name" : "",
       "content" : "Uh, why do you care? Why are you even asking me? You never talk, just zone out with your camera.",
@@ -140,8 +140,8 @@
     },
     {
       "position" : {
-        "y" : 111.23442077636719,
-        "x" : 25.309841156005859
+        "y" : 223.87582397460938,
+        "x" : -414.99295043945312
       },
       "name" : "",
       "content" : "That's why I'm talking to you now.",
@@ -153,8 +153,8 @@
     },
     {
       "position" : {
-        "y" : 131.12461853027344,
-        "x" : 315.02877807617188
+        "y" : 223.50886535644531,
+        "x" : -158.61311340332031
       },
       "name" : "",
       "content" : "What's my last name?",
@@ -166,8 +166,8 @@
     },
     {
       "position" : {
-        "y" : 408.59893798828125,
-        "x" : 671.022216796875
+        "y" : 422.0106201171875,
+        "x" : 145.44136047363281
       },
       "name" : "",
       "content" : "Juliet Pats... Juliet Patson.",
@@ -179,8 +179,8 @@
     },
     {
       "position" : {
-        "y" : 150.79341125488281,
-        "x" : 663.69708251953125
+        "y" : 300.42520141601562,
+        "x" : 146.01028442382812
       },
       "name" : "",
       "content" : "Uh. Juliet... Mason.",
@@ -192,8 +192,8 @@
     },
     {
       "position" : {
-        "y" : -77.207084655761719,
-        "x" : 659.02886962890625
+        "y" : 157.45979309082031,
+        "x" : 148.09332275390625
       },
       "name" : "",
       "content" : "Juliet... Juliet... Olson.",
@@ -205,8 +205,8 @@
     },
     {
       "position" : {
-        "y" : -308.78094482421875,
-        "x" : 667.8748779296875
+        "y" : -2.913970947265625,
+        "x" : 143.96406555175781
       },
       "name" : "",
       "content" : "Juliet Watson. Duh!",
@@ -218,8 +218,8 @@
     },
     {
       "position" : {
-        "y" : 137.51522827148438,
-        "x" : 1028.166259765625
+        "y" : 300.4378662109375,
+        "x" : 408.1080322265625
       },
       "name" : "",
       "content" : "That was truly sad. Thanks for your concern, \"Max Caulfield.\" By the way, Juliet Watson.",
@@ -231,8 +231,8 @@
     },
     {
       "position" : {
-        "y" : -219.67582702636719,
-        "x" : 965.9967041015625
+        "y" : -0.12238220870494843,
+        "x" : 411.75338745117188
       },
       "name" : "",
       "content" : "I'm flattered. I didn't even think you knew my name at all.",
@@ -244,8 +244,8 @@
     },
     {
       "position" : {
-        "y" : -176.22088623046875,
-        "x" : 1290.0052490234375
+        "y" : -0.40494799613952637,
+        "x" : 675.50640869140625
       },
       "name" : "",
       "content" : "Of course I do. Just because I don't talk a lot doesn't mean I don't care. So, how did you find out about them?",
@@ -257,8 +257,8 @@
     },
     {
       "position" : {
-        "y" : -184.18702697753906,
-        "x" : 1559.350830078125
+        "y" : -5.1164546012878418,
+        "x" : 982.396728515625
       },
       "name" : "",
       "content" : "According to Victoria, Dana would do anything to date a quarterback.",
@@ -270,8 +270,8 @@
     },
     {
       "position" : {
-        "y" : -187.74705505371094,
-        "x" : 1819.68115234375
+        "y" : -4.0483331680297852,
+        "x" : 1249.2960205078125
       },
       "name" : "",
       "content" : "According to Victoria? Oh...",
@@ -283,8 +283,8 @@
     },
     {
       "position" : {
-        "y" : -193.78700256347656,
-        "x" : 2071.180908203125
+        "y" : -2.7190721035003662,
+        "x" : 1502.605224609375
       },
       "name" : "",
       "content" : "She saw the sext. And Zachary won't answer his phone. Once Dana admits it, she can go. Straight to Hell.",
@@ -296,8 +296,8 @@
     },
     {
       "position" : {
-        "y" : -195.63322448730469,
-        "x" : 2338.3779296875
+        "y" : 1.0959781408309937,
+        "x" : 1761.5313720703125
       },
       "name" : "",
       "content" : "Max, I swear I didn't do ANYTHING! But I bet Victoria did! I know the proof is in her room!",
@@ -309,8 +309,8 @@
     },
     {
       "position" : {
-        "y" : -805.46441650390625,
-        "x" : -424.31951904296875
+        "y" : -261.2481689453125,
+        "x" : -1442.2833251953125
       },
       "name" : "",
       "content" : "Juliet Watson, you be nice!",
@@ -322,8 +322,8 @@
     },
     {
       "position" : {
-        "y" : -807.4775390625,
-        "x" : -116.27753448486328
+        "y" : -256.541015625,
+        "x" : -1179.7041015625
       },
       "name" : "",
       "content" : "I'm flattered. I didn't even think you knew my name at all.",
@@ -335,8 +335,8 @@
     },
     {
       "position" : {
-        "y" : -795.22515869140625,
-        "x" : 165.19039916992188
+        "y" : -258.66232299804688,
+        "x" : -918.9622802734375
       },
       "name" : "",
       "content" : "Uh. Of course I do.",
@@ -348,8 +348,8 @@
     },
     {
       "position" : {
-        "y" : -792.7210693359375,
-        "x" : 449.91543579101562
+        "y" : -261.5416259765625,
+        "x" : -660.10443115234375
       },
       "name" : "",
       "content" : "Thanks... I locked Dana in because she was sexting Zach, my boyfriend. Unbelievable.",
@@ -361,8 +361,8 @@
     },
     {
       "position" : {
-        "y" : -547.322509765625,
-        "x" : 663.96002197265625
+        "y" : -198.66702270507812,
+        "x" : -362.71597290039062
       },
       "name" : "",
       "content" : "How do you know?",
@@ -374,8 +374,8 @@
     },
     {
       "position" : {
-        "y" : -804.01318359375,
-        "x" : 1154.5146484375
+        "y" : -328.67745971679688,
+        "x" : 153.32902526855469
       },
       "name" : "",
       "content" : "Would Dana do that?",
@@ -387,8 +387,8 @@
     },
     {
       "position" : {
-        "y" : -554.4349365234375,
-        "x" : 948.08380126953125
+        "y" : -194.69862365722656,
+        "x" : -100.08089447021484
       },
       "name" : "",
       "content" : "Victoria Chase. You know her.",
@@ -400,8 +400,8 @@
     },
     {
       "position" : {
-        "y" : -556.441162109375,
-        "x" : 1226.591796875
+        "y" : -194.19259643554688,
+        "x" : 159.71083068847656
       },
       "name" : "",
       "content" : "You could say that... But, why would Dana go after your boyfriend?",
@@ -413,8 +413,8 @@
     },
     {
       "position" : {
-        "y" : 28.493947982788086,
-        "x" : 2657.394287109375
+        "y" : 111.87827301025391,
+        "x" : 2026.16845703125
       },
       "name" : "",
       "content" : "Test Branch True",
@@ -426,8 +426,8 @@
     },
     {
       "position" : {
-        "y" : -458.92697143554688,
-        "x" : 2683.958251953125
+        "y" : -71.362739562988281,
+        "x" : 2016.1312255859375
       },
       "name" : "",
       "content" : "Test Branch False",
@@ -439,8 +439,8 @@
     },
     {
       "position" : {
-        "y" : -299607.30111365818,
-        "x" : -299661.71433158522
+        "y" : -299607.3125,
+        "x" : -299661.71875
       },
       "name" : "",
       "content" : "Just checking this second graph works.",
@@ -452,8 +452,8 @@
     },
     {
       "position" : {
-        "y" : -299642.65367501829,
-        "x" : -299240.38064295036
+        "y" : -299642.65625,
+        "x" : -299240.375
       },
       "name" : "",
       "content" : "This is option 2.",
@@ -465,8 +465,8 @@
     },
     {
       "position" : {
-        "y" : -299526.13755111466,
-        "x" : -299202.8763261119
+        "y" : -299526.125,
+        "x" : -299202.875
       },
       "name" : "",
       "content" : "This is option 1.",
@@ -475,40 +475,6 @@
       "speaker" : "",
       "preview" : "Option 1",
       "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
-    },
-    {
-      "position" : {
-        "y" : -265.93856811523438,
-        "x" : -532.82037353515625
-      },
-      "name" : "",
-      "content" : "",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "speaker" : "",
-      "preview" : "",
-      "uuid" : "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8"
-    },
-    {
-      "position" : {
-        "y" : 199.6756591796875,
-        "x" : -858.9764404296875
-      },
-      "name" : "",
-      "content" : "",
-      "directions" : "",
-      "nodetype" : "delivery",
-      "preview" : "",
-      "uuid" : "E719491B-7597-484E-8211-6356067A3897"
-    },
-    {
-      "position" : {
-        "y" : 191.70335388183594,
-        "x" : -623.1568603515625
-      },
-      "name" : "",
-      "uuid" : "FD50FEB4-D874-46C8-9E84-17689D7829DA",
-      "nodetype" : "context"
     }
   ],
   "graphs" : [
@@ -550,10 +516,7 @@
         "11058EEC-472A-4C0F-9F06-2DFDCA268DEC",
         "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
         "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2",
-        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9",
-        "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8",
-        "E719491B-7597-484E-8211-6356067A3897",
-        "FD50FEB4-D874-46C8-9E84-17689D7829DA"
+        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
       ],
       "links" : [
         "577EC340-5688-40B9-B137-A087CC8A7D3E",
