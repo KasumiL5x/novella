@@ -200,6 +200,10 @@ class PinViewBranch: PinView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
+			let normalColor = NSColor.fromHex("#535353")
+			let ownerSelectedColor = NSColor.fromHex("#f67280")
+			let pinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : normalColor
+			
 			
 			// draw pin stroke
 			_pinStrokeLayer.path = NSBezierPath(roundedRect: _outlineRect, xRadius: 5.0, yRadius: 5.0).cgPath
@@ -207,20 +211,20 @@ class PinViewBranch: PinView {
 			// draw true pin
 			_pinFillLayerTrue.path = NSBezierPath(ovalIn: _truePinRect).cgPath
 			if getTrueDestination() != nil {
-				_pinFillLayerTrue.fillColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+				_pinFillLayerTrue.fillColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				_pinFillLayerTrue.strokeColor = nil
 			} else {
 				_pinFillLayerTrue.fillColor = nil
-				_pinFillLayerTrue.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+				_pinFillLayerTrue.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 			}
 			// draw false pin
 			_pinFillLayerFalse.path = NSBezierPath(ovalIn: _falsePinRect).cgPath
 			if getFalseDestination() != nil {
-				_pinFillLayerFalse.fillColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+				_pinFillLayerFalse.fillColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				_pinFillLayerFalse.strokeColor = nil
 			} else {
 				_pinFillLayerFalse.fillColor = nil
-				_pinFillLayerFalse.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+				_pinFillLayerFalse.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 			}
 			
 			// draw curves
@@ -245,7 +249,7 @@ class PinViewBranch: PinView {
 				if Owner.IsSelected || Owner.IsPrimed {
 					_trueCurveLayer.strokeColor = NSColor.red.cgColor
 				} else {
-					_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchTrueCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchTrueCurveColor.cgColor
+					_trueCurveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				}
 				_trueCurveLayer.path = _trueCurvePath.cgPath
 				_trueCurveLayer.lineDashPattern = (trueDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
@@ -269,7 +273,7 @@ class PinViewBranch: PinView {
 				if Owner.IsSelected || Owner.IsPrimed {
 					_falseCurveLayer.strokeColor = NSColor.red.cgColor
 				} else {
-					_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.pins.branchFalseCurveColor.withSaturation(Settings.graph.trashedSaturation).cgColor : Settings.graph.pins.branchFalseCurveColor.cgColor
+					_falseCurveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				}
 				_falseCurveLayer.path = _falseCurvePath.cgPath
 				_falseCurveLayer.lineDashPattern = (falseDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil

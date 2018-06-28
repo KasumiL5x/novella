@@ -128,7 +128,9 @@ class PinViewLink: PinView {
 			
 			context.resetClip()
 			
-			let pinColor = NSColor.fromHex("#535353")
+			let normalColor = NSColor.fromHex("#535353")
+			let ownerSelectedColor = NSColor.fromHex("#f67280")
+			let pinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : normalColor
 			
 			// MARK: Pin Drawing
 			let strokePath = NSBezierPath(ovalIn: _outlineRect)
@@ -163,11 +165,7 @@ class PinViewLink: PinView {
 					CurveHelper.line(start: origin, end: end, path: _curvePath)
 				}
 				
-				if Owner.IsSelected || Owner.IsPrimed {
-					_curveLayer.strokeColor = NSColor.red.cgColor
-				} else {
-					_curveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
-				}
+				_curveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				_curveLayer.path = _curvePath.cgPath
 				_curveLayer.lineDashPattern = (destination is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
