@@ -10,6 +10,14 @@ import Cocoa
 import NovellaModel
 
 class LinkableView: NSView {
+	// MARK: - Enums -
+	enum SizeType: Int {
+		case compact
+		case small
+		case medium
+		case large
+	}
+	
 	// MARK: - Constants -
 	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
 	static let HIT_IGNORE_TAG: Int = 10
@@ -23,6 +31,7 @@ class LinkableView: NSView {
 	private let _nameLabel: NSTextField
 	private let _contentLabel: NSTextField
 	private let _entryLabel: NSTextField
+	private var _sizeType: SizeType
 	//
 	private var _clickGesture: NSClickGestureRecognizer?
 	private var _doubleClickGesture: NSClickGestureRecognizer?
@@ -62,6 +71,25 @@ class LinkableView: NSView {
 			redraw()
 		}
 	}
+	public var Size: SizeType {
+		get{ return _sizeType }
+		set {
+			_sizeType = newValue
+			// reload and therefore reposition visual elements
+			onNameChanged()
+			onContentChanged()
+			// actually redraw this view
+			redraw()
+			
+			// layout the pins since the size changed
+			layoutPins()
+			// resize to fit subviews which contains the pins and also fits the new widget size
+			sizeToFitSubviews()
+			
+			// update curves as the inputs to these need repositioning based on the new widget size
+			_graphView.updateCurves()
+		}
+	}
 	override var wantsDefaultClipping: Bool {
 		return false
 	}
@@ -90,6 +118,8 @@ class LinkableView: NSView {
 		self._entryLabel.textColor = NSColor.fromHex("#f2f2f2")
 		self._entryLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .bold)
 		//
+		self._sizeType = .small
+		//
 		self._clickGesture = nil
 		self._doubleClickGesture = nil
 		self._ctxGesture = nil
@@ -115,6 +145,11 @@ class LinkableView: NSView {
 		_contextMenu.addItem(_contextItemEntry)
 		_contextMenu.addItem(NSMenuItem.separator())
 		_contextMenu.addItem(_contextItemTrash)
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(withTitle: "Compact", action: #selector(LinkableView.onContextSizeCompact), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Small", action: #selector(LinkableView.onContextSizeSmall), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Medium", action: #selector(LinkableView.onContextSizeMedium), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Large", action: #selector(LinkableView.onContextSizeLarge), keyEquivalent: "")
 		
 		// add shadow
 		wantsLayer = true
@@ -227,6 +262,19 @@ class LinkableView: NSView {
 		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
 	}
 	
+	@objc private func onContextSizeCompact() {
+		Size = .compact
+	}
+	@objc private func onContextSizeSmall() {
+		Size = .small
+	}
+	@objc private func onContextSizeMedium() {
+		Size = .medium
+	}
+	@objc private func onContextSizeLarge() {
+		Size = .large
+	}
+	
 	// MARK: Object Functions
 	private func onTrashed() {
 		_contextItemAddLink.isEnabled = !_trashMode
@@ -271,7 +319,17 @@ class LinkableView: NSView {
 		// 100 = small
 		// 150 = medium
 		// 200 = large
-		return NSMakeRect(0.0, 0.0, 200.0, 100.0)
+		let width: CGFloat = 200.0
+		switch _sizeType {
+		case .compact:
+			return NSMakeRect(0.0, 0.0, width, 40.0)
+		case .small:
+			return NSMakeRect(0.0, 0.0, width, 100.0)
+		case .medium:
+			return NSMakeRect(0.0, 0.0, width, 150.0)
+		case .large:
+			return NSMakeRect(0.0, 0.0, width, 200.0)
+		}
 	}
 	func onMove() {
 		print("LinkableView::onMove() should be overridden.")
@@ -392,6 +450,9 @@ class LinkableView: NSView {
 		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
 	}
 	private func sizeToFitSubviews() {
+		// initially set frame size to widget ret
+		frame.size = widgetRect().size
+		
 		var w: CGFloat = frame.width
 		var h: CGFloat = frame.height
 		for sub in subviews {
