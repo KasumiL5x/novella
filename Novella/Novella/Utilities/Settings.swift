@@ -60,8 +60,8 @@ struct Settings {
 			static var contextColor:       NSColor = NSColor.fromHex("#FF5E3A")
 		}
 		struct pins {
-			static var linkPinColor:          NSColor = NSColor.fromHex("#B3F865")
-			static var linkCurveColor:        NSColor = NSColor.fromHex("#B3F865")
+//			static var linkPinColor:          NSColor = NSColor.fromHex("#B3F865")
+//			static var linkCurveColor:        NSColor = NSColor.fromHex("#B3F865")
 			static var branchTrueCurveColor:  NSColor = NSColor.fromHex("#EA772F")
 			static var branchFalseCurveColor: NSColor = NSColor.fromHex("#ea482f")
 		}
@@ -88,8 +88,8 @@ struct Settings {
 		Settings.graph.nodes.contextColor = NSColor.fromHex("#FF5E3A")
 		
 		// graph.pins
-		Settings.graph.pins.linkPinColor = NSColor.fromHex("#B3F865")
-		Settings.graph.pins.linkCurveColor = NSColor.fromHex("#B3F865")
+//		Settings.graph.pins.linkPinColor = NSColor.fromHex("#B3F865")
+//		Settings.graph.pins.linkCurveColor = NSColor.fromHex("#B3F865")
 		Settings.graph.pins.branchTrueCurveColor = NSColor.fromHex("#EA772F")
 		Settings.graph.pins.branchFalseCurveColor = NSColor.fromHex("#ea482f")
 	}
@@ -147,12 +147,12 @@ struct Settings {
 		}
 		
 		// graph.pins
-		if hasKey(key: Settings.keys.graph.pins.linkPinColor) {
-			Settings.graph.pins.linkPinColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.linkPinColor)!
-		}
-		if hasKey(key: Settings.keys.graph.pins.linkCurveColor) {
-			Settings.graph.pins.linkCurveColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.linkCurveColor)!
-		}
+//		if hasKey(key: Settings.keys.graph.pins.linkPinColor) {
+//			Settings.graph.pins.linkPinColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.linkPinColor)!
+//		}
+//		if hasKey(key: Settings.keys.graph.pins.linkCurveColor) {
+//			Settings.graph.pins.linkCurveColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.linkCurveColor)!
+//		}
 		if hasKey(key: Settings.keys.graph.pins.branchTrueCurveColor) {
 			Settings.graph.pins.branchTrueCurveColor = UserDefaults.standard.color(forKey: Settings.keys.graph.pins.branchTrueCurveColor)!
 		}
@@ -182,8 +182,8 @@ struct Settings {
 		UserDefaults.standard.set(Settings.graph.nodes.contextColor, forKey: Settings.keys.graph.nodes.contextColor)
 		
 		// graph.pins
-		UserDefaults.standard.set(Settings.graph.pins.linkPinColor, forKey: Settings.keys.graph.pins.linkPinColor)
-		UserDefaults.standard.set(Settings.graph.pins.linkCurveColor, forKey: Settings.keys.graph.pins.linkCurveColor)
+//		UserDefaults.standard.set(Settings.graph.pins.linkPinColor, forKey: Settings.keys.graph.pins.linkPinColor)
+//		UserDefaults.standard.set(Settings.graph.pins.linkCurveColor, forKey: Settings.keys.graph.pins.linkCurveColor)
 		UserDefaults.standard.set(Settings.graph.pins.branchTrueCurveColor, forKey: Settings.keys.graph.pins.branchTrueCurveColor)
 		UserDefaults.standard.set(Settings.graph.pins.branchFalseCurveColor, forKey: Settings.keys.graph.pins.branchFalseCurveColor)
 	}

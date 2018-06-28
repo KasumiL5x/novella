@@ -488,6 +488,27 @@
       "speaker" : "",
       "preview" : "",
       "uuid" : "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8"
+    },
+    {
+      "position" : {
+        "y" : 199.67565189825837,
+        "x" : -858.97645920352079
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "delivery",
+      "preview" : "",
+      "uuid" : "E719491B-7597-484E-8211-6356067A3897"
+    },
+    {
+      "position" : {
+        "y" : 191.70335417555179,
+        "x" : -623.15686211059801
+      },
+      "name" : "",
+      "uuid" : "FD50FEB4-D874-46C8-9E84-17689D7829DA",
+      "nodetype" : "context"
     }
   ],
   "graphs" : [
@@ -530,7 +551,9 @@
         "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
         "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2",
         "223ABAD4-5D40-4E2C-B870-22C86F49F2A9",
-        "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8"
+        "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8",
+        "E719491B-7597-484E-8211-6356067A3897",
+        "FD50FEB4-D874-46C8-9E84-17689D7829DA"
       ],
       "links" : [
         "577EC340-5688-40B9-B137-A087CC8A7D3E",
