@@ -17,7 +17,7 @@ class DialogLinkableView: LinkableView {
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
-		setLabelString(str: node.Name.isEmpty ? "Unnamed" : node.Name)
+		setLabelString(str: node.Name)
 		setContentString(str: node.Content)
 	}
 	required init?(coder decoder: NSCoder) {
@@ -29,10 +29,7 @@ class DialogLinkableView: LinkableView {
 	override func onMove() {
 		(Linkable as! NVDialog).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
-	override func bgTopColor() -> NSColor {
-		return Settings.graph.nodes.dialogStartColor
-	}
-	override func bgBottomColor() -> NSColor {
-		return Settings.graph.nodes.endColor
+	override func flagColor() -> NSColor {
+		return Settings.graph.nodes.dialogColor
 	}
 }

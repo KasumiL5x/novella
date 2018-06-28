@@ -23,10 +23,10 @@
   "nodes" : [
     {
       "position" : {
-        "y" : -19.743108749389648,
-        "x" : -2018.0999755859375
+        "y" : -16.271988546592183,
+        "x" : -2018.1507915348047
       },
-      "name" : "",
+      "name" : "Name",
       "content" : "Hey Juliet, is everything cool?",
       "directions" : "Concerned",
       "nodetype" : "dialog",
@@ -49,8 +49,8 @@
     },
     {
       "position" : {
-        "y" : 303.89203748229193,
-        "x" : -1221.9904876216897
+        "y" : 303.89202880859375,
+        "x" : -1221.990478515625
       },
       "name" : "",
       "content" : "What did she do?",
@@ -475,6 +475,19 @@
       "speaker" : "",
       "preview" : "Option 1",
       "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
+    },
+    {
+      "position" : {
+        "y" : -265.93856811523438,
+        "x" : -532.82037353515625
+      },
+      "name" : "",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "speaker" : "",
+      "preview" : "",
+      "uuid" : "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8"
     }
   ],
   "graphs" : [
@@ -516,7 +529,8 @@
         "11058EEC-472A-4C0F-9F06-2DFDCA268DEC",
         "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03",
         "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2",
-        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
+        "223ABAD4-5D40-4E2C-B870-22C86F49F2A9",
+        "B0B2D7C9-D0D9-4216-88D1-1BA270EBA2A8"
       ],
       "links" : [
         "577EC340-5688-40B9-B137-A087CC8A7D3E",

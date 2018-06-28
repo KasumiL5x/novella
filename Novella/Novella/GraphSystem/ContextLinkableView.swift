@@ -28,10 +28,7 @@ class ContextLinkableView: LinkableView {
 	override func onMove() {
 		(Linkable as! NVContext).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
-	override func bgTopColor() -> NSColor {
-		return Settings.graph.nodes.contextStartColor
-	}
-	override func bgBottomColor() -> NSColor {
-		return Settings.graph.nodes.endColor
+	override func flagColor() -> NSColor {
+		return Settings.graph.nodes.contextColor
 	}
 }

@@ -28,10 +28,7 @@ class DeliveryLinkableView: LinkableView {
 	override func onMove() {
 		(Linkable as! NVDelivery).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
-	override func bgTopColor() -> NSColor {
-		return Settings.graph.nodes.deliveryStartColor
-	}
-	override func bgBottomColor() -> NSColor {
-		return Settings.graph.nodes.endColor
+	override func flagColor() -> NSColor {
+		return Settings.graph.nodes.deliveryColor
 	}
 }

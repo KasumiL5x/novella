@@ -28,10 +28,7 @@ class GraphLinkableView: LinkableView {
 	override func onMove() {
 		(Linkable as? NVGraph)?.Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
-	override func bgTopColor() -> NSColor {
-		return Settings.graph.nodes.graphStartColor
-	}
-	override func bgBottomColor() -> NSColor {
-		return Settings.graph.nodes.endColor
+	override func flagColor() -> NSColor {
+		return Settings.graph.nodes.graphColor
 	}
 }
