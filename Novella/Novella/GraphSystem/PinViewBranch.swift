@@ -207,7 +207,7 @@ class PinViewBranch: PinView {
 			
 			// draw pin stroke
 			_pinStrokeLayer.path = NSBezierPath(roundedRect: _outlineRect, xRadius: 5.0, yRadius: 5.0).cgPath
-			_pinStrokeLayer.strokeColor = CGColor.white
+			_pinStrokeLayer.strokeColor = pinColor.cgColor
 			// draw true pin
 			_pinFillLayerTrue.path = NSBezierPath(ovalIn: _truePinRect).cgPath
 			if getTrueDestination() != nil {
