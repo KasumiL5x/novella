@@ -86,6 +86,7 @@ public protocol NVStoryDelegate {
 
 	// Called when an NVNode's preview is changed using NVDialog.Preview.
 	func onStoryNodePreviewChanged(preview: String, node: NVNode)
+	func onStoryNodeSizeChanged(node: NVNode)
 	// Called when an NVDialog's content is changed using NVDialog.Content.
 	func onStoryDialogContentChanged(content: String, node: NVDialog)
 	// Called when an NVDialog's directions are changed using NVDialog.Directions.
@@ -214,6 +215,8 @@ public extension NVStoryDelegate {
 	}
 	
 	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
+	}
+	func onStoryNodeSizeChanged(node: NVNode) {
 	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 	}

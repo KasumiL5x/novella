@@ -185,6 +185,9 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
 		self.updateChangeCount(.changeDone)
 	}
+	func onStoryNodeSizeChanged(node: NVNode) {
+		self.updateChangeCount(.changeDone)
+	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 		self.updateChangeCount(.changeDone)
 	}

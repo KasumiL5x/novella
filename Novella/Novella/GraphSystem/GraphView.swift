@@ -804,4 +804,9 @@ extension GraphView: NVStoryDelegate {
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
 		_allLinkableViews.first(where: {$0.Linkable == node})?.onContentChanged()
 	}
+	
+	// size changes
+	func onStoryNodeSizeChanged(node: NVNode) {
+		_allLinkableViews.first(where: {$0.Linkable == node})?.respondToSizeChange()
+	}
 }

@@ -141,6 +141,7 @@ extension NVStoryManager {
 			var entry: JSONDict = [:]
 			entry["uuid"] = curr.UUID.uuidString
 			entry["name"] = curr.Name
+			entry["size"] = curr.Size.rawValue
 			
 			entry["position"] = [
 				"x": curr.Position.x,
@@ -322,10 +323,21 @@ extension NVStoryManager {
 			let posX = curr["position"]["x"].float!
 			let posY = curr["position"]["y"].float!
 			
+			var sizeEnum: NVNode.SizeType? = nil
+			if let sizeIndex = curr["size"].int {
+				sizeEnum = NVNode.SizeType(rawValue: sizeIndex)
+				if sizeEnum == nil {
+					print("NVStoryManager::fromJSON(): Given node size failed to map to the NVNode.SizeType enum.  The index was\(sizeIndex).")
+				}
+			}
+			
 			switch curr["nodetype"].string! {
 			case "dialog":
 				let dialog = storyManager.makeDialog(uuid: uuid)
 				dialog.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				if sizeEnum != nil {
+					dialog.Size = sizeEnum!
+				}
 				if name != nil {
 					dialog.Name = name!
 				}
@@ -349,6 +361,9 @@ extension NVStoryManager {
 			case "delivery":
 				let delivery = storyManager.makeDelivery(uuid: uuid)
 				delivery.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
+				if sizeEnum != nil {
+					delivery.Size = sizeEnum!
+				}
 				if name != nil {
 					delivery.Name = name!
 				}
@@ -367,6 +382,9 @@ extension NVStoryManager {
 				
 			case "context":
 				let context = storyManager.makeContext(uuid: uuid)
+				if sizeEnum != nil {
+					context.Size = sizeEnum!
+				}
 				context.Position = NSMakePoint(CGFloat(posX), CGFloat(posY))
 				if name != nil {
 					context.Name = name!

@@ -280,7 +280,8 @@
 					"enum": ["dialog", "delivery", "cutscene", "context"]
 				},
 				"position": { "$ref": "#/definitions/position" },
-				"name": { "$ref": "#/definitions/name" }
+				"name": { "$ref": "#/definitions/name" },
+				"size": { "type": "integer" }
 			},
 			"required": ["uuid", "nodetype", "position"],
 			// MARK: node-dependencies

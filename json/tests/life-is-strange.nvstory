@@ -32,6 +32,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "",
+      "size" : 1,
       "uuid" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981"
     },
     {
@@ -45,6 +46,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "We're \"cool\"",
+      "size" : 1,
       "uuid" : "0E492661-9F49-4E41-A1F8-0FCCD60531AA"
     },
     {
@@ -58,6 +60,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "What did she do?",
+      "size" : 1,
       "uuid" : "D0804EB8-E94B-4155-9C31-91DCA4A626DB"
     },
     {
@@ -71,6 +74,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "2721C72B-B0E8-491A-802B-3F0D780A02BB"
     },
     {
@@ -84,6 +88,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "E86E0287-09BB-48AF-B14A-46230BBFE58A"
     },
     {
@@ -97,6 +102,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "She's your friend.",
+      "size" : 1,
       "uuid" : "E7A30B3F-9342-4B34-A356-38C1D826FCD9"
     },
     {
@@ -110,6 +116,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "E7AB59E7-8EB4-45D2-B3B5-099A8C90EA6F"
     },
     {
@@ -123,6 +130,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "B5E312B1-92C8-4676-9B9D-D5EFD71B6930"
     },
     {
@@ -136,6 +144,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next (join)",
+      "size" : 1,
       "uuid" : "9EB999FC-3311-4D6D-8C13-38F501AF2C9D"
     },
     {
@@ -149,6 +158,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "D54A861D-C280-4080-9457-BA59EAD7DAF3"
     },
     {
@@ -162,6 +172,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "EF6D4383-9136-4B88-A9A8-34A7514BF355"
     },
     {
@@ -175,6 +186,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Juliet Patson",
+      "size" : 1,
       "uuid" : "D21835B4-F548-4950-8B1C-335FA786D0CC"
     },
     {
@@ -188,6 +200,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Juliet Mason",
+      "size" : 1,
       "uuid" : "38FB6129-2D20-4FEA-91D9-839F63A2AB5B"
     },
     {
@@ -201,6 +214,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Juliet Olson",
+      "size" : 1,
       "uuid" : "7277F3A1-6875-4527-87D0-803FFAC35DF5"
     },
     {
@@ -214,6 +228,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Juliet Watson",
+      "size" : 1,
       "uuid" : "3EC2EB16-4D94-4213-90D6-872161E5677F"
     },
     {
@@ -227,6 +242,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next (join)",
+      "size" : 1,
       "uuid" : "E8871D27-C6E4-40C2-A222-B49E374A9253"
     },
     {
@@ -240,6 +256,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "F08CAF94-680E-471A-90AC-EF8EF9976AB2"
     },
     {
@@ -253,6 +270,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "2A178593-A8DF-4AAB-857D-0B80FFAA2434"
     },
     {
@@ -266,6 +284,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "E0862791-F19D-4944-A214-945CE8D28BEB"
     },
     {
@@ -279,6 +298,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "60E2AB2D-322B-46EC-8DF1-301EB592507A"
     },
     {
@@ -292,6 +312,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "17B2BA0E-AA7E-4F45-A3A0-BA721BC07B4C"
     },
     {
@@ -305,6 +326,7 @@
       "nodetype" : "dialog",
       "speaker" : "90E03588-638C-47E3-8F12-885E51D84D5A",
       "preview" : "Next (join all)",
+      "size" : 1,
       "uuid" : "853E568A-37B6-4EE7-968D-A26F8E16F499"
     },
     {
@@ -318,6 +340,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Juliet Watson, you be nice! (after rewind)",
+      "size" : 1,
       "uuid" : "10890E31-FCC3-42D7-8CA9-CE245F2D4C96"
     },
     {
@@ -331,6 +354,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "1A057213-3AE1-4AC3-BF84-821F30A3985F"
     },
     {
@@ -344,6 +368,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "96568790-772F-4D68-A681-03FF6EA12D98"
     },
     {
@@ -357,6 +382,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "CC51D119-E14E-470D-A41D-33D0AC0F84FA"
     },
     {
@@ -370,6 +396,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "How do you know?",
+      "size" : 1,
       "uuid" : "D2AA3003-6509-487E-8DF2-87058D24C954"
     },
     {
@@ -383,6 +410,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Would Dana do that?",
+      "size" : 1,
       "uuid" : "3E19E174-3B4B-49E7-B13E-6A5C8B7AC60F"
     },
     {
@@ -396,6 +424,7 @@
       "nodetype" : "dialog",
       "speaker" : "5BBAEC9F-2C20-45F8-B710-CC865EF69B9A",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "11058EEC-472A-4C0F-9F06-2DFDCA268DEC"
     },
     {
@@ -409,6 +438,7 @@
       "nodetype" : "dialog",
       "speaker" : "124272CE-E3CC-42C6-842D-225AF45F0DE9",
       "preview" : "Next",
+      "size" : 1,
       "uuid" : "7DC75076-8E15-4B40-9EB9-F53D7B0E6F03"
     },
     {
@@ -422,6 +452,7 @@
       "nodetype" : "dialog",
       "speaker" : "",
       "preview" : "Test Branch True",
+      "size" : 1,
       "uuid" : "9FE2BFB3-2F36-4B3F-BBE6-1AF3BD19B3C2"
     },
     {
@@ -435,6 +466,7 @@
       "nodetype" : "dialog",
       "speaker" : "",
       "preview" : "Test Branch False",
+      "size" : 1,
       "uuid" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
     },
     {
@@ -448,6 +480,7 @@
       "nodetype" : "dialog",
       "speaker" : "",
       "preview" : "",
+      "size" : 1,
       "uuid" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13"
     },
     {
@@ -461,6 +494,7 @@
       "nodetype" : "dialog",
       "speaker" : "",
       "preview" : "Option 2",
+      "size" : 1,
       "uuid" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
     },
     {
@@ -474,6 +508,7 @@
       "nodetype" : "dialog",
       "speaker" : "",
       "preview" : "Option 1",
+      "size" : 1,
       "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
     }
   ],

@@ -10,14 +10,6 @@ import Cocoa
 import NovellaModel
 
 class LinkableView: NSView {
-	// MARK: - Enums -
-	enum SizeType: Int {
-		case compact
-		case small
-		case medium
-		case large
-	}
-	
 	// MARK: - Constants -
 	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
 	static let HIT_IGNORE_TAG: Int = 10
@@ -31,7 +23,6 @@ class LinkableView: NSView {
 	private let _nameLabel: NSTextField
 	private let _contentLabel: NSTextField
 	private let _entryLabel: NSTextField
-	private var _sizeType: SizeType
 	//
 	private var _clickGesture: NSClickGestureRecognizer?
 	private var _doubleClickGesture: NSClickGestureRecognizer?
@@ -71,25 +62,6 @@ class LinkableView: NSView {
 			redraw()
 		}
 	}
-	public var Size: SizeType {
-		get{ return _sizeType }
-		set {
-			_sizeType = newValue
-			// reload and therefore reposition visual elements
-			onNameChanged()
-			onContentChanged()
-			// actually redraw this view
-			redraw()
-			
-			// layout the pins since the size changed
-			layoutPins()
-			// resize to fit subviews which contains the pins and also fits the new widget size
-			sizeToFitSubviews()
-			
-			// update curves as the inputs to these need repositioning based on the new widget size
-			_graphView.updateCurves()
-		}
-	}
 	override var wantsDefaultClipping: Bool {
 		return false
 	}
@@ -117,8 +89,6 @@ class LinkableView: NSView {
 		self._entryLabel.tag = LinkableView.HIT_IGNORE_TAG
 		self._entryLabel.textColor = NSColor.fromHex("#f2f2f2")
 		self._entryLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .bold)
-		//
-		self._sizeType = .small
 		//
 		self._clickGesture = nil
 		self._doubleClickGesture = nil
@@ -263,16 +233,24 @@ class LinkableView: NSView {
 	}
 	
 	@objc private func onContextSizeCompact() {
-		Size = .compact
+		if let asNode = Linkable as? NVNode {
+			asNode.Size = .compact
+		}
 	}
 	@objc private func onContextSizeSmall() {
-		Size = .small
+		if let asNode = Linkable as? NVNode {
+			asNode.Size = .small
+		}
 	}
 	@objc private func onContextSizeMedium() {
-		Size = .medium
+		if let asNode = Linkable as? NVNode {
+			asNode.Size = .medium
+		}
 	}
 	@objc private func onContextSizeLarge() {
-		Size = .large
+		if let asNode = Linkable as? NVNode {
+			asNode.Size = .large
+		}
 	}
 	
 	// MARK: Object Functions
@@ -281,6 +259,22 @@ class LinkableView: NSView {
 		_contextItemAddBranch.isEnabled = !_trashMode
 		_contextItemEntry.isEnabled = !_trashMode
 		_contextItemTrash.title = _trashMode ? "Untrash" : "Trash"
+	}
+	
+	func respondToSizeChange() {
+		// reload and therefore reposition visual elements
+		onNameChanged()
+		onContentChanged()
+		// actually redraw this view
+		redraw()
+		
+		// layout the pins since the size changed
+		layoutPins()
+		// resize to fit subviews which contains the pins and also fits the new widget size
+		sizeToFitSubviews()
+		
+		// update curves as the inputs to these need repositioning based on the new widget size
+		_graphView.updateCurves()
 	}
 	
 	func setLabelString(str: String) {
@@ -319,16 +313,29 @@ class LinkableView: NSView {
 		// 100 = small
 		// 150 = medium
 		// 200 = large
+		
 		let width: CGFloat = 200.0
-		switch _sizeType {
-		case .compact:
-			return NSMakeRect(0.0, 0.0, width, 40.0)
-		case .small:
-			return NSMakeRect(0.0, 0.0, width, 100.0)
-		case .medium:
-			return NSMakeRect(0.0, 0.0, width, 150.0)
-		case .large:
-			return NSMakeRect(0.0, 0.0, width, 200.0)
+		let compactSize = NSMakeRect(0.0, 0.0, width, 40.0)
+		let smallSize = NSMakeRect(0.0, 0.0, width, 100.0)
+		let mediumSize = NSMakeRect(0.0, 0.0, width, 150.0)
+		let largeSize = NSMakeRect(0.0, 0.0, width, 200.0)
+		
+		if Linkable is NVNode {
+			switch (Linkable as! NVNode).Size {
+			case .compact:
+				return compactSize
+			case .small:
+				return smallSize
+			case .medium:
+				return mediumSize
+			case .large:
+				return largeSize
+			default:
+				print("LinkableView::widgetRect() encountered an NVNode with an unexpected size.")
+				return smallSize
+			}
+		} else {
+			return compactSize
 		}
 	}
 	func onMove() {
