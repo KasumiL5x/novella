@@ -62,9 +62,10 @@ class MainWindowController: NSWindowController {
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "PreviewSegue") {
-			if let vc = segue.destinationController as? ReaderWindowController {
-				vc.setDocument(doc: self.document as! NovellaDocument)
+			guard let doc = self.document as? NovellaDocument, let vc = segue.destinationController as? ReaderWindowController else {
+				return
 			}
+			vc.setDocument(doc: doc)
 		}
 	}
 	
