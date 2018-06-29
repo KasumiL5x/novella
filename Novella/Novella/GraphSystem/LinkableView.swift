@@ -226,7 +226,10 @@ class LinkableView: NSView {
 		}
 	}
 	@objc private func onContextSetEntry() {
+		let currentEntry = _graphView.getLinkableViewFrom(linkable: _graphView.NovellaGraph.Entry, includeParentGraphs: false)
 		try! _graphView.NovellaGraph.setEntry(self.Linkable)
+		currentEntry?.redraw()
+		self.redraw()
 	}
 	@objc private func onContextTrash() {
 		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
@@ -541,10 +544,14 @@ class LinkableView: NSView {
 			
 			// draw the entry point somewhere on the widget rect
 			if self.Linkable == _graphView.NovellaGraph.Entry {
-				let entrySize = drawingRect.width * 0.075
-				let entryRect = NSMakeRect(drawingRect.maxX - entrySize*1.5, drawingRect.maxY - entrySize*1.5, entrySize, entrySize)
-				NSColor.fromHex("#ff5d5d").setFill()
-				NSBezierPath(ovalIn: entryRect).fill()
+				let entrySize = drawingRect.width * 0.03
+				let arrowCenter = NSMakePoint(drawingRect.maxX - entrySize*2.0, drawingRect.maxY - entrySize*2.0)
+				let arrowPath = NSBezierPath()
+				arrowPath.move(to: NSMakePoint(arrowCenter.x - entrySize, arrowCenter.y + entrySize))
+				arrowPath.line(to: NSMakePoint(arrowCenter.x + entrySize, arrowCenter.y))
+				arrowPath.line(to: NSMakePoint(arrowCenter.x - entrySize, arrowCenter.y - entrySize))
+				NSColor.fromHex("#4ecca3").setFill()
+				arrowPath.fill()
 			}
 			
 			context.restoreGState()
