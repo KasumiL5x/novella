@@ -83,8 +83,6 @@ class GraphView: NSView {
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
 		_graphViewMenu.addItem(addMenu)
-		_graphViewMenu.addItem(withTitle: "Un/Trash Selection", action: #selector(GraphView.onGraphViewMenuTrashSelection), keyEquivalent: "")
-		_graphViewMenu.addItem(withTitle: "Empty Trash", action: #selector(GraphView.onGraphViewMenuEmptyTrash), keyEquivalent: "")
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -474,14 +472,6 @@ extension GraphView {
 	}
 	@objc private func onGraphViewMenuAddGraph() {
 		makeGraph(at: _lastContextLocation)
-	}
-	@objc private func onGraphViewMenuTrashSelection() {
-		for curr in _selectionHandler!.Selection {
-			curr.Linkable.InTrash ? curr.Linkable.untrash() : curr.Linkable.trash()
-		}
-	}
-	@objc private func onGraphViewMenuEmptyTrash() {
-		_document.Manager.emptyTrash()
 	}
 }
 
