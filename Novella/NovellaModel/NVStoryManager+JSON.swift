@@ -342,7 +342,7 @@ extension NVStoryManager {
 					dialog.Name = name!
 				}
 				if let speakerUUID = curr["speaker"].string {
-					if let speakerEntity = storyManager.find(uuid: speakerUUID) as? NVEntity {
+					if !speakerUUID.isEmpty, let speakerEntity = storyManager.find(uuid: speakerUUID) as? NVEntity {
 						dialog.Speaker = speakerEntity
 					} else {
 						print("NVStoryManager::fromJSON(): Unable to find Entity by UUID (\(speakerUUID)) when setting Dialog's speaker (\(uuid.uuidString))")
