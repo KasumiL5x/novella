@@ -94,6 +94,13 @@ public class NVStoryManager {
 		setupJavascript()
 	}
 	
+	public func prepareForReading() {
+		// reset all variables to their initial value
+		_variables.forEach { (variable) in
+			variable.setValue(variable.InitialValue)
+		}
+	}
+	
 	func find(uuid: String) -> NVObject? {
 		return _identifiables.first(where: {$0.UUID.uuidString == uuid})
 	}

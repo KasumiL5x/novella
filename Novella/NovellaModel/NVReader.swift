@@ -41,6 +41,9 @@ public class NVReader {
 		_graph = graph
 		_currentNode = startNode
 		
+		// prepare for a fresh reading
+		_manager.prepareForReading()
+		
 		// kick everything off
 		_delegate.readerNodeWillConsume(node: startNode, outputs: getNodeLinks(startNode))
 	}
