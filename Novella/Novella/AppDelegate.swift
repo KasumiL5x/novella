@@ -17,16 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		Settings.saveDefaults() // uncomment to force write of settings
 		Settings.loadDefaults()
 	}
-	
-	func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-		if !flag {
-			for x in sender.windows {
-				x.makeKeyAndOrderFront(self)
-			}
-		}
-		return true
-	}
-	
+
 	@IBAction func onPreferences(_ sender: NSMenuItem) {
 		if nil == _preferencesController {
 			let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Preferences"), bundle: nil)
