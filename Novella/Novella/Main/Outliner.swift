@@ -13,6 +13,7 @@ class AllGraphsOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
 	private var _itemMenu: NSMenu!
+	private var _trashMenuItem: NSMenuItem!
 	
 	var MVC: MainViewController? {
 		get{ return _mvc }
@@ -34,6 +35,9 @@ class AllGraphsOutlineView: NSOutlineView {
 		
 		_itemMenu = NSMenu()
 		_itemMenu.addItem(withTitle: "Add Sub Graph", action: #selector(AllGraphsOutlineView.onItemAdd), keyEquivalent: "")
+		_itemMenu.addItem(NSMenuItem.separator())
+		_trashMenuItem = NSMenuItem(title: "Trash", action: #selector(AllGraphsOutlineView.onItemTrash), keyEquivalent: "")
+		_itemMenu.addItem(_trashMenuItem)
 	}
 	
 	override func menu(for event: NSEvent) -> NSMenu? {
@@ -55,6 +59,12 @@ class AllGraphsOutlineView: NSOutlineView {
 	@objc private func onItemAdd() {
 		if let parent = self.item(atRow: self.selectedRow) as? NVGraph {
 			_mvc?.addGraph(parent: parent)
+		}
+	}
+	@objc private func onItemTrash() {
+		if let item = self.item(atRow: self.selectedRow) as? NVGraph {
+			item.InTrash ? item.untrash() : item.trash()
+			_trashMenuItem.title = item.InTrash ? "Untrash" : "Trash"
 		}
 	}
 }
@@ -95,6 +105,7 @@ class SelectedGraphOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
 	private var _itemMenu: NSMenu!
+	private var _trashMenuItem: NSMenuItem!
 	
 	var MVC: MainViewController? {
 		get{ return _mvc }
@@ -115,7 +126,8 @@ class SelectedGraphOutlineView: NSOutlineView {
 		_blankMenu.addItem(withTitle: "Add...", action: nil, keyEquivalent: "")
 		
 		_itemMenu = NSMenu()
-		_itemMenu.addItem(withTitle: "Toggle Trash", action: #selector(SelectedGraphOutlineView.onItemTrash), keyEquivalent: "")
+		_trashMenuItem = NSMenuItem(title: "Trash", action: #selector(SelectedGraphOutlineView.onItemTrash), keyEquivalent: "")
+		_itemMenu.addItem(_trashMenuItem)
 		
 		self.doubleAction = #selector(SelectedGraphOutlineView.onDoubleAction)
 	}
@@ -141,6 +153,7 @@ class SelectedGraphOutlineView: NSOutlineView {
 	@objc private func onItemTrash() {
 		if let item = self.item(atRow: self.selectedRow) as? NVObject {
 			item.InTrash ? item.untrash() : item.trash()
+			_trashMenuItem.title = item.InTrash ? "Untrash" : "Trash"
 		}
 	}
 }
