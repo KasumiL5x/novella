@@ -177,10 +177,18 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	private var _deliveryImage: NSImage?
 	private var _linkImage: NSImage?
 	
+	private var _filter: String
+	
 	var Graph: NVGraph? {
 		get{ return _graph }
 		set{
 			_graph = newValue
+		}
+	}
+	var Filter: String {
+		get{ return _filter }
+		set{
+			_filter = newValue
 		}
 	}
 	
@@ -191,6 +199,8 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		self._graphImage = NSImage(named: NSImage.Name(rawValue: "Graph"))
 		self._deliveryImage = NSImage(named: NSImage.Name(rawValue: "Delivery"))
 		self._linkImage = NSImage(named: NSImage.Name(rawValue: "Link"))
+		
+		self._filter = ""
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
@@ -206,35 +216,122 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		return customRow
 	}
 	
+	private func filter(node: NVNode) -> Bool {
+		return _filter.isEmpty || node.Name.lowercased().contains(_filter.lowercased())
+	}
+	private func filter(graph: NVGraph) -> Bool {
+		return _filter.isEmpty || graph.Name.lowercased().contains(_filter.lowercased())
+	}
+	private func filter(link: NVBaseLink) -> Bool {
+		if _filter.isEmpty {
+			return true
+		}
+		
+		switch link {
+		case is NVLink:
+			let asLink = link as! NVLink
+			if asLink.Origin.Name.lowercased().contains(_filter.lowercased()) {
+				return true
+			}
+			if let dest = asLink.Transfer.Destination {
+				if dest.Name.lowercased().contains(_filter.lowercased()) {
+					return true
+				}
+			}
+			
+		case is NVBranch:
+			let asBranch = link as! NVBranch
+			if asBranch.Origin.Name.lowercased().contains(_filter.lowercased()) {
+				return true
+			}
+			if let trueDest = asBranch.TrueTransfer.Destination {
+				if trueDest.Name.lowercased().contains(_filter.lowercased()) {
+					return true
+				}
+			}
+			if let falseDest = asBranch.FalseTransfer.Destination {
+				if falseDest.Name.lowercased().contains(_filter.lowercased()) {
+					return true
+				}
+			}
+			
+		default:
+			print("SelecterGraphDelegate tried to filter an unhandled NVBaseLink: \(link).")
+		}
+		
+		return false
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if nil == _graph {
 			return 0
 		}
 		
 		if item == nil {
-			return _graph!.Nodes.count +
-			       _graph!.Graphs.count +
-			       _graph!.Links.count
+			var count = 0
+			_graph!.Nodes.forEach { (node) in
+				if filter(node: node) {
+					count += 1
+				}
+			}
+			_graph!.Graphs.forEach { (graph) in
+				if filter(graph: graph) {
+					count += 1
+				}
+			}
+			_graph!.Links.forEach { (link) in
+				if filter(link: link) {
+					count += 1
+				}
+			}
+			return count
 		}
 		
 		return 0 // everything else
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if index < _graph!.Nodes.count {
-			return _graph!.Nodes[index]
+		// current index used to check against given index
+		var indexCount = 0
+		for node in _graph!.Nodes {
+			if filter(node: node) {
+				if indexCount == index {
+					return node
+				}
+				indexCount += 1
+			}
 		}
-		var offset = _graph!.Nodes.count
+		for graph in _graph!.Graphs {
+			if filter(graph: graph) {
+				if indexCount == index {
+					return graph
+				}
+				indexCount += 1
+			}
+		}
+		for link in _graph!.Links {
+			if filter(link: link) {
+				if indexCount == index {
+					return link
+				}
+				indexCount += 1
+			}
+		}
 		
-		if index < (offset + _graph!.Graphs.count) {
-			return _graph!.Graphs[index - offset]
-		}
-		offset += _graph!.Graphs.count
-		
-		if index < (offset + _graph!.Links.count) {
-			return _graph!.Links[index - offset]
-		}
-		offset += _graph!.Links.count
+//		if index < _graph!.Nodes.count {
+//			return _graph!.Nodes[index]
+//		}
+//		var offset = _graph!.Nodes.count
+//
+//		if index < (offset + _graph!.Graphs.count) {
+//			return _graph!.Graphs[index - offset]
+//		}
+//		offset += _graph!.Graphs.count
+//
+//		if index < (offset + _graph!.Links.count) {
+//			return _graph!.Links[index - offset]
+//		}
+//		offset += _graph!.Links.count
 		
 		fatalError("Shouldn't ever happen.")
 	}

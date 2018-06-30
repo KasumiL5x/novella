@@ -1285,6 +1285,9 @@
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </searchFieldCell>
+                                                                        <connections>
+                                                                            <action selector="onOutlinerFilterChanged:" target="SBf-Of-AwL" id="yac-Dw-mhU"/>
+                                                                        </connections>
                                                                     </searchField>
                                                                 </subviews>
                                                                 <constraints>

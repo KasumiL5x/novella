@@ -136,6 +136,10 @@ class MainViewController: NSViewController {
 		getTabItemFor(graph: graph)?.title = graph.Name
 		_tabController.reloadTabs()
 	}
+	@IBAction func onOutlinerFilterChanged(_ sender: NSSearchField) {
+		_selectedGraphDelegate?.Filter = sender.stringValue
+		reloadSelectedGraph()
+	}
 }
 
 // MARK: - Outliner -
