@@ -1,5 +1,5 @@
 //
-//  OutlinerDelegateDataSource.swift
+//  Outliner.swift
 //  Novella
 //
 //  Created by Daniel Green on 02/06/2018.
@@ -9,6 +9,8 @@
 import Cocoa
 import NovellaModel
 
+// MARK: - All Graphs Outliner -
+// MARK: Fancy Cell
 class AllGraphsFancyCell: NSTableCellView {
 	@IBOutlet private weak var _trashButton: NSButton!
 	private var _trashEmptyImage: NSImage?
@@ -40,10 +42,7 @@ class AllGraphsFancyCell: NSTableCellView {
 		}
 	}
 }
-
-// TODO: Implement the delegate for the above just like the selected one.
-// all i've done is add the FancyCell - it's not yet used like it is in selected.
-
+// MARK: Outline View
 class AllGraphsOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
@@ -103,7 +102,63 @@ class AllGraphsOutlineView: NSOutlineView {
 		}
 	}
 }
+// MARK: Delegate
+class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
+	fileprivate var _mvc: MainViewController
+	
+	init(mvc: MainViewController) {
+		self._mvc = mvc
+	}
+	
+	func outlineViewSelectionDidChange(_ notification: Notification) {
+		let outlineView = (notification.object as! NSOutlineView)
+		
+		_mvc.setSelectedGraph(graph: outlineView.item(atRow: outlineView.selectedRow) as? NVGraph)
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		if item == nil {
+			return _mvc.Document.Manager.Story.Graphs.count
+		}
+		
+		return (item as! NVGraph).Graphs.count
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		if item == nil {
+			return _mvc.Document.Manager.Story.Graphs[index]
+		}
+		return (item as! NVGraph).Graphs[index]
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+		return (item as! NVGraph).Graphs.count > 0
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+		var view: NSTableCellView? = nil
+		
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? AllGraphsFancyCell
+		let asGraph = item as! NVGraph
+		(view as! AllGraphsFancyCell)._graph = asGraph
+		(view as! AllGraphsFancyCell).setTrashIcon(asGraph.InTrash)
+		view?.textField?.stringValue = asGraph.Name
+		
+		return view
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
+		rowView.backgroundColor = NSColor.fromHex("#F0F0F0")
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+		let customRow = OutlinerTableRowView(frame: NSRect.zero)
+		return customRow
+	}
+}
 
+// MARK: - Selected Graph Outliner -
+// MARK: Fancy Cell
 class SelectedGraphFancyCell: NSTableCellView {
 	@IBOutlet weak var _trashButton: NSButton!
 	private var _trashEmptyImage: NSImage?
@@ -135,7 +190,7 @@ class SelectedGraphFancyCell: NSTableCellView {
 		}
 	}
 }
-
+// MARK: Outliner
 class SelectedGraphOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
@@ -202,7 +257,7 @@ class OutlinerTableRowView: NSTableRowView {
 		}
 	}
 }
-
+// MARK: Delegate
 class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
 	private var _graph: NVGraph?
 	private var _mvc: MainViewController
@@ -353,21 +408,6 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			}
 		}
 		
-//		if index < _graph!.Nodes.count {
-//			return _graph!.Nodes[index]
-//		}
-//		var offset = _graph!.Nodes.count
-//
-//		if index < (offset + _graph!.Graphs.count) {
-//			return _graph!.Graphs[index - offset]
-//		}
-//		offset += _graph!.Graphs.count
-//
-//		if index < (offset + _graph!.Links.count) {
-//			return _graph!.Links[index - offset]
-//		}
-//		offset += _graph!.Links.count
-		
 		fatalError("Shouldn't ever happen.")
 	}
 	
@@ -427,58 +467,4 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		return view
 	}
 	
-}
-
-class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
-	fileprivate var _mvc: MainViewController
-	
-	init(mvc: MainViewController) {
-		self._mvc = mvc
-	}
-	
-	func outlineViewSelectionDidChange(_ notification: Notification) {
-		let outlineView = (notification.object as! NSOutlineView)
-		
-		_mvc.setSelectedGraph(graph: outlineView.item(atRow: outlineView.selectedRow) as? NVGraph)
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if item == nil {
-			return _mvc.Document.Manager.Story.Graphs.count
-		}
-		
-		return (item as! NVGraph).Graphs.count
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if item == nil {
-			return _mvc.Document.Manager.Story.Graphs[index]
-		}
-		return (item as! NVGraph).Graphs[index]
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		return (item as! NVGraph).Graphs.count > 0
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-		var view: NSTableCellView? = nil
-		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? AllGraphsFancyCell
-		let asGraph = item as! NVGraph
-		(view as! AllGraphsFancyCell)._graph = asGraph
-		(view as! AllGraphsFancyCell).setTrashIcon(asGraph.InTrash)
-		view?.textField?.stringValue = asGraph.Name
-		
-		return view
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
-		rowView.backgroundColor = NSColor.fromHex("#F0F0F0")
-	}
-	
-	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
-		let customRow = OutlinerTableRowView(frame: NSRect.zero)
-		return customRow
-	}
 }

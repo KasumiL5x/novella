@@ -1149,27 +1149,6 @@
                                                                                                 <outlet property="textField" destination="FuU-Bd-D96" id="ohh-Dc-hkB"/>
                                                                                             </connections>
                                                                                         </tableCellView>
-                                                                                        <tableCellView identifier="TextCell" id="VM1-0M-SJR" userLabel="Text Cell">
-                                                                                            <rect key="frame" x="0.0" y="25" width="186" height="25"/>
-                                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                                            <subviews>
-                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5bu-sE-ZND">
-                                                                                                    <rect key="frame" x="0.0" y="4" width="186" height="17"/>
-                                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Unnamed" id="Rqu-E7-BCQ">
-                                                                                                        <font key="font" metaFont="system"/>
-                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                                    </textFieldCell>
-                                                                                                    <connections>
-                                                                                                        <action selector="onAllGraphsNameChanged:" target="SBf-Of-AwL" id="CJx-8D-Lkp"/>
-                                                                                                    </connections>
-                                                                                                </textField>
-                                                                                            </subviews>
-                                                                                            <connections>
-                                                                                                <outlet property="textField" destination="5bu-sE-ZND" id="33e-f6-Ul1"/>
-                                                                                            </connections>
-                                                                                        </tableCellView>
                                                                                     </prototypeCellViews>
                                                                                 </tableColumn>
                                                                             </tableColumns>
