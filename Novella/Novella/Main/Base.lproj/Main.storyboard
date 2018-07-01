@@ -1112,8 +1112,45 @@
                                                                                     </textFieldCell>
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                     <prototypeCellViews>
-                                                                                        <tableCellView identifier="TextCell" id="VM1-0M-SJR" userLabel="Text Cell">
+                                                                                        <tableCellView identifier="FancyCell" id="81s-AX-wK5" userLabel="Fancy Cell" customClass="AllGraphsFancyCell" customModule="Novella" customModuleProvider="target">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="186" height="25"/>
+                                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                            <subviews>
+                                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FuU-Bd-D96">
+                                                                                                    <rect key="frame" x="0.0" y="4" width="167" height="17"/>
+                                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Unnamed" id="74o-4Y-K4V">
+                                                                                                        <font key="font" metaFont="system"/>
+                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </textFieldCell>
+                                                                                                </textField>
+                                                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="g5i-Tk-FKG">
+                                                                                                    <rect key="frame" x="166" y="2" width="20" height="20"/>
+                                                                                                    <constraints>
+                                                                                                        <constraint firstAttribute="height" constant="20" id="STu-Jg-unQ"/>
+                                                                                                        <constraint firstAttribute="width" constant="20" id="eZn-u7-5WD"/>
+                                                                                                    </constraints>
+                                                                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTrashEmpty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Xxd-Gz-wei">
+                                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                                        <font key="font" metaFont="system"/>
+                                                                                                    </buttonCell>
+                                                                                                    <connections>
+                                                                                                        <action selector="onTrash:" target="81s-AX-wK5" id="aR7-3y-4o9"/>
+                                                                                                    </connections>
+                                                                                                </button>
+                                                                                            </subviews>
+                                                                                            <constraints>
+                                                                                                <constraint firstAttribute="trailing" secondItem="g5i-Tk-FKG" secondAttribute="trailing" id="0Yt-HJ-fR4"/>
+                                                                                                <constraint firstItem="g5i-Tk-FKG" firstAttribute="centerY" secondItem="81s-AX-wK5" secondAttribute="centerY" id="1FH-ix-39A"/>
+                                                                                            </constraints>
+                                                                                            <connections>
+                                                                                                <outlet property="_trashButton" destination="g5i-Tk-FKG" id="49y-ud-f7j"/>
+                                                                                                <outlet property="textField" destination="FuU-Bd-D96" id="ohh-Dc-hkB"/>
+                                                                                            </connections>
+                                                                                        </tableCellView>
+                                                                                        <tableCellView identifier="TextCell" id="VM1-0M-SJR" userLabel="Text Cell">
+                                                                                            <rect key="frame" x="0.0" y="25" width="186" height="25"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
                                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5bu-sE-ZND">
@@ -1486,7 +1523,7 @@
                 </viewController>
                 <customObject id="AdQ-fQ-RMe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76" y="1008"/>
+            <point key="canvasLocation" x="75.5" y="1008"/>
         </scene>
     </scenes>
     <resources>

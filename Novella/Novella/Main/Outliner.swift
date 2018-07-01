@@ -9,6 +9,41 @@
 import Cocoa
 import NovellaModel
 
+class AllGraphsFancyCell: NSTableCellView {
+	@IBOutlet private weak var _trashButton: NSButton!
+	private var _trashEmptyImage: NSImage?
+	private var _trashFullImage: NSImage?
+	var _graph: NVGraph?
+	
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		setup()
+	}
+	required init?(coder decoder: NSCoder) {
+		super.init(coder: decoder)
+		setup()
+	}
+	
+	private func setup() {
+		_trashEmptyImage = NSImage(named: NSImage.Name.trashEmpty)
+		_trashFullImage = NSImage(named: NSImage.Name.trashFull)
+	}
+	
+	func setTrashIcon(_ trash: Bool) {
+		_trashButton.image = trash ? _trashFullImage : _trashEmptyImage
+	}
+	
+	@IBAction func onTrash(_ sender: NSButton) {
+		if let graph = _graph {
+			graph.InTrash ? graph.untrash() : graph.trash()
+			setTrashIcon(graph.InTrash)
+		}
+	}
+}
+
+// TODO: Implement the delegate for the above just like the selected one.
+// all i've done is add the FancyCell - it's not yet used like it is in selected.
+
 class AllGraphsOutlineView: NSOutlineView {
 	private var _mvc: MainViewController?
 	private var _blankMenu: NSMenu!
@@ -429,8 +464,11 @@ class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegat
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView
-		view?.textField?.stringValue = (item as! NVGraph).Name
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? AllGraphsFancyCell
+		let asGraph = item as! NVGraph
+		(view as! AllGraphsFancyCell)._graph = asGraph
+		(view as! AllGraphsFancyCell).setTrashIcon(asGraph.InTrash)
+		view?.textField?.stringValue = asGraph.Name
 		
 		return view
 	}
