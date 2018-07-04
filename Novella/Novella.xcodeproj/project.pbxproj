@@ -98,7 +98,6 @@
 		65F7F8A420C3182F004663D6 /* GraphTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8A220C3182F004663D6 /* GraphTabViewController.swift */; };
 		65F7F8A520C3182F004663D6 /* VariableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8A320C3182F004663D6 /* VariableTabViewController.swift */; };
 		65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8AD20C3187E004663D6 /* Settings.swift */; };
-		65F7F8B320C3195A004663D6 /* KPCTabsControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F8B120C3195A004663D6 /* KPCTabsControl.framework */; };
 		65F7F8B420C3195A004663D6 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F8B220C3195A004663D6 /* Highlightr.framework */; };
 		65F7F8BD20C31A07004663D6 /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B720C31A06004663D6 /* Popovers.storyboard */; };
 		65F7F8BE20C31A07004663D6 /* TabPages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B820C31A06004663D6 /* TabPages.storyboard */; };
@@ -223,7 +222,6 @@
 		65F7F8A220C3182F004663D6 /* GraphTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTabViewController.swift; sourceTree = "<group>"; };
 		65F7F8A320C3182F004663D6 /* VariableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTabViewController.swift; sourceTree = "<group>"; };
 		65F7F8AD20C3187E004663D6 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		65F7F8B120C3195A004663D6 /* KPCTabsControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KPCTabsControl.framework; path = Carthage/Build/Mac/KPCTabsControl.framework; sourceTree = "<group>"; };
 		65F7F8B220C3195A004663D6 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		65F7F8B720C31A06004663D6 /* Popovers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
 		65F7F8B820C31A06004663D6 /* TabPages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TabPages.storyboard; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */,
-				65F7F8B320C3195A004663D6 /* KPCTabsControl.framework in Frameworks */,
 				65F7F8B420C3195A004663D6 /* Highlightr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,7 +306,6 @@
 			isa = PBXGroup;
 			children = (
 				65F7F8B220C3195A004663D6 /* Highlightr.framework */,
-				65F7F8B120C3195A004663D6 /* KPCTabsControl.framework */,
 				65F7F83020C313F6004663D6 /* SwiftyJSON.framework */,
 				6513106020C30F470078C30C /* JSONSchema.framework */,
 			);
@@ -685,11 +681,9 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/Highlightr.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/KPCTabsControl.framework",
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Highlightr.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KPCTabsControl.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
