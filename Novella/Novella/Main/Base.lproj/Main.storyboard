@@ -737,7 +737,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onToolbarVariableEditor:" target="jGA-0Y-lOj" id="ukQ-IG-Bp7"/>
+                                            <segue destination="pao-oB-VAa" kind="show" identifier="VariableSegue" id="Omn-6S-RqF"/>
                                         </connections>
                                     </button>
                                 </toolbarItem>
@@ -854,7 +854,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onToolbarEntityEditor:" target="jGA-0Y-lOj" id="RnB-H0-bK5"/>
+                                            <segue destination="OaF-xx-T5x" kind="show" identifier="EntitySegue" id="xf6-EY-vzg"/>
                                         </connections>
                                     </button>
                                 </toolbarItem>
@@ -885,6 +885,30 @@
                 <customObject id="6f7-a7-6o1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
+        </scene>
+        <!--VariableTab-->
+        <scene sceneID="zr6-wR-cbg">
+            <objects>
+                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="VariableTab" id="pao-oB-VAa" sceneMemberID="viewController"/>
+                <customObject id="G5N-Sd-Eed" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="630" y="41"/>
+        </scene>
+        <!--GraphTab-->
+        <scene sceneID="PXE-Jg-zPd">
+            <objects>
+                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="GraphTab" id="ruP-jx-bSy" sceneMemberID="viewController"/>
+                <customObject id="olQ-WX-We2" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="990" y="1008"/>
+        </scene>
+        <!--EntityTab-->
+        <scene sceneID="6Ir-w7-16Q">
+            <objects>
+                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="EntityTab" id="OaF-xx-T5x" sceneMemberID="viewController"/>
+                <customObject id="KRr-A0-plh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="631" y="-16"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="Kfw-21-9Xi">
@@ -1360,29 +1384,22 @@
                                             <constraint firstItem="1Ku-5H-mtD" firstAttribute="top" secondItem="sZN-bM-fJm" secondAttribute="top" id="zff-Tj-U2a"/>
                                         </constraints>
                                     </customView>
-                                    <customView id="j7Y-PI-hmd" userLabel="Tabs">
+                                    <customView id="j7Y-PI-hmd" userLabel="Graph">
                                         <rect key="frame" x="222" y="0.0" width="1249" height="900"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="Zi9-gZ-g8T" userLabel="TabView">
-                                                <rect key="frame" x="0.0" y="0.0" width="1249" height="865"/>
-                                                <font key="font" metaFont="system"/>
-                                            </tabView>
-                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="k3d-n9-SIG" customClass="TabsControl" customModule="KPCTabsControl">
-                                                <rect key="frame" x="0.0" y="865" width="1249" height="35"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="guy-Mg-wQh"/>
-                                                </constraints>
-                                            </customView>
+                                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="9Yh-P4-Rh1" userLabel="Graph VC Container">
+                                                <rect key="frame" x="0.0" y="0.0" width="1249" height="900"/>
+                                                <connections>
+                                                    <segue destination="ruP-jx-bSy" kind="embed" identifier="GraphSegue" id="KEM-YA-cAv"/>
+                                                </connections>
+                                            </containerView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Zi9-gZ-g8T" firstAttribute="leading" secondItem="j7Y-PI-hmd" secondAttribute="leading" id="04U-6Y-WFA"/>
-                                            <constraint firstAttribute="bottom" secondItem="Zi9-gZ-g8T" secondAttribute="bottom" id="DkU-Jd-ej9"/>
-                                            <constraint firstItem="Zi9-gZ-g8T" firstAttribute="top" secondItem="k3d-n9-SIG" secondAttribute="bottom" id="Y1D-bd-o8t"/>
-                                            <constraint firstItem="k3d-n9-SIG" firstAttribute="leading" secondItem="j7Y-PI-hmd" secondAttribute="leading" id="YxN-do-l9W"/>
-                                            <constraint firstItem="k3d-n9-SIG" firstAttribute="top" secondItem="j7Y-PI-hmd" secondAttribute="top" id="mWi-4E-9rO"/>
-                                            <constraint firstAttribute="trailing" secondItem="Zi9-gZ-g8T" secondAttribute="trailing" id="rt6-Aj-69d"/>
-                                            <constraint firstAttribute="trailing" secondItem="k3d-n9-SIG" secondAttribute="trailing" id="ynL-i0-zjA"/>
+                                            <constraint firstAttribute="trailing" secondItem="9Yh-P4-Rh1" secondAttribute="trailing" id="HFG-1V-1Wo"/>
+                                            <constraint firstItem="9Yh-P4-Rh1" firstAttribute="top" secondItem="j7Y-PI-hmd" secondAttribute="top" id="KWb-gN-kYY"/>
+                                            <constraint firstItem="9Yh-P4-Rh1" firstAttribute="leading" secondItem="j7Y-PI-hmd" secondAttribute="leading" id="iry-Wh-82D"/>
+                                            <constraint firstAttribute="bottom" secondItem="9Yh-P4-Rh1" secondAttribute="bottom" id="qlQ-I6-cdA"/>
                                         </constraints>
                                     </customView>
                                 </subviews>
@@ -1404,8 +1421,6 @@
                         <outlet property="_selectedGraphName" destination="oCJ-jE-X2M" id="o0h-VL-UtQ"/>
                         <outlet property="_selectedGraphOutline" destination="3eJ-sj-RS2" id="Z1a-XU-gjt"/>
                         <outlet property="_splitView" destination="laV-cu-c6V" id="FIh-k4-vc6"/>
-                        <outlet property="_tabController" destination="k3d-n9-SIG" id="Osp-zr-8oh"/>
-                        <outlet property="_tabView" destination="Zi9-gZ-g8T" id="R5I-NW-byN"/>
                     </connections>
                 </viewController>
                 <customObject id="AdQ-fQ-RMe" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

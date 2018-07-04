@@ -52,7 +52,7 @@ class GraphTabViewController: NSViewController {
 		}
 	}
 	
-	fileprivate func configure() {
+	private func configure() {
 		_graphView = GraphView(doc: _document!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE))
 		_graphView?.Delegate = _delegate
 		_scrollView.documentView = _graphView!
@@ -70,6 +70,10 @@ class GraphTabViewController: NSViewController {
 	}
 	
 	func zoomSelected() -> Bool {
+		if _graphView == nil {
+			return false
+		}
+		
 		guard let selectedRect = _graphView?.selectedBounds() else { return false }
 		if selectedRect != NSRect.zero {
 			_scrollView.magnify(toFit: selectedRect)
@@ -78,6 +82,10 @@ class GraphTabViewController: NSViewController {
 		return false
 	}
 	func zoomAll() -> Bool {
+		if _graphView == nil {
+			return false
+		}
+		
 		guard let allRect = _graphView?.contentBounds() else { return false }
 		if allRect != NSRect.zero {
 			_scrollView.magnify(toFit: allRect)
@@ -87,6 +95,10 @@ class GraphTabViewController: NSViewController {
 	}
 	
 	func centerView(animated: Bool) {
+		if _graphView == nil {
+			return
+		}
+		
 		var center = NSMakePoint(_graphView!.bounds.width/2, _graphView!.bounds.height/2)
 		center.x -= _graphView!.visibleRect.width/2
 		center.y -= _graphView!.visibleRect.height/2
@@ -103,7 +115,7 @@ class GraphTabViewController: NSViewController {
 		}
 	}
 	
-	fileprivate func centerOfGraph() -> CGPoint {
+	private func centerOfGraph() -> CGPoint {
 		let centerSelf = NSMakePoint(self.view.frame.width/2, self.view.frame.height/2)
 		return _graphView?.convert(centerSelf, from: self.view) ?? CGPoint.zero
 	}

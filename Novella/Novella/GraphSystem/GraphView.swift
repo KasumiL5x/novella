@@ -112,7 +112,7 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Setup -
-	private func rootFor(graph: NVGraph) {
+	func rootFor(graph: NVGraph) {
 		// remove existing views
 		self.subviews.removeAll()
 		

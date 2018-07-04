@@ -18,19 +18,16 @@ class MainViewController: NSViewController {
 	// MARK: - Variables -
 	private var _appeared: Bool = false
 	private var _document: NovellaDocument!
-	private var _selectedTab: TabItem?
+	private var _graphViewVC: GraphTabViewController?
 	
 	// MARK: - Outlets -
 	@IBOutlet private weak var _splitView: NSSplitView!
-	@IBOutlet private weak var _tabView: NSTabView!
-	@IBOutlet private weak var _tabController: TabsControl!
 	@IBOutlet private weak var _allGraphsOutline: AllGraphsOutlineView!
 	@IBOutlet private weak var _selectedGraphOutline: SelectedGraphOutlineView!
 	@IBOutlet private weak var _selectedGraphName: NSTextField!
 	
 	// MARK: - Delegates & Data Sources -
 	private var _storyDelegate: StoryDelegate?
-	private var _tabsDataSource: TabsDataSource?
 	private var _allGraphsDelegate: AllGraphsDelegate?
 	private var _selectedGraphDelegate: SelectedGraphDelegate?
 	
@@ -48,19 +45,11 @@ class MainViewController: NSViewController {
 		
 		// delegates and data sources
 		_storyDelegate = StoryDelegate(mvc: self)
-		_tabsDataSource = TabsDataSource()
 		_allGraphsDelegate = AllGraphsDelegate(mvc: self)
 		_selectedGraphDelegate = SelectedGraphDelegate(mvc: self)
 		
 		// split view
 		_splitView.delegate = self
-		
-		// tab controller
-		_selectedTab = nil
-		_tabController.style = SafariStyle()
-		_tabController.delegate = self
-		_tabController.dataSource = _tabsDataSource
-		_tabController.reloadTabs()
 		
 		// set outline view BG colors as there seems to be an IB bug where the color is just *slightly* not maintained
 		_allGraphsOutline.backgroundColor = NSColor.fromHex("#ECECEC")
@@ -72,6 +61,16 @@ class MainViewController: NSViewController {
 			// _document canNOT be used before this point
 			self._document = view.window?.windowController?.document as? NovellaDocument
 			self._document.Manager.addDelegate(_storyDelegate!)
+			
+			// graph VC
+			let graph: NVGraph
+			if let first = _document.Manager.Story.Graphs.first {
+				graph = first
+			} else {
+				graph = _document.Manager.makeGraph(name: "main")
+				try! _document.Manager.Story.add(graph: graph)
+			}
+			_graphViewVC?.setup(doc: _document, graph: graph, delegate: self)
 			
 			// outliners
 			_allGraphsOutline.MVC = self
@@ -85,6 +84,12 @@ class MainViewController: NSViewController {
 			reloadSelectedGraph()
 			
 			_appeared = true
+		}
+	}
+	
+	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "GraphSegue") {
+			_graphViewVC = segue.destinationController as? GraphTabViewController
 		}
 	}
 	
@@ -108,9 +113,7 @@ class MainViewController: NSViewController {
 	}
 	
 	func refreshOpenGraphs() {
-		for t in _tabsDataSource!.Tabs {
-			getGraphViewFromTab(tab: t.tabItem)?.redrawAll()
-		}
+		fatalError("Don't forget to implement this! Call redraw on the graph item.")
 	}
 	
 	// MARK: Interface Callbacks
@@ -123,8 +126,6 @@ class MainViewController: NSViewController {
 		}
 		graph.Name = sender.stringValue
 		reloadSelectedGraph()
-		getTabItemFor(graph: graph)?.title = graph.Name
-		_tabController.reloadTabs()
 	}
 	@IBAction func onOutlinerFilterChanged(_ sender: NSSearchField) {
 		_selectedGraphDelegate?.Filter = sender.stringValue
@@ -144,18 +145,17 @@ extension MainViewController {
 	}
 	
 	func setSelectedGraph(graph: NVGraph?) {
+		if getActiveGraph()?.NovellaGraph == graph {
+			return
+		}
+		
 		_selectedGraphDelegate?.Graph = graph
 		reloadSelectedGraph()
 		
 		// handle opening of graph view
 		if let graph = graph {
-			// if a tab is open, switch to it
-			if let tab = getTabForGraph(graph: graph) {
-				selectTab(item: _tabsDataSource!.Tabs.first(where: {$0.tabItem == tab}))
-			} else {
-				_ = addNewTab(forGraph: graph)
-				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
-			}
+			getActiveGraph()?.rootFor(graph: graph)
+			zoomGraph()
 		}
 	}
 }
@@ -169,176 +169,24 @@ extension MainViewController {
 		} else {
 			try! parent!.add(graph: graph)
 		}
-		let newTab = addNewTab(forGraph: graph)
-		selectTab(item: newTab)
+		
+		getActiveGraph()?.rootFor(graph: graph)
+		zoomGraph()
 		
 		reloadAllGraphs()
 		_allGraphsOutline.selectRowIndexes([_allGraphsOutline.row(forItem: graph)], byExtendingSelection: false)
 		reloadSelectedGraph()
 	}
-	
-	func openVariableEditor() {
-		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is VariableTabViewController}) {
-			selectTab(item: existing)
-		} else {
-			let varTab = addVariableTabEditor()
-			selectTab(item: varTab)
-		}
-	}
-	
-	func openEntityEditor() {
-		if let existing = _tabsDataSource!.Tabs.first(where: {$0.tabItem.viewController is EntityTabViewController}) {
-			selectTab(item: existing)
-		} else {
-			let entityTab = addEntityTabEditor()
-			selectTab(item: entityTab)
-		}
-	}
 }
 
 // MARK: - - Tabs -
 extension MainViewController {
-	@discardableResult
-	private func addNewTab(forGraph: NVGraph) -> TabItem? {
-		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
-		let id = NSStoryboard.SceneIdentifier(rawValue: "GraphTab")
-		guard let vc = sb.instantiateController(withIdentifier: id) as? GraphTabViewController else {
-			print("Failed to initialize GraphTabViewController.")
-			return nil
-		}
-		vc.setup(doc: _document, graph: forGraph, delegate: self)
-		let tabViewItem = NSTabViewItem(viewController: vc)
-		_tabView.addTabViewItem(tabViewItem)
-		
-		let tabItem = TabItem(title: forGraph.Name, icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
-		tabItem.closeFunc = { (item) in
-			self.closeTab(tab: item)
-		}
-		_tabsDataSource!.Tabs.append(tabItem)
-		_tabController.reloadTabs()
-		
-		return tabItem
-	}
-	
-	@discardableResult
-	private func addVariableTabEditor() -> TabItem? {
-		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
-		let id = NSStoryboard.SceneIdentifier(rawValue: "VariableTab")
-		guard let vc =  sb.instantiateController(withIdentifier: id) as? VariableTabViewController else {
-			print("Failed to initialize VariableTabViewController.")
-			return nil
-		}
-		vc.setup(doc: _document)
-		let tabViewItem = NSTabViewItem(viewController: vc)
-		_tabView.addTabViewItem(tabViewItem)
-		
-		let tabItem = TabItem(title: "Variable Editor", icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
-		tabItem.closeFunc = { (item) in
-			self.closeTab(tab: item)
-		}
-		_tabsDataSource!.Tabs.append(tabItem)
-		_tabController.reloadTabs()
-		
-		return tabItem
-	}
-	
-	@discardableResult
-	private func addEntityTabEditor() -> TabItem? {
-		let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "TabPages"), bundle: nil)
-		let id = NSStoryboard.SceneIdentifier(rawValue: "EntityTab")
-		guard let vc = sb.instantiateController(withIdentifier: id) as? EntityTabViewController else {
-			print("Failed to initialize EntityTabViewController.")
-			return nil
-		}
-		vc.setup(doc: _document)
-		let tabViewItem = NSTabViewItem(viewController: vc)
-		_tabView.addTabViewItem(tabViewItem)
-		
-		let tabItem = TabItem(title: "Entity Editor", icon: nil, altIcon: nil, tabItem: tabViewItem, selectable: true)
-		tabItem.closeFunc = { (item) in
-			self.closeTab(tab: item)
-		}
-		_tabsDataSource!.Tabs.append(tabItem)
-		_tabController.reloadTabs()
-		
-		return tabItem
-	}
-	
-	private func closeTab(tab: TabItem) {
-		guard let index = _tabsDataSource!.Tabs.index(of: tab) else { return }
-		
-		// re-assign selected tab if this tab was selected
-		if _selectedTab == tab {
-			// behavior of KPCTabsControl seems to be select to right if it exists, but don't select left and instead give nil
-			_selectedTab = (index+1 >= _tabsDataSource!.Tabs.count) ? nil : _tabsDataSource!.Tabs[index+1]
-		}
-		
-		// remove from tabs array
-		_tabsDataSource!.Tabs.remove(at: index)
-		
-		// refresh tab control
-		_tabController.reloadTabs()
-		
-		// remove from actual tab view
-		_tabView.removeTabViewItem(tab.tabItem)
-	}
-	
-	private func closeAllTabs() {
-		_tabsDataSource!.Tabs = []
-		_selectedTab = nil
-		_tabController.reloadTabs()
-		
-		for curr in _tabView.tabViewItems.reversed() {
-			_tabView.removeTabViewItem(curr)
-		}
-	}
-	
-	private func selectTab(item: TabItem?) {
-		// update selected tab
-		_selectedTab = item
-		// get index
-		if _selectedTab != nil, let index = _tabsDataSource!.Tabs.index(of: _selectedTab!) {
-			_tabController.selectItemAtIndex(index)
-			onSelectedTabChanged()
-		} else {
-			_tabController.selectItemAtIndex(-1) // invalid clears selection
-		}
-	}
-	
-	private func onSelectedTabChanged() {
-		_tabView.selectTabViewItem(_selectedTab?.tabItem)
-	}
-	
-	private func getGraphViewFromTab(tab: NSTabViewItem) -> GraphView? {
-		// must have correct VC
-		guard let vc = tab.viewController as? GraphTabViewController else {
-			return nil
-		}
-		return vc.Graph
-	}
-	
 	func getActiveGraph() -> GraphView? {
-		if let selectedTab = _selectedTab {
-			return getGraphViewFromTab(tab: selectedTab.tabItem)
-		}
-		return nil
+		return _graphViewVC?.Graph
 	}
 	
-	private func getTabItemFor(graph: NVGraph) -> TabItem? {
-		return _tabsDataSource!.Tabs.first(where: {
-			guard let graphView = getGraphViewFromTab(tab: $0.tabItem) else {
-				return false
-			}
-			return graphView.NovellaGraph == graph
-		})
-	}
-	
-	private func getTabForGraph(graph: NVGraph) -> NSTabViewItem? {
-		return getTabItemFor(graph: graph)?.tabItem
-	}
-	
-	func zoomActiveGraph() {
-		if let selectedTab = _selectedTab, let graphVC = selectedTab.tabItem.viewController as? GraphTabViewController {
+	func zoomGraph() {
+		if let graphVC = _graphViewVC {
 			if !graphVC.zoomSelected() {
 				_ = graphVC.zoomAll()
 			}
@@ -346,9 +194,7 @@ extension MainViewController {
 	}
 	
 	func centerActiveGraph() {
-		if let selectedTab = _selectedTab, let graphVC = selectedTab.tabItem.viewController as? GraphTabViewController {
-			graphVC.centerView(animated: true)
-		}
+		_graphViewVC?.centerView(animated: true)
 	}
 	
 	func undo() {
@@ -357,49 +203,6 @@ extension MainViewController {
 	
 	func redo() {
 		getActiveGraph()?.redo()
-	}
-}
-extension MainViewController: TabsControlDelegate {
-	func tabsControl(_ control: TabsControl, didReorderItems items: [AnyObject]) {
-	}
-	func tabsControl(_ control: TabsControl, canEditTitleOfItem item: AnyObject) -> Bool {
-		return (item as! TabItem).tabItem.viewController is GraphTabViewController
-	}
-	func tabsControl(_ control: TabsControl, setTitle newTitle: String, forItem item: AnyObject) {
-		let tabItem = (item as! TabItem)
-		
-		switch tabItem.tabItem.viewController {
-		case is GraphTabViewController:
-			if let nvGraph = getGraphViewFromTab(tab: tabItem.tabItem)?.NovellaGraph {
-				nvGraph.Name = newTitle
-				tabItem.title = newTitle
-			}
-			reloadAllGraphs()
-			reloadSelectedGraph()
-			
-		default:
-			print("Unexpected ViewController type for renamed tab.")
-			break
-		}
-	}
-	
-	func tabsControl(_ control: TabsControl, canSelectItem item: AnyObject) -> Bool {
-		return (item as! TabItem).selectable
-	}
-	
-	func tabsControl(_ control: TabsControl, canReorderItem item: AnyObject) -> Bool {
-		// If this is true, there's a bug when selecting tabs (i maybe can fix and PR it).
-		// If true and you call selectItemAtIndex() (during a mousedown event like click button?), then
-		// it will eventually call selectTab(), which for some unknown reason goes into reorder mode, and until
-		// you click on the window to disable it, will hang your program as if it's in async mode.  This causes
-		// fairly severe issues as code after the above call WON'T execute until after clicking again, but
-		// the function does return.
-		return false
-	}
-	
-	func tabsControlDidChangeSelection(_ control: TabsControl, item: AnyObject) {
-		_selectedTab = (item as! TabItem)
-		onSelectedTabChanged()
 	}
 }
 

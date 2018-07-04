@@ -88,8 +88,6 @@
 		65F7F88C20C317DD004663D6 /* ColoredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88420C317DD004663D6 /* ColoredView.swift */; };
 		65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88520C317DD004663D6 /* StoryDelegate.swift */; };
 		65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88620C317DD004663D6 /* MainViewController.swift */; };
-		65F7F88F20C317DD004663D6 /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88720C317DD004663D6 /* TabItem.swift */; };
-		65F7F89020C317DD004663D6 /* TabsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88820C317DD004663D6 /* TabsDataSource.swift */; };
 		65F7F89720C317F4004663D6 /* DialogPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F89220C317F4004663D6 /* DialogPopoverViewController.swift */; };
 		65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F89320C317F4004663D6 /* ContextPopoverViewController.swift */; };
 		65F7F89920C317F4004663D6 /* FunctionPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F89420C317F4004663D6 /* FunctionPopoverViewController.swift */; };
@@ -215,8 +213,6 @@
 		65F7F88420C317DD004663D6 /* ColoredView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredView.swift; sourceTree = "<group>"; };
 		65F7F88520C317DD004663D6 /* StoryDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryDelegate.swift; sourceTree = "<group>"; };
 		65F7F88620C317DD004663D6 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		65F7F88720C317DD004663D6 /* TabItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
-		65F7F88820C317DD004663D6 /* TabsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsDataSource.swift; sourceTree = "<group>"; };
 		65F7F89220C317F4004663D6 /* DialogPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogPopoverViewController.swift; sourceTree = "<group>"; };
 		65F7F89320C317F4004663D6 /* ContextPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextPopoverViewController.swift; sourceTree = "<group>"; };
 		65F7F89420C317F4004663D6 /* FunctionPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionPopoverViewController.swift; sourceTree = "<group>"; };
@@ -265,8 +261,6 @@
 				65F7F88620C317DD004663D6 /* MainViewController.swift */,
 				65F7F88120C317DD004663D6 /* Outliner.swift */,
 				65F7F88520C317DD004663D6 /* StoryDelegate.swift */,
-				65F7F88720C317DD004663D6 /* TabItem.swift */,
-				65F7F88820C317DD004663D6 /* TabsDataSource.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -757,13 +751,11 @@
 				65F7F86020C31714004663D6 /* ContextLinkableView.swift in Sources */,
 				65F7F89720C317F4004663D6 /* DialogPopoverViewController.swift in Sources */,
 				65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */,
-				65F7F89020C317DD004663D6 /* TabsDataSource.swift in Sources */,
 				65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */,
 				65940AD920E2323500C777BF /* EntityTabViewController.swift in Sources */,
 				65F7F86A20C31714004663D6 /* DeliveryLinkableView.swift in Sources */,
 				65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */,
 				65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */,
-				65F7F88F20C317DD004663D6 /* TabItem.swift in Sources */,
 				65F7F85B20C31714004663D6 /* MarqueeView.swift in Sources */,
 				65F7F89A20C317F4004663D6 /* DeliveryPopoverViewController.swift in Sources */,
 			);
