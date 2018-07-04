@@ -8,11 +8,6 @@
 
 import Cocoa
 import NovellaModel
-import class KPCTabsControl.TabsControl
-import struct KPCTabsControl.DefaultStyle
-import struct KPCTabsControl.SafariStyle
-import struct KPCTabsControl.ChromeStyle
-import protocol KPCTabsControl.TabsControlDelegate
 
 class MainViewController: NSViewController {
 	// MARK: - Variables -
@@ -62,7 +57,7 @@ class MainViewController: NSViewController {
 			self._document = view.window?.windowController?.document as? NovellaDocument
 			self._document.Manager.addDelegate(_storyDelegate!)
 			
-			// graph VC
+			// configure graph VC with an existing graph or make a new one
 			let graph: NVGraph
 			if let first = _document.Manager.Story.Graphs.first {
 				graph = first
@@ -113,7 +108,7 @@ class MainViewController: NSViewController {
 	}
 	
 	func refreshOpenGraphs() {
-		fatalError("Don't forget to implement this! Call redraw on the graph item.")
+		getActiveGraph()?.redrawAll()
 	}
 	
 	// MARK: Interface Callbacks

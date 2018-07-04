@@ -12,7 +12,7 @@ import NovellaModel
 class GraphView: NSView {
 	// MARK: - - Variables -
 	private let _document: NovellaDocument
-	private let _nvGraph: NVGraph
+	private var _nvGraph: NVGraph
 	private let _bg: GraphBGView
 	//
 	private var _allLinkableViews: [LinkableView]
@@ -138,6 +138,9 @@ class GraphView: NSView {
 		
 		// clear all popovers
 		self._nodePopovers = []
+		
+		// store new graph
+		_nvGraph = graph
 		
 		// load all nodes
 		for curr in graph.Nodes {
