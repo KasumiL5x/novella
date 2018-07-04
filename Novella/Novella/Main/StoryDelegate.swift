@@ -48,22 +48,18 @@ class StoryDelegate: NVStoryDelegate {
 	}
 	
 	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
-		_mvc.reloadInspector()
 	}
 	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
 		_mvc.reloadSelectedGraph()
-		_mvc.reloadInspector()
 	}
 	
 	func onStoryTrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
-		_mvc.reloadInspector()
 		
 		(_mvc.view.window?.windowController as? MainWindowController)?.setTrashIcon(true)
 	}
 	func onStoryUntrashItem(item: NVObject) {
 		_mvc.reloadSelectedGraph()
-		_mvc.reloadInspector()
 		
 		(_mvc.view.window?.windowController as? MainWindowController)?.setTrashIcon(_mvc.Document.Manager.TrashedItems.count > 0)
 	}
@@ -148,26 +144,20 @@ class StoryDelegate: NVStoryDelegate {
 	
 	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
 		print("Changed node's preview to \"\(preview)\".")
-		_mvc.reloadInspector()
 	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
 		print("Changed dialog's content to \"\(content)\".")
-		_mvc.reloadInspector()
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
 		print("Changed dialog's directions to \"\(directions)\".")
-		_mvc.reloadInspector()
 	}
 	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog) {
 		print("Changed dialog's speaker to \"\(speaker?.Name ?? "none")\".")
-		_mvc.reloadInspector()
 	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
 		print("Changed delivery's content to \"\(content)\".")
-		_mvc.reloadInspector()
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 		print("Changed delivery's directions to \"\(directions)\".")
-		_mvc.reloadInspector()
 	}
 }

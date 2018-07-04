@@ -24,7 +24,6 @@ class MainViewController: NSViewController {
 	@IBOutlet private weak var _splitView: NSSplitView!
 	@IBOutlet private weak var _tabView: NSTabView!
 	@IBOutlet private weak var _tabController: TabsControl!
-	@IBOutlet private weak var _inspector: NSTableView!
 	@IBOutlet private weak var _allGraphsOutline: AllGraphsOutlineView!
 	@IBOutlet private weak var _selectedGraphOutline: SelectedGraphOutlineView!
 	@IBOutlet private weak var _selectedGraphName: NSTextField!
@@ -32,16 +31,12 @@ class MainViewController: NSViewController {
 	// MARK: - Delegates & Data Sources -
 	private var _storyDelegate: StoryDelegate?
 	private var _tabsDataSource: TabsDataSource?
-	private var _inspectorDataDelegate: InspectorDataSource?
 	private var _allGraphsDelegate: AllGraphsDelegate?
 	private var _selectedGraphDelegate: SelectedGraphDelegate?
 	
 	// MARK: - Properties -
 	var Document: NovellaDocument {
 		get{ return _document }
-	}
-	var InspectorDelegate: InspectorDataSource? {
-		get{ return _inspectorDataDelegate }
 	}
 	var Undo: UndoRedo? {
 		get{ return _document?.Undo }
@@ -54,7 +49,6 @@ class MainViewController: NSViewController {
 		// delegates and data sources
 		_storyDelegate = StoryDelegate(mvc: self)
 		_tabsDataSource = TabsDataSource()
-		_inspectorDataDelegate = InspectorDataSource()
 		_allGraphsDelegate = AllGraphsDelegate(mvc: self)
 		_selectedGraphDelegate = SelectedGraphDelegate(mvc: self)
 		
@@ -86,10 +80,6 @@ class MainViewController: NSViewController {
 			_selectedGraphOutline.MVC = self
 			_selectedGraphOutline.delegate = _selectedGraphDelegate
 			_selectedGraphOutline.dataSource = _selectedGraphDelegate
-			
-			// inspector
-			_inspector.dataSource = _inspectorDataDelegate
-			_inspector.delegate = _inspectorDataDelegate
 			
 			reloadAllGraphs()
 			reloadSelectedGraph()
@@ -167,14 +157,6 @@ extension MainViewController {
 				selectTab(item: _tabsDataSource!.Tabs[_tabsDataSource!.Tabs.count-1])
 			}
 		}
-	}
-}
-
-// MARK: - Inspector -
-extension MainViewController {
-	func reloadInspector() {
-		_inspectorDataDelegate!.refresh()
-		_inspector.reloadData()
 	}
 }
 
@@ -458,26 +440,5 @@ extension MainViewController: NSSplitViewDelegate {
 // MARK: - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
 	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
-		if selection.isEmpty {
-			_inspectorDataDelegate!.setTarget(target: nil)
-		} else if selection.count == 1 {
-			let item = selection[0]
-			switch item {
-			case is DialogLinkableView:
-				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVDialog))
-			case is DeliveryLinkableView:
-				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVDelivery))
-			case is ContextLinkableView:
-				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVContext))
-			case is GraphLinkableView:
-				_inspectorDataDelegate!.setTarget(target: (item.Linkable as! NVGraph))
-			default:
-				break
-			}
-		} else {
-			_inspectorDataDelegate!.setTarget(target: nil) // cannot handle selection of multiple items
-		}
-		
-		reloadInspector()
 	}
 }
