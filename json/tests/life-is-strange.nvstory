@@ -12,8 +12,7 @@
   ],
   "story" : {
     "graphs" : [
-      "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
-      "FF48E307-BE3F-4563-B9BF-2667702AF6E0"
+      "3570BCBD-C95A-49B2-908E-BE5FC5DDC544"
     ],
     "name" : "",
     "folders" : [
@@ -26,7 +25,7 @@
         "y" : -4.9011831283569336,
         "x" : -2018.2021484375
       },
-      "name" : "Rename",
+      "name" : "Start",
       "content" : "Hey Juliet, is everything cool?",
       "directions" : "Concerned",
       "nodetype" : "dialog",
@@ -40,7 +39,7 @@
         "y" : -3.2796046733856201,
         "x" : -1760.443603515625
       },
-      "name" : "",
+      "name" : "decision_1",
       "content" : "Oh yes, Max. I've locked Dana in the room because we're \"cool.\"",
       "directions" : "Sarcastic",
       "nodetype" : "dialog",
@@ -54,7 +53,7 @@
         "y" : 222.53495788574219,
         "x" : -1442.905029296875
       },
-      "name" : "",
+      "name" : "wsd",
       "content" : "What did she do?",
       "directions" : "",
       "nodetype" : "dialog",
@@ -96,7 +95,7 @@
         "y" : -0.65117794275283813,
         "x" : -1441.6988525390625
       },
-      "name" : "",
+      "name" : "syf",
       "content" : "She's your friend.",
       "directions" : "",
       "nodetype" : "dialog",
@@ -334,7 +333,7 @@
         "y" : -261.2481689453125,
         "x" : -1442.2833251953125
       },
-      "name" : "",
+      "name" : "be_nice_rewind",
       "content" : "Juliet Watson, you be nice!",
       "directions" : "",
       "nodetype" : "dialog",
@@ -468,48 +467,6 @@
       "preview" : "Test Branch False",
       "size" : 1,
       "uuid" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
-    },
-    {
-      "position" : {
-        "y" : -299607.3125,
-        "x" : -299661.71875
-      },
-      "name" : "",
-      "content" : "Just checking this second graph works.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "speaker" : "",
-      "preview" : "",
-      "size" : 1,
-      "uuid" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13"
-    },
-    {
-      "position" : {
-        "y" : -299642.65625,
-        "x" : -299240.375
-      },
-      "name" : "",
-      "content" : "This is option 2.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "speaker" : "",
-      "preview" : "Option 2",
-      "size" : 1,
-      "uuid" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
-    },
-    {
-      "position" : {
-        "y" : -299526.125,
-        "x" : -299202.875
-      },
-      "name" : "",
-      "content" : "This is option 1.",
-      "directions" : "",
-      "nodetype" : "dialog",
-      "speaker" : "",
-      "preview" : "Option 1",
-      "size" : 1,
-      "uuid" : "A3C2017E-23B3-43AB-A980-A061785667D7"
     }
   ],
   "graphs" : [
@@ -593,33 +550,6 @@
       ],
       "entry" : "A8F5DC19-3B1F-4A96-90D5-DDF74E9C2981",
       "uuid" : "3570BCBD-C95A-49B2-908E-BE5FC5DDC544",
-      "subgraphs" : [
-
-      ],
-      "listeners" : [
-
-      ],
-      "exits" : [
-
-      ]
-    },
-    {
-      "position" : {
-        "y" : 0,
-        "x" : 0
-      },
-      "name" : "0B57F8E2-7D5B-499F-AF37-4FD99600A073",
-      "nodes" : [
-        "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
-        "3FAE24D5-DA41-46F5-B658-C81B1A0C1460",
-        "A3C2017E-23B3-43AB-A980-A061785667D7"
-      ],
-      "links" : [
-        "317B1AB7-40E3-4AFA-B441-8E85CA70AFAF",
-        "B786AD6D-86D8-42A7-A3BF-4CDE7FA5C4C2"
-      ],
-      "entry" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
-      "uuid" : "FF48E307-BE3F-4563-B9BF-2667702AF6E0",
       "subgraphs" : [
 
       ],
@@ -1160,34 +1090,6 @@
           "jscode" : ""
         },
         "destination" : "223ABAD4-5D40-4E2C-B870-22C86F49F2A9"
-      }
-    },
-    {
-      "linktype" : "link",
-      "origin" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
-      "uuid" : "317B1AB7-40E3-4AFA-B441-8E85CA70AFAF",
-      "precondition" : {
-        "jscode" : ""
-      },
-      "transfer" : {
-        "function" : {
-          "jscode" : ""
-        },
-        "destination" : "3FAE24D5-DA41-46F5-B658-C81B1A0C1460"
-      }
-    },
-    {
-      "linktype" : "link",
-      "origin" : "FF039DB6-C085-4CF9-AD32-BE6060F5EF13",
-      "uuid" : "B786AD6D-86D8-42A7-A3BF-4CDE7FA5C4C2",
-      "precondition" : {
-        "jscode" : ""
-      },
-      "transfer" : {
-        "function" : {
-          "jscode" : ""
-        },
-        "destination" : "A3C2017E-23B3-43AB-A980-A061785667D7"
       }
     }
   ],

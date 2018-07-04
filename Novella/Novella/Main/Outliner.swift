@@ -222,6 +222,11 @@ class SelectedGraphOutlineView: NSOutlineView {
 		self.doubleAction = #selector(SelectedGraphOutlineView.onDoubleAction)
 	}
 	
+	override func reloadData() {
+		super.reloadData()
+		self.expandItem(nil, expandChildren: true)
+	}
+	
 	@objc private func onDoubleAction() {
 		if let linkableItem = self.item(atRow: self.selectedRow) as? NVObject {
 			_mvc?.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
@@ -251,10 +256,17 @@ class SelectedGraphOutlineView: NSOutlineView {
 class OutlinerTableRowView: NSTableRowView {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
-		if isSelected {
-			NSColor.fromHex("#739cde").setFill()
+		
+		if isGroupRowStyle {
+			isSelected ? NSColor.fromHex("#739cde").setFill() : NSColor.fromHex("#f7f7f7").setFill()
 			dirtyRect.fill()
+		} else {
+			if isSelected {
+				NSColor.fromHex("#739cde").setFill()
+				dirtyRect.fill()
+			}
 		}
+		
 	}
 }
 // MARK: Delegate
@@ -268,6 +280,9 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	private var _linkImage: NSImage?
 	
 	private var _filter: String
+	
+	private var _topLevel: [String]
+	// TODO: How to make elements part of the top-level below? shouldn't be hard but i need to think or find a sample.
 	
 	var Graph: NVGraph? {
 		get{ return _graph }
@@ -291,6 +306,12 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		self._linkImage = NSImage(named: NSImage.Name(rawValue: "Link"))
 		
 		self._filter = ""
+		
+		self._topLevel = [
+			"Nodes",
+			"Graphs",
+			"Links"
+		]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
@@ -357,111 +378,142 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 			return 0
 		}
 		
-		if item == nil {
-			var count = 0
-			_graph!.Nodes.forEach { (node) in
-				if filter(node: node) {
-					count += 1
+		if let asString = item as? String {
+			switch asString {
+			case _topLevel[0]:
+				var count = 0
+				_graph!.Nodes.forEach { (node) in
+					if filter(node: node) {
+						count += 1
+					}
 				}
-			}
-			_graph!.Graphs.forEach { (graph) in
-				if filter(graph: graph) {
-					count += 1
+				return count
+				
+			case _topLevel[1]:
+				var count = 0
+				_graph!.Graphs.forEach { (graph) in
+					if filter(graph: graph) {
+						count += 1
+					}
 				}
-			}
-			_graph!.Links.forEach { (link) in
-				if filter(link: link) {
-					count += 1
+				return count
+			case _topLevel[2]:
+				var count = 0
+				_graph!.Links.forEach { (link) in
+					if filter(link: link) {
+						count += 1
+					}
 				}
+				return count
+			default:
+				break
 			}
-			return count
 		}
 		
-		return 0 // everything else
+		return _topLevel.count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		// current index used to check against given index
-		var indexCount = 0
-		for node in _graph!.Nodes {
-			if filter(node: node) {
-				if indexCount == index {
-					return node
+		if let asString = item as? String {
+			var indexCount = 0
+			switch asString {
+			case _topLevel[0]:
+				for node in _graph!.Nodes {
+					if filter(node: node) {
+						if indexCount == index {
+							return node
+						}
+						indexCount += 1
+					}
 				}
-				indexCount += 1
-			}
-		}
-		for graph in _graph!.Graphs {
-			if filter(graph: graph) {
-				if indexCount == index {
-					return graph
+				
+			case _topLevel[1]:
+				for graph in _graph!.Graphs {
+					if filter(graph: graph) {
+						if indexCount == index {
+							return graph
+						}
+						indexCount += 1
+					}
 				}
-				indexCount += 1
-			}
-		}
-		for link in _graph!.Links {
-			if filter(link: link) {
-				if indexCount == index {
-					return link
+				
+			case _topLevel[2]:
+				for link in _graph!.Links {
+					if filter(link: link) {
+						if indexCount == index {
+							return link
+						}
+						indexCount += 1
+					}
 				}
-				indexCount += 1
+				
+			default:
+				break
 			}
 		}
 		
-		fatalError("Shouldn't ever happen.")
+		return _topLevel[index]
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		return false
+		return item is String
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+		return item is String
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSTableCellView? = nil
 		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? SelectedGraphFancyCell
+		if let asString = item as? String {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "GroupCell"), owner: self) as? NSTableCellView
+			view?.textField?.stringValue = asString
+		} else {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FancyCell"), owner: self) as? SelectedGraphFancyCell
 		
-		switch item {
-		case is NVGraph:
-			let asGraph = (item as! NVGraph)
-			(view as! SelectedGraphFancyCell)._linkable = asGraph
-			(view as! SelectedGraphFancyCell).setTrashIcon(asGraph.InTrash)
-			view?.textField?.stringValue = asGraph.Name
-			view?.imageView?.image = _graphImage
-			
-		case is NVNode:
-			let asNode = (item as! NVNode)
-			(view as! SelectedGraphFancyCell)._linkable = asNode
-			(view as! SelectedGraphFancyCell).setTrashIcon(asNode.InTrash)
-			view?.textField?.stringValue = asNode.Name
 			switch item {
-			case is NVDialog:
-				view?.imageView?.image = _dialogImage
-			case is NVDelivery:
-				view?.imageView?.image = _deliveryImage
+			case is NVGraph:
+				let asGraph = (item as! NVGraph)
+				(view as! SelectedGraphFancyCell)._linkable = asGraph
+				(view as! SelectedGraphFancyCell).setTrashIcon(asGraph.InTrash)
+				view?.textField?.stringValue = asGraph.Name
+				view?.imageView?.image = _graphImage
+				
+			case is NVNode:
+				let asNode = (item as! NVNode)
+				(view as! SelectedGraphFancyCell)._linkable = asNode
+				(view as! SelectedGraphFancyCell).setTrashIcon(asNode.InTrash)
+				view?.textField?.stringValue = asNode.Name
+				switch item {
+				case is NVDialog:
+					view?.imageView?.image = _dialogImage
+				case is NVDelivery:
+					view?.imageView?.image = _deliveryImage
+				default:
+					break
+				}
+				
+			case is NVLink:
+				let asLink = (item as! NVLink)
+				(view as! SelectedGraphFancyCell).setTrashIcon(asLink.InTrash)
+				let from = _mvc.Document.Manager.nameOf(linkable: asLink.Origin)
+				let to = _mvc.Document.Manager.nameOf(linkable: asLink.Transfer.Destination)
+				view?.textField?.stringValue = "\(from) => \(to)"
+				view?.imageView?.image = _linkImage
+				
+			case is NVBranch:
+				let asBranch = (item as! NVBranch)
+				(view as! SelectedGraphFancyCell).setTrashIcon(asBranch.InTrash)
+				let from = _mvc.Document.Manager.nameOf(linkable: asBranch.Origin)
+				let toTrue = _mvc.Document.Manager.nameOf(linkable: asBranch.TrueTransfer.Destination)
+				let toFalse = _mvc.Document.Manager.nameOf(linkable: asBranch.FalseTransfer.Destination)
+				view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
+				view?.imageView?.image = _linkImage
+				
 			default:
-				break
+				view?.textField?.stringValue = "ERROR"
 			}
-			
-			
-		case is NVLink:
-			let asLink = (item as! NVLink)
-			(view as! SelectedGraphFancyCell).setTrashIcon(asLink.InTrash)
-			let from = _mvc.Document.Manager.nameOf(linkable: asLink.Origin)
-			let to = _mvc.Document.Manager.nameOf(linkable: asLink.Transfer.Destination)
-			view?.textField?.stringValue = "\(from) => \(to)"
-			view?.imageView?.image = _linkImage
-			
-		case is NVBranch:
-			let asBranch = (item as! NVBranch)
-			(view as! SelectedGraphFancyCell).setTrashIcon(asBranch.InTrash)
-			let from = _mvc.Document.Manager.nameOf(linkable: asBranch.Origin)
-			let toTrue = _mvc.Document.Manager.nameOf(linkable: asBranch.TrueTransfer.Destination)
-			let toFalse = _mvc.Document.Manager.nameOf(linkable: asBranch.FalseTransfer.Destination)
-			view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
-			view?.imageView?.image = _linkImage
-			
-		default:
-			view?.textField?.stringValue = "ERROR"
 		}
 		
 		return view
