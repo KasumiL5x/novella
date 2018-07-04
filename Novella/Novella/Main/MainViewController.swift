@@ -57,6 +57,14 @@ class MainViewController: NSViewController {
 			self._document = view.window?.windowController?.document as? NovellaDocument
 			self._document.Manager.addDelegate(_storyDelegate!)
 			
+			// outliners
+			_allGraphsOutline.MVC = self
+			_allGraphsOutline.dataSource = _allGraphsDelegate
+			_allGraphsOutline.delegate = _allGraphsDelegate
+			_selectedGraphOutline.MVC = self
+			_selectedGraphOutline.delegate = _selectedGraphDelegate
+			_selectedGraphOutline.dataSource = _selectedGraphDelegate
+			
 			// configure graph VC with an existing graph or make a new one
 			let graph: NVGraph
 			if let first = _document.Manager.Story.Graphs.first {
@@ -66,14 +74,7 @@ class MainViewController: NSViewController {
 				try! _document.Manager.Story.add(graph: graph)
 			}
 			_graphViewVC?.setup(doc: _document, graph: graph, delegate: self)
-			
-			// outliners
-			_allGraphsOutline.MVC = self
-			_allGraphsOutline.dataSource = _allGraphsDelegate
-			_allGraphsOutline.delegate = _allGraphsDelegate
-			_selectedGraphOutline.MVC = self
-			_selectedGraphOutline.delegate = _selectedGraphDelegate
-			_selectedGraphOutline.dataSource = _selectedGraphDelegate
+			setSelectedGraph(graph: graph, allowReloadSelf: true)
 			
 			reloadAllGraphs()
 			reloadSelectedGraph()
@@ -139,8 +140,8 @@ extension MainViewController {
 		_selectedGraphName.stringValue = _selectedGraphDelegate?.Graph?.Name ?? ""
 	}
 	
-	func setSelectedGraph(graph: NVGraph?) {
-		if getActiveGraph()?.NovellaGraph == graph {
+	func setSelectedGraph(graph: NVGraph?, allowReloadSelf: Bool=false) {
+		if !allowReloadSelf && getActiveGraph()?.NovellaGraph == graph {
 			return
 		}
 		
