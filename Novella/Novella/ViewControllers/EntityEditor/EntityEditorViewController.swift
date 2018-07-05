@@ -1,5 +1,5 @@
 //
-//  EntityTabViewController.swift
+//  EntityEditorController.swift
 //  Novella
 //
 //  Created by Daniel Green on 26/06/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class EntityTabViewController: NSViewController {
+class EntityEditorViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet private weak var _tableView: NSTableView!
 	@IBOutlet private weak var _nameLabel: NSTextField!
@@ -77,7 +77,7 @@ class EntityTabViewController: NSViewController {
 }
 
 // MARK: - NSTableViewDelegate -
-extension EntityTabViewController: NSTableViewDelegate {
+extension EntityEditorViewController: NSTableViewDelegate {
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		var view: NSView?
 		
@@ -100,7 +100,7 @@ extension EntityTabViewController: NSTableViewDelegate {
 }
 
 // MARK: - NSTableViewDataSource -
-extension EntityTabViewController: NSTableViewDataSource {
+extension EntityEditorViewController: NSTableViewDataSource {
 	func numberOfRows(in tableView: NSTableView) -> Int {
 		guard let doc = _document else {
 			return 0
@@ -117,7 +117,7 @@ extension EntityTabViewController: NSTableViewDataSource {
 }
 
 // MARK: - NVStoryDelegate -
-extension EntityTabViewController: NVStoryDelegate {
+extension EntityEditorViewController: NVStoryDelegate {
 	func onStoryMakeEntity(entity: NVEntity) {
 		_tableView.reloadData()
 	}

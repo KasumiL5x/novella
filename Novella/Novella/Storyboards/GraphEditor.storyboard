@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="WIY-dn-675">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--GraphEditor-->
+        <scene sceneID="dBX-a1-bFB">
+            <objects>
+                <viewController storyboardIdentifier="GraphEditor" id="WIY-dn-675" userLabel="GraphEditor" customClass="GraphEditorViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="V1r-fO-eby">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="FbT-ZR-5zz" userLabel="toolbar">
+                                <rect key="frame" x="0.0" y="270" width="450" height="30"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Csy-Hy-q7h">
+                                        <rect key="frame" x="-2" y="-3" width="63" height="35"/>
+                                        <buttonCell key="cell" type="bevel" title="Dialog" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vi7-qW-frv">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarDialog:" target="WIY-dn-675" id="jql-1K-f3W"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KOU-Bu-Ilp">
+                                        <rect key="frame" x="57" y="-3" width="73" height="35"/>
+                                        <buttonCell key="cell" type="bevel" title="Delivery" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d0O-LQ-n0R">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarDelivery:" target="WIY-dn-675" id="adj-Ai-oSl"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eWe-TK-jUu">
+                                        <rect key="frame" x="126" y="-3" width="72" height="35"/>
+                                        <buttonCell key="cell" type="bevel" title="Context" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="blm-8p-T6z">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarContext:" target="WIY-dn-675" id="upE-Bw-nnq"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A6o-zF-CHs">
+                                        <rect key="frame" x="194" y="-3" width="62" height="35"/>
+                                        <buttonCell key="cell" type="bevel" title="Graph" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xma-q1-3YF">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onToolbarGraph:" target="WIY-dn-675" id="c6y-dM-Sbp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Csy-Hy-q7h" firstAttribute="top" secondItem="FbT-ZR-5zz" secondAttribute="top" id="7Jo-iE-TA0"/>
+                                    <constraint firstItem="KOU-Bu-Ilp" firstAttribute="top" secondItem="FbT-ZR-5zz" secondAttribute="top" id="9qs-Y5-rs4"/>
+                                    <constraint firstAttribute="height" constant="30" id="Mhe-uv-oYW"/>
+                                    <constraint firstAttribute="bottom" secondItem="Csy-Hy-q7h" secondAttribute="bottom" id="NqH-e1-UwL"/>
+                                    <constraint firstAttribute="bottom" secondItem="A6o-zF-CHs" secondAttribute="bottom" id="Pvt-QL-FS5"/>
+                                    <constraint firstItem="A6o-zF-CHs" firstAttribute="leading" secondItem="eWe-TK-jUu" secondAttribute="trailing" id="UN0-00-8ur"/>
+                                    <constraint firstItem="Csy-Hy-q7h" firstAttribute="leading" secondItem="FbT-ZR-5zz" secondAttribute="leading" id="dgR-pm-LM6"/>
+                                    <constraint firstAttribute="bottom" secondItem="KOU-Bu-Ilp" secondAttribute="bottom" id="eby-MK-l8h"/>
+                                    <constraint firstAttribute="bottom" secondItem="eWe-TK-jUu" secondAttribute="bottom" id="jWd-xO-GCg"/>
+                                    <constraint firstItem="KOU-Bu-Ilp" firstAttribute="leading" secondItem="Csy-Hy-q7h" secondAttribute="trailing" id="mHK-OC-55z"/>
+                                    <constraint firstItem="eWe-TK-jUu" firstAttribute="leading" secondItem="KOU-Bu-Ilp" secondAttribute="trailing" id="nK6-FU-a0F"/>
+                                    <constraint firstItem="A6o-zF-CHs" firstAttribute="top" secondItem="FbT-ZR-5zz" secondAttribute="top" id="ySd-Ld-eks"/>
+                                    <constraint firstItem="eWe-TK-jUu" firstAttribute="top" secondItem="FbT-ZR-5zz" secondAttribute="top" id="ykK-e0-IKi"/>
+                                </constraints>
+                            </customView>
+                            <scrollView focusRingType="none" borderType="none" horizontalLineScroll="1" horizontalPageScroll="1" verticalLineScroll="1" verticalPageScroll="1" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" scrollerKnobStyle="light" translatesAutoresizingMaskIntoConstraints="NO" id="UVg-Au-lFN" userLabel="ScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="270"/>
+                                <clipView key="contentView" id="HRk-D0-xGp">
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="270"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykB-jB-b6q">
+                                            <rect key="frame" x="0.0" y="0.0" width="435" height="255"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="BdX-FE-drs">
+                                    <rect key="frame" x="0.0" y="254" width="450" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="skV-5y-lyb">
+                                    <rect key="frame" x="434" y="0.0" width="16" height="270"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="UVg-Au-lFN" secondAttribute="trailing" id="3AP-qm-nAl"/>
+                            <constraint firstItem="FbT-ZR-5zz" firstAttribute="leading" secondItem="V1r-fO-eby" secondAttribute="leading" id="7FB-Fu-ECT"/>
+                            <constraint firstAttribute="trailing" secondItem="FbT-ZR-5zz" secondAttribute="trailing" id="Ynr-Mm-t0O"/>
+                            <constraint firstAttribute="bottom" secondItem="UVg-Au-lFN" secondAttribute="bottom" id="a4W-0q-XKY"/>
+                            <constraint firstItem="UVg-Au-lFN" firstAttribute="leading" secondItem="V1r-fO-eby" secondAttribute="leading" id="gOk-JH-8aZ"/>
+                            <constraint firstItem="UVg-Au-lFN" firstAttribute="top" secondItem="FbT-ZR-5zz" secondAttribute="bottom" id="gow-gj-RUj"/>
+                            <constraint firstItem="FbT-ZR-5zz" firstAttribute="top" secondItem="V1r-fO-eby" secondAttribute="top" id="zdp-kX-R58"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_scrollView" destination="UVg-Au-lFN" id="f3n-C7-MgR"/>
+                        <outlet property="_toolbarView" destination="FbT-ZR-5zz" id="Lmh-9v-leE"/>
+                    </connections>
+                </viewController>
+                <customObject id="jyu-tG-vlN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="334" y="633"/>
+        </scene>
+    </scenes>
+</document>

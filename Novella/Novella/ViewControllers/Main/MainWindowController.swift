@@ -69,7 +69,7 @@ class MainWindowController: NSWindowController {
 		}
 		
 		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "VariableSegue") {
-			guard let doc = self.document as? NovellaDocument, let wc = segue.destinationController as? NSWindowController, let vc = wc.contentViewController as? VariableTabViewController else {
+			guard let doc = self.document as? NovellaDocument, let wc = segue.destinationController as? NSWindowController, let vc = wc.contentViewController as? VariableEditorViewController else {
 				return
 			}
 			vc.setup(doc: doc)
@@ -77,7 +77,7 @@ class MainWindowController: NSWindowController {
 		}
 		
 		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "EntitySegue") {
-			guard let doc = self.document as? NovellaDocument, let wc = segue.destinationController as? NSWindowController, let vc = wc.contentViewController as? EntityTabViewController else {
+			guard let doc = self.document as? NovellaDocument, let wc = segue.destinationController as? NSWindowController, let vc = wc.contentViewController as? EntityEditorViewController else {
 				return
 			}
 			vc.setup(doc: doc)

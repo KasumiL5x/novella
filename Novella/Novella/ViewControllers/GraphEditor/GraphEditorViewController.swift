@@ -1,5 +1,5 @@
 //
-//  GraphTabViewController.swift
+//  GraphEditorViewController.swift
 //  Novella
 //
 //  Created by Daniel Green on 21/05/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class GraphTabViewController: NSViewController {
+class GraphEditorViewController: NSViewController {
 	// MARK: - - Outlets -
 	@IBOutlet private weak var _scrollView: NSScrollView!
 	@IBOutlet private weak var _toolbarView: NSView!
@@ -53,7 +53,7 @@ class GraphTabViewController: NSViewController {
 	}
 	
 	private func configure() {
-		_graphView = GraphView(doc: _document!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphTabViewController.GRAPH_SIZE, GraphTabViewController.GRAPH_SIZE))
+		_graphView = GraphView(doc: _document!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphEditorViewController.GRAPH_SIZE, GraphEditorViewController.GRAPH_SIZE))
 		_graphView?.Delegate = _delegate
 		_scrollView.documentView = _graphView!
 	}

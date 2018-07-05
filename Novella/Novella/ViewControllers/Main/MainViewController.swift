@@ -13,7 +13,7 @@ class MainViewController: NSViewController {
 	// MARK: - Variables -
 	private var _appeared: Bool = false
 	private var _document: NovellaDocument!
-	private var _graphViewVC: GraphTabViewController?
+	private var _graphViewVC: GraphEditorViewController?
 	
 	// MARK: - Outlets -
 	@IBOutlet private weak var _splitView: NSSplitView!
@@ -85,7 +85,7 @@ class MainViewController: NSViewController {
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "GraphSegue") {
-			_graphViewVC = segue.destinationController as? GraphTabViewController
+			_graphViewVC = segue.destinationController as? GraphEditorViewController
 		}
 	}
 	

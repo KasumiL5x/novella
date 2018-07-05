@@ -74,7 +74,7 @@ class VariableConstantBoolCell: NSTableCellView {
 }
 
 // MARK: - View Controller -
-class VariableTabViewController: NSViewController {
+class VariableEditorViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
 	
@@ -102,6 +102,7 @@ class VariableTabViewController: NSViewController {
 	
 	func setup(doc: NovellaDocument) {
 		self._document = doc
+		_outlineView.reloadData()
 	}
 	
 	func getSelectedFolder() -> NVFolder? {
@@ -203,7 +204,7 @@ class VariableTabViewController: NSViewController {
 }
 
 // MARK: - NSOutlineViewDelegate -
-extension VariableTabViewController: NSOutlineViewDelegate {
+extension VariableEditorViewController: NSOutlineViewDelegate {
 	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
 		let customRow = OutlinerTableRowView(frame: NSRect.zero)
 		return customRow
@@ -311,7 +312,7 @@ extension VariableTabViewController: NSOutlineViewDelegate {
 }
 
 // MARK: - NSOutlineViewDataSource -
-extension VariableTabViewController: NSOutlineViewDataSource {
+extension VariableEditorViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		switch item {
 		case is NVFolder:

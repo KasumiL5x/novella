@@ -45,9 +45,11 @@
 		655F9FF720C30EAA00B20EFE /* NovellaModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 655F9FF520C30EAA00B20EFE /* NovellaModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		655F9FFA20C30EAA00B20EFE /* NovellaModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; };
 		655F9FFB20C30EAA00B20EFE /* NovellaModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 655F9FF320C30EAA00B20EFE /* NovellaModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		656342F720EE3D9600891B6A /* EntityEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 656342F620EE3D9600891B6A /* EntityEditor.storyboard */; };
+		658646E520EE3BB000A0B167 /* VariableEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658646E420EE3BB000A0B167 /* VariableEditor.storyboard */; };
 		658C9EF520CA609B00D82145 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
 		65940AD720E19B2D00C777BF /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65940AD620E19B2D00C777BF /* NVEntity.swift */; };
-		65940AD920E2323500C777BF /* EntityTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65940AD820E2323500C777BF /* EntityTabViewController.swift */; };
+		65940AD920E2323500C777BF /* EntityEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65940AD820E2323500C777BF /* EntityEditorViewController.swift */; };
 		65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2180E20D13FC900EA4594 /* NVObject.swift */; };
 		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
 		65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */; };
@@ -95,12 +97,12 @@
 		65F7F89B20C317F4004663D6 /* ConditionPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F89620C317F4004663D6 /* ConditionPopoverViewController.swift */; };
 		65F7F89F20C31815004663D6 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F89D20C31815004663D6 /* PreferencesWindowController.swift */; };
 		65F7F8A020C31815004663D6 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F89E20C31815004663D6 /* PreferencesViewController.swift */; };
-		65F7F8A420C3182F004663D6 /* GraphTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8A220C3182F004663D6 /* GraphTabViewController.swift */; };
-		65F7F8A520C3182F004663D6 /* VariableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8A320C3182F004663D6 /* VariableTabViewController.swift */; };
+		65F7F8A420C3182F004663D6 /* GraphEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8A220C3182F004663D6 /* GraphEditorViewController.swift */; };
+		65F7F8A520C3182F004663D6 /* VariableEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8A320C3182F004663D6 /* VariableEditorViewController.swift */; };
 		65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F8AD20C3187E004663D6 /* Settings.swift */; };
 		65F7F8B420C3195A004663D6 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F8B220C3195A004663D6 /* Highlightr.framework */; };
 		65F7F8BD20C31A07004663D6 /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B720C31A06004663D6 /* Popovers.storyboard */; };
-		65F7F8BE20C31A07004663D6 /* TabPages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B820C31A06004663D6 /* TabPages.storyboard */; };
+		65F7F8BE20C31A07004663D6 /* GraphEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B820C31A06004663D6 /* GraphEditor.storyboard */; };
 		65F7F8BF20C31A07004663D6 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F7F8B920C31A06004663D6 /* Preferences.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -169,9 +171,11 @@
 		655F9FF320C30EAA00B20EFE /* NovellaModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NovellaModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FF520C30EAA00B20EFE /* NovellaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NovellaModel.h; sourceTree = "<group>"; };
 		655F9FF620C30EAA00B20EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		656342F620EE3D9600891B6A /* EntityEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EntityEditor.storyboard; sourceTree = "<group>"; };
+		658646E420EE3BB000A0B167 /* VariableEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VariableEditor.storyboard; sourceTree = "<group>"; };
 		658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
 		65940AD620E19B2D00C777BF /* NVEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
-		65940AD820E2323500C777BF /* EntityTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityTabViewController.swift; sourceTree = "<group>"; };
+		65940AD820E2323500C777BF /* EntityEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityEditorViewController.swift; sourceTree = "<group>"; };
 		65A2180E20D13FC900EA4594 /* NVObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVObject.swift; sourceTree = "<group>"; };
 		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
 		65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypewriterLabel.swift; sourceTree = "<group>"; };
@@ -219,12 +223,12 @@
 		65F7F89620C317F4004663D6 /* ConditionPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionPopoverViewController.swift; sourceTree = "<group>"; };
 		65F7F89D20C31815004663D6 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		65F7F89E20C31815004663D6 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
-		65F7F8A220C3182F004663D6 /* GraphTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTabViewController.swift; sourceTree = "<group>"; };
-		65F7F8A320C3182F004663D6 /* VariableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTabViewController.swift; sourceTree = "<group>"; };
+		65F7F8A220C3182F004663D6 /* GraphEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphEditorViewController.swift; sourceTree = "<group>"; };
+		65F7F8A320C3182F004663D6 /* VariableEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableEditorViewController.swift; sourceTree = "<group>"; };
 		65F7F8AD20C3187E004663D6 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		65F7F8B220C3195A004663D6 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		65F7F8B720C31A06004663D6 /* Popovers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
-		65F7F8B820C31A06004663D6 /* TabPages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TabPages.storyboard; sourceTree = "<group>"; };
+		65F7F8B820C31A06004663D6 /* GraphEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GraphEditor.storyboard; sourceTree = "<group>"; };
 		65F7F8B920C31A06004663D6 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,18 +254,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		655B0D0220C42C6C00CDE92F /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				655F9FB620C3087400B20EFE /* Main.storyboard */,
-				65DD6CC720C3412B0078CB28 /* MainWindowController.swift */,
-				65F7F88620C317DD004663D6 /* MainViewController.swift */,
-				65F7F88120C317DD004663D6 /* Outliner.swift */,
-				65F7F88520C317DD004663D6 /* StoryDelegate.swift */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
 		655F9FA220C3087300B20EFE = {
 			isa = PBXGroup;
 			children = (
@@ -291,13 +283,9 @@
 				655F9FB420C3087400B20EFE /* Assets.xcassets */,
 				65F7F83320C31611004663D6 /* Extensions */,
 				65F7F84020C31676004663D6 /* Utilities */,
-				655B0D0220C42C6C00CDE92F /* Main */,
 				65F7F84520C31707004663D6 /* GraphSystem */,
 				65F7F8B620C319D6004663D6 /* Storyboards */,
 				65F7F87020C31722004663D6 /* ViewControllers */,
-				654918E420D6946B008467FF /* ChoiceWheelView.swift */,
-				65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */,
-				650C651F20E3C7A300EF5305 /* CustomImageView.swift */,
 			);
 			path = Novella;
 			sourceTree = "<group>";
@@ -332,6 +320,42 @@
 				65940AD620E19B2D00C777BF /* NVEntity.swift */,
 			);
 			path = NovellaModel;
+			sourceTree = "<group>";
+		};
+		656342F820EE3E5300891B6A /* VariableEditor */ = {
+			isa = PBXGroup;
+			children = (
+				65F7F8A320C3182F004663D6 /* VariableEditorViewController.swift */,
+			);
+			path = VariableEditor;
+			sourceTree = "<group>";
+		};
+		656342F920EE3E5B00891B6A /* EntityEditor */ = {
+			isa = PBXGroup;
+			children = (
+				65940AD820E2323500C777BF /* EntityEditorViewController.swift */,
+			);
+			path = EntityEditor;
+			sourceTree = "<group>";
+		};
+		656342FA20EE3ECF00891B6A /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				650864A420D001C300201542 /* ReaderViewController.swift */,
+				650864A620D0024F00201542 /* ReaderWindowController.swift */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
+		656342FB20EE3EF000891B6A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				65DD6CC720C3412B0078CB28 /* MainWindowController.swift */,
+				65F7F88620C317DD004663D6 /* MainViewController.swift */,
+				65F7F88120C317DD004663D6 /* Outliner.swift */,
+				65F7F88520C317DD004663D6 /* StoryDelegate.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		65AE16CA20C32544006A921F /* Popovers */ = {
@@ -452,11 +476,14 @@
 			isa = PBXGroup;
 			children = (
 				65DD6CC920C345390078CB28 /* Alerts.swift */,
+				654918E420D6946B008467FF /* ChoiceWheelView.swift */,
 				65F7F88420C317DD004663D6 /* ColoredView.swift */,
 				65F7F84120C3168A004663D6 /* CommandSystem.swift */,
 				65F7F84220C3168A004663D6 /* CurveHelper.swift */,
+				650C651F20E3C7A300EF5305 /* CustomImageView.swift */,
 				65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */,
 				65F7F8AD20C3187E004663D6 /* Settings.swift */,
+				65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -479,11 +506,13 @@
 		65F7F87020C31722004663D6 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				656342F920EE3E5B00891B6A /* EntityEditor */,
+				65F7F8A120C3181C004663D6 /* GraphEditor */,
+				656342FB20EE3EF000891B6A /* Main */,
 				65F7F89120C317E6004663D6 /* Popovers */,
 				65F7F89C20C31806004663D6 /* Preferences */,
-				65F7F8A120C3181C004663D6 /* Tabs */,
-				650864A420D001C300201542 /* ReaderViewController.swift */,
-				650864A620D0024F00201542 /* ReaderWindowController.swift */,
+				656342FA20EE3ECF00891B6A /* Reader */,
+				656342F820EE3E5300891B6A /* VariableEditor */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -509,22 +538,23 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
-		65F7F8A120C3181C004663D6 /* Tabs */ = {
+		65F7F8A120C3181C004663D6 /* GraphEditor */ = {
 			isa = PBXGroup;
 			children = (
-				65F7F8A220C3182F004663D6 /* GraphTabViewController.swift */,
-				65F7F8A320C3182F004663D6 /* VariableTabViewController.swift */,
-				65940AD820E2323500C777BF /* EntityTabViewController.swift */,
+				65F7F8A220C3182F004663D6 /* GraphEditorViewController.swift */,
 			);
-			path = Tabs;
+			path = GraphEditor;
 			sourceTree = "<group>";
 		};
 		65F7F8B620C319D6004663D6 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				656342F620EE3D9600891B6A /* EntityEditor.storyboard */,
+				655F9FB620C3087400B20EFE /* Main.storyboard */,
 				65F7F8B720C31A06004663D6 /* Popovers.storyboard */,
 				65F7F8B920C31A06004663D6 /* Preferences.storyboard */,
-				65F7F8B820C31A06004663D6 /* TabPages.storyboard */,
+				65F7F8B820C31A06004663D6 /* GraphEditor.storyboard */,
+				658646E420EE3BB000A0B167 /* VariableEditor.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -626,9 +656,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				656342F720EE3D9600891B6A /* EntityEditor.storyboard in Resources */,
 				655F9FB520C3087400B20EFE /* Assets.xcassets in Resources */,
-				65F7F8BE20C31A07004663D6 /* TabPages.storyboard in Resources */,
+				65F7F8BE20C31A07004663D6 /* GraphEditor.storyboard in Resources */,
 				655F9FB820C3087400B20EFE /* Main.storyboard in Resources */,
+				658646E520EE3BB000A0B167 /* VariableEditor.storyboard in Resources */,
 				65F7F8BF20C31A07004663D6 /* Preferences.storyboard in Resources */,
 				65F7F8BD20C31A07004663D6 /* Popovers.storyboard in Resources */,
 			);
@@ -724,7 +756,7 @@
 				65F7F89B20C317F4004663D6 /* ConditionPopoverViewController.swift in Sources */,
 				654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */,
 				65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */,
-				65F7F8A520C3182F004663D6 /* VariableTabViewController.swift in Sources */,
+				65F7F8A520C3182F004663D6 /* VariableEditorViewController.swift in Sources */,
 				65F7F86F20C31714004663D6 /* GraphViewCommands.swift in Sources */,
 				65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */,
 				655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */,
@@ -736,7 +768,7 @@
 				65F7F83C20C31637004663D6 /* NSColor+Saturation.swift in Sources */,
 				654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */,
 				65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */,
-				65F7F8A420C3182F004663D6 /* GraphTabViewController.swift in Sources */,
+				65F7F8A420C3182F004663D6 /* GraphEditorViewController.swift in Sources */,
 				65F7F86220C31714004663D6 /* GraphBoundsView.swift in Sources */,
 				65F7F86C20C31714004663D6 /* DeliveryPopover.swift in Sources */,
 				650C652020E3C7A300EF5305 /* CustomImageView.swift in Sources */,
@@ -746,7 +778,7 @@
 				65F7F89720C317F4004663D6 /* DialogPopoverViewController.swift in Sources */,
 				65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */,
 				65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */,
-				65940AD920E2323500C777BF /* EntityTabViewController.swift in Sources */,
+				65940AD920E2323500C777BF /* EntityEditorViewController.swift in Sources */,
 				65F7F86A20C31714004663D6 /* DeliveryLinkableView.swift in Sources */,
 				65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */,
 				65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */,
