@@ -22,8 +22,8 @@
   "nodes" : [
     {
       "position" : {
-        "y" : -4.9011831283569336,
-        "x" : -2018.2021484375
+        "y" : 176.72983339463826,
+        "x" : -2061.6716115078889
       },
       "name" : "Start",
       "content" : "Hey Juliet, is everything cool?",

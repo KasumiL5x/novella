@@ -1,5 +1,5 @@
 //
-//  EntityTabViewController.swift
+//  EntityEditorController.swift
 //  Novella
 //
 //  Created by Daniel Green on 26/06/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class EntityTabViewController: NSViewController {
+class EntityEditorViewController: NSViewController {
 	// MARK: - Outlets -
 	@IBOutlet private weak var _tableView: NSTableView!
 	@IBOutlet private weak var _nameLabel: NSTextField!
@@ -30,6 +30,8 @@ class EntityTabViewController: NSViewController {
 	func setup(doc: NovellaDocument) {
 		self._document = doc
 		doc.Manager.addDelegate(self)
+		
+		_tableView.reloadData()
 	}
 	
 	// MARK: - Interface Callbacks -
@@ -75,7 +77,7 @@ class EntityTabViewController: NSViewController {
 }
 
 // MARK: - NSTableViewDelegate -
-extension EntityTabViewController: NSTableViewDelegate {
+extension EntityEditorViewController: NSTableViewDelegate {
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		var view: NSView?
 		
@@ -98,18 +100,24 @@ extension EntityTabViewController: NSTableViewDelegate {
 }
 
 // MARK: - NSTableViewDataSource -
-extension EntityTabViewController: NSTableViewDataSource {
+extension EntityEditorViewController: NSTableViewDataSource {
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return _document!.Manager.Entities.count
+		guard let doc = _document else {
+			return 0
+		}
+		return doc.Manager.Entities.count
 	}
 	
 	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-		return _document!.Manager.Entities[row]
+		guard let doc = _document else {
+			return nil
+		}
+		return doc.Manager.Entities[row]
 	}
 }
 
 // MARK: - NVStoryDelegate -
-extension EntityTabViewController: NVStoryDelegate {
+extension EntityEditorViewController: NVStoryDelegate {
 	func onStoryMakeEntity(entity: NVEntity) {
 		_tableView.reloadData()
 	}

@@ -230,8 +230,8 @@ extension NVStoryManager {
 		}
 
 		// remove from story
-		if self._folders.contains(folder) {
-			self._folders.remove(at: self._folders.index(of: folder)!)
+		if _story.contains(folder: folder) {
+			try! _story.remove(folder: folder)
 		}
 
 		// actual remove

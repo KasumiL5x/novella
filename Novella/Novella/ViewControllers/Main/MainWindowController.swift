@@ -31,7 +31,7 @@ class MainWindowController: NSWindowController {
 	}
 	
 	@IBAction func onToolbarZoomSelected(_ sender: NSButton) {
-		(contentViewController as? MainViewController)?.zoomActiveGraph()
+		(contentViewController as? MainViewController)?.zoomGraph()
 	}
 	
 	@IBAction func onToolbarCenterView(_ sender: NSButton) {
@@ -67,17 +67,25 @@ class MainWindowController: NSWindowController {
 			}
 			vc.setDocument(doc: doc)
 		}
+		
+		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "VariableSegue") {
+			guard let doc = self.document as? NovellaDocument, let wc = segue.destinationController as? NSWindowController, let vc = wc.contentViewController as? VariableEditorViewController else {
+				return
+			}
+			vc.setup(doc: doc)
+			wc.window?.level = .floating
+		}
+		
+		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "EntitySegue") {
+			guard let doc = self.document as? NovellaDocument, let wc = segue.destinationController as? NSWindowController, let vc = wc.contentViewController as? EntityEditorViewController else {
+				return
+			}
+			vc.setup(doc: doc)
+			wc.window?.level = .floating
+		}
 	}
 	
 	@IBAction func onToolbarScreenshot(_ sender: NSButton) {
 		(contentViewController as? MainViewController)?.screenshot()
-	}
-	
-	@IBAction func onToolbarVariableEditor(_ sender: NSButton) {
-		(contentViewController as? MainViewController)?.openVariableEditor()
-	}
-	
-	@IBAction func onToolbarEntityEditor(_ sender: NSButton) {
-		(contentViewController as? MainViewController)?.openEntityEditor()
 	}
 }
