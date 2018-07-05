@@ -886,13 +886,13 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--VariableTab-->
+        <!--VariableEditorWindow-->
         <scene sceneID="zr6-wR-cbg">
             <objects>
-                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="VariableTab" id="pao-oB-VAa" sceneMemberID="viewController"/>
+                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="VariableEditorWindow" id="pao-oB-VAa" sceneMemberID="viewController"/>
                 <customObject id="G5N-Sd-Eed" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="630" y="41"/>
+            <point key="canvasLocation" x="669" y="41"/>
         </scene>
         <!--GraphTab-->
         <scene sceneID="PXE-Jg-zPd">
@@ -902,13 +902,13 @@
             </objects>
             <point key="canvasLocation" x="990" y="1008"/>
         </scene>
-        <!--EntityTab-->
+        <!--EntityEditorWindow-->
         <scene sceneID="6Ir-w7-16Q">
             <objects>
-                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="EntityTab" id="OaF-xx-T5x" sceneMemberID="viewController"/>
+                <controllerPlaceholder storyboardName="TabPages" referencedIdentifier="EntityEditorWindow" id="OaF-xx-T5x" sceneMemberID="viewController"/>
                 <customObject id="KRr-A0-plh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="631" y="-16"/>
+            <point key="canvasLocation" x="662" y="-9"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="Kfw-21-9Xi">

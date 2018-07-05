@@ -30,6 +30,8 @@ class EntityTabViewController: NSViewController {
 	func setup(doc: NovellaDocument) {
 		self._document = doc
 		doc.Manager.addDelegate(self)
+		
+		_tableView.reloadData()
 	}
 	
 	// MARK: - Interface Callbacks -
@@ -100,11 +102,17 @@ extension EntityTabViewController: NSTableViewDelegate {
 // MARK: - NSTableViewDataSource -
 extension EntityTabViewController: NSTableViewDataSource {
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return _document!.Manager.Entities.count
+		guard let doc = _document else {
+			return 0
+		}
+		return doc.Manager.Entities.count
 	}
 	
 	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-		return _document!.Manager.Entities[row]
+		guard let doc = _document else {
+			return nil
+		}
+		return doc.Manager.Entities[row]
 	}
 }
 

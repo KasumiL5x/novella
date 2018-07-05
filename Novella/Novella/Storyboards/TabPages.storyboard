@@ -6,10 +6,31 @@
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
-        <!--VariableTab-->
+        <!--VariableEditorWindow-->
+        <scene sceneID="cJS-2Z-bJ6">
+            <objects>
+                <windowController storyboardIdentifier="VariableEditorWindow" id="SeO-dx-3Hd" userLabel="VariableEditorWindow" sceneMemberID="viewController">
+                    <window key="window" title="Variable Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="2QX-Hf-vML">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="362" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+                        <connections>
+                            <outlet property="delegate" destination="SeO-dx-3Hd" id="WQ3-by-aTR"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="qwa-hs-HaY" kind="relationship" relationship="window.shadowedContentViewController" id="g7i-oR-oHn"/>
+                    </connections>
+                </windowController>
+                <customObject id="O8B-o6-Rbk" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="234" y="-482"/>
+        </scene>
+        <!--VariableEditor-->
         <scene sceneID="jET-on-QDE">
             <objects>
-                <viewController storyboardIdentifier="VariableTab" id="qwa-hs-HaY" userLabel="VariableTab" customClass="VariableTabViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qwa-hs-HaY" userLabel="VariableEditor" customClass="VariableTabViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Xd5-Gc-eOA">
                         <rect key="frame" x="0.0" y="0.0" width="707" height="427"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -424,10 +445,31 @@
             </objects>
             <point key="canvasLocation" x="234.5" y="57.5"/>
         </scene>
-        <!--EntityTab-->
+        <!--EntityEditorWindow-->
+        <scene sceneID="52E-eS-6Yf">
+            <objects>
+                <windowController storyboardIdentifier="EntityEditorWindow" id="btK-mj-8v6" userLabel="EntityEditorWindow" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="3F7-0B-s0C">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="362" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+                        <connections>
+                            <outlet property="delegate" destination="btK-mj-8v6" id="iYF-t4-MLL"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="nay-nu-GgZ" kind="relationship" relationship="window.shadowedContentViewController" id="0E9-Kt-9c5"/>
+                    </connections>
+                </windowController>
+                <customObject id="99e-I3-g4u" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1071" y="-444"/>
+        </scene>
+        <!--EntityEditor-->
         <scene sceneID="Hyp-9R-XZ4">
             <objects>
-                <viewController storyboardIdentifier="EntityTab" id="nay-nu-GgZ" userLabel="EntityTab" customClass="EntityTabViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="nay-nu-GgZ" userLabel="EntityEditor" customClass="EntityTabViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="a5h-FC-i5o">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="420"/>
                         <autoresizingMask key="autoresizingMask"/>
