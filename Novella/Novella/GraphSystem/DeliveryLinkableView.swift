@@ -37,4 +37,10 @@ class DeliveryLinkableView: LinkableView {
 	override func onContentChanged() {
 		setLabelString(str: (Linkable as! NVDelivery).Content)
 	}
+	// MARK: Popover Functions
+	override func _createPopover() {
+		_editPopover = DeliveryPopover()
+		_editPopover?.show(forView: self, at: .minY)
+		(_editPopover?.ViewController as! DeliveryPopoverViewController).setDeliveryNode(node: self)
+	}
 }

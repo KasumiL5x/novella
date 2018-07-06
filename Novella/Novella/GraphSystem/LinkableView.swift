@@ -35,10 +35,13 @@ class LinkableView: NSView {
 	private var _trashMode: Bool
 	//
 	private var _contextMenu: NSMenu
+	private var _contextItemEdit: NSMenuItem
 	private var _contextItemAddLink: NSMenuItem
 	private var _contextItemAddBranch: NSMenuItem
 	private var _contextItemEntry: NSMenuItem
 	private var _contextItemTrash: NSMenuItem
+	//
+	var _editPopover: GenericPopover?
 	
 	// MARK: - Properties -
 	var Linkable: NVObject {
@@ -101,14 +104,18 @@ class LinkableView: NSView {
 		self._trashMode = false
 		//
 		self._contextMenu = NSMenu()
+		self._contextItemEdit = NSMenuItem(title: "Edit", action: #selector(LinkableView.onContextEdit), keyEquivalent: "")
 		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
 		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
 		self._contextItemEntry = NSMenuItem(title: "Set as Entry", action: #selector(LinkableView.onContextSetEntry), keyEquivalent: "")
 		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(LinkableView.onContextTrash), keyEquivalent: "")
+		//
+		self._editPopover = nil
 		super.init(frame: frameRect)
 		
 		// set up context menu
 		_contextMenu.autoenablesItems = false
+		_contextMenu.addItem(_contextItemEdit)
 		_contextMenu.addItem(_contextItemAddLink)
 		_contextMenu.addItem(_contextItemAddBranch)
 		_contextMenu.addItem(NSMenuItem.separator())
@@ -203,7 +210,7 @@ class LinkableView: NSView {
 	}
 	@objc private func onDoubleClick(gesture: NSGestureRecognizer) {
 		if _trashMode { return }
-		_graphView.onDoubleClickLinkable(node: self, gesture: gesture)
+		showEditPopover()
 	}
 	@objc private func onContextClick(gesture: NSGestureRecognizer) {
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
@@ -213,6 +220,9 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: Context Menu Callbacks
+	@objc private func onContextEdit() {
+		showEditPopover()
+	}
 	@objc private func onContextAddLink() {
 		let link = _graphView.Manager.makeLink(origin: self.Linkable)
 		do { try _graphView.NovellaGraph.add(link: link) } catch {
@@ -256,8 +266,21 @@ class LinkableView: NSView {
 		}
 	}
 	
+	// MARK: Popover Functions
+	func _createPopover() {
+		print("LinkableView::_createPopover() should be overridden.")
+	}
+	func showEditPopover() {
+		if let popover = _editPopover {
+			popover.show(forView: self, at: .minY)
+		} else {
+			_createPopover()
+		}
+	}
+	
 	// MARK: Object Functions
 	private func onTrashed() {
+		_contextItemEdit.isEnabled = !_trashMode
 		_contextItemAddLink.isEnabled = !_trashMode
 		_contextItemAddBranch.isEnabled = !_trashMode
 		_contextItemEntry.isEnabled = !_trashMode

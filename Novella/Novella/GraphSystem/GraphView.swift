@@ -31,8 +31,6 @@ class GraphView: NSView {
 	private var _lastContextLocation: CGPoint // last point right clicked on graph view
 	// MARK: Delegate
 	private var _delegate: GraphViewDelegate?
-	// MARK: Popovers
-	private var _nodePopovers: [GenericPopover]
 	
 	// MARK: - - Initialization -
 	init(doc: NovellaDocument, graph: NVGraph, frameRect: NSRect) {
@@ -53,8 +51,6 @@ class GraphView: NSView {
 		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
-		//
-		self._nodePopovers = []
 		
 		super.init(frame: frameRect)
 		
@@ -135,9 +131,6 @@ class GraphView: NSView {
 		_allLinkableViews = []
 		// clear existing pin views
 		_allPinViews = []
-		
-		// clear all popovers
-		self._nodePopovers = []
 		
 		// store new graph
 		_nvGraph = graph
@@ -360,36 +353,6 @@ extension GraphView {
 			}
 		} else {
 			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
-		}
-	}
-	func onDoubleClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
-		// just reshow existing if it already exists
-		if let existing = _nodePopovers.first(where: {$0.View == node}) {
-			existing.show(forView: node, at: .minY)
-			return
-		}
-		
-		switch node {
-		case is DialogLinkableView:
-			let popover = DialogPopover()
-			_nodePopovers.append(popover)
-			popover.show(forView: node, at: .minY)
-			(popover.ViewController as! DialogPopoverViewController).setDialogNode(node: node as! DialogLinkableView, manager: _document.Manager)
-			
-		case is DeliveryLinkableView:
-			let popover = DeliveryPopover()
-			_nodePopovers.append(popover)
-			popover.show(forView: node, at: .minY)
-			(popover.ViewController as! DeliveryPopoverViewController).setDeliveryNode(node: node as! DeliveryLinkableView)
-			
-		case is ContextLinkableView:
-			let popover = ContextPopover()
-			_nodePopovers.append(popover)
-			popover.show(forView: node, at: .minY)
-			(popover.ViewController as! ContextPopoverViewController).setContextNode(node: node as! ContextLinkableView)
-			
-		default:
-			print("Double clicked a LinkableView that doesn't support popovers.")
 		}
 	}
 	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {

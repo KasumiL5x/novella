@@ -36,4 +36,7 @@ class GraphLinkableView: LinkableView {
 	}
 	override func onContentChanged() {
 	}
+	// MARK: Popover Functions
+	override func _createPopover() {
+	}
 }

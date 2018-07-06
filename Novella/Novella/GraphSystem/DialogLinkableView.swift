@@ -38,4 +38,10 @@ class DialogLinkableView: LinkableView {
 	override func onContentChanged() {
 		setContentString(str: (Linkable as! NVDialog).Content)
 	}
+	// MARK: Popover Functions
+	override func _createPopover() {
+		_editPopover = DialogPopover()
+		_editPopover?.show(forView: self, at: .minY)
+		(_editPopover?.ViewController as! DialogPopoverViewController).setDialogNode(node: self, manager: _graphView.Manager)
+	}
 }
