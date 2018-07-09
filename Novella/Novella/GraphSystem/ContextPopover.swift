@@ -9,11 +9,16 @@
 import Cocoa
 
 class ContextPopover: GenericPopover {
-	override func createViewController() -> Bool {
+	func setup(node: ContextLinkableView) {
+		(_popoverViewController as? ContextPopoverViewController)?.setContextNode(node: node)
+		(_detachedViewController as? ContextPopoverViewController)?.setContextNode(node: node)
+	}
+	
+	override func createViewController() -> NSViewController? {
 		let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let popoverID = NSStoryboard.SceneIdentifier(rawValue: "Context")
-		_viewController = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
+		let vc = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
 		
-		return _viewController != nil
+		return vc
 	}
 }

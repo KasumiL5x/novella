@@ -42,6 +42,6 @@ class DialogLinkableView: LinkableView {
 	override func _createPopover() {
 		_editPopover = DialogPopover()
 		_editPopover?.show(forView: self, at: .minY)
-		(_editPopover?.ViewController as! DialogPopoverViewController).setDialogNode(node: self, manager: _graphView.Manager)
+		(_editPopover as! DialogPopover).setup(node: self, manager: _graphView.Manager)
 	}
 }

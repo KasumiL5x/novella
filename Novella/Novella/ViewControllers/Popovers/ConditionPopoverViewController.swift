@@ -11,17 +11,18 @@ import NovellaModel
 import Highlightr
 
 class ConditionPopoverViewController: NSViewController {
-	// MARK: - - Outlets -
-	@IBOutlet weak var _textView: NSView!
-	@IBOutlet weak var _compileStatus: NSTextField!
+	// MARK: - Outlets -
+	@IBOutlet private weak var _textView: NSView!
+	@IBOutlet private weak var _compileStatus: NSTextField!
 	
-	// MARK: - - Variables -
-	fileprivate var _condition: NVCondition?
-	fileprivate let _textStorage = CodeAttributedString()
-	fileprivate let _layoutManager = NSLayoutManager()
-	fileprivate var _textContainer: NSTextContainer!
-	fileprivate var _codeTextbox: NSTextView!
+	// MARK: - Variables -
+	private var _condition: NVCondition?
+	private let _textStorage = CodeAttributedString()
+	private let _layoutManager = NSLayoutManager()
+	private var _textContainer: NSTextContainer!
+	private var _codeTextbox: NSTextView!
 	
+	// MARK: - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -30,7 +31,6 @@ class ConditionPopoverViewController: NSViewController {
 		_textStorage.language = "JavaScript"
 		print(_textStorage.highlightr.setTheme(to: "dracula"))
 		_textStorage.highlightr.theme.codeFont = NSFont(name: "Courier", size: 12)
-		_textStorage.setAttributedString(NSAttributedString(string: _condition?.Javascript ?? "return true;"))
 		_textStorage.addLayoutManager(_layoutManager)
 		
 		let textboxFrame = _textView.bounds
@@ -55,12 +55,17 @@ class ConditionPopoverViewController: NSViewController {
 		])
 	}
 	
+	override func viewDidAppear() {
+		refreshContent()
+	}
+	
 	func setCondition(condition: NVCondition) {
 		_condition = condition
-		
-		if isViewLoaded {
-			_textStorage.setAttributedString(NSAttributedString(string: _condition!.Javascript))
-		}
+		refreshContent()
+	}
+	
+	func refreshContent() {
+		_textStorage.setAttributedString(NSAttributedString(string: _condition?.Javascript ?? ""))
 	}
 }
 

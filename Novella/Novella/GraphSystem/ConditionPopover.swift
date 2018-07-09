@@ -7,13 +7,19 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class ConditionPopover: GenericPopover {
-	override func createViewController() -> Bool {
+	func setup(condition: NVCondition) {
+		(_popoverViewController as? ConditionPopoverViewController)?.setCondition(condition: condition)
+		(_detachedViewController as? ConditionPopoverViewController)?.setCondition(condition: condition)
+	}
+	
+	override func createViewController() -> NSViewController? {
 		let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let popoverID = NSStoryboard.SceneIdentifier(rawValue: "Condition")
-		_viewController = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
+		let vc = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
 		
-		return _viewController != nil
+		return vc
 	}
 }

@@ -23,14 +23,14 @@ class DialogPopoverViewController: NSViewController {
 	private var _speakerMenu: NSMenu?
 	
 	// MARK: - Functions -
+	override var acceptsFirstResponder: Bool {
+		return true
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		_dialogNode = nil
 		_manager = nil
-	}
-	
-	override var acceptsFirstResponder: Bool {
-		return true
 	}
 	
 	override func viewDidAppear() {
@@ -40,7 +40,6 @@ class DialogPopoverViewController: NSViewController {
 	func setDialogNode(node: DialogLinkableView, manager: NVStoryManager) {
 		_dialogNode = node
 		_manager = manager
-		
 		refreshContent()
 	}
 	

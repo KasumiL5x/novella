@@ -7,13 +7,19 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class DialogPopover: GenericPopover {
-	override func createViewController() -> Bool {
+	func setup(node: DialogLinkableView, manager: NVStoryManager) {
+		(_popoverViewController as? DialogPopoverViewController)?.setDialogNode(node: node, manager: manager)
+		(_detachedViewController as? DialogPopoverViewController)?.setDialogNode(node: node, manager: manager)
+	}
+	
+	override func createViewController() -> NSViewController? {
 		let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let popoverID = NSStoryboard.SceneIdentifier(rawValue: "Dialog")
-		_viewController = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
+		let vc = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
 		
-		return _viewController != nil
+		return vc
 	}
 }

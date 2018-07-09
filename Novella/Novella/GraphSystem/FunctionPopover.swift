@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NovellaModel
 
 class FunctionPopover: GenericPopover {
 	private var _trueFalse: Bool
@@ -20,11 +21,16 @@ class FunctionPopover: GenericPopover {
 		super.init()
 	}
 	
-	override func createViewController() -> Bool {
+	func setup(function: NVFunction) {
+		(_popoverViewController as? FunctionPopoverViewController)?.setFunction(function: function)
+		(_detachedViewController as? FunctionPopoverViewController)?.setFunction(function: function)
+	}
+	
+	override func createViewController() -> NSViewController? {
 		let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let popoverID = NSStoryboard.SceneIdentifier(rawValue: "Function")
-		_viewController = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
+		let vc = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
 		
-		return _viewController != nil
+		return vc
 	}
 }

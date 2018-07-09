@@ -11,29 +11,29 @@ import NovellaModel
 import Highlightr
 
 class FunctionPopoverViewController: NSViewController {
-	// MARK: - - Outlets -
-	@IBOutlet weak var _textView: NSView!
+	// MARK: - Outlets -
+//	@IBOutlet weak var _textView: NSView!
 	@IBOutlet weak var _compileStatus: NSTextField!
 	
-	// MARK: - - Variables -
-	fileprivate var _function: NVFunction?
-	fileprivate let _textStorage = CodeAttributedString()
-	fileprivate let _layoutManager = NSLayoutManager()
-	fileprivate var _textContainer: NSTextContainer!
-	fileprivate var _codeTextbox: NSTextView!
+	// MARK: - Variables -
+	private var _function: NVFunction?
+	private let _textStorage = CodeAttributedString()
+	private let _layoutManager = NSLayoutManager()
+	private var _textContainer: NSTextContainer!
+	private var _codeTextbox: NSTextView!
 	
+	// MARK: - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		_function = nil
 		
 		_textStorage.language = "JavaScript"
-		print(_textStorage.highlightr.setTheme(to: "dracula"))
+		_textStorage.highlightr.setTheme(to: "github-gist")
 		_textStorage.highlightr.theme.codeFont = NSFont(name: "Courier", size: 12)
-		_textStorage.setAttributedString(NSAttributedString(string: _function?.Javascript ?? "return true;"))
 		_textStorage.addLayoutManager(_layoutManager)
 		
-		let textboxFrame = _textView.bounds
+		let textboxFrame = view.bounds.insetBy(dx: 30, dy: 30)//_textView.bounds
 		_textContainer = NSTextContainer(size: textboxFrame.size)
 		_layoutManager.addTextContainer(_textContainer)
 		
@@ -41,26 +41,34 @@ class FunctionPopoverViewController: NSViewController {
 		_codeTextbox.autoresizingMask = [.width, .height]
 		_codeTextbox.translatesAutoresizingMaskIntoConstraints = false
 		_codeTextbox.backgroundColor = (_textStorage.highlightr.theme.themeBackgroundColor)
-		_codeTextbox.insertionPointColor = NSColor.white
+		_codeTextbox.insertionPointColor = NSColor.black
 		_codeTextbox.isAutomaticQuoteSubstitutionEnabled = false
 		_codeTextbox.isAutomaticDashSubstitutionEnabled = false
 		_codeTextbox.allowsUndo = true
 		_codeTextbox.delegate = self
-		_textView.addSubview(_codeTextbox)
-		_textView.addConstraints([
-			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: _textView, attribute: .left, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: _textView, attribute: .right, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: _textView, attribute: .top, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .bottom, relatedBy: .equal, toItem: _textView, attribute: .bottom, multiplier: 1.0, constant: 0)
-			])
+//		_textView.addSubview(_codeTextbox)
+		view.addSubview(_codeTextbox)
+//		_textView.addConstraints([
+		view.addConstraints([
+			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 30),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -30),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 30),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -30)
+		])
+	}
+	
+	override func viewWillAppear() {
+		refreshContent()
+		
 	}
 	
 	func setFunction(function: NVFunction) {
 		_function = function
-		
-		if isViewLoaded {
-			_textStorage.setAttributedString(NSAttributedString(string: _function!.Javascript))
-		}
+		refreshContent()
+	}
+	
+	func refreshContent() {
+		_textStorage.setAttributedString(NSAttributedString(string: _function?.Javascript ?? ""))
 	}
 }
 

@@ -40,6 +40,6 @@ class ContextLinkableView: LinkableView {
 	override func _createPopover() {
 		_editPopover = ContextPopover()
 		_editPopover?.show(forView: self, at: .minY)
-		(_editPopover?.ViewController as! ContextPopoverViewController).setContextNode(node: self)
+		(_editPopover as! ContextPopover).setup(node: self)
 	}
 }

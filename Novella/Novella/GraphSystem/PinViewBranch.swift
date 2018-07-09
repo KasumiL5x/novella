@@ -159,19 +159,19 @@ class PinViewBranch: PinView {
 	// MARK: Context Menu Callbacks
 	@objc private func onContextPreCondition() {
 		_conditionPopover.show(forView: self, at: .maxX)
-		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVBranch).PreCondition)
+		_conditionPopover.setup(condition: (BaseLink as! NVBranch).PreCondition)
 	}
 	@objc private func onContextCondition() {
 		_conditionPopover.show(forView: self, at: .maxX)
-		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVBranch).Condition)
+		_conditionPopover.setup(condition: (BaseLink as! NVBranch).Condition)
 	}
 	@objc private func onContextTrueFunction() {
 		_trueFunctionPopover.show(forView: self, at: .maxX)
-		(_trueFunctionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVBranch).TrueTransfer.Function)
+		_trueFunctionPopover.setup(function: (BaseLink as! NVBranch).TrueTransfer.Function)
 	}
 	@objc private func onContextFalseFunction() {
 		_falseFunctionPopover.show(forView: self, at: .maxX)
-		(_falseFunctionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVBranch).FalseTransfer.Function)
+		_falseFunctionPopover.setup(function: (BaseLink as! NVBranch).FalseTransfer.Function)
 	}
 	@objc private func onGraphContextItem(sender: NSMenuItem) {
 		_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: sender.representedObject as? NVObject, forTrue: _pannedPin))

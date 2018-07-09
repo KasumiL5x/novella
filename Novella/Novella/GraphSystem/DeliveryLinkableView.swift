@@ -41,6 +41,6 @@ class DeliveryLinkableView: LinkableView {
 	override func _createPopover() {
 		_editPopover = DeliveryPopover()
 		_editPopover?.show(forView: self, at: .minY)
-		(_editPopover?.ViewController as! DeliveryPopoverViewController).setDeliveryNode(node: self)
+		(_editPopover as! DeliveryPopover).setup(node: self)
 	}
 }

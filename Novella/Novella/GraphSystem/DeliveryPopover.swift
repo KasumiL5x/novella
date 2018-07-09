@@ -9,11 +9,16 @@
 import Cocoa
 
 class DeliveryPopover: GenericPopover {
-	override func createViewController() -> Bool {
+	func setup(node: DeliveryLinkableView) {
+		(_popoverViewController as? DeliveryPopoverViewController)?.setDeliveryNode(node: node)
+		(_detachedViewController as? DeliveryPopoverViewController)?.setDeliveryNode(node: node)
+	}
+	
+	override func createViewController() -> NSViewController? {
 		let popoverStoryboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Popovers"), bundle: nil)
 		let popoverID = NSStoryboard.SceneIdentifier(rawValue: "Delivery")
-		_viewController = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
+		let vc = popoverStoryboard.instantiateController(withIdentifier: popoverID) as? NSViewController
 		
-		return _viewController != nil
+		return vc
 	}
 }

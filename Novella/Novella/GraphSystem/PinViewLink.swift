@@ -100,11 +100,11 @@ class PinViewLink: PinView {
 	// MARK: Context Menu Callbacks
 	@objc private func onContextPreCondition() {
 		_conditionPopover.show(forView: self, at: .maxX)
-		(_conditionPopover.ViewController as! ConditionPopoverViewController).setCondition(condition: (BaseLink as! NVLink).PreCondition)
+		_conditionPopover.setup(condition: (BaseLink as! NVLink).PreCondition)
 	}
 	@objc private func onContextFunction() {
 		_functionPopover.show(forView: self, at: .maxX)
-		(_functionPopover.ViewController as! FunctionPopoverViewController).setFunction(function: (BaseLink as! NVLink).Transfer.Function)
+		_functionPopover.setup(function: (BaseLink as! NVLink).Transfer.Function)
 	}
 	@objc private func onGraphContextItem(sender: NSMenuItem) {
 		_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: sender.representedObject as? NVObject))
