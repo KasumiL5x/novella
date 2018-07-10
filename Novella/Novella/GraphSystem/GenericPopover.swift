@@ -101,6 +101,10 @@ class GenericPopover: NSObject {
 // MARK: - - NSPopoverDelegate -
 extension GenericPopover: NSPopoverDelegate {
 	func detachableWindow(for popover: NSPopover) -> NSWindow? {
+		// this is requested when the window is detached.
+		// setting the popover window's first responder to nil ensures that any in-progress edits are committed (if the user didn't tab or press return etc.).
+		// we can't do this in popoverWill/DidClose as that's too late and window already exists.
+		_popoverViewController?.view.window?.makeFirstResponder(nil)
 		return _window
 	}
 	
