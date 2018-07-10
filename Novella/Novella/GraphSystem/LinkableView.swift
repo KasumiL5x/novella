@@ -90,7 +90,7 @@ class LinkableView: NSView {
 		//
 		self._entryLabel = NSTextField(labelWithString: "Entry")
 		self._entryLabel.tag = LinkableView.HIT_IGNORE_TAG
-		self._entryLabel.textColor = NSColor.fromHex("#f2f2f2")
+		self._entryLabel.textColor = NSColor.fromHex("#d2d2d2")
 		self._entryLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .bold)
 		//
 		self._clickGesture = nil
