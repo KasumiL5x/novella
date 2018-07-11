@@ -8,3 +8,9 @@ xcuserdata/
 Novella/Carthage/Build
 # comment out this line to commit downloaded libraries
 Novella/Carthage/Checkouts
+
+# GitHub Pages/Jekyll Stuff
+docs/_site
+docs/.sass-cache
+docs/.jekyll-metadata
+docs/Gemfile.lock
