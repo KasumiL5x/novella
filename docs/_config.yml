@@ -17,7 +17,7 @@ title: Novella
 email: dgreen@bournemouth.ac.uk
 description: >- # this means to ignore newlines until "baseurl:"
   Novella is a model and framework for authoring interactive narrative experiences. It is developed by Daniel Green as part of his PhD project at Bournemouth University, UK.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/novella" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: KasumiL5x
 github_username:  KasumiL5x
