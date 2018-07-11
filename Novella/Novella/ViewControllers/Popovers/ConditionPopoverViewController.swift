@@ -11,10 +11,6 @@ import NovellaModel
 import Highlightr
 
 class ConditionPopoverViewController: NSViewController {
-	// MARK: - Outlets -
-	@IBOutlet private weak var _textView: NSView!
-	@IBOutlet private weak var _compileStatus: NSTextField!
-	
 	// MARK: - Variables -
 	private var _condition: NVCondition?
 	private let _textStorage = CodeAttributedString()
@@ -29,11 +25,11 @@ class ConditionPopoverViewController: NSViewController {
 		_condition = nil
 		
 		_textStorage.language = "JavaScript"
-		print(_textStorage.highlightr.setTheme(to: "dracula"))
+		_textStorage.highlightr.setTheme(to: "github-gist")
 		_textStorage.highlightr.theme.codeFont = NSFont(name: "Courier", size: 12)
 		_textStorage.addLayoutManager(_layoutManager)
 		
-		let textboxFrame = _textView.bounds
+		let textboxFrame = view.bounds
 		_textContainer = NSTextContainer(size: textboxFrame.size)
 		_layoutManager.addTextContainer(_textContainer)
 		
@@ -41,18 +37,18 @@ class ConditionPopoverViewController: NSViewController {
 		_codeTextbox.autoresizingMask = [.width, .height]
 		_codeTextbox.translatesAutoresizingMaskIntoConstraints = false
 		_codeTextbox.backgroundColor = (_textStorage.highlightr.theme.themeBackgroundColor)
-		_codeTextbox.insertionPointColor = NSColor.white
+		_codeTextbox.insertionPointColor = NSColor.black
 		_codeTextbox.isAutomaticQuoteSubstitutionEnabled = false
 		_codeTextbox.isAutomaticDashSubstitutionEnabled = false
 		_codeTextbox.allowsUndo = true
 		_codeTextbox.delegate = self
-		_textView.addSubview(_codeTextbox)
-		_textView.addConstraints([
-			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: _textView, attribute: .left, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: _textView, attribute: .right, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: _textView, attribute: .top, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .bottom, relatedBy: .equal, toItem: _textView, attribute: .bottom, multiplier: 1.0, constant: 0)
-		])
+		view.addSubview(_codeTextbox)
+		view.addConstraints([
+			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -30)
+			])
 	}
 	
 	override func viewDidAppear() {

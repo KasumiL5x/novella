@@ -11,10 +11,6 @@ import NovellaModel
 import Highlightr
 
 class FunctionPopoverViewController: NSViewController {
-	// MARK: - Outlets -
-//	@IBOutlet weak var _textView: NSView!
-	@IBOutlet weak var _compileStatus: NSTextField!
-	
 	// MARK: - Variables -
 	private var _function: NVFunction?
 	private let _textStorage = CodeAttributedString()
@@ -33,7 +29,7 @@ class FunctionPopoverViewController: NSViewController {
 		_textStorage.highlightr.theme.codeFont = NSFont(name: "Courier", size: 12)
 		_textStorage.addLayoutManager(_layoutManager)
 		
-		let textboxFrame = view.bounds.insetBy(dx: 30, dy: 30)//_textView.bounds
+		let textboxFrame = view.bounds
 		_textContainer = NSTextContainer(size: textboxFrame.size)
 		_layoutManager.addTextContainer(_textContainer)
 		
@@ -46,13 +42,11 @@ class FunctionPopoverViewController: NSViewController {
 		_codeTextbox.isAutomaticDashSubstitutionEnabled = false
 		_codeTextbox.allowsUndo = true
 		_codeTextbox.delegate = self
-//		_textView.addSubview(_codeTextbox)
 		view.addSubview(_codeTextbox)
-//		_textView.addConstraints([
 		view.addConstraints([
-			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 30),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -30),
-			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 30),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: _codeTextbox, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: _codeTextbox, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -30)
 		])
 	}
