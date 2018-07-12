@@ -18,6 +18,7 @@ class ContextLinkableView: LinkableView {
 		self.frame.size = widgetRect().size
 		
 		setLabelString(str: node.Name)
+		setContentString(str: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("ContextLinkableView::init(coder:) not implemented.")

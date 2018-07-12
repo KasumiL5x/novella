@@ -18,6 +18,7 @@ class DeliveryLinkableView: LinkableView {
 		self.frame.size = widgetRect().size
 		
 		setLabelString(str: node.Name)
+		setContentString(str: node.Content)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("DeliveryLinkableView::init(coder:) not implemented.")
@@ -35,7 +36,7 @@ class DeliveryLinkableView: LinkableView {
 		setLabelString(str: Linkable.Name)
 	}
 	override func onContentChanged() {
-		setLabelString(str: (Linkable as! NVDelivery).Content)
+		setContentString(str: (Linkable as! NVDelivery).Content)
 	}
 	// MARK: Popover Functions
 	override func _createPopover() {

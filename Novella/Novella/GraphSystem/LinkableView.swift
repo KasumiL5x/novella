@@ -330,6 +330,8 @@ class LinkableView: NSView {
 	}
 	
 	func redraw() {
+		// hide content label if compact
+		self._contentLabel.isHidden = (Linkable as! NVNode).Size == .compact
 		setNeedsDisplay(bounds)
 	}
 	
