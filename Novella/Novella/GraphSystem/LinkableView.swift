@@ -14,6 +14,7 @@ class LinkableView: NSView {
 	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
 	static let HIT_IGNORE_TAG: Int = 10
 	static let HIT_NIL_TAG: Int = 11
+	static let NODE_ROUNDNESS: CGFloat = 4.0
 	
 	// MARK: - Variables -
 	private var _nvLinkable: NVObject
@@ -141,7 +142,7 @@ class LinkableView: NSView {
 		// instead, make a shadow path that's precomputed
 		var shadowRect = widgetRect()
 		shadowRect.origin = NSMakePoint(0.7, -1.2)
-		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: 4.0, yRadius: 4.0).cgPath
+		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS).cgPath
 		// OR rasterize the view, but this doesn't support retina and will be blurry
 		//self.layer?.shouldRasterize = true
 		//self.layer?.rasterizationScale = NSScreen.main!.backingScaleFactor
@@ -517,8 +518,7 @@ class LinkableView: NSView {
 			let drawingRect = widgetRect()
 			
 			// draw background gradient
-			let bgRadius: CGFloat = 4.0 // TODO: Make this a percentage of the drawingRect's width?
-			var path = NSBezierPath(roundedRect: drawingRect, xRadius: bgRadius, yRadius: bgRadius)
+			var path = NSBezierPath(roundedRect: drawingRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
 			let bgStartColor = NSColor.fromHex("#FAFAFA")
@@ -543,7 +543,7 @@ class LinkableView: NSView {
 				let primedColor = NSColor.fromHex("#4B9CFD")
 				
 				let insetRect = drawingRect
-				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS)
 				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = primedWidth
 				Trashed ? Settings.graph.trashedColorDark.setStroke() : primedColor.setStroke()
@@ -559,7 +559,7 @@ class LinkableView: NSView {
 				let selectedOutlineAlpha: CGFloat = 0.6
 				
 				let insetRect = drawingRect
-				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS)
 				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = selectedWidth
 				if Trashed {
