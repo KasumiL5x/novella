@@ -255,11 +255,7 @@ class PinViewBranch: PinView {
 					CurveHelper.line(start: origin, end: end, path: _trueCurvePath)
 				}
 				
-				if Owner.IsSelected || Owner.IsPrimed {
-					_trueCurveLayer.strokeColor = NSColor.red.cgColor
-				} else {
-					_trueCurveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
-				}
+				_trueCurveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				_trueCurveLayer.path = _trueCurvePath.cgPath
 				_trueCurveLayer.lineDashPattern = (trueDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
@@ -279,11 +275,7 @@ class PinViewBranch: PinView {
 					CurveHelper.line(start: origin, end: end, path: _falseCurvePath)
 				}
 				
-				if Owner.IsSelected || Owner.IsPrimed {
-					_falseCurveLayer.strokeColor = NSColor.red.cgColor
-				} else {
-					_falseCurveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
-				}
+				_falseCurveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
 				_falseCurveLayer.path = _falseCurvePath.cgPath
 				_falseCurveLayer.lineDashPattern = (falseDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
