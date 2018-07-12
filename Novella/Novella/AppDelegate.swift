@@ -13,9 +13,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	fileprivate var _preferencesController: NSWindowController?
 	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		Settings.resetToApp()
-		Settings.saveDefaults() // uncomment to force write of settings
-		Settings.loadDefaults()
 	}
 
 	@IBAction func onPreferences(_ sender: NSMenuItem) {
