@@ -56,6 +56,9 @@ class GraphEditorViewController: NSViewController {
 		_graphView = GraphView(doc: _document!, graph: _graph!, frameRect: NSMakeRect(0.0, 0.0, GraphEditorViewController.GRAPH_SIZE, GraphEditorViewController.GRAPH_SIZE))
 		_graphView?.Delegate = _delegate
 		_scrollView.documentView = _graphView!
+		
+		_scrollView.scrollsDynamically = false
+		_scrollView.contentView.copiesOnScroll = false
 	}
 	
 	func setup(doc: NovellaDocument, graph: NVGraph, delegate: GraphViewDelegate) {

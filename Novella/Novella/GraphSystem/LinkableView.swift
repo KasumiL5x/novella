@@ -128,14 +128,23 @@ class LinkableView: NSView {
 		_contextMenu.addItem(withTitle: "Medium", action: #selector(LinkableView.onContextSizeMedium), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Large", action: #selector(LinkableView.onContextSizeLarge), keyEquivalent: "")
 		
-		// add shadow
 		wantsLayer = true
+		
+		// add shadow
 		layer?.masksToBounds = false
 		self.shadow = NSShadow()
 		self.layer?.shadowOpacity = 0.6
 		self.layer?.shadowColor = NSColor.fromHex("#AEB8C7").cgColor
-		self.layer?.shadowOffset = NSMakeSize(0.5, -1)
-		self.layer?.shadowRadius = 0.3
+		self.layer?.shadowRadius = 0.5
+		// shadows using offsets are a DRAMATIC performance hit, so avoid if possible.
+		//self.layer?.shadowOffset = NSMakeSize(0.5, -1)
+		// instead, make a shadow path that's precomputed
+		var shadowRect = widgetRect()
+		shadowRect.origin = NSMakePoint(0.7, -1.2)
+		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: 4.0, yRadius: 4.0).cgPath
+		// OR rasterize the view, but this doesn't support retina and will be blurry
+		//self.layer?.shouldRasterize = true
+		//self.layer?.rasterizationScale = NSScreen.main!.backingScaleFactor
 		
 		self.addSubview(_outputsBoard)
 		
