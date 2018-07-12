@@ -209,31 +209,45 @@ class PinViewBranch: PinView {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
 			
-			let normalColor = NSColor.fromHex("#535353")
+			// set the pin's color based on what kind of node it's connected to
+			let trueNormalColor: NSColor
+			let falseNormalColor: NSColor
+			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination(), includeParentGraphs: true) {
+				trueNormalColor = trueDest.flagColor()
+			} else {
+				trueNormalColor = NSColor.fromHex("#535353")
+			}
+			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination(), includeParentGraphs: true) {
+				falseNormalColor = falseDest.flagColor()
+			} else {
+				falseNormalColor = NSColor.fromHex("#535353")
+			}
+			
 			let ownerSelectedColor = NSColor.fromHex("#f67280")
-			let pinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : normalColor
+			let truePinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : trueNormalColor
+			let falsePinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : falseNormalColor
 			
 			
 			// draw pin stroke
 			_pinStrokeLayer.path = NSBezierPath(roundedRect: _outlineRect, xRadius: 5.0, yRadius: 5.0).cgPath
-			_pinStrokeLayer.strokeColor = pinColor.cgColor
+			_pinStrokeLayer.strokeColor = NSColor.fromHex("#535353").cgColor
 			// draw true pin
 			_pinFillLayerTrue.path = NSBezierPath(ovalIn: _truePinRect).cgPath
 			if getTrueDestination() != nil {
-				_pinFillLayerTrue.fillColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
+				_pinFillLayerTrue.fillColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : truePinColor.cgColor
 				_pinFillLayerTrue.strokeColor = nil
 			} else {
 				_pinFillLayerTrue.fillColor = nil
-				_pinFillLayerTrue.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
+				_pinFillLayerTrue.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : truePinColor.cgColor
 			}
 			// draw false pin
 			_pinFillLayerFalse.path = NSBezierPath(ovalIn: _falsePinRect).cgPath
 			if getFalseDestination() != nil {
-				_pinFillLayerFalse.fillColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
+				_pinFillLayerFalse.fillColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : falsePinColor.cgColor
 				_pinFillLayerFalse.strokeColor = nil
 			} else {
 				_pinFillLayerFalse.fillColor = nil
-				_pinFillLayerFalse.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
+				_pinFillLayerFalse.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : falsePinColor.cgColor
 			}
 			
 			// draw curves
@@ -255,7 +269,7 @@ class PinViewBranch: PinView {
 					CurveHelper.line(start: origin, end: end, path: _trueCurvePath)
 				}
 				
-				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
+				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : truePinColor.cgColor
 				_trueCurveLayer.path = _trueCurvePath.cgPath
 				_trueCurveLayer.lineDashPattern = (trueDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}
@@ -275,7 +289,7 @@ class PinViewBranch: PinView {
 					CurveHelper.line(start: origin, end: end, path: _falseCurvePath)
 				}
 				
-				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
+				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : falsePinColor.cgColor
 				_falseCurveLayer.path = _falseCurvePath.cgPath
 				_falseCurveLayer.lineDashPattern = (falseDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}

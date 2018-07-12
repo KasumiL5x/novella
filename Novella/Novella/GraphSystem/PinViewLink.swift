@@ -131,7 +131,14 @@ class PinViewLink: PinView {
 			
 			context.resetClip()
 			
-			let normalColor = NSColor.fromHex("#535353")
+			// set the pin's color based on what kind of node it's connected to
+			let normalColor: NSColor
+			if let dest = _graphView.getLinkableViewFrom(linkable: getDestination(), includeParentGraphs: true) {
+				normalColor = dest.flagColor()
+			} else {
+				normalColor = NSColor.fromHex("#535353")
+			}
+			
 			let ownerSelectedColor = NSColor.fromHex("#f67280")
 			let pinColor = (Owner.IsSelected || Owner.IsPrimed) ? ownerSelectedColor : normalColor
 			
