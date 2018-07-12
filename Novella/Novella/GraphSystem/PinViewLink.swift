@@ -16,6 +16,7 @@ class PinViewLink: PinView {
 	private let _curveLayer: CAShapeLayer
 	private let _curvePath: NSBezierPath
 	private let _contextMenu: NSMenu
+	private let _deleteMenuItem: NSMenuItem
 	private let _conditionPopover: ConditionPopover
 	private let _functionPopover: FunctionPopover
 	private let _graphDropMenu: NSMenu
@@ -32,6 +33,7 @@ class PinViewLink: PinView {
 		self._functionPopover = FunctionPopover(true)
 		self._graphDropMenu = NSMenu()
 		self._outlineRect = NSRect.zero
+		self._deleteMenuItem = NSMenuItem(title: "Trash", action: #selector(PinView.onContextDelete), keyEquivalent: "")
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		// add layers
@@ -56,7 +58,7 @@ class PinViewLink: PinView {
 		_contextMenu.addItem(withTitle: "Edit PreCondition", action: #selector(PinViewLink.onContextPreCondition), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinViewLink.onContextFunction), keyEquivalent: "")
 		_contextMenu.addItem(NSMenuItem.separator())
-		_contextMenu.addItem(withTitle: "Un/Trash", action: #selector(PinView.onContextDelete), keyEquivalent: "")
+		_contextMenu.addItem(_deleteMenuItem)
 		
 		// calculate rect
 		_outlineRect = NSMakeRect(0.0, 0.0, PinView.PIN_SIZE, PinView.PIN_SIZE)
@@ -67,6 +69,7 @@ class PinViewLink: PinView {
 	
 	// MARK: - - Functions -
 	override func onTrashed() {
+		_deleteMenuItem.title = BaseLink.InTrash ? "Untrash" : "Trash"
 	}
 	override func getFrameSize() -> NSSize {
 		return NSMakeSize(PinView.PIN_SIZE, PinView.PIN_SIZE)

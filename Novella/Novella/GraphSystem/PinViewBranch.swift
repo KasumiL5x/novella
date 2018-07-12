@@ -27,6 +27,8 @@ class PinViewBranch: PinView {
 	
 	private let _trueContextMenu: NSMenu
 	private let _falseContextMenu: NSMenu
+	private let _deleteTrueMenuItem: NSMenuItem
+	private let _deleteFalseMenuItem: NSMenuItem
 	private let _conditionPopover: ConditionPopover
 	private let _trueFunctionPopover: FunctionPopover
 	private let _falseFunctionPopover: FunctionPopover
@@ -51,6 +53,8 @@ class PinViewBranch: PinView {
 		self._trueFunctionPopover = FunctionPopover(true)
 		self._falseFunctionPopover = FunctionPopover(false)
 		self._graphDropMenu = NSMenu()
+		self._deleteTrueMenuItem = NSMenuItem(title: "Trash", action: nil, keyEquivalent: "")
+		self._deleteFalseMenuItem = NSMenuItem(title: "Trash", action: nil, keyEquivalent: "")
 		super.init(link: link, graphView: graphView, owner: owner)
 		
 		layer!.addSublayer(_pinStrokeLayer)
@@ -87,19 +91,22 @@ class PinViewBranch: PinView {
 		_truePinRect = NSMakeRect(_falsePinRect.origin.x, _falsePinRect.maxY + PinView.PIN_SPACING, _falsePinRect.width, _falsePinRect.height)
 		
 		// configure menus
+		_deleteTrueMenuItem.action = #selector(PinView.onContextDelete)
+		_deleteFalseMenuItem.action = #selector(PinView.onContextDelete)
+		//
 		_trueContextMenu.addItem(withTitle: "Edit True Function", action: #selector(PinViewBranch.onContextTrueFunction), keyEquivalent: "")
 		_trueContextMenu.addItem(NSMenuItem.separator())
 		_trueContextMenu.addItem(withTitle: "Edit PreCondition", action: #selector(PinViewBranch.onContextPreCondition), keyEquivalent: "")
 		_trueContextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewBranch.onContextCondition), keyEquivalent: "")
 		_trueContextMenu.addItem(NSMenuItem.separator())
-		_trueContextMenu.addItem(withTitle: "Delete", action: #selector(PinView.onContextDelete), keyEquivalent: "")
+		_trueContextMenu.addItem(_deleteTrueMenuItem)
 		//
 		_falseContextMenu.addItem(withTitle: "Edit False Function", action: #selector(PinViewBranch.onContextFalseFunction), keyEquivalent: "")
 		_falseContextMenu.addItem(NSMenuItem.separator())
 		_falseContextMenu.addItem(withTitle: "Edit PreCondition", action: #selector(PinViewBranch.onContextPreCondition), keyEquivalent: "")
 		_falseContextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinViewBranch.onContextCondition), keyEquivalent: "")
 		_falseContextMenu.addItem(NSMenuItem.separator())
-		_falseContextMenu.addItem(withTitle: "Un/Trash", action: #selector(PinView.onContextDelete), keyEquivalent: "")
+		_falseContextMenu.addItem(_deleteFalseMenuItem)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinViewBranch::init(coder:) not implemented.")
@@ -107,6 +114,8 @@ class PinViewBranch: PinView {
 	
 	// MARK: - - Functions -
 	override func onTrashed() {
+		_deleteTrueMenuItem.title = BaseLink.InTrash ? "Untrash" : "Trash"
+		_deleteFalseMenuItem.title = BaseLink.InTrash ? "Untrash" : "Trash"
 	}
 	override func getFrameSize() -> NSSize {
 		let actualPinSize = PinView.PIN_SIZE - PinView.PIN_INSET
