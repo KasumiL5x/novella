@@ -143,7 +143,7 @@ class PinViewLink: PinView {
 			let fillPath = NSBezierPath(ovalIn: _outlineRect.insetBy(dx: PinView.PIN_INSET, dy: PinView.PIN_INSET))
 			_pinFillLayer.path = fillPath.cgPath
 			if getDestination() != nil {
-				_pinFillLayer.fillColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
+				_pinFillLayer.fillColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
 			} else {
 				_pinFillLayer.fillColor = CGColor.clear
 			}
@@ -168,7 +168,7 @@ class PinViewLink: PinView {
 					CurveHelper.line(start: origin, end: end, path: _curvePath)
 				}
 				
-				_curveLayer.strokeColor = TrashMode ? pinColor.withSaturation(Settings.graph.trashedSaturation).cgColor : pinColor.cgColor
+				_curveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
 				_curveLayer.path = _curvePath.cgPath
 				_curveLayer.lineDashPattern = (destination is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
 			}

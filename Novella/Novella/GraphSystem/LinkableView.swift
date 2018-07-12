@@ -514,10 +514,7 @@ class LinkableView: NSView {
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
 			let bgStartColor = NSColor.fromHex("#FAFAFA")
 			let bgEndColor = NSColor.fromHex("#FFFFFF")
-			let bgColors = [
-				Trashed ? bgStartColor.withSaturation(Settings.graph.trashedSaturation).cgColor : bgStartColor.cgColor,
-				Trashed ? bgEndColor.withSaturation(Settings.graph.trashedSaturation).cgColor : bgEndColor.cgColor
-			]
+			let bgColors = [bgStartColor.cgColor, bgEndColor.cgColor]
 			let bgGradient = CGGradient(colorsSpace: colorSpace, colors: bgColors as CFArray, locations: [0.0, 0.3])!
 			let bgStart = CGPoint(x: 0, y: drawingRect.height)
 			let bgEnd = CGPoint.zero
@@ -528,7 +525,7 @@ class LinkableView: NSView {
 			context.move(to: NSMakePoint(drawingRect.minX, drawingRect.maxY))
 			context.addLine(to: NSMakePoint(drawingRect.minX, drawingRect.maxY - triangleSize))
 			context.addLine(to: NSMakePoint(drawingRect.minX + triangleSize, drawingRect.maxY))
-			Trashed ? flagColor().withSaturation(Settings.graph.trashedSaturation).setFill() : flagColor().setFill()
+			Trashed ? Settings.graph.trashedColorLight.setFill() : flagColor().setFill()
 			context.fillPath()
 			
 			// draw primed indicator
@@ -540,7 +537,7 @@ class LinkableView: NSView {
 				path = NSBezierPath(roundedRect: insetRect, xRadius: bgRadius, yRadius: bgRadius)
 				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = primedWidth
-				Trashed ? primedColor.withSaturation(Settings.graph.trashedSaturation).setStroke() : primedColor.setStroke()
+				Trashed ? Settings.graph.trashedColorDark.setStroke() : primedColor.setStroke()
 				path.lineJoinStyle = .miterLineJoinStyle
 				path.stroke()
 			}
@@ -557,8 +554,8 @@ class LinkableView: NSView {
 				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = selectedWidth
 				if Trashed {
-					selectedColor.withSaturation(Settings.graph.trashedSaturation).withAlphaComponent(selectedAlpha).setFill()
-					selectedColor.withSaturation(Settings.graph.trashedSaturation).withAlphaComponent(selectedOutlineAlpha).setStroke()
+					Settings.graph.trashedColorDark.withAlphaComponent(selectedAlpha).setFill()
+					Settings.graph.trashedColorDark.withAlphaComponent(selectedOutlineAlpha).setStroke()
 				} else {
 					selectedColor.withAlphaComponent(selectedAlpha).setFill()
 					selectedColor.withAlphaComponent(selectedOutlineAlpha).setStroke()

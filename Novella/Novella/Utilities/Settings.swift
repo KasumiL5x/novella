@@ -10,7 +10,8 @@ import Cocoa
 
 struct Settings {
 	struct graph {
-		static var trashedSaturation: CGFloat = 0.1
+		static var trashedColorLight = NSColor.fromHex("#E0E0E0")
+		static var trashedColorDark = NSColor.fromHex("#CCCCCC")
 		struct nodes {
 			static var dialogColor:        NSColor = NSColor.fromHex("#A8E6CF")
 			static var graphColor:         NSColor = NSColor.fromHex("#BA78CD")
