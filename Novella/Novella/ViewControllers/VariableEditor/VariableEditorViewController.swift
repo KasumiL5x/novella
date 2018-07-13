@@ -76,16 +76,24 @@ class VariableConstantBoolCell: NSTableCellView {
 // MARK: - View Controller -
 class VariableEditorViewController: NSViewController {
 	// MARK: - Outlets -
-	@IBOutlet fileprivate weak var _outlineView: NSOutlineView!
+	@IBOutlet private weak var _outlineView: NSOutlineView!
 	
 	// MARK: - Variables -
 	private var _document: NovellaDocument?
-	fileprivate var _variableTypeIndices: [String:Int] = [:]
+	private var _variableTypeIndices: [String:Int] = [:]
+	private var _filter: String = ""
+	
+	// MARK: - Properties -
+	var Filter: String {
+		get{ return _filter }
+		set {
+			_filter = newValue
+		}
+	}
 	
 	// MARK: - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		_outlineView.backgroundColor = NSColor.fromHex("#F4F5F7")
 		
 		// map the variable data types to an index in the popup's menu set
@@ -130,7 +138,7 @@ class VariableEditorViewController: NSViewController {
 		return nil
 	}
 	
-	@IBAction fileprivate func onAddVariable(_ sender: NSButton) {
+	@IBAction private func onAddVariable(_ sender: NSButton) {
 		if let manager = _document?.Manager, let parent = getSelectedFolder() {
 			let variable = manager.makeVariable(name: NSUUID().uuidString, type: .boolean)
 			try! parent.add(variable: variable)
@@ -138,7 +146,7 @@ class VariableEditorViewController: NSViewController {
 		}
 	}
 	
-	@IBAction fileprivate func onAddFolder(_ sender: NSButton) {
+	@IBAction private func onAddFolder(_ sender: NSButton) {
 		if let manager = _document?.Manager {
 			let folder = manager.makeFolder(name: NSUUID().uuidString)
 			if let parent = getSelectedFolder() {
@@ -151,7 +159,7 @@ class VariableEditorViewController: NSViewController {
 		}
 	}
 	
-	@IBAction fileprivate func onRemoveSelected(_ sender: NSButton) {
+	@IBAction private func onRemoveSelected(_ sender: NSButton) {
 		if let manager = _document?.Manager, let selectedItem = _outlineView.item(atRow: _outlineView.selectedRow) {
 			switch selectedItem {
 			case is NVFolder:
@@ -165,6 +173,11 @@ class VariableEditorViewController: NSViewController {
 			}
 			_outlineView.reloadData()
 		}
+	}
+	
+	@IBAction func onFilterChanged(_ sender: NSSearchField) {
+		_filter = sender.stringValue
+		_outlineView.reloadData()
 	}
 	
 	// MARK: - Table Callbacks -
@@ -313,45 +326,131 @@ extension VariableEditorViewController: NSOutlineViewDelegate {
 
 // MARK: - NSOutlineViewDataSource -
 extension VariableEditorViewController: NSOutlineViewDataSource {
+	private func filter(variable: NVVariable) -> Bool {
+		return _filter.isEmpty || variable.Name.lowercased().contains(_filter.lowercased())
+	}
+	private func filter(folder: NVFolder) -> Bool {
+		if _filter.isEmpty {
+			return true
+		}
+		
+		// check self
+		if folder.Name.lowercased().contains(_filter.lowercased()) {
+			return true
+		}
+		
+		// check all child variables
+		for curr in folder.Variables {
+			if filter(variable: curr) {
+				return true
+			}
+		}
+		
+		// check all child folders
+		for curr in folder.Folders {
+			if filter(folder: curr) {
+				return true
+			}
+		}
+		
+		// nothing matched
+		return false
+	}
+	
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+		var count = 0
+		
 		switch item {
 		case is NVFolder:
 			let asFolder = item as! NVFolder
-			return asFolder.Folders.count + asFolder.Variables.count
+			asFolder.Folders.forEach{ (child) in
+				if filter(folder: child) {
+					count += 1
+				}
+			}
+			asFolder.Variables.forEach{ (child) in
+				if filter(variable: child) {
+					count += 1
+				}
+			}
 			
 		case is NVVariable:
 			return 0
 			
 		default:
-			return _document?.Manager.Story.Folders.count ?? 0
+			_document?.Manager.Story.Folders.forEach{ (folder) in
+				if filter(folder: folder) {
+					count += 1
+				}
+			}
 		}
+		
+		return count
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+		var indexCount = 0
+		
 		switch item {
 		case is NVFolder:
 			let asFolder = item as! NVFolder
-			if index < asFolder.Folders.count {
-				return asFolder.Folders[index]
+			for child in asFolder.Folders {
+				if filter(folder: child) {
+					if indexCount == index {
+						return child
+					}
+					indexCount += 1
+				}
 			}
-			return asFolder.Variables[index - asFolder.Folders.count]
+			for child in asFolder.Variables {
+				if filter(variable: child) {
+					if indexCount == index {
+						return child
+					}
+					indexCount += 1
+				}
+			}
 			
 		default:
-			return _document!.Manager.Story.Folders[index]
+			for folder in _document!.Manager.Story.Folders {
+				if filter(folder: folder) {
+					if indexCount == index {
+						return folder
+					}
+					indexCount += 1
+				}
+			}
 		}
+		
+		fatalError("This shouldn't happen!")
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		switch item {
 		case is NVFolder:
 			let asFolder = item as! NVFolder
-			return (asFolder.Folders.count + asFolder.Variables.count) > 0
+			for child in asFolder.Folders {
+				if filter(folder: child) {
+					return true
+				}
+			}
+			for child in asFolder.Variables {
+				if filter(variable: child) {
+					return true
+				}
+			}
+			return false
 			
 		case is NVVariable:
 			return false
 			
 		default:
-			return _document!.Manager.Story.Folders.count > 0
+			for folder in _document!.Manager.Story.Folders {
+				if filter(folder: folder) {
+					return true
+				}
+			}
+			return false
 		}
 	}
 }

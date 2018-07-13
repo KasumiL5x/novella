@@ -282,7 +282,6 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	private var _filter: String
 	
 	private var _topLevel: [String]
-	// TODO: How to make elements part of the top-level below? shouldn't be hard but i need to think or find a sample.
 	
 	var Graph: NVGraph? {
 		get{ return _graph }
