@@ -311,6 +311,12 @@ class LinkableView: NSView {
 		
 		// update curves as the inputs to these need repositioning based on the new widget size
 		_graphView.updateCurves()
+		
+		// remake shadow
+		var shadowRect = widgetRect()
+		shadowRect.origin = NSMakePoint(0.7, -1.2)
+		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS).cgPath
+		
 	}
 	
 	func setLabelString(str: String) {
