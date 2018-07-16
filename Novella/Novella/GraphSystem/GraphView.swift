@@ -23,6 +23,8 @@ class GraphView: NSView {
 	private var _selectionHandler: SelectionHandler?
 	// MARK: Gestures
 	private var _panGesture: NSPanGestureRecognizer?
+	private var _rmbPanGesture: NSPanGestureRecognizer?
+	private var _rmbPanLocation: CGPoint
 	private var _contextGesture: NSClickGestureRecognizer?
 	// MARK: Linkable Function Variables
 	private var _lastLinkablePanPos: CGPoint
@@ -45,6 +47,8 @@ class GraphView: NSView {
 		self._selectionHandler = nil
 		//
 		self._panGesture = nil
+		self._rmbPanGesture = nil
+		self._rmbPanLocation = CGPoint.zero
 		self._contextGesture = nil
 		//
 		self._lastLinkablePanPos = CGPoint.zero
@@ -63,6 +67,10 @@ class GraphView: NSView {
 		self._panGesture = NSPanGestureRecognizer(target: self, action: #selector(GraphView.onPan))
 		self._panGesture!.buttonMask = 0x1 // "primary button"
 		self.addGestureRecognizer(self._panGesture!)
+		// configure rmb pan gesture
+		self._rmbPanGesture = NSPanGestureRecognizer(target: self, action: #selector(GraphView.onRmbPan))
+		self._rmbPanGesture!.buttonMask = 0x2 // "secondary button"
+		self.addGestureRecognizer(self._rmbPanGesture!)
 		// configure context gesture
 		self._contextGesture = NSClickGestureRecognizer(target: self, action: #selector(GraphView.onContextClick))
 		self._contextGesture!.buttonMask = 0x2 // "secondary button"
@@ -330,6 +338,33 @@ extension GraphView {
 			
 		default:
 			print("In unexpected pan state.")
+			break
+		}
+	}
+	@objc private func onRmbPan(gesture: NSGestureRecognizer) {
+		// if embedded in a scrollview, super is NSClipView,
+		guard let scrollView = superview?.superview as? NSScrollView else {
+			print("Attempted to RMB pan the GraphView but it was not correctly embedded in an NSScrollView.")
+			return
+		}
+		
+		switch gesture.state {
+		case .began:
+			_rmbPanLocation = gesture.location(in: scrollView)
+			
+		case .changed:
+			let curr = gesture.location(in: scrollView)
+			var diff = curr - _rmbPanLocation
+			diff.y *= scrollView.isFlipped ? 1.0 : -1.0
+
+			let center = visibleRect.origin + diff
+			scrollView.contentView.scroll(to: center)
+			scrollView.reflectScrolledClipView(scrollView.contentView)
+
+			
+			_rmbPanLocation = curr
+			
+		default:
 			break
 		}
 	}
