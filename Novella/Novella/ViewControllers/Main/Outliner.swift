@@ -158,6 +158,36 @@ class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegat
 }
 
 // MARK: - Selected Graph Outliner -
+// MARK: OutlinerFilterViewController
+class OutlinerFilterViewController: NSViewController {
+	@IBOutlet private weak var _contexts: NSButton!
+	@IBOutlet private weak var _deliveries: NSButton!
+	@IBOutlet private weak var _dialogs: NSButton!
+	@IBOutlet private weak var _links: NSButton!
+	@IBOutlet private weak var _subgraphs: NSButton!
+	
+	var contextChanged:    ((Bool) -> Void)?
+	var deliveriesChanged: ((Bool) -> Void)?
+	var dialogsChanged:    ((Bool) -> Void)?
+	var linksChanged:      ((Bool) -> Void)?
+	var subgraphsChanged:  ((Bool) -> Void)?
+	
+	@IBAction func onContextsChanged(_ sender: NSButtonCell) {
+		contextChanged?(_contexts.state == .on)
+	}
+	@IBAction func onDeliveriesChanged(_ sender: NSButton) {
+		deliveriesChanged?(_deliveries.state == .on)
+	}
+	@IBAction func onDialogsChanged(_ sender: Any) {
+		dialogsChanged?(_dialogs.state == .on)
+	}
+	@IBAction func onLinksChanged(_ sender: NSButton) {
+		linksChanged?(_links.state == .on)
+	}
+	@IBAction func onSubgraphsChanged(_ sender: NSButton) {
+		subgraphsChanged?(_subgraphs.state == .on)
+	}
+}
 // MARK: Fancy Cell
 class SelectedGraphFancyCell: NSTableCellView {
 	@IBOutlet weak var _trashButton: NSButton!
@@ -279,7 +309,12 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	private var _deliveryImage: NSImage?
 	private var _linkImage: NSImage?
 	
-	private var _filter: String
+	var _filter: String
+	var _showContexts: Bool
+	var _showDeliveries: Bool
+	var _showDialogs: Bool
+	var _showLinks: Bool
+	var _showSubgraphs: Bool
 	
 	private var _topLevel: [String]
 	
@@ -287,12 +322,6 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		get{ return _graph }
 		set{
 			_graph = newValue
-		}
-	}
-	var Filter: String {
-		get{ return _filter }
-		set{
-			_filter = newValue
 		}
 	}
 	
@@ -305,6 +334,12 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		self._linkImage = NSImage(named: NSImage.Name(rawValue: "Link"))
 		
 		self._filter = ""
+		self._showContexts = true
+		self._showDeliveries = true
+		self._showDialogs = true
+		self._showLinks = true
+		self._showSubgraphs = true
+		
 		
 		self._topLevel = [
 			"Nodes",

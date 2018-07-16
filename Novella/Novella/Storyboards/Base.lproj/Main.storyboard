@@ -1049,6 +1049,83 @@
             </objects>
             <point key="canvasLocation" x="1383" y="668"/>
         </scene>
+        <!--Outliner Filter View Controller-->
+        <scene sceneID="P0x-QG-QXX">
+            <objects>
+                <viewController id="JwC-Jm-885" customClass="OutlinerFilterViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="vE5-4u-0Ux">
+                        <rect key="frame" x="0.0" y="0.0" width="141" height="154"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCU-aW-GK8">
+                                <rect key="frame" x="18" y="93" width="105" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Deliveries" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4eq-wQ-dZg">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onDeliveriesChanged:" target="JwC-Jm-885" id="8oY-yg-Qqa"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NW5-EN-Way">
+                                <rect key="frame" x="18" y="118" width="105" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Contexts" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="F0n-xN-Gds">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="onContextsChanged:" target="JwC-Jm-885" id="kQR-Xj-WpJ"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R0s-2U-Wqg">
+                                <rect key="frame" x="18" y="68" width="105" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Dialogs" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NhC-f1-9TF">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onDialogsChanged:" target="JwC-Jm-885" id="Jps-sM-UFd"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QKT-eJ-bHt">
+                                <rect key="frame" x="18" y="43" width="105" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Links" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZzM-UK-vxS">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onLinksChanged:" target="JwC-Jm-885" id="2ha-VA-VYp"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RKB-RB-GGu">
+                                <rect key="frame" x="18" y="18" width="105" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Subgraphs" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nLg-Vn-V0g">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onSubgraphsChanged:" target="JwC-Jm-885" id="QjY-Xx-dg8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="_contexts" destination="NW5-EN-Way" id="Rpf-qh-Lf8"/>
+                        <outlet property="_deliveries" destination="MCU-aW-GK8" id="cmY-Qp-Jrg"/>
+                        <outlet property="_dialogs" destination="R0s-2U-Wqg" id="Id8-vU-FTC"/>
+                        <outlet property="_links" destination="QKT-eJ-bHt" id="Iba-ro-taR"/>
+                        <outlet property="_subgraphs" destination="RKB-RB-GGu" id="fTG-im-5Jh"/>
+                    </connections>
+                </viewController>
+                <customObject id="me6-Nv-BeO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="76" y="1664"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="TFQ-UK-qvb">
             <objects>
@@ -1337,7 +1414,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="221" height="30"/>
                                                                 <subviews>
                                                                     <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkl-Ai-Cp0">
-                                                                        <rect key="frame" x="5" y="5" width="211" height="20"/>
+                                                                        <rect key="frame" x="5" y="5" width="186" height="20"/>
                                                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Filter" usesSingleLineMode="YES" bezelStyle="round" id="qOj-AH-ZH0">
                                                                             <font key="font" metaFont="system"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1347,11 +1424,27 @@
                                                                             <action selector="onOutlinerFilterChanged:" target="SBf-Of-AwL" id="yac-Dw-mhU"/>
                                                                         </connections>
                                                                     </searchField>
+                                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="lyg-YQ-DgV">
+                                                                        <rect key="frame" x="196" y="5" width="20" height="20"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="20" id="YjC-SP-2VS"/>
+                                                                            <constraint firstAttribute="width" constant="20" id="u9W-P8-Ygd"/>
+                                                                        </constraints>
+                                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSQuickLookTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="84y-kU-Ifz">
+                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <segue destination="JwC-Jm-885" kind="popover" identifier="OutlinerFilterSegue" popoverAnchorView="lyg-YQ-DgV" popoverBehavior="t" preferredEdge="maxY" id="di5-2c-pwp"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="trailing" secondItem="wkl-Ai-Cp0" secondAttribute="trailing" constant="5" id="4vR-zT-Men"/>
+                                                                    <constraint firstItem="lyg-YQ-DgV" firstAttribute="centerY" secondItem="rDQ-vh-wUD" secondAttribute="centerY" id="7OG-dM-xOe"/>
                                                                     <constraint firstItem="wkl-Ai-Cp0" firstAttribute="leading" secondItem="rDQ-vh-wUD" secondAttribute="leading" constant="5" id="DIt-jL-bBe"/>
                                                                     <constraint firstAttribute="height" constant="30" id="GU1-vI-7Fv"/>
+                                                                    <constraint firstItem="lyg-YQ-DgV" firstAttribute="leading" secondItem="wkl-Ai-Cp0" secondAttribute="trailing" constant="5" id="O6d-bj-iI7"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="lyg-YQ-DgV" secondAttribute="trailing" constant="5" id="RA7-vo-rMS"/>
                                                                     <constraint firstItem="wkl-Ai-Cp0" firstAttribute="top" secondItem="rDQ-vh-wUD" secondAttribute="top" constant="5" id="eb4-Va-KKE"/>
                                                                     <constraint firstAttribute="bottom" secondItem="wkl-Ai-Cp0" secondAttribute="bottom" constant="5" id="gx0-xu-95B"/>
                                                                 </constraints>
@@ -1432,6 +1525,7 @@
         <image name="NSCaution" width="32" height="32"/>
         <image name="NSGoBackTemplate" width="9" height="12"/>
         <image name="NSGoForwardTemplate" width="9" height="12"/>
+        <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSTouchBarAddTemplate" width="14" height="30"/>
         <image name="NSTouchBarEnterFullScreenTemplate" width="18" height="30"/>
         <image name="NSTouchBarExitFullScreenTemplate" width="18" height="30"/>

@@ -87,6 +87,30 @@ class MainViewController: NSViewController {
 		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "GraphSegue") {
 			_graphViewVC = segue.destinationController as? GraphEditorViewController
 		}
+		
+		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "OutlinerFilterSegue") {
+			let vc = segue.destinationController as? OutlinerFilterViewController
+			vc?.contextChanged = { (state) in
+				self._selectedGraphDelegate?._showContexts = state
+				self.reloadSelectedGraph()
+			}
+			vc?.deliveriesChanged = { (state) in
+				self._selectedGraphDelegate?._showDeliveries = state
+				self.reloadSelectedGraph()
+			}
+			vc?.dialogsChanged = { (state) in
+				self._selectedGraphDelegate?._showDialogs = state
+				self.reloadSelectedGraph()
+			}
+			vc?.linksChanged = { (state) in
+				self._selectedGraphDelegate?._showLinks = state
+				self.reloadSelectedGraph()
+			}
+			vc?.subgraphsChanged = { (state) in
+				self._selectedGraphDelegate?._showSubgraphs = state
+				self.reloadSelectedGraph()
+			}
+		}
 	}
 	
 	// MARK: Functions
@@ -124,7 +148,7 @@ class MainViewController: NSViewController {
 		reloadSelectedGraph()
 	}
 	@IBAction func onOutlinerFilterChanged(_ sender: NSSearchField) {
-		_selectedGraphDelegate?.Filter = sender.stringValue
+		_selectedGraphDelegate?._filter = sender.stringValue
 		reloadSelectedGraph()
 	}
 }
