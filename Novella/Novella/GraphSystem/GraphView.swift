@@ -90,6 +90,7 @@ class GraphView: NSView {
 		//
 		let selectSubMenu = NSMenu()
 		selectSubMenu.addItem(withTitle: "Add link", action: #selector(GraphView.addLinkToSelectedNodes), keyEquivalent: "")
+		selectSubMenu.addItem(withTitle: "Add Branch", action: #selector(GraphView.addBranchToSelectedNodes), keyEquivalent: "")
 		let selectMenu = NSMenuItem()
 		selectMenu.title = "Selection..."
 		selectMenu.submenu = selectSubMenu
@@ -657,6 +658,14 @@ extension GraphView {
 			let link = Manager.makeLink(origin: node.Object)
 			try! NovellaGraph.add(link: link)
 			// the rest is handled in the story callbacks
+		})
+	}
+	
+	// adds a branch to selected nodes
+	@objc private func addBranchToSelectedNodes() {
+		_selectionHandler?.Selection.forEach({ (node) in
+			let branch = Manager.makeBranch(origin: node.Object)
+			try! NovellaGraph.add(link: branch)
 		})
 	}
 }
