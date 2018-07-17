@@ -10,7 +10,7 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-	fileprivate var _preferencesController: NSWindowController?
+	private var _preferencesController: NSWindowController?
 	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 	}

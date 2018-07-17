@@ -11,10 +11,10 @@ import NovellaModel
 
 class ContextPopoverViewController: NSViewController {
 	// MARK: - Outlets -
-	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
+	@IBOutlet private weak var _nameTextField: NSTextField!
 	
 	// MARK: - Variables -
-	fileprivate var _contextNode: ContextNode?
+	private var _contextNode: ContextNode?
 	
 	// MARK: - Functions -
 	override func viewDidLoad() {

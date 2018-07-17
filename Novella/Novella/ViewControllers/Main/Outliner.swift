@@ -104,7 +104,7 @@ class AllGraphsOutlineView: NSOutlineView {
 }
 // MARK: Delegate
 class AllGraphsDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDelegate {
-	fileprivate var _mvc: MainViewController
+	private var _mvc: MainViewController
 	
 	init(mvc: MainViewController) {
 		self._mvc = mvc

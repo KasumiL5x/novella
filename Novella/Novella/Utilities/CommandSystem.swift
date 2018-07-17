@@ -8,7 +8,7 @@
 
 // MARK: Stack
 public struct Stack<T> {
-	fileprivate var array = [T]()
+	private var array = [T]()
 	
 	public var isEmpty: Bool {
 		return array.isEmpty
