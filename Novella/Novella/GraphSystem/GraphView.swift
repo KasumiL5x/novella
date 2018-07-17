@@ -83,12 +83,17 @@ class GraphView: NSView {
 		addSubMenu.addItem(withTitle: "Delivery", action: #selector(GraphView.onGraphViewMenuAddDelivery), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Context", action: #selector(GraphView.onGraphViewMenuAddContext), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Graph", action: #selector(GraphView.onGraphViewMenuAddGraph), keyEquivalent: "")
-		addSubMenu.addItem(NSMenuItem.separator())
-		addSubMenu.addItem(withTitle: "Link to selection...", action: #selector(GraphView.addLinkToSelectedNodes), keyEquivalent: "")
 		let addMenu = NSMenuItem()
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
 		_graphViewMenu.addItem(addMenu)
+		//
+		let selectSubMenu = NSMenu()
+		selectSubMenu.addItem(withTitle: "Add link", action: #selector(GraphView.addLinkToSelectedNodes), keyEquivalent: "")
+		let selectMenu = NSMenuItem()
+		selectMenu.title = "Selection..."
+		selectMenu.submenu = selectSubMenu
+		_graphViewMenu.addItem(selectMenu)
 		
 		rootFor(graph: _nvGraph)
 	}
@@ -647,7 +652,7 @@ extension GraphView {
 // MARK: - Selected Node Functions -
 extension GraphView {
 	// adds a link to selected nodes
-	@objc func addLinkToSelectedNodes() {
+	@objc private func addLinkToSelectedNodes() {
 		_selectionHandler?.Selection.forEach({ (node) in
 			let link = Manager.makeLink(origin: node.Object)
 			try! NovellaGraph.add(link: link)
