@@ -1,0 +1,168 @@
+{
+  "variables" : [
+
+  ],
+  "story" : {
+    "graphs" : [
+      "A25C3CBC-2AB7-4190-8684-EA16698FDD9B"
+    ],
+    "name" : "",
+    "folders" : [
+
+    ]
+  },
+  "nodes" : [
+    {
+      "position" : {
+        "y" : 57.086326599121094,
+        "x" : 287.0400390625
+      },
+      "name" : "Dialog 1",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "dialog",
+      "speaker" : "",
+      "preview" : "",
+      "size" : 0,
+      "uuid" : "D705B9C9-D8FD-4333-BAF6-122DEE09B795"
+    },
+    {
+      "position" : {
+        "y" : -35.506519317626953,
+        "x" : 287.302001953125
+      },
+      "name" : "Delivery 2",
+      "content" : "",
+      "directions" : "",
+      "nodetype" : "delivery",
+      "preview" : "",
+      "size" : 0,
+      "uuid" : "2FAC6987-C344-43A0-8D3D-C3631FAA0639"
+    },
+    {
+      "position" : {
+        "y" : -68.172332763671875,
+        "x" : 31.256757736206055
+      },
+      "name" : "",
+      "size" : 1,
+      "uuid" : "B3F9DB98-26B3-44CE-AD6D-57811E636AF2",
+      "nodetype" : "context"
+    },
+    {
+      "position" : {
+        "y" : 56.280441284179688,
+        "x" : 30.802398681640625
+      },
+      "name" : "Context 1",
+      "size" : 0,
+      "uuid" : "D5D212D3-D957-4EF2-B26B-1B3069595BA4",
+      "nodetype" : "context"
+    }
+  ],
+  "graphs" : [
+    {
+      "position" : {
+        "y" : 0,
+        "x" : 0
+      },
+      "name" : "main",
+      "nodes" : [
+        "D705B9C9-D8FD-4333-BAF6-122DEE09B795",
+        "2FAC6987-C344-43A0-8D3D-C3631FAA0639",
+        "B3F9DB98-26B3-44CE-AD6D-57811E636AF2",
+        "D5D212D3-D957-4EF2-B26B-1B3069595BA4"
+      ],
+      "links" : [
+        "11584D3B-8F96-47DC-830E-E5F69EB85255",
+        "C9D25024-645F-465D-98C5-CA45B795058E",
+        "F8E43B12-25BE-4725-B9EE-2A927D8659B6",
+        "A3601EE7-32D4-453A-9605-AC68F83A0422"
+      ],
+      "entry" : "D5D212D3-D957-4EF2-B26B-1B3069595BA4",
+      "uuid" : "A25C3CBC-2AB7-4190-8684-EA16698FDD9B",
+      "subgraphs" : [
+
+      ],
+      "listeners" : [
+
+      ],
+      "exits" : [
+
+      ]
+    }
+  ],
+  "entities" : [
+
+  ],
+  "links" : [
+    {
+      "linktype" : "link",
+      "origin" : "B3F9DB98-26B3-44CE-AD6D-57811E636AF2",
+      "uuid" : "11584D3B-8F96-47DC-830E-E5F69EB85255",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "2FAC6987-C344-43A0-8D3D-C3631FAA0639"
+      }
+    },
+    {
+      "origin" : "B3F9DB98-26B3-44CE-AD6D-57811E636AF2",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "ttransfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "D705B9C9-D8FD-4333-BAF6-122DEE09B795"
+      },
+      "linktype" : "branch",
+      "uuid" : "C9D25024-645F-465D-98C5-CA45B795058E",
+      "condition" : {
+        "jscode" : ""
+      },
+      "ftransfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "2FAC6987-C344-43A0-8D3D-C3631FAA0639"
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "D705B9C9-D8FD-4333-BAF6-122DEE09B795",
+      "uuid" : "F8E43B12-25BE-4725-B9EE-2A927D8659B6",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : ""
+      }
+    },
+    {
+      "linktype" : "link",
+      "origin" : "D5D212D3-D957-4EF2-B26B-1B3069595BA4",
+      "uuid" : "A3601EE7-32D4-453A-9605-AC68F83A0422",
+      "precondition" : {
+        "jscode" : ""
+      },
+      "transfer" : {
+        "function" : {
+          "jscode" : ""
+        },
+        "destination" : "D705B9C9-D8FD-4333-BAF6-122DEE09B795"
+      }
+    }
+  ],
+  "folders" : [
+
+  ]
+}
