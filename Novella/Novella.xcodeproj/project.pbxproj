@@ -39,6 +39,7 @@
 		654918E320D42165008467FF /* NVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E220D42165008467FF /* NVReader.swift */; };
 		654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E420D6946B008467FF /* ChoiceWheelView.swift */; };
 		654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
+		655E707220FE113500D9FF5B /* NSImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655E707120FE113500D9FF5B /* NSImage+Tint.swift */; };
 		655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F9FAE20C3087300B20EFE /* AppDelegate.swift */; };
 		655F9FB520C3087400B20EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB420C3087400B20EFE /* Assets.xcassets */; };
 		655F9FB820C3087400B20EFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F9FB620C3087400B20EFE /* Main.storyboard */; };
@@ -162,6 +163,7 @@
 		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
 		654918E220D42165008467FF /* NVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReader.swift; sourceTree = "<group>"; };
 		654918E420D6946B008467FF /* ChoiceWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWheelView.swift; sourceTree = "<group>"; };
+		655E707120FE113500D9FF5B /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
 		655F9FAB20C3087300B20EFE /* Novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		655F9FAE20C3087300B20EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		655F9FB420C3087400B20EFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 				65F7F83920C31637004663D6 /* NSView+Toast.swift */,
 				65F7F83420C31636004663D6 /* String+FromAny.swift */,
 				65F7F83520C31636004663D6 /* UserDefaults+Color.swift */,
+				655E707120FE113500D9FF5B /* NSImage+Tint.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -766,6 +769,7 @@
 				65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */,
 				65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */,
 				65F7F83C20C31637004663D6 /* NSColor+Saturation.swift in Sources */,
+				655E707220FE113500D9FF5B /* NSImage+Tint.swift in Sources */,
 				654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */,
 				65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */,
 				65F7F8A420C3182F004663D6 /* GraphEditorViewController.swift in Sources */,

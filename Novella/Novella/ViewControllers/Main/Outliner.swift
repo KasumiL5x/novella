@@ -304,10 +304,12 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	private var _graph: NVGraph?
 	private var _mvc: MainViewController
 	
+	private var _squareImage: NSImage? // original
 	private var _dialogImage: NSImage?
 	private var _graphImage: NSImage?
 	private var _deliveryImage: NSImage?
 	private var _linkImage: NSImage?
+	private var _contextImage: NSImage?
 	
 	var _filter: String
 	var _showContexts: Bool
@@ -326,10 +328,12 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 	init(mvc: MainViewController) {
 		self._mvc = mvc
 		
-		self._dialogImage = NSImage(named: NSImage.Name(rawValue: "Dialog"))
-		self._graphImage = NSImage(named: NSImage.Name(rawValue: "Graph"))
-		self._deliveryImage = NSImage(named: NSImage.Name(rawValue: "Delivery"))
-		self._linkImage = NSImage(named: NSImage.Name(rawValue: "Link"))
+		self._squareImage = NSImage(named: NSImage.Name(rawValue: "Square"))
+		self._dialogImage = self._squareImage?.tinted(color: Settings.graph.nodes.dialogColor)
+		self._graphImage = self._squareImage?.tinted(color: Settings.graph.nodes.graphColor)
+		self._deliveryImage = self._squareImage?.tinted(color: Settings.graph.nodes.deliveryColor)
+		self._linkImage = self._squareImage?.tinted(color: Settings.graph.trashedColorDark) // TODO: Sort out colors, but this will do for now.
+		self._contextImage = self._squareImage?.tinted(color: Settings.graph.nodes.contextColor)
 		
 		self._filter = ""
 		self._showContexts = true
@@ -509,6 +513,8 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 				view?.imageView?.image = _dialogImage
 			case is NVDelivery:
 				view?.imageView?.image = _deliveryImage
+			case is NVContext:
+				view?.imageView?.image = _contextImage
 			default:
 				view?.imageView?.image = NSImage(named: NSImage.Name.caution)
 				break
