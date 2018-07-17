@@ -160,4 +160,14 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 		print("Changed delivery's directions to \"\(directions)\".")
 	}
+	
+	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
+		_mvc.reloadSelectedGraph()
+	}
+	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
+		_mvc.reloadSelectedGraph()
+	}
+	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
+		_mvc.reloadSelectedGraph()
+	}
 }
