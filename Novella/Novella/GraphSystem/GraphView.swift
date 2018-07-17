@@ -354,7 +354,11 @@ extension GraphView {
 			
 		case .changed:
 			let curr = gesture.location(in: scrollView)
-			var diff = curr - _rmbPanLocation
+			
+			let panSpeed: CGFloat = 0.5 // speed of pan relative to delta
+			var diff = (curr - _rmbPanLocation) * panSpeed
+			// flip to match default trackpad behavior
+			diff.x *= scrollView.isFlipped ? -1.0 : 1.0
 			diff.y *= scrollView.isFlipped ? 1.0 : -1.0
 
 			let center = visibleRect.origin + diff
