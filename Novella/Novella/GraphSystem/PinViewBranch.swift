@@ -230,7 +230,7 @@ class PinViewBranch: PinView {
 			
 			// draw pin stroke
 			_pinStrokeLayer.path = NSBezierPath(roundedRect: _outlineRect, xRadius: 5.0, yRadius: 5.0).cgPath
-			_pinStrokeLayer.strokeColor = NSColor.fromHex("#535353").cgColor
+			_pinStrokeLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : NSColor.fromHex("#535353").cgColor
 			// draw true pin
 			_pinFillLayerTrue.path = NSBezierPath(ovalIn: _truePinRect).cgPath
 			if getTrueDestination() != nil {

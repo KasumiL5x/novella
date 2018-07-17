@@ -145,7 +145,7 @@ class PinViewLink: PinView {
 			// MARK: Pin Drawing
 			let strokePath = NSBezierPath(ovalIn: _outlineRect)
 			_pinStrokeLayer.path = strokePath.cgPath
-			_pinStrokeLayer.strokeColor = pinColor.cgColor
+			_pinStrokeLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
 			
 			let fillPath = NSBezierPath(ovalIn: _outlineRect.insetBy(dx: PinView.PIN_INSET, dy: PinView.PIN_INSET))
 			_pinFillLayer.path = fillPath.cgPath
