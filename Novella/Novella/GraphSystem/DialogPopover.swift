@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 class DialogPopover: GenericPopover {
-	func setup(node: DialogLinkableView, manager: NVStoryManager) {
+	func setup(node: DialogNode, manager: NVStoryManager) {
 		(_popoverViewController as? DialogPopoverViewController)?.setDialogNode(node: node, manager: manager)
 		(_detachedViewController as? DialogPopoverViewController)?.setDialogNode(node: node, manager: manager)
 	}

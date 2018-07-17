@@ -9,7 +9,7 @@
 import Cocoa
 
 class DeliveryPopover: GenericPopover {
-	func setup(node: DeliveryLinkableView) {
+	func setup(node: DeliveryNode) {
 		(_popoverViewController as? DeliveryPopoverViewController)?.setDeliveryNode(node: node)
 		(_detachedViewController as? DeliveryPopoverViewController)?.setDeliveryNode(node: node)
 	}

@@ -66,24 +66,24 @@
 		65F7F84320C3168A004663D6 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84120C3168A004663D6 /* CommandSystem.swift */; };
 		65F7F84420C3168A004663D6 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84220C3168A004663D6 /* CurveHelper.swift */; };
 		65F7F85B20C31714004663D6 /* MarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84620C31713004663D6 /* MarqueeView.swift */; };
-		65F7F85C20C31714004663D6 /* LinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84720C31713004663D6 /* LinkableView.swift */; };
+		65F7F85C20C31714004663D6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84720C31713004663D6 /* Node.swift */; };
 		65F7F85D20C31714004663D6 /* ConditionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84820C31713004663D6 /* ConditionPopover.swift */; };
 		65F7F85E20C31714004663D6 /* GraphBGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84920C31713004663D6 /* GraphBGView.swift */; };
 		65F7F85F20C31714004663D6 /* SelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84A20C31713004663D6 /* SelectionHandler.swift */; };
-		65F7F86020C31714004663D6 /* ContextLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84B20C31713004663D6 /* ContextLinkableView.swift */; };
+		65F7F86020C31714004663D6 /* ContextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84B20C31713004663D6 /* ContextNode.swift */; };
 		65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84C20C31713004663D6 /* ContextPopover.swift */; };
 		65F7F86220C31714004663D6 /* GraphBoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84D20C31713004663D6 /* GraphBoundsView.swift */; };
 		65F7F86320C31714004663D6 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84E20C31713004663D6 /* PinView.swift */; };
-		65F7F86420C31714004663D6 /* GraphLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84F20C31713004663D6 /* GraphLinkableView.swift */; };
+		65F7F86420C31714004663D6 /* GraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84F20C31713004663D6 /* GraphNode.swift */; };
 		65F7F86520C31714004663D6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85020C31713004663D6 /* GraphView.swift */; };
 		65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85120C31713004663D6 /* PinViewBranch.swift */; };
 		65F7F86720C31714004663D6 /* DialogPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85220C31713004663D6 /* DialogPopover.swift */; };
 		65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85320C31713004663D6 /* PinViewLink.swift */; };
 		65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85420C31713004663D6 /* GraphViewDelegate.swift */; };
-		65F7F86A20C31714004663D6 /* DeliveryLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85520C31713004663D6 /* DeliveryLinkableView.swift */; };
+		65F7F86A20C31714004663D6 /* DeliveryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85520C31713004663D6 /* DeliveryNode.swift */; };
 		65F7F86B20C31714004663D6 /* GenericPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85620C31714004663D6 /* GenericPopover.swift */; };
 		65F7F86C20C31714004663D6 /* DeliveryPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85720C31714004663D6 /* DeliveryPopover.swift */; };
-		65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85820C31714004663D6 /* DialogLinkableView.swift */; };
+		65F7F86D20C31714004663D6 /* DialogNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85820C31714004663D6 /* DialogNode.swift */; };
 		65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85920C31714004663D6 /* FunctionPopover.swift */; };
 		65F7F86F20C31714004663D6 /* GraphViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85A20C31714004663D6 /* GraphViewCommands.swift */; };
 		65F7F88920C317DD004663D6 /* Outliner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F88120C317DD004663D6 /* Outliner.swift */; };
@@ -192,24 +192,24 @@
 		65F7F84120C3168A004663D6 /* CommandSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
 		65F7F84220C3168A004663D6 /* CurveHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		65F7F84620C31713004663D6 /* MarqueeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeView.swift; sourceTree = "<group>"; };
-		65F7F84720C31713004663D6 /* LinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkableView.swift; sourceTree = "<group>"; };
+		65F7F84720C31713004663D6 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		65F7F84820C31713004663D6 /* ConditionPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionPopover.swift; sourceTree = "<group>"; };
 		65F7F84920C31713004663D6 /* GraphBGView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphBGView.swift; sourceTree = "<group>"; };
 		65F7F84A20C31713004663D6 /* SelectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionHandler.swift; sourceTree = "<group>"; };
-		65F7F84B20C31713004663D6 /* ContextLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextLinkableView.swift; sourceTree = "<group>"; };
+		65F7F84B20C31713004663D6 /* ContextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextNode.swift; sourceTree = "<group>"; };
 		65F7F84C20C31713004663D6 /* ContextPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextPopover.swift; sourceTree = "<group>"; };
 		65F7F84D20C31713004663D6 /* GraphBoundsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphBoundsView.swift; sourceTree = "<group>"; };
 		65F7F84E20C31713004663D6 /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
-		65F7F84F20C31713004663D6 /* GraphLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphLinkableView.swift; sourceTree = "<group>"; };
+		65F7F84F20C31713004663D6 /* GraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphNode.swift; sourceTree = "<group>"; };
 		65F7F85020C31713004663D6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		65F7F85120C31713004663D6 /* PinViewBranch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewBranch.swift; sourceTree = "<group>"; };
 		65F7F85220C31713004663D6 /* DialogPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogPopover.swift; sourceTree = "<group>"; };
 		65F7F85320C31713004663D6 /* PinViewLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewLink.swift; sourceTree = "<group>"; };
 		65F7F85420C31713004663D6 /* GraphViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewDelegate.swift; sourceTree = "<group>"; };
-		65F7F85520C31713004663D6 /* DeliveryLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryLinkableView.swift; sourceTree = "<group>"; };
+		65F7F85520C31713004663D6 /* DeliveryNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryNode.swift; sourceTree = "<group>"; };
 		65F7F85620C31714004663D6 /* GenericPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericPopover.swift; sourceTree = "<group>"; };
 		65F7F85720C31714004663D6 /* DeliveryPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryPopover.swift; sourceTree = "<group>"; };
-		65F7F85820C31714004663D6 /* DialogLinkableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogLinkableView.swift; sourceTree = "<group>"; };
+		65F7F85820C31714004663D6 /* DialogNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogNode.swift; sourceTree = "<group>"; };
 		65F7F85920C31714004663D6 /* FunctionPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionPopover.swift; sourceTree = "<group>"; };
 		65F7F85A20C31714004663D6 /* GraphViewCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewCommands.swift; sourceTree = "<group>"; };
 		65F7F88120C317DD004663D6 /* Outliner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outliner.swift; sourceTree = "<group>"; };
@@ -385,11 +385,11 @@
 			isa = PBXGroup;
 			children = (
 				65223B5220C68D4E008E8A95 /* PinBoard.swift */,
-				65F7F84B20C31713004663D6 /* ContextLinkableView.swift */,
-				65F7F85520C31713004663D6 /* DeliveryLinkableView.swift */,
-				65F7F85820C31714004663D6 /* DialogLinkableView.swift */,
-				65F7F84F20C31713004663D6 /* GraphLinkableView.swift */,
-				65F7F84720C31713004663D6 /* LinkableView.swift */,
+				65F7F84B20C31713004663D6 /* ContextNode.swift */,
+				65F7F85520C31713004663D6 /* DeliveryNode.swift */,
+				65F7F85820C31714004663D6 /* DialogNode.swift */,
+				65F7F84F20C31713004663D6 /* GraphNode.swift */,
+				65F7F84720C31713004663D6 /* Node.swift */,
 			);
 			name = LinkableViews;
 			sourceTree = "<group>";
@@ -737,7 +737,7 @@
 				65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */,
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
 				650864A720D0024F00201542 /* ReaderWindowController.swift in Sources */,
-				65F7F86D20C31714004663D6 /* DialogLinkableView.swift in Sources */,
+				65F7F86D20C31714004663D6 /* DialogNode.swift in Sources */,
 				65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */,
 				65F7F83F20C31637004663D6 /* NSView+Toast.swift in Sources */,
 				65F7F8A020C31815004663D6 /* PreferencesViewController.swift in Sources */,
@@ -761,7 +761,7 @@
 				65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */,
 				655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */,
 				65F7F83E20C31637004663D6 /* NSBezierPath+CGPath.swift in Sources */,
-				65F7F86420C31714004663D6 /* GraphLinkableView.swift in Sources */,
+				65F7F86420C31714004663D6 /* GraphNode.swift in Sources */,
 				65F7F85D20C31714004663D6 /* ConditionPopover.swift in Sources */,
 				65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */,
 				65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */,
@@ -772,14 +772,14 @@
 				65F7F86220C31714004663D6 /* GraphBoundsView.swift in Sources */,
 				65F7F86C20C31714004663D6 /* DeliveryPopover.swift in Sources */,
 				650C652020E3C7A300EF5305 /* CustomImageView.swift in Sources */,
-				65F7F85C20C31714004663D6 /* LinkableView.swift in Sources */,
+				65F7F85C20C31714004663D6 /* Node.swift in Sources */,
 				65F7F89F20C31815004663D6 /* PreferencesWindowController.swift in Sources */,
-				65F7F86020C31714004663D6 /* ContextLinkableView.swift in Sources */,
+				65F7F86020C31714004663D6 /* ContextNode.swift in Sources */,
 				65F7F89720C317F4004663D6 /* DialogPopoverViewController.swift in Sources */,
 				65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */,
 				65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */,
 				65940AD920E2323500C777BF /* EntityEditorViewController.swift in Sources */,
-				65F7F86A20C31714004663D6 /* DeliveryLinkableView.swift in Sources */,
+				65F7F86A20C31714004663D6 /* DeliveryNode.swift in Sources */,
 				65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */,
 				65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */,
 				65F7F85B20C31714004663D6 /* MarqueeView.swift in Sources */,

@@ -18,7 +18,7 @@ class PinBoard: NSView {
 	}
 	
 	override var tag: Int {
-		return LinkableView.HIT_NIL_TAG
+		return Node.HIT_NIL_TAG
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

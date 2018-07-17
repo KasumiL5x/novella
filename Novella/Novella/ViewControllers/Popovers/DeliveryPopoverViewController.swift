@@ -17,7 +17,7 @@ class DeliveryPopoverViewController: NSViewController {
 	@IBOutlet private weak var _contentTextField: NSTextField!
 	
 	// MARK: - Variables -
-	private var _deliveryNode: DeliveryLinkableView?
+	private var _deliveryNode: DeliveryNode?
 	
 	
 	// MARK: - Functions -
@@ -34,13 +34,13 @@ class DeliveryPopoverViewController: NSViewController {
 		refreshContent()
 	}
 	
-	func setDeliveryNode(node: DeliveryLinkableView) {
+	func setDeliveryNode(node: DeliveryNode) {
 		_deliveryNode = node
 		refreshContent()
 	}
 	
 	func refreshContent() {
-		if let asDelivery = (_deliveryNode?.Linkable as? NVDelivery) {
+		if let asDelivery = (_deliveryNode?.Object as? NVDelivery) {
 			let name = asDelivery.Name
 			_nameTextField.stringValue = name.isEmpty ? "" : name
 			
@@ -56,28 +56,28 @@ class DeliveryPopoverViewController: NSViewController {
 	}
 	
 	@IBAction func onNameChanged(_ sender: NSTextField) {
-		guard let delivery = _deliveryNode?.Linkable as? NVDelivery else {
+		guard let delivery = _deliveryNode?.Object as? NVDelivery else {
 			return
 		}
 		delivery.Name = sender.stringValue
 	}
 	
 	@IBAction func onDirectionsChanged(_ sender: NSTextField) {
-		guard let delivery = _deliveryNode?.Linkable as? NVDelivery else {
+		guard let delivery = _deliveryNode?.Object as? NVDelivery else {
 			return
 		}
 		delivery.Directions = sender.stringValue
 	}
 	
 	@IBAction func onPreviewChanged(_ sender: NSTextField) {
-		guard let delivery = _deliveryNode?.Linkable as? NVDelivery else {
+		guard let delivery = _deliveryNode?.Object as? NVDelivery else {
 			return
 		}
 		delivery.Preview = sender.stringValue
 	}
 	
 	@IBAction func onContentChanged(_ sender: NSTextField) {
-		guard let delivery = _deliveryNode?.Linkable as? NVDelivery else {
+		guard let delivery = _deliveryNode?.Object as? NVDelivery else {
 			return
 		}
 		delivery.Content = sender.stringValue

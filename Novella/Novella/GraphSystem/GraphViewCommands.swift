@@ -10,10 +10,10 @@ import Cocoa
 import NovellaModel
 
 class SelectNodesCmd: UndoableCommand {
-	private let _selection: [LinkableView]
+	private let _selection: [Node]
 	private let _handler: SelectionHandler
 	
-	init(selection: [LinkableView], handler: SelectionHandler) {
+	init(selection: [Node], handler: SelectionHandler) {
 		self._selection = selection
 		self._handler = handler
 	}
@@ -27,11 +27,11 @@ class SelectNodesCmd: UndoableCommand {
 	}
 }
 class ReplacedSelectedNodesCmd: UndoableCommand {
-	private let _selection: [LinkableView]
-	private let _oldSelection: [LinkableView]
+	private let _selection: [Node]
+	private let _oldSelection: [Node]
 	private let _handler: SelectionHandler
 	
-	init(selection: [LinkableView], handler: SelectionHandler) {
+	init(selection: [Node], handler: SelectionHandler) {
 		self._selection = selection
 		self._oldSelection = handler.Selection.map({$0}) // arrays have value copy in swift
 		self._handler = handler
@@ -46,10 +46,10 @@ class ReplacedSelectedNodesCmd: UndoableCommand {
 	}
 }
 class DeselectNodesCmd: UndoableCommand {
-	private let _selection: [LinkableView]
+	private let _selection: [Node]
 	private let _handler: SelectionHandler
 	
-	init(selection: [LinkableView], handler: SelectionHandler) {
+	init(selection: [Node], handler: SelectionHandler) {
 		self._selection = selection
 		self._handler = handler
 	}
@@ -63,12 +63,12 @@ class DeselectNodesCmd: UndoableCommand {
 	}
 }
 
-class MoveLinkableViewCmd: UndoableCommand {
-	private let _node: LinkableView
+class MoveNodeCmd: UndoableCommand {
+	private let _node: Node
 	private let _from: CGPoint
 	private let _to: CGPoint
 	
-	init(node: LinkableView, from: CGPoint, to: CGPoint) {
+	init(node: Node, from: CGPoint, to: CGPoint) {
 		self._node = node
 		self._from = from
 		self._to = to

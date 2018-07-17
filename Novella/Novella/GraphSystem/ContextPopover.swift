@@ -9,7 +9,7 @@
 import Cocoa
 
 class ContextPopover: GenericPopover {
-	func setup(node: ContextLinkableView) {
+	func setup(node: ContextNode) {
 		(_popoverViewController as? ContextPopoverViewController)?.setContextNode(node: node)
 		(_detachedViewController as? ContextPopoverViewController)?.setContextNode(node: node)
 	}

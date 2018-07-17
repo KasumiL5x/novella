@@ -18,7 +18,7 @@ class DialogPopoverViewController: NSViewController {
 	@IBOutlet private weak var _contentTextField: NSTextField!
 	
 	// MARK: - Variables -
-	private var _dialogNode: DialogLinkableView?
+	private var _dialogNode: DialogNode?
 	private var _manager: NVStoryManager?
 	private var _speakerMenu: NSMenu?
 	
@@ -37,14 +37,14 @@ class DialogPopoverViewController: NSViewController {
 		refreshContent() // reload contents when the popover appears (can't rely on this alone as we must make it appear to set the dialog node)
 	}
 	
-	func setDialogNode(node: DialogLinkableView, manager: NVStoryManager) {
+	func setDialogNode(node: DialogNode, manager: NVStoryManager) {
 		_dialogNode = node
 		_manager = manager
 		refreshContent()
 	}
 	
 	func refreshContent() {
-		if let asDialog = (_dialogNode?.Linkable as? NVDialog), let manager = _manager {
+		if let asDialog = (_dialogNode?.Object as? NVDialog), let manager = _manager {
 			let name = asDialog.Name
 			_nameTextField.stringValue = name.isEmpty ? "" : name
 			
@@ -78,7 +78,7 @@ class DialogPopoverViewController: NSViewController {
 		}
 		
 		let speakerEntity = _manager!.Entities[speakerMenuItem.tag]
-		(_dialogNode!.Linkable as! NVDialog).Speaker = speakerEntity
+		(_dialogNode!.Object as! NVDialog).Speaker = speakerEntity
 		
 		_speakerButton.image = speakerEntity.CachedImage
 	}
@@ -89,28 +89,28 @@ class DialogPopoverViewController: NSViewController {
 	}
 	
 	@IBAction func onNameChanged(_ sender: NSTextField) {
-		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
+		guard let dlg = _dialogNode?.Object as? NVDialog else {
 			return
 		}
 		dlg.Name = sender.stringValue
 	}
 	
 	@IBAction func onDirectionsChanged(_ sender: NSTextField) {
-		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
+		guard let dlg = _dialogNode?.Object as? NVDialog else {
 			return
 		}
 		dlg.Directions = sender.stringValue
 	}
 	
 	@IBAction func onPreviewChanged(_ sender: NSTextField) {
-		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
+		guard let dlg = _dialogNode?.Object as? NVDialog else {
 			return
 		}
 		dlg.Preview = sender.stringValue
 	}
 	
 	@IBAction func onContentChanged(_ sender: NSTextField) {
-		guard let dlg = _dialogNode?.Linkable as? NVDialog else {
+		guard let dlg = _dialogNode?.Object as? NVDialog else {
 			return
 		}
 		dlg.Content = sender.stringValue

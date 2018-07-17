@@ -14,7 +14,7 @@ class ContextPopoverViewController: NSViewController {
 	@IBOutlet fileprivate weak var _nameTextField: NSTextField!
 	
 	// MARK: - Variables -
-	fileprivate var _contextNode: ContextLinkableView?
+	fileprivate var _contextNode: ContextNode?
 	
 	// MARK: - Functions -
 	override func viewDidLoad() {
@@ -30,13 +30,13 @@ class ContextPopoverViewController: NSViewController {
 		refreshContent()
 	}
 	
-	func setContextNode(node: ContextLinkableView) {
+	func setContextNode(node: ContextNode) {
 		_contextNode = node
 		refreshContent()
 	}
 	
 	func refreshContent() {
-		if let asContext = (_contextNode?.Linkable as? NVContext) {
+		if let asContext = (_contextNode?.Object as? NVContext) {
 			let name = asContext.Name
 			_nameTextField.stringValue = name.isEmpty ? "" : name
 		} else {
@@ -45,7 +45,7 @@ class ContextPopoverViewController: NSViewController {
 	}
 	
 	@IBAction func onNameChanged(_ sender: NSTextField) {
-		guard let ctx = _contextNode?.Linkable as? NVContext else {
+		guard let ctx = _contextNode?.Object as? NVContext else {
 			return
 		}
 		ctx.Name = sender.stringValue

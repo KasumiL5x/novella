@@ -10,7 +10,7 @@ import Foundation
 
 class SelectionHandler {
 	// MARK: - - Variables -
-	private var _selectedNodes: [LinkableView]
+	private var _selectedNodes: [Node]
 	private var _delegate: GraphViewDelegate?
 	private var _graph: GraphView
 	
@@ -21,7 +21,7 @@ class SelectionHandler {
 	}
 	
 	// MARK: - - Properties -
-	var Selection: [LinkableView] {
+	var Selection: [Node] {
 		get{ return _selectedNodes }
 	}
 	var Delegate: GraphViewDelegate? {
@@ -30,7 +30,7 @@ class SelectionHandler {
 	}
 	
 	// MARK: - - Functions -
-	func select(_ nodes: [LinkableView], append: Bool) {
+	func select(_ nodes: [Node], append: Bool) {
 		_selectedNodes.forEach({$0.deselect()})
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes
 		_selectedNodes.forEach({$0.select()})
@@ -38,7 +38,7 @@ class SelectionHandler {
 		_delegate?.onSelectionChanged(graphView: _graph, selection: _selectedNodes)
 	}
 	
-	func deselect(_ nodes: [LinkableView]) {
+	func deselect(_ nodes: [Node]) {
 		nodes.forEach({
 			if _selectedNodes.contains($0) {
 				$0.deselect()

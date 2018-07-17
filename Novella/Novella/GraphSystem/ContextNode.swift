@@ -1,5 +1,5 @@
 //
-//  DeliveryLinkableView.swift
+//  ContextNode.swift
 //  Novella
 //
 //  Created by Daniel Green on 21/05/2018.
@@ -9,39 +9,38 @@
 import Cocoa
 import NovellaModel
 
-class DeliveryLinkableView: LinkableView {
+class ContextNode: Node {
 	// MARK: - - Initialization -
-	init(node: NVDelivery, graphView: GraphView) {
+	init(node: NVContext, graphView: GraphView) {
 		let rect = NSMakeRect(0.0, 0.0, 1.0, 1.0)
-		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
+		super.init(frameRect: rect, nvObject: node, graphView: graphView)
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
 		setLabelString(str: node.Name)
-		setContentString(str: node.Content)
+		setContentString(str: "")
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("DeliveryLinkableView::init(coder:) not implemented.")
+		fatalError("ContextNode::init(coder:) not implemented.")
 	}
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
 	override func onMove() {
-		(Linkable as! NVDelivery).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
+		(Object as! NVContext).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
 	override func flagColor() -> NSColor {
-		return Settings.graph.nodes.deliveryColor
+		return Settings.graph.nodes.contextColor
 	}
 	override func onNameChanged() {
-		setLabelString(str: Linkable.Name)
+		setLabelString(str: Object.Name)
 	}
 	override func onContentChanged() {
-		setContentString(str: (Linkable as! NVDelivery).Content)
 	}
 	// MARK: Popover Functions
 	override func _createPopover() {
-		_editPopover = DeliveryPopover()
+		_editPopover = ContextPopover()
 		_editPopover?.show(forView: self, at: .minY)
-		(_editPopover as! DeliveryPopover).setup(node: self)
+		(_editPopover as! ContextPopover).setup(node: self)
 	}
 }

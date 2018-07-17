@@ -105,38 +105,38 @@ public class NVStoryManager {
 		return _identifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
 	
-	public func nameOf(linkable: NVObject?) -> String {
-		switch linkable {
+	public func nameOf(object: NVObject?) -> String {
+		switch object {
 		case is NVNode:
-			return (linkable as!  NVNode).Name
+			return (object as!  NVNode).Name
 		case is NVGraph:
-			return (linkable as! NVGraph).Name
+			return (object as! NVGraph).Name
 		default:
 			return ""
 		}
 	}
 	
-	public func getLinksFrom(_ linkable: NVObject) -> [NVBaseLink] {
-		return _links.filter({$0.Origin.UUID == linkable.UUID})
+	public func getLinksFrom(_ object: NVObject) -> [NVBaseLink] {
+		return _links.filter({$0.Origin.UUID == object.UUID})
 	}
 	
-	public func getLinksTo(_ linkable: NVObject) -> [NVBaseLink] {
+	public func getLinksTo(_ object: NVObject) -> [NVBaseLink] {
 		return _links.filter({
 			
 			switch $0 {
 			case is NVLink:
 				if let dest = ($0 as! NVLink).Transfer.Destination {
-					return dest.UUID == linkable.UUID
+					return dest.UUID == object.UUID
 				}
 			case is NVBranch:
 				if let trueDest = ($0 as! NVBranch).TrueTransfer.Destination {
-					return trueDest.UUID == linkable.UUID
+					return trueDest.UUID == object.UUID
 				}
 				if let falseDest = ($0 as! NVBranch).FalseTransfer.Destination {
-					return falseDest.UUID == linkable.UUID
+					return falseDest.UUID == object.UUID
 				}
 			case is NVSwitch:
-				print("getLinksTo(linkable) encounterd a NVSwitch which isn't yet implemented.")
+				print("getLinksTo() encountered an NVSwitch which isn't yet implemented.")
 			default:
 				return false
 			}

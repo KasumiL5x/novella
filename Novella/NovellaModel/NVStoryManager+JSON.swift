@@ -446,10 +446,10 @@ extension NVStoryManager {
 			let graph = storyManager.find(uuid: curr["uuid"].string!) as! NVGraph
 			if let entry = curr["entry"].string {
 				if !entry.isEmpty {
-					if let linkable = storyManager.find(uuid: entry) {
-						try! graph.setEntry(linkable)
+					if let object = storyManager.find(uuid: entry) {
+						try! graph.setEntry(object)
 					} else {
-						print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(entry)) when setting Graph's entry (\(graph.UUID.uuidString)).")
+						print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(entry)) when setting Graph's entry (\(graph.UUID.uuidString)).")
 					}
 				}
 			}
@@ -461,7 +461,7 @@ extension NVStoryManager {
 			
 			let originID = curr["origin"].string!
 			guard let origin = storyManager.find(uuid: originID) else {
-				print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(originID)) when creating BaseLink (\(uuid.uuidString)).  Link will NOT be created.")
+				print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(originID)) when creating BaseLink (\(uuid.uuidString)).  Link will NOT be created.")
 				continue // skips the link entirely if this error occurs
 			}
 			
@@ -479,7 +479,7 @@ extension NVStoryManager {
 						if let destination = storyManager.find(uuid: transferDestination) {
 							link.setDestination(dest: destination)
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
+							print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
 						}
 					}
 					
@@ -505,7 +505,7 @@ extension NVStoryManager {
 						if let destination = storyManager.find(uuid: transferDestination) {
 							branch.setTrueDestination(dest: destination)
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
+							print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
 						}
 					}
 					
@@ -520,7 +520,7 @@ extension NVStoryManager {
 						if let destination = storyManager.find(uuid: transferDestination) {
 							branch.setFalseDestination(dest: destination)
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Linkable by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
+							print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
 						}
 					}
 					

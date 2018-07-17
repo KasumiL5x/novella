@@ -19,21 +19,21 @@ class PinView: NSView {
 	// MARK: - - Variables -
 	private var _nvBaseLink: NVBaseLink
 	var _graphView: GraphView
-	private var _owner: LinkableView
+	private var _owner: Node
 	//
 	private var _panGesture: NSPanGestureRecognizer?
 	private var _isDragging: Bool
 	private var _dragPosition: CGPoint
 	private var _dragLayer: CAShapeLayer
 	private var _dragPath: NSBezierPath
-	private var _panTarget: LinkableView?
+	private var _panTarget: Node?
 	//
 	private var _contextGesture: NSClickGestureRecognizer?
 	//
 	private var _trashMode: Bool
 	
 	// MARK: - - Initialization -
-	init(link: NVBaseLink, graphView: GraphView, owner: LinkableView) {
+	init(link: NVBaseLink, graphView: GraphView, owner: Node) {
 		self._nvBaseLink = link
 		self._graphView = graphView
 		self._owner = owner
@@ -86,7 +86,7 @@ class PinView: NSView {
 	var BaseLink: NVBaseLink {
 		get{ return _nvBaseLink }
 	}
-	var Owner: LinkableView {
+	var Owner: Node {
 		get{ return _owner }
 	}
 	var IsDragging: Bool {
@@ -124,7 +124,7 @@ class PinView: NSView {
 	func onPanStarted(_ gesture: NSPanGestureRecognizer) {
 		print("PinView::onPanStarted() should be overridden.")
 	}
-	func onPanFinished(_ target: LinkableView?) {
+	func onPanFinished(_ target: Node?) {
 		print("PinView::onPanFinished() should be overridden.")
 	}
 	func onContextInternal(_ gesture: NSClickGestureRecognizer) {
@@ -150,7 +150,7 @@ class PinView: NSView {
 			redraw()
 			
 			// what is under the cursor in the graph?
-			if let target = _graphView.linkableViewAtPoint(gesture.location(in: _graphView)) {
+			if let target = _graphView.nodeAtPoint(gesture.location(in: _graphView)) {
 				// ignore trashed objects
 				if target.Trashed {
 					_panTarget?.unprime()

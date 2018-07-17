@@ -9,10 +9,10 @@
 import NovellaModel
 
 protocol GraphViewDelegate {
-	func onSelectionChanged(graphView: GraphView, selection: [LinkableView])
+	func onSelectionChanged(graphView: GraphView, selection: [Node])
 }
 
 extension GraphViewDelegate {
-	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
+	func onSelectionChanged(graphView: GraphView, selection: [Node]) {
 	}
 }

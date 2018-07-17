@@ -23,7 +23,7 @@ class PinViewLink: PinView {
 	private var _outlineRect: NSRect
 	
 	// MARK: - - Initialization -
-	init(link: NVLink, graphView: GraphView, owner: LinkableView) {
+	init(link: NVLink, graphView: GraphView, owner: Node) {
 		self._pinStrokeLayer = CAShapeLayer()
 		self._pinFillLayer = CAShapeLayer()
 		self._curveLayer = CAShapeLayer()
@@ -79,11 +79,11 @@ class PinViewLink: PinView {
 	}
 	override func onPanStarted(_ gesture: NSPanGestureRecognizer) {
 	}
-	override func onPanFinished(_ target: LinkableView?) {
+	override func onPanFinished(_ target: Node?) {
 		switch target {
-		case is GraphLinkableView:
+		case is GraphNode:
 			_graphDropMenu.removeAllItems()
-			let asGraph = (target?.Linkable as! NVGraph)
+			let asGraph = (target?.Object as! NVGraph)
 			for child in asGraph.Nodes {
 				let menuItem = NSMenuItem(title: "Link to " + (child.Name.isEmpty ? "Unnamed" : child.Name), action: #selector(PinViewLink.onGraphContextItem), keyEquivalent: "")
 				menuItem.target = self
@@ -93,7 +93,7 @@ class PinViewLink: PinView {
 			NSMenu.popUpContextMenu(_graphDropMenu, with: NSApp.currentEvent!, for: target!)
 			
 		default:
-			_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: target?.Linkable))
+			_graphView.Undo.execute(cmd: SetPinLinkDestinationCmd(pin: self, destination: target?.Object))
 		}
 	}
 	override func onContextInternal(_ gesture: NSClickGestureRecognizer) {
@@ -133,7 +133,7 @@ class PinViewLink: PinView {
 			
 			// set the pin's color based on what kind of node it's connected to
 			let normalColor: NSColor
-			if let dest = _graphView.getLinkableViewFrom(linkable: getDestination(), includeParentGraphs: true) {
+			if let dest = _graphView.getNodeFrom(object: getDestination(), includeParentGraphs: true) {
 				normalColor = dest.flagColor()
 			} else {
 				normalColor = NSColor.fromHex("#535353")
@@ -162,7 +162,7 @@ class PinViewLink: PinView {
 			_curveLayer.path = nil
 			_curvePath.removeAllPoints()
 			// draw link curve
-			if let destination = _graphView.getLinkableViewFrom(linkable: getDestination(), includeParentGraphs: true) {
+			if let destination = _graphView.getNodeFrom(object: getDestination(), includeParentGraphs: true) {
 				// convert local from destination into local of self and make curve
 				end = destination.convert(NSMakePoint(0.0, destination.frame.height * 0.5), to: self)
 				
@@ -177,7 +177,7 @@ class PinViewLink: PinView {
 				
 				_curveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : pinColor.cgColor
 				_curveLayer.path = _curvePath.cgPath
-				_curveLayer.lineDashPattern = (destination is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
+				_curveLayer.lineDashPattern = (destination is GraphNode) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			
 			context.restoreGState()

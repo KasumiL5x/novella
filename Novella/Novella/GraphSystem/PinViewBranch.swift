@@ -35,7 +35,7 @@ class PinViewBranch: PinView {
 	private let _graphDropMenu: NSMenu
 	
 	// MARK: - - Initialization -
-	init(link: NVBranch, graphView: GraphView, owner: LinkableView) {
+	init(link: NVBranch, graphView: GraphView, owner: Node) {
 		self._pinStrokeLayer = CAShapeLayer()
 		self._pinFillLayerTrue = CAShapeLayer()
 		self._pinFillLayerFalse = CAShapeLayer()
@@ -137,11 +137,11 @@ class PinViewBranch: PinView {
 			_pannedPin = false
 		}
 	}
-	override func onPanFinished(_ target: LinkableView?) {
+	override func onPanFinished(_ target: Node?) {
 		switch target {
-		case is GraphLinkableView:
+		case is GraphNode:
 			_graphDropMenu.removeAllItems()
-			let asGraph = (target?.Linkable as! NVGraph)
+			let asGraph = (target?.Object as! NVGraph)
 			for child in asGraph.Nodes {
 				let menuItem = NSMenuItem(title: "Link to " + (child.Name.isEmpty ? "Unnamed" : child.Name), action: #selector(PinViewBranch.onGraphContextItem), keyEquivalent: "")
 				menuItem.target = self
@@ -151,7 +151,7 @@ class PinViewBranch: PinView {
 			NSMenu.popUpContextMenu(_graphDropMenu, with: NSApp.currentEvent!, for: target!)
 			
 		default:
-			_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: target?.Linkable, forTrue: _pannedPin))
+			_graphView.Undo.execute(cmd: SetPinBranchDestinationCmd(pin: self, destination: target?.Object, forTrue: _pannedPin))
 		}
 	}
 	override func onContextInternal(_ gesture: NSClickGestureRecognizer) {
@@ -212,12 +212,12 @@ class PinViewBranch: PinView {
 			// set the pin's color based on what kind of node it's connected to
 			let trueNormalColor: NSColor
 			let falseNormalColor: NSColor
-			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination(), includeParentGraphs: true) {
+			if let trueDest = _graphView.getNodeFrom(object: getTrueDestination(), includeParentGraphs: true) {
 				trueNormalColor = trueDest.flagColor()
 			} else {
 				trueNormalColor = NSColor.fromHex("#535353")
 			}
-			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination(), includeParentGraphs: true) {
+			if let falseDest = _graphView.getNodeFrom(object: getFalseDestination(), includeParentGraphs: true) {
 				falseNormalColor = falseDest.flagColor()
 			} else {
 				falseNormalColor = NSColor.fromHex("#535353")
@@ -254,7 +254,7 @@ class PinViewBranch: PinView {
 			var end = CGPoint.zero
 			//
 			_trueCurveLayer.path = nil
-			if let trueDest = _graphView.getLinkableViewFrom(linkable: getTrueDestination(), includeParentGraphs: true) {
+			if let trueDest = _graphView.getNodeFrom(object: getTrueDestination(), includeParentGraphs: true) {
 				_trueCurvePath.removeAllPoints()
 				let origin = NSMakePoint(_truePinRect.midX, _truePinRect.midY)
 				// convert local from destination into local of self and make curve
@@ -271,10 +271,10 @@ class PinViewBranch: PinView {
 				
 				_trueCurveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : truePinColor.cgColor
 				_trueCurveLayer.path = _trueCurvePath.cgPath
-				_trueCurveLayer.lineDashPattern = (trueDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
+				_trueCurveLayer.lineDashPattern = (trueDest is GraphNode) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			_falseCurveLayer.path = nil
-			if let falseDest = _graphView.getLinkableViewFrom(linkable: getFalseDestination(), includeParentGraphs: true) {
+			if let falseDest = _graphView.getNodeFrom(object: getFalseDestination(), includeParentGraphs: true) {
 				_falseCurvePath.removeAllPoints()
 				let origin = NSMakePoint(_falsePinRect.midX, _falsePinRect.midY)
 				// convert local from destination into local of self and make curve
@@ -291,7 +291,7 @@ class PinViewBranch: PinView {
 				
 				_falseCurveLayer.strokeColor = TrashMode ? Settings.graph.trashedColorDark.cgColor : falsePinColor.cgColor
 				_falseCurveLayer.path = _falseCurvePath.cgPath
-				_falseCurveLayer.lineDashPattern = (falseDest is GraphLinkableView) ? PinView.EXT_CURVE_PATTERN : nil
+				_falseCurveLayer.lineDashPattern = (falseDest is GraphNode) ? PinView.EXT_CURVE_PATTERN : nil
 			}
 			
 			context.restoreGState()

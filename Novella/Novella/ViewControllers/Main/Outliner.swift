@@ -193,7 +193,7 @@ class SelectedGraphFancyCell: NSTableCellView {
 	@IBOutlet weak var _trashButton: NSButton!
 	private var _trashEmptyImage: NSImage?
 	private var _trashFullImage: NSImage?
-	var _linkable: NVObject?
+	var _object: NVObject?
 	
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -214,7 +214,7 @@ class SelectedGraphFancyCell: NSTableCellView {
 	}
 	
 	@IBAction func onTrash(_ sender: NSButton) {
-		if let obj = _linkable {
+		if let obj = _object {
 			obj.InTrash ? obj.untrash() : obj.trash()
 			setTrashIcon(obj.InTrash)
 		}
@@ -258,8 +258,8 @@ class SelectedGraphOutlineView: NSOutlineView {
 	}
 	
 	@objc private func onDoubleAction() {
-		if let linkableItem = self.item(atRow: self.selectedRow) as? NVObject {
-			_mvc?.getActiveGraph()?.selectNVLinkable(linkable: linkableItem)
+		if let object = self.item(atRow: self.selectedRow) as? NVObject {
+			_mvc?.getActiveGraph()?.selectNode(object: object)
 		}
 	}
 	
@@ -494,14 +494,14 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		switch item {
 		case is NVGraph:
 			let asGraph = (item as! NVGraph)
-			(view as! SelectedGraphFancyCell)._linkable = asGraph
+			(view as! SelectedGraphFancyCell)._object = asGraph
 			(view as! SelectedGraphFancyCell).setTrashIcon(asGraph.InTrash)
 			view?.textField?.stringValue = asGraph.Name
 			view?.imageView?.image = _graphImage
 			
 		case is NVNode:
 			let asNode = (item as! NVNode)
-			(view as! SelectedGraphFancyCell)._linkable = asNode
+			(view as! SelectedGraphFancyCell)._object = asNode
 			(view as! SelectedGraphFancyCell).setTrashIcon(asNode.InTrash)
 			view?.textField?.stringValue = asNode.Name
 			switch item {
@@ -517,17 +517,17 @@ class SelectedGraphDelegate: NSObject, NSOutlineViewDataSource, NSOutlineViewDel
 		case is NVLink:
 			let asLink = (item as! NVLink)
 			(view as! SelectedGraphFancyCell).setTrashIcon(asLink.InTrash)
-			let from = _mvc.Document.Manager.nameOf(linkable: asLink.Origin)
-			let to = _mvc.Document.Manager.nameOf(linkable: asLink.Transfer.Destination)
+			let from = _mvc.Document.Manager.nameOf(object: asLink.Origin)
+			let to = _mvc.Document.Manager.nameOf(object: asLink.Transfer.Destination)
 			view?.textField?.stringValue = "\(from) => \(to)"
 			view?.imageView?.image = _linkImage
 			
 		case is NVBranch:
 			let asBranch = (item as! NVBranch)
 			(view as! SelectedGraphFancyCell).setTrashIcon(asBranch.InTrash)
-			let from = _mvc.Document.Manager.nameOf(linkable: asBranch.Origin)
-			let toTrue = _mvc.Document.Manager.nameOf(linkable: asBranch.TrueTransfer.Destination)
-			let toFalse = _mvc.Document.Manager.nameOf(linkable: asBranch.FalseTransfer.Destination)
+			let from = _mvc.Document.Manager.nameOf(object: asBranch.Origin)
+			let toTrue = _mvc.Document.Manager.nameOf(object: asBranch.TrueTransfer.Destination)
+			let toFalse = _mvc.Document.Manager.nameOf(object: asBranch.FalseTransfer.Destination)
 			view?.textField?.stringValue = "\(from) => T=\(toTrue); F=\(toFalse)"
 			view?.imageView?.image = _linkImage
 			

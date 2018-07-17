@@ -262,6 +262,6 @@ extension MainViewController: NSSplitViewDelegate {
 
 // MARK: - GraphViewDelegate -
 extension MainViewController: GraphViewDelegate {
-	func onSelectionChanged(graphView: GraphView, selection: [LinkableView]) {
+	func onSelectionChanged(graphView: GraphView, selection: [Node]) {
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  LinkableView.swift
+//  Node.swift
 //  Novella
 //
 //  Created by Daniel Green on 12/05/2018.
@@ -9,7 +9,7 @@
 import Cocoa
 import NovellaModel
 
-class LinkableView: NSView {
+class Node: NSView {
 	// MARK: - Constants -
 	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
 	static let HIT_IGNORE_TAG: Int = 10
@@ -17,7 +17,7 @@ class LinkableView: NSView {
 	static let NODE_ROUNDNESS: CGFloat = 4.0
 	
 	// MARK: - Variables -
-	private var _nvLinkable: NVObject
+	private var _nvObject: NVObject
 	internal var _graphView: GraphView
 	private var _isPrimed: Bool
 	private var _isSelected: Bool
@@ -45,8 +45,8 @@ class LinkableView: NSView {
 	var _editPopover: GenericPopover?
 	
 	// MARK: - Properties -
-	var Linkable: NVObject {
-		get{ return _nvLinkable }
+	var Object: NVObject {
+		get{ return _nvObject }
 	}
 	var IsPrimed: Bool {
 		get{ return _isPrimed }
@@ -71,26 +71,26 @@ class LinkableView: NSView {
 	}
 	
 	// MARK: - Initialization -
-	init(frameRect: NSRect, nvLinkable: NVObject, graphView: GraphView) {
-		self._nvLinkable = nvLinkable
+	init(frameRect: NSRect, nvObject: NVObject, graphView: GraphView) {
+		self._nvObject = nvObject
 		self._graphView = graphView
 		self._isPrimed = false
 		self._isSelected = false
 		//
 		self._nameLabel = NSTextField(labelWithString: "")
-		self._nameLabel.tag = LinkableView.HIT_IGNORE_TAG
+		self._nameLabel.tag = Node.HIT_IGNORE_TAG
 		self._nameLabel.textColor = NSColor.fromHex("#3c3c3c")
 		self._nameLabel.font = NSFont.systemFont(ofSize: 16.0, weight: .bold)
 		self._nameLabel.placeholderString = "Unnamed"
 		//
 		self._contentLabel = NSTextField(wrappingLabelWithString: "")
-		self._contentLabel.tag = LinkableView.HIT_IGNORE_TAG
+		self._contentLabel.tag = Node.HIT_IGNORE_TAG
 		self._contentLabel.textColor = NSColor.fromHex("#3c3c3c")
 		self._contentLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .light)
 		self._contentLabel.placeholderString = "Your node's content will appear here."
 		//
 		self._entryLabel = NSTextField(labelWithString: "Entry")
-		self._entryLabel.tag = LinkableView.HIT_IGNORE_TAG
+		self._entryLabel.tag = Node.HIT_IGNORE_TAG
 		self._entryLabel.textColor = NSColor.fromHex("#d2d2d2")
 		self._entryLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .bold)
 		//
@@ -105,11 +105,11 @@ class LinkableView: NSView {
 		self._trashMode = false
 		//
 		self._contextMenu = NSMenu()
-		self._contextItemEdit = NSMenuItem(title: "Edit", action: #selector(LinkableView.onContextEdit), keyEquivalent: "")
-		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(LinkableView.onContextAddLink), keyEquivalent: "")
-		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(LinkableView.onContextAddBranch), keyEquivalent: "")
-		self._contextItemEntry = NSMenuItem(title: "Set as Entry", action: #selector(LinkableView.onContextSetEntry), keyEquivalent: "")
-		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(LinkableView.onContextTrash), keyEquivalent: "")
+		self._contextItemEdit = NSMenuItem(title: "Edit", action: #selector(Node.onContextEdit), keyEquivalent: "")
+		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(Node.onContextAddLink), keyEquivalent: "")
+		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(Node.onContextAddBranch), keyEquivalent: "")
+		self._contextItemEntry = NSMenuItem(title: "Set as Entry", action: #selector(Node.onContextSetEntry), keyEquivalent: "")
+		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(Node.onContextTrash), keyEquivalent: "")
 		//
 		self._editPopover = nil
 		super.init(frame: frameRect)
@@ -124,10 +124,10 @@ class LinkableView: NSView {
 		_contextMenu.addItem(NSMenuItem.separator())
 		_contextMenu.addItem(_contextItemTrash)
 		_contextMenu.addItem(NSMenuItem.separator())
-		_contextMenu.addItem(withTitle: "Compact", action: #selector(LinkableView.onContextSizeCompact), keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Small", action: #selector(LinkableView.onContextSizeSmall), keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Medium", action: #selector(LinkableView.onContextSizeMedium), keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Large", action: #selector(LinkableView.onContextSizeLarge), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Compact", action: #selector(Node.onContextSizeCompact), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Small", action: #selector(Node.onContextSizeSmall), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Medium", action: #selector(Node.onContextSizeMedium), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Large", action: #selector(Node.onContextSizeLarge), keyEquivalent: "")
 		
 		wantsLayer = true
 		
@@ -142,7 +142,7 @@ class LinkableView: NSView {
 		// instead, make a shadow path that's precomputed
 		var shadowRect = widgetRect()
 		shadowRect.origin = NSMakePoint(0.7, -1.2)
-		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS).cgPath
+		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS).cgPath
 		// OR rasterize the view, but this doesn't support retina and will be blurry
 		//self.layer?.shouldRasterize = true
 		//self.layer?.rasterizationScale = NSScreen.main!.backingScaleFactor
@@ -163,27 +163,27 @@ class LinkableView: NSView {
 		updateEntryLabel()
 		
 		// primary click recognizer
-		_clickGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onClick))
+		_clickGesture = NSClickGestureRecognizer(target: self, action: #selector(Node.onClick))
 		_clickGesture!.buttonMask = 0x1 // "primary click"
 		_clickGesture!.numberOfClicksRequired = 1
 		self.addGestureRecognizer(_clickGesture!)
 		// double click recognizer
-		_doubleClickGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onDoubleClick))
+		_doubleClickGesture = NSClickGestureRecognizer(target: self, action: #selector(Node.onDoubleClick))
 		_doubleClickGesture!.buttonMask = 0x1 // "primary click"
 		_doubleClickGesture?.numberOfClicksRequired = 2
 		self.addGestureRecognizer(_doubleClickGesture!)
 		// context click recognizer
-		_ctxGesture = NSClickGestureRecognizer(target: self, action: #selector(LinkableView.onContextClick))
+		_ctxGesture = NSClickGestureRecognizer(target: self, action: #selector(Node.onContextClick))
 		_ctxGesture!.buttonMask = 0x2 // "secondary click"
 		_ctxGesture!.numberOfClicksRequired = 1
 		self.addGestureRecognizer(_ctxGesture!)
 		// pan regoznizer
-		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(LinkableView.onPan))
+		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(Node.onPan))
 		_panGesture!.buttonMask = 0x1 // "primary click"
 		self.addGestureRecognizer(_panGesture!)
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("LinkableView::init(coder) not implemented.")
+		fatalError("Node::init(coder) not implemented.")
 	}
 	
 	// MARK: - Functions -
@@ -195,10 +195,10 @@ class LinkableView: NSView {
 		for sub in subviews {
 			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
 				// return the node itself if a subview has the ignore tag (this is used for things like overlaying labels)
-				if sub.tag == LinkableView.HIT_IGNORE_TAG {
+				if sub.tag == Node.HIT_IGNORE_TAG {
 					return self
 				}
-				if sub.tag == LinkableView.HIT_NIL_TAG {
+				if sub.tag == Node.HIT_NIL_TAG {
 					continue // just don't do anything with the view
 				}
 				return sub
@@ -216,7 +216,7 @@ class LinkableView: NSView {
 	
 	// MARK: Gesture Callbacks
 	@objc private func onClick(gesture: NSGestureRecognizer) {
-		_graphView.onClickLinkable(node: self, gesture: gesture)
+		_graphView.onClickNode(node: self, gesture: gesture)
 	}
 	@objc private func onDoubleClick(gesture: NSGestureRecognizer) {
 		if _trashMode { return }
@@ -226,7 +226,7 @@ class LinkableView: NSView {
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
-		_graphView.onPanLinkable(node: self, gesture: gesture)
+		_graphView.onPanNode(node: self, gesture: gesture)
 	}
 	
 	// MARK: Context Menu Callbacks
@@ -234,51 +234,51 @@ class LinkableView: NSView {
 		showEditPopover()
 	}
 	@objc private func onContextAddLink() {
-		let link = _graphView.Manager.makeLink(origin: self.Linkable)
+		let link = _graphView.Manager.makeLink(origin: self.Object)
 		do { try _graphView.NovellaGraph.add(link: link) } catch {
 			fatalError("Tried to add a new link but couldn't add it to this graph.")
 		}
 	}
 	@objc private func onContextAddBranch() {
-		let link = _graphView.Manager.makeBranch(origin: self.Linkable)
+		let link = _graphView.Manager.makeBranch(origin: self.Object)
 		do{ try _graphView.NovellaGraph.add(link: link) } catch {
 			fatalError("Tried to add a new branch but couldn't add it to this graph.")
 		}
 	}
 	@objc private func onContextSetEntry() {
-		let currentEntry = _graphView.getLinkableViewFrom(linkable: _graphView.NovellaGraph.Entry, includeParentGraphs: false)
-		try! _graphView.NovellaGraph.setEntry(self.Linkable)
+		let currentEntry = _graphView.getNodeFrom(object: _graphView.NovellaGraph.Entry, includeParentGraphs: false)
+		try! _graphView.NovellaGraph.setEntry(self.Object)
 		currentEntry?.redraw()
 		self.redraw()
 	}
 	@objc private func onContextTrash() {
-		Linkable.InTrash ? Linkable.untrash() : Linkable.trash()
+		Object.InTrash ? Object.untrash() : Object.trash()
 	}
 	
 	@objc private func onContextSizeCompact() {
-		if let asNode = Linkable as? NVNode {
+		if let asNode = Object as? NVNode {
 			asNode.Size = .compact
 		}
 	}
 	@objc private func onContextSizeSmall() {
-		if let asNode = Linkable as? NVNode {
+		if let asNode = Object as? NVNode {
 			asNode.Size = .small
 		}
 	}
 	@objc private func onContextSizeMedium() {
-		if let asNode = Linkable as? NVNode {
+		if let asNode = Object as? NVNode {
 			asNode.Size = .medium
 		}
 	}
 	@objc private func onContextSizeLarge() {
-		if let asNode = Linkable as? NVNode {
+		if let asNode = Object as? NVNode {
 			asNode.Size = .large
 		}
 	}
 	
 	// MARK: Popover Functions
 	func _createPopover() {
-		print("LinkableView::_createPopover() should be overridden.")
+		print("Node::_createPopover() should be overridden.")
 	}
 	func showEditPopover() {
 		if let popover = _editPopover {
@@ -315,7 +315,7 @@ class LinkableView: NSView {
 		// remake shadow
 		var shadowRect = widgetRect()
 		shadowRect.origin = NSMakePoint(0.7, -1.2)
-		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS).cgPath
+		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS).cgPath
 		
 	}
 	
@@ -342,13 +342,13 @@ class LinkableView: NSView {
 	}
 	
 	func updateEntryLabel() {
-		self._entryLabel.isHidden = _graphView.NovellaGraph.Entry != self.Linkable
+		self._entryLabel.isHidden = _graphView.NovellaGraph.Entry != self.Object
 	}
 	
 	func redraw() {
 		// hide content label if compact
-		if Linkable is NVNode {
-			self._contentLabel.isHidden = (Linkable as! NVNode).Size == .compact
+		if Object is NVNode {
+			self._contentLabel.isHidden = (Object as! NVNode).Size == .compact
 		} else {
 			self._contentLabel.isHidden = true // graphs
 		}
@@ -368,8 +368,8 @@ class LinkableView: NSView {
 		let mediumSize = NSMakeRect(0.0, 0.0, width, 150.0)
 		let largeSize = NSMakeRect(0.0, 0.0, width, 200.0)
 		
-		if Linkable is NVNode {
-			switch (Linkable as! NVNode).Size {
+		if Object is NVNode {
+			switch (Object as! NVNode).Size {
 			case .compact:
 				return compactSize
 			case .small:
@@ -379,7 +379,7 @@ class LinkableView: NSView {
 			case .large:
 				return largeSize
 			default:
-				print("LinkableView::widgetRect() encountered an NVNode with an unexpected size.")
+				print("Node::widgetRect() encountered an NVNode with an unexpected size.")
 				return smallSize
 			}
 		} else {
@@ -387,17 +387,17 @@ class LinkableView: NSView {
 		}
 	}
 	func onMove() {
-		print("LinkableView::onMove() should be overridden.")
+		print("Node::onMove() should be overridden.")
 	}
 	func flagColor() -> NSColor {
-		print("LinkableView::flagColor() should be overridden.")
+		print("Node::flagColor() should be overridden.")
 		return NSColor.black
 	}
 	func onNameChanged() {
-		print("LinkableView::onNameChanged() should be overridden.")
+		print("Node::onNameChanged() should be overridden.")
 	}
 	func onContentChanged() {
-		print("LinkableView::onContentChanged() should be overridden.")
+		print("Node::onContentChanged() should be overridden.")
 	}
 	
 	// MARK: Priming/Selection
@@ -479,7 +479,7 @@ class LinkableView: NSView {
 		// move all views up by the diff and set fixed X
 		for curr in _outputs {
 			curr.frame.origin.y += yDiff
-			curr.frame.origin.x = wRect.width + LinkableView.OUTPUTS_OFFSET_X
+			curr.frame.origin.x = wRect.width + Node.OUTPUTS_OFFSET_X
 		}
 		
 		// set bounds frame and adjust it for the offset
@@ -528,7 +528,7 @@ class LinkableView: NSView {
 			let drawingRect = widgetRect()
 			
 			// draw background gradient
-			var path = NSBezierPath(roundedRect: drawingRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS)
+			var path = NSBezierPath(roundedRect: drawingRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS)
 			path.addClip()
 			let colorSpace = CGColorSpaceCreateDeviceRGB()
 			let bgStartColor = NSColor.fromHex("#FAFAFA")
@@ -553,7 +553,7 @@ class LinkableView: NSView {
 				let primedColor = NSColor.fromHex("#4B9CFD")
 				
 				let insetRect = drawingRect
-				path = NSBezierPath(roundedRect: insetRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS)
 				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = primedWidth
 				Trashed ? Settings.graph.trashedColorDark.setStroke() : primedColor.setStroke()
@@ -569,7 +569,7 @@ class LinkableView: NSView {
 				let selectedOutlineAlpha: CGFloat = 0.6
 				
 				let insetRect = drawingRect
-				path = NSBezierPath(roundedRect: insetRect, xRadius: LinkableView.NODE_ROUNDNESS, yRadius: LinkableView.NODE_ROUNDNESS)
+				path = NSBezierPath(roundedRect: insetRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS)
 				path.addClip() // clip to avoid edge artifacting
 				path.lineWidth = selectedWidth
 				if Trashed {
@@ -584,7 +584,7 @@ class LinkableView: NSView {
 			}
 			
 			// draw the entry point somewhere on the widget rect
-			if self.Linkable == _graphView.NovellaGraph.Entry {
+			if self.Object == _graphView.NovellaGraph.Entry {
 				let entrySize = drawingRect.width * 0.03
 				let arrowCenter = NSMakePoint(drawingRect.maxX - entrySize*2.0, drawingRect.maxY - entrySize*2.0)
 				let arrowPath = NSBezierPath()

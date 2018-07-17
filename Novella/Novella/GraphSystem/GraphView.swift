@@ -15,7 +15,7 @@ class GraphView: NSView {
 	private var _nvGraph: NVGraph
 	private let _bg: GraphBGView
 	//
-	private var _allLinkableViews: [LinkableView]
+	private var _allNodes: [Node]
 	private var _allPinViews: [PinView]
 	// MARK: Selection
 	private var _marquee: MarqueeView
@@ -26,8 +26,8 @@ class GraphView: NSView {
 	private var _rmbPanGesture: NSPanGestureRecognizer?
 	private var _rmbPanLocation: CGPoint
 	private var _contextGesture: NSClickGestureRecognizer?
-	// MARK: Linkable Function Variables
-	private var _lastLinkablePanPos: CGPoint
+	// MARK: Node Function Variables
+	private var _lastNodePanPos: CGPoint
 	// MARK: GraphView Context Menu
 	private var _graphViewMenu: NSMenu // context menu for clicking in the empty graph space
 	private var _lastContextLocation: CGPoint // last point right clicked on graph view
@@ -40,7 +40,7 @@ class GraphView: NSView {
 		self._nvGraph = graph
 		self._bg = GraphBGView(frame: frameRect)
 		//
-		self._allLinkableViews = []
+		self._allNodes = []
 		self._allPinViews = []
 		//
 		self._marquee = MarqueeView(frame: frameRect)
@@ -51,7 +51,7 @@ class GraphView: NSView {
 		self._rmbPanLocation = CGPoint.zero
 		self._contextGesture = nil
 		//
-		self._lastLinkablePanPos = CGPoint.zero
+		self._lastNodePanPos = CGPoint.zero
 		//
 		self._graphViewMenu = NSMenu()
 		self._lastContextLocation = CGPoint.zero
@@ -129,14 +129,14 @@ class GraphView: NSView {
 		_selectionHandler?.select([], append: false)
 		
 		// reset some other things
-		_lastLinkablePanPos = CGPoint.zero
+		_lastNodePanPos = CGPoint.zero
 		_lastContextLocation = CGPoint.zero
 		
 		// clear undo/redo TODO: Not sure if this should still be done since it's not graph-based now.
 		_document.Undo.clear()
 		
-		// clear existing linkable views
-		_allLinkableViews = []
+		// clear existing node views
+		_allNodes = []
 		// clear existing pin views
 		_allPinViews = []
 		
@@ -147,18 +147,18 @@ class GraphView: NSView {
 		for curr in graph.Nodes {
 			switch curr {
 			case is NVDialog:
-				let node = DialogLinkableView(node: curr as! NVDialog, graphView: self)
-				_allLinkableViews.append(node)
+				let node = DialogNode(node: curr as! NVDialog, graphView: self)
+				_allNodes.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
 				
 			case is NVDelivery:
-				let node = DeliveryLinkableView(node: curr as! NVDelivery, graphView: self)
-				_allLinkableViews.append(node)
+				let node = DeliveryNode(node: curr as! NVDelivery, graphView: self)
+				_allNodes.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
 				
 			case is NVContext:
-				let node = ContextLinkableView(node: curr as! NVContext, graphView: self)
-				_allLinkableViews.append(node)
+				let node = ContextNode(node: curr as! NVContext, graphView: self)
+				_allNodes.append(node)
 				self.addSubview(node, positioned: .below, relativeTo: _marquee)
 				
 			default:
@@ -168,13 +168,13 @@ class GraphView: NSView {
 		}
 		// load all subgraph (nodes)
 		for curr in graph.Graphs {
-			let node = GraphLinkableView(node: curr, graphView: self)
-			_allLinkableViews.append(node)
+			let node = GraphNode(node: curr, graphView: self)
+			_allNodes.append(node)
 			self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		}
 		// load all links
 		for curr in graph.Links {
-			guard let node = getLinkableViewFrom(linkable: curr.Origin, includeParentGraphs: false) else {
+			guard let node = getNodeFrom(object: curr.Origin, includeParentGraphs: false) else {
 				print("Received a link with an origin that could not be found!")
 				continue
 			}
@@ -196,7 +196,7 @@ class GraphView: NSView {
 	// MARK: - - Graph Functions / Helpers -
 	func redrawAll() {
 		self.setNeedsDisplay(bounds)
-		_allLinkableViews.forEach{$0.redraw()}
+		_allNodes.forEach{$0.redraw()}
 		_allPinViews.forEach{$0.redraw()}
 	}
 	func offsetToEditorPosition(pos: CGPoint) -> CGPoint {
@@ -240,7 +240,7 @@ class GraphView: NSView {
 		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
 	}
 	func contentBounds() -> NSRect {
-		if _allLinkableViews.isEmpty {
+		if _allNodes.isEmpty {
 			return NSRect.zero
 		}
 		
@@ -249,7 +249,7 @@ class GraphView: NSView {
 		var minY = CGFloat.infinity
 		var maxX = -CGFloat.infinity
 		var maxY = -CGFloat.infinity
-		for curr in _allLinkableViews {
+		for curr in _allNodes {
 			minX = curr.frame.minX < minX ? curr.frame.minX : minX
 			maxX = curr.frame.maxX > maxX ? curr.frame.maxX : maxX
 			minY = curr.frame.minY < minY ? curr.frame.minY : minY
@@ -271,21 +271,21 @@ class GraphView: NSView {
 		_document.Undo.redo(levels: levels)
 	}
 	
-	func getLinkableViewFrom(linkable: NVObject?, includeParentGraphs: Bool) -> LinkableView? {
-		if nil == linkable {
+	func getNodeFrom(object: NVObject?, includeParentGraphs: Bool) -> Node? {
+		if nil == object {
 			return nil
 		}
 		
-		return _allLinkableViews.first(where: {
-			if includeParentGraphs && $0 is GraphLinkableView {
-				let asGraph = (($0 as! GraphLinkableView).Linkable as! NVGraph)
+		return _allNodes.first(where: {
+			if includeParentGraphs && $0 is GraphNode {
+				let asGraph = (($0 as! GraphNode).Object as! NVGraph)
 				for child in asGraph.Nodes {
-					if child.UUID == linkable?.UUID {
+					if child.UUID == object?.UUID {
 						return true
 					}
 				}
 			}
-			return $0.Linkable.UUID == linkable?.UUID
+			return $0.Object.UUID == object?.UUID
 		})
 	}
 }
@@ -310,7 +310,7 @@ extension GraphView {
 				
 				// handle priming
 				let nodesInMarquee = allNodesIn(rect: _marquee.Marquee)
-				for curr in _allLinkableViews {
+				for curr in _allNodes {
 					if curr.IsSelected {
 						continue // ignore already selected
 					}
@@ -377,8 +377,8 @@ extension GraphView {
 		}
 	}
 	
-	// MARK: From LinkableView
-	func onClickLinkable(node: LinkableView, gesture: NSGestureRecognizer) {
+	// MARK: From Node
+	func onClickNode(node: Node, gesture: NSGestureRecognizer) {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
 		if append {
 			if node.IsSelected {
@@ -390,7 +390,7 @@ extension GraphView {
 			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
 		}
 	}
-	func onPanLinkable(node: LinkableView, gesture: NSPanGestureRecognizer) {
+	func onPanNode(node: Node, gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
 		case .began:
 			// if node is not selected but we dragged it, replace selection and then start dragging
@@ -398,17 +398,17 @@ extension GraphView {
 				_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
 			}
 			
-			_lastLinkablePanPos = gesture.location(in: self)
+			_lastNodePanPos = gesture.location(in: self)
 			if _document.Undo.inCompound() {
-				print("Tried to begin pan LinkableView but UndoRedo was already in a Compound!")
+				print("Tried to begin panning a Node but UndoRedo was already in a Compound!")
 			} else {
 				_document.Undo.beginCompound(executeOnAdd: true)
 			}
 			break
 		case .changed:
 			let curr = gesture.location(in: self)
-			let dx = (curr.x - _lastLinkablePanPos.x)
-			let dy = (curr.y - _lastLinkablePanPos.y)
+			let dx = (curr.x - _lastNodePanPos.x)
+			let dy = (curr.y - _lastNodePanPos.y)
 			
 			_selectionHandler?.Selection.forEach({
 				var pos = NSMakePoint($0.frame.origin.x + dx, $0.frame.origin.y + dy)
@@ -425,27 +425,27 @@ extension GraphView {
 				if (pos.x + $0.frame.width) > bounds.width {
 					pos.x = bounds.width - $0.frame.width
 				}
-				_document.Undo.execute(cmd: MoveLinkableViewCmd(node: $0, from: $0.frame.origin, to: pos))
+				_document.Undo.execute(cmd: MoveNodeCmd(node: $0, from: $0.frame.origin, to: pos))
 			})
 			
-			_lastLinkablePanPos = curr
+			_lastNodePanPos = curr
 			break
 		case .cancelled, .ended:
 			if !_document.Undo.inCompound() {
-				print("Tried to end pan LinkableView but UndoRedo was not in a Compound!")
+				print("Tried to end panning a Node but UndoRedo was not in a Compound!")
 			} else {
 				_document.Undo.endCompound()
 			}
 			break
 		default:
-			print("onPanLinkable found unexpected gesture state.")
+			print("onPanNode found unexpected gesture state.")
 			break
 		}
 	}
 	
 	// MARK: From PinView
-	func linkableViewAtPoint(_ point: CGPoint) -> LinkableView? {
-		for curr in _allLinkableViews {
+	func nodeAtPoint(_ point: CGPoint) -> Node? {
+		for curr in _allNodes {
 			let hit = curr.hitTest(point)
 		
 			// didn't hit or hit a subview
@@ -478,19 +478,19 @@ extension GraphView {
 
 // MARK: - - Selection -
 extension GraphView {
-	func selectNVLinkable(linkable: NVObject) {
-		if let view = getLinkableViewFrom(linkable: linkable, includeParentGraphs: false) {
+	func selectNode(object: NVObject) {
+		if let view = getNodeFrom(object: object, includeParentGraphs: false) {
 			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
 		}
 	}
 	
-	private func nodeIn(node: LinkableView, rect: NSRect) -> Bool {
+	private func nodeIn(node: Node, rect: NSRect) -> Bool {
 		return NSIntersectsRect(node.frame, rect)
 	}
 	
-	private func allNodesIn(rect: NSRect) -> [LinkableView] {
-		var nodes: [LinkableView] = []
-		for curr in _allLinkableViews {
+	private func allNodesIn(rect: NSRect) -> [Node] {
+		var nodes: [Node] = []
+		for curr in _allNodes {
 			if nodeIn(node: curr, rect: rect) {
 				nodes.append(curr)
 			}
@@ -501,7 +501,7 @@ extension GraphView {
 
 // MARK: - - Creation -
 extension GraphView {
-	// MARK: LinkableView Conveniences
+	// MARK: Node Conveniences
 	func makeDialog(at: CGPoint) {
 		let nvDialog = _document.Manager.makeDialog()
 		nvDialog.Position = at
@@ -535,11 +535,11 @@ extension GraphView {
 		}
 	}
 	
-	// MARK: LinkableViews
+	// MARK: Nodes
 	@discardableResult
-	private func makeDialogLinkableView(nvDialog: NVDialog, at: CGPoint) -> DialogLinkableView {
-		let node = DialogLinkableView(node: nvDialog, graphView: self)
-		_allLinkableViews.append(node)
+	private func makeDialogNode(nvDialog: NVDialog, at: CGPoint) -> DialogNode {
+		let node = DialogNode(node: nvDialog, graphView: self)
+		_allNodes.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
 		var pos = at
@@ -551,9 +551,9 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	private func makeDeliveryLinkableView(nvDelivery: NVDelivery, at: CGPoint) -> DeliveryLinkableView {
-		let node = DeliveryLinkableView(node: nvDelivery, graphView: self)
-		_allLinkableViews.append(node)
+	private func makeDeliveryNode(nvDelivery: NVDelivery, at: CGPoint) -> DeliveryNode {
+		let node = DeliveryNode(node: nvDelivery, graphView: self)
+		_allNodes.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
 		var pos = at
@@ -565,9 +565,9 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	private func makeContextLinkableView(nvContext: NVContext, at: CGPoint) -> ContextLinkableView {
-		let node = ContextLinkableView(node: nvContext, graphView: self)
-		_allLinkableViews.append(node)
+	private func makeContextNode(nvContext: NVContext, at: CGPoint) -> ContextNode {
+		let node = ContextNode(node: nvContext, graphView: self)
+		_allNodes.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
 		var pos = at
@@ -579,9 +579,9 @@ extension GraphView {
 	}
 	
 	@discardableResult
-	private func makeGraphLinkableView(nvGraph: NVGraph, at: CGPoint) -> GraphLinkableView {
-		let node = GraphLinkableView(node: nvGraph, graphView: self)
-		_allLinkableViews.append(node)
+	private func makeGraphNode(nvGraph: NVGraph, at: CGPoint) -> GraphNode {
+		let node = GraphNode(node: nvGraph, graphView: self)
+		_allNodes.append(node)
 		self.addSubview(node, positioned: .below, relativeTo: _marquee)
 		
 		var pos = at
@@ -592,7 +592,7 @@ extension GraphView {
 		return node
 	}
 	
-	private func deleteLinkableView(node: LinkableView) {
+	private func deleteNode(node: Node) {
 		// 1. remove from parent view
 		node.removeFromSuperview()
 		
@@ -601,21 +601,21 @@ extension GraphView {
 			deletePinView(pin: pin)
 		}
 		
-		// 3. remove from all linkables
-		_allLinkableViews.remove(at: _allLinkableViews.index(of: node)!)
+		// 3. remove from all nodes
+		_allNodes.remove(at: _allNodes.index(of: node)!)
 		
 		// 4. update all curves as anything incoming no longer links to this item
 		updateCurves() // TODO: Could optimize by only redrawing the connected curves
 	}
 	
 	// MARK: PinViews
-	private func makePinViewLink(baseLink: NVLink, forNode: LinkableView) -> PinViewLink {
+	private func makePinViewLink(baseLink: NVLink, forNode: Node) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		
 		return pin
 	}
-	private func makePinViewBranch(baseLink: NVBranch, forNode: LinkableView) -> PinViewBranch {
+	private func makePinViewBranch(baseLink: NVBranch, forNode: Node) -> PinViewBranch {
 		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
 		
@@ -623,17 +623,17 @@ extension GraphView {
 	}
 	
 	private func deletePinView(pin: PinView) {
-		// !. remove from linkables
-		_allLinkableViews.forEach { (lview) in
+		// 1. remove from nodes
+		_allNodes.forEach { (lview) in
 			if lview.Outputs.contains(pin) {
 				lview.removeOutput(pin: pin)
 			}
 		}
 		
-		// 3. remove from all pin views
+		// 2. remove from all pin views
 		_allPinViews.remove(at: _allPinViews.index(of: pin)!)
 		
-		// 4. update all curves as anything incoming no longer links to this item
+		// 3. update all curves as anything incoming no longer links to this item
 		updateCurves() // TODO: Could optimize by only redrawing the connected curves
 	}
 }
@@ -655,13 +655,13 @@ extension GraphView: NVStoryDelegate {
 		
 		switch node {
 		case is NVDialog:
-			makeDialogLinkableView(nvDialog: node as! NVDialog, at: pos)
+			makeDialogNode(nvDialog: node as! NVDialog, at: pos)
 			
 		case is NVDelivery:
-			makeDeliveryLinkableView(nvDelivery: node as! NVDelivery, at: pos)
+			makeDeliveryNode(nvDelivery: node as! NVDelivery, at: pos)
 			
 		case is NVContext:
-			makeContextLinkableView(nvContext: node as! NVContext, at: pos)
+			makeContextNode(nvContext: node as! NVContext, at: pos)
 			
 		default:
 			print("Added node to GraphView but it is not yet handled: \(node)")
@@ -670,8 +670,8 @@ extension GraphView: NVStoryDelegate {
 	
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
 		if parent == self.NovellaGraph {
-			if self.getLinkableViewFrom(linkable: graph, includeParentGraphs: false) != nil {
-				print("Tried to add graph as a linkable but it already exists!")
+			if self.getNodeFrom(object: graph, includeParentGraphs: false) != nil {
+				print("Tried to add graph as a Node but it already exists!")
 				return
 			}
 			
@@ -681,7 +681,7 @@ extension GraphView: NVStoryDelegate {
 			} else {
 				pos = graph.Position
 			}
-			makeGraphLinkableView(nvGraph: graph, at: pos)
+			makeGraphNode(nvGraph: graph, at: pos)
 		}
 	}
 	
@@ -690,7 +690,7 @@ extension GraphView: NVStoryDelegate {
 			return
 		}
 		
-		guard let originView = getLinkableViewFrom(linkable: link.Origin, includeParentGraphs: false) else {
+		guard let originView = getNodeFrom(object: link.Origin, includeParentGraphs: false) else {
 			print("Tried to add link to graph but its origin node wasn't in the GraphView yet.")
 			return
 		}
@@ -713,7 +713,7 @@ extension GraphView: NVStoryDelegate {
 			return
 		}
 		
-		for x in _allLinkableViews {
+		for x in _allNodes {
 			x.updateEntryLabel()
 		}
 	}
@@ -727,7 +727,7 @@ extension GraphView: NVStoryDelegate {
 		case is NVContext:
 			fallthrough
 		case is NVGraph:
-			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
+			if let lv = getNodeFrom(object: item, includeParentGraphs: false) {
 				lv.Trashed = true
 			}
 			
@@ -755,7 +755,7 @@ extension GraphView: NVStoryDelegate {
 		case is NVContext:
 			fallthrough
 		case is NVGraph:
-			if let lv = getLinkableViewFrom(linkable: item, includeParentGraphs: false) {
+			if let lv = getNodeFrom(object: item, includeParentGraphs: false) {
 				lv.Trashed = false
 			}
 			
@@ -775,29 +775,29 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	func onStoryDeleteNode(node: NVNode) {
-		if let node = _allLinkableViews.first(where: {$0.Linkable == node}) {
-			deleteLinkableView(node: node)
+		if let node = _allNodes.first(where: {$0.Object == node}) {
+			deleteNode(node: node)
 		}
 	}
 	func onStoryDeleteGraph(graph: NVGraph) {
-		if let graph = _allLinkableViews.first(where: {$0.Linkable == graph}) {
-			deleteLinkableView(node: graph)
+		if let graph = _allNodes.first(where: {$0.Object == graph}) {
+			deleteNode(node: graph)
 		}
 	}
 	
 	// name and content changes
 	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
-		_allLinkableViews.first(where: {$0.Linkable == obj})?.onNameChanged()
+		_allNodes.first(where: {$0.Object == obj})?.onNameChanged()
 	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
-		_allLinkableViews.first(where: {$0.Linkable == node})?.onContentChanged()
+		_allNodes.first(where: {$0.Object == node})?.onContentChanged()
 	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
-		_allLinkableViews.first(where: {$0.Linkable == node})?.onContentChanged()
+		_allNodes.first(where: {$0.Object == node})?.onContentChanged()
 	}
 	
 	// size changes
 	func onStoryNodeSizeChanged(node: NVNode) {
-		_allLinkableViews.first(where: {$0.Linkable == node})?.respondToSizeChange()
+		_allNodes.first(where: {$0.Object == node})?.respondToSizeChange()
 	}
 }

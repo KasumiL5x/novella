@@ -1,5 +1,5 @@
 //
-//  DialogView.swift
+//  DialogNode.swift
 //  Novella
 //
 //  Created by Daniel Green on 12/05/2018.
@@ -9,11 +9,11 @@
 import Cocoa
 import NovellaModel
 
-class DialogLinkableView: LinkableView {
+class DialogNode: Node {
 	// MARK: - - Initialization -
 	init(node: NVDialog, graphView: GraphView) {
 		let rect = NSMakeRect(0.0, 0.0, 1.0, 1.0)
-		super.init(frameRect: rect, nvLinkable: node, graphView: graphView)
+		super.init(frameRect: rect, nvObject: node, graphView: graphView)
 		self.frame.origin = graphView.offsetFromEditorPosition(pos: node.Position)
 		self.frame.size = widgetRect().size
 		
@@ -21,22 +21,22 @@ class DialogLinkableView: LinkableView {
 		setContentString(str: node.Content)
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("DialogLinkableView::init(coder:) not implemented.")
+		fatalError("DialogNode::init(coder:) not implemented.")
 	}
 	
 	// MARK: - - Functions -
 	// MARK: Virtual Functions
 	override func onMove() {
-		(Linkable as! NVDialog).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
+		(Object as! NVDialog).Position = _graphView.offsetToEditorPosition(pos: frame.origin)
 	}
 	override func flagColor() -> NSColor {
 		return Settings.graph.nodes.dialogColor
 	}
 	override func onNameChanged() {
-		setLabelString(str: Linkable.Name)
+		setLabelString(str: Object.Name)
 	}
 	override func onContentChanged() {
-		setContentString(str: (Linkable as! NVDialog).Content)
+		setContentString(str: (Object as! NVDialog).Content)
 	}
 	// MARK: Popover Functions
 	override func _createPopover() {
