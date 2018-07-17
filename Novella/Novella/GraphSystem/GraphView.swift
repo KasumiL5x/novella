@@ -83,6 +83,8 @@ class GraphView: NSView {
 		addSubMenu.addItem(withTitle: "Delivery", action: #selector(GraphView.onGraphViewMenuAddDelivery), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Context", action: #selector(GraphView.onGraphViewMenuAddContext), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Graph", action: #selector(GraphView.onGraphViewMenuAddGraph), keyEquivalent: "")
+		addSubMenu.addItem(NSMenuItem.separator())
+		addSubMenu.addItem(withTitle: "Link to selection...", action: #selector(GraphView.addLinkToSelectedNodes), keyEquivalent: "")
 		let addMenu = NSMenuItem()
 		addMenu.title = "Add..."
 		addMenu.submenu = addSubMenu
@@ -639,6 +641,18 @@ extension GraphView {
 		
 		// 3. update all curves as anything incoming no longer links to this item
 		updateCurves() // TODO: Could optimize by only redrawing the connected curves
+	}
+}
+
+// MARK: - Selected Node Functions -
+extension GraphView {
+	// adds a link to selected nodes
+	@objc func addLinkToSelectedNodes() {
+		_selectionHandler?.Selection.forEach({ (node) in
+			let link = Manager.makeLink(origin: node.Object)
+			try! NovellaGraph.add(link: link)
+			// the rest is handled in the story callbacks
+		})
 	}
 }
 
