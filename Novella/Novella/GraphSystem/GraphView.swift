@@ -202,6 +202,9 @@ class GraphView: NSView {
 	}
 	
 	// MARK: - - Graph Functions / Helpers -
+	override func mouseDown(with event: NSEvent) {
+		_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [], handler: _selectionHandler!))
+	}
 	func redrawAll() {
 		self.setNeedsDisplay(bounds)
 		_allNodes.forEach{$0.redraw()}
