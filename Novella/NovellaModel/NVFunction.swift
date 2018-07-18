@@ -43,7 +43,7 @@ public class NVFunction {
 		}
 		
 		// call the function so we can get its value back
-		guard let result = execFunc.call(withArguments: []) else {
+		guard let _ = execFunc.call(withArguments: []) else {
 			fatalError("Could not execute JavaScript function executeFunction().")
 		}
 	}
