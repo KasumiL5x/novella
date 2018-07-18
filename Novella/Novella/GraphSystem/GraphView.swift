@@ -203,7 +203,7 @@ class GraphView: NSView {
 	
 	// MARK: - - Graph Functions / Helpers -
 	override func mouseDown(with event: NSEvent) {
-		_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [], handler: _selectionHandler!))
+		_selectionHandler?.select([], append: false)
 	}
 	func redrawAll() {
 		self.setNeedsDisplay(bounds)
@@ -338,9 +338,9 @@ extension GraphView {
 		case .cancelled, .ended:
 			if _marquee.InMarquee {
 				if NSApp.currentEvent!.modifierFlags.contains(.shift) {
-					_document.Undo.execute(cmd: SelectNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
+					_selectionHandler?.select(allNodesIn(rect: _marquee.Marquee), append: true)
 				} else {
-					_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: allNodesIn(rect: _marquee.Marquee), handler: _selectionHandler!))
+					_selectionHandler?.select(allNodesIn(rect: _marquee.Marquee), append: false)
 				}
 				_marquee.Marquee = NSRect.zero
 				_marquee.InMarquee = false
@@ -397,12 +397,12 @@ extension GraphView {
 		let append = NSApp.currentEvent!.modifierFlags.contains(.shift)
 		if append {
 			if node.IsSelected {
-				_document.Undo.execute(cmd: DeselectNodesCmd(selection: [node], handler: _selectionHandler!))
+				_selectionHandler?.deselect([node])
 			} else {
-				_document.Undo.execute(cmd: SelectNodesCmd(selection: [node], handler: _selectionHandler!))
+				_selectionHandler?.select([node], append: true)
 			}
 		} else {
-			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
+			_selectionHandler?.select([node], append: false)
 		}
 	}
 	func onPanNode(node: Node, gesture: NSPanGestureRecognizer) {
@@ -410,7 +410,7 @@ extension GraphView {
 		case .began:
 			// if node is not selected but we dragged it, replace selection and then start dragging
 			if !node.IsSelected {
-				_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [node], handler: _selectionHandler!))
+				_selectionHandler?.select([node], append: false)
 			}
 			
 			_lastNodePanPos = gesture.location(in: self)
@@ -495,7 +495,7 @@ extension GraphView {
 extension GraphView {
 	func selectNode(object: NVObject) {
 		if let view = getNodeFrom(object: object, includeParentGraphs: false) {
-			_document.Undo.execute(cmd: ReplacedSelectedNodesCmd(selection: [view], handler: _selectionHandler!))
+			_selectionHandler?.select([view], append: false)
 		}
 	}
 	

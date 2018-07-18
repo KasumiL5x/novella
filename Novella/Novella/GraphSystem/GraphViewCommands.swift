@@ -9,60 +9,6 @@
 import Cocoa
 import NovellaModel
 
-class SelectNodesCmd: UndoableCommand {
-	private let _selection: [Node]
-	private let _handler: SelectionHandler
-	
-	init(selection: [Node], handler: SelectionHandler) {
-		self._selection = selection
-		self._handler = handler
-	}
-	
-	func execute() {
-		_handler.select(_selection, append: true)
-	}
-	
-	func unexecute() {
-		_handler.deselect(_selection)
-	}
-}
-class ReplacedSelectedNodesCmd: UndoableCommand {
-	private let _selection: [Node]
-	private let _oldSelection: [Node]
-	private let _handler: SelectionHandler
-	
-	init(selection: [Node], handler: SelectionHandler) {
-		self._selection = selection
-		self._oldSelection = handler.Selection.map({$0}) // arrays have value copy in swift
-		self._handler = handler
-	}
-	
-	func execute() {
-		_handler.select(_selection, append: false)
-	}
-	
-	func unexecute() {
-		_handler.select(_oldSelection, append: false)
-	}
-}
-class DeselectNodesCmd: UndoableCommand {
-	private let _selection: [Node]
-	private let _handler: SelectionHandler
-	
-	init(selection: [Node], handler: SelectionHandler) {
-		self._selection = selection
-		self._handler = handler
-	}
-	
-	func execute() {
-		_handler.deselect(_selection)
-	}
-	
-	func unexecute() {
-		_handler.select(_selection, append: true)
-	}
-}
-
 class MoveNodeCmd: UndoableCommand {
 	private let _node: Node
 	private let _from: CGPoint
