@@ -75,7 +75,7 @@ class PinView: NSView {
 		_dragLayer.lineDashPattern = [5, 5]
 		_dragLayer.lineJoin = kCALineJoinRound
 		_dragLayer.lineWidth = 2.0
-		_dragLayer.strokeColor = NSColor.red.cgColor
+		_dragLayer.strokeColor = NSColor.fromHex("#f67280").cgColor
 		layer!.addSublayer(_dragLayer)
 	}
 	required init?(coder decoder: NSCoder) {

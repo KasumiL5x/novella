@@ -73,7 +73,6 @@
 		65F7F85F20C31714004663D6 /* SelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84A20C31713004663D6 /* SelectionHandler.swift */; };
 		65F7F86020C31714004663D6 /* ContextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84B20C31713004663D6 /* ContextNode.swift */; };
 		65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84C20C31713004663D6 /* ContextPopover.swift */; };
-		65F7F86220C31714004663D6 /* GraphBoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84D20C31713004663D6 /* GraphBoundsView.swift */; };
 		65F7F86320C31714004663D6 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84E20C31713004663D6 /* PinView.swift */; };
 		65F7F86420C31714004663D6 /* GraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84F20C31713004663D6 /* GraphNode.swift */; };
 		65F7F86520C31714004663D6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85020C31713004663D6 /* GraphView.swift */; };
@@ -200,7 +199,6 @@
 		65F7F84A20C31713004663D6 /* SelectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionHandler.swift; sourceTree = "<group>"; };
 		65F7F84B20C31713004663D6 /* ContextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextNode.swift; sourceTree = "<group>"; };
 		65F7F84C20C31713004663D6 /* ContextPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextPopover.swift; sourceTree = "<group>"; };
-		65F7F84D20C31713004663D6 /* GraphBoundsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphBoundsView.swift; sourceTree = "<group>"; };
 		65F7F84E20C31713004663D6 /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		65F7F84F20C31713004663D6 /* GraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphNode.swift; sourceTree = "<group>"; };
 		65F7F85020C31713004663D6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -383,7 +381,7 @@
 			name = PinViews;
 			sourceTree = "<group>";
 		};
-		65AE16CE20C32586006A921F /* LinkableViews */ = {
+		65AE16CE20C32586006A921F /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				65223B5220C68D4E008E8A95 /* PinBoard.swift */,
@@ -393,14 +391,13 @@
 				65F7F84F20C31713004663D6 /* GraphNode.swift */,
 				65F7F84720C31713004663D6 /* Node.swift */,
 			);
-			name = LinkableViews;
+			name = Nodes;
 			sourceTree = "<group>";
 		};
 		65AE16CF20C325AB006A921F /* OtherViews */ = {
 			isa = PBXGroup;
 			children = (
 				65F7F84920C31713004663D6 /* GraphBGView.swift */,
-				65F7F84D20C31713004663D6 /* GraphBoundsView.swift */,
 				65F7F84620C31713004663D6 /* MarqueeView.swift */,
 			);
 			name = OtherViews;
@@ -498,7 +495,7 @@
 				65F7F85A20C31714004663D6 /* GraphViewCommands.swift */,
 				65F7F85420C31713004663D6 /* GraphViewDelegate.swift */,
 				65F7F84A20C31713004663D6 /* SelectionHandler.swift */,
-				65AE16CE20C32586006A921F /* LinkableViews */,
+				65AE16CE20C32586006A921F /* Nodes */,
 				65AE16CF20C325AB006A921F /* OtherViews */,
 				65AE16CC20C32579006A921F /* PinViews */,
 				65AE16CA20C32544006A921F /* Popovers */,
@@ -773,7 +770,6 @@
 				654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */,
 				65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */,
 				65F7F8A420C3182F004663D6 /* GraphEditorViewController.swift in Sources */,
-				65F7F86220C31714004663D6 /* GraphBoundsView.swift in Sources */,
 				65F7F86C20C31714004663D6 /* DeliveryPopover.swift in Sources */,
 				650C652020E3C7A300EF5305 /* CustomImageView.swift in Sources */,
 				65F7F85C20C31714004663D6 /* Node.swift in Sources */,
