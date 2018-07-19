@@ -60,6 +60,19 @@ class MainWindowController: NSWindowController {
 		(contentViewController as? MainViewController)?.refreshOpenGraphs()
 	}
 	
+	@IBAction func onToolbarZoom(_ sender: NSPopUpButton) {
+		let title  = sender.selectedItem!.title.lowercased()
+		switch title {
+		case "fit":
+			(contentViewController as? MainViewController)?.zoomGraph()
+			break
+			
+		default:
+			let woPercent = Float(title[..<title.index(title.endIndex, offsetBy: -1)])! * 0.01
+			(contentViewController as? MainViewController)?.zoomGraph(percent: CGFloat(woPercent))
+		}
+	}
+	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		if segue.identifier == NSStoryboardSegue.Identifier(rawValue: "PreviewSegue") {
 			guard let doc = self.document as? NovellaDocument, let vc = segue.destinationController as? ReaderWindowController else {

@@ -213,6 +213,12 @@ extension MainViewController {
 		}
 	}
 	
+	func zoomGraph(percent: CGFloat) { // 0...1+
+		if let graphVC = _graphViewVC {
+			graphVC.zoom(to: percent)
+		}
+	}
+	
 	func centerActiveGraph() {
 		_graphViewVC?.centerView(animated: true)
 	}

@@ -96,6 +96,13 @@ class GraphEditorViewController: NSViewController {
 		}
 		return false
 	}
+	func zoom(to: CGFloat) {
+		if _graphView == nil {
+			return
+		}
+		
+		_scrollView.magnification = to
+	}
 	
 	func centerView(animated: Bool) {
 		if _graphView == nil {

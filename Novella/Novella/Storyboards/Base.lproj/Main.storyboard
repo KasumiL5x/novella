@@ -858,12 +858,61 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="E18E70C3-9168-4678-8AC2-310908184B87" label="Custom View" paletteLabel="Custom View" id="tOF-BS-p3p" userLabel="Zoom Menu">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="40" height="18"/>
+                                    <size key="maxSize" width="100" height="28"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="2j2-ep-cpH">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Fit" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="ehp-C7-x7V" id="3kU-dK-u96">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <menu key="menu" id="tQ3-qr-xk7">
+                                                <items>
+                                                    <menuItem title="Fit" state="on" id="ehp-C7-x7V">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="4dL-Ab-foQ"/>
+                                                    <menuItem title="25%" id="sRX-yq-TTR">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="50%" id="52b-FS-zBa">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="100%" id="BNP-Zc-tfS">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="125%" id="KcN-Wy-5d7">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="150%" id="jCE-RK-Wzt">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="200%" id="EQd-ZE-IU0">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="300%" id="nzU-M0-Zvn">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="400%" id="KOw-mW-QBU">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="onToolbarZoom:" target="jGA-0Y-lOj" id="94Z-wE-qni"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="6I3-JS-OQD"/>
                                 <toolbarItem reference="7tY-vX-D3Q"/>
                                 <toolbarItem reference="LSu-mw-2cP"/>
                                 <toolbarItem reference="T62-ZT-jVU"/>
+                                <toolbarItem reference="tOF-BS-p3p"/>
                                 <toolbarItem reference="GXV-F2-TSv"/>
                                 <toolbarItem reference="yGj-rV-Scg"/>
                                 <toolbarItem reference="u6g-ls-Hhq"/>
