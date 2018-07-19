@@ -31,7 +31,7 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryMakeBranch(branch: NVBranch) {
 		_mvc.reloadSelectedGraph()
 	}
-	func onStoryMakeSwitch(switch: NVSwitch) {
+	func onStoryMakeSwitch(theSwitch: NVSwitch) {
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryMakeDialog(dialog: NVDialog) {
@@ -53,12 +53,12 @@ class StoryDelegate: NVStoryDelegate {
 		_mvc.reloadSelectedGraph()
 	}
 	
-	func onStoryTrashItem(item: NVObject) {
+	func onStoryTrashObject(object: NVObject) {
 		_mvc.reloadSelectedGraph()
 		
 		(_mvc.view.window?.windowController as? MainWindowController)?.setTrashIcon(true)
 	}
-	func onStoryUntrashItem(item: NVObject) {
+	func onStoryUntrashObject(object: NVObject) {
 		_mvc.reloadSelectedGraph()
 		
 		(_mvc.view.window?.windowController as? MainWindowController)?.setTrashIcon(_mvc.Document.Manager.TrashedItems.count > 0)

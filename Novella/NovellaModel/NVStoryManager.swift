@@ -341,7 +341,7 @@ extension NVStoryManager {
 		_links.append(swtch)
 		_identifiables.append(swtch)
 		
-		_delegates.forEach{$0.onStoryMakeSwitch(switch: swtch)}
+		_delegates.forEach{$0.onStoryMakeSwitch(theSwitch: swtch)}
 		return swtch
 	}
 	
@@ -471,13 +471,13 @@ extension NVStoryManager {
 extension NVStoryManager {
 	func trash(_ item: NVObject) {
 		_trashed.append(item)
-		_delegates.forEach{$0.onStoryTrashItem(item: item)}
+		_delegates.forEach{$0.onStoryTrashObject(object: item)}
 	}
 	
 	func untrash(_ item: NVObject) {
 		if let idx = _trashed.index(of: item) {
 			_trashed.remove(at: idx)
-			_delegates.forEach{$0.onStoryUntrashItem(item: item)}
+			_delegates.forEach{$0.onStoryUntrashObject(object: item)}
 		}
 	}
 	

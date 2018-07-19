@@ -8,261 +8,296 @@
 
 import Foundation
 
-// MARK: - - Main Delegate -
+// MARK: - Main Delegate -
 public protocol NVStoryDelegate {
-	// Called when an NVFolder is created using StoryManager.makeFolder().
+	// MARK: Creation
 	func onStoryMakeFolder(folder: NVFolder)
-	// Called when an NVVariable is created using StoryManager.makeVariable().
 	func onStoryMakeVariable(variable: NVVariable)
-	// Called when an NVGraph is created using StoryManager.makeGraph().
 	func onStoryMakeGraph(graph: NVGraph)
-	// Called when an NVLink is created using StoryManager.makeLink().
 	func onStoryMakeLink(link: NVLink)
-	// Called when an NVBranch is created using StoryManager.makeBranch().
 	func onStoryMakeBranch(branch: NVBranch)
-	// Called when an NVSwitch is created using StoryManager.makeSwitch().
-	func onStoryMakeSwitch(switch: NVSwitch)
-	// Called when an NVDialog is created using StoryManager.makeDialog().
+	func onStoryMakeSwitch(theSwitch: NVSwitch)
 	func onStoryMakeDialog(dialog: NVDialog)
-	//
 	func onStoryMakeEntity(entity: NVEntity)
-	// Called when an NVDelivery is created using StoryManager.makeDelivery().
 	func onStoryMakeDelivery(delivery: NVDelivery)
-	// Called when a NVContext is created using StoryManager.makeContext().
 	func onStoryMakeContext(context: NVContext)
 	
-	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint)
-	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String)
-	
-	// Called when a NVTrashable is added to the trash using the internal StoryManager.trash().
-	func onStoryTrashItem(item: NVObject)
-	// Called when a NVTrashable is removed from the trash using the internal StoryManager().
-	func onStoryUntrashItem(item: NVObject)
-	
-	// Called when an NVFolder is deleted using StoryManager.deleteFolder().
+	// MARK: Deletion
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool)
-	// Called when an NVVariable is deleted using StoryManager.deleteVariable().
 	func onStoryDeleteVariable(variable: NVVariable)
-	// Called when an NVNode is deleted using StoryManager.delete(node).
 	func onStoryDeleteNode(node: NVNode)
-	// Called when an NVBaseLink is deleted using StoryManager.delete(link).
 	func onStoryDeleteLink(link: NVBaseLink)
 	func onStoryDeleteGraph(graph: NVGraph)
 	func onStoryDeleteEntity(entity: NVEntity)
 	
-	func onStoryEntityImageChanged(entity: NVEntity)
+	// MARK: Objects
+	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint)
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String)
+	func onStoryTrashObject(object: NVObject)
+	func onStoryUntrashObject(object: NVObject)
 	
-	// Called when an NVFolder is added to the Story using Story.add(folder).
+	// MARK: Story
+	func onStoryNameChanged(story: NVStory, name: String)
 	func onStoryAddFolder(folder: NVFolder)
-	// Called when an NVFolder is removed from the Story using Story.remove(folder).
 	func onStoryRemoveFolder(folder: NVFolder)
-	// Called when an NVGraph is added to the Story using Story.add(graph).
 	func onStoryAddGraph(graph: NVGraph)
-	// Called when an NVGraph is removed from the Story using Story.remove(graph).
 	func onStoryRemoveGraph(graph: NVGraph)
 	
-	// Called when an NVGraph is added to an NVGraph using NVGraph.add(graph).
+	// MARK: Graphs
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph)
-	// Called when an NVNode (or derived class) is added to an NVGraph using NVGraph.add(node).
 	func onStoryGraphAddNode(node: NVNode, parent: NVGraph)
-	// Called when an NVBaseLink (or derived class) is added to an NVGraph using NVGraph.add(link).
 	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph)
-	// Called when an NVListener is added to an NVGraph using NVGraph.add(listener).
 	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph)
-	// Called when an NVExitNode is added to an NVGraph using NVGraph.add(exit).
 	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph)
-	// Called when an NVGraph is removed from an NVGraph using NVGraph.remove(graph).
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph)
-	// Called when an NVNode (or derived class) is removed from an NVGraph using NVGraph.remove(node).
 	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph)
-	// Called when an NVBaseLink (or derived class) is removed from NVGraph using NVGraph.remove(link).
 	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph)
-	// Called when an NVListener is removed from an NVGraph using NVGraph.remove(listener).
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph)
-	// Called when an NVExitNode is removed from an NVGraph using NVGraph.remove(exit).
 	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph)
-	// Called when an NVGraph's entry is set using NVGraph.setEntry().
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph)
-
-	// Called when an NVNode's preview is changed using NVDialog.Preview.
+	
+	// MARK: Nodes
 	func onStoryNodePreviewChanged(preview: String, node: NVNode)
 	func onStoryNodeSizeChanged(node: NVNode)
-	// Called when an NVDialog's content is changed using NVDialog.Content.
+	
+	// MARK: Dialogs
 	func onStoryDialogContentChanged(content: String, node: NVDialog)
-	// Called when an NVDialog's directions are changed using NVDialog.Directions.
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog)
 	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog)
-	// Called when an NVDelivery's content is changed using NVDelivery.Content.
+	
+	// MARK: Deliveries
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery)
-	// Called when an NVDelivery's directions are changed using NVDelivery.Directions.
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery)
 	
-	// Called when an NVLink's transfer's destination is set using NVLink.SetDestination().
+	// MARK: Links
 	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?)
-	// Called when an NVBranch's true transfer's destination is set using NVBranch.SetTrueDestination().
 	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?)
-	// Called when an NVBranch's false transfer's destination is set using NVBranch.SetTrueDestination().
 	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?)
 	
+	// MARK: Entities
+	func onStoryEntityImageChanged(entity: NVEntity)
+	
+	// MARK: Functions/Conditions
 	func onStoryFunctionUpdated(function: NVFunction)
 	func onStoryConditionUpdated(condition: NVCondition)
 	
-	// Called when an NVVariable's synopsis is changed using NVVariable.Synopsis.
+	// MARK: Variables
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String)
-	// Called when an NVVariable's type is changed using NVVariable.setType().
 	func onStoryVariableTypeChanged(variable: NVVariable, type: NVDataType)
-	// Called when an NVVariable's value is changed using NVVariable.setValue().
 	func onStoryVariableValueChanged(variable: NVVariable, value: Any)
-	// Called when an NVVariable's initial value is changed using NVVariable.setInitialValue().
 	func onStoryVariableInitialValueChanged(variable: NVVariable, value: Any)
-	// Called when an NVVariable's constant is changed using NVVariable.Constant.
 	func onStoryVariableConstantChanged(variable: NVVariable, constant: Bool)
 	
-	// Called when an NVFolder's synopsis is changed using NVFolder.Synopsis.
+	// MARK: Folders
 	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String)
-	// Called when an NVFolder is added to an NVFolder as a child.
 	func onStoryFolderAddFolder(parent: NVFolder, child: NVFolder)
-	// Called when an NVFolder is removed from an NVFolder as a child.
 	func onStoryFolderRemoveFolder(parent: NVFolder, child: NVFolder)
-	// Called when an NVVariable is added to an NVFolder as a child.
 	func onStoryFolderAddVariable(parent: NVFolder, child: NVVariable)
-	// Called when an NVVariable is removed from an NVFolder as a child.
 	func onStoryFolderRemoveVariable(parent: NVFolder, child: NVVariable)
-	
-	// Called when an NVStory's name is changed using NVStory.Name.
-	func onStoryNameChanged(story: NVStory, name: String)
 }
 
-// MARK: - - Default Implementations -
+// MARK: - Default Implementations -
 public extension NVStoryDelegate {
+	// MARK: Creation
 	func onStoryMakeFolder(folder: NVFolder) {
+		NVLog.log("Created a new Folder (\(folder.UUID)).", level: .simple)
 	}
 	func onStoryMakeVariable(variable: NVVariable) {
+		NVLog.log("Created a new Variable (\(variable.UUID)).", level: .simple)
 	}
 	func onStoryMakeGraph(graph: NVGraph) {
+		NVLog.log("Created a new Graph (\(graph.UUID)).", level: .simple)
 	}
 	func onStoryMakeLink(link: NVLink) {
+		NVLog.log("Created a new Link (\(link.UUID)).", level: .simple)
 	}
 	func onStoryMakeBranch(branch: NVBranch) {
+		NVLog.log("Created a new Branch (\(branch.UUID)).", level: .simple)
 	}
-	func onStoryMakeSwitch(switch: NVSwitch) {
+	func onStoryMakeSwitch(theSwitch: NVSwitch) {
+		NVLog.log("Created a new Switch (\(theSwitch.UUID)).", level: .simple)
 	}
 	func onStoryMakeDialog(dialog: NVDialog) {
+		NVLog.log("Created a new Dialog (\(dialog.UUID)).", level: .simple)
 	}
 	func onStoryMakeEntity(entity: NVEntity) {
+		NVLog.log("Created a new Entity (\(entity.UUID)).", level: .simple)
 	}
 	func onStoryMakeDelivery(delivery: NVDelivery) {
+		NVLog.log("Created a new Delivery (\(delivery.UUID)).", level: .simple)
 	}
 	func onStoryMakeContext(context: NVContext) {
+		NVLog.log("Created a new Context (\(context.UUID)).", level: .simple)
 	}
 	
-	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
-	}
-	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
-	}
-	
-	func onStoryTrashItem(item: NVObject) {
-	}
-	func onStoryUntrashItem(item: NVObject) {
-	}
-	
+	// MARK: Deletion
 	func onStoryDeleteFolder(folder: NVFolder, contents: Bool) {
+		NVLog.log("Deleted Folder (\(folder.UUID))" + (contents ? " and its contents." : "."), level: .simple)
 	}
 	func onStoryDeleteVariable(variable: NVVariable) {
+		NVLog.log("Deleted Variable (\(variable.UUID)).", level: .simple)
 	}
 	func onStoryDeleteNode(node: NVNode) {
+		NVLog.log("Deleted Node (\(node.UUID)).", level: .simple)
 	}
 	func onStoryDeleteLink(link: NVBaseLink) {
+		NVLog.log("Deleted Link (\(link.UUID)).", level: .simple)
 	}
 	func onStoryDeleteGraph(graph: NVGraph) {
+		NVLog.log("Deleted Graph (\(graph.UUID)).", level: .simple)
 	}
 	func onStoryDeleteEntity(entity: NVEntity) {
+		NVLog.log("Deleted Entity (\(entity.UUID)).", level: .simple)
 	}
 	
-	func onStoryEntityImageChanged(entity: NVEntity) {
+	// MARK: Objects
+	func onStoryObjectPositionChanged(obj: NVObject, oldPos: CGPoint, newPos: CGPoint) {
+//		NVLog.log("Object (\(obj.UUID)) moved from (\(oldPos)) to (\(newPos)).", level: .verbose)
+	}
+	func onStoryObjectNameChanged(obj: NVObject, oldName: String, newName: String) {
+		NVLog.log("Object (\(obj.UUID)) renamed from (\(oldName)) to (\(newName)).", level: .simple)
+	}
+	func onStoryTrashObject(object: NVObject) {
+		NVLog.log("Object (\(object.UUID)) trashed.", level: .simple)
+	}
+	func onStoryUntrashObject(object: NVObject) {
+		NVLog.log("Object (\(object.UUID)) untrashed.", level: .simple)
 	}
 	
+	// MARK: Story
+	func onStoryNameChanged(story: NVStory, name: String) {
+		NVLog.log("Story name changed to (\(name)).", level: .simple)
+	}
 	func onStoryAddFolder(folder: NVFolder) {
+		NVLog.log("Folder (\(folder.UUID)) added to Story.", level: .simple)
 	}
 	func onStoryRemoveFolder(folder: NVFolder) {
+		NVLog.log("Folder (\(folder.UUID)) removed from Story.", level: .simple)
 	}
 	func onStoryAddGraph(graph: NVGraph) {
+		NVLog.log("Graph (\(graph.UUID)) added to Story.", level: .simple)
 	}
 	func onStoryRemoveGraph(graph: NVGraph) {
+		NVLog.log("Graph (\(graph.UUID)) removed from Story.", level: .simple)
 	}
 	
+	// MARK: Graphs
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
+		NVLog.log("Graph (\(graph.UUID)) added to Graph (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryGraphAddNode(node: NVNode, parent: NVGraph) {
+		NVLog.log("Node (\(node.UUID)) added to Graph (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph) {
+		NVLog.log("Link (\(link.UUID)) added to Graph (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph) {
+		NVLog.log("Listener (\(listener.UUID)) added to Graph (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph) {
+		NVLog.log("Exit (\(exit.UUID)) added to Graph (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
+		NVLog.log("Graph (\(graph.UUID)) removed from Graph (\(from.UUID)).", level: .simple)
 	}
 	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph) {
+		NVLog.log("Node (\(node.UUID)) removed from Graph (\(from.UUID)).", level: .simple)
 	}
 	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph) {
+		NVLog.log("Link (\(link.UUID)) removed from Graph (\(from.UUID)).", level: .simple)
 	}
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
+		NVLog.log("Listener (\(listener.UUID)) removed from Graph (\(from.UUID)).", level: .simple)
 	}
 	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
+		NVLog.log("Exit (\(exit.UUID)) removed from Graph (\(from.UUID)).", level: .simple)
 	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
+		NVLog.log("Graph (\(graph.UUID)) Entry set to (\(entry.UUID)).", level: .simple)
 	}
 	
+	// MARK: Nodes
 	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
+		NVLog.log("Node (\(node.UUID)) preview set to (\(preview)).", level: .simple)
 	}
 	func onStoryNodeSizeChanged(node: NVNode) {
+		NVLog.log("Node (\(node.UUID)) size set to (\(node.Size)).", level: .simple)
 	}
+	
+	// MARK: Dialogs
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
+		NVLog.log("Dialog (\(node.UUID)) content set to (\(content)).", level: .simple)
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
+		NVLog.log("Dialog (\(node.UUID)) directions set to (\(directions)).", level: .simple)
 	}
 	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog) {
+		NVLog.log("Dialog (\(node.UUID)) speaker set to (\(speaker?.UUID.uuidString ?? "nil")).", level: .simple)
 	}
+	
+	// MARK: Deliveries
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
+		NVLog.log("Delivery (\(node.UUID)) content set to (\(content)).", level: .simple)
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
+		NVLog.log("Delivery (\(node.UUID)) directions set to (\(directions)).", level: .simple)
 	}
 	
+	// MARK: Links
 	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
+		NVLog.log("Link (\(link.UUID)) destination set to (\(dest?.UUID.uuidString ?? "nil")).", level: .simple)
 	}
 	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
+		NVLog.log("Branch (\(branch.UUID)) true destination set to (\(dest?.UUID.uuidString ?? "nil")).", level: .simple)
 	}
 	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
+		NVLog.log("Branch (\(branch.UUID)) false destination set to (\(dest?.UUID.uuidString ?? "nil")).", level: .simple)
 	}
 	
+	// MARK: Entities
+	func onStoryEntityImageChanged(entity: NVEntity) {
+		NVLog.log("Entity (\(entity.UUID)) image changed to (\(entity.ImageName)).", level: .simple)
+	}
+	
+	// MARK: Functions/Conditions
 	func onStoryFunctionUpdated(function: NVFunction) {
+		NVLog.log("Function updated.", level: .simple)
 	}
 	func onStoryConditionUpdated(condition: NVCondition) {
+		NVLog.log("Condition updated.", level: .simple)
 	}
 	
+	// MARK: Variables
 	func onStoryVariableSynopsisChanged(variable: NVVariable, synopsis: String) {
+		NVLog.log("Variable (\(variable.UUID)) synopsis set to (\(synopsis)).", level: .simple)
 	}
 	func onStoryVariableTypeChanged(variable: NVVariable, type: NVDataType) {
+		NVLog.log("Variable (\(variable.UUID)) type set to (\(type)).", level: .simple)
 	}
 	func onStoryVariableValueChanged(variable: NVVariable, value: Any) {
+		NVLog.log("Variable (\(variable.UUID)) value set to (\(value)).", level: .simple)
 	}
 	func onStoryVariableInitialValueChanged(variable: NVVariable, value: Any) {
+		NVLog.log("Variable (\(variable.UUID)) initial value set to (\(value)).", level: .simple)
 	}
 	func onStoryVariableConstantChanged(variable: NVVariable, constant: Bool) {
+		NVLog.log("Variable (\(variable.UUID)) constant set to (\(constant)).", level: .simple)
 	}
-	
+
+	// MARK: Folders
 	func onStoryFolderSynopsisChanged(folder: NVFolder, synopsis: String) {
+		NVLog.log("Folder (\(folder.UUID)) synopsis set to (\(synopsis)).", level: .simple)
 	}
 	func onStoryFolderAddFolder(parent: NVFolder, child: NVFolder) {
+		NVLog.log("Folder (\(child.UUID)) added to Folder (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryFolderRemoveFolder(parent: NVFolder, child: NVFolder) {
+		NVLog.log("Folder (\(child.UUID)) removed from (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryFolderAddVariable(parent: NVFolder, child: NVVariable) {
+		NVLog.log("Variable (\(child.UUID)) added to Folder (\(parent.UUID)).", level: .simple)
 	}
 	func onStoryFolderRemoveVariable(parent: NVFolder, child: NVVariable) {
-	}
-	
-	func onStoryNameChanged(story: NVStory, name: String) {
+		NVLog.log("Variable (\(child.UUID)) removed from Folder (\(parent.UUID)).", level: .simple)
 	}
 }

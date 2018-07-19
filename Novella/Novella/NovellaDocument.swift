@@ -82,7 +82,7 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryMakeBranch(branch: NVBranch) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryMakeSwitch(switch: NVSwitch) {
+	func onStoryMakeSwitch(theSwitch: NVSwitch) {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryMakeDialog(dialog: NVDialog) {
@@ -105,10 +105,10 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryTrashItem(item: NVObject) {
+	func onStoryTrashObject(object: NVObject) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryUntrashItem(item: NVObject) {
+	func onStoryUntrashObject(object: NVObject) {
 		self.updateChangeCount(.changeDone)
 	}
 	

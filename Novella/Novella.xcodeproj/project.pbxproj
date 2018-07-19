@@ -57,6 +57,7 @@
 		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC920C345390078CB28 /* Alerts.swift */; };
 		65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */; };
+		65ED41C020FF48A8004C97A9 /* NVLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ED41BF20FF48A8004C97A9 /* NVLog.swift */; };
 		65F7F83120C313F6004663D6 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F83020C313F6004663D6 /* SwiftyJSON.framework */; };
 		65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83420C31636004663D6 /* String+FromAny.swift */; };
 		65F7F83B20C31637004663D6 /* UserDefaults+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83520C31636004663D6 /* UserDefaults+Color.swift */; };
@@ -183,6 +184,7 @@
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextFieldCell.swift; sourceTree = "<group>"; };
+		65ED41BF20FF48A8004C97A9 /* NVLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLog.swift; sourceTree = "<group>"; };
 		65F7F83020C313F6004663D6 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65F7F83420C31636004663D6 /* String+FromAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
 		65F7F83520C31636004663D6 /* UserDefaults+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Color.swift"; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				655F9FF620C30EAA00B20EFE /* Info.plist */,
 				65A2180E20D13FC900EA4594 /* NVObject.swift */,
 				65940AD620E19B2D00C777BF /* NVEntity.swift */,
+				65ED41BF20FF48A8004C97A9 /* NVLog.swift */,
 			);
 			path = NovellaModel;
 			sourceTree = "<group>";
@@ -800,6 +803,7 @@
 				6513104B20C30F050078C30C /* NVNode.swift in Sources */,
 				6513105020C30F050078C30C /* NVCondition.swift in Sources */,
 				6513104720C30F050078C30C /* NVFolder.swift in Sources */,
+				65ED41C020FF48A8004C97A9 /* NVLog.swift in Sources */,
 				6513104520C30F050078C30C /* NVPath.swift in Sources */,
 				6513104920C30F050078C30C /* NVDataType.swift in Sources */,
 				654918E320D42165008467FF /* NVReader.swift in Sources */,

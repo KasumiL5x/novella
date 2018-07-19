@@ -753,8 +753,8 @@ extension GraphView: NVStoryDelegate {
 		}
 	}
 	
-	func onStoryTrashItem(item: NVObject) {
-		switch item {
+	func onStoryTrashObject(object: NVObject) {
+		switch object {
 		case is NVDialog:
 			fallthrough
 		case is NVDelivery:
@@ -762,27 +762,27 @@ extension GraphView: NVStoryDelegate {
 		case is NVContext:
 			fallthrough
 		case is NVGraph:
-			if let lv = getNodeFrom(object: item, includeParentGraphs: false) {
+			if let lv = getNodeFrom(object: object, includeParentGraphs: false) {
 				lv.Trashed = true
 			}
 			
 		case is NVBaseLink:
-			if let pin = _allPinViews.first(where: {$0.BaseLink == item}) {
+			if let pin = _allPinViews.first(where: {$0.BaseLink == object}) {
 				pin.TrashMode = true
 			}
 			
 		default:
-			print("Trashed unsupported item: \(item)")
+			print("Trashed unsupported item: \(object)")
 		}
 	}
-	func onStoryUntrashItem(item: NVObject) {
-		for linkTo in _document.Manager.getLinksTo(item) {
+	func onStoryUntrashObject(object: NVObject) {
+		for linkTo in _document.Manager.getLinksTo(object) {
 			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
 				pin.TrashMode = false
 			}
 		}
 		
-		switch item {
+		switch object {
 		case is NVDialog:
 			fallthrough
 		case is NVDelivery:
@@ -790,17 +790,17 @@ extension GraphView: NVStoryDelegate {
 		case is NVContext:
 			fallthrough
 		case is NVGraph:
-			if let lv = getNodeFrom(object: item, includeParentGraphs: false) {
+			if let lv = getNodeFrom(object: object, includeParentGraphs: false) {
 				lv.Trashed = false
 			}
 			
 		case is NVBaseLink:
-			if let pin = _allPinViews.first(where: {$0.BaseLink == item}) {
+			if let pin = _allPinViews.first(where: {$0.BaseLink == object}) {
 				pin.TrashMode = false
 			}
 			
 		default:
-			print("Trashed unsupported item: \(item)")
+			print("Trashed unsupported item: \(object)")
 		}
 	}
 	
