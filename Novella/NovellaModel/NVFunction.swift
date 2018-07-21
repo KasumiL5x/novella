@@ -32,7 +32,7 @@ public class NVFunction {
 		funcCode += _javascript
 		funcCode += "\n}"
 		
-		print(funcCode)
+		NVLog.log("Function JS:\n\(funcCode)", level: .verbose)
 		
 		// evaluate the script so JS knows about it
 		_manager._jsContext.evaluateScript(funcCode)
