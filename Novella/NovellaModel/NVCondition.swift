@@ -34,7 +34,7 @@ public class NVCondition {
 		boolFunc += _javascript.isEmpty ? "return true;" : _javascript
 		boolFunc += "\n}"
 		
-		NVLog.log("Function JS:\n\(boolFunc)", level: .verbose)
+		NVLog.log("Function JS:\n\(boolFunc)", level: .debug)
 		
 		// evaluate the script so JS knows about it
 		_manager._jsContext.evaluateScript(boolFunc)

@@ -9,50 +9,27 @@
 import Foundation
 
 public class NVLog {
-	public enum Verbosity: Int {
-		case none // nothing at all
-		case simple // only information
-		case verbose // warnings and information
+	public struct Level: OptionSet {
+		public let rawValue: Int
+		
+		public init(rawValue: Int) {
+			self.rawValue = rawValue
+		}
+		
+		static let none    = Level(rawValue: 0)
+		static let info    = Level(rawValue: 1 << 0) // generic printing
+		static let warning = Level(rawValue: 1 << 1) // non-critical failures
+		static let error   = Level(rawValue: 1 << 2) // critical failures
+		static let debug   = Level(rawValue: 1 << 3) // debug information
+		static let all     = Level(rawValue: ~0)
 	}
 	
-	public static var level: Verbosity = .verbose
+	public static var logLevel: Level = [Level.all]
 	
-	public static func log(_ msg: String, level: Verbosity = .simple) {
-		if level == .none || level.rawValue > NVLog.level.rawValue {
+	public static func log(_ msg: String, level: Level) {
+		if !NVLog.logLevel.contains(level) {
 			return
 		}
 		print("Novella: " + msg)
 	}
 }
-
-// tests below from repl.it session
-//// default verbosity
-//print("Default verbosity:")
-//NVLog.log("Default verbosity. Should print.")
-//NVLog.log("None. Should not print.", level: .none)
-//NVLog.log("Simple. Should print.", level: .simple)
-//NVLog.log("Verbose. Should print.", level: .verbose)
-//
-//// no verbosity
-//print("\nNo verbosity:")
-//NVLog.level = .none
-//NVLog.log("Default verbosity. Should not print.")
-//NVLog.log("None. Should not print.", level: .none)
-//NVLog.log("Simple. Should not print.", level: .simple)
-//NVLog.log("Verbose. Should not print.", level: .verbose)
-//
-//// simple verbosity
-//print("\nSimple verbosity:")
-//NVLog.level = .simple
-//NVLog.log("Default verbosity. Should print.")
-//NVLog.log("None. Should not print.", level: .none)
-//NVLog.log("Simple. Should print.", level: .simple)
-//NVLog.log("Verbose. Should not print.", level: .verbose)
-//
-//// no verbosity
-//print("\nVerbose verbosity:")
-//NVLog.level = .verbose
-//NVLog.log("Default verbosity. Should  print.")
-//NVLog.log("None. Should not print.", level: .none)
-//NVLog.log("Simple. Should print.", level: .simple)
-//NVLog.log("Verbose. Should print.", level: .verbose)

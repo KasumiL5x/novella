@@ -69,7 +69,6 @@ public class NVVariable: NVObject {
 		_type = type
 		_value = type.defaultValue
 		_initialValue = type.defaultValue
-		// TODO: Can I somehow convert existing data safely or revert to defaults otherwise?
 		
 		_manager.Delegates.forEach{$0.onStoryVariableTypeChanged(variable: self, type: _type)}
 	}
@@ -77,11 +76,11 @@ public class NVVariable: NVObject {
 	@discardableResult
 	public func setValue(_ val: Any) -> Bool {
 		if self._constant {
-			print("NVVariable::setValue(): Variable is constant.")
+			NVLog.log("Tried to set Variable's (\(self.UUID.uuidString)) value but it is constant.", level: .warning)
 			return false
 		}
 		if !_type.matches(value: val) {
-			print("NVVariable::setValue(): Variable datatype mismatch (expected \(_type.stringValue), received \(type(of: val))).")
+			NVLog.log("Tried to set Variable's (\(self.UUID.uuidString)) value but the datatype mismatched (expected \(_type.stringValue) but received \(type(of: val)).", level: .warning)
 			return false
 		}
 		
@@ -100,7 +99,7 @@ public class NVVariable: NVObject {
 	@discardableResult
 	public func setInitialValue(_ val: Any) -> Bool {
 		if !_type.matches(value: val) {
-			print("NVVariable::setInitial(): Variable datatype mismatch (expected \(_type.stringValue), received \(type(of: val))).")
+			NVLog.log("Tried to set Variable's (\(self.UUID.uuidString)) initial value but the datatype mismatched (expected \(_type.stringValue) but received \(type(of: val)).", level: .warning)
 			return false
 		}
 		switch _type {
