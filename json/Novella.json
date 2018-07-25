@@ -186,10 +186,6 @@
 				"listeners": {
 					"type": "array",
 					"items": { "$ref": "#/definitions/uuid" }
-				},
-				"exits": {
-					"type": "array",
-					"items": { "$ref": "#/definitions/uuid" }
 				}
 			},
 			"required": ["uuid", "name", "position"]

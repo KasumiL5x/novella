@@ -14,7 +14,6 @@ public class NVGraph: NVObject {
 	internal var _nodes: [NVNode]
 	internal var _links: [NVBaseLink]
 	internal var _listeners: [NVListener]
-	internal var _exits: [NVExitNode]
 	internal var _entry: NVObject?
 	// parent graph is valid unless as a direct child of the story
 	internal var _parent: NVGraph?
@@ -32,9 +31,6 @@ public class NVGraph: NVObject {
 	public var Listeners: [NVListener] {
 		get{ return _listeners }
 	}
-	public var Exits: [NVExitNode] {
-		get{ return _exits }
-	}
 	public var Entry: NVObject? {
 		get{ return _entry }
 	}
@@ -48,7 +44,6 @@ public class NVGraph: NVObject {
 		self._nodes = []
 		self._links = []
 		self._listeners = []
-		self._exits = []
 		self._entry = nil
 		self._parent = nil
 		super.init(manager: manager, uuid: uuid)
@@ -207,34 +202,6 @@ public class NVGraph: NVObject {
 		_listeners.remove(at: idx)
 		
 		_manager.Delegates.forEach{$0.onStoryGraphRemoveListener(listener: listener, from: self)}
-	}
-	
-	// MARK: Exit Nodes
-	public func contains(exit: NVExitNode) -> Bool {
-		return _exits.contains(exit)
-	}
-	
-	@discardableResult
-	public func add(exit: NVExitNode) -> NVExitNode {
-		// already a child
-		if contains(exit: exit) {
-			NVLog.log("Tried to add Exit (\(exit.UUID.uuidString)) to Graph (\(self.UUID.uuidString)) but it was already a child.", level: .warning)
-			return exit
-		}
-		_exits.append(exit)
-		
-		_manager.Delegates.forEach{$0.onStoryGraphAddExit(exit: exit, parent: self)}
-		return exit
-	}
-	
-	public func remove(exit: NVExitNode) {
-		guard let idx = _exits.index(of: exit) else {
-			NVLog.log("Tried to remove Exit (\(exit.UUID.uuidString)) from Graph (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
-			return
-		}
-		_exits.remove(at: idx)
-		
-		_manager.Delegates.forEach{$0.onStoryGraphRemoveExit(exit: exit, from: self)}
 	}
 	
 	// MARK: Simulation

@@ -48,12 +48,10 @@ public protocol NVStoryDelegate {
 	func onStoryGraphAddNode(node: NVNode, parent: NVGraph)
 	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph)
 	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph)
-	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph)
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph)
 	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph)
 	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph)
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph)
-	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph)
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph)
 	
 	// MARK: Nodes
@@ -194,9 +192,6 @@ public extension NVStoryDelegate {
 	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph) {
 		NVLog.log("Listener (\(listener.UUID)) added to Graph (\(parent.UUID)).", level: .info)
 	}
-	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph) {
-		NVLog.log("Exit (\(exit.UUID)) added to Graph (\(parent.UUID)).", level: .info)
-	}
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
 		NVLog.log("Graph (\(graph.UUID)) removed from Graph (\(from.UUID)).", level: .info)
 	}
@@ -208,9 +203,6 @@ public extension NVStoryDelegate {
 	}
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
 		NVLog.log("Listener (\(listener.UUID)) removed from Graph (\(from.UUID)).", level: .info)
-	}
-	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
-		NVLog.log("Exit (\(exit.UUID)) removed from Graph (\(from.UUID)).", level: .info)
 	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
 		NVLog.log("Graph (\(graph.UUID)) Entry set to (\(entry.UUID)).", level: .info)

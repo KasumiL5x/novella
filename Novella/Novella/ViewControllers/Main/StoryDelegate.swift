@@ -113,10 +113,6 @@ class StoryDelegate: NVStoryDelegate {
 		print("Added listener \(listener.UUID) to graph \(parent.Name).")
 		_mvc.reloadSelectedGraph()
 	}
-	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph) {
-		print("Added exit \(exit.UUID) to graph \(parent.Name).")
-		_mvc.reloadSelectedGraph()
-	}
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
 		print("Removed graph \(graph.Name) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
@@ -131,10 +127,6 @@ class StoryDelegate: NVStoryDelegate {
 	}
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
 		print("Removed listener \(listener.UUID) from graph \(from.Name).")
-		_mvc.reloadSelectedGraph()
-	}
-	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
-		print("Removed exit \(exit.UUID) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {

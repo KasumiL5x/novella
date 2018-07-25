@@ -69,7 +69,6 @@ extension NVStoryManager {
 			entry["nodes"] = curr._nodes.map({$0.UUID.uuidString})
 			entry["links"] = curr._links.map({$0.UUID.uuidString})
 			entry["listeners"] = curr._listeners.map({$0.UUID.uuidString})
-			entry["exits"] = curr._exits.map({$0.UUID.uuidString})
 			graphs.append(entry)
 		}
 		root["graphs"] = graphs
@@ -424,9 +423,6 @@ extension NVStoryManager {
 			
 			// 6.2 link all listeners by UUID
 			// TODO: Once listeners are parsed.
-			
-			// 6.3 link all exits by UUID
-			// TODO: Once exits are parsed.
 		}
 		
 		// 6.4 link all subgraphs by uuid
@@ -764,10 +760,6 @@ extension NVStoryManager {
 						"items": [ "$ref": "#/definitions/uuid" ]
 					],
 					"listeners": [
-						"type": "array",
-						"items": [ "$ref": "#/definitions/uuid" ]
-					],
-					"exits": [
 						"type": "array",
 						"items": [ "$ref": "#/definitions/uuid" ]
 					]

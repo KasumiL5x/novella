@@ -160,9 +160,6 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
-	func onStoryGraphAddExit(exit: NVExitNode, parent: NVGraph) {
-		self.updateChangeCount(.changeDone)
-	}
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
@@ -173,9 +170,6 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
-		self.updateChangeCount(.changeDone)
-	}
-	func onStoryGraphRemoveExit(exit: NVExitNode, from: NVGraph) {
 		self.updateChangeCount(.changeDone)
 	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
