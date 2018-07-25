@@ -60,18 +60,20 @@ public class NVFolder: NVObject {
 	}
 	
 	@discardableResult
-	public func add(folder: NVFolder) throws -> NVFolder {
+	public func add(folder: NVFolder) -> NVFolder {
 		// cannot add self
 		if folder == self {
-			throw NVError.invalid("Tried to add Folder to self (\(Name)).")
+			NVLog.log("Tried to add a Folder to itself (\(folder.UUID.uuidString)).", level: .warning)
+			return self
 		}
 		// already a child
 		if contains(folder: folder) {
-			throw NVError.invalid("Tried to add Folder but it already exists (\(folder.Name) to \(Name)).")
+			NVLog.log("Tried to add a Folder (\(folder.UUID.uuidString)) to Folder (\(self.UUID.uuidString)) but it is already a child.", level: .warning)
+			return folder
 		}
 		// unparent first
 		if folder._parent != nil {
-			try! folder._parent!.remove(folder: folder)
+			folder._parent!.remove(folder: folder)
 		}
 		// now add
 		folder._parent = self
@@ -81,9 +83,10 @@ public class NVFolder: NVObject {
 		return folder
 	}
 	
-	public func remove(folder: NVFolder) throws {
+	public func remove(folder: NVFolder) {
 		guard let idx = _folders.index(of: folder) else {
-			throw NVError.invalid("Tried to remove Folder (\(folder.Name)) from (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove a Folder (\(folder.UUID.uuidString)) from Folder (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
@@ -115,14 +118,15 @@ public class NVFolder: NVObject {
 	}
 	
 	@discardableResult
-	public func add(variable: NVVariable) throws -> NVVariable {
+	public func add(variable: NVVariable) -> NVVariable {
 		// already a child
 		if contains(variable: variable) {
-			throw NVError.invalid("Tried to add Variable but it already exists (\(variable.Name) to \(Name)).")
+			NVLog.log("Tried to add a Variable (\(variable.UUID.uuidString)) to Folder (\(self.UUID.uuidString)) but it already exists.", level: .warning)
+			return variable
 		}
 		// unparent first
 		if variable.Folder != nil {
-			try! variable.Folder?.remove(variable: variable)
+			variable.Folder?.remove(variable: variable)
 		}
 		// now add
 		variable._folder = self
@@ -132,9 +136,10 @@ public class NVFolder: NVObject {
 		return variable
 	}
 	
-	public func remove(variable: NVVariable) throws {
+	public func remove(variable: NVVariable) {
 		guard let idx = _variables.index(of: variable) else {
-			throw NVError.invalid("Tried to remove Variable (\(variable.Name)) from (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove a Variable (\(variable.UUID.uuidString)) from Folder (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)

@@ -122,13 +122,13 @@ extension NVStoryManager {
 			}
 			else if curr is NVSwitch {
 				entry["linktype"] = "switch"
-				print("NVStoryManager::toJSON(): Haven't implemented Switch export yet.")
+				NVLog.log("NVStoryManager::toJSON(): Haven't implemented Switch export yet.", level: .warning)
 				// TODO: Variable (UUID?)
 				// TODO: Default Transfer.
 				// TODO: [value:Transfer].
 			}
 			else {
-				print("NVStoryManager::toJSON(): Encountered NVBaseLink while exporting.  This should never happen.")
+				NVLog.log("NVStoryManager::toJSON(): Encountered NVBaseLink while exporting.  This should never happen.", level: .warning)
 			}
 			
 			links.append(entry)
@@ -180,7 +180,7 @@ extension NVStoryManager {
 		
 		// check if the root object is valid JSON
 		if !JSONSerialization.isValidJSONObject(root) {
-			print("NVStoryManager::toJSON(): Root object cannot form valid JSON.")
+			NVLog.log("NVStoryManager::toJSON(): Root object cannot form valid JSON.", level: .warning)
 			return ""
 		}
 		
@@ -188,7 +188,7 @@ extension NVStoryManager {
 		let schema = Schema(NVStoryManager.JSON_SCHEMA)
 		let validated = schema.validate(root)
 		if !validated.valid {
-			print("NVStoryManager::toJSON(): Failed to validate root against Schema.")
+			NVLog.log("NVStoryManager::toJSON(): Failed to validate root against Schema.", level: .warning)
 			validated.errors?.forEach({print($0)})
 			return ""
 		}
@@ -196,7 +196,7 @@ extension NVStoryManager {
 		// get a JSON string
 		let json = JSON(root)
 		guard let str = json.rawString(.utf8, options: .prettyPrinted) else {
-			print("NVStoryManager::toJSON(): Failed to serialize root into JSON.")
+			NVLog.log("NVStoryManager::toJSON(): Failed to serialize root into JSON.", level: .warning)
 			return ""
 		}
 		return str
@@ -208,14 +208,14 @@ extension NVStoryManager {
 	public static func fromJSON(str: String) -> NVStoryManager? {
 		// get Data from string
 		guard let data = str.data(using: .utf8)  else {
-			print("NVStoryManager::fromJSON(): Failed to get Data from JSON string.")
+			NVLog.log("NVStoryManager::fromJSON(): Failed to get Data from JSON string.", level: .warning)
 			return nil
 		}
 		
 		// parse using SwiftyJSON
 		let json: JSON
 		do { json = try JSON(data: data) } catch {
-			print("NVStoryManager::fromJSON(): Failed to parse JSON.")
+			NVLog.log("NVStoryManager::fromJSON(): Failed to parse JSON.", level: .warning)
 			return nil
 		}
 		
@@ -223,8 +223,8 @@ extension NVStoryManager {
 		let schema = Schema(NVStoryManager.JSON_SCHEMA)
 		let validated = schema.validate(json.object) // json.object is the root object
 		if !validated.valid {
-			print("NVStoryManager::fromJSON(): Failed to validate JSON against schema.")
-			validated.errors?.forEach({print($0)})
+			NVLog.log("NVStoryManager::fromJSON(): Failed to validate JSON against schema.", level: .warning)
+			validated.errors?.forEach({NVLog.log($0, level: .warning)})
 			return nil
 		}
 		
@@ -295,9 +295,9 @@ extension NVStoryManager {
 			// 2.1 link variables to folders by uuid
 			for child in curr["variables"].arrayValue {
 				if let variable = storyManager.find(uuid: child.string!) as? NVVariable {
-					try! folder.add(variable: variable)
+					folder.add(variable: variable)
 				} else {
-					print("NVStoryManager::fromJSON(): Unable to find Variable by UUID (\(child.string!) when adding to Folder (\(uuid.uuidString)).")
+					NVLog.log("NVStoryManager::fromJSON(): Unable to find Variable by UUID (\(child.string!) when adding to Folder (\(uuid.uuidString)).", level: .warning)
 				}
 			}
 		}
@@ -307,9 +307,9 @@ extension NVStoryManager {
 			let folder = storyManager.find(uuid: curr["uuid"].string!) as! NVFolder
 			for child in curr["subfolders"].arrayValue {
 				if let subfolder = storyManager.find(uuid: child.string!) as? NVFolder {
-					try! folder.add(folder: subfolder)
+					 folder.add(folder: subfolder)
 				} else {
-					print("NVStoryManager::fromJSON(): Unable to find Folder by UUID (\(child.string!)) when adding to Folder (\(curr["uuid"].string!)).")
+					NVLog.log("NVStoryManager::fromJSON(): Unable to find Folder by UUID (\(child.string!)) when adding to Folder (\(curr["uuid"].string!)).", level: .warning)
 				}
 			}
 		}
@@ -327,7 +327,7 @@ extension NVStoryManager {
 			if let sizeIndex = curr["size"].int {
 				sizeEnum = NVNode.SizeType(rawValue: sizeIndex)
 				if sizeEnum == nil {
-					print("NVStoryManager::fromJSON(): Given node size failed to map to the NVNode.SizeType enum.  The index was\(sizeIndex).")
+					NVLog.log("NVStoryManager::fromJSON(): Given node size failed to map to the NVNode.SizeType enum.  The index was\(sizeIndex).", level: .warning)
 				}
 			}
 			
@@ -346,7 +346,7 @@ extension NVStoryManager {
 						if let speakerEntity = storyManager.find(uuid: speakerUUID) as? NVEntity {
 							dialog.Speaker = speakerEntity
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Entity by UUID (\(speakerUUID)) when setting Dialog's speaker (\(uuid.uuidString))")
+							NVLog.log("NVStoryManager::fromJSON(): Unable to find Entity by UUID (\(speakerUUID)) when setting Dialog's speaker (\(uuid.uuidString))", level: .warning)
 						}
 					}
 				}
@@ -380,7 +380,7 @@ extension NVStoryManager {
 				}
 				
 			case "cutscene":
-				print("NVStoryManager::fromJSON(): Encountered Cutscene but it is not yet implemented.")
+				NVLog.log("NVStoryManager::fromJSON(): Encountered Cutscene but it is not yet implemented.", level: .warning)
 				
 			case "context":
 				let context = storyManager.makeContext(uuid: uuid)
@@ -393,7 +393,7 @@ extension NVStoryManager {
 				}
 				
 			default:
-				print("NVStoryManager::fromJSON(): Encountered invalid node type (\(curr["nodetype"].string!))")
+				NVLog.log("NVStoryManager::fromJSON(): Encountered invalid node type (\(curr["nodetype"].string!))", level: .warning)
 			}
 		}
 		
@@ -416,9 +416,9 @@ extension NVStoryManager {
 			// 6.1 link all nodes by uuid
 			for child in curr["nodes"].arrayValue {
 				if let node = storyManager.find(uuid: child.string!) as? NVNode {
-					try! graph.add(node: node)
+					graph.add(node: node)
 				} else {
-					print("NVStoryManager::fromJSON(): Unable to find Node by UUID (\(child.string!) when adding to Graph (\(uuid.uuidString)).")
+					NVLog.log("NVStoryManager::fromJSON(): Unable to find Node by UUID (\(child.string!) when adding to Graph (\(uuid.uuidString)).", level: .warning)
 				}
 			}
 			
@@ -434,9 +434,9 @@ extension NVStoryManager {
 			let graph = storyManager.find(uuid: curr["uuid"].string!) as! NVGraph
 			for child in curr["subgraphs"].arrayValue {
 				if let subgraph = storyManager.find(uuid: child.string!) as? NVGraph {
-					try! graph.add(graph: subgraph)
+					graph.add(graph: subgraph)
 				} else {
-					print("NVStoryManager::fromJSON(): Unable to find Graph by UUID (\(child.string!)) when adding to Graph (\(curr["uuid"].string!)).")
+					NVLog.log("NVStoryManager::fromJSON(): Unable to find Graph by UUID (\(child.string!)) when adding to Graph (\(curr["uuid"].string!)).", level: .warning)
 				}
 			}
 		}
@@ -447,9 +447,9 @@ extension NVStoryManager {
 			if let entry = curr["entry"].string {
 				if !entry.isEmpty {
 					if let object = storyManager.find(uuid: entry) {
-						try! graph.setEntry(object)
+						graph.setEntry(object)
 					} else {
-						print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(entry)) when setting Graph's entry (\(graph.UUID.uuidString)).")
+						NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(entry)) when setting Graph's entry (\(graph.UUID.uuidString)).", level: .warning)
 					}
 				}
 			}
@@ -461,7 +461,7 @@ extension NVStoryManager {
 			
 			let originID = curr["origin"].string!
 			guard let origin = storyManager.find(uuid: originID) else {
-				print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(originID)) when creating BaseLink (\(uuid.uuidString)).  Link will NOT be created.")
+				NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(originID)) when creating BaseLink (\(uuid.uuidString)).  Link will NOT be created.", level: .warning)
 				continue // skips the link entirely if this error occurs
 			}
 			
@@ -479,7 +479,7 @@ extension NVStoryManager {
 						if let destination = storyManager.find(uuid: transferDestination) {
 							link.setDestination(dest: destination)
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).")
+							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).", level: .warning)
 						}
 					}
 					
@@ -505,7 +505,7 @@ extension NVStoryManager {
 						if let destination = storyManager.find(uuid: transferDestination) {
 							branch.setTrueDestination(dest: destination)
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).")
+							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).", level: .warning)
 						}
 					}
 					
@@ -520,7 +520,7 @@ extension NVStoryManager {
 						if let destination = storyManager.find(uuid: transferDestination) {
 							branch.setFalseDestination(dest: destination)
 						} else {
-							print("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).")
+							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).", level: .warning)
 						}
 					}
 					
@@ -530,10 +530,10 @@ extension NVStoryManager {
 				}
 				break
 			case "switch":
-				print("NVStoryManager::fromJSON(): Encountered Switch while parsing links, but they are not yet implemented.")
+				NVLog.log("NVStoryManager::fromJSON(): Encountered Switch while parsing links, but they are not yet implemented.", level: .warning)
 				break
 			default:
-				print("NVStoryManager::fromJSON(): Encountered invalid link type (\(curr["linktype"].string!))")
+				NVLog.log("NVStoryManager::fromJSON(): Encountered invalid link type (\(curr["linktype"].string!))", level: .warning)
 			}
 		}
 		
@@ -543,9 +543,9 @@ extension NVStoryManager {
 			
 			for child in curr["links"].arrayValue {
 				if let link = storyManager.find(uuid: child.string!) as? NVBaseLink {
-					try! graph.add(link: link)
+					graph.add(link: link)
 				} else {
-					print("NVStoryManager::fromJSON(): Unable to find BaseLink by UUID (\(child.string!)) when adding to Graph (\(graph.UUID.uuidString)).")
+					NVLog.log("NVStoryManager::fromJSON(): Unable to find BaseLink by UUID (\(child.string!)) when adding to Graph (\(graph.UUID.uuidString)).", level: .warning)
 				}
 			}
 		}
@@ -553,17 +553,17 @@ extension NVStoryManager {
 		// 9. assign folders and graphs to story's local stuff
 		for curr in json["story"]["folders"].arrayValue {
 			if let folder = storyManager.find(uuid: curr.string!) as? NVFolder {
-				try! storyManager.Story.add(folder: folder)
+				storyManager.Story.add(folder: folder)
 			} else {
-				print("NVStoryManager::fromJSON(): Unable to find Folder by UUID (\(curr.string!)) when adding to Story.")
+				NVLog.log("NVStoryManager::fromJSON(): Unable to find Folder by UUID (\(curr.string!)) when adding to Story.", level: .warning)
 			}
 			
 		}
 		for curr in json["story"]["graphs"].arrayValue {
 			if let graph = storyManager.find(uuid: curr.string!) as? NVGraph {
-				try! storyManager.Story.add(graph: graph)
+				storyManager.Story.add(graph: graph)
 			} else {
-				print("NVStoryManager::fromJSON(): Unable to find Graph by UUID (\(curr.string!)) when adding to Story.")
+				NVLog.log("NVStoryManager::fromJSON(): Unable to find Graph by UUID (\(curr.string!)) when adding to Story.", level: .warning)
 			}
 		}
 		

@@ -20,7 +20,8 @@ public class NVBaseLink: NVObject {
 	// MARK: - Initialization -
 	init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
 		if !origin.isLinkable() {
-			fatalError("NVBaseLink::init was passed a non-linkable NVObject.  This should never happen.  Contact your local programmer and DON'T PANIC!")
+			NVLog.log("BaseLink initialized with a non-linkable NVObject.  This should never happen.  Contact your local programmer and DON'T PANIC!", level: .error)
+			fatalError()
 		}
 		self._origin = origin
 		super.init(manager: manager, uuid: uuid)

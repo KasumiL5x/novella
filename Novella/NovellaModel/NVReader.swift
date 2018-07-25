@@ -34,7 +34,7 @@ public class NVReader {
 	// MARK: - Functions -
 	public func start(_ graph: NVGraph, atNode: NVNode?) {
 		guard let startNode = (atNode != nil ? atNode : graph._entry) as? NVNode else {
-			print("NVReader::start() couldn't find a suitable start node.  Either the graph's entry must be valid, or the given node must be valid and a child of the graph.")
+			NVLog.log("Reader couldn't find a suitable starting node. Either the graph's entry must be valid, or the given node must be valid and a child of the graph.", level: .warning)
 			return
 		}
 		
@@ -59,7 +59,7 @@ public class NVReader {
 		
 		// link must be within the links array
 		if !availableLinks.contains(chosenLink) {
-			print("NVReader::next() requested link wasn't in list provided.")
+			NVLog.log("Link provided to Reader wasn't in the given list of links.", level: .warning)
 			return
 		}
 		
@@ -73,19 +73,19 @@ public class NVReader {
 			nextNode = asBranch.PreCondition.execute() ? asBranch.TrueTransfer._destination as? NVNode : asBranch.FalseTransfer._destination as? NVNode
 			
 		default:
-			print("NVReader::next() requested link isn't yet implemented in reading, sorry!")
+			NVLog.log("Link provided to Reader isn't yet implemented for reading, sorry!", level: .warning)
 			return
 		}
 		
 		// next node can't be nil
 		if nextNode == nil {
-			print("NVReader::next() requested link could not be followed as its destination was nil.")
+			NVLog.log("Link provided to Reader couldn't be followed as its destination is nil.", level: .warning)
 			return
 		}
 		
 		// for now I'm not handling nodes in other graphs
 		if !_graph!.contains(node: nextNode!) {
-			print("NVReader::next() requested links's destination is in another graph which I'm not supporting right now.")
+			NVLog.log("Link provided to Reader has a destination in another graph which is not yet supported, sorry!", level: .warning)
 			return
 		}
 		
@@ -99,7 +99,7 @@ public class NVReader {
 			asBranch.Condition.execute() ? asBranch.TrueTransfer.Function.execute() : asBranch.FalseTransfer.Function.execute()
 			
 		default:
-			print("NVReader::next() requested link isn't yet implemented in reading, sorry!")
+			NVLog.log("Link provided to Reader isn't yet implemented for reading so I can't run its function, sorry!", level: .warning)
 			return
 		}
 		
@@ -125,7 +125,7 @@ public class NVReader {
 				}
 				
 			default:
-				print("NVReader::getNodeLinks() encountered an unhandled link.")
+				NVLog.log("Reader encountered an unhandled link type when trying to get the node links.", level: .warning)
 			}
 		}
 		return links

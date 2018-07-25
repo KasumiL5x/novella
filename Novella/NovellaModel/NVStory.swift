@@ -50,10 +50,11 @@ public class NVStory {
 	}
 	
 	@discardableResult
-	public func add(folder: NVFolder) throws -> NVFolder {
+	public func add(folder: NVFolder) -> NVFolder {
 		// already a child
 		if contains(folder: folder) {
-			throw NVError.invalid("Tried to add a Folder but it already exists (\(folder.Name) to story).")
+			NVLog.log("Tried to add Folder (\(folder.UUID.uuidString)) to Story but it was already a child.", level: .warning)
+			return folder
 		}
 		// now add
 		_folders.append(folder)
@@ -62,9 +63,10 @@ public class NVStory {
 		return folder
 	}
 	
-	public func remove(folder: NVFolder) throws {
+	public func remove(folder: NVFolder) {
 		guard let idx = _folders.index(of: folder) else {
-			throw NVError.invalid("Tried to remove Folder (\(folder.Name)) from story but it was not a child.")
+			NVLog.log("Tried to remove Folder (\(folder.UUID.uuidString)) from Story but it was not a child.", level: .warning)
+			return
 		}
 		_folders.remove(at: idx)
 		
@@ -81,14 +83,15 @@ public class NVStory {
 	}
 	
 	@discardableResult
-	public func add(graph: NVGraph) throws -> NVGraph {
+	public func add(graph: NVGraph) -> NVGraph {
 		// already a child
 		if contains(graph: graph) {
-			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph.Name) to story).")
+			NVLog.log("Tried to add Graph (\(graph.UUID.uuidString)) to Story but it was already a child.", level: .warning)
+			return graph
 		}
 		// unparent first
 		if graph._parent != nil {
-			try graph._parent?.remove(graph: graph)
+			graph._parent?.remove(graph: graph)
 		}
 		// now add
 		graph._parent = nil
@@ -98,9 +101,10 @@ public class NVStory {
 		return graph
 	}
 	
-	public func remove(graph: NVGraph) throws {
+	public func remove(graph: NVGraph) {
 		guard let idx = _graphs.index(of: graph) else {
-			throw NVError.invalid("Tried to remove Graph (\(graph.Name)) from story but it was not a child.")
+			NVLog.log("Tried to remove Graph (\(graph.UUID.uuidString)) from Story but it was already a child.", level: .warning)
+			return
 		}
 		_graphs.remove(at: idx)
 		

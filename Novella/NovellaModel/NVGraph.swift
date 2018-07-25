@@ -63,15 +63,17 @@ public class NVGraph: NVObject {
 	}
 	
 	// MARK: Setters
-	public func setEntry(_ entry: NVObject) throws {
+	public func setEntry(_ entry: NVObject) {
 		if let fg = entry as? NVGraph {
 			if !contains(graph: fg) {
-				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(Name)).")
+				NVLog.log("Tried to set a Graph's (\(self.UUID.uuidString)) entry but it wasn't a child (\(entry.UUID.uuidString)).", level: .warning)
+				return
 			}
 		}
 		if let fn = entry as? NVNode {
 			if !contains(node: fn) {
-				throw NVError.invalid("Tried to set Graph's entry but it wasn't a child (\(Name)).")
+				NVLog.log("Tried to set a Graph's (\(self.UUID.uuidString)) entry but it wasn't a child (\(entry.UUID.uuidString)).", level: .warning)
+				return
 			}
 		}
 		_entry = entry
@@ -89,18 +91,20 @@ public class NVGraph: NVObject {
 	}
 	
 	@discardableResult
-	public func add(graph: NVGraph) throws -> NVGraph {
+	public func add(graph: NVGraph) -> NVGraph {
 		// cannot add self
 		if graph == self {
-			throw NVError.invalid("Tried to add a Graph to self (\(Name)).")
+			NVLog.log("Tried to add Graph to itself (\(self.UUID.uuidString)).", level: .warning)
+			return self
 		}
 		// already a child
 		if contains(graph: graph) {
-			throw NVError.invalid("Tried to add a Graph but it already exists (\(graph.Name) to \(Name)).")
+			NVLog.log("Tried to add Graph (\(graph.UUID.uuidString)) to Graph (\(self.UUID.uuidString)) but it was already a child.", level: .warning)
+			return graph
 		}
 		// unparent first
 		if graph._parent != nil {
-			try! graph._parent!.remove(graph: graph)
+			graph._parent!.remove(graph: graph)
 		}
 		// now add
 		graph._parent = self
@@ -110,9 +114,10 @@ public class NVGraph: NVObject {
 		return graph
 	}
 	
-	public func remove(graph: NVGraph) throws {
+	public func remove(graph: NVGraph) {
 		guard let idx = _graphs.index(of: graph) else {
-			throw NVError.invalid("Tried to remove Graph (\(graph.Name)) from (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove Graph (\(graph.UUID.uuidString)) from Graph (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
@@ -126,10 +131,11 @@ public class NVGraph: NVObject {
 	}
 	
 	@discardableResult
-	public func add(node: NVNode) throws -> NVNode {
+	public func add(node: NVNode) -> NVNode {
 		// already a child
 		if contains(node: node) {
-			throw NVError.invalid("Tried to add a Node but it already exists (to \(Name)).")
+			NVLog.log("Tried to add Node (\(node.UUID.uuidString)) to Graph (\(self.UUID.uuidString)) but it was already a child.", level: .warning)
+			return node
 		}
 		_nodes.append(node)
 		
@@ -137,9 +143,10 @@ public class NVGraph: NVObject {
 		return node
 	}
 	
-	public func remove(node: NVNode) throws {
+	public func remove(node: NVNode) {
 		guard let idx = _nodes.index(of: node) else {
-			throw NVError.invalid("Tried to remove a Node from (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove Node (\(node.UUID.uuidString)) from Graph (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_nodes.remove(at: idx)
 		
@@ -152,10 +159,11 @@ public class NVGraph: NVObject {
 	}
 	
 	@discardableResult
-	public func add(link: NVBaseLink) throws -> NVBaseLink {
+	public func add(link: NVBaseLink) -> NVBaseLink {
 		// already a child
 		if contains(link: link) {
-			throw NVError.invalid("Tried to add a BaseLink but it already exists (to \(Name)).")
+			NVLog.log("Tried to add a BaseLink (\(link.UUID.uuidString)) to Graph (\(self.UUID.uuidString)) but it was already a child.", level: .warning)
+			return link
 		}
 		_links.append(link)
 		
@@ -163,9 +171,10 @@ public class NVGraph: NVObject {
 		return link
 	}
 	
-	public func remove(link: NVBaseLink) throws {
+	public func remove(link: NVBaseLink) {
 		guard let idx = _links.index(of: link) else {
-			throw NVError.invalid("Tried to remove BaseLink from (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove BaseLink (\(link.UUID.uuidString)) from Graph (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_links.remove(at: idx)
 		
@@ -178,10 +187,11 @@ public class NVGraph: NVObject {
 	}
 	
 	@discardableResult
-	public func add(listener: NVListener) throws -> NVListener {
+	public func add(listener: NVListener) -> NVListener {
 		// already a child
 		if contains(listener: listener) {
-			throw NVError.invalid("Tried to add a Listener but it already exists (to Graph \(Name)).")
+			NVLog.log("Tried to add Listener (\(listener.UUID.uuidString)) to Graph (\(self.UUID.uuidString)) but it was already a child.", level: .warning)
+			return listener
 		}
 		_listeners.append(listener)
 		
@@ -189,9 +199,10 @@ public class NVGraph: NVObject {
 		return listener
 	}
 	
-	public func remove(listener: NVListener) throws {
+	public func remove(listener: NVListener) {
 		guard let idx = _listeners.index(of: listener) else {
-			throw NVError.invalid("Tried to remove Listener from Graph (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove Listener (\(listener.UUID.uuidString)) from Graph (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_listeners.remove(at: idx)
 		
@@ -204,10 +215,11 @@ public class NVGraph: NVObject {
 	}
 	
 	@discardableResult
-	public func add(exit: NVExitNode) throws -> NVExitNode {
+	public func add(exit: NVExitNode) -> NVExitNode {
 		// already a child
 		if contains(exit: exit) {
-			throw NVError.invalid("Tried to add an ExitNode but it alerady exists (to Graph \(Name)).")
+			NVLog.log("Tried to add Exit (\(exit.UUID.uuidString)) to Graph (\(self.UUID.uuidString)) but it was already a child.", level: .warning)
+			return exit
 		}
 		_exits.append(exit)
 		
@@ -215,9 +227,10 @@ public class NVGraph: NVObject {
 		return exit
 	}
 	
-	public func remove(exit: NVExitNode) throws {
+	public func remove(exit: NVExitNode) {
 		guard let idx = _exits.index(of: exit) else {
-			throw NVError.invalid("Tried to remove ExitNode from Graph (\(Name)) but it was not a child.")
+			NVLog.log("Tried to remove Exit (\(exit.UUID.uuidString)) from Graph (\(self.UUID.uuidString)) but it was not a child.", level: .warning)
+			return
 		}
 		_exits.remove(at: idx)
 		

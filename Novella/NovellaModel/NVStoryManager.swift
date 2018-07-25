@@ -136,7 +136,7 @@ public class NVStoryManager {
 					return falseDest.UUID == object.UUID
 				}
 			case is NVSwitch:
-				print("getLinksTo() encountered an NVSwitch which isn't yet implemented.")
+				NVLog.log("getLinksTo() doesn't yet handle Switch.", level: .warning)
 			default:
 				return false
 			}
@@ -150,7 +150,7 @@ public class NVStoryManager {
 		// javascript runtime error handling
 		_jsContext.exceptionHandler = { (ctx, ex) in
 			if let ex = ex {
-				print("JavaScript error: \(ex.toString())")
+				NVLog.log("JavaScript error: \(ex.toString())", level: .error)
 			}
 		}
 		
@@ -162,12 +162,12 @@ public class NVStoryManager {
 		let js_getvar: @convention(block) (String) -> Any? = { [weak self](name) in
 			for v in self!._variables {
 				if name == NVPath.fullPathTo(v) {
-					print("JS requested variable: \(name).  Found and returning value: \(v.Value).")
+					NVLog.log("JS requested variable: \(name).  Found and returning value: \(v.Value).", level: .debug)
 					return v.Value
 				}
 			}
 			
-			print("JS requested variable: \(name).  Could not find varible; returning nil.")
+			NVLog.log("JS requested variable: \(name).  Could not find varible; returning nil.", level: .debug)
 			return nil
 		}
 		_jsContext.setObject(js_getvar, forKeyedSubscript: "getvar" as (NSCopying & NSObjectProtocol))
@@ -184,12 +184,12 @@ public class NVStoryManager {
 			
 			// safety check
 			if variable == nil {
-				print("JS requested setting variable \"\(name)\" but was not found.")
+				NVLog.log("JS requested setting variable \"\(name)\" but was not found.", level: .debug)
 				return
 			}
 			
 			if !variable!.setValue(value) {
-				print("JS requested setting variable \"\(name)\" to value \"\(value)\" but it failed to do so.")
+				NVLog.log("JS requested setting variable \"\(name)\" to value \"\(value)\" but it failed to do so.", level: .debug)
 			}
 		}
 		_jsContext.setObject(js_setvar, forKeyedSubscript: "setvar" as (NSCopying & NSObjectProtocol))
@@ -197,7 +197,7 @@ public class NVStoryManager {
 	}
 	
 	let js_nvlog: @convention(block) (String) -> Void = { msg in
-		print("\nJavaScript Console: \(msg)")
+		NVLog.log("\nJavaScript Console: \(msg)", level: .info)
 	}
 }
 
@@ -226,12 +226,12 @@ extension NVStoryManager {
 
 		// remove from parent
 		if let parent = folder._parent {
-			try! parent.remove(folder: folder)
+			parent.remove(folder: folder)
 		}
 
 		// remove from story
 		if _story.contains(folder: folder) {
-			try! _story.remove(folder: folder)
+			_story.remove(folder: folder)
 		}
 
 		// actual remove
@@ -255,7 +255,7 @@ extension NVStoryManager {
 	}
 	
 	public func delete(variable: NVVariable) {
-		try! _folders.first(where: {$0.Variables.contains(variable)})?.remove(variable: variable)
+		_folders.first(where: {$0.Variables.contains(variable)})?.remove(variable: variable)
 		_variables.remove(at: _variables.index(of: variable)!)
 		_identifiables.remove(at: _identifiables.index(of: variable)!)
 		
@@ -280,9 +280,9 @@ extension NVStoryManager {
 		
 		// 1. remove from either story or its parent
 		if _story.contains(graph: graph) {
-			try! _story.remove(graph: graph)
+			_story.remove(graph: graph)
 		}
-		try! graph.Parent?.remove(graph: graph)
+		graph.Parent?.remove(graph: graph)
 		
 		// 2. delete all of its nodes
 		let nodes = graph.Nodes
@@ -349,7 +349,7 @@ extension NVStoryManager {
 		// 1. remove from all graphs containing it
 		_graphs.forEach { (graph) in
 			if graph.contains(link: link) {
-				try! graph.remove(link: link)
+				graph.remove(link: link)
 			}
 		}
 		
@@ -399,7 +399,7 @@ extension NVStoryManager {
 		// 1. remove from all graphs containing it
 		_graphs.forEach { (graph) in
 			if graph.contains(node: node) {
-				try! graph.remove(node: node)
+				graph.remove(node: node)
 			}
 		}
 		
@@ -419,7 +419,7 @@ extension NVStoryManager {
 				}
 				
 			case is NVSwitch:
-				print("NVStoryManager::delete(node): Tried to remove node form NVSwitch but is not yet implemented.")
+				NVLog.log("delete(node) tried to remove Node from Switch but it is not yet implemented.", level: .warning)
 				
 			default:
 				break
@@ -502,7 +502,7 @@ extension NVStoryManager {
 				_trashed.remove(at: i)
 				
 			default:
-				print("Tried to untrash some unhandled object: \(curr)")
+				NVLog.log("Tried to untrash some unhandled object: \(curr.UUID.uuidString)", level: .warning)
 			}
 		}
 	}

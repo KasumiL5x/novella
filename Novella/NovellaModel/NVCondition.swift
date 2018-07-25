@@ -41,12 +41,14 @@ public class NVCondition {
 		
 		// get a reference to the function
 		guard let execFunc = _manager._jsContext.objectForKeyedSubscript("executeCondition") else {
-			fatalError("Could not find JavaScript function executeCondition().")
+			NVLog.log("Condition could not find JavaScript executeCondition() function!", level: .error)
+			fatalError()
 		}
 		
 		// call the function so we can get its value back
 		guard let result = execFunc.call(withArguments: []) else {
-			fatalError("Could not execute JavaScript function executeCondition().")
+			NVLog.log("Condition could not execute JavaScript executeCondition() function!", level: .error)
+			fatalError()
 		}
 		
 		// JS will always return something, so worst case we get false

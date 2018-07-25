@@ -39,12 +39,14 @@ public class NVFunction {
 		
 		// get a reference to the function
 		guard let execFunc = _manager._jsContext.objectForKeyedSubscript("executeFunction") else {
-			fatalError("Could not find JavaScript function executeFunction().")
+			NVLog.log("Function could not find JavaScript executeFunction() function!", level: .error)
+			fatalError()
 		}
 		
 		// call the function so we can get its value back
 		guard let _ = execFunc.call(withArguments: []) else {
-			fatalError("Could not execute JavaScript function executeFunction().")
+			NVLog.log("Function could not execute JavaScript executeFunction() function!", level: .error)
+			fatalError()
 		}
 	}
 }

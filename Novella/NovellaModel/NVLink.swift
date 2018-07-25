@@ -31,7 +31,7 @@ public class NVLink : NVBaseLink {
 	// MARK: - Functions -
 	public func setDestination(dest: NVObject?) {
 		if dest != nil && !(dest!.isLinkable()) {
-			print("NVLink.setDestination was given a non-linkable NVObject.  The request was ignored.")
+			NVLog.log("Could not set Link's destination as the Object was not linkable (\(dest?.UUID.uuidString)).", level: .warning)
 			return
 		}
 		_transfer._destination = dest

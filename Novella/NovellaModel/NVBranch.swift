@@ -41,7 +41,7 @@ public class NVBranch : NVBaseLink {
 	// MARK: - Functions -
 	public func setTrueDestination(dest: NVObject?) {
 		if dest != nil && !(dest!.isLinkable()) {
-			print("NVBranch.setTrueDestination was given a non-linkable NVObject.  The request was ignored.")
+			NVLog.log("Could not set Branch's true destination as the Object was not linkable (\(dest?.UUID.uuidString)).", level: .warning)
 			return
 		}
 		_trueTransfer._destination = dest
@@ -50,7 +50,7 @@ public class NVBranch : NVBaseLink {
 	
 	public func setFalseDestination(dest: NVObject?) {
 		if dest != nil && !(dest!.isLinkable()) {
-			print("NVBranch.setFalseDestination was given a non-linkable NVObject.  The request was ignored.")
+			NVLog.log("Could not set Branch's false destination as the Object was not linkable (\(dest?.UUID.uuidString)).", level: .warning)
 			return
 		}
 		_falseTransfer._destination = dest

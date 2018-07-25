@@ -51,7 +51,8 @@ public enum NVDataType {
 		case "integer": return .integer
 		case "double": return .double
 		default:
-			fatalError("Forgot to handle DataType string conversion!") // TODO: Switch to throws? IDK.
+			NVLog.log("Forgot to handle DataType string conversion (\(str))!", level: .error)
+			fatalError()
 		}
 	}
 }

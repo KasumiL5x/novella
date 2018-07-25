@@ -63,7 +63,7 @@ public class NVObject {
 	
 	// MARK: - Linking -
 	public func isLinkable() -> Bool {
-		print("NVObject::isLinkable() should be overridden (\(self)).")
+		NVLog.log("NVObject::isLinkable() should be overridden (\(self.UUID.uuidString)).", level: .warning)
 		return false
 	}
 }
