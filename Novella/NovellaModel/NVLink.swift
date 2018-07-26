@@ -30,11 +30,7 @@ public class NVLink : NVBaseLink {
 	
 	// MARK: - Functions -
 	public func setDestination(dest: NVObject?) {
-		if dest != nil && !(dest!.isLinkable()) {
-			NVLog.log("Could not set Link's destination as the Object was not linkable (\(dest?.UUID.uuidString)).", level: .warning)
-			return
-		}
-		_transfer._destination = dest
+		_transfer.Destination = dest
 		_manager.Delegates.forEach{$0.onStoryLinkSetDestination(link: self, dest: dest)}
 	}
 }
