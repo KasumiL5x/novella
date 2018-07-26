@@ -71,7 +71,7 @@ class MainViewController: NSViewController {
 				graph = first
 			} else {
 				graph = _document.Manager.makeGraph(name: "main")
-				try! _document.Manager.Story.add(graph: graph)
+				_document.Manager.Story.add(graph: graph)
 			}
 			_graphViewVC?.setup(doc: _document, graph: graph, delegate: self)
 			setSelectedGraph(graph: graph, allowReloadSelf: true)
@@ -185,9 +185,9 @@ extension MainViewController {
 	func addGraph(parent: NVGraph?) {
 		let graph = _document.Manager.makeGraph(name: NSUUID().uuidString)
 		if parent == nil {
-			try! _document.Manager.Story.add(graph: graph)
+			_document.Manager.Story.add(graph: graph)
 		} else {
-			try! parent!.add(graph: graph)
+			parent!.add(graph: graph)
 		}
 		
 		getActiveGraph()?.rootFor(graph: graph)

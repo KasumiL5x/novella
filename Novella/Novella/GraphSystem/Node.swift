@@ -235,19 +235,15 @@ class Node: NSView {
 	}
 	@objc private func onContextAddLink() {
 		let link = _graphView.Manager.makeLink(origin: self.Object)
-		do { try _graphView.NovellaGraph.add(link: link) } catch {
-			fatalError("Tried to add a new link but couldn't add it to this graph.")
-		}
+		_graphView.NovellaGraph.add(link: link)
 	}
 	@objc private func onContextAddBranch() {
 		let link = _graphView.Manager.makeBranch(origin: self.Object)
-		do{ try _graphView.NovellaGraph.add(link: link) } catch {
-			fatalError("Tried to add a new branch but couldn't add it to this graph.")
-		}
+		_graphView.NovellaGraph.add(link: link)
 	}
 	@objc private func onContextSetEntry() {
 		let currentEntry = _graphView.getNodeFrom(object: _graphView.NovellaGraph.Entry, includeParentGraphs: false)
-		try! _graphView.NovellaGraph.setEntry(self.Object)
+		_graphView.NovellaGraph.setEntry(self.Object)
 		currentEntry?.redraw()
 		self.redraw()
 	}

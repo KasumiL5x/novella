@@ -520,34 +520,25 @@ extension GraphView {
 	func makeDialog(at: CGPoint) {
 		let nvDialog = _document.Manager.makeDialog()
 		nvDialog.Position = at
-		do { try _nvGraph.add(node: nvDialog) } catch {
-			// TODO: Possibly handle this by allowing for a remove(node:) in story which removes it from everything?
-			fatalError("Tried to add a new dialog but couldn't add it to this graph.")
-		}
+		_nvGraph.add(node: nvDialog)
 	}
 	
 	func makeDelivery(at: CGPoint) {
 		let nvDelivery = _document.Manager.makeDelivery()
 		nvDelivery.Position = at
-		do { try _nvGraph.add(node: nvDelivery) } catch {
-			fatalError("Tried to add a new delivery but couldn't add it to this graph.")
-		}
+		_nvGraph.add(node: nvDelivery)
 	}
 	
 	func makeContext(at: CGPoint) {
 		let nvContext = _document.Manager.makeContext()
 		nvContext.Position = at
-		do { try _nvGraph.add(node: nvContext) } catch {
-			fatalError("Tried to add a new context but couldn't add it to this graph.")
-		}
+		_nvGraph.add(node: nvContext)
 	}
 	
 	func makeGraph(at: CGPoint) {
 		let nvGraph = _document.Manager.makeGraph(name: NSUUID().uuidString)
 		nvGraph.Position = at
-		do { try _nvGraph.add(graph: nvGraph) } catch {
-			fatalError("Tried to add a new graph but couldn't add it to this graph.")
-		}
+		_nvGraph.add(graph: nvGraph)
 	}
 	
 	// MARK: Nodes
@@ -659,7 +650,7 @@ extension GraphView {
 	@objc private func addLinkToSelectedNodes() {
 		_selectionHandler?.Selection.forEach({ (node) in
 			let link = Manager.makeLink(origin: node.Object)
-			try! NovellaGraph.add(link: link)
+			NovellaGraph.add(link: link)
 			// the rest is handled in the story callbacks
 		})
 	}
@@ -668,7 +659,7 @@ extension GraphView {
 	@objc private func addBranchToSelectedNodes() {
 		_selectionHandler?.Selection.forEach({ (node) in
 			let branch = Manager.makeBranch(origin: node.Object)
-			try! NovellaGraph.add(link: branch)
+			NovellaGraph.add(link: branch)
 		})
 	}
 }

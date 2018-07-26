@@ -141,7 +141,7 @@ class VariableEditorViewController: NSViewController {
 	@IBAction private func onAddVariable(_ sender: NSButton) {
 		if let manager = _document?.Manager, let parent = getSelectedFolder() {
 			let variable = manager.makeVariable(name: NSUUID().uuidString, type: .boolean)
-			try! parent.add(variable: variable)
+			parent.add(variable: variable)
 			_outlineView.reloadData()
 		}
 	}
@@ -150,9 +150,9 @@ class VariableEditorViewController: NSViewController {
 		if let manager = _document?.Manager {
 			let folder = manager.makeFolder(name: NSUUID().uuidString)
 			if let parent = getSelectedFolder() {
-				try! parent.add(folder: folder)
+				parent.add(folder: folder)
 			} else {
-				try! manager.Story.add(folder: folder)
+				manager.Story.add(folder: folder)
 			}
 			
 			_outlineView.reloadData()
