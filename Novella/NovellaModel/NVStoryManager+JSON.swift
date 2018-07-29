@@ -544,10 +544,12 @@ extension NVStoryManager {
 				
 				if let defaultTransfer = curr["dtransfer"].dictionary {
 					let transferDestination = defaultTransfer["destination"]!.string!
-					if let destination = storyManager.find(uuid: transferDestination) {
-						swtch.DefaultTransfer.Destination = destination
-					} else {
-						NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transferDestination)) when setting a Switch's default Transfer's destination (\(uuid.uuidString)).", level: .warning)
+					if !transferDestination.isEmpty {
+						if let destination = storyManager.find(uuid: transferDestination) {
+							swtch.DefaultTransfer.Destination = destination
+						} else {
+							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transferDestination)) when setting a Switch's default Transfer's destination (\(uuid.uuidString)).", level: .warning)
+						}
 					}
 					
 					if let function = defaultTransfer["function"]?.dictionary {
