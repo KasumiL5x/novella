@@ -190,13 +190,16 @@ class GraphView: NSView {
 			switch curr {
 			case is NVLink:
 				node.addOutput(pin: makePinViewLink(baseLink: curr as! NVLink, forNode: node))
-				break
+				
 			case is NVBranch:
 				node.addOutput(pin: makePinViewBranch(baseLink: curr as! NVBranch, forNode: node))
-				break
+				
+			case is NVSwitch:
+				node.addOutput(pin: makePinViewSwitch(baseLink: curr as! NVSwitch, forNode: node))
+				
 			default:
 				print("Found a link that is not yet supported (\(curr)).")
-				break
+				
 			}
 		}
 	}
@@ -618,13 +621,16 @@ extension GraphView {
 	private func makePinViewLink(baseLink: NVLink, forNode: Node) -> PinViewLink {
 		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
-		
 		return pin
 	}
 	private func makePinViewBranch(baseLink: NVBranch, forNode: Node) -> PinViewBranch {
 		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
 		_allPinViews.append(pin)
-		
+		return pin
+	}
+	private func makePinViewSwitch(baseLink: NVSwitch, forNode: Node) -> PinViewSwitch {
+		let pin = PinViewSwitch(link: baseLink, graphView: self, owner: forNode)
+		_allPinViews.append(pin)
 		return pin
 	}
 	
@@ -727,6 +733,9 @@ extension GraphView: NVStoryDelegate {
 			
 		case is NVBranch:
 			originView.addOutput(pin: makePinViewBranch(baseLink: link as! NVBranch, forNode: originView))
+			
+		case is NVSwitch:
+			originView.addOutput(pin: makePinViewSwitch(baseLink: link as! NVSwitch, forNode: originView))
 			
 		default:
 			print("GraphView::onStoryGraphAddLink() encountered unsupported link (\(link)).")

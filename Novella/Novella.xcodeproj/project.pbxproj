@@ -34,6 +34,7 @@
 		6513105F20C30F050078C30C /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104320C30F050078C30C /* NVDelivery.swift */; };
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
 		65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65223B5220C68D4E008E8A95 /* PinBoard.swift */; };
+		652ACC34210C4A82008EF078 /* PinViewSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC33210C4A82008EF078 /* PinViewSwitch.swift */; };
 		654918E320D42165008467FF /* NVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E220D42165008467FF /* NVReader.swift */; };
 		654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E420D6946B008467FF /* ChoiceWheelView.swift */; };
 		654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
@@ -157,6 +158,7 @@
 		6513104320C30F050078C30C /* NVDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
+		652ACC33210C4A82008EF078 /* PinViewSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewSwitch.swift; sourceTree = "<group>"; };
 		654918E220D42165008467FF /* NVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReader.swift; sourceTree = "<group>"; };
 		654918E420D6946B008467FF /* ChoiceWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWheelView.swift; sourceTree = "<group>"; };
 		655E707120FE113500D9FF5B /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				65F7F84E20C31713004663D6 /* PinView.swift */,
 				65F7F85120C31713004663D6 /* PinViewBranch.swift */,
 				65F7F85320C31713004663D6 /* PinViewLink.swift */,
+				652ACC33210C4A82008EF078 /* PinViewSwitch.swift */,
 			);
 			name = PinViews;
 			sourceTree = "<group>";
@@ -751,6 +754,7 @@
 				65F7F84420C3168A004663D6 /* CurveHelper.swift in Sources */,
 				65F7F86320C31714004663D6 /* PinView.swift in Sources */,
 				65F7F89B20C317F4004663D6 /* ConditionPopoverViewController.swift in Sources */,
+				652ACC34210C4A82008EF078 /* PinViewSwitch.swift in Sources */,
 				654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */,
 				65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */,
 				65F7F8A520C3182F004663D6 /* VariableEditorViewController.swift in Sources */,

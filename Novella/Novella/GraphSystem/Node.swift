@@ -39,6 +39,7 @@ class Node: NSView {
 	private var _contextItemEdit: NSMenuItem
 	private var _contextItemAddLink: NSMenuItem
 	private var _contextItemAddBranch: NSMenuItem
+	private var _contextItemAddSwitch: NSMenuItem
 	private var _contextItemEntry: NSMenuItem
 	private var _contextItemTrash: NSMenuItem
 	//
@@ -108,6 +109,7 @@ class Node: NSView {
 		self._contextItemEdit = NSMenuItem(title: "Edit", action: #selector(Node.onContextEdit), keyEquivalent: "")
 		self._contextItemAddLink = NSMenuItem(title: "Add Link", action: #selector(Node.onContextAddLink), keyEquivalent: "")
 		self._contextItemAddBranch = NSMenuItem(title: "Add Branch", action: #selector(Node.onContextAddBranch), keyEquivalent: "")
+		self._contextItemAddSwitch = NSMenuItem(title: "Add Switch", action: #selector(Node.onContextAddSwitch), keyEquivalent: "")
 		self._contextItemEntry = NSMenuItem(title: "Set as Entry", action: #selector(Node.onContextSetEntry), keyEquivalent: "")
 		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(Node.onContextTrash), keyEquivalent: "")
 		//
@@ -119,6 +121,7 @@ class Node: NSView {
 		_contextMenu.addItem(_contextItemEdit)
 		_contextMenu.addItem(_contextItemAddLink)
 		_contextMenu.addItem(_contextItemAddBranch)
+		_contextMenu.addItem(_contextItemAddSwitch)
 		_contextMenu.addItem(NSMenuItem.separator())
 		_contextMenu.addItem(_contextItemEntry)
 		_contextMenu.addItem(NSMenuItem.separator())
@@ -241,6 +244,10 @@ class Node: NSView {
 		let link = _graphView.Manager.makeBranch(origin: self.Object)
 		_graphView.NovellaGraph.add(link: link)
 	}
+	@objc private func onContextAddSwitch() {
+		let swtch = _graphView.Manager.makeSwitch(origin: self.Object)
+		_graphView.NovellaGraph.add(link: swtch)
+	}
 	@objc private func onContextSetEntry() {
 		let currentEntry = _graphView.getNodeFrom(object: _graphView.NovellaGraph.Entry, includeParentGraphs: false)
 		_graphView.NovellaGraph.setEntry(self.Object)
@@ -289,6 +296,7 @@ class Node: NSView {
 		_contextItemEdit.isEnabled = !_trashMode
 		_contextItemAddLink.isEnabled = !_trashMode
 		_contextItemAddBranch.isEnabled = !_trashMode
+		_contextItemAddSwitch.isEnabled = !_trashMode
 		_contextItemEntry.isEnabled = !_trashMode
 		_contextItemTrash.title = _trashMode ? "Untrash" : "Trash"
 	}

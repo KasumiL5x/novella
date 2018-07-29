@@ -226,6 +226,15 @@
 								"ttransfer": { "$ref": "#/definitions/transfer" },
 								"ftransfer": { "$ref": "#/definitions/transfer" }
 							}
+						},
+						// switch
+						{
+							"properties": {
+								"linktype": { "enum": ["switch"] },
+								"precondition": { "$ref": "#/definitions/condition" },
+								"dtransfer": { "$ref": "#/definitions/transfer" }
+								// TODO: Complete switch's properties.
+							}
 						}
 					]
 				}

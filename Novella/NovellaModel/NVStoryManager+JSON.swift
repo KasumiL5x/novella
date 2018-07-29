@@ -119,12 +119,21 @@ extension NVStoryManager {
 					ftransfer["function"] = ffunction
 				entry["ftransfer"] = ftransfer
 			}
-			else if curr is NVSwitch {
+			else if let asSwitch = curr as? NVSwitch {
 				entry["linktype"] = "switch"
-				NVLog.log("NVStoryManager::toJSON(): Haven't implemented Switch export yet.", level: .warning)
-				// TODO: Variable (UUID?)
-				// TODO: Default Transfer.
-				// TODO: [value:Transfer].
+				
+				var precondition: JSONDict = [:]
+				precondition["jscode"] = ""//asSwitch.PreCondition.Javascript // TODO: Add precondition to switch.
+				entry["precondition"] = precondition
+				
+				var dtransfer: JSONDict = [:]
+				dtransfer["destination"] = asSwitch.DefaultTransfer.Destination?.UUID.uuidString ?? ""
+					var dfunction: JSONDict = [:]
+					dfunction["jscode"] = asSwitch.DefaultTransfer.Function.Javascript
+					dtransfer["function"] = dfunction
+				entry["dtransfer"] = dtransfer
+				
+				// TODO: The rest of Switches.
 			}
 			else {
 				NVLog.log("NVStoryManager::toJSON(): Encountered NVBaseLink while exporting.  This should never happen.", level: .warning)
@@ -483,7 +492,7 @@ extension NVStoryManager {
 						link.Transfer.Function.Javascript = function["jscode"]!.string!
 					}
 				}
-				break
+
 			case "branch":
 				let branch = storyManager.makeBranch(origin: origin, uuid: uuid)
 				
@@ -524,10 +533,28 @@ extension NVStoryManager {
 						branch.FalseTransfer.Function.Javascript = function["jscode"]!.string!
 					}
 				}
-				break
+
 			case "switch":
-				NVLog.log("NVStoryManager::fromJSON(): Encountered Switch while parsing links, but they are not yet implemented.", level: .warning)
-				break
+				let swtch = storyManager.makeSwitch(origin: origin, uuid: uuid)
+				
+				// TODO: Preconditions
+//				if let precondition = curr["precondition"].dictionary {
+//					branch.PreCondition.Javascript = precondition["jscode"]!.string!
+//				}
+				
+				if let defaultTransfer = curr["dtransfer"].dictionary {
+					let transferDestination = defaultTransfer["destination"]!.string!
+					if let destination = storyManager.find(uuid: transferDestination) {
+						swtch.DefaultTransfer.Destination = destination
+					} else {
+						NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transferDestination)) when setting a Switch's default Transfer's destination (\(uuid.uuidString)).", level: .warning)
+					}
+					
+					if let function = defaultTransfer["function"]?.dictionary {
+						swtch.DefaultTransfer.Function.Javascript = function["jscode"]!.string!
+					}
+				}
+				
 			default:
 				NVLog.log("NVStoryManager::fromJSON(): Encountered invalid link type (\(curr["linktype"].string!))", level: .warning)
 			}
@@ -801,6 +828,16 @@ extension NVStoryManager {
 									"condition": [ "$ref": "#/definitions/condition" ],
 									"ttransfer": [ "$ref": "#/definitions/transfer" ],
 									"ftransfer": [ "$ref": "#/definitions/transfer" ]
+								]
+							],
+							
+							// switch
+							[
+								"properties": [
+									"linktype": [ "enum": ["switch"] ],
+									"precondition": [ "$ref": "#/definitions/condition" ],
+									"dtransfer": [ "$ref": "#/definitions/transfer" ]
+									// TODO: Complete switch's properties.
 								]
 							]
 						]

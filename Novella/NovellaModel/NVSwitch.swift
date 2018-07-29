@@ -16,6 +16,17 @@ public class NVSwitch : NVBaseLink {
 	private var _defaultTransfer: NVTransfer
 	private var _values: [AnyHashable:NVTransfer]
 	
+	// MARK: - Properties -
+	public var Variable: NVVariable? {
+		get{ return _variable }
+	}
+	public var DefaultTransfer: NVTransfer {
+		get{  return _defaultTransfer }
+	}
+	public var Values: [AnyHashable:NVTransfer] {
+		get{ return _values }
+	}
+	
 	// MARK: - Initialization -
 	override init(manager: NVStoryManager, uuid: NSUUID, origin: NVObject) {
 		self._variable = nil
