@@ -22,6 +22,8 @@ public class NVVariable: NVObject {
 		get{ return _synopsis }
 		set{
 			_synopsis = newValue
+			
+			NVLog.log("Variable (\(self.UUID)) synopsis set to (\(_synopsis)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryVariableSynopsisChanged(variable: self, synopsis: _synopsis)}
 		}
 	}
@@ -38,6 +40,8 @@ public class NVVariable: NVObject {
 		get{ return _constant }
 		set{
 			_constant = newValue
+			
+			NVLog.log("Variable (\(self.UUID)) constant set to (\(_constant)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryVariableConstantChanged(variable: self, constant: _constant)}
 		}
 	}
@@ -70,6 +74,7 @@ public class NVVariable: NVObject {
 		_value = type.defaultValue
 		_initialValue = type.defaultValue
 		
+		NVLog.log("Variable (\(self.UUID)) type set to (\(_type)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryVariableTypeChanged(variable: self, type: _type)}
 	}
 
@@ -92,6 +97,8 @@ public class NVVariable: NVObject {
 		case .integer:
 			_value = val as! Int
 		}
+		
+		NVLog.log("Variable (\(self.UUID)) value set to (\(_value)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryVariableValueChanged(variable: self, value: _value)}
 		return true
 	}
@@ -113,6 +120,8 @@ public class NVVariable: NVObject {
 			_initialValue = val as! Int
 			_value = val as! Int
 		}
+		
+		NVLog.log("Variable (\(self.UUID)) initial value set to (\(_initialValue)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryVariableInitialValueChanged(variable: self, value: _initialValue)}
 		return true
 	}

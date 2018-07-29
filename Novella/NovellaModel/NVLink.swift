@@ -31,6 +31,8 @@ public class NVLink : NVBaseLink {
 	// MARK: - Functions -
 	public func setDestination(dest: NVObject?) {
 		_transfer.Destination = dest
+		
+		NVLog.log("Link (\(self.UUID)) destination set to (\(dest?.UUID.uuidString ?? "nil")).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryLinkSetDestination(link: self, dest: dest)}
 	}
 }

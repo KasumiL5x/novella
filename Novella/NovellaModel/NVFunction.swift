@@ -16,6 +16,8 @@ public class NVFunction {
 		get{ return _javascript }
 		set{
 			_javascript = newValue
+			
+			NVLog.log("Function updated.", level: .info)
 			_manager.Delegates.forEach{$0.onStoryFunctionUpdated(function: self)}
 		} // TODO: Make this a function and validate the JS upon change?
 	}

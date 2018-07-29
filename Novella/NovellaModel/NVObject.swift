@@ -39,6 +39,8 @@ public class NVObject {
 		set {
 			let oldName = _name
 			_name = newValue
+			
+			NVLog.log("Object (\(self.UUID)) renamed from (\(oldName)) to (\(_name)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryObjectNameChanged(obj: self, oldName: oldName, newName: _name)}
 		}
 	}

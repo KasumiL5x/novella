@@ -18,6 +18,8 @@ public class NVDelivery: NVNode {
 		get { return _content }
 		set {
 			_content = newValue
+			
+			NVLog.log("Delivery (\(self.UUID)) content set to (\(_content)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryDeliveryContentChanged(content: _content, node: self)}
 		}
 	}
@@ -25,6 +27,8 @@ public class NVDelivery: NVNode {
 		get { return _directions }
 		set {
 			_directions = newValue
+			
+			NVLog.log("Delivery (\(self.UUID)) directions set to (\(_directions)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryDeliveryDirectionsChanged(directions: _directions, node: self)}
 		}
 	}

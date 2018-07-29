@@ -18,6 +18,8 @@ public class NVCondition {
 		get{ return _javascript }
 		set{
 			_javascript = newValue
+			
+			NVLog.log("Condition updated.", level: .info)
 			_manager.Delegates.forEach{$0.onStoryConditionUpdated(condition: self)}
 		} // TODO: Make this a function and validate the JS upon change?
 	}

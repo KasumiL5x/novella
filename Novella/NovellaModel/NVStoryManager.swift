@@ -209,6 +209,7 @@ extension NVStoryManager {
 		_folders.append(folder)
 		_identifiables.append(folder)
 		
+		NVLog.log("Created a new Folder (\(folder.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeFolder(folder: folder)}
 		return folder
 	}
@@ -238,6 +239,7 @@ extension NVStoryManager {
 		_folders.remove(at: _folders.index(of: folder)!)
 		_identifiables.remove(at: _identifiables.index(of: folder)!)
 
+		NVLog.log("Deleted Folder (\(folder.UUID))" + (deleteContents ? " and its contents." : "."), level: .info)
 		_delegates.forEach{$0.onStoryDeleteFolder(folder: folder, contents: deleteContents)}
 	}
 }
@@ -250,6 +252,7 @@ extension NVStoryManager {
 		_variables.append(variable)
 		_identifiables.append(variable)
 		
+		NVLog.log("Created a new Variable (\(variable.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeVariable(variable: variable)}
 		return variable
 	}
@@ -259,6 +262,7 @@ extension NVStoryManager {
 		_variables.remove(at: _variables.index(of: variable)!)
 		_identifiables.remove(at: _identifiables.index(of: variable)!)
 		
+		NVLog.log("Deleted Variable (\(variable.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryDeleteVariable(variable: variable)}
 	}
 }
@@ -271,6 +275,7 @@ extension NVStoryManager {
 		_graphs.append(graph)
 		_identifiables.append(graph)
 		
+		NVLog.log("Created a new Graph (\(graph.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeGraph(graph: graph)}
 		return graph
 	}
@@ -309,6 +314,7 @@ extension NVStoryManager {
 		_identifiables.remove(at: _identifiables.index(of: graph)!)
 	
 		// delegate
+		NVLog.log("Deleted Graph (\(graph.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryDeleteGraph(graph: graph)}
 	}
 }
@@ -321,6 +327,7 @@ extension NVStoryManager {
 		_links.append(link)
 		_identifiables.append(link)
 		
+		NVLog.log("Created a new Link (\(link.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeLink(link: link)}
 		return link
 	}
@@ -331,6 +338,7 @@ extension NVStoryManager {
 		_links.append(branch)
 		_identifiables.append(branch)
 		
+		NVLog.log("Created a new Branch (\(branch.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeBranch(branch: branch)}
 		return branch
 	}
@@ -341,6 +349,7 @@ extension NVStoryManager {
 		_links.append(swtch)
 		_identifiables.append(swtch)
 		
+		NVLog.log("Created a new Switch (\(swtch.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeSwitch(theSwitch: swtch)}
 		return swtch
 	}
@@ -359,6 +368,7 @@ extension NVStoryManager {
 		// 3. remove from all identifiables
 		_identifiables.remove(at: _identifiables.index(of: link)!)
 		
+		NVLog.log("Deleted Link (\(link.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryDeleteLink(link: link)}
 	}
 }
@@ -371,6 +381,7 @@ extension NVStoryManager {
 		_nodes.append(dialog)
 		_identifiables.append(dialog)
 		
+		NVLog.log("Created a new Dialog (\(dialog.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeDialog(dialog: dialog)}
 		return dialog
 	}
@@ -381,6 +392,7 @@ extension NVStoryManager {
 		_nodes.append(delivery)
 		_identifiables.append(delivery)
 		
+		NVLog.log("Created a new Delivery (\(delivery.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeDelivery(delivery: delivery)}
 		return delivery
 	}
@@ -391,6 +403,7 @@ extension NVStoryManager {
 		_nodes.append(context)
 		_identifiables.append(context)
 		
+		NVLog.log("Created a new Context (\(context.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeContext(context: context)}
 		return context
 	}
@@ -438,6 +451,7 @@ extension NVStoryManager {
 		// 5. remove from all identifiables
 		_identifiables.remove(at: _identifiables.index(of: node)!)
 		
+		NVLog.log("Deleted Node (\(node.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryDeleteNode(node: node)}
 	}
 }
@@ -451,6 +465,7 @@ extension NVStoryManager {
 		_entities.append(entity)
 		_identifiables.append(entity)
 		
+		NVLog.log("Created a new Entity (\(entity.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryMakeEntity(entity: entity)}
 		return entity
 	}
@@ -462,6 +477,7 @@ extension NVStoryManager {
 		// 2. remove from all identifiables
 		_identifiables.remove(at: _identifiables.index(of: entity)!)
 		
+		NVLog.log("Deleted Entity (\(entity.UUID)).", level: .info)
 		_delegates.forEach{$0.onStoryDeleteEntity(entity: entity)}
 	}
 	// handle in trash below
@@ -471,12 +487,16 @@ extension NVStoryManager {
 extension NVStoryManager {
 	func trash(_ item: NVObject) {
 		_trashed.append(item)
+		
+		NVLog.log("Object (\(item.UUID)) trashed.", level: .info)
 		_delegates.forEach{$0.onStoryTrashObject(object: item)}
 	}
 	
 	func untrash(_ item: NVObject) {
 		if let idx = _trashed.index(of: item) {
 			_trashed.remove(at: idx)
+			
+			NVLog.log("Object (\(item.UUID)) untrashed.", level: .info)
 			_delegates.forEach{$0.onStoryUntrashObject(object: item)}
 		}
 	}

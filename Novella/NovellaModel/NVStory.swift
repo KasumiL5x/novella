@@ -27,6 +27,8 @@ public class NVStory {
 		get{ return _name }
 		set{
 			_name = newValue
+			
+			NVLog.log("Story name changed to (\(_name)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryNameChanged(story: self, name: _name)}
 		}
 	}
@@ -59,6 +61,7 @@ public class NVStory {
 		// now add
 		_folders.append(folder)
 		
+		NVLog.log("Folder (\(folder.UUID)) added to Story.", level: .info)
 		_manager.Delegates.forEach{$0.onStoryAddFolder(folder: folder)}
 		return folder
 	}
@@ -70,6 +73,7 @@ public class NVStory {
 		}
 		_folders.remove(at: idx)
 		
+		NVLog.log("Folder (\(folder.UUID)) removed from Story.", level: .info)
 		_manager.Delegates.forEach{$0.onStoryRemoveFolder(folder: folder)}
 	}
 	
@@ -97,6 +101,7 @@ public class NVStory {
 		graph._parent = nil
 		_graphs.append(graph)
 		
+		NVLog.log("Graph (\(graph.UUID)) added to Story.", level: .info)
 		_manager.Delegates.forEach{$0.onStoryAddGraph(graph: graph)}
 		return graph
 	}
@@ -108,6 +113,7 @@ public class NVStory {
 		}
 		_graphs.remove(at: idx)
 		
+		NVLog.log("Graph (\(graph.UUID)) removed from Story.", level: .info)
 		_manager.Delegates.forEach{$0.onStoryRemoveGraph(graph: graph)}
 	}
 }

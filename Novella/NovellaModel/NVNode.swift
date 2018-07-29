@@ -26,6 +26,8 @@ public class NVNode: NVObject {
 		get { return _preview }
 		set {
 			_preview = newValue
+			
+			NVLog.log("Node (\(self.UUID)) preview set to (\(_preview)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryNodePreviewChanged(preview: _preview, node: self)}
 		}
 	}
@@ -33,6 +35,8 @@ public class NVNode: NVObject {
 		get{ return _sizeType }
 		set{
 			_sizeType = newValue
+			
+			NVLog.log("Node (\(self.UUID)) size set to (\(_sizeType)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryNodeSizeChanged(node: self)}
 		}
 	}

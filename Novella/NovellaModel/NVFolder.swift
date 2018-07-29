@@ -20,6 +20,8 @@ public class NVFolder: NVObject {
 		get{ return _synopsis }
 		set{
 			_synopsis = newValue
+			
+			NVLog.log("Folder (\(self.UUID)) synopsis set to (\(_synopsis)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryFolderSynopsisChanged(folder: self, synopsis: _synopsis)}
 		}
 	}
@@ -79,6 +81,7 @@ public class NVFolder: NVObject {
 		folder._parent = self
 		_folders.append(folder)
 		
+		NVLog.log("Folder (\(folder.UUID)) added to Folder (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryFolderAddFolder(parent: self, child: folder)}
 		return folder
 	}
@@ -91,6 +94,7 @@ public class NVFolder: NVObject {
 		_folders[idx]._parent = nil
 		_folders.remove(at: idx)
 		
+		NVLog.log("Folder (\(folder.UUID)) removed from (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryFolderRemoveFolder(parent: self, child: folder)}
 	}
 	
@@ -132,6 +136,7 @@ public class NVFolder: NVObject {
 		variable._folder = self
 		_variables.append(variable)
 		
+		NVLog.log("Variable (\(variable.UUID)) added to Folder (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryFolderAddVariable(parent: self, child: variable)}
 		return variable
 	}
@@ -144,6 +149,7 @@ public class NVFolder: NVObject {
 		_variables[idx]._folder = nil
 		_variables.remove(at: idx)
 		
+		NVLog.log("Variable (\(variable.UUID)) removed from Folder (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryFolderRemoveVariable(parent: self, child: variable)}
 	}
 	

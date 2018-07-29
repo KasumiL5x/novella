@@ -98,59 +98,44 @@ class StoryDelegate: NVStoryDelegate {
 	}
 	
 	func onStoryGraphAddGraph(graph: NVGraph, parent: NVGraph) {
-		print("Added graph \(graph.Name) to graph \(parent.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphAddNode(node: NVNode, parent: NVGraph) {
-		print("Added node \(node.Name) to graph \(parent.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphAddLink(link: NVBaseLink, parent: NVGraph) {
-		print("Added link \(link.UUID) to graph \(parent.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphAddListener(listener: NVListener, parent: NVGraph) {
-		print("Added listener \(listener.UUID) to graph \(parent.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphRemoveGraph(graph: NVGraph, from: NVGraph) {
-		print("Removed graph \(graph.Name) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphRemoveNode(node: NVNode, from: NVGraph) {
-		print("Removed node \(node.Name) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphRemoveLink(link: NVBaseLink, from: NVGraph) {
-		print("Removed link \(link.UUID) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphRemoveListener(listener: NVListener, from: NVGraph) {
-		print("Removed listener \(listener.UUID) from graph \(from.Name).")
 		_mvc.reloadSelectedGraph()
 	}
 	func onStoryGraphSetEntry(entry: NVObject, graph: NVGraph) {
-		print("Changed graph's entry to \(entry.UUID).")
 		_mvc.reloadSelectedGraph()
 	}
 	
 	func onStoryNodePreviewChanged(preview: String, node: NVNode) {
-		print("Changed node's preview to \"\(preview)\".")
 	}
 	func onStoryDialogContentChanged(content: String, node: NVDialog) {
-		print("Changed dialog's content to \"\(content)\".")
 	}
 	func onStoryDialogDirectionsChanged(directions: String, node: NVDialog) {
-		print("Changed dialog's directions to \"\(directions)\".")
 	}
 	func onStoryDialogSpeakerChanged(speaker: NVEntity?, node: NVDialog) {
-		print("Changed dialog's speaker to \"\(speaker?.Name ?? "none")\".")
 	}
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery) {
-		print("Changed delivery's content to \"\(content)\".")
 	}
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
-		print("Changed delivery's directions to \"\(directions)\".")
 	}
 	
 	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {

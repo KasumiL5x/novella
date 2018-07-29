@@ -73,6 +73,7 @@ public class NVGraph: NVObject {
 		}
 		_entry = entry
 		
+		NVLog.log("Graph (\(self.UUID)) Entry set to (\(entry.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphSetEntry(entry: entry, graph: self)}
 	}
 	
@@ -105,6 +106,7 @@ public class NVGraph: NVObject {
 		graph._parent = self
 		_graphs.append(graph)
 		
+		NVLog.log("Graph (\(graph.UUID)) added to Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphAddGraph(graph: graph, parent: self)}
 		return graph
 	}
@@ -117,6 +119,7 @@ public class NVGraph: NVObject {
 		_graphs[idx]._parent = nil
 		_graphs.remove(at: idx)
 		
+		NVLog.log("Graph (\(graph.UUID)) removed from Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphRemoveGraph(graph: graph, from: self)}
 	}
 	
@@ -134,6 +137,7 @@ public class NVGraph: NVObject {
 		}
 		_nodes.append(node)
 		
+		NVLog.log("Node (\(node.UUID)) added to Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphAddNode(node: node, parent: self)}
 		return node
 	}
@@ -145,6 +149,7 @@ public class NVGraph: NVObject {
 		}
 		_nodes.remove(at: idx)
 		
+		NVLog.log("Node (\(node.UUID)) removed from Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphRemoveNode(node: node, from: self)}
 	}
 	
@@ -162,6 +167,7 @@ public class NVGraph: NVObject {
 		}
 		_links.append(link)
 		
+		NVLog.log("Link (\(link.UUID)) added to Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphAddLink(link: link, parent: self)}
 		return link
 	}
@@ -173,6 +179,7 @@ public class NVGraph: NVObject {
 		}
 		_links.remove(at: idx)
 		
+		NVLog.log("Link (\(link.UUID)) removed from Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphRemoveLink(link: link, from: self)}
 	}
 	
@@ -190,6 +197,7 @@ public class NVGraph: NVObject {
 		}
 		_listeners.append(listener)
 		
+		NVLog.log("Listener (\(listener.UUID)) added to Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphAddListener(listener: listener, parent: self)}
 		return listener
 	}
@@ -201,6 +209,7 @@ public class NVGraph: NVObject {
 		}
 		_listeners.remove(at: idx)
 		
+		NVLog.log("Listener (\(listener.UUID)) removed from Graph (\(self.UUID)).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryGraphRemoveListener(listener: listener, from: self)}
 	}
 	

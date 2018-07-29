@@ -41,11 +41,15 @@ public class NVBranch : NVBaseLink {
 	// MARK: - Functions -
 	public func setTrueDestination(dest: NVObject?) {
 		_trueTransfer.Destination = dest
+		
+		NVLog.log("Branch (\(self.UUID)) true destination set to (\(dest?.UUID.uuidString ?? "nil")).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryBranchSetTrueDestination(branch: self, dest: dest)}
 	}
 	
 	public func setFalseDestination(dest: NVObject?) {
 		_falseTransfer.Destination = dest
+		
+		NVLog.log("Branch (\(self.UUID)) false destination set to (\(dest?.UUID.uuidString ?? "nil")).", level: .info)
 		_manager.Delegates.forEach{$0.onStoryBranchSetFalseDestination(branch: self, dest: dest)}
 	}
 }

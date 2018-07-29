@@ -20,6 +20,7 @@ public class NVEntity: NVObject {
 			_imageName = newValue
 			cacheImage()
 			
+			NVLog.log("Entity (\(self.UUID)) image changed to (\(self.ImageName)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryEntityImageChanged(entity: self)}
 		}
 	}

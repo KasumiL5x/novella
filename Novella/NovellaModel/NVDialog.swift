@@ -19,6 +19,8 @@ public class NVDialog: NVNode {
 		get { return _content }
 		set {
 			_content = newValue
+			
+			NVLog.log("Dialog (\(self.UUID)) content set to (\(_content)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryDialogContentChanged(content: _content, node: self)}
 		}
 	}
@@ -26,6 +28,8 @@ public class NVDialog: NVNode {
 		get { return _directions }
 		set {
 			_directions = newValue
+			
+			NVLog.log("Dialog (\(self.UUID)) directions set to (\(_directions)).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryDialogDirectionsChanged(directions: _directions, node: self)}
 		}
 	}
@@ -33,6 +37,8 @@ public class NVDialog: NVNode {
 		get{ return _speaker }
 		set {
 			_speaker = newValue
+			
+			NVLog.log("Dialog (\(self.UUID)) speaker set to (\(_speaker?.UUID.uuidString ?? "nil")).", level: .info)
 			_manager.Delegates.forEach{$0.onStoryDialogSpeakerChanged(speaker: _speaker, node: self)}
 		}
 	}
