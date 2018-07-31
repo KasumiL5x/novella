@@ -20,8 +20,11 @@ class PinBranch: Pin {
 	private var _trueTransfer: Transfer?
 	private var _falseTransfer: Transfer?
 	private var _pannedTransfer: Transfer?
-	private var _graphMenu: NSMenu
-	
+	private let _graphMenu: NSMenu
+	private let _contextMenu: NSMenu
+	private let _deleteMenuItem: NSMenuItem
+	private var _contextClickedTransfer: Transfer?
+	private let _conditionPopover: ConditionPopover
 	
 	// MARK: - Initialization -
 	init(branch: NVBranch, owner: Node) {
@@ -30,6 +33,10 @@ class PinBranch: Pin {
 		self._falseTransfer = nil
 		self._pannedTransfer = nil
 		self._graphMenu = NSMenu()
+		self._contextMenu = NSMenu()
+		self._deleteMenuItem = NSMenuItem(title: "Trash", action: #selector(PinBranch.onContextDelete), keyEquivalent: "")
+		self._contextClickedTransfer = nil
+		self._conditionPopover = ConditionPopover()
 		super.init(link: branch, owner: owner)
 		
 		// setup layers
@@ -54,6 +61,14 @@ class PinBranch: Pin {
 		subFrame.width += PinBranch.PADDING
 		subFrame.height += PinBranch.PADDING
 		self.frame.size = subFrame
+		
+		// context menu
+		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinBranch.onContextFunction), keyEquivalent: "")
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(withTitle: "Edit PreCondition", action: #selector(PinBranch.onContextPreCondition), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Edit Condition", action: #selector(PinBranch.onContextCondition), keyEquivalent: "")
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(_deleteMenuItem)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinBranch::init(coder) not implemented.")
@@ -117,11 +132,31 @@ class PinBranch: Pin {
 		
 		_pannedTransfer = nil
 	}
+	override func contextClicked(_ gesture: NSClickGestureRecognizer) {
+		_contextClickedTransfer = transferAt(gesture.location(in: self))
+		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+	}
 	
 	// MARK: Graph Menu Callback
 	@objc private func onGraphMenu(sender: NSMenuItem) {
 		// NOTE: This works because menus are BLOCKING. _pannedTransfer won't be set to nil until this function is called.
 		Owner._graphView.Undo.execute(cmd: SetTransferDestinationCmd(transfer: _pannedTransfer!, dest: sender.representedObject as? NVObject))
+	}
+	
+	// MARK: Context Menu Callbacks
+	@objc private func onContextFunction() {
+		_contextClickedTransfer?.showFunctionPopover()
+	}
+	@objc private func onContextPreCondition() {
+		_conditionPopover.show(forView: self, at: .maxX)
+		_conditionPopover.setup(condition: (BaseLink as! NVBranch).PreCondition)
+	}
+	@objc private func onContextCondition() {
+		_conditionPopover.show(forView: self, at: .maxX)
+		_conditionPopover.setup(condition: (BaseLink as! NVBranch).Condition)
+	}
+	@objc private func onContextDelete() {
+		BaseLink.InTrash ? BaseLink.untrash() : BaseLink.trash()
 	}
 	
 	// MARK: - Drawing -

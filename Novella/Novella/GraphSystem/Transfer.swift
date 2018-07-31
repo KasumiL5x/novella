@@ -28,6 +28,8 @@ class Transfer: NSView {
 	private var _dragPath: NSBezierPath
 	private var _isDragging: Bool
 	private var _dragPosition: CGPoint
+	//
+	private let _functionPopover: FunctionPopover
 	
 	// MARK: - Properties -
 	var IsDragging: Bool {
@@ -64,6 +66,8 @@ class Transfer: NSView {
 		self._dragPath = NSBezierPath()
 		self._isDragging = false
 		self._dragPosition = CGPoint.zero
+		//
+		self._functionPopover = FunctionPopover(true)
 		super.init(frame: NSMakeRect(0.0, 0.0, Transfer.SIZE, Transfer.SIZE))
 		
 		// setup layers
@@ -92,6 +96,7 @@ class Transfer: NSView {
 		_dragLayer.lineJoin = kCALineJoinRound
 		_dragLayer.lineWidth = Transfer.THICKNESS
 		_dragLayer.strokeColor = NSColor.fromHex("#F67280").cgColor
+		
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Transfer::init(coder) not implemented.")
@@ -100,6 +105,12 @@ class Transfer: NSView {
 	// MARK: - Functions -
 	func redraw() {
 		setNeedsDisplay(bounds)
+	}
+	
+	func showFunctionPopover() {
+		// must be shown before setup otherwise outlets aren't linked
+		_functionPopover.show(forView: self, at: .maxX)
+		_functionPopover.setup(function: _nvTransfer.Function)
 	}
 	
 	// MARK: - Drawing -

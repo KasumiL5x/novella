@@ -18,12 +18,18 @@ class PinLink: Pin {
 	private var _bgLayer: CAShapeLayer
 	private var _transfer: Transfer?
 	private let _graphMenu: NSMenu
+	private let _contextMenu: NSMenu
+	private let _deleteMenuItem: NSMenuItem
+	private let _conditionPopover: ConditionPopover
 	
 	// MARK: - Initialization -
 	init(link: NVLink, owner: Node) {
 		self._bgLayer = CAShapeLayer()
 		self._transfer = nil
 		self._graphMenu = NSMenu()
+		self._contextMenu = NSMenu()
+		self._deleteMenuItem = NSMenuItem(title: "Trash", action: #selector(PinLink.onContextDelete), keyEquivalent: "")
+		self._conditionPopover = ConditionPopover()
 		super.init(link: link, owner: owner)
 		
 		// setup layers
@@ -43,6 +49,13 @@ class PinLink: Pin {
 		subFrame.width += PinLink.PADDING
 		subFrame.height += PinLink.PADDING
 		self.frame.size = subFrame
+		
+		// context menu
+		_contextMenu.addItem(withTitle: "Edit Function", action: #selector(PinLink.onContextFunction), keyEquivalent: "")
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(withTitle: "Edit PreCondition", action: #selector(PinLink.onContextPreCondition), keyEquivalent: "")
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(_deleteMenuItem)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinLink::init(coder) not implemented.")
@@ -76,10 +89,25 @@ class PinLink: Pin {
 			Owner._graphView.Undo.execute(cmd: SetTransferDestinationCmd(transfer: _transfer!, dest: Target?.Object))
 		}
 	}
+	override func contextClicked(_ gesture: NSClickGestureRecognizer) {
+		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+	}
 	
 	// MARK: Graph Menu Callback
 	@objc private func onGraphMenu(sender: NSMenuItem) {
 		Owner._graphView.Undo.execute(cmd: SetTransferDestinationCmd(transfer: _transfer!, dest: sender.representedObject as? NVObject))
+	}
+	
+	// MARK: Context Menu Callbacks
+	@objc private func onContextFunction() {
+		_transfer?.showFunctionPopover()
+	}
+	@objc private func onContextPreCondition() {
+		_conditionPopover.show(forView: self, at: .maxX)
+		_conditionPopover.setup(condition: (BaseLink as! NVLink).PreCondition)
+	}
+	@objc private func onContextDelete() {
+		BaseLink.InTrash ? BaseLink.untrash() : BaseLink.trash()
 	}
 	
 	// MARK: - Drawing -

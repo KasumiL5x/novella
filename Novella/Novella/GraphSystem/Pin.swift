@@ -15,6 +15,7 @@ class Pin: NSView {
 	private var _owner: Node
 	private var _panGesture: NSPanGestureRecognizer?
 	private var _panTarget: Node?
+	private var _contextGesture: NSClickGestureRecognizer?
 	
 	// MARK: - Properties -
 	var BaseLink: NVBaseLink {
@@ -33,6 +34,7 @@ class Pin: NSView {
 		self._owner = owner
 		self._panGesture = nil
 		self._panTarget = nil
+		self._contextGesture = nil
 		super.init(frame: NSMakeRect(0.0, 0.0, 10.0, 10.0)) // anything nonzero for now as derived classes should set this
 		
 		// setup layers
@@ -43,6 +45,12 @@ class Pin: NSView {
 		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(Pin.onPan))
 		_panGesture!.buttonMask = 0x1 // "primary click"
 		self.addGestureRecognizer(_panGesture!)
+		
+		// context click gesture
+		_contextGesture = NSClickGestureRecognizer(target: self, action: #selector(Pin.onContextClick))
+		_contextGesture!.buttonMask = 0x2 // "secondary click"
+		_contextGesture!.numberOfClicksRequired = 1
+		self.addGestureRecognizer(_contextGesture!)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Pin::init(coder) not implemented.")
@@ -94,6 +102,9 @@ class Pin: NSView {
 			break
 		}
 	}
+	@objc private func onContextClick(gesture: NSClickGestureRecognizer) {
+		contextClicked(gesture)
+	}
 	
 	// MARK: Virtuals
 	func panStarted(_ gesture: NSPanGestureRecognizer) {
@@ -104,5 +115,8 @@ class Pin: NSView {
 	}
 	func panEnded(_ gesture: NSPanGestureRecognizer) {
 		NVLog.log("Pin::panEnded() should be overridden.", level: .warning)
+	}
+	func contextClicked(_ gesture: NSClickGestureRecognizer) {
+		NVLog.log("Pin::contextClicked() should be overridden.", level: .warning)
 	}
 }
