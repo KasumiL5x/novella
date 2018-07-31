@@ -16,7 +16,7 @@ class GraphView: NSView {
 	private let _bg: GraphBGView
 	//
 	private var _allNodes: [Node]
-	private var _allPinViews: [PinView]
+	private var _allPins: [Pin]
 	// MARK: Selection
 	private var _marquee: MarqueeView
 
@@ -41,7 +41,7 @@ class GraphView: NSView {
 		self._bg = GraphBGView(frame: frameRect)
 		//
 		self._allNodes = []
-		self._allPinViews = []
+		self._allPins = []
 		//
 		self._marquee = MarqueeView(frame: frameRect)
 		self._selectionHandler = nil
@@ -146,7 +146,7 @@ class GraphView: NSView {
 		// clear existing node views
 		_allNodes = []
 		// clear existing pin views
-		_allPinViews = []
+		_allPins = []
 		
 		// store new graph
 		_nvGraph = graph
@@ -189,13 +189,14 @@ class GraphView: NSView {
 			
 			switch curr {
 			case is NVLink:
-				node.addOutput(pin: makePinViewLink(baseLink: curr as! NVLink, forNode: node))
+				node.addPin(makePinLink(baseLink: curr as! NVLink, forNode: node))
 				
 			case is NVBranch:
-				node.addOutput(pin: makePinViewBranch(baseLink: curr as! NVBranch, forNode: node))
+				node.addPin(makePinBranch(baseLink: curr as! NVBranch, forNode: node))
 				
 			case is NVSwitch:
-				node.addOutput(pin: makePinViewSwitch(baseLink: curr as! NVSwitch, forNode: node))
+//				node.addOutput(pin: makePinViewSwitch(baseLink: curr as! NVSwitch, forNode: node))
+				break
 				
 			default:
 				print("Found a link that is not yet supported (\(curr)).")
@@ -211,7 +212,7 @@ class GraphView: NSView {
 	func redrawAll() {
 		self.setNeedsDisplay(bounds)
 		_allNodes.forEach{$0.redraw()}
-		_allPinViews.forEach{$0.redraw()}
+		_allPins.forEach{$0.redraw()}
 	}
 	func offsetToEditorPosition(pos: CGPoint) -> CGPoint {
 		return pos - NSMakePoint(bounds.width*0.5, bounds.height*0.5)
@@ -273,7 +274,7 @@ class GraphView: NSView {
 	}
 	
 	func updateCurves() {
-		for child in _allPinViews {
+		for child in _allPins {
 			child.redraw()
 		}
 	}
@@ -606,8 +607,8 @@ extension GraphView {
 		node.removeFromSuperview()
 		
 		// 2. remove all of its pins (as we need to remove them from lists and can't rely on auto remove)
-		node.Outputs.forEach { (pin) in
-			deletePinView(pin: pin)
+		node.PinBoard.Pins.forEach { (pin) in
+			deletePin(pin)
 		}
 		
 		// 3. remove from all nodes
@@ -618,35 +619,34 @@ extension GraphView {
 	}
 	
 	// MARK: PinViews
-	private func makePinViewLink(baseLink: NVLink, forNode: Node) -> PinViewLink {
-		let pin = PinViewLink(link: baseLink, graphView: self, owner: forNode)
-		_allPinViews.append(pin)
+	private func makePinLink(baseLink: NVLink, forNode: Node) -> PinLink {
+		let pin = PinLink(link: baseLink, owner: forNode)
+		_allPins.append(pin)
 		return pin
 	}
-	private func makePinViewBranch(baseLink: NVBranch, forNode: Node) -> PinViewBranch {
-		let pin = PinViewBranch(link: baseLink, graphView: self, owner: forNode)
-		_allPinViews.append(pin)
+	private func makePinBranch(baseLink: NVBranch, forNode: Node) -> PinBranch {
+		let pin = PinBranch(branch: baseLink, owner: forNode)
+		_allPins.append(pin)
 		return pin
 	}
-	private func makePinViewSwitch(baseLink: NVSwitch, forNode: Node) -> PinViewSwitch {
-		let pin = PinViewSwitch(link: baseLink, graphView: self, owner: forNode)
-		_allPinViews.append(pin)
-		return pin
-	}
+//	private func makePinViewSwitch(baseLink: NVSwitch, forNode: Node) -> PinViewSwitch {
+//		let pin = PinViewSwitch(link: baseLink, graphView: self, owner: forNode)
+//		_allPinViews.append(pin)
+//		return pin
+//	}
 	
-	private func deletePinView(pin: PinView) {
+	private func deletePin(_ pin: Pin) {
 		// 1. remove from nodes
-		_allNodes.forEach { (lview) in
-			if lview.Outputs.contains(pin) {
-				lview.removeOutput(pin: pin)
-			}
+		_allNodes.forEach { (node) in
+			node.removePin(pin) // may or may not exist but this function doesn't care
 		}
 		
 		// 2. remove from all pin views
-		_allPinViews.remove(at: _allPinViews.index(of: pin)!)
+		_allPins.remove(at: _allPins.index(of: pin)!)
 		
+		// TODO: Why is this here?
 		// 3. update all curves as anything incoming no longer links to this item
-		updateCurves() // TODO: Could optimize by only redrawing the connected curves
+		updateCurves()
 	}
 }
 
@@ -729,13 +729,14 @@ extension GraphView: NVStoryDelegate {
 		
 		switch link {
 		case is NVLink:
-			originView.addOutput(pin: makePinViewLink(baseLink: link as! NVLink, forNode: originView))
+			originView.addPin(makePinLink(baseLink: link as! NVLink, forNode: originView))
 			
 		case is NVBranch:
-			originView.addOutput(pin: makePinViewBranch(baseLink: link as! NVBranch, forNode: originView))
+			originView.addPin(makePinBranch(baseLink: link as! NVBranch, forNode: originView))
 			
 		case is NVSwitch:
-			originView.addOutput(pin: makePinViewSwitch(baseLink: link as! NVSwitch, forNode: originView))
+//			originView.addOutput(pin: makePinViewSwitch(baseLink: link as! NVSwitch, forNode: originView))
+			break
 			
 		default:
 			print("GraphView::onStoryGraphAddLink() encountered unsupported link (\(link)).")
@@ -767,8 +768,8 @@ extension GraphView: NVStoryDelegate {
 			}
 			
 		case is NVBaseLink:
-			if let pin = _allPinViews.first(where: {$0.BaseLink == object}) {
-				pin.TrashMode = true
+			if let pin = _allPins.first(where: {$0.BaseLink == object}) {
+				pin.onTrashed(true)
 			}
 			
 		default:
@@ -777,8 +778,8 @@ extension GraphView: NVStoryDelegate {
 	}
 	func onStoryUntrashObject(object: NVObject) {
 		for linkTo in _document.Manager.getLinksTo(object) {
-			if let pin = _allPinViews.first(where: {$0.BaseLink == linkTo}) {
-				pin.TrashMode = false
+			if let pin = _allPins.first(where: {$0.BaseLink == linkTo}) {
+				pin.onTrashed(false)
 			}
 		}
 		
@@ -795,8 +796,8 @@ extension GraphView: NVStoryDelegate {
 			}
 			
 		case is NVBaseLink:
-			if let pin = _allPinViews.first(where: {$0.BaseLink == object}) {
-				pin.TrashMode = false
+			if let pin = _allPins.first(where: {$0.BaseLink == object}) {
+				pin.onTrashed(false)
 			}
 			
 		default:
@@ -805,8 +806,8 @@ extension GraphView: NVStoryDelegate {
 	}
 	
 	func onStoryDeleteLink(link: NVBaseLink) {
-		if let pin = _allPinViews.first(where: {$0.BaseLink == link}) {
-			deletePinView(pin: pin)
+		if let pin = _allPins.first(where: {$0.BaseLink == link}) {
+			deletePin(pin)
 		}
 	}
 	func onStoryDeleteNode(node: NVNode) {

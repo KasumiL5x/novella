@@ -33,8 +33,6 @@
 		6513105E20C30F050078C30C /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104220C30F050078C30C /* NVStory.swift */; };
 		6513105F20C30F050078C30C /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104320C30F050078C30C /* NVDelivery.swift */; };
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
-		65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65223B5220C68D4E008E8A95 /* PinBoard.swift */; };
-		652ACC34210C4A82008EF078 /* PinViewSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC33210C4A82008EF078 /* PinViewSwitch.swift */; };
 		652ACC37210EE521008EF078 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC36210EE521008EF078 /* Transfer.swift */; };
 		652ACC39210EE621008EF078 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC38210EE621008EF078 /* Pin.swift */; };
 		652ACC3B210EED81008EF078 /* PinBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC3A210EED81008EF078 /* PinBranch.swift */; };
@@ -78,12 +76,9 @@
 		65F7F85F20C31714004663D6 /* SelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84A20C31713004663D6 /* SelectionHandler.swift */; };
 		65F7F86020C31714004663D6 /* ContextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84B20C31713004663D6 /* ContextNode.swift */; };
 		65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84C20C31713004663D6 /* ContextPopover.swift */; };
-		65F7F86320C31714004663D6 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84E20C31713004663D6 /* PinView.swift */; };
 		65F7F86420C31714004663D6 /* GraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F84F20C31713004663D6 /* GraphNode.swift */; };
 		65F7F86520C31714004663D6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85020C31713004663D6 /* GraphView.swift */; };
-		65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85120C31713004663D6 /* PinViewBranch.swift */; };
 		65F7F86720C31714004663D6 /* DialogPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85220C31713004663D6 /* DialogPopover.swift */; };
-		65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85320C31713004663D6 /* PinViewLink.swift */; };
 		65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85420C31713004663D6 /* GraphViewDelegate.swift */; };
 		65F7F86A20C31714004663D6 /* DeliveryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85520C31713004663D6 /* DeliveryNode.swift */; };
 		65F7F86B20C31714004663D6 /* GenericPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F85620C31714004663D6 /* GenericPopover.swift */; };
@@ -162,8 +157,6 @@
 		6513104220C30F050078C30C /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
 		6513104320C30F050078C30C /* NVDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
-		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
-		652ACC33210C4A82008EF078 /* PinViewSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewSwitch.swift; sourceTree = "<group>"; };
 		652ACC36210EE521008EF078 /* Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
 		652ACC38210EE621008EF078 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		652ACC3A210EED81008EF078 /* PinBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBranch.swift; sourceTree = "<group>"; };
@@ -209,12 +202,9 @@
 		65F7F84A20C31713004663D6 /* SelectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionHandler.swift; sourceTree = "<group>"; };
 		65F7F84B20C31713004663D6 /* ContextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextNode.swift; sourceTree = "<group>"; };
 		65F7F84C20C31713004663D6 /* ContextPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextPopover.swift; sourceTree = "<group>"; };
-		65F7F84E20C31713004663D6 /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		65F7F84F20C31713004663D6 /* GraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphNode.swift; sourceTree = "<group>"; };
 		65F7F85020C31713004663D6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
-		65F7F85120C31713004663D6 /* PinViewBranch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewBranch.swift; sourceTree = "<group>"; };
 		65F7F85220C31713004663D6 /* DialogPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogPopover.swift; sourceTree = "<group>"; };
-		65F7F85320C31713004663D6 /* PinViewLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewLink.swift; sourceTree = "<group>"; };
 		65F7F85420C31713004663D6 /* GraphViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewDelegate.swift; sourceTree = "<group>"; };
 		65F7F85520C31713004663D6 /* DeliveryNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryNode.swift; sourceTree = "<group>"; };
 		65F7F85620C31714004663D6 /* GenericPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericPopover.swift; sourceTree = "<group>"; };
@@ -396,10 +386,6 @@
 		65AE16CC20C32579006A921F /* PinViews */ = {
 			isa = PBXGroup;
 			children = (
-				65F7F84E20C31713004663D6 /* PinView.swift */,
-				65F7F85120C31713004663D6 /* PinViewBranch.swift */,
-				65F7F85320C31713004663D6 /* PinViewLink.swift */,
-				652ACC33210C4A82008EF078 /* PinViewSwitch.swift */,
 			);
 			name = PinViews;
 			sourceTree = "<group>";
@@ -407,7 +393,6 @@
 		65AE16CE20C32586006A921F /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				65223B5220C68D4E008E8A95 /* PinBoard.swift */,
 				65F7F84B20C31713004663D6 /* ContextNode.swift */,
 				65F7F85520C31713004663D6 /* DeliveryNode.swift */,
 				65F7F85820C31714004663D6 /* DialogNode.swift */,
@@ -762,13 +747,11 @@
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
 				650864A720D0024F00201542 /* ReaderWindowController.swift in Sources */,
 				65F7F86D20C31714004663D6 /* DialogNode.swift in Sources */,
-				65F7F86820C31714004663D6 /* PinViewLink.swift in Sources */,
 				65F7F83F20C31637004663D6 /* NSView+Toast.swift in Sources */,
 				65F7F8A020C31815004663D6 /* PreferencesViewController.swift in Sources */,
 				65F7F86520C31714004663D6 /* GraphView.swift in Sources */,
 				65F7F83D20C31637004663D6 /* NSColor+Hex.swift in Sources */,
 				65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */,
-				65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */,
 				65F7F86B20C31714004663D6 /* GenericPopover.swift in Sources */,
 				65F7F85E20C31714004663D6 /* GraphBGView.swift in Sources */,
 				65F7F85F20C31714004663D6 /* SelectionHandler.swift in Sources */,
@@ -778,9 +761,7 @@
 				652ACC3D210F1317008EF078 /* Board.swift in Sources */,
 				65F7F84420C3168A004663D6 /* CurveHelper.swift in Sources */,
 				652ACC37210EE521008EF078 /* Transfer.swift in Sources */,
-				65F7F86320C31714004663D6 /* PinView.swift in Sources */,
 				65F7F89B20C317F4004663D6 /* ConditionPopoverViewController.swift in Sources */,
-				652ACC34210C4A82008EF078 /* PinViewSwitch.swift in Sources */,
 				654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */,
 				65F7F8AF20C3187E004663D6 /* Settings.swift in Sources */,
 				65F7F8A520C3182F004663D6 /* VariableEditorViewController.swift in Sources */,
@@ -806,7 +787,6 @@
 				65F7F86020C31714004663D6 /* ContextNode.swift in Sources */,
 				65F7F89720C317F4004663D6 /* DialogPopoverViewController.swift in Sources */,
 				65F7F89820C317F4004663D6 /* ContextPopoverViewController.swift in Sources */,
-				65F7F86620C31714004663D6 /* PinViewBranch.swift in Sources */,
 				65940AD920E2323500C777BF /* EntityEditorViewController.swift in Sources */,
 				65F7F86A20C31714004663D6 /* DeliveryNode.swift in Sources */,
 				65F7F88D20C317DD004663D6 /* StoryDelegate.swift in Sources */,

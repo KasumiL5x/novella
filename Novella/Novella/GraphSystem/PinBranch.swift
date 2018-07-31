@@ -97,6 +97,11 @@ class PinBranch: Pin {
 	}
 	
 	// MARK: Virtual
+	override func redraw() {
+		setNeedsDisplay(bounds)
+		_trueTransfer?.redraw()
+		_falseTransfer?.redraw()
+	}
 	override func panStarted(_ gesture: NSPanGestureRecognizer) {
 		_pannedTransfer = transferAt(gesture.location(in: self))
 		if let transfer = _pannedTransfer {
@@ -158,13 +163,19 @@ class PinBranch: Pin {
 	@objc private func onContextDelete() {
 		BaseLink.InTrash ? BaseLink.untrash() : BaseLink.trash()
 	}
+	override func trashed() {
+		_deleteMenuItem.title = "Untrash"
+	}
+	override func untrashed() {
+		_deleteMenuItem.title = "Trash"
+	}
 	
 	// MARK: - Drawing -
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
 		_bgLayer.fillColor = nil
-		_bgLayer.strokeColor = NSColor.fromHex("#2D2D2D").cgColor
+		_bgLayer.strokeColor = BaseLink.InTrash ? Settings.graph.trashedColorDark.cgColor : NSColor.fromHex("#4a4a4a").cgColor
 		let path = NSBezierPath(roundedRect: bounds, xRadius: PinBranch.RADIUS, yRadius: PinBranch.RADIUS)
 		_bgLayer.path = path.cgPath
 	}

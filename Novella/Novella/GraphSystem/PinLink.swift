@@ -63,6 +63,10 @@ class PinLink: Pin {
 	
 	// MARK: - Functions -
 	// MARK: Virtuals
+	override func redraw() {
+		setNeedsDisplay(bounds)
+		_transfer?.redraw()
+	}
 	override func panStarted(_ gesture: NSPanGestureRecognizer) {
 		_transfer?.IsDragging = true
 		_transfer?.DragPosition = gesture.location(in: _transfer)
@@ -92,6 +96,12 @@ class PinLink: Pin {
 	override func contextClicked(_ gesture: NSClickGestureRecognizer) {
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
+	override func trashed() {
+		_deleteMenuItem.title = "Untrash"
+	}
+	override func untrashed() {
+		_deleteMenuItem.title = "Trash"
+	}
 	
 	// MARK: Graph Menu Callback
 	@objc private func onGraphMenu(sender: NSMenuItem) {
@@ -115,7 +125,7 @@ class PinLink: Pin {
 		super.draw(dirtyRect)
 		
 		_bgLayer.fillColor = nil
-		_bgLayer.strokeColor = NSColor.fromHex("#2D2D2D").cgColor
+		_bgLayer.strokeColor = BaseLink.InTrash ? Settings.graph.trashedColorDark.cgColor : NSColor.fromHex("#4a4a4a").cgColor
 		let path = NSBezierPath(roundedRect: bounds, xRadius: PinLink.RADIUS, yRadius: PinLink.RADIUS)
 		_bgLayer.path = path.cgPath
 	}

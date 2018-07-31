@@ -30,9 +30,6 @@ class Node: NSView {
 	private var _ctxGesture: NSClickGestureRecognizer?
 	private var _panGesture: NSPanGestureRecognizer?
 	//
-	private var _outputs: [PinView]
-	private var _outputsBoard: PinBoard
-	//
 	private var _trashMode: Bool
 	//
 	private var _contextMenu: NSMenu
@@ -58,17 +55,17 @@ class Node: NSView {
 	var IsSelected: Bool {
 		get{ return _isSelected }
 	}
-	public var Outputs: [PinView] {
-		get{ return _outputs }
-	}
 	public var Trashed: Bool {
 		get{ return _trashMode }
 		set{
 			_trashMode = newValue
-			_outputs.forEach{$0.TrashMode = newValue}
+			_board.Pins.forEach{$0.onTrashed(newValue)}
 			onTrashed()
 			redraw()
 		}
+	}
+	var PinBoard: Board {
+		get{ return _board }
 	}
 	override var wantsDefaultClipping: Bool {
 		return false
@@ -102,9 +99,6 @@ class Node: NSView {
 		self._doubleClickGesture = nil
 		self._ctxGesture = nil
 		self._panGesture = nil
-		//
-		self._outputs = []
-		self._outputsBoard = PinBoard()
 		//
 		self._trashMode = false
 		//
@@ -155,8 +149,6 @@ class Node: NSView {
 		//self.layer?.shouldRasterize = true
 		//self.layer?.rasterizationScale = NSScreen.main!.backingScaleFactor
 		
-		self.addSubview(_outputsBoard)
-		
 		// name label
 		setLabelString(str: "")
 		self.addSubview(self._nameLabel)
@@ -193,10 +185,7 @@ class Node: NSView {
 		
 		// test
 		self.addSubview(_board)
-		_board.frame.origin = NSMakePoint(230, 10)
-		//
-		_board.add(PinBranch(branch: graphView.Manager.makeBranch(origin: _nvObject), owner: self))
-		_board.add(PinLink(link: graphView.Manager.makeLink(origin: _nvObject), owner: self))
+		layoutBoard()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Node::init(coder) not implemented.")
@@ -324,8 +313,8 @@ class Node: NSView {
 		// actually redraw this view
 		redraw()
 		
-		// layout the pins since the size changed
-		layoutPins()
+		// reposition the board
+		layoutBoard()
 		// resize to fit subviews which contains the pins and also fits the new widget size
 		sizeToFitSubviews()
 		
@@ -425,25 +414,25 @@ class Node: NSView {
 		_isSelected = true
 		_isPrimed = false
 		setNeedsDisplay(bounds)
-		_outputs.forEach{$0.redraw()}
+		_board.Pins.forEach{$0.redraw()}
 	}
 	func deselect() {
 		_isSelected = false
 		_isPrimed = false
 		setNeedsDisplay(bounds)
-		_outputs.forEach{$0.redraw()}
+		_board.Pins.forEach{$0.redraw()}
 	}
 	func prime() {
 		_isSelected = false
 		_isPrimed = true
 		setNeedsDisplay(bounds)
-		_outputs.forEach{$0.redraw()}
+		_board.Pins.forEach{$0.redraw()}
 	}
 	func unprime() {
 		_isSelected = false
 		_isPrimed = false
 		setNeedsDisplay(bounds)
-		_outputs.forEach{$0.redraw()}
+		_board.Pins.forEach{$0.redraw()}
 	}
 	
 	// MARK: Movement
@@ -454,62 +443,23 @@ class Node: NSView {
 	}
 	
 	// MARK: Outputs
-	func addOutput(pin: PinView) {
-		_outputs.append(pin)
-		self.addSubview(pin)
-		layoutPins()
-		sizeToFitSubviews() // subviews cannot be interacted with if they are out of the bounds of the superview, so resize
-		
-		setNeedsDisplay(bounds)
+	func addPin(_ pin: Pin) {
+		_board.add(pin)
+		layoutBoard()
+		sizeToFitSubviews()
+		redraw()
 	}
-	func removeOutput(pin: PinView) {
-		if let idx = _outputs.index(of: pin) {
-			_outputs.remove(at: idx)
-			pin.removeFromSuperview()
-			layoutPins()
-		}
+	func removePin(_ pin: Pin) {
+		_board.remove(pin)
+		layoutBoard()
+		sizeToFitSubviews()
+		redraw()
 	}
-	private func layoutPins() {
-		if _outputs.isEmpty {
-			_outputsBoard.frame = NSRect.zero // remove outputs board (size to zero)
-			_outputsBoard.setNeedsDisplay(_outputsBoard.bounds)
-			return
-		}
-		
-		// set first pin at origin
-		_outputs[0].frame.origin = CGPoint.zero
-		
-		// align all other views accordingly
-		let spacing: CGFloat = 5.0
-		var lastY = _outputs[0].bounds.height
-		if _outputs.count > 1 {
-			for i in 1..<_outputs.count {
-				_outputs[i].frame.origin = NSMakePoint(0.0, lastY + spacing)
-				lastY += _outputs[i].bounds.height + spacing
-			}
-		}
-		
-		// calculate center Y (since at origin can just half height of stack, i.e. last element)
-		let centerY = _outputs.last!.frame.maxY * 0.5
-		
-		// calculate difference between the stack's center and the widget's rect's center
-		let wRect = widgetRect()
-		let yDiff = (wRect.height*0.5) - centerY
-		
-		// move all views up by the diff and set fixed X
-		for curr in _outputs {
-			curr.frame.origin.y += yDiff
-			curr.frame.origin.x = wRect.width + Node.OUTPUTS_OFFSET_X
-		}
-		
-		// set bounds frame and adjust it for the offset
-		_outputsBoard.frame = boundsOf(views: _outputs)
-		let border = NSMakeSize(6.0, 8.0)
-		_outputsBoard.frame.size.width += border.width
-		_outputsBoard.frame.size.height += border.height
-		_outputsBoard.frame.origin.x -= border.width * 0.5
-		_outputsBoard.frame.origin.y -= border.height * 0.5
-		_outputsBoard.setNeedsDisplay(_outputsBoard.frame)
+	private func layoutBoard() {
+		var pos = CGPoint.zero
+		pos.x = widgetRect().maxX + Node.OUTPUTS_OFFSET_X
+		pos.y = (widgetRect().midY - _board.bounds.midY)
+		_board.frame.origin = pos
 	}
 	private func boundsOf(views: [NSView]) -> NSRect {
 		var minX = CGFloat.infinity
@@ -525,6 +475,8 @@ class Node: NSView {
 		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
 	}
 	private func sizeToFitSubviews() {
+		// subviews cannot be interacted with if they are out of the bounds of the superview, so resize
+		
 		// initially set frame size to widget ret
 		frame.size = widgetRect().size
 		

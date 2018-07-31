@@ -58,6 +58,11 @@ class Pin: NSView {
 	
 	
 	// MARK: - Functions -
+	func onTrashed(_ state: Bool) {
+		state ? trashed() : untrashed()
+		redraw()
+	}
+	
 	// MARK: Gesture Callbacks
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
@@ -107,6 +112,9 @@ class Pin: NSView {
 	}
 	
 	// MARK: Virtuals
+	func redraw() {
+		NVLog.log("Pin::redraw() should be overridden.", level: .warning)
+	}
 	func panStarted(_ gesture: NSPanGestureRecognizer) {
 		NVLog.log("Pin::panStarted() should be overridden.", level: .warning)
 	}
@@ -118,5 +126,11 @@ class Pin: NSView {
 	}
 	func contextClicked(_ gesture: NSClickGestureRecognizer) {
 		NVLog.log("Pin::contextClicked() should be overridden.", level: .warning)
+	}
+	func trashed() {
+		NVLog.log("Pin::trashed() should be overridden.", level: .warning)
+	}
+	func untrashed() {
+		NVLog.log("Pin::untrashed() should be overridden.", level: .warning)
 	}
 }

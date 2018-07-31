@@ -101,7 +101,7 @@ class Board: NSView {
 		super.draw(dirtyRect)
 		
 		_bgLayer.fillColor = NSColor.fromHex("#FAFAFA").cgColor
-		_bgLayer.strokeColor = NSColor.fromHex("#2D2D2D").cgColor
+		_bgLayer.strokeColor = nil//NSColor.fromHex("#2D2D2D").cgColor
 		let path = NSBezierPath(roundedRect: bounds, xRadius: Board.RADIUS, yRadius: Board.RADIUS)
 		_bgLayer.path = path.cgPath
 	}
