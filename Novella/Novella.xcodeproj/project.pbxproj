@@ -35,6 +35,11 @@
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
 		65223B5320C68D4E008E8A95 /* PinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65223B5220C68D4E008E8A95 /* PinBoard.swift */; };
 		652ACC34210C4A82008EF078 /* PinViewSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC33210C4A82008EF078 /* PinViewSwitch.swift */; };
+		652ACC37210EE521008EF078 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC36210EE521008EF078 /* Transfer.swift */; };
+		652ACC39210EE621008EF078 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC38210EE621008EF078 /* Pin.swift */; };
+		652ACC3B210EED81008EF078 /* PinBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC3A210EED81008EF078 /* PinBranch.swift */; };
+		652ACC3D210F1317008EF078 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC3C210F1317008EF078 /* Board.swift */; };
+		652ACC3F210FAEC5008EF078 /* PinLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC3E210FAEC5008EF078 /* PinLink.swift */; };
 		654918E320D42165008467FF /* NVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E220D42165008467FF /* NVReader.swift */; };
 		654918E520D6946B008467FF /* ChoiceWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654918E420D6946B008467FF /* ChoiceWheelView.swift */; };
 		654918E620D6A7FA008467FF /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C9EF020CA5CCD00D82145 /* CGPoint+Math.swift */; };
@@ -159,6 +164,11 @@
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
 		65223B5220C68D4E008E8A95 /* PinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBoard.swift; sourceTree = "<group>"; };
 		652ACC33210C4A82008EF078 /* PinViewSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewSwitch.swift; sourceTree = "<group>"; };
+		652ACC36210EE521008EF078 /* Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
+		652ACC38210EE621008EF078 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		652ACC3A210EED81008EF078 /* PinBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBranch.swift; sourceTree = "<group>"; };
+		652ACC3C210F1317008EF078 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		652ACC3E210FAEC5008EF078 /* PinLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinLink.swift; sourceTree = "<group>"; };
 		654918E220D42165008467FF /* NVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReader.swift; sourceTree = "<group>"; };
 		654918E420D6946B008467FF /* ChoiceWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWheelView.swift; sourceTree = "<group>"; };
 		655E707120FE113500D9FF5B /* NSImage+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Tint.swift"; sourceTree = "<group>"; };
@@ -254,6 +264,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		652ACC35210EE513008EF078 /* Pins */ = {
+			isa = PBXGroup;
+			children = (
+				652ACC36210EE521008EF078 /* Transfer.swift */,
+				652ACC38210EE621008EF078 /* Pin.swift */,
+				652ACC3A210EED81008EF078 /* PinBranch.swift */,
+				652ACC3C210F1317008EF078 /* Board.swift */,
+				652ACC3E210FAEC5008EF078 /* PinLink.swift */,
+			);
+			name = Pins;
+			sourceTree = "<group>";
+		};
 		655F9FA220C3087300B20EFE = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +513,7 @@
 		65F7F84520C31707004663D6 /* GraphSystem */ = {
 			isa = PBXGroup;
 			children = (
+				652ACC35210EE513008EF078 /* Pins */,
 				65F7F85020C31713004663D6 /* GraphView.swift */,
 				65F7F85A20C31714004663D6 /* GraphViewCommands.swift */,
 				65F7F85420C31713004663D6 /* GraphViewDelegate.swift */,
@@ -734,6 +757,7 @@
 				65F7F86120C31714004663D6 /* ContextPopover.swift in Sources */,
 				65F7F86E20C31714004663D6 /* FunctionPopover.swift in Sources */,
 				650864A520D001C300201542 /* ReaderViewController.swift in Sources */,
+				652ACC39210EE621008EF078 /* Pin.swift in Sources */,
 				65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */,
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
 				650864A720D0024F00201542 /* ReaderWindowController.swift in Sources */,
@@ -751,7 +775,9 @@
 				65F7F84320C3168A004663D6 /* CommandSystem.swift in Sources */,
 				65F7F86720C31714004663D6 /* DialogPopover.swift in Sources */,
 				65F7F83B20C31637004663D6 /* UserDefaults+Color.swift in Sources */,
+				652ACC3D210F1317008EF078 /* Board.swift in Sources */,
 				65F7F84420C3168A004663D6 /* CurveHelper.swift in Sources */,
+				652ACC37210EE521008EF078 /* Transfer.swift in Sources */,
 				65F7F86320C31714004663D6 /* PinView.swift in Sources */,
 				65F7F89B20C317F4004663D6 /* ConditionPopoverViewController.swift in Sources */,
 				652ACC34210C4A82008EF078 /* PinViewSwitch.swift in Sources */,
@@ -762,9 +788,11 @@
 				65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */,
 				655F9FAF20C3087300B20EFE /* AppDelegate.swift in Sources */,
 				65F7F83E20C31637004663D6 /* NSBezierPath+CGPath.swift in Sources */,
+				652ACC3F210FAEC5008EF078 /* PinLink.swift in Sources */,
 				65F7F86420C31714004663D6 /* GraphNode.swift in Sources */,
 				65F7F85D20C31714004663D6 /* ConditionPopover.swift in Sources */,
 				65F7F86920C31714004663D6 /* GraphViewDelegate.swift in Sources */,
+				652ACC3B210EED81008EF078 /* PinBranch.swift in Sources */,
 				65F7F88E20C317DD004663D6 /* MainViewController.swift in Sources */,
 				65F7F83C20C31637004663D6 /* NSColor+Saturation.swift in Sources */,
 				655E707220FE113500D9FF5B /* NSImage+Tint.swift in Sources */,

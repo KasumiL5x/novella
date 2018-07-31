@@ -29,6 +29,26 @@ class MoveNodeCmd: UndoableCommand {
 	}
 }
 
+class SetTransferDestinationCmd: UndoableCommand {
+	private let _transfer: Transfer
+	private let _prevDest: NVObject?
+	private let _newDest: NVObject?
+	
+	init(transfer: Transfer, dest: NVObject?) {
+		self._transfer = transfer
+		self._prevDest = transfer.Destination
+		self._newDest = dest
+	}
+	
+	func execute() {
+		_transfer.Destination = _newDest
+	}
+	
+	func unexecute() {
+		_transfer.Destination = _prevDest
+	}
+}
+
 class SetPinLinkDestinationCmd: UndoableCommand {
 	private let _pin: PinViewLink
 	private let _prevDest: NVObject?

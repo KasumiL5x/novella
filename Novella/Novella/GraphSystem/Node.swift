@@ -44,6 +44,9 @@ class Node: NSView {
 	private var _contextItemTrash: NSMenuItem
 	//
 	var _editPopover: GenericPopover?
+	//
+	// temp testing
+	private var _board: Board
 	
 	// MARK: - Properties -
 	var Object: NVObject {
@@ -114,6 +117,8 @@ class Node: NSView {
 		self._contextItemTrash = NSMenuItem(title: "Trash", action: #selector(Node.onContextTrash), keyEquivalent: "")
 		//
 		self._editPopover = nil
+		//
+		self._board = Board()
 		super.init(frame: frameRect)
 		
 		// set up context menu
@@ -184,6 +189,14 @@ class Node: NSView {
 		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(Node.onPan))
 		_panGesture!.buttonMask = 0x1 // "primary click"
 		self.addGestureRecognizer(_panGesture!)
+		
+		
+		// test
+		self.addSubview(_board)
+		_board.frame.origin = NSMakePoint(230, 10)
+		//
+		_board.add(PinBranch(branch: graphView.Manager.makeBranch(origin: _nvObject), owner: self))
+		_board.add(PinLink(link: graphView.Manager.makeLink(origin: _nvObject), owner: self))
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Node::init(coder) not implemented.")
@@ -194,17 +207,20 @@ class Node: NSView {
 	// MARK: Hit Test
 	override func hitTest(_ point: NSPoint) -> NSView? {
 		// point is in the superview's coordinate system
-		// manually check each subview's bounds (if i want to do something similar i'd need to override their hittest and call it here)
 		for sub in subviews {
 			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
 				// return the node itself if a subview has the ignore tag (this is used for things like overlaying labels)
 				if sub.tag == Node.HIT_IGNORE_TAG {
 					return self
 				}
+				
+				// disregard the interaction and pretend it didn't happen
 				if sub.tag == Node.HIT_NIL_TAG {
-					continue // just don't do anything with the view
+					continue
 				}
-				return sub
+				
+				// defer the choice to the subview (note the point sent is in THIS view's coordinate system)
+				return sub.hitTest(superview!.convert(point, to: self))
 			}
 		}
 		
