@@ -67,7 +67,7 @@ class Transfer: NSView {
 		self._isDragging = false
 		self._dragPosition = CGPoint.zero
 		//
-		self._functionPopover = FunctionPopover(true)
+		self._functionPopover = FunctionPopover()
 		super.init(frame: NSMakeRect(0.0, 0.0, Transfer.SIZE, Transfer.SIZE))
 		
 		// setup layers

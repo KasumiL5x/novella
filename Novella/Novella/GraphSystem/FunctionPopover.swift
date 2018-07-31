@@ -10,17 +10,6 @@ import Cocoa
 import NovellaModel
 
 class FunctionPopover: GenericPopover {
-	private var _trueFalse: Bool
-	
-	var TrueFalse: Bool {
-		get{ return _trueFalse }
-	}
-	
-	init(_ trueFalse: Bool) {
-		_trueFalse = trueFalse
-		super.init()
-	}
-	
 	func setup(function: NVFunction) {
 		(_popoverViewController as? FunctionPopoverViewController)?.setFunction(function: function)
 		(_detachedViewController as? FunctionPopoverViewController)?.setFunction(function: function)
