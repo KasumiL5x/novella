@@ -16,12 +16,12 @@ public class NVLog {
 			self.rawValue = rawValue
 		}
 		
-		static let none    = Level(rawValue: 0)
-		static let info    = Level(rawValue: 1 << 0) // generic printing
-		static let warning = Level(rawValue: 1 << 1) // non-critical failures
-		static let error   = Level(rawValue: 1 << 2) // critical failures
-		static let debug   = Level(rawValue: 1 << 3) // debug information
-		static let all     = Level(rawValue: ~0)
+		public static let none    = Level(rawValue: 0)
+		public static let info    = Level(rawValue: 1 << 0) // generic printing
+		public static let warning = Level(rawValue: 1 << 1) // non-critical failures
+		public static let error   = Level(rawValue: 1 << 2) // critical failures
+		public static let debug   = Level(rawValue: 1 << 3) // debug information
+		public static let all     = Level(rawValue: ~0)
 	}
 	
 	public static var logLevel: Level = [Level.all]
