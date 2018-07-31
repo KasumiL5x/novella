@@ -22,14 +22,32 @@ public class NVLog {
 		public static let error   = Level(rawValue: 1 << 2) // critical failures
 		public static let debug   = Level(rawValue: 1 << 3) // debug information
 		public static let all     = Level(rawValue: ~0)
+		
+		func toString() -> String {
+			switch self {
+			case Level.warning:
+				return "Warning"
+			case Level.error:
+				return "Error"
+			default:
+				return ""
+			}
+		}
 	}
 	
 	public static var logLevel: Level = [Level.all]
+	static let dateFormatter = DateFormatter()
 	
 	public static func log(_ msg: String, level: Level) {
 		if !NVLog.logLevel.contains(level) {
 			return
 		}
-		print("Novella: " + msg)
+		
+		NVLog.dateFormatter.timeStyle = .medium
+		NVLog.dateFormatter.dateStyle = .short
+		let time = NVLog.dateFormatter.string(from: Date())
+		
+		let extra = level.toString()
+		print("(\(time)) Novella: " + (extra.isEmpty ? "" : " " + extra) + msg)
 	}
 }
