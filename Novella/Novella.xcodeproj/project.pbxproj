@@ -383,13 +383,6 @@
 			name = Popovers;
 			sourceTree = "<group>";
 		};
-		65AE16CC20C32579006A921F /* PinViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = PinViews;
-			sourceTree = "<group>";
-		};
 		65AE16CE20C32586006A921F /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,7 +498,6 @@
 				65F7F84A20C31713004663D6 /* SelectionHandler.swift */,
 				65AE16CE20C32586006A921F /* Nodes */,
 				65AE16CF20C325AB006A921F /* OtherViews */,
-				65AE16CC20C32579006A921F /* PinViews */,
 				65AE16CA20C32544006A921F /* Popovers */,
 			);
 			path = GraphSystem;
