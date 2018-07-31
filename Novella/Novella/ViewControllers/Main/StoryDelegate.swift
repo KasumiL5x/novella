@@ -138,13 +138,7 @@ class StoryDelegate: NVStoryDelegate {
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 	}
 	
-	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
-		_mvc.reloadSelectedGraph()
-	}
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
-		_mvc.reloadSelectedGraph()
-	}
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
+	func onStoryTransferDestinationChanged(transfer: NVTransfer, dest: NVObject?) {
 		_mvc.reloadSelectedGraph()
 	}
 }

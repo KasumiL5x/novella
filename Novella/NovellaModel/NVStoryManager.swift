@@ -420,15 +420,15 @@ extension NVStoryManager {
 		getLinksTo(node).forEach { (link) in
 			switch link {
 			case is NVLink:
-				(link as! NVLink).setDestination(dest: nil)
+				(link as! NVLink).Transfer.Destination = nil
 				
 			case is NVBranch:
 				let asBranch = link as! NVBranch
 				if asBranch.TrueTransfer.Destination?.UUID == node.UUID {
-					asBranch.setTrueDestination(dest: nil)
+					asBranch.TrueTransfer.Destination = nil
 				}
 				if asBranch.FalseTransfer.Destination?.UUID == node.UUID {
-					asBranch.setFalseDestination(dest: nil)
+					asBranch.FalseTransfer.Destination = nil
 				}
 				
 			case is NVSwitch:

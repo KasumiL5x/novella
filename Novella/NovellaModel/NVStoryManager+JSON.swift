@@ -482,7 +482,7 @@ extension NVStoryManager {
 					let transferDestination = transfer["destination"]!.string!
 					if !transferDestination.isEmpty {
 						if let destination = storyManager.find(uuid: transferDestination) {
-							link.setDestination(dest: destination)
+							link.Transfer.Destination = destination
 						} else {
 							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(transfer["destination"]!.string!)) when setting a Link's Transfer's destination (\(uuid.uuidString)).", level: .warning)
 						}
@@ -508,7 +508,7 @@ extension NVStoryManager {
 					let transferDestination = trueTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
 						if let destination = storyManager.find(uuid: transferDestination) {
-							branch.setTrueDestination(dest: destination)
+							branch.TrueTransfer.Destination = destination
 						} else {
 							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(trueTransfer["destination"]!.string!)) when setting a Branch's true Transfer's destination (\(uuid.uuidString)).", level: .warning)
 						}
@@ -523,7 +523,7 @@ extension NVStoryManager {
 					let transferDestination = falseTransfer["destination"]!.string!
 					if !transferDestination.isEmpty {
 						if let destination = storyManager.find(uuid: transferDestination) {
-							branch.setFalseDestination(dest: destination)
+							branch.FalseTransfer.Destination = destination
 						} else {
 							NVLog.log("NVStoryManager::fromJSON(): Unable to find Object by UUID (\(falseTransfer["destination"]!.string!)) when setting a Branch's false Transfer's destination (\(uuid.uuidString)).", level: .warning)
 						}

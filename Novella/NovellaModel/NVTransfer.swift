@@ -8,6 +8,7 @@
 
 public class NVTransfer {
 	// MARK: - Variables -
+	private var _manager: NVStoryManager
 	private var _destination: NVObject?
 	private var _function: NVFunction
 	
@@ -20,6 +21,9 @@ public class NVTransfer {
 				return
 			}
 			_destination = newValue
+			
+			NVLog.log("Transfer destination set to (\(_destination?.UUID.uuidString ?? "nil")).", level: .info)
+			_manager.Delegates.forEach{$0.onStoryTransferDestinationChanged(transfer: self, dest: _destination)}
 		}
 	}
 	public var Function: NVFunction {
@@ -28,6 +32,7 @@ public class NVTransfer {
 	
 	// MARK: - Initialization -
 	init(manager: NVStoryManager) {
+		self._manager = manager
 		self._destination = nil
 		self._function = NVFunction(manager: manager)
 	}

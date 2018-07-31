@@ -67,10 +67,8 @@ public protocol NVStoryDelegate {
 	func onStoryDeliveryContentChanged(content: String, node: NVDelivery)
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery)
 	
-	// MARK: Links
-	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?)
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?)
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?)
+	// MARK: Transfers
+	func onStoryTransferDestinationChanged(transfer: NVTransfer, dest: NVObject?)
 	
 	// MARK: Entities
 	func onStoryEntityImageChanged(entity: NVEntity)
@@ -196,12 +194,8 @@ public extension NVStoryDelegate {
 	func onStoryDeliveryDirectionsChanged(directions: String, node: NVDelivery) {
 	}
 	
-	// MARK: Links
-	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
-	}
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
-	}
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
+	// MARK: Transfers
+	func onStoryTransferDestinationChanged(transfer: NVTransfer, dest: NVObject?) {
 	}
 	
 	// MARK: Entities

@@ -198,13 +198,7 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
-	func onStoryLinkSetDestination(link: NVLink, dest: NVObject?) {
-		self.updateChangeCount(.changeDone)
-	}
-	func onStoryBranchSetTrueDestination(branch: NVBranch, dest: NVObject?) {
-		self.updateChangeCount(.changeDone)
-	}
-	func onStoryBranchSetFalseDestination(branch: NVBranch, dest: NVObject?) {
+	func onStoryTransferDestinationChanged(transfer: NVTransfer, dest: NVObject?) {
 		self.updateChangeCount(.changeDone)
 	}
 	
