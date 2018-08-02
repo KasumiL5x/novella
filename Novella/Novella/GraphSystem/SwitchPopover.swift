@@ -10,9 +10,9 @@ import Cocoa
 import NovellaModel
 
 class SwitchPopover: GenericPopover {
-	func setup(swtch: NVSwitch) {
-		(_popoverViewController as? SwitchPopoverViewController)?.setSwitch(swtch: swtch)
-		(_detachedViewController as? SwitchPopoverViewController)?.setSwitch(swtch: swtch)
+	func setup(swtch: NVSwitch, doc: NovellaDocument) {
+		(_popoverViewController as? SwitchPopoverViewController)?.setSwitch(swtch: swtch, doc: doc)
+		(_detachedViewController as? SwitchPopoverViewController)?.setSwitch(swtch: swtch, doc: doc)
 	}
 	
 	override func createViewController() -> NSViewController? {

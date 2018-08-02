@@ -97,7 +97,7 @@ class PinSwitch: Pin {
 	// MARK: Context Menu Callbacks
 	@objc private func onContextChooseVariable() {
 		_switchPopover.show(forView: self, at: .maxX)
-		_switchPopover.setup(swtch: BaseLink as! NVSwitch)
+		_switchPopover.setup(swtch: BaseLink as! NVSwitch, doc: Owner._graphView.Document)
 	}
 	
 	// MARK: - Drawing -

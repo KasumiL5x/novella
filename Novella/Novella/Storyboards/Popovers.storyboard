@@ -146,9 +146,15 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="onVariableChanged:" target="17H-DE-zNw" id="3ky-Nw-mBN"/>
+                                </connections>
                             </popUpButton>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="_variablesPopup" destination="slk-RB-abV" id="fA0-3o-uIc"/>
+                    </connections>
                 </viewController>
                 <customObject id="vRw-nW-bTk" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

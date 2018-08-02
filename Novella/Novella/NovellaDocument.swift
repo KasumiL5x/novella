@@ -202,6 +202,10 @@ extension NovellaDocument: NVStoryDelegate {
 		self.updateChangeCount(.changeDone)
 	}
 	
+	func onStorySwitchVariableChanged(swtch: NVSwitch, variable: NVVariable?) {
+		self.updateChangeCount(.changeDone)
+	}
+	
 	func onStoryFunctionUpdated(function: NVFunction) {
 		self.updateChangeCount(.changeDone)
 	}

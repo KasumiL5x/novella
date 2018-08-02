@@ -70,6 +70,9 @@ public protocol NVStoryDelegate {
 	// MARK: Transfers
 	func onStoryTransferDestinationChanged(transfer: NVTransfer, dest: NVObject?)
 	
+	// MARK: Links
+	func onStorySwitchVariableChanged(swtch: NVSwitch, variable: NVVariable?)
+	
 	// MARK: Entities
 	func onStoryEntityImageChanged(entity: NVEntity)
 	
@@ -196,6 +199,10 @@ public extension NVStoryDelegate {
 	
 	// MARK: Transfers
 	func onStoryTransferDestinationChanged(transfer: NVTransfer, dest: NVObject?) {
+	}
+	
+	// MARK: Links
+	func onStorySwitchVariableChanged(swtch: NVSwitch, variable: NVVariable?) {
 	}
 	
 	// MARK: Entities

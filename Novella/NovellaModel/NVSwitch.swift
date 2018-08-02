@@ -19,6 +19,12 @@ public class NVSwitch : NVBaseLink {
 	// MARK: - Properties -
 	public var Variable: NVVariable? {
 		get{ return _variable }
+		set{
+			_variable = newValue
+			
+			NVLog.log("Switch's (\(self.UUID.uuidString)) variable set to (\(_variable?.UUID.uuidString ?? "nil")).", level: .info)
+			_manager.Delegates.forEach{$0.onStorySwitchVariableChanged(swtch: self, variable: _variable)}
+		}
 	}
 	public var DefaultTransfer: NVTransfer {
 		get{  return _defaultTransfer }
