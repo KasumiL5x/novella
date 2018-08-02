@@ -100,6 +100,60 @@
             </objects>
             <point key="canvasLocation" x="-391" y="32.5"/>
         </scene>
+        <!--SwitchOption-->
+        <scene sceneID="pMx-hZ-7S0">
+            <objects>
+                <viewController storyboardIdentifier="SwitchOption" id="6yo-ZZ-UxT" userLabel="SwitchOption" customClass="SwitchOptionPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="vpl-pl-6AT">
+                        <rect key="frame" x="0.0" y="0.0" width="136" height="61"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIP-lM-Qy4">
+                                <rect key="frame" x="20" y="20" width="96" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="value" drawsBackground="YES" id="DdF-YW-p4O">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="vp3-Zm-oHa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="162" y="-157.5"/>
+        </scene>
+        <!--Switch-->
+        <scene sceneID="26v-mS-clQ">
+            <objects>
+                <viewController storyboardIdentifier="Switch" id="17H-DE-zNw" userLabel="Switch" customClass="SwitchPopoverViewController" customModule="Novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="x81-3Y-99I">
+                        <rect key="frame" x="0.0" y="0.0" width="258" height="61"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="slk-RB-abV">
+                                <rect key="frame" x="18" y="17" width="223" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="JC3-aZ-1VI" id="7mk-1j-hYy">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="ah8-J8-tN5">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="JC3-aZ-1VI"/>
+                                            <menuItem title="Item 2" id="INp-RJ-e95"/>
+                                            <menuItem title="Item 3" id="Xks-1h-fhb"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="vRw-nW-bTk" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="162" y="-14"/>
+        </scene>
         <!--Condition-->
         <scene sceneID="hU6-ti-Ucr">
             <objects>

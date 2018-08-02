@@ -195,8 +195,7 @@ class GraphView: NSView {
 				node.addPin(makePinBranch(baseLink: curr as! NVBranch, forNode: node))
 				
 			case is NVSwitch:
-//				node.addOutput(pin: makePinViewSwitch(baseLink: curr as! NVSwitch, forNode: node))
-				break
+				node.addPin(makePinSwitch(baseLink: curr as! NVSwitch, forNode: node))
 				
 			default:
 				print("Found a link that is not yet supported (\(curr)).")
@@ -629,11 +628,11 @@ extension GraphView {
 		_allPins.append(pin)
 		return pin
 	}
-//	private func makePinViewSwitch(baseLink: NVSwitch, forNode: Node) -> PinViewSwitch {
-//		let pin = PinViewSwitch(link: baseLink, graphView: self, owner: forNode)
-//		_allPinViews.append(pin)
-//		return pin
-//	}
+	private func makePinSwitch(baseLink: NVSwitch, forNode: Node) -> PinSwitch {
+		let pin = PinSwitch(swtch: baseLink, owner: forNode)
+		_allPins.append(pin)
+		return pin
+	}
 	
 	private func deletePin(_ pin: Pin) {
 		// 1. remove from nodes
@@ -735,8 +734,7 @@ extension GraphView: NVStoryDelegate {
 			originView.addPin(makePinBranch(baseLink: link as! NVBranch, forNode: originView))
 			
 		case is NVSwitch:
-//			originView.addOutput(pin: makePinViewSwitch(baseLink: link as! NVSwitch, forNode: originView))
-			break
+			originView.addPin(makePinSwitch(baseLink: link as! NVSwitch, forNode: originView))
 			
 		default:
 			print("GraphView::onStoryGraphAddLink() encountered unsupported link (\(link)).")

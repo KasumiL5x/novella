@@ -33,6 +33,8 @@
 		6513105E20C30F050078C30C /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104220C30F050078C30C /* NVStory.swift */; };
 		6513105F20C30F050078C30C /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513104320C30F050078C30C /* NVDelivery.swift */; };
 		6513106120C30F470078C30C /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6513106020C30F470078C30C /* JSONSchema.framework */; };
+		651DBE4021133B9B001DDCB2 /* SwitchPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651DBE3F21133B9B001DDCB2 /* SwitchPopoverViewController.swift */; };
+		651DBE4221133C07001DDCB2 /* SwitchPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651DBE4121133C07001DDCB2 /* SwitchPopover.swift */; };
 		652ACC37210EE521008EF078 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC36210EE521008EF078 /* Transfer.swift */; };
 		652ACC39210EE621008EF078 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC38210EE621008EF078 /* Pin.swift */; };
 		652ACC3B210EED81008EF078 /* PinBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652ACC3A210EED81008EF078 /* PinBranch.swift */; };
@@ -56,9 +58,12 @@
 		65A2180F20D13FC900EA4594 /* NVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2180E20D13FC900EA4594 /* NVObject.swift */; };
 		65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */; };
 		65CDA4FD20E01C440043C8D3 /* TypewriterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */; };
+		65D0B8B0211115FE0056A8A9 /* PinSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0B8AF211115FE0056A8A9 /* PinSwitch.swift */; };
 		65DD6CC820C3412B0078CB28 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC720C3412B0078CB28 /* MainWindowController.swift */; };
 		65DD6CCA20C345390078CB28 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CC920C345390078CB28 /* Alerts.swift */; };
 		65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */; };
+		65E02A952112378200D75E49 /* SwitchOptionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E02A942112378200D75E49 /* SwitchOptionPopover.swift */; };
+		65E02A972112381A00D75E49 /* SwitchOptionPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E02A962112381A00D75E49 /* SwitchOptionPopoverViewController.swift */; };
 		65ED41C020FF48A8004C97A9 /* NVLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ED41BF20FF48A8004C97A9 /* NVLog.swift */; };
 		65F7F83120C313F6004663D6 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F7F83020C313F6004663D6 /* SwiftyJSON.framework */; };
 		65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7F83420C31636004663D6 /* String+FromAny.swift */; };
@@ -157,6 +162,8 @@
 		6513104220C30F050078C30C /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
 		6513104320C30F050078C30C /* NVDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
 		6513106020C30F470078C30C /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONSchema.framework; path = Carthage/Build/Mac/JSONSchema.framework; sourceTree = "<group>"; };
+		651DBE3F21133B9B001DDCB2 /* SwitchPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPopoverViewController.swift; sourceTree = "<group>"; };
+		651DBE4121133C07001DDCB2 /* SwitchPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPopover.swift; sourceTree = "<group>"; };
 		652ACC36210EE521008EF078 /* Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
 		652ACC38210EE621008EF078 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		652ACC3A210EED81008EF078 /* PinBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBranch.swift; sourceTree = "<group>"; };
@@ -182,9 +189,12 @@
 		65A2180E20D13FC900EA4594 /* NVObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVObject.swift; sourceTree = "<group>"; };
 		65C6C2BA20CE6AEF00558EAA /* NovellaDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovellaDocument.swift; sourceTree = "<group>"; };
 		65CDA4FC20E01C440043C8D3 /* TypewriterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypewriterLabel.swift; sourceTree = "<group>"; };
+		65D0B8AF211115FE0056A8A9 /* PinSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinSwitch.swift; sourceTree = "<group>"; };
 		65DD6CC720C3412B0078CB28 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		65DD6CC920C345390078CB28 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		65DD6CCB20C3E5E60078CB28 /* RoundedTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextFieldCell.swift; sourceTree = "<group>"; };
+		65E02A942112378200D75E49 /* SwitchOptionPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchOptionPopover.swift; sourceTree = "<group>"; };
+		65E02A962112381A00D75E49 /* SwitchOptionPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchOptionPopoverViewController.swift; sourceTree = "<group>"; };
 		65ED41BF20FF48A8004C97A9 /* NVLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLog.swift; sourceTree = "<group>"; };
 		65F7F83020C313F6004663D6 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65F7F83420C31636004663D6 /* String+FromAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FromAny.swift"; sourceTree = "<group>"; };
@@ -262,6 +272,7 @@
 				652ACC3A210EED81008EF078 /* PinBranch.swift */,
 				652ACC3C210F1317008EF078 /* Board.swift */,
 				652ACC3E210FAEC5008EF078 /* PinLink.swift */,
+				65D0B8AF211115FE0056A8A9 /* PinSwitch.swift */,
 			);
 			name = Pins;
 			sourceTree = "<group>";
@@ -379,6 +390,8 @@
 				65F7F85220C31713004663D6 /* DialogPopover.swift */,
 				65F7F85920C31714004663D6 /* FunctionPopover.swift */,
 				65F7F85620C31714004663D6 /* GenericPopover.swift */,
+				65E02A942112378200D75E49 /* SwitchOptionPopover.swift */,
+				651DBE4121133C07001DDCB2 /* SwitchPopover.swift */,
 			);
 			name = Popovers;
 			sourceTree = "<group>";
@@ -525,6 +538,8 @@
 				65F7F89520C317F4004663D6 /* DeliveryPopoverViewController.swift */,
 				65F7F89220C317F4004663D6 /* DialogPopoverViewController.swift */,
 				65F7F89420C317F4004663D6 /* FunctionPopoverViewController.swift */,
+				65E02A962112381A00D75E49 /* SwitchOptionPopoverViewController.swift */,
+				651DBE3F21133B9B001DDCB2 /* SwitchPopoverViewController.swift */,
 			);
 			path = Popovers;
 			sourceTree = "<group>";
@@ -739,10 +754,14 @@
 				65DD6CCC20C3E5E70078CB28 /* RoundedTextFieldCell.swift in Sources */,
 				650864A720D0024F00201542 /* ReaderWindowController.swift in Sources */,
 				65F7F86D20C31714004663D6 /* DialogNode.swift in Sources */,
+				65D0B8B0211115FE0056A8A9 /* PinSwitch.swift in Sources */,
+				65E02A972112381A00D75E49 /* SwitchOptionPopoverViewController.swift in Sources */,
+				65E02A952112378200D75E49 /* SwitchOptionPopover.swift in Sources */,
 				65F7F83F20C31637004663D6 /* NSView+Toast.swift in Sources */,
 				65F7F8A020C31815004663D6 /* PreferencesViewController.swift in Sources */,
 				65F7F86520C31714004663D6 /* GraphView.swift in Sources */,
 				65F7F83D20C31637004663D6 /* NSColor+Hex.swift in Sources */,
+				651DBE4021133B9B001DDCB2 /* SwitchPopoverViewController.swift in Sources */,
 				65F7F83A20C31637004663D6 /* String+FromAny.swift in Sources */,
 				65F7F86B20C31714004663D6 /* GenericPopover.swift in Sources */,
 				65F7F85E20C31714004663D6 /* GraphBGView.swift in Sources */,
@@ -785,6 +804,7 @@
 				65C6C2BB20CE6AEF00558EAA /* NovellaDocument.swift in Sources */,
 				65F7F85B20C31714004663D6 /* MarqueeView.swift in Sources */,
 				65F7F89A20C317F4004663D6 /* DeliveryPopoverViewController.swift in Sources */,
+				651DBE4221133C07001DDCB2 /* SwitchPopover.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
