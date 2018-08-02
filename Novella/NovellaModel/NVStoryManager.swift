@@ -201,7 +201,7 @@ public class NVStoryManager {
 	}
 }
 
-// MARK: - - Folders -
+// MARK: - Folders -
 extension NVStoryManager {
 	@discardableResult
 	public func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
@@ -244,7 +244,7 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - Variables -
+// MARK: - Variables -
 extension NVStoryManager {
 	@discardableResult
 	public func makeVariable(name: String, type: NVDataType, uuid: NSUUID?=nil) -> NVVariable {
@@ -267,7 +267,7 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - Graphs -
+// MARK: - Graphs -
 extension NVStoryManager {
 	@discardableResult
 	public func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
@@ -319,7 +319,7 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - Links -
+// MARK: - Links -
 extension NVStoryManager {
 	@discardableResult
 	public func makeLink(origin: NVObject, uuid: NSUUID?=nil) -> NVLink {
@@ -373,7 +373,7 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - Nodes -
+// MARK: - Nodes -
 extension NVStoryManager {
 	@discardableResult
 	public func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
@@ -483,7 +483,7 @@ extension NVStoryManager {
 	// handle in trash below
 }
 
-// MARK: - - Trashing Stuff -
+// MARK: - Trashing Stuff -
 extension NVStoryManager {
 	func trash(_ item: NVObject) {
 		_trashed.append(item)

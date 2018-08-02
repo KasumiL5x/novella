@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 class GraphView: NSView {
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private let _document: NovellaDocument
 	private var _nvGraph: NVGraph
 	private let _bg: GraphBGView
@@ -34,7 +34,7 @@ class GraphView: NSView {
 	// MARK: Delegate
 	private var _delegate: GraphViewDelegate?
 	
-	// MARK: - - Initialization -
+	// MARK: - Initialization -
 	init(doc: NovellaDocument, graph: NVGraph, frameRect: NSRect) {
 		self._document = doc
 		self._nvGraph = graph
@@ -102,7 +102,7 @@ class GraphView: NSView {
 		fatalError("GraphView::init(coder) not implemented.")
 	}
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
 	var NovellaGraph: NVGraph {
 		get{ return _nvGraph }
 	}
@@ -123,7 +123,7 @@ class GraphView: NSView {
 		get{ return _document }
 	}
 	
-	// MARK: - - Setup -
+	// MARK: - Setup -
 	func rootFor(graph: NVGraph) {
 		// remove existing views
 		self.subviews.removeAll()
@@ -204,7 +204,7 @@ class GraphView: NSView {
 		}
 	}
 	
-	// MARK: - - Graph Functions / Helpers -
+	// MARK: - Graph Functions / Helpers -
 	override func mouseDown(with event: NSEvent) {
 		_selectionHandler?.select([], append: false)
 	}
@@ -304,7 +304,7 @@ class GraphView: NSView {
 	}
 }
 
-// MARK: - - Gestures -
+// MARK: - Gestures -
 extension GraphView {
 	// MARK: GraphView Callbacks
 	@objc private func onPan(gesture: NSGestureRecognizer) {
@@ -477,7 +477,7 @@ extension GraphView {
 	}
 }
 
-// MARK: - - Context Menu Callbacks -
+// MARK: - Context Menu Callbacks -
 extension GraphView {
 	// MARK: GraphView Menu
 	@objc private func onGraphViewMenuAddDialog() {
@@ -494,7 +494,7 @@ extension GraphView {
 	}
 }
 
-// MARK: - - Selection -
+// MARK: - Selection -
 extension GraphView {
 	func selectNode(object: NVObject) {
 		if let view = getNodeFrom(object: object, includeParentGraphs: false) {
@@ -517,7 +517,7 @@ extension GraphView {
 	}
 }
 
-// MARK: - - Creation -
+// MARK: - Creation -
 extension GraphView {
 	// MARK: Node Conveniences
 	func makeDialog(at: CGPoint) {

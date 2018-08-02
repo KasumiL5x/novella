@@ -94,14 +94,14 @@ class GenericPopover: NSObject {
 		}
 	}
 	
-	// MARK: - - Virtual Functions -
+	// MARK: - Virtual Functions -
 	func createViewController() -> NSViewController? {
 		print("GenericPopover::createViewController should be overridden.")
 		return nil
 	}
 }
 
-// MARK: - - NSPopoverDelegate -
+// MARK: - NSPopoverDelegate -
 extension GenericPopover: NSPopoverDelegate {
 	func detachableWindow(for popover: NSPopover) -> NSWindow? {
 		// this is requested when the window is detached.

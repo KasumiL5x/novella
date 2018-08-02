@@ -9,7 +9,7 @@
 import Cocoa
 
 class MarqueeView: NSView {
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _origin: NSPoint
 	private var _marquee: NSRect
 	private var _inMarquee: Bool
@@ -19,7 +19,7 @@ class MarqueeView: NSView {
 	private var _dashPhase: CGFloat
 	private var _color: NSColor
 	
-	// MARK: - - Initializers -
+	// MARK: - Initializers -
 	override init(frame frameRect: NSRect) {
 		self._origin = NSPoint.zero
 		self._marquee = NSRect.zero
@@ -36,7 +36,7 @@ class MarqueeView: NSView {
 		fatalError("MarqueeView::init(coder) not implemented.")
 	}
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
 	var Origin: NSPoint {
 		get{ return _origin }
 		set{
@@ -56,7 +56,7 @@ class MarqueeView: NSView {
 		set{ _inMarquee = newValue }
 	}
 	
-	// MARK: - - Internal Functions -
+	// MARK: - Internal Functions -
 	override func hitTest(_ point: NSPoint) -> NSView? {
 		return nil
 	}

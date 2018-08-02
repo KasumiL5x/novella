@@ -9,18 +9,18 @@
 import Foundation
 
 class SelectionHandler {
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _selectedNodes: [Node]
 	private var _delegate: GraphViewDelegate?
 	private var _graph: GraphView
 	
-	// MARK: - - Initialization -
+	// MARK: - Initialization -
 	init(graph: GraphView) {
 		self._selectedNodes = []
 		self._graph = graph
 	}
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
 	var Selection: [Node] {
 		get{ return _selectedNodes }
 	}
@@ -29,7 +29,7 @@ class SelectionHandler {
 		set{ _delegate = newValue }
 	}
 	
-	// MARK: - - Functions -
+	// MARK: - Functions -
 	func select(_ nodes: [Node], append: Bool) {
 		_selectedNodes.forEach({$0.deselect()})
 		_selectedNodes = append ? (_selectedNodes + nodes) : nodes

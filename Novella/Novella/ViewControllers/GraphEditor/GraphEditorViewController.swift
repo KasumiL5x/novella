@@ -10,12 +10,12 @@ import Cocoa
 import NovellaModel
 
 class GraphEditorViewController: NSViewController {
-	// MARK: - - Outlets -
+	// MARK: - Outlets -
 	@IBOutlet private weak var _scrollView: NSScrollView!
 	@IBOutlet private weak var _toolbarView: NSView!
 	
 	
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _document: NovellaDocument?
 	private static let GRAPH_SIZE: CGFloat = 600000
 	private var _graphView: GraphView?
@@ -25,12 +25,12 @@ class GraphEditorViewController: NSViewController {
 	//
 	private var _firstAppear: Bool = true
 	
-	// MARK: - - Properties -
+	// MARK: - Properties -
 	var Graph: GraphView? {
 		get{ return _graphView }
 	}
 	
-	// MARK: - - Functions -
+	// MARK: - Functions -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -130,7 +130,7 @@ class GraphEditorViewController: NSViewController {
 		return _graphView?.convert(centerSelf, from: self.view) ?? CGPoint.zero
 	}
 	
-	// MARK: - - Interface Callbacks -
+	// MARK: - Interface Callbacks -
 	@IBAction func onToolbarDialog(_ sender: NSButton) {
 		_graphView?.makeDialog(at: centerOfGraph())
 	}

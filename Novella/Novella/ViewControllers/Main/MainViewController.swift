@@ -199,7 +199,7 @@ extension MainViewController {
 	}
 }
 
-// MARK: - - Tabs -
+// MARK: - Tabs -
 extension MainViewController {
 	func getActiveGraph() -> GraphView? {
 		return _graphViewVC?.Graph

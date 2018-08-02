@@ -11,7 +11,7 @@ import SwiftyJSON
 
 typealias JSONDict = [String:Any]
 
-// MARK: - - Save -
+// MARK: - Save -
 extension NVStoryManager {
 	public func toJSON() -> String {
 		var root: JSONDict = [:]
@@ -211,7 +211,7 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - Load -
+// MARK: - Load -
 extension NVStoryManager {
 	public static func fromJSON(str: String) -> NVStoryManager? {
 		// get Data from string
@@ -601,7 +601,7 @@ extension NVStoryManager {
 	}
 }
 
-// MARK: - - Schema -
+// MARK: - Schema -
 extension NVStoryManager {
 	static let JSON_SCHEMA: JSONDict = [
 		"$schema": "http://json-schema.org/draft-04/schema#",

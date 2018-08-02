@@ -10,7 +10,7 @@ import Cocoa
 import NovellaModel
 
 class GraphNode: Node {
-	// MARK: - - Initialization -
+	// MARK: - Initialization -
 	init(node: NVGraph, graphView: GraphView) {
 		let rect = NSMakeRect(0.0, 0.0, 1.0, 1.0)
 		super.init(frameRect: rect, nvObject: node, graphView: graphView)
@@ -24,7 +24,7 @@ class GraphNode: Node {
 		fatalError("GraphNode::init(coder) not implemented.")
 	}
 	
-	// MARK: - - Functions -
+	// MARK: - Functions -
 	// MARK: Virtual Functions
 	override func onMove() {
 		(Object as? NVGraph)?.Position = _graphView.offsetToEditorPosition(pos: frame.origin)
