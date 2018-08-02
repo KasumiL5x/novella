@@ -19,7 +19,7 @@ class GenericPopoverWindow: NSWindow {
 }
 
 class GenericPopover: NSObject {
-	// MARK: - - Variables -
+	// MARK: - Variables -
 	private var _view: NSView?
 	private var _popover: NSPopover?
 	private var _window: GenericPopoverWindow?
@@ -27,7 +27,10 @@ class GenericPopover: NSObject {
 	var _popoverViewController: NSViewController?
 	var _detachedViewController: NSViewController?
 	
-	// MARK: - - Initialization -
+	// MARK: - Properties -
+	public var Detachable: Bool = true
+	
+	// MARK: - Initialization -
 	override init() {
 		self._view = nil
 		self._popover = nil
@@ -109,7 +112,7 @@ extension GenericPopover: NSPopoverDelegate {
 	}
 	
 	func popoverShouldDetach(_ popover: NSPopover) -> Bool {
-		return true
+		return Detachable
 	}
 	
 	func popoverDidClose(_ notification: Notification) {

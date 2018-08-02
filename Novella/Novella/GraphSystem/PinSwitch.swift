@@ -27,6 +27,7 @@ class PinSwitch: Pin {
 		self._contextMenu = NSMenu()
 		self._defaultTransfer = nil
 		self._switchPopover = SwitchPopover()
+		self._switchPopover.Detachable = false
 		super.init(link: swtch, owner: owner)
 		
 		// setup layers
