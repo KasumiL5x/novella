@@ -136,10 +136,7 @@ class PinSwitch: Pin {
 		setFrame()
 		redraw()
 		
-		// TODO: Not sure I should be accessing like this - may make a single public function and make these private
-		Owner.layoutBoard()
-		Owner.sizeToFitSubviews()
-		Owner.redraw()
+		Owner.PinBoard.layoutPins()
 	}
 	@objc private func onContextRemoveOption() {
 		fatalError("Not yet implemented.")

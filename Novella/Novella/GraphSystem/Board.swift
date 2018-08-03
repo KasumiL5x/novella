@@ -16,6 +16,8 @@ class Board: NSView {
 	// MARK: - Variables -
 	private var _bgLayer: CAShapeLayer
 	private var _pins: [Pin]
+	//
+	var layoutChanged: (() -> Void)?
 	
 	// MARK: - Properties -
 	var Pins: [Pin] {
@@ -26,6 +28,7 @@ class Board: NSView {
 	override init(frame frameRect: NSRect) {
 		self._bgLayer = CAShapeLayer()
 		self._pins = []
+		self.layoutChanged = nil
 		super.init(frame: frameRect)
 		
 		// layer setup
@@ -94,6 +97,9 @@ class Board: NSView {
 		subFrame.width += Board.PADDING
 		subFrame.height += Board.PADDING
 		self.frame.size = subFrame
+		
+		// tell whoever is listening that we changed
+		layoutChanged?()
 	}
 	
 	// MARK: - Drawing -

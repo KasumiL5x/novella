@@ -13,7 +13,6 @@ class Node: NSView {
 	// MARK: - Constants -
 	static let OUTPUTS_OFFSET_X: CGFloat = 6.0
 	static let HIT_IGNORE_TAG: Int = 10
-	static let HIT_NIL_TAG: Int = 11
 	static let NODE_ROUNDNESS: CGFloat = 4.0
 	
 	// MARK: - Variables -
@@ -115,6 +114,12 @@ class Node: NSView {
 		self._board = Board()
 		super.init(frame: frameRect)
 		
+		// setup layers
+		wantsLayer = true
+		layer?.masksToBounds = false
+		// add shadow
+		setupShadow()
+		
 		// set up context menu
 		_contextMenu.autoenablesItems = false
 		_contextMenu.addItem(_contextItemEdit)
@@ -130,37 +135,6 @@ class Node: NSView {
 		_contextMenu.addItem(withTitle: "Small", action: #selector(Node.onContextSizeSmall), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Medium", action: #selector(Node.onContextSizeMedium), keyEquivalent: "")
 		_contextMenu.addItem(withTitle: "Large", action: #selector(Node.onContextSizeLarge), keyEquivalent: "")
-		
-		wantsLayer = true
-		
-		// add shadow
-		layer?.masksToBounds = false
-		self.shadow = NSShadow()
-		self.layer?.shadowOpacity = 0.6
-		self.layer?.shadowColor = NSColor.fromHex("#AEB8C7").cgColor
-		self.layer?.shadowRadius = 0.5
-		// shadows using offsets are a DRAMATIC performance hit, so avoid if possible.
-		//self.layer?.shadowOffset = NSMakeSize(0.5, -1)
-		// instead, make a shadow path that's precomputed
-		var shadowRect = widgetRect()
-		shadowRect.origin = NSMakePoint(0.7, -1.2)
-		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS).cgPath
-		// OR rasterize the view, but this doesn't support retina and will be blurry
-		//self.layer?.shouldRasterize = true
-		//self.layer?.rasterizationScale = NSScreen.main!.backingScaleFactor
-		
-		// name label
-		setLabelString(str: "")
-		self.addSubview(self._nameLabel)
-		// content label
-		setContentString(str: "")
-		self.addSubview(self._contentLabel)
-		
-		// entry label
-		self.addSubview(self._entryLabel)
-		self._entryLabel.sizeToFit()
-		self._entryLabel.frame.origin = NSMakePoint(3.0, 1.0)
-		updateEntryLabel()
 		
 		// primary click recognizer
 		_clickGesture = NSClickGestureRecognizer(target: self, action: #selector(Node.onClick))
@@ -181,18 +155,34 @@ class Node: NSView {
 		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(Node.onPan))
 		_panGesture!.buttonMask = 0x1 // "primary click"
 		self.addGestureRecognizer(_panGesture!)
+
+		// name and content labels
+		setLabelString(str: "")
+		setContentString(str: "")
+		self.addSubview(self._nameLabel)
+		self.addSubview(self._contentLabel)
 		
+		// entry label
+		self.addSubview(self._entryLabel)
+		self._entryLabel.sizeToFit()
+		self._entryLabel.frame.origin = NSMakePoint(3.0, 1.0)
+		showHideEntryLabel()
 		
-		// test
+		// pin board
 		self.addSubview(_board)
-		layoutBoard()
+		positionBoard() // initial position before callback setup
+		_board.layoutChanged = {
+			self.positionBoard()
+			self.sizeToFitSubviews()
+			self.redraw()
+//			print("layout changed")
+		}
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Node::init(coder) not implemented.")
 	}
 	
 	// MARK: - Functions -
-	
 	// MARK: Hit Test
 	override func hitTest(_ point: NSPoint) -> NSView? {
 		// point is in the superview's coordinate system
@@ -202,12 +192,6 @@ class Node: NSView {
 				if sub.tag == Node.HIT_IGNORE_TAG {
 					return self
 				}
-				
-				// disregard the interaction and pretend it didn't happen
-				if sub.tag == Node.HIT_NIL_TAG {
-					continue
-				}
-				
 				// defer the choice to the subview (note the point sent is in THIS view's coordinate system)
 				return sub.hitTest(superview!.convert(point, to: self))
 			}
@@ -220,6 +204,27 @@ class Node: NSView {
 		
 		// nuttin'
 		return nil
+	}
+	
+	// MARK: Shadows
+	func setupShadow() {
+		if self.shadow == nil {
+			self.shadow = NSShadow()
+		}
+		
+		self.layer?.shadowOpacity = 0.6
+		self.layer?.shadowColor = NSColor.fromHex("#AEB8C7").cgColor
+		self.layer?.shadowRadius = 0.5
+		
+		// shadows using offsets are a DRAMATIC performance hit, so avoid if possible.
+		//self.layer?.shadowOffset = NSMakeSize(0.5, -1)
+		// instead, make a shadow path that's precomputed
+		var shadowRect = widgetRect()
+		shadowRect.origin = NSMakePoint(0.7, -1.2)
+		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS).cgPath
+		// OR rasterize the view, but this doesn't support retina and will be blurry
+		//self.layer?.shouldRasterize = true
+		//self.layer?.rasterizationScale = NSScreen.main!.backingScaleFactor
 	}
 	
 	// MARK: Gesture Callbacks
@@ -262,7 +267,6 @@ class Node: NSView {
 	@objc private func onContextTrash() {
 		Object.InTrash ? Object.untrash() : Object.trash()
 	}
-	
 	@objc private func onContextSizeCompact() {
 		if let asNode = Object as? NVNode {
 			asNode.Size = .compact
@@ -310,22 +314,16 @@ class Node: NSView {
 		// reload and therefore reposition visual elements
 		onNameChanged()
 		onContentChanged()
-		// actually redraw this view
-		redraw()
-		
 		// reposition the board
-		layoutBoard()
+		positionBoard()
 		// resize to fit subviews which contains the pins and also fits the new widget size
 		sizeToFitSubviews()
-		
 		// update curves as the inputs to these need repositioning based on the new widget size
 		_graphView.updateCurves()
-		
 		// remake shadow
-		var shadowRect = widgetRect()
-		shadowRect.origin = NSMakePoint(0.7, -1.2)
-		self.layer?.shadowPath = NSBezierPath(roundedRect: shadowRect, xRadius: Node.NODE_ROUNDNESS, yRadius: Node.NODE_ROUNDNESS).cgPath
-		
+		setupShadow()
+		// actually redraw this view
+		redraw()
 	}
 	
 	func setLabelString(str: String) {
@@ -350,7 +348,7 @@ class Node: NSView {
 		_contentLabel.lineBreakMode = .byWordWrapping
 	}
 	
-	func updateEntryLabel() {
+	func showHideEntryLabel() {
 		self._entryLabel.isHidden = _graphView.NovellaGraph.Entry != self.Object
 	}
 	
@@ -364,13 +362,12 @@ class Node: NSView {
 		setNeedsDisplay(bounds)
 	}
 	
-	// MARK: Virtual Functions
+	
 	func widgetRect() -> NSRect {
 		// 40 = compact (w/o content label)
 		// 100 = small
 		// 150 = medium
 		// 200 = large
-		
 		let width: CGFloat = 200.0
 		let compactSize = NSMakeRect(0.0, 0.0, width, 40.0)
 		let smallSize = NSMakeRect(0.0, 0.0, width, 100.0)
@@ -395,6 +392,8 @@ class Node: NSView {
 			return compactSize
 		}
 	}
+	
+	// MARK: Virtual Functions
 	func onMove() {
 		print("Node::onMove() should be overridden.")
 	}
@@ -445,42 +444,21 @@ class Node: NSView {
 	// MARK: Outputs
 	func addPin(_ pin: Pin) {
 		_board.add(pin)
-		layoutBoard()
-		sizeToFitSubviews()
-		redraw()
 	}
 	func removePin(_ pin: Pin) {
 		_board.remove(pin)
-		layoutBoard()
-		sizeToFitSubviews()
-		redraw()
 	}
-	func layoutBoard() {
-		// TODO: Not sure if I should have the board layout pins here.
-		_board.layoutPins()
-		
+	private func positionBoard() {
+		// calculate and set new position of the board now that it has been resized internally
 		var pos = CGPoint.zero
 		pos.x = widgetRect().maxX + Node.OUTPUTS_OFFSET_X
 		pos.y = (widgetRect().midY - _board.bounds.midY)
 		_board.frame.origin = pos
 	}
-	private func boundsOf(views: [NSView]) -> NSRect {
-		var minX = CGFloat.infinity
-		var maxX = -CGFloat.infinity
-		var minY = CGFloat.infinity
-		var maxY = -CGFloat.infinity
-		for curr in views {
-			minX = curr.frame.minX < minX ? curr.frame.minX : minX
-			maxX = curr.frame.maxX > maxX ? curr.frame.maxX : maxX
-			minY = curr.frame.minY < minY ? curr.frame.minY : minY
-			maxY = curr.frame.maxY > maxY ? curr.frame.maxY : maxY
-		}
-		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
-	}
-	func sizeToFitSubviews() {
+	private func sizeToFitSubviews() {
 		// subviews cannot be interacted with if they are out of the bounds of the superview, so resize
 		
-		// initially set frame size to widget ret
+		// initially set frame size to widget rect
 		frame.size = widgetRect().size
 		
 		var w: CGFloat = frame.width

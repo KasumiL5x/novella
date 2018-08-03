@@ -748,7 +748,7 @@ extension GraphView: NVStoryDelegate {
 		}
 		
 		for x in _allNodes {
-			x.updateEntryLabel()
+			x.showHideEntryLabel()
 		}
 	}
 	
