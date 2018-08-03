@@ -72,6 +72,9 @@ public protocol NVStoryDelegate {
 	
 	// MARK: Links
 	func onStorySwitchVariableChanged(swtch: NVSwitch, variable: NVVariable?)
+	func onStorySwitchOptionValueChanged(swtch: NVSwitch, option: NVSwitchOption)
+	func onStorySwitchOptionAdded(swtch: NVSwitch, option: NVSwitchOption)
+	func onStorySwitchOptionRemoved(swtch: NVSwitch, option: NVSwitchOption)
 	
 	// MARK: Entities
 	func onStoryEntityImageChanged(entity: NVEntity)
@@ -203,6 +206,12 @@ public extension NVStoryDelegate {
 	
 	// MARK: Links
 	func onStorySwitchVariableChanged(swtch: NVSwitch, variable: NVVariable?) {
+	}
+	func onStorySwitchOptionValueChanged(swtch: NVSwitch, option: NVSwitchOption) {
+	}
+	func onStorySwitchOptionAdded(swtch: NVSwitch, option: NVSwitchOption) {
+	}
+	func onStorySwitchOptionRemoved(swtch: NVSwitch, option: NVSwitchOption) {
 	}
 	
 	// MARK: Entities

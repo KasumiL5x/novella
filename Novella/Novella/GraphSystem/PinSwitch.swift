@@ -20,6 +20,7 @@ class PinSwitch: Pin {
 	private let _contextMenu: NSMenu
 	private var _defaultTransfer: Transfer?
 	private let _switchPopover: SwitchPopover
+	private let _conditionPopover: ConditionPopover
 
 	// MARK: - Initialization -
 	init(swtch: NVSwitch, owner: Node) {
@@ -28,6 +29,7 @@ class PinSwitch: Pin {
 		self._defaultTransfer = nil
 		self._switchPopover = SwitchPopover()
 		self._switchPopover.Detachable = false
+		self._conditionPopover = ConditionPopover()
 		super.init(link: swtch, owner: owner)
 		
 		// setup layers
@@ -46,12 +48,12 @@ class PinSwitch: Pin {
 		// context menu
 		_contextMenu.addItem(withTitle: "Choose Variable", action: #selector(PinSwitch.onContextChooseVariable), keyEquivalent: "")
 		_contextMenu.addItem(NSMenuItem.separator())
-		_contextMenu.addItem(withTitle: "Add Option", action: nil, keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Remove Option", action: nil, keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Edit Option Value", action: nil, keyEquivalent: "")
-		_contextMenu.addItem(withTitle: "Edit Option Function", action: nil, keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Add Option", action: #selector(PinSwitch.onContextAddOption), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Remove Option", action: #selector(PinSwitch.onContextRemoveOption), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Edit Option Value", action: #selector(PinSwitch.onContextEditOptionValue), keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Edit Option Function", action: #selector(PinSwitch.onContextEditOptionFunction), keyEquivalent: "")
 		_contextMenu.addItem(NSMenuItem.separator())
-		_contextMenu.addItem(withTitle: "Edit Precondition", action: nil, keyEquivalent: "")
+		_contextMenu.addItem(withTitle: "Edit Precondition", action: #selector(PinSwitch.onContextEditPreCondition), keyEquivalent: "")
 		_contextMenu.addItem(NSMenuItem.separator())
 		_contextMenu.addItem(withTitle: "Trash", action: nil, keyEquivalent: "")
 		
@@ -98,6 +100,21 @@ class PinSwitch: Pin {
 	@objc private func onContextChooseVariable() {
 		_switchPopover.show(forView: self, at: .maxX)
 		_switchPopover.setup(swtch: BaseLink as! NVSwitch, doc: Owner._graphView.Document)
+	}
+	@objc private func onContextAddOption() {
+		fatalError("Not yet implemented.")
+	}
+	@objc private func onContextRemoveOption() {
+		fatalError("Not yet implemented.")
+	}
+	@objc private func onContextEditOptionValue() {
+		fatalError("Not yet implemented.")
+	}
+	@objc private func onContextEditOptionFunction() {
+		fatalError("Not yet implemented.")
+	}
+	@objc private func onContextEditPreCondition() {
+		fatalError("I forgot to add preconditions to switches in the model... will do this later.")
 	}
 	
 	// MARK: - Drawing -

@@ -205,6 +205,15 @@ extension NovellaDocument: NVStoryDelegate {
 	func onStorySwitchVariableChanged(swtch: NVSwitch, variable: NVVariable?) {
 		self.updateChangeCount(.changeDone)
 	}
+	func onStorySwitchOptionValueChanged(swtch: NVSwitch, option: NVSwitchOption) {
+		self.updateChangeCount(.changeDone)
+	}
+	func onStorySwitchOptionAdded(swtch: NVSwitch, option: NVSwitchOption) {
+		self.updateChangeCount(.changeDone)
+	}
+	func onStorySwitchOptionRemoved(swtch: NVSwitch, option: NVSwitchOption) {
+		self.updateChangeCount(.changeDone)
+	}
 	
 	func onStoryFunctionUpdated(function: NVFunction) {
 		self.updateChangeCount(.changeDone)
