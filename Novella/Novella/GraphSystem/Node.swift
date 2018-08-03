@@ -455,7 +455,10 @@ class Node: NSView {
 		sizeToFitSubviews()
 		redraw()
 	}
-	private func layoutBoard() {
+	func layoutBoard() {
+		// TODO: Not sure if I should have the board layout pins here.
+		_board.layoutPins()
+		
 		var pos = CGPoint.zero
 		pos.x = widgetRect().maxX + Node.OUTPUTS_OFFSET_X
 		pos.y = (widgetRect().midY - _board.bounds.midY)
@@ -474,7 +477,7 @@ class Node: NSView {
 		}
 		return NSMakeRect(minX, minY, maxX - minX, maxY - minY)
 	}
-	private func sizeToFitSubviews() {
+	func sizeToFitSubviews() {
 		// subviews cannot be interacted with if they are out of the bounds of the superview, so resize
 		
 		// initially set frame size to widget ret

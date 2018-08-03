@@ -19,6 +19,7 @@ class PinSwitch: Pin {
 	private var _bgLayer: CAShapeLayer
 	private let _contextMenu: NSMenu
 	private var _defaultTransfer: Transfer?
+	private var _options: [(transfer: Transfer, opt: NVSwitchOption)]
 	private let _switchPopover: SwitchPopover
 	private let _conditionPopover: ConditionPopover
 
@@ -27,6 +28,7 @@ class PinSwitch: Pin {
 		self._bgLayer = CAShapeLayer()
 		self._contextMenu = NSMenu()
 		self._defaultTransfer = nil
+		self._options = []
 		self._switchPopover = SwitchPopover()
 		self._switchPopover.Detachable = false
 		self._conditionPopover = ConditionPopover()
@@ -59,16 +61,11 @@ class PinSwitch: Pin {
 		
 		// setup transfers
 		self._defaultTransfer = Transfer(transfer: swtch.DefaultTransfer, owner: self)
-		self.addSubview(_defaultTransfer!)
 		
 		// layout the transfers
 		layoutTransfers()
-		
 		// calculate bounds including padding
-		var subFrame = subviewsFrame()
-		subFrame.width += PinSwitch.PADDING
-		subFrame.height += PinSwitch.PADDING
-		self.frame.size = subFrame
+		setFrame()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("PinSwitch::init(coder) not implemented.")
@@ -87,11 +84,43 @@ class PinSwitch: Pin {
 		return NSMakeSize(w, h)
 	}
 	private func layoutTransfers() {
+		// remove all as we add them dynamically
+		self.subviews.removeAll()
+		
 		// default transfer at the bottom
-		_defaultTransfer?.frame.origin += NSMakePoint(PinSwitch.PADDING, PinSwitch.PADDING)
+		self.addSubview(_defaultTransfer!)
+		_defaultTransfer!.frame.origin = NSMakePoint(PinSwitch.PADDING, PinSwitch.PADDING)
+		
+		// create local transfers and switch options
+		_options = []
+		for opt in (BaseLink as! NVSwitch).Options {
+			let entry = (transfer: Transfer(transfer: opt.Transfer, owner: self), opt: opt)
+			_options.append(entry)
+			self.addSubview(entry.transfer)
+		}
+		
+		// all options above that with spacing
+		var lastY = _defaultTransfer!.frame.maxY
+		for opt in _options {
+			opt.transfer.frame.origin.x = PinSwitch.PADDING
+			opt.transfer.frame.origin.y = lastY + PinSwitch.PADDING
+			
+			lastY = opt.transfer.frame.maxY
+		}
+	}
+	private func setFrame() {
+		var subFrame = subviewsFrame()
+		subFrame.width += PinSwitch.PADDING
+		subFrame.height += PinSwitch.PADDING
+		self.frame.size = subFrame
 	}
 	
 	// MARK: Virtuals
+	override func redraw() {
+		setNeedsDisplay(bounds)
+		_defaultTransfer?.redraw()
+		_options.forEach{$0.transfer.redraw()}
+	}
 	override func contextClicked(_ gesture: NSClickGestureRecognizer) {
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
@@ -102,7 +131,15 @@ class PinSwitch: Pin {
 		_switchPopover.setup(swtch: BaseLink as! NVSwitch, doc: Owner._graphView.Document)
 	}
 	@objc private func onContextAddOption() {
-		fatalError("Not yet implemented.")
+		let _ = (BaseLink as! NVSwitch).addOption()
+		layoutTransfers()
+		setFrame()
+		redraw()
+		
+		// TODO: Not sure I should be accessing like this - may make a single public function and make these private
+		Owner.layoutBoard()
+		Owner.sizeToFitSubviews()
+		Owner.redraw()
 	}
 	@objc private func onContextRemoveOption() {
 		fatalError("Not yet implemented.")
