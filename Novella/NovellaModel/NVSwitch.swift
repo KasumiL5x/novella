@@ -80,7 +80,7 @@ public class NVSwitch : NVBaseLink {
 	}
 	
 	// MARK: - Functions -
-	func addOption() -> NVSwitchOption {
+	public func addOption() -> NVSwitchOption {
 		let opt = NVSwitchOption(owner: self, manager: _manager, id: _uniqueID)
 		_options.append(opt)
 		_uniqueID += 1
@@ -90,7 +90,7 @@ public class NVSwitch : NVBaseLink {
 		return opt
 	}
 	
-	func removeOption(_ opt: NVSwitchOption) {
+	public func removeOption(_ opt: NVSwitchOption) {
 		guard let idx = _options.index(of: opt) else {
 			return
 		}
