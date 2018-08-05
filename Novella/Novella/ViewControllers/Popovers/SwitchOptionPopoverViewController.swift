@@ -36,7 +36,7 @@ class SwitchOptionPopoverViewController: NSViewController {
 		case .double:
 			_option!.Value = ns.doubleValue
 		case .integer:
-			_option!.Value = ns.intValue
+			_option!.Value = ns.integerValue
 		}
 	}
 }

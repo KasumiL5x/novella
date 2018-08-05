@@ -70,8 +70,11 @@ public class NVReader {
 			
 		case is NVBranch:
 			let asBranch = (chosenLink as! NVBranch)
-			nextNode = asBranch.PreCondition.execute() ? asBranch.TrueTransfer.Destination as? NVNode : asBranch.FalseTransfer.Destination as? NVNode
 			nextNode = asBranch.Condition.execute() ? asBranch.TrueTransfer.Destination as? NVNode : asBranch.FalseTransfer.Destination as? NVNode
+			
+		case is NVSwitch:
+			let asSwitch = (chosenLink as! NVSwitch)
+			nextNode = asSwitch.evaluate().Destination as? NVNode
 			
 		default:
 			NVLog.log("Link provided to Reader isn't yet implemented for reading, sorry!", level: .warning)
@@ -99,6 +102,10 @@ public class NVReader {
 			let asBranch = (chosenLink as! NVBranch)
 			asBranch.Condition.execute() ? asBranch.TrueTransfer.Function.execute() : asBranch.FalseTransfer.Function.execute()
 			
+		case is NVSwitch:
+			let asSwitch = (chosenLink as! NVSwitch)
+			asSwitch.evaluate().Function.execute()
+			
 		default:
 			NVLog.log("Link provided to Reader isn't yet implemented for reading so I can't run its function, sorry!", level: .warning)
 			return
@@ -124,6 +131,26 @@ public class NVReader {
 				if asBranch.TrueTransfer.Destination != nil && asBranch.FalseTransfer.Destination != nil && asBranch.PreCondition.execute() {
 					links.append(x)
 				}
+				
+			case is NVSwitch:
+				let asSwitch = x as! NVSwitch
+				// TODO: I forgot to add preconditions to switch statements...
+				// must have a valid default destination
+				if asSwitch.DefaultTransfer.Destination == nil {
+					continue
+				}
+				// must have a valid destination for all options
+				var isNil = false
+				for opt in asSwitch.Options {
+					if opt.Transfer.Destination == nil {
+						isNil = true
+						break
+					}
+				}
+				if isNil {
+					continue
+				}
+				links.append(x)
 				
 			default:
 				NVLog.log("Reader encountered an unhandled link type when trying to get the node links.", level: .warning)

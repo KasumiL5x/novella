@@ -28,6 +28,7 @@ class PinSwitch: Pin {
 	//
 	private var _contextClickedTransferOption: TransferOption?
 	private var _contextClickedDefaultTransfer: Transfer?
+	private let _graphMenu: NSMenu
 
 	// MARK: - Initialization -
 	init(swtch: NVSwitch, owner: Node) {
@@ -42,6 +43,7 @@ class PinSwitch: Pin {
 		//
 		self._contextClickedTransferOption = nil
 		self._contextClickedDefaultTransfer = nil
+		self._graphMenu = NSMenu()
 		super.init(link: swtch, owner: owner)
 		
 		// setup layers
@@ -145,10 +147,55 @@ class PinSwitch: Pin {
 		_defaultTransfer?.redraw()
 		_options.forEach{$0.transfer.redraw()}
 	}
+	override func panStarted(_ gesture: NSPanGestureRecognizer) {
+		_contextClickedDefaultTransfer = defaultTransferAt(gesture.location(in: self))
+		_contextClickedTransferOption = optionAt(gesture.location(in: self))
+		if let transfer = _contextClickedDefaultTransfer ?? _contextClickedTransferOption?.transfer {
+			transfer.IsDragging = true
+			transfer.DragPosition = gesture.location(in: transfer)
+		}
+	}
+	override func panChanged(_ gesture: NSPanGestureRecognizer) {
+		if let transfer = _contextClickedDefaultTransfer ?? _contextClickedTransferOption?.transfer {
+			transfer.DragPosition = gesture.location(in: transfer)
+		}
+	}
+	override func panEnded(_ gesture: NSPanGestureRecognizer) {
+		if let transfer = _contextClickedDefaultTransfer ?? _contextClickedTransferOption?.transfer {
+			transfer.IsDragging = false
+			
+			switch Target {
+			case is GraphNode:
+				_graphMenu.removeAllItems()
+				let asGraph = (Target?.Object as! NVGraph)
+				for child in asGraph.Nodes {
+					let menuItem = NSMenuItem(title: (child.Name.isEmpty ? "Unnamed" : child.Name), action: #selector(PinSwitch.onGraphMenu), keyEquivalent: "")
+					menuItem.target = self
+					menuItem.representedObject = child
+					_graphMenu.addItem(menuItem)
+				}
+				NSMenu.popUpContextMenu(_graphMenu, with: NSApp.currentEvent!, for: Target!)
+				
+			default:
+				Owner._graphView.Undo.execute(cmd: SetTransferDestinationCmd(transfer: transfer, dest: Target?.Object))
+			}
+		}
+		
+		_contextClickedDefaultTransfer = nil
+		_contextClickedTransferOption = nil
+	}
 	override func contextClicked(_ gesture: NSClickGestureRecognizer) {
 		_contextClickedDefaultTransfer = defaultTransferAt(gesture.location(in: self))
 		_contextClickedTransferOption = optionAt(gesture.location(in: self))
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+	}
+	
+	// MARK: Graph Menu Callback
+	@objc private func onGraphMenu(sender: NSMenuItem) {
+		// NOTE: This works because menus are BLOCKING. _pannedTransfer won't be set to nil until this function is called.
+		if let transfer = _contextClickedDefaultTransfer ?? _contextClickedTransferOption?.transfer {
+			Owner._graphView.Undo.execute(cmd: SetTransferDestinationCmd(transfer: transfer, dest: sender.representedObject as? NVObject))
+		}
 	}
 	
 	// MARK: Context Menu Callbacks

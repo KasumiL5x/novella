@@ -113,7 +113,7 @@ public class NVSwitch : NVBaseLink {
 			case .boolean:
 				// same data type
 				if !(opt.Value is Bool) {
-					break
+					continue
 				}
 				if (opt.Value as! Bool) == (variable.Value as! Bool) {
 					return opt.Transfer
@@ -121,7 +121,7 @@ public class NVSwitch : NVBaseLink {
 				
 			case .integer:
 				if !(opt.Value is Int) {
-					break
+					continue
 				}
 				if (opt.Value as! Int) == (variable.Value as! Int) {
 					return opt.Transfer
@@ -129,7 +129,7 @@ public class NVSwitch : NVBaseLink {
 				
 			case .double:
 				if !(opt.Value is Double) {
-					break
+					continue
 				}
 				if fabs((opt.Value as! Double) - (variable.Value as! Double)) <= NVSwitch.EPSILON {
 					return opt.Transfer

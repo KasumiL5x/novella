@@ -116,7 +116,7 @@ class PinBranch: Pin {
 	}
 	override func panEnded(_ gesture: NSPanGestureRecognizer) {
 		if let transfer = _pannedTransfer {
-			_pannedTransfer?.IsDragging = false
+			transfer.IsDragging = false
 			
 			switch Target {
 			case is GraphNode:

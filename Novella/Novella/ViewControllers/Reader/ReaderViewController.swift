@@ -133,8 +133,19 @@ extension ReaderViewController: NVReaderDelegate {
 				}
 				options.append(str)
 				
+				
+			case is NVSwitch:
+				let asSwitch = (base as! NVSwitch)
+				let str: String
+				if let defaultAsNode = asSwitch.DefaultTransfer.Destination as? NVNode {
+					str = "Switch (default: \(defaultAsNode.Preview.isEmpty ? defaultAsNode.Name : defaultAsNode.Preview))"
+				} else {
+					str = "Switch (default: Non-NVNode: \(asSwitch.DefaultTransfer.Destination?.Name ?? "nil"))"
+				}
+				options.append(str)
+				
 			default:
-				break
+				print("Oh dear, I forgot to handle this link type in the client's reader callbacks!")
 			}
 		}
 		_choiceWheel.setup(options: options)
