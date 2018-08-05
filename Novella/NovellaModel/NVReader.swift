@@ -71,6 +71,7 @@ public class NVReader {
 		case is NVBranch:
 			let asBranch = (chosenLink as! NVBranch)
 			nextNode = asBranch.PreCondition.execute() ? asBranch.TrueTransfer.Destination as? NVNode : asBranch.FalseTransfer.Destination as? NVNode
+			nextNode = asBranch.Condition.execute() ? asBranch.TrueTransfer.Destination as? NVNode : asBranch.FalseTransfer.Destination as? NVNode
 			
 		default:
 			NVLog.log("Link provided to Reader isn't yet implemented for reading, sorry!", level: .warning)
