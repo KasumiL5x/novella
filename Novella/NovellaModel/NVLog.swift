@@ -48,6 +48,6 @@ public class NVLog {
 		let time = NVLog.dateFormatter.string(from: Date())
 		
 		let extra = level.toString()
-		print("(\(time)) Novella: " + (extra.isEmpty ? "" : " " + extra) + msg)
+		print("(\(time)) Novella" + (extra.isEmpty ? ": " : " " + extra + ": ") + msg)
 	}
 }
