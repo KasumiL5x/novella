@@ -10,6 +10,8 @@ import Cocoa
 import NovellaModel
 
 class PinSwitch: Pin {
+	typealias TransferOption = (transfer: Transfer, opt: NVSwitchOption)
+	
 	// MARK: - Statics -
 	static let RADIUS: CGFloat = 6.0
 	static let PADDING: CGFloat = 2.0
@@ -19,9 +21,13 @@ class PinSwitch: Pin {
 	private var _bgLayer: CAShapeLayer
 	private let _contextMenu: NSMenu
 	private var _defaultTransfer: Transfer?
-	private var _options: [(transfer: Transfer, opt: NVSwitchOption)]
+	private var _options: [TransferOption]
 	private let _switchPopover: SwitchPopover
+	private let _switchOptionPopover: SwitchOptionPopover
 	private let _conditionPopover: ConditionPopover
+	//
+	private var _contextClickedTransferOption: TransferOption?
+	private var _contextClickedDefaultTransfer: Transfer?
 
 	// MARK: - Initialization -
 	init(swtch: NVSwitch, owner: Node) {
@@ -30,8 +36,12 @@ class PinSwitch: Pin {
 		self._defaultTransfer = nil
 		self._options = []
 		self._switchPopover = SwitchPopover()
+		self._switchOptionPopover = SwitchOptionPopover()
 		self._switchPopover.Detachable = false
 		self._conditionPopover = ConditionPopover()
+		//
+		self._contextClickedTransferOption = nil
+		self._contextClickedDefaultTransfer = nil
 		super.init(link: swtch, owner: owner)
 		
 		// setup layers
@@ -83,6 +93,20 @@ class PinSwitch: Pin {
 		}
 		return NSMakeSize(w, h)
 	}
+	private func optionAt(_ point: CGPoint) -> TransferOption? {
+		for curr in _options {
+			if NSPointInRect(point, curr.transfer.frame) {
+				return curr
+			}
+		}
+		return nil
+	}
+	private func defaultTransferAt(_ point: CGPoint) -> Transfer? {
+		if NSPointInRect(point, _defaultTransfer!.frame) {
+			return _defaultTransfer
+		}
+		return nil
+	}
 	private func layoutTransfers() {
 		// remove all as we add them dynamically
 		self.subviews.removeAll()
@@ -122,6 +146,8 @@ class PinSwitch: Pin {
 		_options.forEach{$0.transfer.redraw()}
 	}
 	override func contextClicked(_ gesture: NSClickGestureRecognizer) {
+		_contextClickedDefaultTransfer = defaultTransferAt(gesture.location(in: self))
+		_contextClickedTransferOption = optionAt(gesture.location(in: self))
 		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 	}
 	
@@ -139,13 +165,24 @@ class PinSwitch: Pin {
 		Owner.PinBoard.layoutPins()
 	}
 	@objc private func onContextRemoveOption() {
-		fatalError("Not yet implemented.")
+		if _contextClickedTransferOption != nil {
+			(BaseLink as! NVSwitch).removeOption(_contextClickedTransferOption!.opt)
+			layoutTransfers()
+			setFrame()
+			redraw()
+			
+			Owner.PinBoard.layoutPins()
+		}
 	}
 	@objc private func onContextEditOptionValue() {
-		fatalError("Not yet implemented.")
+		if let opt = _contextClickedTransferOption, let v = (BaseLink as! NVSwitch).Variable {
+			_switchOptionPopover.show(forView: opt.transfer, at: .maxX)
+			_switchOptionPopover.setup(variable: v, option: opt.opt)
+		}
 	}
 	@objc private func onContextEditOptionFunction() {
-		fatalError("Not yet implemented.")
+		_contextClickedDefaultTransfer?.showFunctionPopover()
+		_contextClickedTransferOption?.transfer.showFunctionPopover()
 	}
 	@objc private func onContextEditPreCondition() {
 		fatalError("I forgot to add preconditions to switches in the model... will do this later.")

@@ -10,9 +10,9 @@ import Cocoa
 import NovellaModel
 
 class SwitchOptionPopover: GenericPopover {
-	func setup(variable: NVVariable) {
-		(_popoverViewController as? SwitchOptionPopoverViewController)?.setVariable(variable: variable)
-		(_detachedViewController as? SwitchOptionPopoverViewController)?.setVariable(variable: variable)
+	func setup(variable: NVVariable, option: NVSwitchOption) {
+		(_popoverViewController as? SwitchOptionPopoverViewController)?.setVariable(variable: variable, option: option)
+		(_detachedViewController as? SwitchOptionPopoverViewController)?.setVariable(variable: variable, option: option)
 	}
 	
 	override func createViewController() -> NSViewController? {
