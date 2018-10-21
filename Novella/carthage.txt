@@ -1,0 +1,11 @@
+Installs for Mac from cartfile.resolved:
+carthage bootstrap --platform mac
+
+Updates for Mac (i.e. latest versions) from cartfile:
+carthage update --platform mac
+
+Rebuild existing:
+carthage build
+
+Can also choose a specific library with these commands:
+carthage update [lib name]

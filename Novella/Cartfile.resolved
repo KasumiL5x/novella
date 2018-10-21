@@ -1,3 +1,2 @@
-github "KasumiL5x/JSONSchemaSwift" "ffbfa5a3c3479605b38c06d686593188f28afdc4"
-github "SwiftyJSON/SwiftyJSON" "4.1.0"
+github "SwiftyJSON/SwiftyJSON" "4.2.0"
 github "raspu/Highlightr" "2.0.1"

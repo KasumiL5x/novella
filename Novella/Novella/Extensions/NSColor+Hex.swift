@@ -1,9 +1,9 @@
 //
-//  CGColor+Hex.swift
-//  Novella
+//  NSColor+Hex.swift
+//  novella
 //
-//  Created by Daniel Green on 05/05/2018.
-//  Copyright © 2018 Daniel Green. All rights reserved.
+//  Created by dgreen on 10/08/2018.
+//  Copyright © 2018 dgreen. All rights reserved.
 //
 
 import AppKit
@@ -39,3 +39,4 @@ public extension NSColor {
 		return hexString as String
 	}
 }
+

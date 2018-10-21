@@ -1,31 +1,21 @@
 //
 //  AppDelegate.swift
-//  Novella
+//  novella
 //
-//  Created by Daniel Green on 11/04/2018.
-//  Copyright © 2018 Daniel Green. All rights reserved.
+//  Created by dgreen on 09/08/2018.
+//  Copyright © 2018 dgreen. All rights reserved.
 //
 
 import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-	private var _preferencesController: NSWindowController?
-	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
+		// Insert code here to initialize your application
 	}
 
-	@IBAction func onPreferences(_ sender: NSMenuItem) {
-		if nil == _preferencesController {
-			let sb = NSStoryboard(name: NSStoryboard.Name(rawValue: "Preferences"), bundle: nil)
-			_preferencesController = sb.instantiateInitialController() as? NSWindowController
-		}
-		
-		if _preferencesController != nil {
-			_preferencesController!.showWindow(sender)
-		}
+	func applicationWillTerminate(_ aNotification: Notification) {
+		// Insert code here to tear down your application
 	}
-	
-	
 }
 

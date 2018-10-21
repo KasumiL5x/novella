@@ -5,9 +5,9 @@ xcuserdata/
 
 # Carthage
 #
-Novella/Carthage/Build
+novella/Carthage/Build
 # comment out this line to commit downloaded libraries
-Novella/Carthage/Checkouts
+novella/Carthage/Checkouts
 
 # GitHub Pages/Jekyll Stuff
 docs/_site

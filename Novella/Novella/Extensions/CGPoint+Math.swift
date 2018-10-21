@@ -1,9 +1,9 @@
 //
 //  CGPoint+Math.swift
-//  Novella
+//  novella
 //
-//  Created by Daniel Green on 08/06/2018.
-//  Copyright © 2018 Daniel Green. All rights reserved.
+//  Created by dgreen on 12/08/2018.
+//  Copyright © 2018 dgreen. All rights reserved.
 //
 
 import Foundation
