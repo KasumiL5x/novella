@@ -18,6 +18,7 @@ class Canvas: NSView {
 	private var _allLinks: [Link]
 	private var _panGesture: NSPanGestureRecognizer?
 	private var _benches: [CanvasObject:Bench<NSView>]
+	private var _lastContextLocation = CGPoint.zero
 	private var _canvasContextMenu = NSMenu()
 	private var _rmbPanLocation = CGPoint.zero
 	private var _rmbInitialMag: CGFloat = 0.0
@@ -63,6 +64,15 @@ class Canvas: NSView {
 		
 		// canvas context menu setup
 		_canvasContextMenu.addItem(withTitle: "Save to image...", action: #selector(Canvas.onContextSaveImage), keyEquivalent: "")
+		let addSubMenu = NSMenu()
+		addSubMenu.addItem(withTitle: "Dialog", action: #selector(Canvas.onContextAddDialog), keyEquivalent: "")
+		addSubMenu.addItem(withTitle: "Delivery", action: #selector(Canvas.onContextAddDelivery), keyEquivalent: "")
+		addSubMenu.addItem(withTitle: "Branch", action: #selector(Canvas.onContextAddBranch), keyEquivalent: "")
+		addSubMenu.addItem(withTitle: "Switch", action: #selector(Canvas.onContextAddSwitch), keyEquivalent: "")
+		let addMenuItem = NSMenuItem()
+		addMenuItem.title = "Add..."
+		addMenuItem.submenu = addSubMenu
+		_canvasContextMenu.addItem(addMenuItem)
 		
 		// selection handler
 		Selection = CanvasSelection(canvas: self)
@@ -293,6 +303,7 @@ class Canvas: NSView {
 		}
 	}
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
+		_lastContextLocation = gesture.location(in: self)
 		NSMenu.popUpContextMenu(_canvasContextMenu, with: NSApp.currentEvent!, for: self)
 	}
 	
@@ -310,6 +321,18 @@ class Canvas: NSView {
 		do{ try finalData?.write(to: sp.url!) } catch {
 			print("Failed to write screenshot to disk.")
 		}
+	}
+	@objc private func onContextAddDialog() {
+		makeDialog(at: _lastContextLocation)
+	}
+	@objc private func onContextAddDelivery() {
+		makeDelivery(at: _lastContextLocation)
+	}
+	@objc private func onContextAddBranch() {
+		makeBranch(at: _lastContextLocation)
+	}
+	@objc private func onContextAddSwitch() {
+		makeSwitch(at: _lastContextLocation)
 	}
 	
 	// MARK: External Creation
