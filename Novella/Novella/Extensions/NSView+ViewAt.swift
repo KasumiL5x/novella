@@ -9,6 +9,15 @@
 import AppKit
 
 extension NSView {
+	
+	enum CustomTag: Int {
+		case ignore = -1
+		case node = 10 // includes derivatives
+		case branch = 20
+		case swtch = 30
+		case transfer = 40
+	}
+	
 	// Custom local-space frame used for the hit testing in viewAt(:). Can override per object.
 	func viewBounds() -> NSRect {
 		return bounds
@@ -26,7 +35,7 @@ extension NSView {
 		}
 		
 		// check self
-		if self.tag != -1 && NSPointInRect(superview!.convert(point, to: self), viewBounds()) {
+		if self.tag != CustomTag.ignore.rawValue && NSPointInRect(superview!.convert(point, to: self), viewBounds()) {
 			return self
 		}
 		

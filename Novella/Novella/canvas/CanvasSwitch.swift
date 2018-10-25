@@ -55,7 +55,10 @@ class SwitchOption: NSView {
 
 class CanvasSwitch: CanvasObject {
 	static let ROUNDNESS: CGFloat = 4.0
-	static let TAG_HIT_IGNORE: Int = 42
+	
+	override var tag: Int {
+		return CustomTag.swtch.rawValue
+	}
 	
 	// MARK: - Variables
 	private let _switchLabel: NSTextField
@@ -80,7 +83,7 @@ class CanvasSwitch: CanvasObject {
 		// switch label
 		addSubview(_switchLabel)
 		_switchLabel.translatesAutoresizingMaskIntoConstraints = false
-		_switchLabel.tag = CanvasSwitch.TAG_HIT_IGNORE
+		_switchLabel.tag = CustomTag.ignore.rawValue
 		_switchLabel.textColor = NSColor.fromHex("#3C3C3C")
 		_switchLabel.font = NSFont.monospacedDigitSystemFont(ofSize: 12.0, weight: .bold)
 		_switchLabel.alignment = .left
@@ -112,7 +115,7 @@ class CanvasSwitch: CanvasObject {
 		for sub in subviews {
 			// subviews with ignore tag should return this view instead
 			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
-				if sub.tag == CanvasSwitch.TAG_HIT_IGNORE {
+				if sub.tag == CustomTag.ignore.rawValue {
 					return self
 				}
 				return sub.hitTest(superview!.convert(point, to: self))

@@ -11,7 +11,10 @@ import Cocoa
 /// Base class for canvas nodes (dialog, delivery, etc.).
 class CanvasNode: CanvasObject {
 	static let ROUNDNESS: CGFloat = 4.0
-	static let TAG_HIT_IGNORE: Int = 42
+	
+	override var tag: Int {
+		return CustomTag.node.rawValue
+	}
 	
 	// MARK: - Variables
 	private let _nameLabel: NSTextField
@@ -28,14 +31,14 @@ class CanvasNode: CanvasObject {
 		
 		// name label
 		_nameLabel = NSTextField(labelWithString: "")
-		_nameLabel.tag = CanvasNode.TAG_HIT_IGNORE
+		_nameLabel.tag = CustomTag.ignore.rawValue
 		_nameLabel.textColor = NSColor.fromHex("#3C3C3C")
 		_nameLabel.font = NSFont.systemFont(ofSize: 16.0, weight: .bold)
 		_nameLabel.placeholderString = "Unnamed"
 		
 		// content label
 		_contentLabel = NSTextField(wrappingLabelWithString: "")
-		_contentLabel.tag = CanvasNode.TAG_HIT_IGNORE
+		_contentLabel.tag = CustomTag.ignore.rawValue
 		_contentLabel.textColor = NSColor.fromHex("#3C3C3C")
 		_contentLabel.font = NSFont.systemFont(ofSize: 10.0, weight: .light)
 		_contentLabel.placeholderString = "A preview of the node's content will appear here."
@@ -129,7 +132,7 @@ class CanvasNode: CanvasObject {
 		for sub in subviews {
 			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
 				// subviews with ignore tag should return this view instead
-				if sub.tag == CanvasNode.TAG_HIT_IGNORE {
+				if sub.tag == CustomTag.ignore.rawValue {
 					return self
 				}
 				return sub.hitTest(superview!.convert(point, to: self)) // delegate to sub using point in this view's coords

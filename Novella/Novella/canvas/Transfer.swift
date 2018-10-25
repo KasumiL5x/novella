@@ -37,6 +37,8 @@ class Transfer: NSView {
 	private var _regularThickness: CGFloat = 2.0
 	//
 	private var _functionPopover = FunctionPopover()
+	//
+	private var _lastParker: Parker? = nil
 	
 	// MARK: - Properties
 	var TargetObject: CanvasObject? = nil
@@ -155,6 +157,14 @@ class Transfer: NSView {
 				TargetObject = nil
 			}
 			
+			// handle priming of Parkers
+			//
+			_lastParker?.unprime() // unprime any previous parkers
+			let windowPos = gesture.location(in: nil)
+			let hitView = window?.contentView?.viewAt(windowPos)
+			_lastParker = hitView as? Parker
+			_lastParker?.prime() // prime new parker
+			
 		case .cancelled, .ended:
 			isDragging = false
 			
@@ -180,6 +190,11 @@ class Transfer: NSView {
 			
 			// reset target object
 			TargetObject = nil
+			
+			// handle parking
+			if let parker = _lastParker {
+				parker.park(self)
+			}
 			
 		default:
 			break

@@ -10,7 +10,10 @@ import AppKit
 
 class CanvasBranch: CanvasObject {
 	static let ROUNDNESS: CGFloat = 4.0
-	static let TAG_HIT_IGNORE: Int = 42
+	
+	override var tag: Int {
+		return CustomTag.branch.rawValue
+	}
 	
 	// MARK: - Variables
 	private let _branchLabel: NSTextField
@@ -39,7 +42,7 @@ class CanvasBranch: CanvasObject {
 		// branch label
 		addSubview(_branchLabel)
 		_branchLabel.translatesAutoresizingMaskIntoConstraints = false
-		_branchLabel.tag = CanvasBranch.TAG_HIT_IGNORE
+		_branchLabel.tag = CustomTag.ignore.rawValue
 		_branchLabel.textColor = NSColor.fromHex("#3C3C3C")
 		_branchLabel.font = NSFont.systemFont(ofSize: 12.0, weight: .bold)
 		_branchLabel.alignment = .left
@@ -68,7 +71,7 @@ class CanvasBranch: CanvasObject {
 		for sub in subviews {
 			// subviews with ignore tag should return this view instead
 			if NSPointInRect(superview!.convert(point, to: sub), sub.bounds) {
-				if sub.tag == CanvasBranch.TAG_HIT_IGNORE {
+				if sub.tag == CustomTag.ignore.rawValue {
 					return self
 				}
 				return sub.hitTest(superview!.convert(point, to: self))
