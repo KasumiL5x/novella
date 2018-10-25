@@ -76,7 +76,6 @@ class CanvasObject: NSView {
 		_panGesture?.buttonMask = 0x1 // "primary click"
 		addGestureRecognizer(_panGesture!)
 	}
-	
 	func prime() {
 		CurrentState = .primed
 	}
@@ -115,6 +114,11 @@ class CanvasObject: NSView {
 		onContextClick(gesture: gesture)
 	}
 	@objc private func _onPan(gesture: NSPanGestureRecognizer) {
+//		let windowPos = gesture.location(in: nil)
+//		let hitView = window?.contentView?.viewAt(windowPos)
+//		print("onPan(\(windowPos): \(hitView))")
+		
+		
 		switch gesture.state {
 		case .began:
 			// if node is not selected but we dragged it, replace selection before beginning drag

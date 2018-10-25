@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65069822218198B60027F1E2 /* NSView+ViewAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65069821218198B60027F1E2 /* NSView+ViewAt.swift */; };
 		650A18F0212CB28500F85B3A /* Outliner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650A18EF212CB28500F85B3A /* Outliner.storyboard */; };
 		6516094B215CB1D1006978AE /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516094A215CB1D1006978AE /* Alerts.swift */; };
 		65217DCE212A064E006E25BB /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65217DCD212A064E006E25BB /* CustomImageView.swift */; };
@@ -93,6 +94,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65069821218198B60027F1E2 /* NSView+ViewAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ViewAt.swift"; sourceTree = "<group>"; };
 		650A18EF212CB28500F85B3A /* Outliner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Outliner.storyboard; sourceTree = "<group>"; };
 		6516094A215CB1D1006978AE /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		65217DCD212A064E006E25BB /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				657932D921312D3C00090F89 /* NSImage+Extra.swift */,
 				6516094A215CB1D1006978AE /* Alerts.swift */,
 				652C7EF82165E8F700E9389C /* NSRect+setCenter.swift */,
+				65069821218198B60027F1E2 /* NSView+ViewAt.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				658DFBFE214E4C8E002B1AA1 /* OutlinerGraphViewController.swift in Sources */,
 				DF5622BB21217E6C00640AD0 /* PreviewPopover.swift in Sources */,
 				DF544E8C211D8FD1008A7B76 /* NVSwitch.swift in Sources */,
+				65069822218198B60027F1E2 /* NSView+ViewAt.swift in Sources */,
 				65BC082F217B14E0005C61DB /* CanvasDelivery.swift in Sources */,
 				DF22E9EA211DA14D00606D97 /* Canvas.swift in Sources */,
 				6530DDFB2129BB000088D5F0 /* EntitiesViewController.swift in Sources */,
