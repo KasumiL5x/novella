@@ -17,7 +17,7 @@ extension NSView {
 	// Finds and returns the view that is hit, including subviews, if any, using their own special frame.
 	func viewAt(_ point: CGPoint) -> NSView? {
 		// check subviews first
-		for sub in subviews {
+		for sub in subviews.reversed() {
 			if NSPointInRect(superview!.convert(point, to: sub), sub.viewBounds()) {
 				if let result = sub.viewAt(superview!.convert(point, to: self)) { // defer to child view
 					return result
