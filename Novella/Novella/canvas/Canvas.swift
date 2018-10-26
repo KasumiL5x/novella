@@ -63,7 +63,6 @@ class Canvas: NSView {
 		addGestureRecognizer(canvasContextGesture)
 		
 		// canvas context menu setup
-		_canvasContextMenu.addItem(withTitle: "Save to image...", action: #selector(Canvas.onContextSaveImage), keyEquivalent: "")
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(Canvas.onContextAddDialog), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Delivery", action: #selector(Canvas.onContextAddDelivery), keyEquivalent: "")
@@ -73,6 +72,7 @@ class Canvas: NSView {
 		addMenuItem.title = "Add..."
 		addMenuItem.submenu = addSubMenu
 		_canvasContextMenu.addItem(addMenuItem)
+		_canvasContextMenu.addItem(withTitle: "Save to image...", action: #selector(Canvas.onContextSaveImage), keyEquivalent: "")
 		
 		// selection handler
 		Selection = CanvasSelection(canvas: self)
