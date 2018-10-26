@@ -16,6 +16,8 @@ class Parker: NSView {
 	private var _primed: Bool = false
 	private var _transfer: Transfer? = nil
 	//
+	let _bgLayer = CAShapeLayer()
+	//
 	private var _dragLayer = CAShapeLayer()
 	private var _dragPath = NSBezierPath()
 	private var _isDragging = false
@@ -29,6 +31,12 @@ class Parker: NSView {
 		// setup background layer
 		wantsLayer = true
 		layer?.masksToBounds = false
+		
+		// configure bg layer
+		layer?.addSublayer(_bgLayer)
+		_bgLayer.fillColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.05).cgColor
+		_bgLayer.strokeColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.2).cgColor
+		_bgLayer.lineWidth = 3.0
 		
 		// configure drag layer
 		layer?.addSublayer(_dragLayer)
@@ -84,6 +92,7 @@ class Parker: NSView {
 				
 				_targetObject = nil
 				_transfer = nil
+				_primed = false
 			}
 			
 		default:
@@ -104,8 +113,7 @@ class Parker: NSView {
 	
 	func park(_ transfer: Transfer) {
 		_transfer = transfer
-		print("TODO: Park given Transfer (\(transfer)).")
-		
+		_primed = false
 		setNeedsDisplay(bounds)
 	}
 	
@@ -114,13 +122,14 @@ class Parker: NSView {
 			ctx.saveGState()
 			
 			if _transfer != nil {
-				NSColor.blue.setFill()
+				_bgLayer.fillColor = NSColor.fromHex("#12e2a3").withAlphaComponent(0.6).cgColor
 			} else if _primed {
-				NSColor.green.setFill()
+				_bgLayer.fillColor = NSColor.fromHex("#26baee").withAlphaComponent(0.4).cgColor
 			} else {
-				NSColor.red.setFill()
+				_bgLayer.fillColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.2).cgColor
 			}
-			NSBezierPath(ovalIn: bounds).fill()
+			
+			_bgLayer.path = NSBezierPath(ovalIn: bounds).cgPath
 			
 			if _isDragging {
 				let curveOrigin = NSMakePoint(bounds.midX, bounds.midY)
