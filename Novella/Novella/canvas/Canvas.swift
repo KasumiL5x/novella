@@ -72,6 +72,9 @@ class Canvas: NSView {
 		addMenuItem.title = "Add..."
 		addMenuItem.submenu = addSubMenu
 		_canvasContextMenu.addItem(addMenuItem)
+		//
+		_canvasContextMenu.addItem(withTitle: "Select All", action: #selector(Canvas.onContextSelectAll), keyEquivalent: "")
+		//
 		_canvasContextMenu.addItem(withTitle: "Save to image...", action: #selector(Canvas.onContextSaveImage), keyEquivalent: "")
 		
 		// selection handler
@@ -333,6 +336,9 @@ class Canvas: NSView {
 	}
 	@objc private func onContextAddSwitch() {
 		makeSwitch(at: _lastContextLocation)
+	}
+	@objc private func onContextSelectAll() {
+		Selection?.select(_allObjects, append: false)
 	}
 	
 	// MARK: External Creation
