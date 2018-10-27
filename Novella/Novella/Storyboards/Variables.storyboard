@@ -6,10 +6,31 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Window Controller-->
+        <scene sceneID="f3J-Ia-t2L">
+            <objects>
+                <windowController storyboardIdentifier="VariablesWindow" id="mj9-Ux-cb9" customClass="VariablesWindowController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="TrM-K0-l5D">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="-2492" y="259" width="480" height="270"/>
+                        <rect key="screenRect" x="-3008" y="-305" width="3008" height="1669"/>
+                        <connections>
+                            <outlet property="delegate" destination="mj9-Ux-cb9" id="bwr-E4-QEE"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="paZ-W2-h3f" kind="relationship" relationship="window.shadowedContentViewController" id="k11-Rf-KVH"/>
+                    </connections>
+                </windowController>
+                <customObject id="q52-33-4MX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-506" y="195"/>
+        </scene>
         <!--Variables-->
         <scene sceneID="rOK-ZZ-cnh">
             <objects>
-                <viewController storyboardIdentifier="Variables" id="paZ-W2-h3f" userLabel="Variables" customClass="VariablesViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="paZ-W2-h3f" userLabel="Variables" customClass="VariablesViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Csj-1Y-OrI">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -304,7 +325,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="ConstantBoolCell" id="JiN-fe-WJn" userLabel="BoolCell" customClass="VariablesConstantBoolCell" customModule="novella" customModuleProvider="target">
-                                                            <rect key="frame" x="324" y="1" width="106" height="25"/>
+                                                            <rect key="frame" x="323.5" y="1" width="106" height="25"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FIu-Mp-DGo" userLabel="PopUp Button">
@@ -330,7 +351,7 @@
                                                             </connections>
                                                         </tableCellView>
                                                         <tableCellView identifier="ConstantTextCell" id="D2v-bc-TCk" userLabel="TextCell">
-                                                            <rect key="frame" x="324" y="28" width="106" height="25"/>
+                                                            <rect key="frame" x="323.5" y="28" width="106" height="25"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ILR-pn-Jze">

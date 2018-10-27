@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Window Controller-->
+        <scene sceneID="i0L-xG-06f">
+            <objects>
+                <windowController storyboardIdentifier="EntitiesWindow" id="Pby-Jq-whV" customClass="EntitiesWindowController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ZNe-Ii-z7R">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="-2492" y="259" width="480" height="270"/>
+                        <rect key="screenRect" x="-3008" y="-305" width="3008" height="1669"/>
+                        <connections>
+                            <outlet property="delegate" destination="Pby-Jq-whV" id="jHg-NF-jep"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="AmK-ol-eQR" kind="relationship" relationship="window.shadowedContentViewController" id="fih-TI-VPA"/>
+                    </connections>
+                </windowController>
+                <customObject id="o6S-44-7iw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-666" y="136"/>
+        </scene>
         <!--Entities-->
         <scene sceneID="urg-DT-KAw">
             <objects>
-                <viewController storyboardIdentifier="Entities" id="AmK-ol-eQR" userLabel="Entities" customClass="EntitiesViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AmK-ol-eQR" userLabel="Entities" customClass="EntitiesViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="2yp-7z-oNO">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -33,7 +55,7 @@
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn identifier="" width="140" minWidth="40" maxWidth="1000" id="Jxw-dq-AEZ">
+                                                                <tableColumn width="140" minWidth="40" maxWidth="1000" id="Jxw-dq-AEZ">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -150,7 +172,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Name" drawsBackground="YES" id="Odk-EF-NbB">
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -162,7 +184,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Synopsis" drawsBackground="YES" id="DfT-5D-gWv">
                                                     <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <connections>
@@ -203,12 +225,12 @@
                 </viewController>
                 <customObject id="JDY-Cf-Hv5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-128" y="121"/>
+            <point key="canvasLocation" x="5" y="127"/>
         </scene>
     </scenes>
     <resources>
-        <image name="NSCaution" width="32" height="32"/>
+        <image name="NSCaution" width="128" height="128"/>
         <image name="NSTouchBarUserAddTemplate" width="21" height="30"/>
-        <image name="NSTrashEmpty" width="32" height="32"/>
+        <image name="NSTrashEmpty" width="128" height="128"/>
     </resources>
 </document>

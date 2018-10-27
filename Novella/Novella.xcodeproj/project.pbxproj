@@ -26,6 +26,8 @@
 		65B099FB21235E7500F86D3C /* NSView+SubviewsFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B099FA21235E7500F86D3C /* NSView+SubviewsFrame.swift */; };
 		65B099FD2123648500F86D3C /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B099FC2123648500F86D3C /* CurveHelper.swift */; };
 		65B13F2F2141529A00E83885 /* ContentPopovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B13F2E2141529A00E83885 /* ContentPopovers.storyboard */; };
+		65B980CD218454CF0048D78C /* EntitiesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B980CC218454CF0048D78C /* EntitiesWindowController.swift */; };
+		65B980CF218457010048D78C /* VariablesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B980CE218457010048D78C /* VariablesWindowController.swift */; };
 		65BC082E217B14E0005C61DB /* CanvasNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC082B217B14E0005C61DB /* CanvasNode.swift */; };
 		65BC082F217B14E0005C61DB /* CanvasDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC082C217B14E0005C61DB /* CanvasDelivery.swift */; };
 		65BC0830217B14E0005C61DB /* CanvasDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC082D217B14E0005C61DB /* CanvasDialog.swift */; };
@@ -53,10 +55,8 @@
 		DF22EA012120791200606D97 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22EA002120791200606D97 /* CGPoint+Math.swift */; };
 		DF22EA052120DE3900606D97 /* Entities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF22EA042120DE3900606D97 /* Entities.storyboard */; };
 		DF22EA082120DEFD00606D97 /* GenericPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22EA072120DEFD00606D97 /* GenericPopover.swift */; };
-		DF22EA0A2120E31700606D97 /* EntityPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22EA092120E31700606D97 /* EntityPopover.swift */; };
 		DF544E8C211D8FD1008A7B76 /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF544E8B211D8FD1008A7B76 /* NVSwitch.swift */; };
 		DF5622B521217D1500640AD0 /* Variables.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5622B421217D1500640AD0 /* Variables.storyboard */; };
-		DF5622B721217D4500640AD0 /* VariablePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622B621217D4500640AD0 /* VariablePopover.swift */; };
 		DF5622B921217E3E00640AD0 /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5622B821217E3E00640AD0 /* Preview.storyboard */; };
 		DF5622BB21217E6C00640AD0 /* PreviewPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622BA21217E6C00640AD0 /* PreviewPopover.swift */; };
 		DF5622BD212184DD00640AD0 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622BC212184DD00640AD0 /* VariablesViewController.swift */; };
@@ -114,6 +114,8 @@
 		65B099FA21235E7500F86D3C /* NSView+SubviewsFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+SubviewsFrame.swift"; sourceTree = "<group>"; };
 		65B099FC2123648500F86D3C /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		65B13F2E2141529A00E83885 /* ContentPopovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContentPopovers.storyboard; sourceTree = "<group>"; };
+		65B980CC218454CF0048D78C /* EntitiesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesWindowController.swift; sourceTree = "<group>"; };
+		65B980CE218457010048D78C /* VariablesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesWindowController.swift; sourceTree = "<group>"; };
 		65BC082B217B14E0005C61DB /* CanvasNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasNode.swift; sourceTree = "<group>"; };
 		65BC082C217B14E0005C61DB /* CanvasDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasDelivery.swift; sourceTree = "<group>"; };
 		65BC082D217B14E0005C61DB /* CanvasDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasDialog.swift; sourceTree = "<group>"; };
@@ -141,10 +143,8 @@
 		DF22EA002120791200606D97 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
 		DF22EA042120DE3900606D97 /* Entities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Entities.storyboard; sourceTree = "<group>"; };
 		DF22EA072120DEFD00606D97 /* GenericPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPopover.swift; sourceTree = "<group>"; };
-		DF22EA092120E31700606D97 /* EntityPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityPopover.swift; sourceTree = "<group>"; };
 		DF544E8B211D8FD1008A7B76 /* NVSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
 		DF5622B421217D1500640AD0 /* Variables.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Variables.storyboard; sourceTree = "<group>"; };
-		DF5622B621217D4500640AD0 /* VariablePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablePopover.swift; sourceTree = "<group>"; };
 		DF5622B821217E3E00640AD0 /* Preview.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		DF5622BA21217E6C00640AD0 /* PreviewPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPopover.swift; sourceTree = "<group>"; };
 		DF5622BC212184DD00640AD0 /* VariablesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +198,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65B980CB218454AD0048D78C /* WindowControllers */ = {
+			isa = PBXGroup;
+			children = (
+				65B980CC218454CF0048D78C /* EntitiesWindowController.swift */,
+				65B980CE218457010048D78C /* VariablesWindowController.swift */,
+			);
+			path = WindowControllers;
+			sourceTree = "<group>";
+		};
 		65BC0831217B14E9005C61DB /* nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,8 +300,6 @@
 			isa = PBXGroup;
 			children = (
 				DF22EA072120DEFD00606D97 /* GenericPopover.swift */,
-				DF22EA092120E31700606D97 /* EntityPopover.swift */,
-				DF5622B621217D4500640AD0 /* VariablePopover.swift */,
 				DF5622BA21217E6C00640AD0 /* PreviewPopover.swift */,
 				65F2F2CA214155CB000F2B53 /* DialogPopover.swift */,
 				657DBAAA214253ED00C7CF17 /* BranchPopover.swift */,
@@ -339,6 +346,7 @@
 				DF22E9DF211D9AC800606D97 /* extensions */,
 				DFCE6052211C3E44005900D8 /* model */,
 				DF22E9E5211DA00E00606D97 /* ViewControllers */,
+				65B980CB218454AD0048D78C /* WindowControllers */,
 				DF22E9E2211D9F5E00606D97 /* Storyboards */,
 				DFCE6040211C3D20005900D8 /* AppDelegate.swift */,
 				DFCE6044211C3D20005900D8 /* Document.swift */,
@@ -519,6 +527,7 @@
 				65CD4F26217C665C003B58E5 /* FunctionPopoverViewController.swift in Sources */,
 				DF00FF3C217736AA00216AB3 /* Bench.swift in Sources */,
 				653A0FD3213FAF9200FADE3F /* PreviewViewController.swift in Sources */,
+				65B980CF218457010048D78C /* VariablesWindowController.swift in Sources */,
 				65F2F2CD21415612000F2B53 /* DialogViewController.swift in Sources */,
 				DFCE606C211C5B55005900D8 /* NVFunction.swift in Sources */,
 				65CD4F28217C67E0003B58E5 /* FunctionPopover.swift in Sources */,
@@ -528,8 +537,6 @@
 				DFCE605C211C46A1005900D8 /* NVLog.swift in Sources */,
 				DFDB8559211CD48600A30A6E /* NVEntity.swift in Sources */,
 				DF22E9FF212072A900606D97 /* CanvasSelection.swift in Sources */,
-				DF5622B721217D4500640AD0 /* VariablePopover.swift in Sources */,
-				DF22EA0A2120E31700606D97 /* EntityPopover.swift in Sources */,
 				DFEA59C421327C3100AECEC2 /* Colors.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				DFCE6062211C591A005900D8 /* NVNode.swift in Sources */,
@@ -542,6 +549,7 @@
 				DFCE6056211C3F4F005900D8 /* NVIdentifiable.swift in Sources */,
 				DF22E9F8211F670E00606D97 /* CanvasSwitch.swift in Sources */,
 				DFCE6058211C45CC005900D8 /* NVFolder.swift in Sources */,
+				65B980CD218454CF0048D78C /* EntitiesWindowController.swift in Sources */,
 				65EA955B217D0C8A00DBF7CF /* ConditionPopoverViewController.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
 				DF59763C2173362400D35168 /* DeliveryViewController.swift in Sources */,

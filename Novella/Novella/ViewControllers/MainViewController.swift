@@ -33,8 +33,8 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 	// MARK: - Variables
 	private var _outlinerGraphVC: OutlinerGraphViewController? = nil
 	private var _previewPopover: PreviewPopover = PreviewPopover()
-	private var _entitiesPopover: EntityPopover = EntityPopover()
-	private var _variablesPopover: VariablePopover = VariablePopover()
+	private var _entitiesWC: EntitiesWindowController? = nil
+	private var _variablesWC: VariablesWindowController? = nil
 	private var _sidebarItems: [(title: String, icon: NSImage?, action: Selector?)] = [
 		(title: "Outliner",  icon: NSImage(named: NSImage.touchBarSidebarTemplateName), action: #selector(MainViewController.onMenuOutliner)),
 		(title: "Preview",   icon: NSImage(named: "Play"), action: #selector(MainViewController.onMenuPreview)),
@@ -61,18 +61,18 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		_previewPopover.setup(doc: doc, graph: graph)
 	}
 	@objc private func onMenuVariables(sender: NSTableRowView) {
-		guard let doc = view.window?.windowController?.document as? Document else {
+		guard let doc = view.window?.windowController?.document as? Document, let wc = _variablesWC else {
 			return
 		}
-		_variablesPopover.show(forView: sender, at: .maxX)
-		_variablesPopover.setup(doc: doc)
+		wc.showWindow(nil)
+		(wc.contentViewController as? VariablesViewController)?.Doc = doc
 	}
 	@objc private func onMenuEntities(sender: NSTableRowView) {
-		guard let doc = view.window?.windowController?.document as? Document else {
+		guard let doc = view.window?.windowController?.document as? Document, let wc = _entitiesWC else {
 			return
 		}
-		_entitiesPopover.show(forView: sender, at: .maxX)
-		_entitiesPopover.setup(doc: doc)
+		wc.showWindow(nil)
+		(wc.contentViewController as? EntitiesViewController)?.Doc = doc
 	}
 	@objc private func onMenuDialog(sender: NSTableRowView) {
 		_outlinerGraphVC?.GraphVC?.MainCanvas?.makeDialog(at: _outlinerGraphVC!.GraphVC!.centerOfCanvas())
@@ -128,6 +128,14 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 				NSApplication.shared.sendAction(action, to: self, from: row)
 			}
 		}
+		
+		// entities window setup
+		let entitiesStoryboard = NSStoryboard(name: "Entities", bundle: nil)
+		_entitiesWC = entitiesStoryboard.instantiateController(withIdentifier: "EntitiesWindow") as? EntitiesWindowController
+		
+		// variables window setup
+		let variablesStoryboard = NSStoryboard(name: "Variables", bundle: nil)
+		_variablesWC = variablesStoryboard.instantiateController(withIdentifier: "VariablesWindow") as? VariablesWindowController
 	}
 	
 	
