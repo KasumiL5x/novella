@@ -29,6 +29,7 @@ class Transfer: NSView {
 	//
 	private var _curveLayer = CAShapeLayer()
 	private var _curvePath = NSBezierPath()
+	private var _externalCurveBall = CAShapeLayer()
 	//
 	private var _focusedCurveColor = NSColor.fromHex("#f67280").cgColor
 	private var _focusedDashPattern: [NSNumber] = [10,7]
@@ -104,6 +105,11 @@ class Transfer: NSView {
 		_curveLayer.fillColor = nil
 		_curveLayer.lineCap = .round
 		_curveLayer.lineWidth = _regularThickness
+		// configure external curve ball layer
+		layer!.addSublayer(_externalCurveBall)
+		_externalCurveBall.fillColor = CGColor.clear
+		_externalCurveBall.strokeColor = CGColor.clear
+		_externalCurveBall.lineWidth = _regularThickness
 		
 		// base menu configuration (owners can add their own)
 		Menu.addItem(withTitle: "Edit Function", action: #selector(Transfer.onMenuFunction), keyEquivalent: "")
@@ -236,15 +242,27 @@ class Transfer: NSView {
 			_fillLayer.fillColor = destObject != nil ? destColor : CGColor.clear
 			
 			// curve drawing
+			_externalCurveBall.path = nil
 			if let destObject = destObject {
 				_curvePath.removeAllPoints()
 				let curveOrigin = NSMakePoint(bounds.midX, bounds.midY)
 				let curveEnd = destObject.convert(NSMakePoint(0, destObject.frame.height * 0.5), to: self)
 				CurveHelper.catmullRom(points: [curveOrigin, curveEnd], alpha: 1.0, closed: false, path: _curvePath)
 				_curveLayer.path = _curvePath.cgPath
+			} else if TheTransfer.Destination != nil {
+				// if the transfer isn't nil but we didn't find an object, it's in another graph, so draw the 'external curve'
+				_curvePath.removeAllPoints()
+				let curveOrigin = NSMakePoint(bounds.midX, bounds.midY)
+				let curveEnd = curveOrigin + NSMakePoint(30.0, 0.0)
+				CurveHelper.line(start: curveOrigin, end: curveEnd, path: _curvePath)
+				_curveLayer.path = _curvePath.cgPath
+				_externalCurveBall.fillColor = NSColor.black.withAlphaComponent(0.3).cgColor
+				_externalCurveBall.strokeColor = NSColor.black.withAlphaComponent(0.6).cgColor
+				let ballSize: CGFloat = 15.0
+				_externalCurveBall.path = NSBezierPath(ovalIn: NSMakeRect(curveEnd.x, curveEnd.y - ballSize * 0.5, ballSize, ballSize)).cgPath
 			}
 			if Focused {
-				_curveLayer.strokeColor = destObject != nil ? _focusedCurveColor : CGColor.clear
+				_curveLayer.strokeColor = (destObject != nil || TheTransfer.Destination != nil) ? _focusedCurveColor : CGColor.clear
 				_curveLayer.lineWidth = _focusedThickness
 				_curveLayer.lineDashPattern = _focusedDashPattern
 				_curveLayer.lineDashPhase = 0.0
@@ -254,9 +272,8 @@ class Transfer: NSView {
 				anim.duration = _focusedDashDuration
 				anim.repeatDuration = CFTimeInterval(Float.greatestFiniteMagnitude)
 				_curveLayer.add(anim, forKey: nil)
-				
 			} else {
-				_curveLayer.strokeColor = destObject != nil ? destColor : CGColor.clear
+				_curveLayer.strokeColor = (destObject != nil || TheTransfer.Destination != nil) ? destColor : CGColor.clear
 				_curveLayer.lineWidth = _regularThickness
 				_curveLayer.lineDashPattern = nil
 				_curveLayer.lineDashPhase = 0.0
