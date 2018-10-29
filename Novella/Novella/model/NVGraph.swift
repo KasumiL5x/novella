@@ -49,6 +49,20 @@ class NVGraph: NVIdentifiable {
 		self.Name = name
 	}
 	
+	// MARK: - Generic
+	func contains(linkable: NVLinkable) -> Bool {
+		switch linkable {
+		case let asNode as NVNode:
+			return contains(node: asNode)
+		case let asBranch as NVBranch:
+			return contains(branch: asBranch)
+		case let asSwitch as NVSwitch:
+			return contains(swtch: asSwitch)
+		default:
+			return false
+		}
+	}
+	
 	// MARK: - Graphs
 	func contains(graph: NVGraph) -> Bool {
 		return Graphs.contains(graph)
