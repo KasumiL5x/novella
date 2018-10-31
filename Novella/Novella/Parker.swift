@@ -24,6 +24,8 @@ class Parker: NSView {
 	private var _dragPosition = CGPoint.zero
 	//
 	private var _targetObject: CanvasObject?
+	//
+	private var _menu = NSMenu()
 
 	required init?(coder decoder: NSCoder) {
 		super.init(coder: decoder)
@@ -47,6 +49,13 @@ class Parker: NSView {
 		
 		let pan = NSPanGestureRecognizer(target: self, action: #selector(Parker.onPan))
 		addGestureRecognizer(pan)
+		
+		let ctx = NSClickGestureRecognizer(target: self, action: #selector(Parker.onContextClick))
+		ctx.buttonMask = 0x2
+		addGestureRecognizer(ctx)
+		
+		// menu setup
+		_menu.addItem(withTitle: "Clear", action: #selector(Parker.onContextClear), keyEquivalent: "")
 	}
 	
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
@@ -102,6 +111,14 @@ class Parker: NSView {
 		setNeedsDisplay(bounds)
 	}
 	
+	@objc private func onContextClick(gesture: NSClickGestureRecognizer) {
+		NSMenu.popUpContextMenu(_menu, with: NSApp.currentEvent!, for: self)
+	}
+	
+	@objc private func onContextClear() {
+		reset()
+	}
+	
 	func prime() {
 		_primed = true
 		setNeedsDisplay(bounds)
@@ -114,6 +131,14 @@ class Parker: NSView {
 	func park(_ transfer: Transfer) {
 		_transfer = transfer
 		_primed = false
+		setNeedsDisplay(bounds)
+	}
+	
+	func reset() {
+		_primed = false
+		_transfer = nil
+		_isDragging = false
+		_targetObject = nil
 		setNeedsDisplay(bounds)
 	}
 	
