@@ -12,6 +12,8 @@
 		6516094B215CB1D1006978AE /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516094A215CB1D1006978AE /* Alerts.swift */; };
 		651633442181B24F0078A68C /* Parker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651633432181B24F0078A68C /* Parker.swift */; };
 		65217DCE212A064E006E25BB /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65217DCD212A064E006E25BB /* CustomImageView.swift */; };
+		6523424C218AE1B600BBDF28 /* NVContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523424B218AE1B600BBDF28 /* NVContext.swift */; };
+		6523424E218AE40E00BBDF28 /* CanvasContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523424D218AE40E00BBDF28 /* CanvasContext.swift */; };
 		652C7EF92165E8F700E9389C /* NSRect+setCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C7EF82165E8F700E9389C /* NSRect+setCenter.swift */; };
 		6530DDFB2129BB000088D5F0 /* EntitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6530DDFA2129BB000088D5F0 /* EntitiesViewController.swift */; };
 		653A0FD3213FAF9200FADE3F /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */; };
@@ -100,6 +102,8 @@
 		6516094A215CB1D1006978AE /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		651633432181B24F0078A68C /* Parker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parker.swift; sourceTree = "<group>"; };
 		65217DCD212A064E006E25BB /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		6523424B218AE1B600BBDF28 /* NVContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVContext.swift; sourceTree = "<group>"; };
+		6523424D218AE40E00BBDF28 /* CanvasContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasContext.swift; sourceTree = "<group>"; };
 		652C7EF82165E8F700E9389C /* NSRect+setCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+setCenter.swift"; sourceTree = "<group>"; };
 		6530DDFA2129BB000088D5F0 /* EntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesViewController.swift; sourceTree = "<group>"; };
 		653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				65BC082C217B14E0005C61DB /* CanvasDelivery.swift */,
 				65BC082D217B14E0005C61DB /* CanvasDialog.swift */,
 				65BC082B217B14E0005C61DB /* CanvasNode.swift */,
+				6523424D218AE40E00BBDF28 /* CanvasContext.swift */,
 			);
 			name = nodes;
 			sourceTree = "<group>";
@@ -365,6 +370,7 @@
 			children = (
 				DFDB855C211CE29B00A30A6E /* NVBranch.swift */,
 				DFCE6065211C59C8005900D8 /* NVCondition.swift */,
+				6523424B218AE1B600BBDF28 /* NVContext.swift */,
 				DFDB855A211CD58300A30A6E /* NVDelivery.swift */,
 				DFDB8556211CD38C00A30A6E /* NVDialog.swift */,
 				DFDB8558211CD48600A30A6E /* NVEntity.swift */,
@@ -377,13 +383,13 @@
 				DFCE605B211C46A1005900D8 /* NVLog.swift */,
 				DFCE6061211C591A005900D8 /* NVNode.swift */,
 				DFDB855E211CE85E00A30A6E /* NVPath.swift */,
+				653A0FD4213FB27900FADE3F /* NVReader.swift */,
 				DFCE605D211C573C005900D8 /* NVStory.swift */,
 				DFDB8554211CA04E00A30A6E /* NVStoryDelegate.swift */,
 				DF544E8B211D8FD1008A7B76 /* NVSwitch.swift */,
 				DFCE6067211C59E5005900D8 /* NVTransfer.swift */,
 				DFCE6059211C45D4005900D8 /* NVValue.swift */,
 				DFCE6053211C3E87005900D8 /* NVVariable.swift */,
-				653A0FD4213FB27900FADE3F /* NVReader.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -521,6 +527,7 @@
 				DF22E9F4211F60E500606D97 /* CanvasObject.swift in Sources */,
 				DFDB855F211CE85E00A30A6E /* NVPath.swift in Sources */,
 				DFDB8555211CA04E00A30A6E /* NVStoryDelegate.swift in Sources */,
+				6523424E218AE40E00BBDF28 /* CanvasContext.swift in Sources */,
 				DF5622BD212184DD00640AD0 /* VariablesViewController.swift in Sources */,
 				657DBAAB214253ED00C7CF17 /* BranchPopover.swift in Sources */,
 				657DBAAD2142541600C7CF17 /* BranchViewController.swift in Sources */,
@@ -547,6 +554,7 @@
 				DFCE6068211C59E5005900D8 /* NVTransfer.swift in Sources */,
 				DFCE6064211C5963005900D8 /* NVLink.swift in Sources */,
 				DFCE6056211C3F4F005900D8 /* NVIdentifiable.swift in Sources */,
+				6523424C218AE1B600BBDF28 /* NVContext.swift in Sources */,
 				DF22E9F8211F670E00606D97 /* CanvasSwitch.swift in Sources */,
 				DFCE6058211C45CC005900D8 /* NVFolder.swift in Sources */,
 				65B980CD218454CF0048D78C /* EntitiesWindowController.swift in Sources */,

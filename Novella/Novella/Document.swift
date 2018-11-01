@@ -165,6 +165,11 @@ extension Document {
 				delivery.Directions = node["directions"].stringValue
 				delivery.Preview = node["preview"].stringValue
 				
+			case "context":
+				let context = Story.makeContext(uuid: id)
+				context.Name = name
+				context.Content = node["content"].stringValue
+				
 			default:
 				NVLog.log("Encountered unknown NVNode type during import (\(node["type"].stringValue)).", level: .warning)
 			}
@@ -619,6 +624,9 @@ extension Document {
 				entry["content"] = asDelivery.Content
 				entry["directions"] = asDelivery.Directions
 				entry["preview"] = asDelivery.Preview
+			case let asContext as NVContext:
+				entry["type"] = "context"
+				entry["content"] = asContext.Content
 			default:
 				NVLog.log("Encountered unknown NVNode type during export.", level: .warning)
 			}
@@ -730,6 +738,12 @@ extension Document: NVStoryDelegate {
 			Positions[delivery.ID] = CGPoint.zero
 		}
 	}
+	func nvStoryDidCreateContext(context: NVContext) {
+		updateChangeCount(.changeDone)
+		if Positions[context.ID] == nil {
+			Positions[context.ID] = CGPoint.zero
+		}
+	}
 	func nvStoryDidCreateEntity(entity: NVEntity) {
 		updateChangeCount(.changeDone)
 		if EntityImageNames[entity.ID] != nil {
@@ -765,6 +779,7 @@ extension Document: NVStoryDelegate {
 	func nvDeliveryContentDidChange(delivery: NVDelivery) { updateChangeCount(.changeDone) }
 	func nvDeliveryDirectionsDidChange(delivery: NVDelivery) { updateChangeCount(.changeDone) }
 	func nvDeliveryPreviewDidChange(delivery: NVDelivery) { updateChangeCount(.changeDone) }
+	func nvContextContentDidChange(context: NVContext) { updateChangeCount(.changeDone) }
 	func nvConditionDidUpdate(condition: NVCondition) { updateChangeCount(.changeDone) }
 	func nvFunctionDidUpdate(function: NVFunction) { updateChangeCount(.changeDone) }
 	func nvSwitchVariableDidChange(swtch: NVSwitch) { updateChangeCount(.changeDone) }

@@ -66,6 +66,7 @@ class Canvas: NSView {
 		let addSubMenu = NSMenu()
 		addSubMenu.addItem(withTitle: "Dialog", action: #selector(Canvas.onContextAddDialog), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Delivery", action: #selector(Canvas.onContextAddDelivery), keyEquivalent: "")
+		addSubMenu.addItem(withTitle: "Context", action: #selector(Canvas.onContextAddContext), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Branch", action: #selector(Canvas.onContextAddBranch), keyEquivalent: "")
 		addSubMenu.addItem(withTitle: "Switch", action: #selector(Canvas.onContextAddSwitch), keyEquivalent: "")
 		let addMenuItem = NSMenuItem()
@@ -120,6 +121,8 @@ class Canvas: NSView {
 				makeDialog(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvNode: asDialog)
 			case let asDelivery as NVDelivery:
 				makeDelivery(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvNode: asDelivery)
+			case let asContext as NVContext:
+				makeContext(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvNode: asContext)
 			default:
 				NVLog.log("Encountered unhandled node type while creating Canvas.", level: .warning)
 			}
@@ -331,6 +334,9 @@ class Canvas: NSView {
 	@objc private func onContextAddDelivery() {
 		makeDelivery(at: _lastContextLocation)
 	}
+	@objc private func onContextAddContext() {
+		makeContext(at: _lastContextLocation)
+	}
 	@objc private func onContextAddBranch() {
 		makeBranch(at: _lastContextLocation)
 	}
@@ -351,6 +357,11 @@ class Canvas: NSView {
 		let delivery = makeDelivery(at: at, nvNode: nil)
 		Graph.add(node: delivery.Node)
 		return delivery
+	}
+	@discardableResult func makeContext(at: CGPoint) -> CanvasContext {
+		let context = makeContext(at: at, nvNode: nil)
+		Graph.add(node: context.Node)
+		return context
 	}
 	@discardableResult func makeBranch(at: CGPoint) -> CanvasBranch {
 		let branch = makeBranch(at: at, nvBranch: nil)
@@ -390,6 +401,26 @@ class Canvas: NSView {
 		bench.translatesAutoresizingMaskIntoConstraints = false
 		
 		let node = CanvasDelivery(canvas: self, nvNode: nvNode ?? Doc.Story.makeDelivery(), bench: bench)
+		_allObjects.append(node)
+		addSubview(node, positioned: .below, relativeTo: _marquee)
+		var pos = at
+		pos.x -= node.frame.width * 0.5
+		pos.y -= node.frame.height * 0.5
+		node.frame.origin = pos
+		
+		// linking
+		bench.constrainTo(node)
+		_benches[node] = bench
+		
+		return node
+	}
+	@discardableResult private func makeContext(at: CGPoint, nvNode: NVContext?) -> CanvasContext {
+		// make bench
+		let bench = Bench<NSView>()
+		addSubview(bench, positioned: .below, relativeTo: _marquee)
+		bench.translatesAutoresizingMaskIntoConstraints = false
+		
+		let node = CanvasContext(canvas: self, nvNode: nvNode ?? Doc.Story.makeContext(), bench: bench)
 		_allObjects.append(node)
 		addSubview(node, positioned: .below, relativeTo: _marquee)
 		var pos = at
@@ -474,6 +505,13 @@ extension Canvas: NVStoryDelegate {
 	func nvDeliveryContentDidChange(delivery: NVDelivery) {
 		guard let obj = canvasObjectFor(nvLinkable: delivery) else {
 			print("Canvas tried to handle nvDeliveryContentDidChange(\(delivery.ID)) but couldn't find a matching CanvasObject.")
+			return
+		}
+		obj.reloadFromModel()
+	}
+	func nvContextContentDidChange(context: NVContext) {
+		guard let obj = canvasObjectFor(nvLinkable: context) else {
+			print("Canvas tried to handle nvContextContentDidChange(\(context.ID)) but couldn't find a matching CanvasObject.")
 			return
 		}
 		obj.reloadFromModel()

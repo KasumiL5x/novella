@@ -235,6 +235,13 @@ class NVStory {
 		Delegates.forEach{$0.nvStoryDidCreateDelivery(delivery: delivery)}
 		return delivery
 	}
+	@discardableResult func makeContext(uuid: NSUUID?=nil) -> NVContext {
+		let context = NVContext(id: uuid ?? NSUUID(), story: self)
+		_identifiables.append(context)
+		
+		Delegates.forEach{$0.nvStoryDidCreateContext(context: context)}
+		return context
+	}
 	@discardableResult func makeEntity(uuid: NSUUID?=nil) -> NVEntity {
 		let entity = NVEntity(id: uuid ?? NSUUID(), story: self)
 		_identifiables.append(entity)

@@ -35,6 +35,7 @@ protocol NVStoryDelegate {
 	func nvStoryDidCreateSwitch(swtch: NVSwitch)
 	func nvStoryDidCreateDialog(dialog: NVDialog)
 	func nvStoryDidCreateDelivery(delivery: NVDelivery)
+	func nvStoryDidCreateContext(context: NVContext)
 	func nvStoryDidCreateEntity(entity: NVEntity)
 	func nvStoryDidCreateVariable(variable: NVVariable)
 	
@@ -75,6 +76,9 @@ protocol NVStoryDelegate {
 	func nvDeliveryContentDidChange(delivery: NVDelivery)
 	func nvDeliveryDirectionsDidChange(delivery: NVDelivery)
 	func nvDeliveryPreviewDidChange(delivery: NVDelivery)
+	
+	// MARK: Contexts
+	func nvContextContentDidChange(context: NVContext)
 	
 	// MARK: Conditions
 	func nvConditionDidUpdate(condition: NVCondition)
@@ -138,6 +142,8 @@ extension NVStoryDelegate {
 	func nvStoryDidCreateDialog(dialog: NVDialog) {
 	}
 	func nvStoryDidCreateDelivery(delivery: NVDelivery) {
+	}
+	func nvStoryDidCreateContext(context: NVContext) {
 	}
 	func nvStoryDidCreateEntity(entity: NVEntity) {
 	}
@@ -208,6 +214,10 @@ extension NVStoryDelegate {
 	func nvDeliveryDirectionsDidChange(delivery: NVDelivery) {
 	}
 	func nvDeliveryPreviewDidChange(delivery: NVDelivery) {
+	}
+	
+	// MARK: Contexts
+	func nvContextContentDidChange(context: NVContext) {
 	}
 	
 	// MARK: Conditions
