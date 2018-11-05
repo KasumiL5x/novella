@@ -8,6 +8,14 @@
 
 import Cocoa
 
+extension NSNotification.Name {
+	static let canvasAddDialog = Notification.Name("canvasAddDialog")
+	static let canvasAddDelivery = Notification.Name("canvasAddDelivery")
+	static let canvasAddContext = Notification.Name("canvasAddContext")
+	static let canvasAddBranch = Notification.Name("canvasAddBranch")
+	static let canvasAddSwitch = Notification.Name("canvasAddSwitch")
+}
+
 class Canvas: NSView {
 	static let DEFAULT_SIZE: CGFloat = 600000.0
 	
@@ -86,6 +94,13 @@ class Canvas: NSView {
 		
 		// setup story delegate
 		doc.Story.addDelegate(self)
+		
+		// setup notification callbacks
+		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddDialog), name: .canvasAddDialog, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddDelivery), name: .canvasAddDelivery, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddContext), name: .canvasAddContext, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddBranch), name: .canvasAddBranch, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddSwitch), name: .canvasAddSwitch, object: nil)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError("Canvas::init(coder) not implemented.")
@@ -345,6 +360,23 @@ class Canvas: NSView {
 	}
 	@objc private func onContextSelectAll() {
 		Selection?.select(_allObjects, append: false)
+	}
+	
+	// MARK: Notification Center Callbacks
+	@objc private func onNotificationAddDialog(_ sender: NSNotification) {
+		makeDialog(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
+	}
+	@objc private func onNotificationAddDelivery(_ sender: NSNotification) {
+		makeDelivery(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
+	}
+	@objc private func onNotificationAddContext(_ sender: NSNotification) {
+		makeContext(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
+	}
+	@objc private func onNotificationAddBranch(_ sender: NSNotification) {
+		makeBranch(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
+	}
+	@objc private func onNotificationAddSwitch(_ sender: NSNotification) {
+		makeSwitch(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
 	}
 	
 	// MARK: External Creation

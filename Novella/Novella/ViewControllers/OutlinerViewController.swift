@@ -27,6 +27,11 @@ class OutlinerOutlineView: NSOutlineView, NVStoryDelegate {
 	
 	private func setup() {
 		_menu = NSMenu()
+		_menu.addItem(withTitle: "New Dialog", action: #selector(OutlinerOutlineView.onMenuNewDialog), keyEquivalent: "")
+		_menu.addItem(withTitle: "New Delivery", action: #selector(OutlinerOutlineView.onMenuNewDelivery), keyEquivalent: "")
+		_menu.addItem(withTitle: "New Context", action: #selector(OutlinerOutlineView.onMenuNewContext), keyEquivalent: "")
+		_menu.addItem(withTitle: "New Branch", action: #selector(OutlinerOutlineView.onMenuNewBranch), keyEquivalent: "")
+		_menu.addItem(withTitle: "New Switch", action: #selector(OutlinerOutlineView.onMenuNewSwitch), keyEquivalent: "")
 		_menu.addItem(withTitle: "New Graph", action: #selector(OutlinerOutlineView.onMenuNewGraph), keyEquivalent: "")
 	}
 	
@@ -34,6 +39,21 @@ class OutlinerOutlineView: NSOutlineView, NVStoryDelegate {
 		return _menu
 	}
 	
+	@objc private func onMenuNewDialog() {
+		NotificationCenter.default.post(name: .canvasAddDialog, object: nil)
+	}
+	@objc private func onMenuNewDelivery() {
+		NotificationCenter.default.post(name: .canvasAddDelivery, object: nil)
+	}
+	@objc private func onMenuNewContext() {
+		NotificationCenter.default.post(name: .canvasAddContext, object: nil)
+	}
+	@objc private func onMenuNewBranch() {
+		NotificationCenter.default.post(name: .canvasAddBranch, object: nil)
+	}
+	@objc private func onMenuNewSwitch() {
+		NotificationCenter.default.post(name: .canvasAddSwitch, object: nil)
+	}
 	@objc private func onMenuNewGraph() {
 		guard let doc = Doc, let parentGraph = parentGraphOfSelection() else {
 			return
