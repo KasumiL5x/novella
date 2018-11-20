@@ -10,7 +10,7 @@ import AppKit
 
 class ContextPopover: GenericPopover {
 	func setup(ctx: NVContext) {
-		(_popoverViewController as? ContextPopoverViewController)?.Context = ctx
+		(_popoverViewController as? ContextViewController)?.Context = ctx
 	}
 	
 	override func createViewController() -> NSViewController? {

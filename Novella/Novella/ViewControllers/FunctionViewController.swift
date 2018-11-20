@@ -9,7 +9,7 @@
 import AppKit
 import Highlightr
 
-class FunctionPopoverViewController: NSViewController {
+class FunctionViewController: NSViewController {
 	private let _textStorage = CodeAttributedString()
 	private var _codeTextbox: NSTextView!
 	
@@ -53,7 +53,7 @@ class FunctionPopoverViewController: NSViewController {
 	}
 }
 
-extension FunctionPopoverViewController: NSTextViewDelegate {
+extension FunctionViewController: NSTextViewDelegate {
 	func textDidChange(_ notification: Notification) {
 		TheTransfer?.Function.JavaScript = _codeTextbox.string
 	}

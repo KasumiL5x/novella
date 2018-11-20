@@ -103,7 +103,7 @@
         <!--ContextPopover-->
         <scene sceneID="lbg-43-w4O">
             <objects>
-                <viewController storyboardIdentifier="ContextPopover" id="8hl-Vh-mnS" userLabel="ContextPopover" customClass="ContextPopoverViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContextPopover" id="8hl-Vh-mnS" userLabel="ContextPopover" customClass="ContextViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="F7o-Gc-cAj">
                         <rect key="frame" x="0.0" y="0.0" width="412" height="252"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -250,7 +250,7 @@
         <!--FunctionPopover-->
         <scene sceneID="q9h-4F-bQh">
             <objects>
-                <viewController storyboardIdentifier="FunctionPopover" id="n68-8F-jKE" userLabel="FunctionPopover" customClass="FunctionPopoverViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FunctionPopover" id="n68-8F-jKE" userLabel="FunctionPopover" customClass="FunctionViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="YGL-ti-UL9">
                         <rect key="frame" x="0.0" y="0.0" width="412" height="266"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -360,7 +360,7 @@
         <!--ConditionPopover-->
         <scene sceneID="BBv-aS-bm2">
             <objects>
-                <viewController storyboardIdentifier="ConditionPopover" id="KGc-wX-Jox" userLabel="ConditionPopover" customClass="ConditionPopoverViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConditionPopover" id="KGc-wX-Jox" userLabel="ConditionPopover" customClass="ConditionViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="RqL-4e-Gxr">
                         <rect key="frame" x="0.0" y="0.0" width="412" height="266"/>
                         <autoresizingMask key="autoresizingMask"/>

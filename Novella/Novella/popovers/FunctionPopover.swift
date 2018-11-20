@@ -10,7 +10,7 @@ import AppKit
 
 class FunctionPopover: GenericPopover {
 	func setup(transfer: NVTransfer) {
-		(_popoverViewController as? FunctionPopoverViewController)?.TheTransfer = transfer
+		(_popoverViewController as? FunctionViewController)?.TheTransfer = transfer
 	}
 	
 	override func createViewController() -> NSViewController? {

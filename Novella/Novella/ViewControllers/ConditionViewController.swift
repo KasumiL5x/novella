@@ -9,7 +9,7 @@
 import AppKit
 import Highlightr
 
-class ConditionPopoverViewController: NSViewController {
+class ConditionViewController: NSViewController {
 	private let _textStorage = CodeAttributedString()
 	private var _codeTextbox: NSTextView!
 	
@@ -53,7 +53,7 @@ class ConditionPopoverViewController: NSViewController {
 	}
 }
 
-extension ConditionPopoverViewController: NSTextViewDelegate {
+extension ConditionViewController: NSTextViewDelegate {
 	func textDidChange(_ notification: Notification) {
 		Condition?.JavaScript = _codeTextbox.string
 	}

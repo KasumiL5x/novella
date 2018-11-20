@@ -8,7 +8,7 @@
 
 import AppKit
 
-class ContextPopoverViewController: NSViewController {
+class ContextViewController: NSViewController {
 	// MARK: - Outlets
 	@IBOutlet weak var _idTextfield: NSTextField!
 	@IBOutlet weak var _contentTextfield: NSTextField!

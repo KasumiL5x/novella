@@ -10,7 +10,7 @@ import AppKit
 
 class ConditionPopover: GenericPopover {
 	func setup(condition: NVCondition) {
-		(_popoverViewController as? ConditionPopoverViewController)?.Condition = condition
+		(_popoverViewController as? ConditionViewController)?.Condition = condition
 	}
 	
 	override func createViewController() -> NSViewController? {
