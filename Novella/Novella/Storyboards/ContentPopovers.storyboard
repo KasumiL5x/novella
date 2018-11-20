@@ -100,6 +100,49 @@
             </objects>
             <point key="canvasLocation" x="-569" y="170"/>
         </scene>
+        <!--ContextPopover-->
+        <scene sceneID="lbg-43-w4O">
+            <objects>
+                <viewController storyboardIdentifier="ContextPopover" id="8hl-Vh-mnS" userLabel="ContextPopover" customClass="ContextPopoverViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="F7o-Gc-cAj">
+                        <rect key="frame" x="0.0" y="0.0" width="412" height="252"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YDT-uX-SLE">
+                                <rect key="frame" x="25" y="210" width="300" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ID" drawsBackground="YES" id="QIk-rv-HIf">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="onIDChanged:" target="8hl-Vh-mnS" id="MfD-K9-vt4"/>
+                                </connections>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Okb-h8-1qk">
+                                <rect key="frame" x="25" y="20" width="362" height="180"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Content" drawsBackground="YES" id="IFB-Nm-LmM">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="onContentChanged:" target="8hl-Vh-mnS" id="3b4-mP-JfD"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="_contentTextfield" destination="Okb-h8-1qk" id="IRB-Op-Hw5"/>
+                        <outlet property="_idTextfield" destination="YDT-uX-SLE" id="oWk-L2-xAX"/>
+                    </connections>
+                </viewController>
+                <customObject id="KqW-Sl-lOa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-569" y="571"/>
+        </scene>
         <!--DeliveryPopover-->
         <scene sceneID="TqH-Pr-B3g">
             <objects>

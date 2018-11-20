@@ -19,6 +19,8 @@
 		653A0FD3213FAF9200FADE3F /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */; };
 		653A0FD5213FB27900FADE3F /* NVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A0FD4213FB27900FADE3F /* NVReader.swift */; };
 		6569CED9213EFABC0085CD03 /* ChoiceWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569CED8213EFABC0085CD03 /* ChoiceWheel.swift */; };
+		656EC40521A3F19500CE552F /* ContextPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656EC40421A3F19500CE552F /* ContextPopoverViewController.swift */; };
+		656EC40721A3F38100CE552F /* ContextPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656EC40621A3F38100CE552F /* ContextPopover.swift */; };
 		657932DA21312D3C00090F89 /* NSImage+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657932D921312D3C00090F89 /* NSImage+Extra.swift */; };
 		657DBAAB214253ED00C7CF17 /* BranchPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DBAAA214253ED00C7CF17 /* BranchPopover.swift */; };
 		657DBAAD2142541600C7CF17 /* BranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DBAAC2142541600C7CF17 /* BranchViewController.swift */; };
@@ -109,6 +111,8 @@
 		653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		653A0FD4213FB27900FADE3F /* NVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReader.swift; sourceTree = "<group>"; };
 		6569CED8213EFABC0085CD03 /* ChoiceWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWheel.swift; sourceTree = "<group>"; };
+		656EC40421A3F19500CE552F /* ContextPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopoverViewController.swift; sourceTree = "<group>"; };
+		656EC40621A3F38100CE552F /* ContextPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopover.swift; sourceTree = "<group>"; };
 		657932D921312D3C00090F89 /* NSImage+Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extra.swift"; sourceTree = "<group>"; };
 		657DBAAA214253ED00C7CF17 /* BranchPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchPopover.swift; sourceTree = "<group>"; };
 		657DBAAC2142541600C7CF17 /* BranchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchViewController.swift; sourceTree = "<group>"; };
@@ -214,10 +218,10 @@
 		65BC0831217B14E9005C61DB /* nodes */ = {
 			isa = PBXGroup;
 			children = (
+				6523424D218AE40E00BBDF28 /* CanvasContext.swift */,
 				65BC082C217B14E0005C61DB /* CanvasDelivery.swift */,
 				65BC082D217B14E0005C61DB /* CanvasDialog.swift */,
 				65BC082B217B14E0005C61DB /* CanvasNode.swift */,
-				6523424D218AE40E00BBDF28 /* CanvasContext.swift */,
 			);
 			name = nodes;
 			sourceTree = "<group>";
@@ -280,6 +284,7 @@
 				DF6D92AA2179AEFF00D40B13 /* SwitchOptionViewController.swift */,
 				65CD4F25217C665C003B58E5 /* FunctionPopoverViewController.swift */,
 				65EA955A217D0C8A00DBF7CF /* ConditionPopoverViewController.swift */,
+				656EC40421A3F19500CE552F /* ContextPopoverViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				DFE4E84321793E2C00FE511F /* SwitchOptionPopover.swift */,
 				65CD4F27217C67E0003B58E5 /* FunctionPopover.swift */,
 				65EA955C217D0CFC00DBF7CF /* ConditionPopover.swift */,
+				656EC40621A3F38100CE552F /* ContextPopover.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -500,6 +506,7 @@
 				DFDF8A77217861D500E7341A /* SwitchViewController.swift in Sources */,
 				652C7EF92165E8F700E9389C /* NSRect+setCenter.swift in Sources */,
 				DF22EA082120DEFD00606D97 /* GenericPopover.swift in Sources */,
+				656EC40521A3F19500CE552F /* ContextPopoverViewController.swift in Sources */,
 				DF22E9E7211DA02500606D97 /* GraphViewController.swift in Sources */,
 				DFCE605A211C45D4005900D8 /* NVValue.swift in Sources */,
 				65CF7195212D5CED0081CBF4 /* OutlinerViewController.swift in Sources */,
@@ -546,6 +553,7 @@
 				DF22E9FF212072A900606D97 /* CanvasSelection.swift in Sources */,
 				DFEA59C421327C3100AECEC2 /* Colors.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
+				656EC40721A3F38100CE552F /* ContextPopover.swift in Sources */,
 				DFCE6062211C591A005900D8 /* NVNode.swift in Sources */,
 				DFCE6060211C57EA005900D8 /* NVGraph.swift in Sources */,
 				65BC0830217B14E0005C61DB /* CanvasDialog.swift in Sources */,
