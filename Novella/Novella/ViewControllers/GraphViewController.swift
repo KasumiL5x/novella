@@ -15,7 +15,7 @@ class GraphViewController: NSViewController {
 	
 	func setup(doc: Document) {
 		_document = doc
-		MainCanvas = Canvas()
+		MainCanvas = Canvas(doc: doc)
 		_scrollView.documentView = MainCanvas
 	}
 }

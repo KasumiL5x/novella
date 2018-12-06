@@ -10,6 +10,8 @@ import Cocoa
 import SwiftyJSON
 
 class Document: NSDocument {
+	private(set) var Story: NVStory = NVStory()
+	
 	override init() {
 		super.init()
 	}

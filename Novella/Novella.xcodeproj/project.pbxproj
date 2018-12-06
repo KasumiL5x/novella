@@ -30,6 +30,8 @@
 		DF94929321B9705400BC8AB0 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */; };
 		DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF94929421B9716E00BC8AB0 /* Graph.storyboard */; };
 		DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929621B9723900BC8AB0 /* GraphViewController.swift */; };
+		DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929821B9838F00BC8AB0 /* CanvasObject.swift */; };
+		DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */; };
 		DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6040211C3D20005900D8 /* AppDelegate.swift */; };
 		DFCE6045211C3D20005900D8 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6044211C3D20005900D8 /* Document.swift */; };
 		DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFCE6048211C3D20005900D8 /* Main.storyboard */; };
@@ -59,6 +61,8 @@
 		DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		DF94929421B9716E00BC8AB0 /* Graph.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Graph.storyboard; sourceTree = "<group>"; };
 		DF94929621B9723900BC8AB0 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		DF94929821B9838F00BC8AB0 /* CanvasObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasObject.swift; sourceTree = "<group>"; };
+		DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasMarquee.swift; sourceTree = "<group>"; };
 		DFCE603D211C3D20005900D8 /* novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFCE6040211C3D20005900D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFCE6044211C3D20005900D8 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 			children = (
 				DF94928D21B96F8C00BC8AB0 /* Canvas.swift */,
 				DF94928F21B96F9F00BC8AB0 /* CanvasBackground.swift */,
+				DF94929821B9838F00BC8AB0 /* CanvasObject.swift */,
+				DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */,
 			);
 			path = canvas;
 			sourceTree = "<group>";
@@ -271,6 +277,7 @@
 			files = (
 				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
 				DF94929321B9705400BC8AB0 /* NSColor+Hex.swift in Sources */,
+				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
 				DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */,
@@ -286,6 +293,7 @@
 				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
 				DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
+				DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */,
 				DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */,
 				DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */,
 				DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */,
