@@ -8,6 +8,9 @@
 
 Novella is a model and framework for authoring interactive narrative experiences.  It is developed by Daniel Green as part of his PhD project at Bournemouth University, UK.
 
+## Status
+This project is currently in **periodic** development.  Development priority changes during the PhD, as this tool is not a main contribution to the thesis.
+
 ## Installation
 This part is to come.
 
