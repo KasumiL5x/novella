@@ -7,190 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65069822218198B60027F1E2 /* NSView+ViewAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65069821218198B60027F1E2 /* NSView+ViewAt.swift */; };
-		650A18F0212CB28500F85B3A /* Outliner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650A18EF212CB28500F85B3A /* Outliner.storyboard */; };
-		6516094B215CB1D1006978AE /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516094A215CB1D1006978AE /* Alerts.swift */; };
-		651633442181B24F0078A68C /* Parker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651633432181B24F0078A68C /* Parker.swift */; };
-		65217DCE212A064E006E25BB /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65217DCD212A064E006E25BB /* CustomImageView.swift */; };
-		6523424C218AE1B600BBDF28 /* NVContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523424B218AE1B600BBDF28 /* NVContext.swift */; };
-		6523424E218AE40E00BBDF28 /* CanvasContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523424D218AE40E00BBDF28 /* CanvasContext.swift */; };
-		652C7EF92165E8F700E9389C /* NSRect+setCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C7EF82165E8F700E9389C /* NSRect+setCenter.swift */; };
-		6530DDFB2129BB000088D5F0 /* EntitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6530DDFA2129BB000088D5F0 /* EntitiesViewController.swift */; };
-		653A0FD3213FAF9200FADE3F /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */; };
-		653A0FD5213FB27900FADE3F /* NVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653A0FD4213FB27900FADE3F /* NVReader.swift */; };
-		6569CED9213EFABC0085CD03 /* ChoiceWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569CED8213EFABC0085CD03 /* ChoiceWheel.swift */; };
-		656EC40521A3F19500CE552F /* ContextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656EC40421A3F19500CE552F /* ContextViewController.swift */; };
-		656EC40721A3F38100CE552F /* ContextPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656EC40621A3F38100CE552F /* ContextPopover.swift */; };
-		657932DA21312D3C00090F89 /* NSImage+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657932D921312D3C00090F89 /* NSImage+Extra.swift */; };
-		657DBAAB214253ED00C7CF17 /* BranchPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DBAAA214253ED00C7CF17 /* BranchPopover.swift */; };
-		657DBAAD2142541600C7CF17 /* BranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DBAAC2142541600C7CF17 /* BranchViewController.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
-		658DFBFE214E4C8E002B1AA1 /* OutlinerGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658DFBFD214E4C8E002B1AA1 /* OutlinerGraphViewController.swift */; };
-		65B099F921235D0D00F86D3C /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B099F821235D0D00F86D3C /* Link.swift */; };
-		65B099FB21235E7500F86D3C /* NSView+SubviewsFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B099FA21235E7500F86D3C /* NSView+SubviewsFrame.swift */; };
-		65B099FD2123648500F86D3C /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B099FC2123648500F86D3C /* CurveHelper.swift */; };
-		65B13F2F2141529A00E83885 /* ContentPopovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B13F2E2141529A00E83885 /* ContentPopovers.storyboard */; };
-		65B980CD218454CF0048D78C /* EntitiesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B980CC218454CF0048D78C /* EntitiesWindowController.swift */; };
-		65B980CF218457010048D78C /* VariablesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B980CE218457010048D78C /* VariablesWindowController.swift */; };
-		65BC082E217B14E0005C61DB /* CanvasNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC082B217B14E0005C61DB /* CanvasNode.swift */; };
-		65BC082F217B14E0005C61DB /* CanvasDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC082C217B14E0005C61DB /* CanvasDelivery.swift */; };
-		65BC0830217B14E0005C61DB /* CanvasDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC082D217B14E0005C61DB /* CanvasDialog.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
-		65CD4F26217C665C003B58E5 /* FunctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD4F25217C665C003B58E5 /* FunctionViewController.swift */; };
-		65CD4F28217C67E0003B58E5 /* FunctionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD4F27217C67E0003B58E5 /* FunctionPopover.swift */; };
-		65CF7195212D5CED0081CBF4 /* OutlinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CF7194212D5CED0081CBF4 /* OutlinerViewController.swift */; };
-		65EA955B217D0C8A00DBF7CF /* ConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EA955A217D0C8A00DBF7CF /* ConditionViewController.swift */; };
-		65EA955D217D0CFC00DBF7CF /* ConditionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EA955C217D0CFC00DBF7CF /* ConditionPopover.swift */; };
-		65F2F2CB214155CB000F2B53 /* DialogPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2F2CA214155CB000F2B53 /* DialogPopover.swift */; };
-		65F2F2CD21415612000F2B53 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2F2CC21415612000F2B53 /* DialogViewController.swift */; };
-		DF00FF3C217736AA00216AB3 /* Bench.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF00FF3B217736AA00216AB3 /* Bench.swift */; };
-		DF22E9E1211D9AD800606D97 /* ColoredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9E0211D9AD800606D97 /* ColoredView.swift */; };
-		DF22E9E4211D9F7E00606D97 /* Graph.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF22E9E3211D9F7E00606D97 /* Graph.storyboard */; };
-		DF22E9E7211DA02500606D97 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9E6211DA02500606D97 /* GraphViewController.swift */; };
-		DF22E9EA211DA14D00606D97 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9E9211DA14D00606D97 /* Canvas.swift */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
-		DF22E9EE211DAA5200606D97 /* CanvasBG.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9ED211DAA5200606D97 /* CanvasBG.swift */; };
-		DF22E9F0211DAB5900606D97 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EF211DAB5900606D97 /* NSColor+Hex.swift */; };
-		DF22E9F4211F60E500606D97 /* CanvasObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9F3211F60E500606D97 /* CanvasObject.swift */; };
-		DF22E9F6211F667000606D97 /* CanvasBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9F5211F667000606D97 /* CanvasBranch.swift */; };
-		DF22E9F8211F670E00606D97 /* CanvasSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9F7211F670E00606D97 /* CanvasSwitch.swift */; };
-		DF22E9FD2120222E00606D97 /* CanvasMarquee.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9FC2120222E00606D97 /* CanvasMarquee.swift */; };
-		DF22E9FF212072A900606D97 /* CanvasSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9FE212072A900606D97 /* CanvasSelection.swift */; };
-		DF22EA012120791200606D97 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22EA002120791200606D97 /* CGPoint+Math.swift */; };
-		DF22EA052120DE3900606D97 /* Entities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF22EA042120DE3900606D97 /* Entities.storyboard */; };
-		DF22EA082120DEFD00606D97 /* GenericPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22EA072120DEFD00606D97 /* GenericPopover.swift */; };
-		DF544E8C211D8FD1008A7B76 /* NVSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF544E8B211D8FD1008A7B76 /* NVSwitch.swift */; };
-		DF5622B521217D1500640AD0 /* Variables.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5622B421217D1500640AD0 /* Variables.storyboard */; };
-		DF5622B921217E3E00640AD0 /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5622B821217E3E00640AD0 /* Preview.storyboard */; };
-		DF5622BB21217E6C00640AD0 /* PreviewPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622BA21217E6C00640AD0 /* PreviewPopover.swift */; };
-		DF5622BD212184DD00640AD0 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622BC212184DD00640AD0 /* VariablesViewController.swift */; };
-		DF5622C02121FD7300640AD0 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622BF2121FD7300640AD0 /* Transfer.swift */; };
-		DF5622C221220DF000640AD0 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5622C121220DF000640AD0 /* NSBezierPath+CGPath.swift */; };
-		DF59763C2173362400D35168 /* DeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF59763B2173362400D35168 /* DeliveryViewController.swift */; };
-		DF59763E2173745100D35168 /* DeliveryPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF59763D2173745100D35168 /* DeliveryPopover.swift */; };
-		DF6D92AB2179AEFF00D40B13 /* SwitchOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D92AA2179AEFF00D40B13 /* SwitchOptionViewController.swift */; };
 		DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6040211C3D20005900D8 /* AppDelegate.swift */; };
 		DFCE6045211C3D20005900D8 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6044211C3D20005900D8 /* Document.swift */; };
-		DFCE6047211C3D20005900D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFCE6046211C3D20005900D8 /* Assets.xcassets */; };
 		DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFCE6048211C3D20005900D8 /* Main.storyboard */; };
-		DFCE6054211C3E87005900D8 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6053211C3E87005900D8 /* NVVariable.swift */; };
-		DFCE6056211C3F4F005900D8 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6055211C3F4F005900D8 /* NVIdentifiable.swift */; };
-		DFCE6058211C45CC005900D8 /* NVFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6057211C45CC005900D8 /* NVFolder.swift */; };
-		DFCE605A211C45D4005900D8 /* NVValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6059211C45D4005900D8 /* NVValue.swift */; };
-		DFCE605C211C46A1005900D8 /* NVLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE605B211C46A1005900D8 /* NVLog.swift */; };
-		DFCE605E211C573C005900D8 /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE605D211C573C005900D8 /* NVStory.swift */; };
-		DFCE6060211C57EA005900D8 /* NVGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE605F211C57EA005900D8 /* NVGraph.swift */; };
-		DFCE6062211C591A005900D8 /* NVNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6061211C591A005900D8 /* NVNode.swift */; };
-		DFCE6064211C5963005900D8 /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6063211C5963005900D8 /* NVLink.swift */; };
-		DFCE6066211C59C8005900D8 /* NVCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6065211C59C8005900D8 /* NVCondition.swift */; };
-		DFCE6068211C59E5005900D8 /* NVTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6067211C59E5005900D8 /* NVTransfer.swift */; };
-		DFCE606A211C5A3D005900D8 /* NVLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6069211C5A3D005900D8 /* NVLinkable.swift */; };
-		DFCE606C211C5B55005900D8 /* NVFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE606B211C5B55005900D8 /* NVFunction.swift */; };
-		DFDB8555211CA04E00A30A6E /* NVStoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB8554211CA04E00A30A6E /* NVStoryDelegate.swift */; };
-		DFDB8557211CD38C00A30A6E /* NVDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB8556211CD38C00A30A6E /* NVDialog.swift */; };
-		DFDB8559211CD48600A30A6E /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB8558211CD48600A30A6E /* NVEntity.swift */; };
-		DFDB855B211CD58300A30A6E /* NVDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB855A211CD58300A30A6E /* NVDelivery.swift */; };
-		DFDB855D211CE29B00A30A6E /* NVBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB855C211CE29B00A30A6E /* NVBranch.swift */; };
-		DFDB855F211CE85E00A30A6E /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB855E211CE85E00A30A6E /* NVPath.swift */; };
-		DFDF8A77217861D500E7341A /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF8A76217861D500E7341A /* SwitchViewController.swift */; };
-		DFDF8A7921787BC700E7341A /* SwitchPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF8A7821787BC700E7341A /* SwitchPopover.swift */; };
-		DFE4E84421793E2C00FE511F /* SwitchOptionPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE4E84321793E2C00FE511F /* SwitchOptionPopover.swift */; };
-		DFEA59C421327C3100AECEC2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEA59C321327C3100AECEC2 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		65069821218198B60027F1E2 /* NSView+ViewAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ViewAt.swift"; sourceTree = "<group>"; };
-		650A18EF212CB28500F85B3A /* Outliner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Outliner.storyboard; sourceTree = "<group>"; };
-		6516094A215CB1D1006978AE /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		651633432181B24F0078A68C /* Parker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parker.swift; sourceTree = "<group>"; };
-		65217DCD212A064E006E25BB /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
-		6523424B218AE1B600BBDF28 /* NVContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVContext.swift; sourceTree = "<group>"; };
-		6523424D218AE40E00BBDF28 /* CanvasContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasContext.swift; sourceTree = "<group>"; };
-		652C7EF82165E8F700E9389C /* NSRect+setCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+setCenter.swift"; sourceTree = "<group>"; };
-		6530DDFA2129BB000088D5F0 /* EntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesViewController.swift; sourceTree = "<group>"; };
-		653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
-		653A0FD4213FB27900FADE3F /* NVReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReader.swift; sourceTree = "<group>"; };
-		6569CED8213EFABC0085CD03 /* ChoiceWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWheel.swift; sourceTree = "<group>"; };
-		656EC40421A3F19500CE552F /* ContextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextViewController.swift; sourceTree = "<group>"; };
-		656EC40621A3F38100CE552F /* ContextPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPopover.swift; sourceTree = "<group>"; };
-		657932D921312D3C00090F89 /* NSImage+Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extra.swift"; sourceTree = "<group>"; };
-		657DBAAA214253ED00C7CF17 /* BranchPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchPopover.swift; sourceTree = "<group>"; };
-		657DBAAC2142541600C7CF17 /* BranchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchViewController.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
-		658DFBFD214E4C8E002B1AA1 /* OutlinerGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinerGraphViewController.swift; sourceTree = "<group>"; };
-		65B099F821235D0D00F86D3C /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		65B099FA21235E7500F86D3C /* NSView+SubviewsFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+SubviewsFrame.swift"; sourceTree = "<group>"; };
-		65B099FC2123648500F86D3C /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
-		65B13F2E2141529A00E83885 /* ContentPopovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContentPopovers.storyboard; sourceTree = "<group>"; };
-		65B980CC218454CF0048D78C /* EntitiesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesWindowController.swift; sourceTree = "<group>"; };
-		65B980CE218457010048D78C /* VariablesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesWindowController.swift; sourceTree = "<group>"; };
-		65BC082B217B14E0005C61DB /* CanvasNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasNode.swift; sourceTree = "<group>"; };
-		65BC082C217B14E0005C61DB /* CanvasDelivery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasDelivery.swift; sourceTree = "<group>"; };
-		65BC082D217B14E0005C61DB /* CanvasDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasDialog.swift; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
-		65CD4F25217C665C003B58E5 /* FunctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionViewController.swift; sourceTree = "<group>"; };
-		65CD4F27217C67E0003B58E5 /* FunctionPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionPopover.swift; sourceTree = "<group>"; };
-		65CF7194212D5CED0081CBF4 /* OutlinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinerViewController.swift; sourceTree = "<group>"; };
-		65EA955A217D0C8A00DBF7CF /* ConditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionViewController.swift; sourceTree = "<group>"; };
-		65EA955C217D0CFC00DBF7CF /* ConditionPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionPopover.swift; sourceTree = "<group>"; };
-		65F2F2CA214155CB000F2B53 /* DialogPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogPopover.swift; sourceTree = "<group>"; };
-		65F2F2CC21415612000F2B53 /* DialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
-		DF00FF3B217736AA00216AB3 /* Bench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bench.swift; sourceTree = "<group>"; };
-		DF22E9E0211D9AD800606D97 /* ColoredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredView.swift; sourceTree = "<group>"; };
-		DF22E9E3211D9F7E00606D97 /* Graph.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Graph.storyboard; sourceTree = "<group>"; };
-		DF22E9E6211DA02500606D97 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
-		DF22E9E9211DA14D00606D97 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		DF22E9ED211DAA5200606D97 /* CanvasBG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBG.swift; sourceTree = "<group>"; };
-		DF22E9EF211DAB5900606D97 /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
-		DF22E9F3211F60E500606D97 /* CanvasObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasObject.swift; sourceTree = "<group>"; };
-		DF22E9F5211F667000606D97 /* CanvasBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBranch.swift; sourceTree = "<group>"; };
-		DF22E9F7211F670E00606D97 /* CanvasSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSwitch.swift; sourceTree = "<group>"; };
-		DF22E9FC2120222E00606D97 /* CanvasMarquee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasMarquee.swift; sourceTree = "<group>"; };
-		DF22E9FE212072A900606D97 /* CanvasSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSelection.swift; sourceTree = "<group>"; };
-		DF22EA002120791200606D97 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
-		DF22EA042120DE3900606D97 /* Entities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Entities.storyboard; sourceTree = "<group>"; };
-		DF22EA072120DEFD00606D97 /* GenericPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPopover.swift; sourceTree = "<group>"; };
-		DF544E8B211D8FD1008A7B76 /* NVSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSwitch.swift; sourceTree = "<group>"; };
-		DF5622B421217D1500640AD0 /* Variables.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Variables.storyboard; sourceTree = "<group>"; };
-		DF5622B821217E3E00640AD0 /* Preview.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
-		DF5622BA21217E6C00640AD0 /* PreviewPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPopover.swift; sourceTree = "<group>"; };
-		DF5622BC212184DD00640AD0 /* VariablesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesViewController.swift; sourceTree = "<group>"; };
-		DF5622BF2121FD7300640AD0 /* Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
-		DF5622C121220DF000640AD0 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
-		DF59763B2173362400D35168 /* DeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryViewController.swift; sourceTree = "<group>"; };
-		DF59763D2173745100D35168 /* DeliveryPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryPopover.swift; sourceTree = "<group>"; };
-		DF6D92AA2179AEFF00D40B13 /* SwitchOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchOptionViewController.swift; sourceTree = "<group>"; };
 		DFCE603D211C3D20005900D8 /* novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFCE6040211C3D20005900D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFCE6044211C3D20005900D8 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		DFCE6046211C3D20005900D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFCE6049211C3D20005900D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DFCE604B211C3D20005900D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DFCE604C211C3D20005900D8 /* novella.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = novella.entitlements; sourceTree = "<group>"; };
-		DFCE6053211C3E87005900D8 /* NVVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
-		DFCE6055211C3F4F005900D8 /* NVIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
-		DFCE6057211C45CC005900D8 /* NVFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVFolder.swift; sourceTree = "<group>"; };
-		DFCE6059211C45D4005900D8 /* NVValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVValue.swift; sourceTree = "<group>"; };
-		DFCE605B211C46A1005900D8 /* NVLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLog.swift; sourceTree = "<group>"; };
-		DFCE605D211C573C005900D8 /* NVStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
-		DFCE605F211C57EA005900D8 /* NVGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVGraph.swift; sourceTree = "<group>"; };
-		DFCE6061211C591A005900D8 /* NVNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVNode.swift; sourceTree = "<group>"; };
-		DFCE6063211C5963005900D8 /* NVLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
-		DFCE6065211C59C8005900D8 /* NVCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVCondition.swift; sourceTree = "<group>"; };
-		DFCE6067211C59E5005900D8 /* NVTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVTransfer.swift; sourceTree = "<group>"; };
-		DFCE6069211C5A3D005900D8 /* NVLinkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLinkable.swift; sourceTree = "<group>"; };
-		DFCE606B211C5B55005900D8 /* NVFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVFunction.swift; sourceTree = "<group>"; };
-		DFDB8554211CA04E00A30A6E /* NVStoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStoryDelegate.swift; sourceTree = "<group>"; };
-		DFDB8556211CD38C00A30A6E /* NVDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVDialog.swift; sourceTree = "<group>"; };
-		DFDB8558211CD48600A30A6E /* NVEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
-		DFDB855A211CD58300A30A6E /* NVDelivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVDelivery.swift; sourceTree = "<group>"; };
-		DFDB855C211CE29B00A30A6E /* NVBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVBranch.swift; sourceTree = "<group>"; };
-		DFDB855E211CE85E00A30A6E /* NVPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
-		DFDF8A76217861D500E7341A /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
-		DFDF8A7821787BC700E7341A /* SwitchPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPopover.swift; sourceTree = "<group>"; };
-		DFE4E84321793E2C00FE511F /* SwitchOptionPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchOptionPopover.swift; sourceTree = "<group>"; };
-		DFEA59C321327C3100AECEC2 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,26 +40,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		65B980CB218454AD0048D78C /* WindowControllers */ = {
-			isa = PBXGroup;
-			children = (
-				65B980CC218454CF0048D78C /* EntitiesWindowController.swift */,
-				65B980CE218457010048D78C /* VariablesWindowController.swift */,
-			);
-			path = WindowControllers;
-			sourceTree = "<group>";
-		};
-		65BC0831217B14E9005C61DB /* nodes */ = {
-			isa = PBXGroup;
-			children = (
-				6523424D218AE40E00BBDF28 /* CanvasContext.swift */,
-				65BC082C217B14E0005C61DB /* CanvasDelivery.swift */,
-				65BC082D217B14E0005C61DB /* CanvasDialog.swift */,
-				65BC082B217B14E0005C61DB /* CanvasNode.swift */,
-			);
-			name = nodes;
-			sourceTree = "<group>";
-		};
 		65BFD9AB212575A900FDA31B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,34 +49,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DF22E9DF211D9AC800606D97 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DF22E9E0211D9AD800606D97 /* ColoredView.swift */,
-				DF22E9EF211DAB5900606D97 /* NSColor+Hex.swift */,
-				DF22EA002120791200606D97 /* CGPoint+Math.swift */,
-				DF5622C121220DF000640AD0 /* NSBezierPath+CGPath.swift */,
-				65B099FA21235E7500F86D3C /* NSView+SubviewsFrame.swift */,
-				65B099FC2123648500F86D3C /* CurveHelper.swift */,
-				65217DCD212A064E006E25BB /* CustomImageView.swift */,
-				657932D921312D3C00090F89 /* NSImage+Extra.swift */,
-				6516094A215CB1D1006978AE /* Alerts.swift */,
-				652C7EF82165E8F700E9389C /* NSRect+setCenter.swift */,
-				65069821218198B60027F1E2 /* NSView+ViewAt.swift */,
-			);
-			path = extensions;
-			sourceTree = "<group>";
-		};
 		DF22E9E2211D9F5E00606D97 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				DFCE6048211C3D20005900D8 /* Main.storyboard */,
-				DF22E9E3211D9F7E00606D97 /* Graph.storyboard */,
-				DF22EA042120DE3900606D97 /* Entities.storyboard */,
-				DF5622B421217D1500640AD0 /* Variables.storyboard */,
-				DF5622B821217E3E00640AD0 /* Preview.storyboard */,
-				650A18EF212CB28500F85B3A /* Outliner.storyboard */,
-				65B13F2E2141529A00E83885 /* ContentPopovers.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -270,66 +60,9 @@
 		DF22E9E5211DA00E00606D97 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				DF22E9E6211DA02500606D97 /* GraphViewController.swift */,
 				DF22E9EB211DA6DE00606D97 /* MainViewController.swift */,
-				DF5622BC212184DD00640AD0 /* VariablesViewController.swift */,
-				6530DDFA2129BB000088D5F0 /* EntitiesViewController.swift */,
-				65CF7194212D5CED0081CBF4 /* OutlinerViewController.swift */,
-				653A0FD2213FAF9200FADE3F /* PreviewViewController.swift */,
-				65F2F2CC21415612000F2B53 /* DialogViewController.swift */,
-				657DBAAC2142541600C7CF17 /* BranchViewController.swift */,
-				658DFBFD214E4C8E002B1AA1 /* OutlinerGraphViewController.swift */,
-				DF59763B2173362400D35168 /* DeliveryViewController.swift */,
-				DFDF8A76217861D500E7341A /* SwitchViewController.swift */,
-				DF6D92AA2179AEFF00D40B13 /* SwitchOptionViewController.swift */,
-				65CD4F25217C665C003B58E5 /* FunctionViewController.swift */,
-				65EA955A217D0C8A00DBF7CF /* ConditionViewController.swift */,
-				656EC40421A3F19500CE552F /* ContextViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		DF22E9E8211DA13D00606D97 /* canvas */ = {
-			isa = PBXGroup;
-			children = (
-				65BC0831217B14E9005C61DB /* nodes */,
-				DF5622BE2121FD5900640AD0 /* links */,
-				DF22E9E9211DA14D00606D97 /* Canvas.swift */,
-				DF22E9ED211DAA5200606D97 /* CanvasBG.swift */,
-				DF22E9F3211F60E500606D97 /* CanvasObject.swift */,
-				DF22E9F5211F667000606D97 /* CanvasBranch.swift */,
-				DF22E9F7211F670E00606D97 /* CanvasSwitch.swift */,
-				DF22E9FC2120222E00606D97 /* CanvasMarquee.swift */,
-				DF22E9FE212072A900606D97 /* CanvasSelection.swift */,
-				DF00FF3B217736AA00216AB3 /* Bench.swift */,
-			);
-			path = canvas;
-			sourceTree = "<group>";
-		};
-		DF22EA062120DED000606D97 /* popovers */ = {
-			isa = PBXGroup;
-			children = (
-				DF22EA072120DEFD00606D97 /* GenericPopover.swift */,
-				DF5622BA21217E6C00640AD0 /* PreviewPopover.swift */,
-				65F2F2CA214155CB000F2B53 /* DialogPopover.swift */,
-				657DBAAA214253ED00C7CF17 /* BranchPopover.swift */,
-				DF59763D2173745100D35168 /* DeliveryPopover.swift */,
-				DFDF8A7821787BC700E7341A /* SwitchPopover.swift */,
-				DFE4E84321793E2C00FE511F /* SwitchOptionPopover.swift */,
-				65CD4F27217C67E0003B58E5 /* FunctionPopover.swift */,
-				65EA955C217D0CFC00DBF7CF /* ConditionPopover.swift */,
-				656EC40621A3F38100CE552F /* ContextPopover.swift */,
-			);
-			path = popovers;
-			sourceTree = "<group>";
-		};
-		DF5622BE2121FD5900640AD0 /* links */ = {
-			isa = PBXGroup;
-			children = (
-				DF5622BF2121FD7300640AD0 /* Transfer.swift */,
-				65B099F821235D0D00F86D3C /* Link.swift */,
-			);
-			name = links;
 			sourceTree = "<group>";
 		};
 		DFCE6034211C3D20005900D8 = {
@@ -352,52 +85,14 @@
 		DFCE603F211C3D20005900D8 /* novella */ = {
 			isa = PBXGroup;
 			children = (
-				DF22EA062120DED000606D97 /* popovers */,
-				DF22E9E8211DA13D00606D97 /* canvas */,
-				DF22E9DF211D9AC800606D97 /* extensions */,
-				DFCE6052211C3E44005900D8 /* model */,
 				DF22E9E5211DA00E00606D97 /* ViewControllers */,
-				65B980CB218454AD0048D78C /* WindowControllers */,
 				DF22E9E2211D9F5E00606D97 /* Storyboards */,
 				DFCE6040211C3D20005900D8 /* AppDelegate.swift */,
 				DFCE6044211C3D20005900D8 /* Document.swift */,
-				DFCE6046211C3D20005900D8 /* Assets.xcassets */,
 				DFCE604B211C3D20005900D8 /* Info.plist */,
 				DFCE604C211C3D20005900D8 /* novella.entitlements */,
-				DFEA59C321327C3100AECEC2 /* Colors.swift */,
-				6569CED8213EFABC0085CD03 /* ChoiceWheel.swift */,
-				651633432181B24F0078A68C /* Parker.swift */,
 			);
 			path = novella;
-			sourceTree = "<group>";
-		};
-		DFCE6052211C3E44005900D8 /* model */ = {
-			isa = PBXGroup;
-			children = (
-				DFDB855C211CE29B00A30A6E /* NVBranch.swift */,
-				DFCE6065211C59C8005900D8 /* NVCondition.swift */,
-				6523424B218AE1B600BBDF28 /* NVContext.swift */,
-				DFDB855A211CD58300A30A6E /* NVDelivery.swift */,
-				DFDB8556211CD38C00A30A6E /* NVDialog.swift */,
-				DFDB8558211CD48600A30A6E /* NVEntity.swift */,
-				DFCE6057211C45CC005900D8 /* NVFolder.swift */,
-				DFCE606B211C5B55005900D8 /* NVFunction.swift */,
-				DFCE605F211C57EA005900D8 /* NVGraph.swift */,
-				DFCE6055211C3F4F005900D8 /* NVIdentifiable.swift */,
-				DFCE6063211C5963005900D8 /* NVLink.swift */,
-				DFCE6069211C5A3D005900D8 /* NVLinkable.swift */,
-				DFCE605B211C46A1005900D8 /* NVLog.swift */,
-				DFCE6061211C591A005900D8 /* NVNode.swift */,
-				DFDB855E211CE85E00A30A6E /* NVPath.swift */,
-				653A0FD4213FB27900FADE3F /* NVReader.swift */,
-				DFCE605D211C573C005900D8 /* NVStory.swift */,
-				DFDB8554211CA04E00A30A6E /* NVStoryDelegate.swift */,
-				DF544E8B211D8FD1008A7B76 /* NVSwitch.swift */,
-				DFCE6067211C59E5005900D8 /* NVTransfer.swift */,
-				DFCE6059211C45D4005900D8 /* NVValue.swift */,
-				DFCE6053211C3E87005900D8 /* NVVariable.swift */,
-			);
-			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,14 +155,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF22E9E4211D9F7E00606D97 /* Graph.storyboard in Resources */,
-				DFCE6047211C3D20005900D8 /* Assets.xcassets in Resources */,
-				65B13F2F2141529A00E83885 /* ContentPopovers.storyboard in Resources */,
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
-				DF5622B521217D1500640AD0 /* Variables.storyboard in Resources */,
-				650A18F0212CB28500F85B3A /* Outliner.storyboard in Resources */,
-				DF22EA052120DE3900606D97 /* Entities.storyboard in Resources */,
-				DF5622B921217E3E00640AD0 /* Preview.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,85 +184,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				658DFBFE214E4C8E002B1AA1 /* OutlinerGraphViewController.swift in Sources */,
-				DF5622BB21217E6C00640AD0 /* PreviewPopover.swift in Sources */,
-				DF544E8C211D8FD1008A7B76 /* NVSwitch.swift in Sources */,
-				65069822218198B60027F1E2 /* NSView+ViewAt.swift in Sources */,
-				65BC082F217B14E0005C61DB /* CanvasDelivery.swift in Sources */,
-				DF22E9EA211DA14D00606D97 /* Canvas.swift in Sources */,
-				6530DDFB2129BB000088D5F0 /* EntitiesViewController.swift in Sources */,
-				DFDF8A77217861D500E7341A /* SwitchViewController.swift in Sources */,
-				652C7EF92165E8F700E9389C /* NSRect+setCenter.swift in Sources */,
-				DF22EA082120DEFD00606D97 /* GenericPopover.swift in Sources */,
-				656EC40521A3F19500CE552F /* ContextViewController.swift in Sources */,
-				DF22E9E7211DA02500606D97 /* GraphViewController.swift in Sources */,
-				DFCE605A211C45D4005900D8 /* NVValue.swift in Sources */,
-				65CF7195212D5CED0081CBF4 /* OutlinerViewController.swift in Sources */,
-				DFDB855D211CE29B00A30A6E /* NVBranch.swift in Sources */,
-				653A0FD5213FB27900FADE3F /* NVReader.swift in Sources */,
-				DF59763E2173745100D35168 /* DeliveryPopover.swift in Sources */,
-				DFCE6066211C59C8005900D8 /* NVCondition.swift in Sources */,
-				DFDF8A7921787BC700E7341A /* SwitchPopover.swift in Sources */,
-				657932DA21312D3C00090F89 /* NSImage+Extra.swift in Sources */,
-				6569CED9213EFABC0085CD03 /* ChoiceWheel.swift in Sources */,
-				DF6D92AB2179AEFF00D40B13 /* SwitchOptionViewController.swift in Sources */,
-				DF5622C221220DF000640AD0 /* NSBezierPath+CGPath.swift in Sources */,
-				DFDB855B211CD58300A30A6E /* NVDelivery.swift in Sources */,
-				DF22E9FD2120222E00606D97 /* CanvasMarquee.swift in Sources */,
-				DFDB8557211CD38C00A30A6E /* NVDialog.swift in Sources */,
-				65F2F2CB214155CB000F2B53 /* DialogPopover.swift in Sources */,
-				65EA955D217D0CFC00DBF7CF /* ConditionPopover.swift in Sources */,
-				65B099FB21235E7500F86D3C /* NSView+SubviewsFrame.swift in Sources */,
-				65B099FD2123648500F86D3C /* CurveHelper.swift in Sources */,
-				65BC082E217B14E0005C61DB /* CanvasNode.swift in Sources */,
-				DF22E9F0211DAB5900606D97 /* NSColor+Hex.swift in Sources */,
-				DFCE6054211C3E87005900D8 /* NVVariable.swift in Sources */,
-				DFE4E84421793E2C00FE511F /* SwitchOptionPopover.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
-				DF22E9F4211F60E500606D97 /* CanvasObject.swift in Sources */,
-				DFDB855F211CE85E00A30A6E /* NVPath.swift in Sources */,
-				DFDB8555211CA04E00A30A6E /* NVStoryDelegate.swift in Sources */,
-				6523424E218AE40E00BBDF28 /* CanvasContext.swift in Sources */,
-				DF5622BD212184DD00640AD0 /* VariablesViewController.swift in Sources */,
-				657DBAAB214253ED00C7CF17 /* BranchPopover.swift in Sources */,
-				657DBAAD2142541600C7CF17 /* BranchViewController.swift in Sources */,
-				65CD4F26217C665C003B58E5 /* FunctionViewController.swift in Sources */,
-				DF00FF3C217736AA00216AB3 /* Bench.swift in Sources */,
-				653A0FD3213FAF9200FADE3F /* PreviewViewController.swift in Sources */,
-				65B980CF218457010048D78C /* VariablesWindowController.swift in Sources */,
-				65F2F2CD21415612000F2B53 /* DialogViewController.swift in Sources */,
-				DFCE606C211C5B55005900D8 /* NVFunction.swift in Sources */,
-				65CD4F28217C67E0003B58E5 /* FunctionPopover.swift in Sources */,
-				DF22EA012120791200606D97 /* CGPoint+Math.swift in Sources */,
-				65B099F921235D0D00F86D3C /* Link.swift in Sources */,
-				DF22E9F6211F667000606D97 /* CanvasBranch.swift in Sources */,
-				DFCE605C211C46A1005900D8 /* NVLog.swift in Sources */,
-				DFDB8559211CD48600A30A6E /* NVEntity.swift in Sources */,
-				DF22E9FF212072A900606D97 /* CanvasSelection.swift in Sources */,
-				DFEA59C421327C3100AECEC2 /* Colors.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
-				656EC40721A3F38100CE552F /* ContextPopover.swift in Sources */,
-				DFCE6062211C591A005900D8 /* NVNode.swift in Sources */,
-				DFCE6060211C57EA005900D8 /* NVGraph.swift in Sources */,
-				65BC0830217B14E0005C61DB /* CanvasDialog.swift in Sources */,
-				DF22E9EE211DAA5200606D97 /* CanvasBG.swift in Sources */,
-				DFCE605E211C573C005900D8 /* NVStory.swift in Sources */,
-				DFCE6068211C59E5005900D8 /* NVTransfer.swift in Sources */,
-				DFCE6064211C5963005900D8 /* NVLink.swift in Sources */,
-				DFCE6056211C3F4F005900D8 /* NVIdentifiable.swift in Sources */,
-				6523424C218AE1B600BBDF28 /* NVContext.swift in Sources */,
-				DF22E9F8211F670E00606D97 /* CanvasSwitch.swift in Sources */,
-				DFCE6058211C45CC005900D8 /* NVFolder.swift in Sources */,
-				65B980CD218454CF0048D78C /* EntitiesWindowController.swift in Sources */,
-				65EA955B217D0C8A00DBF7CF /* ConditionViewController.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
-				DF59763C2173362400D35168 /* DeliveryViewController.swift in Sources */,
-				DFCE606A211C5A3D005900D8 /* NVLinkable.swift in Sources */,
-				651633442181B24F0078A68C /* Parker.swift in Sources */,
-				DF22E9E1211D9AD800606D97 /* ColoredView.swift in Sources */,
-				DF5622C02121FD7300640AD0 /* Transfer.swift in Sources */,
-				6516094B215CB1D1006978AE /* Alerts.swift in Sources */,
-				65217DCE212A064E006E25BB /* CustomImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

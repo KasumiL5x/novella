@@ -826,9 +826,6 @@
                             </customView>
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eg3-Bo-lPx">
                                 <rect key="frame" x="150" y="0.0" width="850" height="700"/>
-                                <connections>
-                                    <segue destination="C35-jx-6g8" kind="embed" identifier="OutlinerGraph" id="f4g-08-7XZ"/>
-                                </connections>
                             </containerView>
                         </subviews>
                         <constraints>
@@ -849,47 +846,6 @@
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="981"/>
-        </scene>
-        <!--Graph-->
-        <scene sceneID="plj-JP-p87">
-            <objects>
-                <controllerPlaceholder storyboardName="Graph" referencedIdentifier="Graph" id="Jh9-aC-GS5" sceneMemberID="viewController"/>
-                <customObject id="5vr-Db-J7h" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="484" y="1632"/>
-        </scene>
-        <!--Outliner Graph View Controller-->
-        <scene sceneID="1Oc-jg-r0C">
-            <objects>
-                <splitViewController id="C35-jx-6g8" customClass="OutlinerGraphViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
-                    <splitViewItems>
-                        <splitViewItem id="AEs-26-5Nc"/>
-                        <splitViewItem id="6aJ-fh-V02"/>
-                    </splitViewItems>
-                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="x50-vk-ge1">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <connections>
-                            <outlet property="delegate" destination="C35-jx-6g8" id="JeW-t5-OCu"/>
-                        </connections>
-                    </splitView>
-                    <connections>
-                        <outlet property="splitView" destination="x50-vk-ge1" id="mYV-Js-nHf"/>
-                        <segue destination="9Wo-c6-eIm" kind="relationship" relationship="splitItems" id="xTC-LZ-FFJ"/>
-                        <segue destination="Jh9-aC-GS5" kind="relationship" relationship="splitItems" id="1wl-l3-XmG"/>
-                    </connections>
-                </splitViewController>
-                <customObject id="LoJ-99-tu6" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="74" y="1667"/>
-        </scene>
-        <!--Outliner-->
-        <scene sceneID="iqP-hM-xoj">
-            <objects>
-                <controllerPlaceholder storyboardName="Outliner" referencedIdentifier="Outliner" id="9Wo-c6-eIm" sceneMemberID="viewController"/>
-                <customObject id="X85-Gd-dNQ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="490" y="1702"/>
         </scene>
     </scenes>
     <resources>
