@@ -10,6 +10,21 @@
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
+		DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */; };
+		DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */; };
+		DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927021B96D6E00BC8AB0 /* NVLink.swift */; };
+		DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927121B96D6E00BC8AB0 /* NVCondition.swift */; };
+		DF94928121B96D6F00BC8AB0 /* NVBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927221B96D6E00BC8AB0 /* NVBeat.swift */; };
+		DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927321B96D6F00BC8AB0 /* NVValue.swift */; };
+		DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */; };
+		DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927521B96D6F00BC8AB0 /* NVEvent.swift */; };
+		DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927621B96D6F00BC8AB0 /* NVFunction.swift */; };
+		DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */; };
+		DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927821B96D6F00BC8AB0 /* NVLog.swift */; };
+		DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927921B96D6F00BC8AB0 /* NVGroup.swift */; };
+		DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927A21B96D6F00BC8AB0 /* NVDiscoverableBeat.swift */; };
+		DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927B21B96D6F00BC8AB0 /* NVStory.swift */; };
+		DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */; };
 		DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6040211C3D20005900D8 /* AppDelegate.swift */; };
 		DFCE6045211C3D20005900D8 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6044211C3D20005900D8 /* Document.swift */; };
 		DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFCE6048211C3D20005900D8 /* Main.storyboard */; };
@@ -19,6 +34,21 @@
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVUtil.swift; sourceTree = "<group>"; };
+		DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
+		DF94927021B96D6E00BC8AB0 /* NVLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
+		DF94927121B96D6E00BC8AB0 /* NVCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVCondition.swift; sourceTree = "<group>"; };
+		DF94927221B96D6E00BC8AB0 /* NVBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVBeat.swift; sourceTree = "<group>"; };
+		DF94927321B96D6F00BC8AB0 /* NVValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVValue.swift; sourceTree = "<group>"; };
+		DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStoryDelegate.swift; sourceTree = "<group>"; };
+		DF94927521B96D6F00BC8AB0 /* NVEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEvent.swift; sourceTree = "<group>"; };
+		DF94927621B96D6F00BC8AB0 /* NVFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFunction.swift; sourceTree = "<group>"; };
+		DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
+		DF94927821B96D6F00BC8AB0 /* NVLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLog.swift; sourceTree = "<group>"; };
+		DF94927921B96D6F00BC8AB0 /* NVGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVGroup.swift; sourceTree = "<group>"; };
+		DF94927A21B96D6F00BC8AB0 /* NVDiscoverableBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDiscoverableBeat.swift; sourceTree = "<group>"; };
+		DF94927B21B96D6F00BC8AB0 /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
+		DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
 		DFCE603D211C3D20005900D8 /* novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFCE6040211C3D20005900D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFCE6044211C3D20005900D8 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -65,6 +95,28 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		DF94926D21B96D3900BC8AB0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				DF94927221B96D6E00BC8AB0 /* NVBeat.swift */,
+				DF94927121B96D6E00BC8AB0 /* NVCondition.swift */,
+				DF94927A21B96D6F00BC8AB0 /* NVDiscoverableBeat.swift */,
+				DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */,
+				DF94927521B96D6F00BC8AB0 /* NVEvent.swift */,
+				DF94927621B96D6F00BC8AB0 /* NVFunction.swift */,
+				DF94927921B96D6F00BC8AB0 /* NVGroup.swift */,
+				DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */,
+				DF94927021B96D6E00BC8AB0 /* NVLink.swift */,
+				DF94927821B96D6F00BC8AB0 /* NVLog.swift */,
+				DF94927B21B96D6F00BC8AB0 /* NVStory.swift */,
+				DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */,
+				DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */,
+				DF94927321B96D6F00BC8AB0 /* NVValue.swift */,
+				DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		DFCE6034211C3D20005900D8 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +137,7 @@
 		DFCE603F211C3D20005900D8 /* novella */ = {
 			isa = PBXGroup;
 			children = (
+				DF94926D21B96D3900BC8AB0 /* model */,
 				DF22E9E5211DA00E00606D97 /* ViewControllers */,
 				DF22E9E2211D9F5E00606D97 /* Storyboards */,
 				DFCE6040211C3D20005900D8 /* AppDelegate.swift */,
@@ -184,9 +237,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
+				DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */,
+				DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */,
+				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
+				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
+				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
+				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
+				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
+				DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */,
+				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
+				DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
+				DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */,
+				DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */,
+				DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */,
+				DF94928121B96D6F00BC8AB0 /* NVBeat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
