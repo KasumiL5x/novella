@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Graph View Controller-->
+        <scene sceneID="h7p-6X-w2Z">
+            <objects>
+                <viewController storyboardIdentifier="GraphVC" id="dvR-07-gBt" customClass="GraphViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="v1R-Em-VSE">
+                        <rect key="frame" x="0.0" y="0.0" width="720" height="480"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0l6-ub-nlu" userLabel="Scroll View">
+                                <rect key="frame" x="0.0" y="0.0" width="720" height="480"/>
+                                <clipView key="contentView" id="LxD-2Q-UVD">
+                                    <rect key="frame" x="1" y="1" width="718" height="478"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJV-mS-PYX">
+                                            <rect key="frame" x="0.0" y="0.0" width="703" height="463"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="EXs-bE-hig">
+                                    <rect key="frame" x="1" y="463" width="718" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="fla-Zq-7V9">
+                                    <rect key="frame" x="703" y="1" width="16" height="478"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="0l6-ub-nlu" firstAttribute="leading" secondItem="v1R-Em-VSE" secondAttribute="leading" id="9m1-c7-yez"/>
+                            <constraint firstItem="0l6-ub-nlu" firstAttribute="top" secondItem="v1R-Em-VSE" secondAttribute="top" id="Z1V-Yt-Kly"/>
+                            <constraint firstAttribute="trailing" secondItem="0l6-ub-nlu" secondAttribute="trailing" id="meF-IQ-VDE"/>
+                            <constraint firstAttribute="bottom" secondItem="0l6-ub-nlu" secondAttribute="bottom" id="sMN-S3-rYh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_scrollView" destination="0l6-ub-nlu" id="wK1-Oc-f4f"/>
+                    </connections>
+                </viewController>
+                <customObject id="XI9-Ru-GFc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

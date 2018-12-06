@@ -9,9 +9,19 @@
 import Cocoa
 
 class MainViewController: NSViewController, NSTableViewDelegate {
+	private var _graphVC: GraphViewController? = nil
+	
 	override func viewWillAppear() {
+		guard let doc = view.window?.windowController?.document as? Document else {
+			return
+		}
+		
+		_graphVC?.setup(doc: doc)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+		if segue.identifier == "GraphVC" {
+			_graphVC = segue.destinationController as? GraphViewController
+		}
 	}
 }
