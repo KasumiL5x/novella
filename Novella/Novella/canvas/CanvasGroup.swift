@@ -14,9 +14,15 @@ class CanvasGroup: CanvasObject {
 	init(canvas: Canvas, group: NVGroup) {
 		self.Group = group
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
+		
+		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasGroup.onSubmerge), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
+	}
+	
+	@objc private func onSubmerge() {
+		_canvas.setupFor(group: self.Group)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

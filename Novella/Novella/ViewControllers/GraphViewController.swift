@@ -20,10 +20,17 @@ class GraphViewController: NSViewController {
 		MainCanvas = Canvas(doc: doc)
 		_scrollView.documentView = MainCanvas
 		
-		updatePath(to: doc.Story.MainGroup)
+		MainCanvas!.didSetupGroup = { (group) in
+			self.updatePath(to: group)
+		}
+		MainCanvas!.didSetupBeat = { (beat) in
+			self.updatePath(to: beat)
+		}
+		
+		MainCanvas!.setupFor(group: doc.Story.MainGroup)
 	}
 	
-	func updatePath(to: NVPathable) {
+	private func updatePath(to: NVPathable) {
 		var fullPath = NVPath.fullPath(to)
 		fullPath.path = fullPath.path.replacingOccurrences(of: " ", with: "%20")
 		_pathControl.url = URL(string: fullPath.path)

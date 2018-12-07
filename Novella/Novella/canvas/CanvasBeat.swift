@@ -14,9 +14,15 @@ class CanvasBeat: CanvasObject {
 	init(canvas: Canvas, beat: NVBeat) {
 		self.Beat = beat
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
+		
+		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
+	}
+
+	@objc private func onSubmerge() {
+		_canvas.setupFor(beat: self.Beat)
 	}
 	
 	override func draw(_ dirtyRect: NSRect) {

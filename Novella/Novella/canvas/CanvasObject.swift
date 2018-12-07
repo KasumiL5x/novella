@@ -17,6 +17,7 @@ class CanvasObject: NSView {
 	
 	private(set) var _canvas: Canvas
 	private var _lastPanPos: CGPoint
+	var ContextMenu: NSMenu
 	var CurrentState: State = .normal {
 		didSet {
 			onStateChanged()
@@ -27,6 +28,7 @@ class CanvasObject: NSView {
 	init(canvas: Canvas, frame: NSRect) {
 		self._canvas = canvas
 		self._lastPanPos = CGPoint.zero
+		self.ContextMenu = NSMenu()
 		super.init(frame: frame)
 		
 		let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onClick))
@@ -74,6 +76,7 @@ class CanvasObject: NSView {
 		onDoubleClick(gesture: gesture)
 	}
 	@objc private func _onContextClick(gesture: NSClickGestureRecognizer) {
+		NSMenu.popUpContextMenu(ContextMenu, with: NSApp.currentEvent!, for: self)
 		onContextClick(gesture: gesture)
 	}
 	@objc private func _onPan(gesture: NSPanGestureRecognizer) {

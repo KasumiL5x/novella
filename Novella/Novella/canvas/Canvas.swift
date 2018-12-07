@@ -11,6 +11,9 @@ import AppKit
 class Canvas: NSView {
 	static let DEFAULT_SIZE: CGFloat = 600000.0
 	
+	var didSetupGroup: ((NVGroup) -> Void)?
+	var didSetupBeat: ((NVBeat) -> Void)?
+	
 	private let _doc: Document
 	private var _mappedGroup: NVGroup?
 	private var _mappedBeat: NVBeat?
@@ -57,8 +60,8 @@ class Canvas: NSView {
 		addMenuItem.title = "Add..."
 		addMenuItem.submenu = addMenu
 		_contextMenu.addItem(addMenuItem)
-		
-		setupFor(group: _doc.Story.MainGroup)
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(withTitle: "Surface", action: nil, keyEquivalent: "")
 		
 		doc.Story.Delegates.append(self)
 	}
@@ -66,7 +69,7 @@ class Canvas: NSView {
 		fatalError()
 	}
 	
-	private func setupFor(group: NVGroup) {
+	func setupFor(group: NVGroup) {
 		_mappedGroup = group
 		_mappedBeat = nil
 		
@@ -79,9 +82,11 @@ class Canvas: NSView {
 		subviews.removeAll()
 		addSubview(_background)
 		addSubview(_marquee)
+		
+		didSetupGroup?(group)
 	}
 	
-	private func setupFor(beat: NVBeat) {
+	func setupFor(beat: NVBeat) {
 		_mappedBeat = beat
 		_mappedGroup = nil
 		
@@ -94,6 +99,8 @@ class Canvas: NSView {
 		subviews.removeAll()
 		addSubview(_background)
 		addSubview(_marquee)
+		
+		didSetupBeat?(beat)
 	}
 	
 	override func mouseDown(with event: NSEvent) {  // this is the default mousedown w/o any gestures
@@ -138,7 +145,10 @@ class Canvas: NSView {
 	}
 	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
-		NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+		if _mappedGroup != nil || _mappedBeat != nil {
+			// must be set up to show context menu
+			NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+		}
 	}
 	
 	@objc private func onContextAddGroup() {
@@ -299,7 +309,7 @@ extension Canvas: NVStoryDelegate {
 			return
 		}
 		print("TODO: Here is where I'd read from the Positions array if the entry exists; for now use center.")
-		makeGroup(nvGroup: group, at: centerPoint())
+		makeGroup(nvGroup: child, at: centerPoint())
 	}
 	
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
