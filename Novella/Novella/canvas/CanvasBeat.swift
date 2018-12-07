@@ -11,9 +11,9 @@ import Cocoa
 class CanvasBeat: CanvasObject {
 	let Beat: NVBeat
 	
-	init(beat: NVBeat) {
+	init(canvas: Canvas, beat: NVBeat) {
 		self.Beat = beat
-		super.init(frame: NSMakeRect(0, 0, 15, 15))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

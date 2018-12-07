@@ -11,9 +11,9 @@ import Cocoa
 class CanvasEvent: CanvasObject {
 	let Event: NVEvent
 	
-	init(event: NVEvent) {
+	init(canvas: Canvas, event: NVEvent) {
 		self.Event = event
-		super.init(frame: NSMakeRect(0, 0, 15, 15))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

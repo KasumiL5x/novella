@@ -11,9 +11,9 @@ import Cocoa
 class CanvasGroup: CanvasObject {
 	let Group: NVGroup
 	
-	init(group: NVGroup) {
+	init(canvas: Canvas, group: NVGroup) {
 		self.Group = group
-		super.init(frame: NSMakeRect(0, 0, 15, 15))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

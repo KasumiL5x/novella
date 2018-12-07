@@ -17,6 +17,7 @@ class Canvas: NSView {
 	private let _background: CanvasBackground
 	private let _marquee: CanvasMarquee
 	private var _allObjects: [CanvasObject]
+	private(set) var Selection: CanvasSelection
 	private var _contextMenu: NSMenu
 	private let _addGroupMenuItem: NSMenuItem
 	private let _addBeatMenuItem: NSMenuItem
@@ -30,6 +31,7 @@ class Canvas: NSView {
 		self._background = CanvasBackground(frame: initialFrame)
 		self._marquee = CanvasMarquee(frame: initialFrame)
 		self._allObjects = []
+		self.Selection = CanvasSelection()
 		self._contextMenu = NSMenu()
 		self._addGroupMenuItem = NSMenuItem(title: "Group", action: #selector(Canvas.onContextAddGroup), keyEquivalent: "")
 		self._addBeatMenuItem = NSMenuItem(title: "Beat", action: #selector(Canvas.onContextAddBeat), keyEquivalent: "")
@@ -72,6 +74,8 @@ class Canvas: NSView {
 		_addBeatMenuItem.isEnabled = true
 		_addEventMenuItem.isEnabled = false
 		
+		Selection.clear()
+		
 		subviews.removeAll()
 		addSubview(_background)
 		addSubview(_marquee)
@@ -85,9 +89,28 @@ class Canvas: NSView {
 		_addBeatMenuItem.isEnabled = false
 		_addEventMenuItem.isEnabled = false
 		
+		Selection.clear()
+		
 		subviews.removeAll()
 		addSubview(_background)
 		addSubview(_marquee)
+	}
+	
+	override func mouseDown(with event: NSEvent) {  // this is the default mousedown w/o any gestures
+		Selection.clear()
+	}
+	
+	private func objectIn(obj: CanvasObject, rect: NSRect) -> Bool {
+		return NSIntersectsRect(obj.frame, rect)
+	}
+	private func allObjectsIn(rect: NSRect) -> [CanvasObject] {
+		var objs: [CanvasObject] = []
+		_allObjects.forEach { (obj) in
+			if objectIn(obj: obj, rect: _marquee.Region) {
+				objs.append(obj)
+			}
+		}
+		return objs
 	}
 	
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
@@ -103,6 +126,9 @@ class Canvas: NSView {
 			
 		case .cancelled, .ended:
 			if _marquee.InMarquee {
+				let append = NSApp.currentEvent?.modifierFlags.contains(.shift) ?? false
+				Selection.select(allObjectsIn(rect: _marquee.Region), append: append)
+				
 				_marquee.InMarquee = false
 			}
 			
@@ -152,7 +178,7 @@ class Canvas: NSView {
 	
 	// creating canvas elements from novella elements w/o requesting them from the story
 	@discardableResult private func makeGroup(nvGroup: NVGroup, at: CGPoint) -> CanvasGroup {
-		let obj = CanvasGroup(group: nvGroup)
+		let obj = CanvasGroup(canvas: self, group: nvGroup)
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
@@ -164,7 +190,7 @@ class Canvas: NSView {
 		return obj
 	}
 	@discardableResult private func makeBeat(nvBeat: NVBeat, at: CGPoint) -> CanvasBeat {
-		let obj = CanvasBeat(beat: nvBeat)
+		let obj = CanvasBeat(canvas: self, beat: nvBeat)
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
@@ -176,7 +202,7 @@ class Canvas: NSView {
 		return obj
 	}
 	@discardableResult private func makeEvent(nvEvent: NVEvent, at: CGPoint) -> CanvasEvent {
-		let obj = CanvasEvent(event: nvEvent)
+		let obj = CanvasEvent(canvas: self, event: nvEvent)
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
@@ -186,6 +212,25 @@ class Canvas: NSView {
 		obj.frame.origin = pos
 		
 		return obj
+	}
+	
+	func moveSelection(delta: CGPoint) {
+		Selection.Selection.forEach { (obj) in
+			var newPos = NSMakePoint(obj.frame.origin.x + delta.x, obj.frame.origin.y + delta.y)
+			if newPos.x < 0.0 {
+				newPos.x = 0.0
+			}
+			if (newPos.x + obj.frame.width) > bounds.width {
+				newPos.x = bounds.width - obj.frame.width
+			}
+			if newPos.y < 0.0 {
+				newPos.y = 0.0
+			}
+			if (newPos.y + obj.frame.height) > bounds.height {
+				newPos.y = bounds.height - obj.frame.height
+			}
+			obj.move(to: newPos)
+		}
 	}
 }
 
