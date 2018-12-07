@@ -15,8 +15,8 @@ class Canvas: NSView {
 	var didSetupBeat: ((NVBeat) -> Void)?
 	
 	private let _doc: Document
-	private var _mappedGroup: NVGroup?
-	private var _mappedBeat: NVBeat?
+	private(set) var MappedGroup: NVGroup?
+	private(set) var MappedBeat: NVBeat?
 	private let _background: CanvasBackground
 	private let _marquee: CanvasMarquee
 	private var _allObjects: [CanvasObject]
@@ -29,8 +29,8 @@ class Canvas: NSView {
 	
 	init(doc: Document) {
 		self._doc = doc
-		self._mappedGroup = nil
-		self._mappedBeat = nil
+		self.MappedGroup = nil
+		self.MappedBeat = nil
 		let initialFrame = NSMakeRect(0, 0, Canvas.DEFAULT_SIZE, Canvas.DEFAULT_SIZE)
 		self._background = CanvasBackground(frame: initialFrame)
 		self._marquee = CanvasMarquee(frame: initialFrame)
@@ -73,8 +73,8 @@ class Canvas: NSView {
 	}
 	
 	func setupFor(group: NVGroup) {
-		_mappedGroup = group
-		_mappedBeat = nil
+		MappedGroup = group
+		MappedBeat = nil
 		
 		_addGroupMenuItem.isEnabled = true
 		_addBeatMenuItem.isEnabled = true
@@ -91,8 +91,8 @@ class Canvas: NSView {
 	}
 	
 	func setupFor(beat: NVBeat) {
-		_mappedBeat = beat
-		_mappedGroup = nil
+		MappedBeat = beat
+		MappedGroup = nil
 		
 		_addGroupMenuItem.isEnabled = false
 		_addBeatMenuItem.isEnabled = false
@@ -150,37 +150,37 @@ class Canvas: NSView {
 	}
 	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
-		if _mappedGroup != nil || _mappedBeat != nil {
+		if MappedGroup != nil || MappedBeat != nil {
 			// must be set up to show context menu
 			NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 		}
 	}
 	
 	@objc private func onContextAddGroup() {
-		if let mappedGroup = _mappedGroup {
+		if let mappedGroup = MappedGroup {
 			let newGroup = _doc.Story.makeGroup()
 			mappedGroup.add(group: newGroup)
 		}
 	}
 	
 	@objc private func onContextAddBeat() {
-		if let mappedGroup = _mappedGroup {
+		if let mappedGroup = MappedGroup {
 			let newBeat = _doc.Story.makeBeat()
 			mappedGroup.add(beat: newBeat)
 		}
 	}
 	
 	@objc private func onContextAddEvent() {
-		if let mappedBeat = _mappedBeat {
+		if let mappedBeat = MappedBeat {
 			let newEvent = _doc.Story.makeEvent()
 			mappedBeat.add(event: newEvent)
 		}
 	}
 	
 	@objc private func onContextSurface() {
-		if let parent = _mappedGroup?.Parent {
+		if let parent = MappedGroup?.Parent {
 			setupFor(group: parent)
-		} else if let parent = _mappedBeat?.Parent {
+		} else if let parent = MappedBeat?.Parent {
 			setupFor(group: parent)
 		}
 	}
@@ -307,7 +307,7 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
-		if group != _mappedGroup {
+		if group != MappedGroup {
 			return
 		}
 		print("TODO: Here is where I'd read from the Positions array if the entry exists; for now use center.")
@@ -318,7 +318,7 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
-		if group != _mappedGroup {
+		if group != MappedGroup {
 			return
 		}
 		print("TODO: Here is where I'd read from the Positions array if the entry exists; for now use center.")

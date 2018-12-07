@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias NVPathResult = (path: String, objects: [Any])
+
 protocol NVPathable {
 	func localPath() -> String
 	func localObject() -> Any
@@ -17,7 +19,7 @@ protocol NVPathable {
 class NVPath {
 	static let DELIM = "/"
 	
-	static func fullPath(_ pathable: NVPathable) -> (path: String, objects: [Any]) {
+	static func fullPath(_ pathable: NVPathable) -> NVPathResult {
 		var str = ""
 		var obj: [Any] = []
 		

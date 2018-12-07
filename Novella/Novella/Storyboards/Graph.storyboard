@@ -40,9 +40,8 @@
                                 <subviews>
                                     <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmM-ky-sfv">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="40"/>
-                                        <pathCell key="cell" selectable="YES" editable="YES" alignment="left" id="fZF-B9-9Mm">
+                                        <pathCell key="cell" selectable="YES" editable="YES" alignment="left" placeholderString="Story Path Here" id="fZF-B9-9Mm">
                                             <font key="font" metaFont="system"/>
-                                            <url key="url" string="file://localhost/Applications/"/>
                                         </pathCell>
                                     </pathControl>
                                 </subviews>
