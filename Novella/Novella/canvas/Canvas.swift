@@ -25,6 +25,7 @@ class Canvas: NSView {
 	private let _addGroupMenuItem: NSMenuItem
 	private let _addBeatMenuItem: NSMenuItem
 	private let _addEventMenuItem: NSMenuItem
+	private let _surfaceMenuItem: NSMenuItem
 	
 	init(doc: Document) {
 		self._doc = doc
@@ -39,6 +40,7 @@ class Canvas: NSView {
 		self._addGroupMenuItem = NSMenuItem(title: "Group", action: #selector(Canvas.onContextAddGroup), keyEquivalent: "")
 		self._addBeatMenuItem = NSMenuItem(title: "Beat", action: #selector(Canvas.onContextAddBeat), keyEquivalent: "")
 		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
+		self._surfaceMenuItem = NSMenuItem(title: "Surface", action: #selector(Canvas.onContextSurface), keyEquivalent: "")
 		super.init(frame: initialFrame)
 		
 		wantsLayer = true
@@ -61,7 +63,8 @@ class Canvas: NSView {
 		addMenuItem.submenu = addMenu
 		_contextMenu.addItem(addMenuItem)
 		_contextMenu.addItem(NSMenuItem.separator())
-		_contextMenu.addItem(withTitle: "Surface", action: nil, keyEquivalent: "")
+		_contextMenu.addItem(_surfaceMenuItem)
+		_contextMenu.autoenablesItems = false
 		
 		doc.Story.Delegates.append(self)
 	}
@@ -76,6 +79,7 @@ class Canvas: NSView {
 		_addGroupMenuItem.isEnabled = true
 		_addBeatMenuItem.isEnabled = true
 		_addEventMenuItem.isEnabled = false
+		_surfaceMenuItem.isEnabled = group.Parent != nil
 		
 		Selection.clear()
 		
@@ -93,6 +97,7 @@ class Canvas: NSView {
 		_addGroupMenuItem.isEnabled = false
 		_addBeatMenuItem.isEnabled = false
 		_addEventMenuItem.isEnabled = false
+		_surfaceMenuItem.isEnabled = beat.Parent != nil
 		
 		Selection.clear()
 		
@@ -169,6 +174,14 @@ class Canvas: NSView {
 		if let mappedBeat = _mappedBeat {
 			let newEvent = _doc.Story.makeEvent()
 			mappedBeat.add(event: newEvent)
+		}
+	}
+	
+	@objc private func onContextSurface() {
+		if let parent = _mappedGroup?.Parent {
+			setupFor(group: parent)
+		} else if let parent = _mappedBeat?.Parent {
+			setupFor(group: parent)
 		}
 	}
 	
