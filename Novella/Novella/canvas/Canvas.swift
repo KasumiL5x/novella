@@ -22,6 +22,7 @@ class Canvas: NSView {
 	private var _allObjects: [CanvasObject]
 	private(set) var Selection: CanvasSelection
 	private var _contextMenu: NSMenu
+	private var _lastContextPos: CGPoint
 	private let _addGroupMenuItem: NSMenuItem
 	private let _addBeatMenuItem: NSMenuItem
 	private let _addEventMenuItem: NSMenuItem
@@ -37,6 +38,7 @@ class Canvas: NSView {
 		self._allObjects = []
 		self.Selection = CanvasSelection()
 		self._contextMenu = NSMenu()
+		self._lastContextPos = CGPoint.zero
 		self._addGroupMenuItem = NSMenuItem(title: "Group", action: #selector(Canvas.onContextAddGroup), keyEquivalent: "")
 		self._addBeatMenuItem = NSMenuItem(title: "Beat", action: #selector(Canvas.onContextAddBeat), keyEquivalent: "")
 		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
@@ -164,8 +166,9 @@ class Canvas: NSView {
 	}
 	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
+		// must be set up to show context menu
 		if MappedGroup != nil || MappedBeat != nil {
-			// must be set up to show context menu
+			_lastContextPos = gesture.location(in: self)
 			NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 		}
 	}
@@ -174,6 +177,7 @@ class Canvas: NSView {
 		if let mappedGroup = MappedGroup {
 			let newGroup = Doc.Story.makeGroup()
 			mappedGroup.add(group: newGroup)
+			canvasGroupFor(nvGroup: newGroup)?.move(to: _lastContextPos)
 		}
 	}
 	
@@ -181,6 +185,7 @@ class Canvas: NSView {
 		if let mappedGroup = MappedGroup {
 			let newBeat = Doc.Story.makeBeat()
 			mappedGroup.add(beat: newBeat)
+			canvasBeatFor(nvBeat: newBeat)?.move(to: _lastContextPos)
 		}
 	}
 	
@@ -188,6 +193,7 @@ class Canvas: NSView {
 		if let mappedBeat = MappedBeat {
 			let newEvent = Doc.Story.makeEvent()
 			mappedBeat.add(event: newEvent)
+			canvasEventFor(nvEvent: newEvent)?.move(to: _lastContextPos)
 		}
 	}
 	
