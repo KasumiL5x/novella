@@ -25,6 +25,11 @@ class CanvasBeat: CanvasObject {
 		_canvas.setupFor(beat: self.Beat)
 	}
 	
+	// virtuals
+	override func onMove() {
+		_canvas.Doc.Positions[Beat.UUID] = frame.origin
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()

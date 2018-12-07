@@ -14,7 +14,7 @@ class Canvas: NSView {
 	var didSetupGroup: ((NVGroup) -> Void)?
 	var didSetupBeat: ((NVBeat) -> Void)?
 	
-	private let _doc: Document
+	private(set) var Doc: Document
 	private(set) var MappedGroup: NVGroup?
 	private(set) var MappedBeat: NVBeat?
 	private let _background: CanvasBackground
@@ -28,7 +28,7 @@ class Canvas: NSView {
 	private let _surfaceMenuItem: NSMenuItem
 	
 	init(doc: Document) {
-		self._doc = doc
+		self.Doc = doc
 		self.MappedGroup = nil
 		self.MappedBeat = nil
 		let initialFrame = NSMakeRect(0, 0, Canvas.DEFAULT_SIZE, Canvas.DEFAULT_SIZE)
@@ -87,6 +87,15 @@ class Canvas: NSView {
 		addSubview(_background)
 		addSubview(_marquee)
 		
+		// add all child groups
+		for child in group.Groups {
+			makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		// add all child beats
+		for child in group.Beats {
+			makeBeat(nvBeat: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		
 		didSetupGroup?(group)
 	}
 	
@@ -104,6 +113,11 @@ class Canvas: NSView {
 		subviews.removeAll()
 		addSubview(_background)
 		addSubview(_marquee)
+		
+		// add all child events
+		for child in beat.Events {
+			makeEvent(nvEvent: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
 		
 		didSetupBeat?(beat)
 	}
@@ -158,21 +172,21 @@ class Canvas: NSView {
 	
 	@objc private func onContextAddGroup() {
 		if let mappedGroup = MappedGroup {
-			let newGroup = _doc.Story.makeGroup()
+			let newGroup = Doc.Story.makeGroup()
 			mappedGroup.add(group: newGroup)
 		}
 	}
 	
 	@objc private func onContextAddBeat() {
 		if let mappedGroup = MappedGroup {
-			let newBeat = _doc.Story.makeBeat()
+			let newBeat = Doc.Story.makeBeat()
 			mappedGroup.add(beat: newBeat)
 		}
 	}
 	
 	@objc private func onContextAddEvent() {
 		if let mappedBeat = MappedBeat {
-			let newEvent = _doc.Story.makeEvent()
+			let newEvent = Doc.Story.makeEvent()
 			mappedBeat.add(event: newEvent)
 		}
 	}
@@ -310,8 +324,7 @@ extension Canvas: NVStoryDelegate {
 		if group != MappedGroup {
 			return
 		}
-		print("TODO: Here is where I'd read from the Positions array if the entry exists; for now use center.")
-		makeBeat(nvBeat: beat, at: centerPoint())
+		makeBeat(nvBeat: beat, at: Doc.Positions[beat.UUID] ?? centerPoint())
 	}
 	
 	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
@@ -321,8 +334,8 @@ extension Canvas: NVStoryDelegate {
 		if group != MappedGroup {
 			return
 		}
-		print("TODO: Here is where I'd read from the Positions array if the entry exists; for now use center.")
-		makeGroup(nvGroup: child, at: centerPoint())
+
+		makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 	}
 	
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {

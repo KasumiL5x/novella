@@ -19,6 +19,11 @@ class CanvasEvent: CanvasObject {
 		fatalError()
 	}
 	
+	// virtuals
+	override func onMove() {
+		_canvas.Doc.Positions[Event.UUID] = frame.origin
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()

@@ -25,6 +25,11 @@ class CanvasGroup: CanvasObject {
 		_canvas.setupFor(group: self.Group)
 	}
 	
+	// virtuals
+	override func onMove() {
+		_canvas.Doc.Positions[Group.UUID] = frame.origin
+	}
+	
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
