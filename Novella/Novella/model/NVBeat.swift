@@ -11,6 +11,7 @@ import Foundation
 class NVBeat: NVIdentifiable {
 	var UUID: NSUUID
 	let _story: NVStory
+	var Parent: NVGroup? // warning: no friend class support so has to be public
 	var Label: String {
 		didSet {
 			NVLog.log("Beat (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
@@ -44,6 +45,7 @@ class NVBeat: NVIdentifiable {
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
+		self.Parent = nil
 		self.Label = ""
 		self.Parallel = false
 		self.PreCondition = NVCondition(story: story)
@@ -63,6 +65,8 @@ class NVBeat: NVIdentifiable {
 			return
 		}
 		Events.append(event)
+		event.Parent = self
+		
 		NVLog.log("Added Event (\(event.UUID.uuidString)) to Beat (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvBeatDidAddEvent(story: _story, beat: self, event: event)}
 	}
@@ -72,6 +76,8 @@ class NVBeat: NVIdentifiable {
 			return
 		}
 		Events.remove(at: idx)
+		event.Parent = nil
+		
 		NVLog.log("Removed Event (\(event.UUID.uuidString)) from Beat (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvBeatDidRemoveEvent(story: _story, beat: self, event: event)}
 		
@@ -100,6 +106,20 @@ class NVBeat: NVIdentifiable {
 		EventLinks.remove(at: idx)
 		NVLog.log("Removed EventLink (\(eventLink.UUID.uuidString)) from Beat (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvBeatDidRemoveEventLink(story: _story, beat: self, link: eventLink)}
+	}
+}
+
+extension NVBeat: NVPathable {
+	func localPath() -> String {
+		return Label.isEmpty ? "Unnamed" : Label
+	}
+	
+	func localObject() -> Any {
+		return self
+	}
+	
+	func parentPathable() -> NVPathable? {
+		return Parent
 	}
 }
 

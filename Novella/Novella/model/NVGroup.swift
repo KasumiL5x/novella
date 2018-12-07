@@ -11,6 +11,7 @@ import Foundation
 class NVGroup: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
+	var Parent: NVGroup? // warning: no friend class support so has to be public
 	var Label: String {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
@@ -39,6 +40,7 @@ class NVGroup: NVIdentifiable {
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
+		self.Parent = nil
 		self.Label = ""
 		self.PreCondition = NVCondition(story: story)
 		self.EntryFunction = NVFunction(story: story)
@@ -58,6 +60,7 @@ class NVGroup: NVIdentifiable {
 			return
 		}
 		Beats.append(beat)
+		beat.Parent = self
 		
 		NVLog.log("Added Beat (\(beat.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvGroupDidAddBeat(story: _story, group: self, beat: beat)}
@@ -68,9 +71,11 @@ class NVGroup: NVIdentifiable {
 			return
 		}
 		Beats.remove(at: idx)
+		beat.Parent = nil
+		
 		NVLog.log("Removed Beat (\(beat.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvGroupDidRemoveBeat(story: _story, group: self, beat: beat)}
-
+		
 		if Entry == beat {
 			Entry = nil
 		}
@@ -90,6 +95,7 @@ class NVGroup: NVIdentifiable {
 			return
 		}
 		Groups.append(group)
+		group.Parent = self
 		
 		NVLog.log("Added Group (\(group.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvGroupDidAddGroup(story: _story, group: self, child: group)}
@@ -100,6 +106,7 @@ class NVGroup: NVIdentifiable {
 			return
 		}
 		Groups.remove(at: idx)
+		group.Parent = nil
 		
 		NVLog.log("Removed Group (\(group.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
@@ -127,6 +134,20 @@ class NVGroup: NVIdentifiable {
 		
 		NVLog.log("Removed BeatLink (\(beatLink.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvGroupDidRemoveBeatLink(story: _story, group: self, link: beatLink)}
+	}
+}
+
+extension NVGroup: NVPathable {
+	func localPath() -> String {
+		return Label.isEmpty ? "Unnamed" : Label
+	}
+	
+	func localObject() -> Any {
+		return self
+	}
+	
+	func parentPathable() -> NVPathable? {
+		return Parent
 	}
 }
 

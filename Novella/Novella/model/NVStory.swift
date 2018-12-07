@@ -45,6 +45,7 @@ class NVStory {
 		self.setupJS()
 		
 		self.MainGroup = NVGroup(uuid: NSUUID(), story: self)
+		self.MainGroup.Label = "Main Group"
 	}
 	
 	private func setupJS() {

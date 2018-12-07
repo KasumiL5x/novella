@@ -11,6 +11,7 @@ import Foundation
 class NVEvent: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
+	var Parent: NVBeat? // warning: no friend class support so has to be public
 	var Label: String {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
@@ -31,6 +32,7 @@ class NVEvent: NVIdentifiable {
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
+		self.Parent = nil
 		self.Label = ""
 		self.Parallel = false
 		self.PreCondition = NVCondition(story: story)
@@ -59,6 +61,20 @@ class NVEvent: NVIdentifiable {
 		Participants.remove(at: idx)
 		NVLog.log("Removed Entity (\(participant.UUID.uuidString)) from Event (\(UUID.uuidString)).", level: .info)
 		_story.Delegates.forEach{$0.nvEventDidRemoveParticipant(story: _story, event: self, entity: participant)}
+	}
+}
+
+extension NVEvent: NVPathable {
+	func localPath() -> String {
+		return Label.isEmpty ? "Unnamed" : Label
+	}
+	
+	func localObject() -> Any {
+		return self
+	}
+	
+	func parentPathable() -> NVPathable? {
+		return Parent
 	}
 }
 

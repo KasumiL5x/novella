@@ -35,6 +35,7 @@
 		DF94929D21B98A9100BC8AB0 /* CanvasGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */; };
 		DF94929F21B98A9A00BC8AB0 /* CanvasBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929E21B98A9A00BC8AB0 /* CanvasBeat.swift */; };
 		DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */; };
+		DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9492A221BA573600BC8AB0 /* NVPath.swift */; };
 		DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6040211C3D20005900D8 /* AppDelegate.swift */; };
 		DFCE6045211C3D20005900D8 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCE6044211C3D20005900D8 /* Document.swift */; };
 		DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFCE6048211C3D20005900D8 /* Main.storyboard */; };
@@ -69,6 +70,7 @@
 		DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGroup.swift; sourceTree = "<group>"; };
 		DF94929E21B98A9A00BC8AB0 /* CanvasBeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBeat.swift; sourceTree = "<group>"; };
 		DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEvent.swift; sourceTree = "<group>"; };
+		DF9492A221BA573600BC8AB0 /* NVPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
 		DFCE603D211C3D20005900D8 /* novella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = novella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFCE6040211C3D20005900D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFCE6044211C3D20005900D8 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */,
 				DF94927321B96D6F00BC8AB0 /* NVValue.swift */,
 				DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */,
+				DF9492A221BA573600BC8AB0 /* NVPath.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
 				DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */,
+				DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */,
 				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
