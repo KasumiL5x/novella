@@ -38,9 +38,8 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="AEX-fu-3wh" userLabel="Bottom">
                                 <rect key="frame" x="0.0" y="0.0" width="720" height="40"/>
                                 <subviews>
-                                    <pathControl verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmM-ky-sfv">
-                                        <rect key="frame" x="0.0" y="9" width="202" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmM-ky-sfv">
+                                        <rect key="frame" x="0.0" y="0.0" width="720" height="40"/>
                                         <pathCell key="cell" selectable="YES" editable="YES" alignment="left" id="fZF-B9-9Mm">
                                             <font key="font" metaFont="system"/>
                                             <url key="url" string="file://localhost/Applications/"/>
@@ -48,7 +47,11 @@
                                     </pathControl>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="pmM-ky-sfv" firstAttribute="top" secondItem="AEX-fu-3wh" secondAttribute="top" id="8Qv-Yi-e80"/>
+                                    <constraint firstAttribute="trailing" secondItem="pmM-ky-sfv" secondAttribute="trailing" id="Aqn-1N-s5C"/>
+                                    <constraint firstAttribute="bottom" secondItem="pmM-ky-sfv" secondAttribute="bottom" id="MJX-v3-Lvy"/>
                                     <constraint firstAttribute="height" constant="40" id="YKX-Vr-AbB"/>
+                                    <constraint firstItem="pmM-ky-sfv" firstAttribute="leading" secondItem="AEX-fu-3wh" secondAttribute="leading" id="eg4-Wa-ieW"/>
                                 </constraints>
                             </customView>
                         </subviews>
