@@ -14,11 +14,13 @@ class CanvasBeat: CanvasObject {
 	
 	let Beat: NVBeat
 	private let _outlineLayer: CAShapeLayer
+	private let _labelLayer: CATextLayer
 	
 	init(canvas: Canvas, beat: NVBeat) {
 		self.Beat = beat
 		self._outlineLayer = CAShapeLayer()
-		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 64, 64))
+		self._labelLayer = CATextLayer()
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 85, 64))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
 		
@@ -53,6 +55,19 @@ class CanvasBeat: CanvasObject {
 		_outlineLayer.fillColor = nil
 		_outlineLayer.strokeColor = CGColor.clear
 		layer?.addSublayer(_outlineLayer)
+		
+		// label
+		_labelLayer.string = "Unnamed"
+		_labelLayer.contentsScale = NSScreen.main!.backingScaleFactor
+		_labelLayer.font = NSFont.systemFont(ofSize: 1.0, weight: .bold)
+		_labelLayer.fontSize = 12.0
+		_labelLayer.foregroundColor = NSColor.fromHex("#3C3C3C").withAlphaComponent(0.75).cgColor
+		_labelLayer.frame.size = _labelLayer.preferredFrameSize()
+		_labelLayer.frame.origin = NSMakePoint(flagRect.maxX + 2.0, flagRect.maxY - flagRect.height * 0.25)
+		_labelLayer.frame.size.width = bgGradient.frame.width - _labelLayer.frame.origin.x
+		_labelLayer.isWrapped = true
+		_labelLayer.truncationMode = .middle
+		layer?.addSublayer(_labelLayer)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
