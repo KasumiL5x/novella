@@ -10,7 +10,7 @@ import Cocoa
 
 class CanvasBeat: CanvasObject {
 	static let Roundness: CGFloat = 0.2
-	static let FlagWidth: CGFloat = 0.2
+	static let FlagWidth: CGFloat = 0.175
 	
 	let Beat: NVBeat
 	private let _outlineLayer: CAShapeLayer
@@ -20,7 +20,7 @@ class CanvasBeat: CanvasObject {
 		self.Beat = beat
 		self._outlineLayer = CAShapeLayer()
 		self._labelLayer = CATextLayer()
-		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 85, 64))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
 		
@@ -60,10 +60,10 @@ class CanvasBeat: CanvasObject {
 		_labelLayer.string = "Unnamed"
 		_labelLayer.contentsScale = NSScreen.main!.backingScaleFactor
 		_labelLayer.font = NSFont.systemFont(ofSize: 1.0, weight: .bold)
-		_labelLayer.fontSize = 12.0
+		_labelLayer.fontSize = 13.0
 		_labelLayer.foregroundColor = NSColor.fromHex("#3C3C3C").withAlphaComponent(0.75).cgColor
 		_labelLayer.frame.size = _labelLayer.preferredFrameSize()
-		_labelLayer.frame.origin = NSMakePoint(flagRect.maxX + 2.0, flagRect.maxY - flagRect.height * 0.25)
+		_labelLayer.frame.origin = NSMakePoint(flagRect.maxX + 3.0, flagRect.maxY - _labelLayer.frame.size.height)
 		_labelLayer.frame.size.width = bgGradient.frame.width - _labelLayer.frame.origin.x
 		_labelLayer.isWrapped = true
 		_labelLayer.truncationMode = .middle
