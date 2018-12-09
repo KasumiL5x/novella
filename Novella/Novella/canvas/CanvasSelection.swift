@@ -38,6 +38,7 @@ class CanvasSelection {
 	}
 	
 	func clear() {
+		Selection.forEach{$0.CurrentState = .normal}
 		Selection = []
 	}
 }
