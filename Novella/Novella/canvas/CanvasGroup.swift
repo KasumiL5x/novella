@@ -13,9 +13,30 @@ class CanvasGroup: CanvasObject {
 	
 	init(canvas: Canvas, group: NVGroup) {
 		self.Group = group
-		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 64, 64))
+		
+		wantsLayer = true
+		layer?.masksToBounds = false
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasGroup.onSubmerge), keyEquivalent: "")
+		
+		let bgOutline = CAGradientLayer(layer: layer)
+		bgOutline.colors = [NSColor.fromHex("#FFFFFF").cgColor, NSColor.fromHex("#D7E1EC").cgColor]
+		bgOutline.locations = [0.0, 1.0]
+		bgOutline.startPoint = CGPoint.zero
+		bgOutline.endPoint = NSMakePoint(0.0, 1.0)
+		bgOutline.frame = bounds.insetBy(dx: -2.0, dy: -2.0)
+		bgOutline.cornerRadius = max(bgOutline.frame.width, bgOutline.frame.height) * 0.5
+		layer?.addSublayer(bgOutline)
+		//
+		let bgGradient = CAGradientLayer(layer: layer)
+		bgGradient.colors = [NSColor.fromHex("#FFFFFF").cgColor, NSColor.fromHex("#D7E1EC").cgColor]
+		bgGradient.locations = [0.0, 1.0]
+		bgGradient.startPoint = NSMakePoint(0.0, 1.0)
+		bgGradient.endPoint = CGPoint.zero
+		bgGradient.frame = bounds
+		bgGradient.cornerRadius = max(bgGradient.frame.width, bgGradient.frame.height) * 0.5
+		layer?.addSublayer(bgGradient)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -33,11 +54,6 @@ class CanvasGroup: CanvasObject {
 	override func draw(_ dirtyRect: NSRect) {
 		if let context = NSGraphicsContext.current?.cgContext {
 			context.saveGState()
-			
-			NSColor.green.setFill()
-			NSColor.systemPink.setStroke()
-			NSBezierPath(ovalIn: bounds).fill()
-			NSBezierPath(ovalIn: bounds).stroke()
 			
 			context.restoreGState()
 		}

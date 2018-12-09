@@ -31,6 +31,9 @@ class CanvasObject: NSView {
 		self.ContextMenu = NSMenu()
 		super.init(frame: frame)
 		
+		wantsLayer = true
+		layer?.masksToBounds = false
+		
 		let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onClick))
 		clickGesture.buttonMask = 0x1
 		clickGesture.numberOfClicksRequired = 1
@@ -117,5 +120,8 @@ class CanvasObject: NSView {
 	func onStateChanged() {
 	}
 	func redraw() {
+	}
+	func objectRect() -> NSRect {
+		return bounds
 	}
 }

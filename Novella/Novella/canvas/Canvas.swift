@@ -150,6 +150,12 @@ class Canvas: NSView {
 		case .changed:
 			if _marquee.InMarquee {
 				_marquee.End = gesture.location(in: self)
+				
+				// handle un/priming of non-selected objects in the selection marquee
+				let objsInMarquee = allObjectsIn(rect: _marquee.Region)
+				_allObjects.filter{$0.CurrentState != .selected}.forEach { (obj) in
+					obj.CurrentState = objsInMarquee.contains(obj) ? .primed : .normal
+				}
 			}
 			
 		case .cancelled, .ended:

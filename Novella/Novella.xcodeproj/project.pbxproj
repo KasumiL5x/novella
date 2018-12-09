@@ -10,6 +10,7 @@
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
+		DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */; };
 		DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */; };
 		DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */; };
 		DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927021B96D6E00BC8AB0 /* NVLink.swift */; };
@@ -47,6 +48,7 @@
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVUtil.swift; sourceTree = "<group>"; };
 		DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
 		DF94927021B96D6E00BC8AB0 /* NVLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */,
 				DF9492A621BA825D00BC8AB0 /* CGPoint+Math.swift */,
+				DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
 				DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */,
+				DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */,
 				DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */,
 				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
