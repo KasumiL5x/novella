@@ -11,6 +11,10 @@
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
 		DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */; };
+		DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */; };
+		DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */; };
+		DF93F60D21BD99C100CF5B03 /* CanvasBeatLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */; };
+		DF93F60F21BD99D200CF5B03 /* CanvasEventLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */; };
 		DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */; };
 		DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */; };
 		DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927021B96D6E00BC8AB0 /* NVLink.swift */; };
@@ -49,6 +53,10 @@
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
+		DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extra.swift"; sourceTree = "<group>"; };
+		DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLink.swift; sourceTree = "<group>"; };
+		DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBeatLink.swift; sourceTree = "<group>"; };
+		DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEventLink.swift; sourceTree = "<group>"; };
 		DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVUtil.swift; sourceTree = "<group>"; };
 		DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
 		DF94927021B96D6E00BC8AB0 /* NVLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
@@ -159,6 +167,9 @@
 				DF94929E21B98A9A00BC8AB0 /* CanvasBeat.swift */,
 				DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */,
 				DF9492A821BA82ED00BC8AB0 /* CanvasSelection.swift */,
+				DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */,
+				DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */,
+				DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */,
 			);
 			path = canvas;
 			sourceTree = "<group>";
@@ -169,6 +180,7 @@
 				DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */,
 				DF9492A621BA825D00BC8AB0 /* CGPoint+Math.swift */,
 				DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */,
+				DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -307,6 +319,7 @@
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
+				DF93F60F21BD99D200CF5B03 /* CanvasEventLink.swift in Sources */,
 				DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */,
 				DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */,
 				DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */,
@@ -314,6 +327,7 @@
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
 				DF9492A921BA82ED00BC8AB0 /* CanvasSelection.swift in Sources */,
+				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
 				DF94929F21B98A9A00BC8AB0 /* CanvasBeat.swift in Sources */,
 				DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */,
 				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
@@ -324,9 +338,11 @@
 				DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */,
 				DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */,
 				DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */,
+				DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */,
 				DF94928121B96D6F00BC8AB0 /* NVBeat.swift in Sources */,
 				DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */,
 				DF9492A721BA825D00BC8AB0 /* CGPoint+Math.swift in Sources */,
+				DF93F60D21BD99C100CF5B03 /* CanvasBeatLink.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
