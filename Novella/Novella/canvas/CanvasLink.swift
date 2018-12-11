@@ -76,6 +76,7 @@ class CanvasLink: NSView {
 			_isDragging = true
 			_dragPosition = gesture.location(in: self)
 			_dragLayer.strokeColor = NSColor.red.cgColor
+			_dragLayer.path = nil // otherwise after removing animations the path will flicker
 			_dragLayer.removeAllAnimations()
 			
 		case .changed:
