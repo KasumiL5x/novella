@@ -23,6 +23,8 @@ class CanvasBeat: CanvasObject {
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasBeat.onAddLink), keyEquivalent: "")
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
@@ -75,6 +77,10 @@ class CanvasBeat: CanvasObject {
 
 	@objc private func onSubmerge() {
 		_canvas.setupFor(beat: self.Beat)
+	}
+	
+	@objc private func onAddLink() {
+		_canvas.makeBeatLink(beat: self)
 	}
 	
 	// virtuals

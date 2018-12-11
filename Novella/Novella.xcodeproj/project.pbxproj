@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
+		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
 		DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
+		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */,
 				DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */,
 				DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */,
+				65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */,
 			);
 			path = canvas;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
+				65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */,
 				DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */,
 				DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */,
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,

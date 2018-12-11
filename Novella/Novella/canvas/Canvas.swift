@@ -20,6 +20,7 @@ class Canvas: NSView {
 	private let _background: CanvasBackground
 	private let _marquee: CanvasMarquee
 	private var _allObjects: [CanvasObject]
+	private var _allBenches: [CanvasObject:CanvasBench]
 	private(set) var Selection: CanvasSelection
 	private var _contextMenu: NSMenu
 	private var _lastContextPos: CGPoint
@@ -36,6 +37,7 @@ class Canvas: NSView {
 		self._background = CanvasBackground(frame: initialFrame)
 		self._marquee = CanvasMarquee(frame: initialFrame)
 		self._allObjects = []
+		self._allBenches = [:]
 		self.Selection = CanvasSelection()
 		self._contextMenu = NSMenu()
 		self._lastContextPos = CGPoint.zero
@@ -83,6 +85,9 @@ class Canvas: NSView {
 		_addEventMenuItem.isEnabled = false
 		_surfaceMenuItem.isEnabled = group.Parent != nil
 		
+		_allObjects = []
+		_allBenches = [:]
+		
 		Selection.clear()
 		
 		subviews.removeAll()
@@ -109,6 +114,9 @@ class Canvas: NSView {
 		_addBeatMenuItem.isEnabled = false
 		_addEventMenuItem.isEnabled = false
 		_surfaceMenuItem.isEnabled = beat.Parent != nil
+		
+		_allObjects = []
+		_allBenches = [:]
 		
 		Selection.clear()
 		
@@ -139,6 +147,16 @@ class Canvas: NSView {
 			}
 		}
 		return objs
+	}
+	
+	private func makeBench() -> CanvasBench {
+		let bench = CanvasBench()
+		addSubview(bench, positioned: .above, relativeTo: _marquee)
+		bench.translatesAutoresizingMaskIntoConstraints = false
+		return bench
+	}
+	private func benchFor(obj: CanvasObject) -> CanvasBench? {
+		return _allBenches.keys.contains(obj) ? _allBenches[obj] : nil
 	}
 	
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
@@ -242,11 +260,15 @@ class Canvas: NSView {
 		let obj = CanvasBeat(canvas: self, beat: nvBeat)
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
-		
+
 		var pos = at
 		pos.x -= obj.frame.width * 0.5
 		pos.y -= obj.frame.height * 0.5
 		obj.frame.origin = pos
+
+		let bench = makeBench()
+		_allBenches[obj] = bench
+		bench.constrain(to: obj)
 		
 		return obj
 	}
@@ -260,9 +282,14 @@ class Canvas: NSView {
 		pos.y -= obj.frame.height * 0.5
 		obj.frame.origin = pos
 		
+		let bench = makeBench()
+		_allBenches[obj] = bench
+		bench.constrain(to: obj)
+		
 		return obj
 	}
 	
+	// shared object functionality
 	func moveSelection(delta: CGPoint) {
 		Selection.Selection.forEach { (obj) in
 			var newPos = NSMakePoint(obj.frame.origin.x + delta.x, obj.frame.origin.y + delta.y)
@@ -281,6 +308,21 @@ class Canvas: NSView {
 			obj.move(to: newPos)
 		}
 	}
+	
+	func makeBeatLink(beat: CanvasBeat) {
+		// beats only exist within groups so ensure a group is mapped
+		if let group = MappedGroup {
+			let link = Doc.Story.makeBeatLink(origin: beat.Beat, dest: nil)
+			group.add(beatLink: link)
+		}
+	}
+	func makeEventLink(event: CanvasEvent) {
+		// events only exist within beats so ensure a beat is mapped
+		if let beat = MappedBeat {
+			let link = Doc.Story.makeEventLink(origin: event.Event, dest: nil)
+			beat.add(eventLink: link)
+		}
+	}
 }
 
 extension Canvas: NVStoryDelegate {
@@ -297,9 +339,19 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink) {
+		guard let obj = canvasBeatFor(nvBeat: link.Origin) else {
+			NVLog.log("Tried to add a BeatLink but couldn't find a CanvasBeat for the origin!", level: .error)
+			return
+		}
+		benchFor(obj: obj)?.add(CanvasBeatLink(link: link))
 	}
 	
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
+		guard let obj = canvasEventFor(nvEvent: link.Origin) else {
+			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
+			return
+		}
+		benchFor(obj: obj)?.add(CanvasEventLink(link: link))
 	}
 	
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
