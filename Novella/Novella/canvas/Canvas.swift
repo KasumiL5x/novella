@@ -102,6 +102,10 @@ class Canvas: NSView {
 		for child in group.Beats {
 			makeBeat(nvBeat: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
+		// add all beat links
+		for child in group.BeatLinks {
+			addBeatLink(link: child)
+		}
 		
 		didSetupGroup?(group)
 	}
@@ -127,6 +131,10 @@ class Canvas: NSView {
 		// add all child events
 		for child in beat.Events {
 			makeEvent(nvEvent: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		// add all event links
+		for child in beat.EventLinks {
+			addEventLink(link: child)
 		}
 		
 		didSetupBeat?(beat)
@@ -316,12 +324,26 @@ class Canvas: NSView {
 			group.add(beatLink: link)
 		}
 	}
+	private func addEventLink(link: NVEventLink) {
+		guard let obj = canvasEventFor(nvEvent: link.Origin) else {
+			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
+			return
+		}
+		benchFor(obj: obj)?.add(CanvasEventLink(link: link))
+	}
 	func makeEventLink(event: CanvasEvent) {
 		// events only exist within beats so ensure a beat is mapped
 		if let beat = MappedBeat {
 			let link = Doc.Story.makeEventLink(origin: event.Event, dest: nil)
 			beat.add(eventLink: link)
 		}
+	}
+	private func addBeatLink(link: NVBeatLink) {
+		guard let obj = canvasBeatFor(nvBeat: link.Origin) else {
+			NVLog.log("Tried to add a BeatLink but couldn't find a CanvasBeat for the origin!", level: .error)
+			return
+		}
+		benchFor(obj: obj)?.add(CanvasBeatLink(link: link))
 	}
 }
 
@@ -339,19 +361,11 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink) {
-		guard let obj = canvasBeatFor(nvBeat: link.Origin) else {
-			NVLog.log("Tried to add a BeatLink but couldn't find a CanvasBeat for the origin!", level: .error)
-			return
-		}
-		benchFor(obj: obj)?.add(CanvasBeatLink(link: link))
+		addBeatLink(link: link)
 	}
 	
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
-		guard let obj = canvasEventFor(nvEvent: link.Origin) else {
-			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
-			return
-		}
-		benchFor(obj: obj)?.add(CanvasEventLink(link: link))
+		addEventLink(link: link)
 	}
 	
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
