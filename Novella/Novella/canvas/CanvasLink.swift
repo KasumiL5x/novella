@@ -91,6 +91,14 @@ class CanvasLink: NSView {
 		fatalError()
 	}
 	
+	func redraw() {
+		// calculate curve as the origin will have changed
+		if let target = _currentTarget {
+			updateCurveTo(obj: target)
+		}
+		setNeedsDisplay(bounds)
+	}
+	
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
 		case .began:
@@ -138,11 +146,48 @@ class CanvasLink: NSView {
 		setNeedsDisplay(bounds)
 	}
 	
+	private func onTargetChanged(prev: CanvasObject?, curr: CanvasObject?) {
+		// revert previous object's state if it exists
+		prev?.CurrentState = .normal
+		
+		// prime current object if we care about it (decided by derived classes)
+		if curr != nil && canlinkTo(obj: curr!) {
+			curr!.CurrentState = .primed
+		}
+	}
+	
+	private func onPanEnded(curr: CanvasObject?) {
+		// revert back to normal
+		curr?.CurrentState = .normal
+		
+		// if we dropped on an object we CAN link to
+		if curr != nil && canlinkTo(obj: curr!) {
+			// setup the new curve path
+			updateCurveTo(obj: curr!)
+			
+			// let the derived class handle the connecting (including reverting previous connetions etc.)
+			connectTo(obj: curr!)
+		} else {
+			// hide the
+			_curvelayer.isHidden = true
+			_curvelayer.path = nil
+		}
+	}
+	
+	func updateCurveTo(obj: CanvasObject) {
+		_curvelayer.isHidden = false
+		let origin = NSMakePoint(bounds.midX, bounds.midY)
+		let end = obj.convert(NSMakePoint(0.0, obj.frame.height * 0.5), to: self)
+		_curvelayer.path = CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false).cgPath
+	}
+	
 	// virtuals
-	func onTargetChanged(prev: CanvasObject?, curr: CanvasObject?) {
-		print("Please override me Alan.")
+	func canlinkTo(obj: CanvasObject) -> Bool {
+		print("Alan, please override.")
+		return false
 	}
-	func onPanEnded(curr: CanvasObject?) {
-		print("Please override me Alan.")
+	func connectTo(obj: CanvasObject) {
+		print("Alan, please override.")
 	}
+
 }

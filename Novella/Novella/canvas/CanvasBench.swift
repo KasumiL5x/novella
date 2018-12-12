@@ -17,6 +17,14 @@ class CanvasBench: NSView {
 	private var _widthConstraint: NSLayoutConstraint?
 	private var _heightConstraint: NSLayoutConstraint?
 	
+	// when the frame changes, we need to recalculate the links as their origin will have moved
+	override var frame: NSRect {
+		didSet {
+			Items.forEach{$0.redraw()}
+			setNeedsDisplay(bounds)
+		}
+	}
+	
 	init() {
 		self._bglayer = CAShapeLayer()
 		self.Items = []
