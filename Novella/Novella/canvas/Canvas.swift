@@ -144,6 +144,21 @@ class Canvas: NSView {
 		Selection.clear()
 	}
 	
+	func objectAt(point: CGPoint, ignoring: CanvasObject?=nil) -> CanvasObject? {
+		for curr in _allObjects {
+			let hit = curr.hitTest(point)
+			// ignore objects that didn't hittest themselves
+			if hit != curr {
+				continue
+			}
+			// also ignore a result that is the same as the 'ignoring' value if it's not nil (e.g., self)
+			if ignoring != nil && ignoring == hit {
+				continue
+			}
+			return curr
+		}
+		return nil
+	}
 	private func objectIn(obj: CanvasObject, rect: NSRect) -> Bool {
 		return NSIntersectsRect(obj.frame, rect)
 	}
@@ -329,7 +344,7 @@ class Canvas: NSView {
 			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
 			return
 		}
-		benchFor(obj: obj)?.add(CanvasEventLink(link: link))
+		benchFor(obj: obj)?.add(CanvasEventLink(canvas: self, origin: obj, link: link))
 	}
 	func makeEventLink(event: CanvasEvent) {
 		// events only exist within beats so ensure a beat is mapped
@@ -343,7 +358,7 @@ class Canvas: NSView {
 			NVLog.log("Tried to add a BeatLink but couldn't find a CanvasBeat for the origin!", level: .error)
 			return
 		}
-		benchFor(obj: obj)?.add(CanvasBeatLink(link: link))
+		benchFor(obj: obj)?.add(CanvasBeatLink(canvas: self, origin: obj, link: link))
 	}
 }
 

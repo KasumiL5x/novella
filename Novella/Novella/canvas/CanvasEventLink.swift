@@ -11,9 +11,9 @@ import AppKit
 class CanvasEventLink: CanvasLink {
 	let EventLink: NVEventLink
 	
-	init(link: NVEventLink) {
+	init(canvas: Canvas, origin: CanvasObject, link: NVEventLink) {
 		self.EventLink = link
-		super.init()
+		super.init(canvas: canvas, origin: origin)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

@@ -13,20 +13,30 @@ class CanvasLink: NSView {
 	static let OutlineInset: CGFloat = 3.0
 	static let FillInset: CGFloat = 1.5
 	
+	private var _canvas: Canvas
+	private(set) var Origin: CanvasObject?
+	//
 	private let _outlineLayer: CAShapeLayer
 	private let _fillLayer: CAShapeLayer
 	//
 	private let _dragLayer: CAShapeLayer
 	private var _isDragging: Bool
 	private var _dragPosition: CGPoint
+	private var _previousTarget: CanvasObject?
+	private var _currentTarget: CanvasObject?
 	
-	init() {
+	init(canvas: Canvas, origin: CanvasObject) {
+		self._canvas = canvas
+		self.Origin = origin
+		//
 		self._outlineLayer = CAShapeLayer()
 		self._fillLayer = CAShapeLayer()
 		//
 		self._dragLayer = CAShapeLayer()
 		self._isDragging = false
 		self._dragPosition = CGPoint.zero
+		self._previousTarget = nil
+		self._currentTarget = nil
 		super.init(frame: NSMakeRect(0, 0, CanvasLink.Size, CanvasLink.Size))
 		
 		wantsLayer = true
@@ -84,6 +94,13 @@ class CanvasLink: NSView {
 			let origin = NSMakePoint(bounds.midX, bounds.midY)
 			_dragLayer.path = CurveHelper.catmullRom(points: [origin, _dragPosition], alpha: 1.0, closed: false).cgPath
 			
+			// update target
+			_currentTarget = _canvas.objectAt(point: gesture.location(in: _canvas), ignoring: Origin)
+			if _currentTarget != _previousTarget {
+				onTargetChanged(prev: _previousTarget, curr: _currentTarget)
+			}
+			_previousTarget = _currentTarget
+			
 		case .cancelled, .ended:
 			_isDragging = false
 			// animate color to clear
@@ -101,10 +118,20 @@ class CanvasLink: NSView {
 			strokeAnim.isRemovedOnCompletion = false
 			_dragLayer.add(strokeAnim, forKey: strokeAnim.keyPath)
 			
+			onPanEnded(curr: _currentTarget)
+			
 		default:
 			break
 		}
 		
 		setNeedsDisplay(bounds)
+	}
+	
+	// virtuals
+	func onTargetChanged(prev: CanvasObject?, curr: CanvasObject?) {
+		print("Please override me Alan.")
+	}
+	func onPanEnded(curr: CanvasObject?) {
+		print("Please override me Alan.")
 	}
 }
