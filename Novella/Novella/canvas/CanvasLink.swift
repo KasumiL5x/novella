@@ -113,63 +113,51 @@ class CanvasLink: NSView {
 			let origin = NSMakePoint(bounds.midX, bounds.midY)
 			_dragLayer.path = CurveHelper.catmullRom(points: [origin, _dragPosition], alpha: 1.0, closed: false).cgPath
 			
-			// update target
-			_currentTarget = _canvas.objectAt(point: gesture.location(in: _canvas), ignoring: Origin)
-			if _currentTarget != _previousTarget {
-				onTargetChanged(prev: _previousTarget, curr: _currentTarget)
+			// update target (only if valid and can be connected to as defined by the derived classes)
+			if let target = _canvas.objectAt(point: gesture.location(in: _canvas), ignoring: Origin), canlinkTo(obj: target) {
+				_currentTarget = target
+			} else {
+				_currentTarget = nil
 			}
+			// did the target change?
+			if _currentTarget != _previousTarget {
+				// revert previous target's state
+				_previousTarget?.CurrentState = .normal
+				// prime current target
+				_currentTarget?.CurrentState = .primed
+			}
+			// update previous target
 			_previousTarget = _currentTarget
 			
 		case .cancelled, .ended:
 			_isDragging = false
-			// animate color to clear
-			let colorAnim = CABasicAnimation(keyPath: "strokeColor")
-			colorAnim.duration = 0.3
-			colorAnim.toValue = CGColor.clear
-			colorAnim.fillMode = .forwards
-			colorAnim.isRemovedOnCompletion = false
-			_dragLayer.add(colorAnim, forKey: colorAnim.keyPath)
-			// animate stroke length to 0
-			let strokeAnim = CABasicAnimation(keyPath: "strokeEnd")
-			strokeAnim.toValue = 0.0
-			strokeAnim.duration = 0.2
-			strokeAnim.fillMode = .forwards
-			strokeAnim.isRemovedOnCompletion = false
-			_dragLayer.add(strokeAnim, forKey: strokeAnim.keyPath)
 			
-			onPanEnded(curr: _currentTarget)
-			
+			if let target = _currentTarget {
+				target.CurrentState = .normal
+				updateCurveTo(obj: target)
+				_dragLayer.strokeColor = CGColor.clear // don't want a nice transition otherwise there would be two curves
+			} else {
+				_curvelayer.strokeColor = CGColor.clear
+				// animate the drag layer back to the origin
+				let colorAnim = CABasicAnimation(keyPath: "strokeColor")
+				colorAnim.duration = 0.3
+				colorAnim.toValue = CGColor.clear
+				colorAnim.fillMode = .forwards
+				colorAnim.isRemovedOnCompletion = false
+				_dragLayer.add(colorAnim, forKey: colorAnim.keyPath)
+				let strokeAnim = CABasicAnimation(keyPath: "strokeEnd")
+				strokeAnim.toValue = 0.0
+				strokeAnim.duration = 0.2
+				strokeAnim.fillMode = .forwards
+				strokeAnim.isRemovedOnCompletion = false
+				_dragLayer.add(strokeAnim, forKey: strokeAnim.keyPath)
+			}
+
 		default:
 			break
 		}
 		
 		setNeedsDisplay(bounds)
-	}
-	
-	private func onTargetChanged(prev: CanvasObject?, curr: CanvasObject?) {
-		// revert previous object's state if it exists
-		prev?.CurrentState = .normal
-		
-		// prime current object if we care about it (decided by derived classes)
-		if curr != nil && canlinkTo(obj: curr!) {
-			curr!.CurrentState = .primed
-		}
-	}
-	
-	private func onPanEnded(curr: CanvasObject?) {
-		// revert back to normal
-		curr?.CurrentState = .normal
-		
-		// if we dropped on an object we CAN link to
-		if curr != nil && canlinkTo(obj: curr!) {
-			// setup the new curve path
-			updateCurveTo(obj: curr!)
-			
-			// let the derived class handle the connecting (including reverting previous connetions etc.)
-			connectTo(obj: curr!)
-		} else {
-			_curvelayer.strokeColor = CGColor.clear
-		}
 	}
 	
 	func updateCurveTo(obj: CanvasObject) {
