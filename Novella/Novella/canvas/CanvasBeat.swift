@@ -84,6 +84,9 @@ class CanvasBeat: CanvasObject {
 	}
 	
 	// virtuals
+	override func mainColor() -> NSColor {
+		return NSColor.fromHex("#FF5E3A")
+	}
 	override func onClick(gesture: NSClickGestureRecognizer) {
 	}
 	override func onDoubleClick(gesture: NSClickGestureRecognizer) {

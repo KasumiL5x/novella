@@ -20,6 +20,9 @@ class CanvasEvent: CanvasObject {
 	}
 	
 	// virtuals
+	override func mainColor() -> NSColor {
+		return NSColor.fromHex("#FF00FF") // also not implemented this class properly yet
+	}
 	override func onMove() {
 		_canvas.Doc.Positions[Event.UUID] = frame.origin
 	}

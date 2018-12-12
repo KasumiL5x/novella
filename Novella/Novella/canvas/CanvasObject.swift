@@ -126,6 +126,9 @@ class CanvasObject: NSView {
 	}
 	
 	// virtual functions
+	func mainColor() -> NSColor {
+		return NSColor.fromHex("#FF00FF")
+	}
 	func onClick(gesture: NSClickGestureRecognizer) {
 	}
 	func onDoubleClick(gesture: NSClickGestureRecognizer) {

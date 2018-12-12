@@ -47,6 +47,9 @@ class CanvasGroup: CanvasObject {
 	}
 	
 	// virtuals
+	override func mainColor() -> NSColor {
+		return NSColor.fromHex("#FF00FF") // not yet implemented this class fully
+	}
 	override func onMove() {
 		_canvas.Doc.Positions[Group.UUID] = frame.origin
 	}

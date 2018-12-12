@@ -84,7 +84,7 @@ class CanvasLink: NSView {
 		_curvelayer.fillColor = nil
 		_curvelayer.lineCap = .round
 		_curvelayer.lineWidth = 2.0
-		_curvelayer.strokeColor = NSColor.green.cgColor
+		_curvelayer.strokeColor = NSColor.black.cgColor
 		layer?.addSublayer(_curvelayer)
 	}
 	required init?(coder decoder: NSCoder) {
@@ -168,14 +168,12 @@ class CanvasLink: NSView {
 			// let the derived class handle the connecting (including reverting previous connetions etc.)
 			connectTo(obj: curr!)
 		} else {
-			// hide the
-			_curvelayer.isHidden = true
-			_curvelayer.path = nil
+			_curvelayer.strokeColor = CGColor.clear
 		}
 	}
 	
 	func updateCurveTo(obj: CanvasObject) {
-		_curvelayer.isHidden = false
+		_curvelayer.strokeColor = obj.mainColor().cgColor
 		let origin = NSMakePoint(bounds.midX, bounds.midY)
 		let end = obj.convert(NSMakePoint(0.0, obj.frame.height * 0.5), to: self)
 		_curvelayer.path = CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false).cgPath
