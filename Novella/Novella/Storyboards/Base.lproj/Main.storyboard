@@ -726,6 +726,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <segue destination="cRu-fY-t8q" kind="show" identifier="OutlinerVC" id="Y9C-tY-olL"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -754,7 +757,15 @@
                 <controllerPlaceholder storyboardName="Graph" referencedIdentifier="GraphVC" id="JzM-wE-2ha" sceneMemberID="viewController"/>
                 <customObject id="2ad-vj-1lR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="74" y="1504"/>
+            <point key="canvasLocation" x="101" y="1504"/>
+        </scene>
+        <!--Outliner-->
+        <scene sceneID="Qjc-dk-QDn">
+            <objects>
+                <controllerPlaceholder storyboardName="Outliner" referencedIdentifier="Outliner" id="cRu-fY-t8q" sceneMemberID="viewController"/>
+                <customObject id="bFW-RT-XNu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-27" y="1504"/>
         </scene>
     </scenes>
     <resources>
