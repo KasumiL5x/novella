@@ -24,7 +24,7 @@ class CanvasBeatLink: CanvasLink {
 		return obj is CanvasBeat
 	}
 	
-	override func connectTo(obj: CanvasObject) {
+	override func connectTo(obj: CanvasObject?) {
 		// revert old CanvasBeat back to normal state and remove self as delegate
 		if let oldDest = BeatLink.Destination, let oldObj = _canvas.canvasBeatFor(nvBeat: oldDest) {
 			oldObj.CurrentState = .normal
@@ -32,10 +32,10 @@ class CanvasBeatLink: CanvasLink {
 		}
 		
 		// update model link destination
-		BeatLink.Destination = (obj as! CanvasBeat).Beat
+		BeatLink.Destination = (obj as? CanvasBeat)?.Beat ?? nil
 		
 		// add self as delegate
-		obj.add(delegate: self)
+		obj?.add(delegate: self)
 	}
 }
 

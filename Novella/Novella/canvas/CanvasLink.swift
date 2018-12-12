@@ -132,6 +132,9 @@ class CanvasLink: NSView {
 		case .cancelled, .ended:
 			_isDragging = false
 			
+			// let the delegate handle connection
+			connectTo(obj: _currentTarget)
+			
 			if let target = _currentTarget {
 				target.CurrentState = .normal
 				updateCurveTo(obj: target)
@@ -172,7 +175,7 @@ class CanvasLink: NSView {
 		print("Alan, please override.")
 		return false
 	}
-	func connectTo(obj: CanvasObject) {
+	func connectTo(obj: CanvasObject?) {
 		print("Alan, please override.")
 	}
 
