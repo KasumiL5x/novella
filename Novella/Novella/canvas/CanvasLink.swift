@@ -13,7 +13,7 @@ class CanvasLink: NSView {
 	static let OutlineInset: CGFloat = 3.0
 	static let FillInset: CGFloat = 1.5
 	
-	private var _canvas: Canvas
+	private(set) var _canvas: Canvas
 	private(set) var Origin: CanvasObject?
 	//
 	private let _outlineLayer: CAShapeLayer
@@ -23,7 +23,9 @@ class CanvasLink: NSView {
 	private var _isDragging: Bool
 	private var _dragPosition: CGPoint
 	private var _previousTarget: CanvasObject?
-	private var _currentTarget: CanvasObject?
+	private(set) var _currentTarget: CanvasObject?
+	//
+	var _curvelayer: CAShapeLayer // no protected in swift...
 	
 	init(canvas: Canvas, origin: CanvasObject) {
 		self._canvas = canvas
@@ -37,6 +39,8 @@ class CanvasLink: NSView {
 		self._dragPosition = CGPoint.zero
 		self._previousTarget = nil
 		self._currentTarget = nil
+		//
+		self._curvelayer = CAShapeLayer()
 		super.init(frame: NSMakeRect(0, 0, CanvasLink.Size, CanvasLink.Size))
 		
 		wantsLayer = true
@@ -75,6 +79,13 @@ class CanvasLink: NSView {
 		_dragLayer.lineWidth = 2.0
 		_dragLayer.strokeColor = CGColor.clear
 		layer?.addSublayer(_dragLayer)
+		
+		// curve layer
+		_curvelayer.fillColor = nil
+		_curvelayer.lineCap = .round
+		_curvelayer.lineWidth = 2.0
+		_curvelayer.strokeColor = NSColor.green.cgColor
+		layer?.addSublayer(_curvelayer)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

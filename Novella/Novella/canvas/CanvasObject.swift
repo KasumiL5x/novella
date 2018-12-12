@@ -8,6 +8,10 @@
 
 import Cocoa
 
+protocol CanvasObjectDelegate: class {
+	func canvasObjectMoved(obj: CanvasObject)
+}
+
 class CanvasObject: NSView {
 	enum State {
 		case normal
@@ -24,11 +28,13 @@ class CanvasObject: NSView {
 			redraw()
 		}
 	}
+	private var _delegates: [CanvasObjectDelegate]
 	
 	init(canvas: Canvas, frame: NSRect) {
 		self._canvas = canvas
 		self._lastPanPos = CGPoint.zero
 		self.ContextMenu = NSMenu()
+		self._delegates = []
 		super.init(frame: frame)
 		
 		wantsLayer = true
@@ -57,9 +63,22 @@ class CanvasObject: NSView {
 		fatalError()
 	}
 	
+	func add(delegate: CanvasObjectDelegate) {
+		_delegates.append(delegate)
+	}
+	func remove(delegate: CanvasObjectDelegate) {
+		for i in 0..<_delegates.count {
+			if _delegates[i] === delegate {
+				_delegates.remove(at: i)
+				break
+			}
+		}
+	}
+	
 	func move(to: CGPoint) {
 		frame.origin = to
 		onMove()
+		_delegates.forEach{$0.canvasObjectMoved(obj: self)}
 	}
 	
 	@objc private func _onClick(gesture: NSClickGestureRecognizer) {
