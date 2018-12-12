@@ -262,7 +262,7 @@ class Canvas: NSView {
 	func canvasBeatFor(nvBeat: NVBeat) -> CanvasBeat? {
 		return (_allObjects.filter{$0 is CanvasBeat} as! [CanvasBeat]).first(where: {$0.Beat == nvBeat})
 	}
-	private func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
+	func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
 		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.Event == nvEvent})
 	}
 	

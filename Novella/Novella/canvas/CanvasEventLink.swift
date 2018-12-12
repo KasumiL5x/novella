@@ -18,4 +18,29 @@ class CanvasEventLink: CanvasLink {
 	required init?(coder decoder: NSCoder) {
 		fatalError()
 	}
+	
+	// virtuals
+	override func canlinkTo(obj: CanvasObject) -> Bool {
+		return obj is CanvasEvent
+	}
+	
+	override func connectTo(obj: CanvasObject?) {
+		// revert old CanvasEvent back to normal state and remove self as delegate
+		if let oldDest = EventLink.Destination, let oldObj = _canvas.canvasEventFor(nvEvent: oldDest) {
+			oldObj.CurrentState = .normal
+			oldObj.remove(delegate: self)
+		}
+		
+		// update model link destination
+		EventLink.Destination = (obj as? CanvasEvent)?.Event ?? nil
+		
+		// add self as delegate
+		obj?.add(delegate: self)
+	}
+}
+
+extension CanvasEventLink: CanvasObjectDelegate {
+	func canvasObjectMoved(obj: CanvasObject) {
+		updateCurveTo(obj: obj)
+	}
 }
