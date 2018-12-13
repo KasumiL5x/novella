@@ -122,6 +122,9 @@
                             <constraint firstItem="hKY-Lf-JO3" firstAttribute="leading" secondItem="wv2-9j-Kmb" secondAttribute="leading" id="tfs-e0-nHx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_outlineView" destination="F4I-90-6Lt" id="rNj-h0-sJ5"/>
+                    </connections>
                 </viewController>
                 <customObject id="mj1-Rv-fgb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

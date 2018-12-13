@@ -18,6 +18,7 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		}
 		
 		_graphVC?.setup(doc: doc)
+		_outlinerVC?.setup(doc: doc)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {

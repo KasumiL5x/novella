@@ -11,6 +11,7 @@
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
 		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
+		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
 		65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */; };
 		65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
@@ -57,6 +58,7 @@
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
 		65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Outliner.storyboard; sourceTree = "<group>"; };
 		65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinerViewController.swift; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */,
 				DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */,
 				6532644D21C055B5009C0ED8 /* CurveHelper.swift */,
+				65CC99A521C23F63008CD7BA /* CustomTables.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */,
 				6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */,
 				DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */,
+				65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */,
 				DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */,
 				DF94928121B96D6F00BC8AB0 /* NVBeat.swift in Sources */,
 				DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */,
