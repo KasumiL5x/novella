@@ -18,7 +18,6 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		}
 		
 		_graphVC?.setup(doc: doc)
-		_outlinerVC?.setup(doc: doc)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -28,6 +27,11 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		if segue.identifier == "OutlinerVC" {
 			_outlinerVC = segue.destinationController as? OutlinerViewController
+			guard let doc = view.window?.windowController?.document as? Document else {
+				print("ERROR: Could not find doc when OutlinerVC segue was triggered.")
+				return
+			}
+			_outlinerVC?.setup(doc: doc)
 		}
 	}
 }

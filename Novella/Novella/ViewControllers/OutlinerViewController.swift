@@ -17,12 +17,14 @@ class OutlinerViewController: NSViewController {
 		view.window?.level = .floating
 	}
 	
-	func setup(doc: Document) {
-		_document = doc
-		
+	override func viewDidLoad() {
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
 		_outlineView.reloadData()
+	}
+	
+	func setup(doc: Document) {
+		_document = doc
 	}
 }
 
@@ -44,19 +46,19 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 		
 		switch item {
 		case let asGroup as NVGroup:
-			print("Please fill in NVGroup Alan")
+			(view as? NSTableCellView)?.textField?.stringValue = asGroup.Label
 			
 		case let asBeat as NVBeat:
-			print("Please fill in NVBeat Alan")
+			(view as? NSTableCellView)?.textField?.stringValue = asBeat.Label
 			
 		case let asBeatLink as NVBeatLink:
-			print("Please fill in NVBeatLink Alan")
+			(view as? NSTableCellView)?.textField?.stringValue = "(\(asBeatLink.Origin.Label)) -> (\(asBeatLink.Destination?.Label ?? "nil"))"
 			
 		case let asEvent as NVEvent:
-			print("Please fill in NVEvent Alan")
+			(view as? NSTableCellView)?.textField?.stringValue = asEvent.Label
 			
 		case let asEventLink as NVEventLink:
-			print("Please fill in NVEventLink Alan")
+			(view as? NSTableCellView)?.textField?.stringValue = "(\(asEventLink.Origin.Label)) -> (\(asEventLink.Destination?.Label ?? "nil"))"
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"

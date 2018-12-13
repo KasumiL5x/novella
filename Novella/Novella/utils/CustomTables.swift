@@ -16,8 +16,10 @@ class CustomTableRowView: NSTableRowView {
 			isSelected ? NSColor.fromHex("#739cde").setFill() : NSColor.fromHex("#f7f7f7").setFill()
 			dirtyRect.fill()
 		} else {
-			NSColor.fromHex("#739cde").setFill()
-			dirtyRect.fill()
+			if isSelected {
+				NSColor.fromHex("#739cde").setFill()
+				dirtyRect.fill()
+			}
 		}		
 	}
 }
