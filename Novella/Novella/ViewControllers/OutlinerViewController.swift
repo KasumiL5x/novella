@@ -25,6 +25,7 @@ class OutlinerViewController: NSViewController {
 	
 	func setup(doc: Document) {
 		_document = doc
+		doc.Story.addDelegate(self)
 	}
 }
 
@@ -140,5 +141,161 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 		default:
 			return false
 		}
+	}
+}
+
+extension OutlinerViewController: NVStoryDelegate {
+	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvStoryDidMakeBeat(story: NVStory, beat: NVBeat) {
+	}
+	
+	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
+	}
+	
+	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink) {
+	}
+	
+	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
+	}
+	
+	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvStoryDidDeleteBeat(story: NVStory, beat: NVBeat) {
+	}
+	
+	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
+	}
+	
+	func nvStoryDidDeleteBeatLink(story: NVStory, link: NVBeatLink) {
+	}
+	
+	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
+	}
+	
+	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
+		_outlineView.reloadItem(group)
+	}
+	
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidAddBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat) {
+		_outlineView.reloadItem(beat)
+	}
+	
+	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
+	}
+	
+	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat) {
+	}
+	
+	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
+		_outlineView.reloadItem(beat, reloadChildren: true)
+	}
+	
+	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
+		_outlineView.reloadItem(beat, reloadChildren: true)
+	}
+	
+	func nvBeatDidAddEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
+		_outlineView.reloadItem(beat, reloadChildren: true)
+	}
+	
+	func nvBeatDidRemoveEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
+		_outlineView.reloadItem(beat, reloadChildren: true)
+	}
+	
+	func nvDNBeatTangibilityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	}
+	
+	func nvDNBeatFunctionalityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	}
+	
+	func nvDNBeatClarityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	}
+	
+	func nvDNBeatDeliveryDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	}
+	
+	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
+		_outlineView.reloadItem(event)
+	}
+	
+	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventDidAddParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
+	}
+	
+	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
+	}
+	
+	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvVariableConstantDidChange(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvVariableValueDidChange(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvBeatLinkDestinationDidChange(story: NVStory, link: NVBeatLink) {
+	}
+	
+	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
+	}
+	
+	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity) {
+	}
+	
+	func nvEntityDescriptionDidChange(story: NVStory, entity: NVEntity) {
+	}
+	
+	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
+	}
+	
+	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 	}
 }
