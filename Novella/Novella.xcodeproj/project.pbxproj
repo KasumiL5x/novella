@@ -12,6 +12,7 @@
 		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
+		65CC99A821C264DE008CD7BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CC99A721C264DE008CD7BA /* Assets.xcassets */; };
 		65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */; };
 		65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
@@ -59,6 +60,7 @@
 		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
+		65CC99A721C264DE008CD7BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Outliner.storyboard; sourceTree = "<group>"; };
 		65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinerViewController.swift; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				DFCE6044211C3D20005900D8 /* Document.swift */,
 				DFCE604B211C3D20005900D8 /* Info.plist */,
 				DFCE604C211C3D20005900D8 /* novella.entitlements */,
+				65CC99A721C264DE008CD7BA /* Assets.xcassets */,
 			);
 			path = novella;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 			files = (
 				65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */,
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
+				65CC99A821C264DE008CD7BA /* Assets.xcassets in Resources */,
 				DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
