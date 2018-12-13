@@ -70,7 +70,7 @@ class Canvas: NSView {
 		_contextMenu.addItem(_surfaceMenuItem)
 		_contextMenu.autoenablesItems = false
 		
-		doc.Story.Delegates.append(self)
+		doc.Story.addDelegate(self)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

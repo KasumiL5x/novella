@@ -10,7 +10,7 @@ import Foundation
 import JavaScriptCore
 
 class NVStory {
-	var Delegates: [NVStoryDelegate]
+	private(set) var Delegates: [NVStoryDelegate]
 	private var _identifiables: [NVIdentifiable]
 	private(set) var MainGroup: NVGroup! // see init for ! usage
 	private(set) var JVM: JSContext
@@ -126,6 +126,27 @@ class NVStory {
 			}
 		}
 		JVM.setObject(js_setdub, forKeyedSubscript: "setdub" as (NSCopying & NSObjectProtocol))
+	}
+	
+	private func indexOfDelegate(_ delegate: NVStoryDelegate) -> Int {
+		for i in 0..<Delegates.count {
+			if Delegates[i] === delegate {
+				return i
+			}
+		}
+		return -1
+	}
+	func addDelegate(_ delegate: NVStoryDelegate) {
+		if indexOfDelegate(delegate) != -1 {
+			return
+		}
+		Delegates.append(delegate)
+	}
+	func removeDelegate(_ delegate: NVStoryDelegate) {
+		let idx = indexOfDelegate(delegate)
+		if idx != -1 {
+			Delegates.remove(at: idx)
+		}
 	}
 	
 	func find(uuid: String) -> NVIdentifiable? {

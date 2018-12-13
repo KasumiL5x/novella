@@ -19,7 +19,7 @@ class Document: NSDocument {
 	
 	override init() {
 		super.init()
-		Story.Delegates.append(self)
+		Story.addDelegate(self)
 	}
 
 	override class var autosavesInPlace: Bool {
