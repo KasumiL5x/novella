@@ -14,17 +14,20 @@ class CanvasBeat: CanvasObject {
 	
 	let Beat: NVBeat
 	private let _outlineLayer: CAShapeLayer
+	private let _parallelLayer: CAShapeLayer
 	private let _labelLayer: CATextLayer
 	
 	init(canvas: Canvas, beat: NVBeat) {
 		self.Beat = beat
 		self._outlineLayer = CAShapeLayer()
 		self._labelLayer = CATextLayer()
+		self._parallelLayer = CAShapeLayer()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
 		ContextMenu.addItem(NSMenuItem.separator())
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasBeat.onAddLink), keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Parallel", action: #selector(CanvasBeat.onParallel), keyEquivalent: "")
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
@@ -58,6 +61,16 @@ class CanvasBeat: CanvasObject {
 		_outlineLayer.strokeColor = CGColor.clear
 		layer?.addSublayer(_outlineLayer)
 		
+		// parallel layer
+		let parallelSize: CGFloat = 15.0
+		_parallelLayer.path = NSBezierPath(ovalIn: NSMakeRect(0, 0, parallelSize, parallelSize)).cgPath
+		_parallelLayer.fillColor = NSColor.fromHex("#aaccFF").cgColor
+		_parallelLayer.strokeColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.1).cgColor
+		_parallelLayer.lineWidth = 2.0
+		_parallelLayer.frame.origin = NSMakePoint(bounds.maxX - parallelSize - 3.0, 3.0)
+		_parallelLayer.opacity = 0.0
+		layer?.addSublayer(_parallelLayer)
+		
 		// label
 		_labelLayer.string = "Unnamed"
 		_labelLayer.contentsScale = NSScreen.main!.backingScaleFactor
@@ -81,6 +94,11 @@ class CanvasBeat: CanvasObject {
 	
 	@objc private func onAddLink() {
 		_canvas.makeBeatLink(beat: self)
+	}
+	
+	@objc private func onParallel() {
+		Beat.Parallel = !Beat.Parallel
+		_parallelLayer.opacity = Beat.Parallel ? 1.0 : 0.0
 	}
 	
 	// virtuals
