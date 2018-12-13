@@ -116,7 +116,7 @@ class Canvas: NSView {
 		
 		_addGroupMenuItem.isEnabled = false
 		_addBeatMenuItem.isEnabled = false
-		_addEventMenuItem.isEnabled = false
+		_addEventMenuItem.isEnabled = true
 		_surfaceMenuItem.isEnabled = beat.Parent != nil
 		
 		_allObjects = []
