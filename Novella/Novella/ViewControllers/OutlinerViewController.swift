@@ -36,7 +36,7 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 	
 	// color even/odd rows
 	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
-		rowView.backgroundColor = (row % 2 == 0) ? CustomTableColors.RowEven : CustomTableColors.RowOdd
+		rowView.backgroundColor = (row % 2 == 0) ? NSColor(named: "NVTableRowEven")! : NSColor(named: "NVTableRowOdd")!
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
