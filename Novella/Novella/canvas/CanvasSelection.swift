@@ -50,5 +50,10 @@ class CanvasSelection {
 	func clear() {
 		Selection.forEach{$0.CurrentState = .normal}
 		Selection = []
+		
+		// post selection changed notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
+			"selection": Selection
+		])
 	}
 }
