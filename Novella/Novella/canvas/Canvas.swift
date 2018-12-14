@@ -441,9 +441,11 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat) {
+		canvasBeatFor(nvBeat: beat)?.reloadData()
 	}
 	
 	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
+		canvasBeatFor(nvBeat: beat)?.redraw()
 	}
 	
 	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat) {

@@ -26,11 +26,13 @@
                     <rect key="frame" x="71" y="50" width="131" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="label" drawsBackground="YES" id="IXH-Sa-WJU">
-                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="U4p-tT-MNr"/>
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <action selector="onLabelChanged:" target="c22-O7-iKe" id="W14-hR-jpX"/>
+                    </connections>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rPp-lN-QAW">
                     <rect key="frame" x="18" y="18" width="70" height="18"/>
@@ -39,6 +41,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onParallelChanged:" target="c22-O7-iKe" id="rvU-vU-XKs"/>
+                    </connections>
                 </button>
             </subviews>
             <connections>

@@ -43,6 +43,8 @@ class BeatPropertyView: NSView {
 	@IBOutlet weak private var _label: NSTextField!
 	@IBOutlet weak private var _parallel: NSButton!
 	
+	private var _beat: CanvasBeat? = nil
+	
 	static func instantiate(beat: CanvasBeat) -> BeatPropertyView {
 		guard let view: BeatPropertyView = initFromNib() else {
 			fatalError()
@@ -52,6 +54,8 @@ class BeatPropertyView: NSView {
 	}
 	
 	private func setupFor(beat: CanvasBeat) {
+		_beat = beat
+		
 		wantsLayer = true
 		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
 		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
@@ -61,5 +65,13 @@ class BeatPropertyView: NSView {
 		
 		// callbacks for both getting and setting etc.
 		print("TODO: Setup for beat.")
+	}
+	
+	@IBAction func onLabelChanged(_ sender: NSTextField) {
+		_beat?.Beat.Label = sender.stringValue
+	}
+	
+	@IBAction func onParallelChanged(_ sender: NSButton) {
+		_beat?.Beat.Parallel = sender.state == .on
 	}
 }

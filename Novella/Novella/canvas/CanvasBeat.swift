@@ -83,6 +83,9 @@ class CanvasBeat: CanvasObject {
 		_labelLayer.isWrapped = true
 		_labelLayer.truncationMode = .middle
 		layer?.addSublayer(_labelLayer)
+		
+		// load initial model data
+		reloadData()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -98,7 +101,6 @@ class CanvasBeat: CanvasObject {
 	
 	@objc private func onParallel() {
 		Beat.Parallel = !Beat.Parallel
-		_parallelLayer.opacity = Beat.Parallel ? 1.0 : 0.0
 	}
 	
 	// virtuals
@@ -130,5 +132,10 @@ class CanvasBeat: CanvasObject {
 		}
 	}
 	override func redraw() {
+		_parallelLayer.opacity = Beat.Parallel ? 1.0 : 0.0
+	}
+	override func reloadData() {
+		_labelLayer.string = Beat.Label.isEmpty ? "Unnamed" : Beat.Label
+		
 	}
 }

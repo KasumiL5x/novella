@@ -125,25 +125,39 @@ class CanvasObject: NSView {
 		onPan(gesture: gesture)
 	}
 	
+	//
 	// virtual functions
+	
 	func mainColor() -> NSColor {
+		// the primary color of the object (often used for flags and so on)
 		return NSColor.fromHex("#FF00FF")
 	}
 	func onClick(gesture: NSClickGestureRecognizer) {
+		// single click gesture
 	}
 	func onDoubleClick(gesture: NSClickGestureRecognizer) {
+		// double click gesture
 	}
 	func onContextClick(gesture: NSClickGestureRecognizer) {
+		// context click gesture
 	}
 	func onPan(gesture: NSPanGestureRecognizer) {
+		// pan gesture
 	}
 	func onMove() {
+		// when move() is called
 	}
 	func onStateChanged() {
+		// when the state changed
 	}
 	func redraw() {
+		// redraw the element (including controlling whether layers should be visible or not etc.)
 	}
 	func objectRect() -> NSRect {
+		// rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
 		return bounds
+	}
+	func reloadData() {
+		// reload data from the model itself (e.g., update labels)
 	}
 }
