@@ -6,10 +6,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Outliner View Controller-->
+        <!--Outliner-->
         <scene sceneID="6Cw-wg-R4c">
             <objects>
-                <viewController storyboardIdentifier="Outliner" showSeguePresentationStyle="single" id="wEJ-8P-nRi" customClass="OutlinerViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Outliner" storyboardIdentifier="Outliner" showSeguePresentationStyle="single" id="wEJ-8P-nRi" customClass="OutlinerViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="wv2-9j-Kmb">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="420"/>
                         <autoresizingMask key="autoresizingMask"/>
