@@ -1,0 +1,57 @@
+//
+//  PropertyViewControllers.swift
+//  novella
+//
+//  Created by Daniel Green on 14/12/2018.
+//  Copyright © 2018 dgreen. All rights reserved.
+//
+
+import AppKit
+
+class TransformPropertyView: NSView {
+	static func instantiate(obj: CanvasObject) -> TransformPropertyView {
+		guard let view: TransformPropertyView = initFromNib() else {
+			fatalError()
+		}
+		view.setupFor(obj: obj)
+		return view
+	}
+	
+	@IBOutlet weak public var _positionX: NSTextField!
+	@IBOutlet weak public var _positionY: NSTextField!
+	
+	private func setupFor(obj: CanvasObject) {
+		_positionX.stringValue = "\(obj.frame.origin.x)"
+		_positionY.stringValue = "\(obj.frame.origin.y)"
+		obj.add(delegate: self)
+		print("TODO: How and when do I remove this delegate? Is it auto removed when this class dies? Need to check.")
+	}
+}
+
+extension TransformPropertyView: CanvasObjectDelegate {
+	func canvasObjectMoved(obj: CanvasObject) {
+		_positionX.stringValue = "\(obj.frame.origin.x)"
+		_positionY.stringValue = "\(obj.frame.origin.y)"
+	}
+}
+
+class BeatPropertyView: NSView {
+	@IBOutlet weak private var _label: NSTextField!
+	@IBOutlet weak private var _parallel: NSButton!
+	
+	static func instantiate(beat: CanvasBeat) -> BeatPropertyView {
+		guard let view: BeatPropertyView = initFromNib() else {
+			fatalError()
+		}
+		view.setupFor(beat: beat)
+		return view
+	}
+	
+	private func setupFor(beat: CanvasBeat) {
+		_label.stringValue = beat.Beat.Label
+		_parallel.state = beat.Beat.Parallel ? .on : .off
+		
+		// callbacks for both getting and setting etc.
+		print("TODO: Setup for beat.")
+	}
+}

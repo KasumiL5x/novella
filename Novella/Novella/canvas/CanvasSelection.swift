@@ -23,6 +23,11 @@ class CanvasSelection {
 			Selection = objs
 			Selection.forEach{$0.CurrentState = .selected}
 		}
+		
+		// post selection changed notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
+			"selection": Selection
+		])
 	}
 
 	func deselect(_ obj: CanvasObject) {
@@ -35,6 +40,11 @@ class CanvasSelection {
 				Selection.remove(at: idx)
 			}
 		}
+		
+		// post selection changed notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
+			"selection": Selection
+		])
 	}
 	
 	func clear() {

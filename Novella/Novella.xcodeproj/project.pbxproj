@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532644D21C055B5009C0ED8 /* CurveHelper.swift */; };
+		655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F41B421C3924000F7E7D8 /* Inspector.storyboard */; };
+		655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
+		65AE3DAC21C3B2B50026DDE1 /* InspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */; };
+		65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */; };
+		65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */; };
+		65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */; };
+		65AE3DB921C3C44B0026DDE1 /* BeatPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */; };
 		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
@@ -56,7 +63,14 @@
 
 /* Begin PBXFileReference section */
 		6532644D21C055B5009C0ED8 /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
+		655F41B421C3924000F7E7D8 /* Inspector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Inspector.storyboard; sourceTree = "<group>"; };
+		655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViews.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
+		65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorViewController.swift; sourceTree = "<group>"; };
+		65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransformPropertyView.xib; sourceTree = "<group>"; };
+		65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Nib.swift"; sourceTree = "<group>"; };
+		65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
+		65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeatPropertyView.xib; sourceTree = "<group>"; };
 		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
@@ -118,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65AE3DB121C3B3790026DDE1 /* InspectorProperties */ = {
+			isa = PBXGroup;
+			children = (
+				65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */,
+				65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */,
+			);
+			path = InspectorProperties;
+			sourceTree = "<group>";
+		};
 		65BFD9AB212575A900FDA31B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,9 +153,11 @@
 		DF22E9E2211D9F5E00606D97 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				65AE3DB121C3B3790026DDE1 /* InspectorProperties */,
 				DFCE6048211C3D20005900D8 /* Main.storyboard */,
 				DF94929421B9716E00BC8AB0 /* Graph.storyboard */,
 				65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */,
+				655F41B421C3924000F7E7D8 /* Inspector.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -143,6 +168,8 @@
 				DF22E9EB211DA6DE00606D97 /* MainViewController.swift */,
 				DF94929621B9723900BC8AB0 /* GraphViewController.swift */,
 				65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */,
+				655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */,
+				65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -198,6 +225,8 @@
 				DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */,
 				6532644D21C055B5009C0ED8 /* CurveHelper.swift */,
 				65CC99A521C23F63008CD7BA /* CustomTables.swift */,
+				65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */,
+				65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -296,9 +325,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */,
+				65AE3DB921C3C44B0026DDE1 /* BeatPropertyView.xib in Resources */,
 				65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */,
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
 				65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */,
+				655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */,
 				DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,11 +363,13 @@
 				DF94929D21B98A9100BC8AB0 /* CanvasGroup.swift in Sources */,
 				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
 				DF94929321B9705400BC8AB0 /* NSColor+Hex.swift in Sources */,
+				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
 				65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */,
 				65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */,
+				65AE3DAC21C3B2B50026DDE1 /* InspectorViewController.swift in Sources */,
 				DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */,
 				DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */,
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
@@ -343,6 +377,7 @@
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
 				DF93F60F21BD99D200CF5B03 /* CanvasEventLink.swift in Sources */,
 				DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */,
+				655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */,
 				DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */,
 				DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */,
 				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
@@ -357,6 +392,7 @@
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
 				DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */,
 				DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */,
+				65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */,
 				DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */,
 				DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */,
 				6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */,
