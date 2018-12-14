@@ -21,6 +21,10 @@ class TransformPropertyView: NSView {
 	@IBOutlet weak public var _positionY: NSTextField!
 	
 	private func setupFor(obj: CanvasObject) {
+		wantsLayer = true
+		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
+		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
+		
 		_positionX.stringValue = "\(obj.frame.origin.x)"
 		_positionY.stringValue = "\(obj.frame.origin.y)"
 		obj.add(delegate: self)
@@ -48,6 +52,10 @@ class BeatPropertyView: NSView {
 	}
 	
 	private func setupFor(beat: CanvasBeat) {
+		wantsLayer = true
+		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
+		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
+		
 		_label.stringValue = beat.Beat.Label
 		_parallel.state = beat.Beat.Parallel ? .on : .off
 		
