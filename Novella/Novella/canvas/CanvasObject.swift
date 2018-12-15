@@ -8,14 +8,9 @@
 
 import Cocoa
 
+// has to be objc due to some compiled bug according to SO
 @objc protocol CanvasObjectDelegate: AnyObject {
 	func canvasObjectMoved(obj: CanvasObject)
-}
-final class WeakCanvasObjectDelegate {
-	private(set) weak var value: CanvasObjectDelegate?
-	init(value: CanvasObjectDelegate?) {
-		self.value = value
-	}
 }
 
 class CanvasObject: NSView {
