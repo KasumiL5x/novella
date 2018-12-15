@@ -12,12 +12,15 @@ class OutlinerViewController: NSViewController {
 	@IBOutlet weak private var _outlineView: NSOutlineView!
 	
 	private var _document: Document? = nil
+	private var _linkIcon: NSImage?
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
 	}
 	
 	override func viewDidLoad() {
+		_linkIcon = NSImage(named: "NVLink")
+		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
 		_outlineView.reloadData()
@@ -54,12 +57,14 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			
 		case let asBeatLink as NVBeatLink:
 			(view as? NSTableCellView)?.textField?.stringValue = "(\(asBeatLink.Origin.Label)) -> (\(asBeatLink.Destination?.Label ?? "nil"))"
+			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		case let asEvent as NVEvent:
 			(view as? NSTableCellView)?.textField?.stringValue = asEvent.Label
 			
 		case let asEventLink as NVEventLink:
 			(view as? NSTableCellView)?.textField?.stringValue = "(\(asEventLink.Origin.Label)) -> (\(asEventLink.Destination?.Label ?? "nil"))"
+			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"

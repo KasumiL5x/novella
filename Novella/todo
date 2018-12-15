@@ -1,0 +1,22 @@
+-- Generic
+[] Entity Editor
+[] Outliner functionality
+[] Saving and loading
+[] Property editor (mind changed: just use popovers again)
+
+-- Links
+[] Deletable
+
+-- Beats
+[] Able to delete
+[] Mark as entry (and rendering)
+[] Submerge on double click
+
+-- Groups
+[] Everything
+
+-- Events
+[] Everything
+
+-- Icons
+[] All (including dark mode)
