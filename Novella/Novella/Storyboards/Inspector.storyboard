@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GqB-NL-EqA">
-                                <rect key="frame" x="18" y="413" width="84" height="17"/>
+                                <rect key="frame" x="18" y="413" width="214" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="No selection." id="dEe-Ju-Ho9">
                                     <font key="font" usesAppearanceFont="YES"/>
