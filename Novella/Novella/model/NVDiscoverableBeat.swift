@@ -29,25 +29,25 @@ class NVDiscoverableBeat: NVBeat {
 	var Tangibility: DNTangibility {
 		didSet {
 			NVLog.log("DNBeat (\(UUID.uuidString)) Tangibility changed (\(oldValue) -> \(Tangibility)).", level: .info)
-			_story.Delegates.forEach{$0.nvDNBeatTangibilityDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvDNBeatTangibilityDidChange(story: _story, beat: self)}
 		}
 	}
 	var Functionality: DNFunctionality {
 		didSet {
 			NVLog.log("DNBeat (\(UUID.uuidString)) Functionality changed (\(oldValue) -> \(Functionality)).", level: .info)
-			_story.Delegates.forEach{$0.nvDNBeatFunctionalityDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvDNBeatFunctionalityDidChange(story: _story, beat: self)}
 		}
 	}
 	var Clarity: DNClarity {
 		didSet {
 			NVLog.log("DNBeat (\(UUID.uuidString)) Clarity changed (\(oldValue) -> \(Clarity)).", level: .info)
-			_story.Delegates.forEach{$0.nvDNBeatClarityDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvDNBeatClarityDidChange(story: _story, beat: self)}
 		}
 	}
 	var Delivery: DNDelivery {
 		didSet {
 			NVLog.log("DNBeat (\(UUID.uuidString)) Delivery changed (\(oldValue) -> \(Delivery)).", level: .info)
-			_story.Delegates.forEach{$0.nvDNBeatDeliveryDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvDNBeatDeliveryDidChange(story: _story, beat: self)}
 		}
 	}
 	

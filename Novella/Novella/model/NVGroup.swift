@@ -15,7 +15,7 @@ class NVGroup: NVIdentifiable {
 	var Label: String {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
-			_story.Delegates.forEach{$0.nvGroupLabelDidChange(story: _story, group: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupLabelDidChange(story: _story, group: self)}
 		}
 	}
 	var PreCondition: NVCondition
@@ -30,7 +30,7 @@ class NVGroup: NVIdentifiable {
 			} else {
 				NVLog.log("Group (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
-			_story.Delegates.forEach{$0.nvGroupEntryDidChange(story: _story, group: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupEntryDidChange(story: _story, group: self)}
 		}
 	}
 	private(set) var Beats: [NVBeat]
@@ -63,7 +63,7 @@ class NVGroup: NVIdentifiable {
 		beat.Parent = self
 		
 		NVLog.log("Added Beat (\(beat.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvGroupDidAddBeat(story: _story, group: self, beat: beat)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddBeat(story: _story, group: self, beat: beat)}
 	}
 	func remove(beat: NVBeat) {
 		guard let idx = Beats.index(of: beat) else {
@@ -74,7 +74,7 @@ class NVGroup: NVIdentifiable {
 		beat.Parent = nil
 		
 		NVLog.log("Removed Beat (\(beat.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvGroupDidRemoveBeat(story: _story, group: self, beat: beat)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveBeat(story: _story, group: self, beat: beat)}
 		
 		if Entry == beat {
 			Entry = nil
@@ -98,7 +98,7 @@ class NVGroup: NVIdentifiable {
 		group.Parent = self
 		
 		NVLog.log("Added Group (\(group.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvGroupDidAddGroup(story: _story, group: self, child: group)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddGroup(story: _story, group: self, child: group)}
 	}
 	func remove(group: NVGroup) {
 		guard let idx = Groups.index(of: group) else {
@@ -109,7 +109,7 @@ class NVGroup: NVIdentifiable {
 		group.Parent = nil
 		
 		NVLog.log("Removed Group (\(group.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
 	}
 	
 	func contains(beatLink: NVBeatLink) -> Bool {
@@ -123,7 +123,7 @@ class NVGroup: NVIdentifiable {
 		BeatLinks.append(beatLink)
 		
 		NVLog.log("Added BeatLink (\(beatLink.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvGroupDidAddBeatLink(story: _story, group: self, link: beatLink)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddBeatLink(story: _story, group: self, link: beatLink)}
 	}
 	func remove(beatLink: NVBeatLink) {
 		guard let idx = BeatLinks.index(of: beatLink) else {
@@ -133,7 +133,7 @@ class NVGroup: NVIdentifiable {
 		BeatLinks.remove(at: idx)
 		
 		NVLog.log("Removed BeatLink (\(beatLink.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvGroupDidRemoveBeatLink(story: _story, group: self, link: beatLink)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveBeatLink(story: _story, group: self, link: beatLink)}
 	}
 }
 

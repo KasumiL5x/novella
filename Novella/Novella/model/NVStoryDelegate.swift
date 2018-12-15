@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NVStoryDelegate: class {
+protocol NVStoryDelegate: AnyObject {
 	// creation
 	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup)
 	func nvStoryDidMakeBeat(story: NVStory, beat: NVBeat)

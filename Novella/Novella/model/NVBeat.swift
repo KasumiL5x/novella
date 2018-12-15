@@ -15,13 +15,13 @@ class NVBeat: NVIdentifiable {
 	var Label: String {
 		didSet {
 			NVLog.log("Beat (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
-			_story.Delegates.forEach{$0.nvBeatLabelDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatLabelDidChange(story: _story, beat: self)}
 		}
 	}
 	var Parallel: Bool {
 		didSet {
 			NVLog.log("Beat (\(UUID.uuidString)) Parallel changed (\(oldValue) -> \(Parallel)).", level: .info)
-			_story.Delegates.forEach{$0.nvBeatParallelDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatParallelDidChange(story: _story, beat: self)}
 		}
 	}
 	var PreCondition: NVCondition
@@ -36,7 +36,7 @@ class NVBeat: NVIdentifiable {
 			} else {
 				NVLog.log("Beat (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
-			_story.Delegates.forEach{$0.nvBeatEntryDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatEntryDidChange(story: _story, beat: self)}
 		}
 	}
 	private(set) var Events: [NVEvent]
@@ -68,7 +68,7 @@ class NVBeat: NVIdentifiable {
 		event.Parent = self
 		
 		NVLog.log("Added Event (\(event.UUID.uuidString)) to Beat (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvBeatDidAddEvent(story: _story, beat: self, event: event)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatDidAddEvent(story: _story, beat: self, event: event)}
 	}
 	func remove(event: NVEvent) {
 		guard let idx = Events.index(of: event) else {
@@ -79,7 +79,7 @@ class NVBeat: NVIdentifiable {
 		event.Parent = nil
 		
 		NVLog.log("Removed Event (\(event.UUID.uuidString)) from Beat (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvBeatDidRemoveEvent(story: _story, beat: self, event: event)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatDidRemoveEvent(story: _story, beat: self, event: event)}
 		
 		if Entry == event {
 			Entry = nil
@@ -96,7 +96,7 @@ class NVBeat: NVIdentifiable {
 		}
 		EventLinks.append(eventLink)
 		NVLog.log("Added EventLink (\(eventLink.UUID.uuidString)) to Beat (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvBeatDidAddEventLink(story: _story, beat: self, link: eventLink)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatDidAddEventLink(story: _story, beat: self, link: eventLink)}
 	}
 	func remove(eventLink: NVEventLink) {
 		guard let idx = EventLinks.index(of: eventLink) else {
@@ -105,7 +105,7 @@ class NVBeat: NVIdentifiable {
 		}
 		EventLinks.remove(at: idx)
 		NVLog.log("Removed EventLink (\(eventLink.UUID.uuidString)) from Beat (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.forEach{$0.nvBeatDidRemoveEventLink(story: _story, beat: self, link: eventLink)}
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatDidRemoveEventLink(story: _story, beat: self, link: eventLink)}
 	}
 }
 

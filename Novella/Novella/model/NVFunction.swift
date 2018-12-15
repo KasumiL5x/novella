@@ -12,7 +12,7 @@ class NVFunction {
 	private let _story: NVStory
 	var Code: String = "" {
 		didSet {
-			_story.Delegates.forEach{$0.nvFunctionCodeDidChange(story: _story, function: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvFunctionCodeDidChange(story: _story, function: self)}
 		}
 	}
 	private(set) var FunctionName: String

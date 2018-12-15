@@ -10,7 +10,12 @@ import Foundation
 import JavaScriptCore
 
 class NVStory {
-	private(set) var Delegates: [NVStoryDelegate]
+	// Delegates are stored as a generic AnyObject but are actually NVStoryDelegate.  This is because to have weak
+	// references to protocols, you must use a load of hacky code, or NSHashTable/Set. However, they usually require
+	// @objc for protocols, which means that all functions in the protocol need to derive from NSObject. This is shit.
+	// However, it seems you can ADD and then CAST the types. As long as I abstract the adding, I can guarantee the type.
+	private(set) var Delegates = NSHashTable<AnyObject>()
+	
 	private var _identifiables: [NVIdentifiable]
 	private(set) var MainGroup: NVGroup! // see init for ! usage
 	private(set) var JVM: JSContext
@@ -38,7 +43,6 @@ class NVStory {
 	}
 	
 	init() {
-		self.Delegates = []
 		self._identifiables = []
 		self.MainGroup = nil // cannot use self here so nil it first
 		self.JVM = JSContext()
@@ -128,25 +132,11 @@ class NVStory {
 		JVM.setObject(js_setdub, forKeyedSubscript: "setdub" as (NSCopying & NSObjectProtocol))
 	}
 	
-	private func indexOfDelegate(_ delegate: NVStoryDelegate) -> Int {
-		for i in 0..<Delegates.count {
-			if Delegates[i] === delegate {
-				return i
-			}
-		}
-		return -1
-	}
 	func addDelegate(_ delegate: NVStoryDelegate) {
-		if indexOfDelegate(delegate) != -1 {
-			return
-		}
-		Delegates.append(delegate)
+		Delegates.add(delegate)
 	}
 	func removeDelegate(_ delegate: NVStoryDelegate) {
-		let idx = indexOfDelegate(delegate)
-		if idx != -1 {
-			Delegates.remove(at: idx)
-		}
+		Delegates.remove(delegate)
 	}
 	
 	func find(uuid: String) -> NVIdentifiable? {
@@ -159,7 +149,7 @@ class NVStory {
 		_identifiables.append(group)
 		
 		NVLog.log("Created Group (\(group.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeGroup(story: self, group: group)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeGroup(story: self, group: group)}
 		return group
 	}
 	func makeBeat(uuid: NSUUID?=nil) -> NVBeat {
@@ -167,7 +157,7 @@ class NVStory {
 		_identifiables.append(beat)
 		
 		NVLog.log("Created Beat (\(beat.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeBeat(story: self, beat: beat)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeBeat(story: self, beat: beat)}
 		return beat
 	}
 	func makeDNBeat(uuid: NSUUID?=nil) -> NVDiscoverableBeat {
@@ -175,7 +165,7 @@ class NVStory {
 		_identifiables.append(beat)
 		
 		NVLog.log("Created DiscoverableBeat (\(beat.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeBeat(story: self, beat: beat)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeBeat(story: self, beat: beat)}
 		return beat
 	}
 	func makeEvent(uuid: NSUUID?=nil) -> NVEvent {
@@ -183,7 +173,7 @@ class NVStory {
 		_identifiables.append(event)
 		
 		NVLog.log("Created Event (\(event.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeEvent(story: self, event: event)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEvent(story: self, event: event)}
 		return event
 	}
 	func makeEntity(uuid: NSUUID?=nil) -> NVEntity {
@@ -191,7 +181,7 @@ class NVStory {
 		_identifiables.append(entity)
 		
 		NVLog.log("Created Entity (\(entity.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeEntity(story: self, entity: entity)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEntity(story: self, entity: entity)}
 		return entity
 	}
 	func makeBeatLink(uuid: NSUUID?=nil, origin: NVBeat, dest: NVBeat?) -> NVBeatLink {
@@ -199,7 +189,7 @@ class NVStory {
 		_identifiables.append(link)
 		
 		NVLog.log("Created BeatLink (\(link.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeBeatLink(story: self, link: link)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeBeatLink(story: self, link: link)}
 		return link
 	}
 	func makeEventLink(uuid: NSUUID?=nil, origin: NVEvent, dest: NVEvent?) -> NVEventLink {
@@ -207,7 +197,7 @@ class NVStory {
 		_identifiables.append(link)
 		
 		NVLog.log("Created EventLink (\(link.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeEventLink(story: self, link: link)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEventLink(story: self, link: link)}
 		return link
 	}
 	func makeVariable(uuid: NSUUID?=nil) -> NVVariable {
@@ -215,7 +205,7 @@ class NVStory {
 		_identifiables.append(variable)
 		
 		NVLog.log("Created Variable (\(variable.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidMakeVariable(story: self, variable: variable)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeVariable(story: self, variable: variable)}
 		return variable
 	}
 	
@@ -247,7 +237,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Group (\(group.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteGroup(story: self, group: group)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteGroup(story: self, group: group)}
 	}
 	func delete(beat: NVBeat) {
 		// remove from any links as source or destination
@@ -284,7 +274,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Beat (\(beat.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteBeat(story: self, beat: beat)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteBeat(story: self, beat: beat)}
 	}
 	func delete(event: NVEvent) {
 		// remove from any links as source or destination
@@ -312,7 +302,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Event (\(event.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteEvent(story: self, event: event)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEvent(story: self, event: event)}
 	}
 	func delete(entity: NVEntity) {
 		// remove from all events
@@ -328,7 +318,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Entity (\(entity.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteEntity(story: self, entity: entity)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEntity(story: self, entity: entity)}
 	}
 	func delete(beatLink: NVBeatLink) {
 		// remove from all groups that contain it
@@ -344,7 +334,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted BeatLink (\(beatLink.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteBeatLink(story: self, link: beatLink)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteBeatLink(story: self, link: beatLink)}
 	}
 	func delete(eventLink: NVEventLink) {
 		// remove from all beats that contain it
@@ -360,7 +350,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted EventLink (\(eventLink.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteEventLink(story: self, link: eventLink)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEventLink(story: self, link: eventLink)}
 	}
 	func delete(variable: NVVariable) {
 		// remove from story
@@ -369,6 +359,6 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Variable (\(variable.UUID.uuidString)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteVariable(story: self, variable: variable)}
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteVariable(story: self, variable: variable)}
 	}
 }
