@@ -34,6 +34,25 @@ class TransformPropertyView: NSView {
 		obj.add(delegate: self)
 		print("TODO: How and when do I remove this delegate? Is it auto removed when this class dies? Need to check.")
 	}
+	
+	@IBAction func onPosX(_ sender: NSTextField) {
+		moveObject()
+	}
+	@IBAction func onPosY(_ sender: NSTextField) {
+		moveObject()
+	}
+	
+	private func moveObject() {
+		// get x double
+		guard let xfmt = (_positionX.formatter as? NumberFormatter), let x = xfmt.number(from: _positionX.stringValue)?.floatValue else {
+			return
+		}
+		// get y double
+		guard let yfmt = (_positionY.formatter as? NumberFormatter), let y = yfmt.number(from: _positionY.stringValue)?.floatValue else {
+			return
+		}
+		_obj?.move(to: NSMakePoint(CGFloat(x), CGFloat(y)))
+	}
 }
 extension TransformPropertyView: CanvasObjectDelegate {
 	func canvasObjectMoved(obj: CanvasObject) {
