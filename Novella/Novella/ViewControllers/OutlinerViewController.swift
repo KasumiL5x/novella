@@ -220,6 +220,12 @@ extension OutlinerViewController: NVStoryDelegate {
 	
 	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat) {
 		_outlineView.reloadItem(beat)
+		for i in 0..<_outlineView.numberOfRows {
+			let item = _outlineView.item(atRow: i)
+			if let asBeatLink = item as? NVBeatLink, asBeatLink.Origin == beat || asBeatLink.Destination == beat {
+				_outlineView.reloadItem(item)
+			}
+		}
 	}
 	
 	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
@@ -258,6 +264,13 @@ extension OutlinerViewController: NVStoryDelegate {
 	
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		_outlineView.reloadItem(event)
+		
+		for i in 0..<_outlineView.numberOfRows {
+			let item = _outlineView.item(atRow: i)
+			if let asEventLink = item as? NVEventLink, asEventLink.Origin == event || asEventLink.Destination == event {
+				_outlineView.reloadItem(item)
+			}
+		}
 	}
 	
 	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
