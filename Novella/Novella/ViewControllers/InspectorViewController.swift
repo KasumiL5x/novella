@@ -9,6 +9,8 @@
 import Cocoa
 
 class InspectorViewController: NSViewController {
+	@IBOutlet weak private var _statusLabel: NSTextField!
+	
 	private var _currentFocus: CanvasObject? = nil
 	
 	override func viewDidAppear() {
@@ -30,11 +32,17 @@ class InspectorViewController: NSViewController {
 		if selection.isEmpty {
 			_currentFocus = nil
 			setupForNil()
+			_statusLabel.stringValue = "No selection."
+			_statusLabel.isHidden = false
 			return
 		}
 		
 		if selection.count > 1 {
 			print("You have selected multiple objects but only the first object's properties are shown for now.")
+			setupForNil()
+			_statusLabel.stringValue = "Multiple objects selected."
+			_statusLabel.isHidden = false
+			return
 		}
 		
 		// if the same, do nothing
@@ -64,7 +72,7 @@ class InspectorViewController: NSViewController {
 	}
 	
 	private func setupForNil() {
-		view.subviews.removeAll()
+		view.subviews.filter{$0 != _statusLabel}.reversed().forEach{$0.removeFromSuperview()}
 	}
 	
 	private func setupFor(group: CanvasGroup) {

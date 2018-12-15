@@ -62,9 +62,6 @@ class BeatPropertyView: NSView {
 		
 		_label.stringValue = beat.Beat.Label
 		_parallel.state = beat.Beat.Parallel ? .on : .off
-		
-		// callbacks for both getting and setting etc.
-		print("TODO: Setup for beat.")
 	}
 	
 	@IBAction func onLabelChanged(_ sender: NSTextField) {
