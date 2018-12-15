@@ -27,7 +27,6 @@ class CanvasBeat: CanvasObject {
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
 		ContextMenu.addItem(NSMenuItem.separator())
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasBeat.onAddLink), keyEquivalent: "")
-		ContextMenu.addItem(withTitle: "Parallel", action: #selector(CanvasBeat.onParallel), keyEquivalent: "")
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
@@ -97,10 +96,6 @@ class CanvasBeat: CanvasObject {
 	
 	@objc private func onAddLink() {
 		_canvas.makeBeatLink(beat: self)
-	}
-	
-	@objc private func onParallel() {
-		Beat.Parallel = !Beat.Parallel
 	}
 	
 	// virtuals
