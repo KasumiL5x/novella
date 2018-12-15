@@ -127,7 +127,7 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup) {
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
 		updateChangeCount(.changeDone)
 	}
 	

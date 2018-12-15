@@ -64,6 +64,7 @@ extension TransformPropertyView: CanvasObjectDelegate {
 class BeatPropertyView: NSView {
 	@IBOutlet weak private var _label: NSTextField!
 	@IBOutlet weak private var _parallel: NSButton!
+	@IBOutlet weak private var _entry: NSButton!
 	
 	private var _beat: CanvasBeat? = nil
 	
@@ -84,6 +85,7 @@ class BeatPropertyView: NSView {
 		
 		_label.stringValue = beat.Beat.Label
 		_parallel.state = beat.Beat.Parallel ? .on : .off
+		_entry.state = beat.Beat.Parent?.Entry == beat.Beat ? .on : .off
 	}
 	
 	@IBAction func onLabelChanged(_ sender: NSTextField) {
@@ -92,5 +94,9 @@ class BeatPropertyView: NSView {
 	
 	@IBAction func onParallelChanged(_ sender: NSButton) {
 		_beat?.Beat.Parallel = sender.state == .on
+	}
+	
+	@IBAction func onEntryChanged(_ sender: NSButton) {
+		_beat?.Beat.Parent?.Entry = sender.state == .on ? _beat?.Beat : nil
 	}
 }

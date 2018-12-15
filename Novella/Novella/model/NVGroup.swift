@@ -30,7 +30,7 @@ class NVGroup: NVIdentifiable {
 			} else {
 				NVLog.log("Group (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupEntryDidChange(story: _story, group: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupEntryDidChange(story: _story, group: self, oldEntry: oldValue, newEntry: Entry)}
 		}
 	}
 	private(set) var Beats: [NVBeat]

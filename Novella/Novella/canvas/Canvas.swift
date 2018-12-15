@@ -410,7 +410,13 @@ extension Canvas: NVStoryDelegate {
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
 	}
 	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup) {
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
+		if let old = oldEntry {
+			canvasBeatFor(nvBeat: old)?.redraw()
+		}
+		if let new = newEntry {
+			canvasBeatFor(nvBeat: new)?.redraw()
+		}
 	}
 	
 	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {

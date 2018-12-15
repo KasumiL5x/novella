@@ -15,13 +15,15 @@ class CanvasBeat: CanvasObject {
 	let Beat: NVBeat
 	private let _outlineLayer: CAShapeLayer
 	private let _parallelLayer: CAShapeLayer
+	private let _entryLayer: CAShapeLayer
 	private let _labelLayer: CATextLayer
 	
 	init(canvas: Canvas, beat: NVBeat) {
 		self.Beat = beat
 		self._outlineLayer = CAShapeLayer()
-		self._labelLayer = CATextLayer()
 		self._parallelLayer = CAShapeLayer()
+		self._entryLayer = CAShapeLayer()
+		self._labelLayer = CATextLayer()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
@@ -69,6 +71,16 @@ class CanvasBeat: CanvasObject {
 		_parallelLayer.frame.origin = NSMakePoint(bounds.maxX - parallelSize - 3.0, 3.0)
 		_parallelLayer.opacity = 0.0
 		layer?.addSublayer(_parallelLayer)
+		
+		// entry layer
+		let entrySize: CGFloat = 15.0
+		_entryLayer.path = NSBezierPath(ovalIn: NSMakeRect(0, 0, entrySize, entrySize)).cgPath
+		_entryLayer.fillColor = NSColor.fromHex("#ffaacc").cgColor
+		_entryLayer.strokeColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.1).cgColor
+		_entryLayer.lineWidth = 2.0
+		_entryLayer.frame.origin = NSMakePoint(_parallelLayer.frame.minX - entrySize, 3.0)
+		_entryLayer.opacity = 0.0
+		layer?.addSublayer(_entryLayer)
 		
 		// label
 		_labelLayer.string = "Unnamed"
@@ -128,9 +140,9 @@ class CanvasBeat: CanvasObject {
 	}
 	override func redraw() {
 		_parallelLayer.opacity = Beat.Parallel ? 1.0 : 0.0
+		_entryLayer.opacity = Beat.Parent?.Entry == Beat ? 1.0 : 0.0
 	}
 	override func reloadData() {
 		_labelLayer.string = Beat.Label.isEmpty ? "Unnamed" : Beat.Label
-		
 	}
 }

@@ -29,7 +29,7 @@ protocol NVStoryDelegate: AnyObject {
 	
 	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup)
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup)
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?)
 	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat)
 	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat)
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup)

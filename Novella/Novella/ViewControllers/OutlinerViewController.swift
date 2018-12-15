@@ -196,7 +196,7 @@ extension OutlinerViewController: NVStoryDelegate {
 		_outlineView.reloadItem(group)
 	}
 	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup) {
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
 	}
 	
 	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
