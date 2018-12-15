@@ -20,7 +20,11 @@ class TransformPropertyView: NSView {
 	@IBOutlet weak public var _positionX: NSTextField!
 	@IBOutlet weak public var _positionY: NSTextField!
 	
+	private var _obj: CanvasObject?
+	
 	private func setupFor(obj: CanvasObject) {
+		_obj = obj
+		
 		wantsLayer = true
 		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
 		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
@@ -31,7 +35,6 @@ class TransformPropertyView: NSView {
 		print("TODO: How and when do I remove this delegate? Is it auto removed when this class dies? Need to check.")
 	}
 }
-
 extension TransformPropertyView: CanvasObjectDelegate {
 	func canvasObjectMoved(obj: CanvasObject) {
 		_positionX.stringValue = "\(obj.frame.origin.x)"

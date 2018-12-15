@@ -8,8 +8,14 @@
 
 import Cocoa
 
-protocol CanvasObjectDelegate: class {
+@objc protocol CanvasObjectDelegate: AnyObject {
 	func canvasObjectMoved(obj: CanvasObject)
+}
+final class WeakCanvasObjectDelegate {
+	private(set) weak var value: CanvasObjectDelegate?
+	init(value: CanvasObjectDelegate?) {
+		self.value = value
+	}
 }
 
 class CanvasObject: NSView {
@@ -28,13 +34,13 @@ class CanvasObject: NSView {
 			redraw()
 		}
 	}
-	private var _delegates: [CanvasObjectDelegate]
+	private var _delegates = NSHashTable<CanvasObjectDelegate>.weakObjects()
 	
 	init(canvas: Canvas, frame: NSRect) {
 		self._canvas = canvas
 		self._lastPanPos = CGPoint.zero
 		self.ContextMenu = NSMenu()
-		self._delegates = []
+		
 		super.init(frame: frame)
 		
 		wantsLayer = true
@@ -64,21 +70,17 @@ class CanvasObject: NSView {
 	}
 	
 	func add(delegate: CanvasObjectDelegate) {
-		_delegates.append(delegate)
+		_delegates.add(delegate)
 	}
 	func remove(delegate: CanvasObjectDelegate) {
-		for i in 0..<_delegates.count {
-			if _delegates[i] === delegate {
-				_delegates.remove(at: i)
-				break
-			}
-		}
+		_delegates.remove(delegate)
+		// not strictly necesary as NSHashTable removes nil values from allObjects
 	}
 	
 	func move(to: CGPoint) {
 		frame.origin = to
 		onMove()
-		_delegates.forEach{$0.canvasObjectMoved(obj: self)}
+		_delegates.allObjects.forEach{$0.canvasObjectMoved(obj: self)}
 	}
 	
 	@objc private func _onClick(gesture: NSClickGestureRecognizer) {

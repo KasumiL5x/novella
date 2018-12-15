@@ -80,14 +80,14 @@ class InspectorViewController: NSViewController {
 	}
 	
 	private func setupFor(beat: CanvasBeat) {
-		let xform = TransformPropertyView.instantiate(obj: beat)
-		view.addSubview(xform)
-		xform.translatesAutoresizingMaskIntoConstraints = false
+		weak var xform = TransformPropertyView.instantiate(obj: beat)
+		view.addSubview(xform!)
+		xform!.translatesAutoresizingMaskIntoConstraints = false
 		view.addConstraints([
-			NSLayoutConstraint(item: xform, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform.frame.width),
-			NSLayoutConstraint(item: xform, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform.frame.height),
-			NSLayoutConstraint(item: xform, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 5.0),
-			NSLayoutConstraint(item: xform, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+			NSLayoutConstraint(item: xform!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform!.frame.width),
+			NSLayoutConstraint(item: xform!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform!.frame.height),
+			NSLayoutConstraint(item: xform!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 5.0),
+			NSLayoutConstraint(item: xform!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
 		])
 		
 		let props = BeatPropertyView.instantiate(beat: beat)
