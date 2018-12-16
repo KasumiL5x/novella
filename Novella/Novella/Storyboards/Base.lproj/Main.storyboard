@@ -738,7 +738,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <segue destination="mF0-7K-Mpf" kind="show" id="iYt-ko-1ki"/>
+                                            <segue destination="mF0-7K-Mpf" kind="show" identifier="InspectorVC" id="iYt-ko-1ki"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -134,6 +134,11 @@ class CanvasObject: NSView {
 	}
 	func onDoubleClick(gesture: NSClickGestureRecognizer) {
 		// double click gesture
+		
+		// send double click notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil, userInfo: [
+			"object": self
+		])
 	}
 	func onContextClick(gesture: NSClickGestureRecognizer) {
 		// context click gesture

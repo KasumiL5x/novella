@@ -23,6 +23,33 @@ class InspectorViewController: NSViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(InspectorViewController.onCanvasSelectionChanged), name: NSNotification.Name.nvCanvasSelectionChanged, object: nil)
 	}
 	
+	func setupFor(object: CanvasObject) {
+		// if the same, do nothing
+		if _currentFocus == object {
+			print("Selected an already selected object; doing nothing.")
+			return
+		}
+		
+		// store new selection focus
+		_currentFocus = object
+		// clear existing controls
+		setupForNil()
+		
+		switch _currentFocus {
+		case let asGroup as CanvasGroup:
+			setupFor(group: asGroup)
+			
+		case let asBeat as CanvasBeat:
+			setupFor(beat: asBeat)
+			
+		case let asEvent as CanvasEvent:
+			setupFor(event: asEvent)
+			
+		default:
+			print("Received nvCanvasSelectionChanged notification but the selection was unknown.")
+		}
+	}
+	
 	@objc private func onCanvasSelectionChanged(_ sender: NSNotification) {
 		guard let selection = sender.userInfo?["selection"] as? [CanvasObject] else {
 			return
@@ -45,30 +72,7 @@ class InspectorViewController: NSViewController {
 			return
 		}
 		
-		// if the same, do nothing
-		if _currentFocus == selection[0] {
-			print("Selected an already selected object; doing nothing.")
-			return
-		}
-		
-		// store new selection focus
-		_currentFocus = selection[0]
-		// clear existing controls
-		setupForNil()
-		
-		switch _currentFocus {
-		case let asGroup as CanvasGroup:
-			setupFor(group: asGroup)
-			
-		case let asBeat as CanvasBeat:
-			setupFor(beat: asBeat)
-			
-		case let asEvent as CanvasEvent:
-			setupFor(event: asEvent)
-			
-		default:
-			print("Received nvCanvasSelectionChanged notification but the selection was unknown.")
-		}
+		setupFor(object: selection[0])
 	}
 	
 	private func setupForNil() {

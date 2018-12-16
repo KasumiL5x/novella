@@ -114,14 +114,6 @@ class CanvasBeat: CanvasObject {
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#FF5E3A")
 	}
-	override func onClick(gesture: NSClickGestureRecognizer) {
-	}
-	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
-	}
-	override func onContextClick(gesture: NSClickGestureRecognizer) {
-	}
-	override func onPan(gesture: NSPanGestureRecognizer) {
-	}
 	override func onMove() {
 		_canvas.Doc.Positions[Beat.UUID] = frame.origin
 	}
