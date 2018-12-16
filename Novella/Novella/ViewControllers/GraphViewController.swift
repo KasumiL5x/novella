@@ -55,7 +55,7 @@ class GraphViewController: NSViewController {
 			cell.tag = idx
 			switch _currentPathResult.objects[idx] {
 			case is NVGroup:
-				cell.image = NSImage(named: NSImage.folderName)
+				cell.image = NSImage(named: "NVGroup") ?? NSImage(named: NSImage.cautionName)
 			case is NVBeat:
 				cell.image = NSImage(named: NSImage.cautionName)
 			case is NVEvent:
