@@ -13,6 +13,7 @@ class OutlinerViewController: NSViewController {
 	
 	private var _document: Document? = nil
 	private var _linkIcon: NSImage?
+	private var _groupImage: NSImage?
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
@@ -20,6 +21,7 @@ class OutlinerViewController: NSViewController {
 	
 	override func viewDidLoad() {
 		_linkIcon = NSImage(named: "NVLink")
+		_groupImage = NSImage(named: "NVGroup")
 		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
@@ -51,6 +53,7 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 		switch item {
 		case let asGroup as NVGroup:
 			(view as? NSTableCellView)?.textField?.stringValue = asGroup.Label
+			(view as? NSTableCellView)?.imageView?.image = _groupImage ?? NSImage(named: NSImage.cautionName)
 			
 		case let asBeat as NVBeat:
 			(view as? NSTableCellView)?.textField?.stringValue = asBeat.Label
