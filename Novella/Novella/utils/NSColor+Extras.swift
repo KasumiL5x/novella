@@ -39,3 +39,18 @@ public extension NSColor {
 		return hexString as String
 	}
 }
+
+public extension NSColor {
+	public func lighter(removeSaturation val: CGFloat, resultAlpha alpha: CGFloat?=nil) -> NSColor {
+		return NSColor(calibratedHue: hueComponent,
+									 saturation: max(saturationComponent - val, 0.0),
+									 brightness: brightnessComponent,
+									 alpha: alpha ?? alphaComponent)
+	}
+	public func darker(removeValue val: CGFloat, resultAlpha alpha: CGFloat?=nil) -> NSColor {
+		return NSColor(calibratedHue: hueComponent,
+									 saturation: saturationComponent,
+									 brightness: max(brightnessComponent - val, 0.0),
+									 alpha: alpha ?? alphaComponent)
+	}
+}

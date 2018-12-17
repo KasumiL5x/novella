@@ -34,18 +34,22 @@ class CanvasGroup: CanvasObject {
 		
 		let mainFrame = objectRect()
 		
+		let flagColor = NSColor.fromHex("#99b1c8") //99b1c8
+		let primaryColor = flagColor.lighter(removeSaturation: 0.15) // also #A6BBCF
+		let darkerColor = primaryColor.darker(removeValue: 0.04) // also b3c5d6
+		
 		// main background layer
 		let bgGradient = CAGradientLayer()
 		bgGradient.frame = mainFrame
 		bgGradient.cornerRadius = (max(bgGradient.frame.width, bgGradient.frame.height) * 0.5) * CanvasGroup.Roundness
-		bgGradient.colors = [NSColor.fromHex("#A6BBCF").cgColor, NSColor.fromHex("#b3c5d6").cgColor]
+		bgGradient.colors = [primaryColor.cgColor, darkerColor.cgColor]
 		bgGradient.startPoint = NSPoint.zero
 		bgGradient.endPoint = NSMakePoint(0.0, 1.0)
 		bgGradient.locations = [0.0, 0.3]
 		// outline layer
 		_outlineLayer.fillColor = nil
 		_outlineLayer.path = NSBezierPath(roundedRect: bgGradient.frame, xRadius: bgGradient.cornerRadius, yRadius: bgGradient.cornerRadius).cgPath
-		_outlineLayer.strokeColor = NSColor.fromHex("#b3c5d6").withAlphaComponent(0.4).cgColor //99b1c8
+		_outlineLayer.strokeColor = darkerColor.withAlphaComponent(0.4).cgColor //99b1c8
 		setupOutlineLayer()
 		layer?.addSublayer(_outlineLayer) // add before bg so it's below it
 		layer?.addSublayer(bgGradient)
@@ -54,7 +58,7 @@ class CanvasGroup: CanvasObject {
 		let flagLayer = CAShapeLayer()
 		let flagRect = NSMakeRect(0, 0, mainFrame.width * CanvasGroup.FlagSize, mainFrame.height)
 		flagLayer.path = NSBezierPath.withRoundedCorners(rect: flagRect, byRoundingCorners: [.minXMinY, .minXMaxY], withRadius: bgGradient.cornerRadius, includingEdges: [.all]).cgPath
-		flagLayer.fillColor = NSColor.fromHex("#99b1c8").cgColor
+		flagLayer.fillColor = flagColor.cgColor
 		layer?.addSublayer(flagLayer)
 		
 		// type icon layer

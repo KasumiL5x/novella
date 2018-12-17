@@ -46,7 +46,7 @@
 		DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */; };
 		DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94928D21B96F8C00BC8AB0 /* Canvas.swift */; };
 		DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94928F21B96F9F00BC8AB0 /* CanvasBackground.swift */; };
-		DF94929321B9705400BC8AB0 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */; };
+		DF94929321B9705400BC8AB0 /* NSColor+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929221B9705400BC8AB0 /* NSColor+Extras.swift */; };
 		DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF94929421B9716E00BC8AB0 /* Graph.storyboard */; };
 		DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929621B9723900BC8AB0 /* GraphViewController.swift */; };
 		DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929821B9838F00BC8AB0 /* CanvasObject.swift */; };
@@ -102,7 +102,7 @@
 		DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
 		DF94928D21B96F8C00BC8AB0 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		DF94928F21B96F9F00BC8AB0 /* CanvasBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBackground.swift; sourceTree = "<group>"; };
-		DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
+		DF94929221B9705400BC8AB0 /* NSColor+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Extras.swift"; sourceTree = "<group>"; };
 		DF94929421B9716E00BC8AB0 /* Graph.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Graph.storyboard; sourceTree = "<group>"; };
 		DF94929621B9723900BC8AB0 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		DF94929821B9838F00BC8AB0 /* CanvasObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasObject.swift; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 		DF94929121B9704000BC8AB0 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				DF94929221B9705400BC8AB0 /* NSColor+Hex.swift */,
+				DF94929221B9705400BC8AB0 /* NSColor+Extras.swift */,
 				DF9492A621BA825D00BC8AB0 /* CGPoint+Math.swift */,
 				DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */,
 				DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */,
@@ -366,7 +366,7 @@
 				DF94929D21B98A9100BC8AB0 /* CanvasGroup.swift in Sources */,
 				655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */,
 				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
-				DF94929321B9705400BC8AB0 /* NSColor+Hex.swift in Sources */,
+				DF94929321B9705400BC8AB0 /* NSColor+Extras.swift in Sources */,
 				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
