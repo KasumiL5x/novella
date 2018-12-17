@@ -11,7 +11,10 @@ import AppKit
 class CanvasBackground: NSView {
 	// color
 	private var _backgroundColor: NSColor
-	private var _lineColor: NSColor
+	private var _primaryColor: NSColor
+	private var _secondaryColor: NSColor
+	private var _tertiaryColor: NSColor
+//	private var _lineColor: NSColor
 	// opacity
 	private var _majorOpacity: CGFloat
 	private var _minorOpacity: CGFloat
@@ -28,8 +31,11 @@ class CanvasBackground: NSView {
 	private var _density: CGFloat
 	
 	override init(frame frameRect: NSRect) {
-		self._backgroundColor = NSColor.fromHex("#dfedff")
-		self._lineColor = NSColor.fromHex("#acd3ff")
+		self._backgroundColor = NSColor(named: "NVGridBackground")!
+		self._primaryColor = NSColor(named: "NVGridPrimary")!
+		self._secondaryColor = NSColor(named: "NVGridSecondary")!
+		self._tertiaryColor = NSColor(named: "NVGridTertiary")!
+//		self._lineColor = NSColor.fromHex("#acd3ff")
 		//
 		self._majorOpacity = CGFloat(0.5)
 		self._minorOpacity = CGFloat(0.4)
@@ -39,7 +45,7 @@ class CanvasBackground: NSView {
 		self._minorThickness = CGFloat(1.0)
 		self._thickness = CGFloat(0.5)
 		//
-		self._primaryDivisor = 64
+		self._primaryDivisor = 128
 		self._secondaryDivisor = 32
 		self._tertiaryDivisor = 16
 		//
@@ -70,13 +76,16 @@ class CanvasBackground: NSView {
 			// horizontal lines
 			for i in stride(from: Int(dirtyRect.minY), through: Int(dirtyRect.maxY), by: 1) {
 				if i % _primaryDivisor == 0 {
-					_lineColor.withAlphaComponent(_majorOpacity).set()
+					_primaryColor.set()
+//					_lineColor.withAlphaComponent(_majorOpacity).set()
 					linePath.lineWidth = _majorThickness
 				} else if i % _secondaryDivisor == 0 {
-					_lineColor.withAlphaComponent(_minorOpacity).set()
+					_secondaryColor.set()
+//					_lineColor.withAlphaComponent(_minorOpacity).set()
 					linePath.lineWidth = _minorThickness
 				} else if i % _tertiaryDivisor == 0 {
-					_lineColor.withAlphaComponent(_opacity).set()
+					_tertiaryColor.set()
+//					_lineColor.withAlphaComponent(_opacity).set()
 					linePath.lineWidth = _thickness
 				} else {
 					continue
@@ -92,13 +101,16 @@ class CanvasBackground: NSView {
 			// vertical lines
 			for i in stride(from: Int(dirtyRect.minX), through: Int(dirtyRect.maxX), by: 1) {
 				if i % _primaryDivisor == 0 {
-					_lineColor.withAlphaComponent(_majorOpacity).set()
+					_primaryColor.set()
+//					_lineColor.withAlphaComponent(_majorOpacity).set()
 					linePath.lineWidth = _majorThickness
 				} else if i % _secondaryDivisor == 0 {
-					_lineColor.withAlphaComponent(_minorOpacity).set()
+					_secondaryColor.set()
+//					_lineColor.withAlphaComponent(_minorOpacity).set()
 					linePath.lineWidth = _minorThickness
 				} else if i % _tertiaryDivisor == 0 {
-					_lineColor.withAlphaComponent(_opacity).set()
+					_tertiaryColor.set()
+//					_lineColor.withAlphaComponent(_opacity).set()
 					linePath.lineWidth = _thickness
 				} else {
 					continue
