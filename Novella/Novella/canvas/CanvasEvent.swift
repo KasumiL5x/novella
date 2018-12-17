@@ -26,17 +26,4 @@ class CanvasEvent: CanvasObject {
 	override func onMove() {
 		_canvas.Doc.Positions[Event.UUID] = frame.origin
 	}
-	
-	override func draw(_ dirtyRect: NSRect) {
-		if let context = NSGraphicsContext.current?.cgContext {
-			context.saveGState()
-			
-			NSColor.green.setFill()
-			NSColor.red.setStroke()
-			NSBezierPath(ovalIn: bounds).fill()
-			NSBezierPath(ovalIn: bounds).stroke()
-			
-			context.restoreGState()
-		}
-	}
 }

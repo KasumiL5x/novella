@@ -14,6 +14,14 @@ import Cocoa
 }
 
 class CanvasObject: NSView {
+	static let Roundness: CGFloat = 0.075
+	static let NormalOutlineSize: CGFloat = 1.0
+	static let PrimedOutlineSize: CGFloat = 2.0
+	static let SelectedOutlineSize: CGFloat = 4.0
+	static let FlagSize: CGFloat = 0.3
+	static let IconSize: CGFloat = 0.55
+	static let LabelOffset: CGFloat = 4.0
+	
 	enum State {
 		case normal
 		case primed
@@ -31,37 +39,108 @@ class CanvasObject: NSView {
 	}
 	private var _delegates = NSHashTable<CanvasObjectDelegate>.weakObjects()
 	
+	private let _outlineLayer: CAShapeLayer
+	private let _labelLayer: CATextLayer
+	
 	init(canvas: Canvas, frame: NSRect) {
 		self._canvas = canvas
 		self._lastPanPos = CGPoint.zero
 		self.ContextMenu = NSMenu()
-		
+		self._outlineLayer = CAShapeLayer()
+		self._labelLayer = CATextLayer()
 		super.init(frame: frame)
+		
+		self.frame = objectRect()
+		let mainFrame = objectRect()
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
 		
+		// object colors
+		let primaryColor = mainColor()
+		let lighterColor = primaryColor.lighter(removeSaturation: 0.15)
+		let darkerColor = lighterColor.darker(removeValue: 0.04)
+
+		// main background layer
+		let bgGradient = CAGradientLayer()
+		bgGradient.frame = mainFrame
+		bgGradient.cornerRadius = (max(bgGradient.frame.width, bgGradient.frame.height) * 0.5) * CanvasObject.Roundness
+		bgGradient.colors = [lighterColor.cgColor, darkerColor.cgColor]
+		bgGradient.startPoint = NSPoint.zero
+		bgGradient.endPoint = NSMakePoint(0.0, 1.0)
+		bgGradient.locations = [0.0, 0.3]
+		// outline layer
+		_outlineLayer.fillColor = nil
+		_outlineLayer.path = NSBezierPath(roundedRect: bgGradient.frame, xRadius: bgGradient.cornerRadius, yRadius: bgGradient.cornerRadius).cgPath
+		_outlineLayer.strokeColor = darkerColor.withAlphaComponent(0.4).cgColor //99b1c8
+		setupOutlineLayer()
+		layer?.addSublayer(_outlineLayer) // add before bg so it's below it
+		layer?.addSublayer(bgGradient)
+		
+		// flag layer
+		let flagLayer = CAShapeLayer()
+		let flagRect = NSMakeRect(0, 0, mainFrame.width * CanvasObject.FlagSize, mainFrame.height)
+		flagLayer.path = NSBezierPath.withRoundedCorners(rect: flagRect, byRoundingCorners: [.minXMinY, .minXMaxY], withRadius: bgGradient.cornerRadius, includingEdges: [.all]).cgPath
+		flagLayer.fillColor = primaryColor.cgColor
+		layer?.addSublayer(flagLayer)
+		
+		// type icon layer
+		let iconLayer = CALayer()
+		let typeIconSize = flagRect.width * CanvasObject.IconSize // square as a percentage of the flag
+		iconLayer.frame = NSMakeRect(0, 0, typeIconSize, typeIconSize)
+		iconLayer.frame.setCenter(flagRect.center)
+		iconLayer.contents = NSImage(named: NSImage.cautionName)
+		iconLayer.contentsRect = NSMakeRect(0, 0, 1, 1)
+		iconLayer.contentsGravity = .resizeAspectFill
+		layer?.addSublayer(iconLayer)
+		
+		// label layer
+		_labelLayer.string = "Alan please change this."
+		_labelLayer.contentsScale = NSScreen.main?.backingScaleFactor ?? 1.0
+		_labelLayer.font = NSFont.systemFont(ofSize: 1.0, weight: .light)
+		_labelLayer.fontSize = 8.0
+		_labelLayer.foregroundColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.75).cgColor
+		_labelLayer.frame.size = _labelLayer.preferredFrameSize()
+		_labelLayer.frame.origin = NSMakePoint(flagRect.maxX + CanvasObject.LabelOffset, flagRect.midY - _labelLayer.frame.height * 0.5)
+		_labelLayer.frame.size.width = mainFrame.width - _labelLayer.frame.minX
+		_labelLayer.truncationMode = .middle
+		layer?.addSublayer(_labelLayer)
+		
+		// gestures
 		let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onClick))
 		clickGesture.buttonMask = 0x1
 		clickGesture.numberOfClicksRequired = 1
 		addGestureRecognizer(clickGesture)
-		
+		//
 		let dubGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onDoubleClick))
 		dubGesture.buttonMask = 0x1
 		dubGesture.numberOfClicksRequired = 2
 		addGestureRecognizer(dubGesture)
-		
+		//
 		let ctxGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onContextClick))
 		ctxGesture.buttonMask = 0x2
 		ctxGesture.numberOfClicksRequired = 1
 		addGestureRecognizer(ctxGesture)
-		
+		//
 		let panGesture = NSPanGestureRecognizer(target: self, action: #selector(CanvasObject._onPan))
 		panGesture.buttonMask = 0x1
 		addGestureRecognizer(panGesture)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
+	}
+	
+	private func setupOutlineLayer() {
+		let width: CGFloat
+		switch CurrentState {
+		case .normal:
+			width = CanvasObject.NormalOutlineSize
+		case .primed:
+			width = CanvasObject.PrimedOutlineSize
+		case .selected:
+			width = CanvasObject.SelectedOutlineSize
+		}
+		_outlineLayer.lineWidth = width
 	}
 	
 	func add(delegate: CanvasObjectDelegate) {
@@ -124,42 +203,35 @@ class CanvasObject: NSView {
 	
 	//
 	// virtual functions
-	
-	func mainColor() -> NSColor {
-		// the primary color of the object (often used for flags and so on)
+	func mainColor() -> NSColor { // the primary color of the object
 		return NSColor.fromHex("#FF00FF")
 	}
-	func onClick(gesture: NSClickGestureRecognizer) {
-		// single click gesture
+	func onClick(gesture: NSClickGestureRecognizer) { // single click gesture
 	}
-	func onDoubleClick(gesture: NSClickGestureRecognizer) {
-		// double click gesture
-		
+	func onDoubleClick(gesture: NSClickGestureRecognizer) { // double click gesture
 		// send double click notification
 		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil, userInfo: [
 			"object": self
 		])
 	}
-	func onContextClick(gesture: NSClickGestureRecognizer) {
-		// context click gesture
+	func onContextClick(gesture: NSClickGestureRecognizer) { // context click gesture
 	}
-	func onPan(gesture: NSPanGestureRecognizer) {
-		// pan gesture
+	func onPan(gesture: NSPanGestureRecognizer) { // pan gesture
 	}
-	func onMove() {
-		// when move() is called
+	func onMove() { // when move() is called
 	}
-	func onStateChanged() {
-		// when the state changed
+	func onStateChanged() { // when the state changed
+		setupOutlineLayer()
 	}
-	func redraw() {
-		// redraw the element (including controlling whether layers should be visible or not etc.)
+	func redraw() { // redraw the element (including controlling whether layers should be visible or not etc.)
 	}
-	func objectRect() -> NSRect {
-		// rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
+	func objectRect() -> NSRect { // rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
 		return bounds
 	}
-	func reloadData() {
-		// reload data from the model itself (e.g., update labels)
+	func reloadData() { // reload data from the model itself (e.g., update labels)
+		_labelLayer.string = labelString()
+	}
+	func labelString() -> String { // for derived classes to return the model object's label as everything has this
+		return "Alan, please implement this."
 	}
 }
