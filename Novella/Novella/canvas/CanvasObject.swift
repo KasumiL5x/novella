@@ -34,7 +34,6 @@ class CanvasObject: NSView {
 	var CurrentState: State = .normal {
 		didSet {
 			onStateChanged()
-			redraw()
 		}
 	}
 	private var _delegates = NSHashTable<CanvasObjectDelegate>.weakObjects()
@@ -203,35 +202,43 @@ class CanvasObject: NSView {
 	
 	//
 	// virtual functions
-	func mainColor() -> NSColor { // the primary color of the object
-		return NSColor.fromHex("#FF00FF")
+
+	func onClick(gesture: NSClickGestureRecognizer) {
 	}
-	func onClick(gesture: NSClickGestureRecognizer) { // single click gesture
-	}
-	func onDoubleClick(gesture: NSClickGestureRecognizer) { // double click gesture
+	func onDoubleClick(gesture: NSClickGestureRecognizer) {
 		// send double click notification
 		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil, userInfo: [
 			"object": self
 		])
 	}
-	func onContextClick(gesture: NSClickGestureRecognizer) { // context click gesture
+	func onContextClick(gesture: NSClickGestureRecognizer) {
 	}
-	func onPan(gesture: NSPanGestureRecognizer) { // pan gesture
+	func onPan(gesture: NSPanGestureRecognizer) {
 	}
-	func onMove() { // when move() is called
+	func onMove() {
 	}
-	func onStateChanged() { // when the state changed
+	func onStateChanged() {
 		setupOutlineLayer()
 	}
-	func redraw() { // redraw the element (including controlling whether layers should be visible or not etc.)
+	func mainColor() -> NSColor {
+		return NSColor.fromHex("#FF00FF")
 	}
-	func objectRect() -> NSRect { // rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
-		return bounds
-	}
-	func reloadData() { // reload data from the model itself (e.g., update labels)
-		_labelLayer.string = labelString()
-	}
-	func labelString() -> String { // for derived classes to return the model object's label as everything has this
+	func labelString() -> String {
+		// for derived classes to return the model object's label as everything has this
 		return "Alan, please implement this."
 	}
+	func objectRect() -> NSRect {
+		 // rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
+		return bounds
+	}
+	func reloadData() {
+		_labelLayer.string = labelString()
+	}
 }
+
+// todo:
+// - clean up this code (mainly sort out the virtual functions and possibly merge redraw/reload?)
+// - make sure canvas is adding events because i forgot to!
+// - move beat's entry and parallel layers into the main canvas object and defer choice to derived classes)
+// - recolor and size the bench/links as they are too large now (or make the nodes a little larger perhaps).
+//gruigrungreungreungreungunrieguringruneierguni

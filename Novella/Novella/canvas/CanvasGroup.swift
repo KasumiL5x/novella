@@ -11,8 +11,6 @@ import Cocoa
 class CanvasGroup: CanvasObject {
 	let Group: NVGroup
 	
-
-	
 	init(canvas: Canvas, group: NVGroup) {
 		self.Group = group
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1))
@@ -31,11 +29,15 @@ class CanvasGroup: CanvasObject {
 	}
 	
 	// virtuals
+	override func onMove() {
+		super.onMove()
+		_canvas.Doc.Positions[Group.UUID] = frame.origin
+	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#99b1c8")
 	}
-	override func onMove() {
-		_canvas.Doc.Positions[Group.UUID] = frame.origin
+	override func labelString() -> String {
+		return Group.Label.isEmpty ? "Unknown" : Group.Label
 	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 100.0, 100.0 * 0.25)

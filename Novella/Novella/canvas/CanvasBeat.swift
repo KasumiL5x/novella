@@ -10,6 +10,7 @@ import Cocoa
 
 class CanvasBeat: CanvasObject {
 	let Beat: NVBeat
+	
 	private let _parallelLayer: CAShapeLayer
 	private let _entryLayer: CAShapeLayer
 	
@@ -62,20 +63,22 @@ class CanvasBeat: CanvasObject {
 	}
 	
 	// virtuals
+	override func onMove() {
+		super.onMove()
+		_canvas.Doc.Positions[Beat.UUID] = frame.origin
+	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#FF5E3A")
 	}
-	override func onMove() {
-		_canvas.Doc.Positions[Beat.UUID] = frame.origin
-	}
-	override func redraw() {
-		_parallelLayer.opacity = Beat.Parallel ? 1.0 : 0.0
-		_entryLayer.opacity = Beat.Parent?.Entry == Beat ? 1.0 : 0.0
+	override func labelString() -> String {
+		return Beat.Label.isEmpty ? "Unknown" : Beat.Label
 	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 100.0, 100.0 * 0.25)
 	}
-	override func labelString() -> String {
-		return Beat.Label.isEmpty ? "Unnamed" : Beat.Label
+	override func reloadData() {
+		super.reloadData()
+		_parallelLayer.opacity = Beat.Parallel ? 1.0 : 0.0
+		_entryLayer.opacity = Beat.Parent?.Entry == Beat ? 1.0 : 0.0
 	}
 }
