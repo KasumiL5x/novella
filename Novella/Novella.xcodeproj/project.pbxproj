@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532644D21C055B5009C0ED8 /* CurveHelper.swift */; };
+		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
 		655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F41B421C3924000F7E7D8 /* Inspector.storyboard */; };
 		655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		6532644D21C055B5009C0ED8 /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
+		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
 		655F41B421C3924000F7E7D8 /* Inspector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Inspector.storyboard; sourceTree = "<group>"; };
 		655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViews.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				65CC99A521C23F63008CD7BA /* CustomTables.swift */,
 				65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */,
 				65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */,
+				655864E521C7F6D40080EDFB /* NSRect+Center.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF94929D21B98A9100BC8AB0 /* CanvasGroup.swift in Sources */,
+				655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */,
 				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
 				DF94929321B9705400BC8AB0 /* NSColor+Hex.swift in Sources */,
 				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,
