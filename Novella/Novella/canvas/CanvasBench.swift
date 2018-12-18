@@ -10,7 +10,7 @@ import AppKit
 
 class CanvasBench: NSView {
 	static let Roundness: CGFloat = 0.2
-	static let Padding: CGFloat = 5.0
+	static let Padding: CGFloat = 2.5
 	
 	private var _bglayer: CAShapeLayer
 	private(set) var Items: [CanvasLink]
@@ -34,7 +34,7 @@ class CanvasBench: NSView {
 		layer?.masksToBounds = false
 		
 		// bg layer
-		_bglayer.fillColor = NSColor.fromHex("#FAFAFA").cgColor
+		_bglayer.fillColor = NSColor(named: "NVBenchBackground")!.cgColor
 		layer?.addSublayer(_bglayer)
 		
 		// inital sizing

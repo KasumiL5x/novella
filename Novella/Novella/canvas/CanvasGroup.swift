@@ -40,6 +40,6 @@ class CanvasGroup: CanvasObject {
 		return Group.Label.isEmpty ? "Unknown" : Group.Label
 	}
 	override func objectRect() -> NSRect {
-		return NSMakeRect(0, 0, 100.0, 100.0 * 0.25)
+		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}
 }

@@ -9,7 +9,7 @@
 import AppKit
 
 class CanvasLink: NSView {
-	static let Size: CGFloat = 20.0
+	static let Size: CGFloat = 15.0
 	static let OutlineInset: CGFloat = 3.0
 	static let FillInset: CGFloat = 1.5
 	
@@ -46,9 +46,12 @@ class CanvasLink: NSView {
 		wantsLayer = true
 		layer?.masksToBounds = false
 		
+		let backgroundColor = NSColor(named: "NVLinkBackground")!
+		let outlineColor = NSColor(named: "NVLinkOutline")!
+		
 		// background first
 		let bgLayer = CAShapeLayer()
-		bgLayer.fillColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.05).cgColor
+		bgLayer.fillColor = backgroundColor.cgColor // 0.05
 		bgLayer.path = NSBezierPath(roundedRect: bounds, xRadius: 4.0, yRadius: 4.0).cgPath
 		layer?.addSublayer(bgLayer)
 		
@@ -56,7 +59,7 @@ class CanvasLink: NSView {
 		let outlineRect = bounds.insetBy(dx: CanvasLink.OutlineInset, dy: CanvasLink.OutlineInset)
 		_outlineLayer.lineWidth = 1.0
 		_outlineLayer.fillColor = nil
-		_outlineLayer.strokeColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.5).cgColor
+		_outlineLayer.strokeColor = outlineColor.cgColor // 0.5
 		_outlineLayer.path = NSBezierPath(ovalIn: outlineRect).cgPath
 		layer?.addSublayer(_outlineLayer)
 		

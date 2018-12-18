@@ -34,6 +34,6 @@ class CanvasEvent: CanvasObject {
 		return Event.Label.isEmpty ? "Unknown" : Event.Label
 	}
 	override func objectRect() -> NSRect {
-		return NSMakeRect(0, 0, 100.0, 100.0 * 0.25)
+		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}
 }
