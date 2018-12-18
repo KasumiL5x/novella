@@ -458,6 +458,10 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
+		if beat != MappedBeat {
+			return
+		}
+		makeEvent(nvEvent: event, at: Doc.Positions[event.UUID] ?? centerPoint())
 	}
 	
 	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent) {

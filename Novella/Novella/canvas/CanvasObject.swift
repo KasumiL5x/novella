@@ -237,8 +237,6 @@ class CanvasObject: NSView {
 }
 
 // todo:
-// - clean up this code (mainly sort out the virtual functions and possibly merge redraw/reload?)
-// - make sure canvas is adding events because i forgot to!
 // - move beat's entry and parallel layers into the main canvas object and defer choice to derived classes)
 // - recolor and size the bench/links as they are too large now (or make the nodes a little larger perhaps).
 //gruigrungreungreungreungunrieguringruneierguni

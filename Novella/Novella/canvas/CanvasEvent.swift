@@ -14,6 +14,9 @@ class CanvasEvent: CanvasObject {
 	init(canvas: Canvas, event: NVEvent) {
 		self.Event = event
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
+		
+		// load initial model data
+		reloadData()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -29,5 +32,8 @@ class CanvasEvent: CanvasObject {
 	}
 	override func labelString() -> String {
 		return Event.Label.isEmpty ? "Unknown" : Event.Label
+	}
+	override func objectRect() -> NSRect {
+		return NSMakeRect(0, 0, 100.0, 100.0 * 0.25)
 	}
 }
