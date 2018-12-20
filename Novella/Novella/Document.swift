@@ -163,7 +163,7 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat) {
+	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?) {
 		updateChangeCount(.changeDone)
 	}
 	

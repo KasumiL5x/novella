@@ -80,7 +80,25 @@ class InspectorViewController: NSViewController {
 	}
 	
 	private func setupFor(group: CanvasGroup) {
-		print("Alan please implement groups.")
+		weak var xform = TransformPropertyView.instantiate(obj: group)
+		view.addSubview(xform!)
+		xform!.translatesAutoresizingMaskIntoConstraints = false
+		view.addConstraints([
+			NSLayoutConstraint(item: xform!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform!.frame.width),
+			NSLayoutConstraint(item: xform!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform!.frame.height),
+			NSLayoutConstraint(item: xform!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 5.0),
+			NSLayoutConstraint(item: xform!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+		])
+		
+		weak var props = GroupPropertyView.instantiate(group: group)
+		view.addSubview(props!)
+		props!.translatesAutoresizingMaskIntoConstraints = false
+		view.addConstraints([
+			NSLayoutConstraint(item: props!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props!.frame.width),
+			NSLayoutConstraint(item: props!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props!.frame.height),
+			NSLayoutConstraint(item: props!, attribute: .top, relatedBy: .equal, toItem: xform, attribute: .bottom, multiplier: 1.0, constant: 5.0),
+			NSLayoutConstraint(item: props!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+		])
 	}
 	
 	private func setupFor(beat: CanvasBeat) {
@@ -94,18 +112,36 @@ class InspectorViewController: NSViewController {
 			NSLayoutConstraint(item: xform!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
 		])
 		
-		let props = BeatPropertyView.instantiate(beat: beat)
-		view.addSubview(props)
-		props.translatesAutoresizingMaskIntoConstraints = false
+		weak var props = BeatPropertyView.instantiate(beat: beat)
+		view.addSubview(props!)
+		props!.translatesAutoresizingMaskIntoConstraints = false
 		view.addConstraints([
-			NSLayoutConstraint(item: props, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props.frame.width),
-			NSLayoutConstraint(item: props, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props.frame.height),
-			NSLayoutConstraint(item: props, attribute: .top, relatedBy: .equal, toItem: xform, attribute: .bottom, multiplier: 1.0, constant: 5.0),
-			NSLayoutConstraint(item: props, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+			NSLayoutConstraint(item: props!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props!.frame.width),
+			NSLayoutConstraint(item: props!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props!.frame.height),
+			NSLayoutConstraint(item: props!, attribute: .top, relatedBy: .equal, toItem: xform, attribute: .bottom, multiplier: 1.0, constant: 5.0),
+			NSLayoutConstraint(item: props!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
 		])
 	}
 	
 	private func setupFor(event: CanvasEvent) {
-		print("Alan please implement events.")
+		weak var xform = TransformPropertyView.instantiate(obj: event)
+		view.addSubview(xform!)
+		xform!.translatesAutoresizingMaskIntoConstraints = false
+		view.addConstraints([
+			NSLayoutConstraint(item: xform!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform!.frame.width),
+			NSLayoutConstraint(item: xform!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: xform!.frame.height),
+			NSLayoutConstraint(item: xform!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 5.0),
+			NSLayoutConstraint(item: xform!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+		])
+		
+		weak var props = EventPropertyView.instantiate(event: event)
+		view.addSubview(props!)
+		props!.translatesAutoresizingMaskIntoConstraints = false
+		view.addConstraints([
+			NSLayoutConstraint(item: props!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props!.frame.width),
+			NSLayoutConstraint(item: props!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: props!.frame.height),
+			NSLayoutConstraint(item: props!, attribute: .top, relatedBy: .equal, toItem: xform, attribute: .bottom, multiplier: 1.0, constant: 5.0),
+			NSLayoutConstraint(item: props!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+		])
 	}
 }

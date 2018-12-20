@@ -239,7 +239,7 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
 	}
 	
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat) {
+	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?) {
 	}
 	
 	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {

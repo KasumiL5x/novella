@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65062A3221CB7D24001DD008 /* GroupPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65062A3121CB7D24001DD008 /* GroupPropertyView.xib */; };
+		65062A3421CB80F8001DD008 /* EventPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65062A3321CB80F8001DD008 /* EventPropertyView.xib */; };
 		6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532644D21C055B5009C0ED8 /* CurveHelper.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
 		655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F41B421C3924000F7E7D8 /* Inspector.storyboard */; };
@@ -63,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65062A3121CB7D24001DD008 /* GroupPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupPropertyView.xib; sourceTree = "<group>"; };
+		65062A3321CB80F8001DD008 /* EventPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPropertyView.xib; sourceTree = "<group>"; };
 		6532644D21C055B5009C0ED8 /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
 		655F41B421C3924000F7E7D8 /* Inspector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Inspector.storyboard; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 			children = (
 				65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */,
 				65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */,
+				65062A3121CB7D24001DD008 /* GroupPropertyView.xib */,
+				65062A3321CB80F8001DD008 /* EventPropertyView.xib */,
 			);
 			path = InspectorProperties;
 			sourceTree = "<group>";
@@ -329,8 +335,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */,
+				65062A3421CB80F8001DD008 /* EventPropertyView.xib in Resources */,
 				65AE3DB921C3C44B0026DDE1 /* BeatPropertyView.xib in Resources */,
 				65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */,
+				65062A3221CB7D24001DD008 /* GroupPropertyView.xib in Resources */,
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
 				65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */,
 				655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */,

@@ -40,7 +40,7 @@ protocol NVStoryDelegate: AnyObject {
 	// beats
 	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat)
 	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat)
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat)
+	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?)
 	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent)
 	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent)
 	func nvBeatDidAddEventLink(story: NVStory, beat: NVBeat, link: NVEventLink)

@@ -408,6 +408,7 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
+		canvasGroupFor(nvGroup: group)?.reloadData()
 	}
 	
 	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
@@ -454,7 +455,13 @@ extension Canvas: NVStoryDelegate {
 		canvasBeatFor(nvBeat: beat)?.reloadData()
 	}
 	
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat) {
+	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?) {
+		if let old = oldEntry {
+			canvasEventFor(nvEvent: old)?.reloadData()
+		}
+		if let new = newEntry {
+			canvasEventFor(nvEvent: new)?.reloadData()
+		}
 	}
 	
 	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
@@ -486,9 +493,11 @@ extension Canvas: NVStoryDelegate {
 	}
 	
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
+		canvasEventFor(nvEvent: event)?.reloadData()
 	}
 	
 	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
+		canvasEventFor(nvEvent: event)?.reloadData()
 	}
 	
 	func nvEventDidAddParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {

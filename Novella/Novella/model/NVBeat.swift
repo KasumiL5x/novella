@@ -36,7 +36,7 @@ class NVBeat: NVIdentifiable {
 			} else {
 				NVLog.log("Beat (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatEntryDidChange(story: _story, beat: self)}
+			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatEntryDidChange(story: _story, beat: self, oldEntry: oldValue, newEntry: Entry)}
 		}
 	}
 	private(set) var Events: [NVEvent]

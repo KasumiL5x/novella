@@ -31,8 +31,7 @@ class TransformPropertyView: NSView {
 		
 		_positionX.stringValue = "\(obj.frame.origin.x)"
 		_positionY.stringValue = "\(obj.frame.origin.y)"
-		obj.add(delegate: self)
-		print("TODO: How and when do I remove this delegate? Is it auto removed when this class dies? Need to check.")
+		obj.add(delegate: self) // autoremoves itself once nil thanks to the hash map
 	}
 	
 	@IBAction func onPosX(_ sender: NSTextField) {
@@ -98,5 +97,73 @@ class BeatPropertyView: NSView {
 	
 	@IBAction func onEntryChanged(_ sender: NSButton) {
 		_beat?.Beat.Parent?.Entry = sender.state == .on ? _beat?.Beat : nil
+	}
+}
+
+class GroupPropertyView: NSView {
+	@IBOutlet weak private var _label: NSTextField!
+	
+	private var _group: CanvasGroup? = nil
+	
+	static func instantiate(group: CanvasGroup) -> GroupPropertyView {
+		guard let view: GroupPropertyView = initFromNib() else {
+			fatalError()
+		}
+		view.setupFor(group: group)
+		return view
+	}
+	
+	private func setupFor(group: CanvasGroup) {
+		_group = group
+		
+		wantsLayer = true
+		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
+		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
+		
+		_label.stringValue = group.Group.Label
+	}
+	
+	@IBAction func onLabelChanged(_ sender: NSTextField) {
+		_group?.Group.Label = sender.stringValue
+	}
+}
+
+class EventPropertyView: NSView {
+	@IBOutlet weak var _label: NSTextField!
+	@IBOutlet weak var _parallel: NSButton!
+	@IBOutlet weak var _entry: NSButton!
+	
+	private var _event: CanvasEvent? = nil
+	
+	static func instantiate(event: CanvasEvent) -> EventPropertyView {
+		guard let view: EventPropertyView = initFromNib() else {
+			fatalError()
+		}
+		view.setupFor(event: event)
+		return view
+	}
+	
+	private func setupFor(event: CanvasEvent) {
+		_event = event
+		
+		wantsLayer = true
+		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
+		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
+		
+		_label.stringValue = event.Event.Label
+		_parallel.state = event.Event.Parallel ? .on : .off
+		_entry.state = event.Event.Parent?.Entry == event.Event ? .on : .off
+	}
+	
+	@IBAction func onLabelChanged(_ sender: NSTextField) {
+		_event?.Event.Label = sender.stringValue
+	}
+	
+	@IBAction func onParallelChanged(_ sender: NSButton) {
+		_event?.Event.Parallel = sender.state == .on
+	}
+	
+	@IBAction func onEntryChanged(_ sender: NSButton) {
+		_event?.Event.Parent?.Entry = sender.state == .on ? _event?.Event : nil
 	}
 }
