@@ -15,6 +15,8 @@ class GraphViewController: NSViewController {
 	private var _document: Document? = nil
 	private(set) var MainCanvas: Canvas? = nil
 	private var _currentPathResult: NVPathResult = ("", [])
+	@IBOutlet weak private var _currentZoomLevel: NSTextField!
+	
 	
 	func setup(doc: Document) {
 		_document = doc
@@ -31,6 +33,11 @@ class GraphViewController: NSViewController {
 		MainCanvas!.setupFor(group: doc.Story.MainGroup)
 		
 		_pathControl.doubleAction = #selector(GraphViewController.onPathDoubleClick)
+		
+		// set up callback for the scroll view's clip view bounds change so we can update the magnification label (this unfortunately includes moving, too)
+		_scrollView.contentView.postsBoundsChangedNotifications = true
+		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onScrollViewChanged), name: NSView.boundsDidChangeNotification, object: _scrollView.contentView)
+		updateZoomLabel()
 	}
 	
 	@objc func onPathDoubleClick() {
@@ -42,6 +49,21 @@ class GraphViewController: NSViewController {
 				MainCanvas?.setupFor(beat: asBeat)
 			}
 		}
+	}
+	
+	@objc func onScrollViewChanged() {
+		updateZoomLabel()
+	}
+	private func updateZoomLabel() {
+		// regular percent out of 100
+		let minMag = _scrollView.minMagnification
+		let maxMag = _scrollView.maxMagnification
+		var percent = (_scrollView.magnification - minMag) / (maxMag - minMag)
+		// clamp as macos can slightly go beyond both ways for its elastic physics
+		percent = min(100.0, max(0.0, percent * 100.0))
+		
+		// label with formatting to 2 decimal places
+		_currentZoomLevel.stringValue = "\(String(format: "%.2f", percent))%"
 	}
 	
 	private func updatePath(to: NVPathable) {

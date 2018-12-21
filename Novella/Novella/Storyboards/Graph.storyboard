@@ -17,21 +17,21 @@
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0l6-ub-nlu" userLabel="Scroll View">
                                 <rect key="frame" x="0.0" y="40" width="720" height="440"/>
                                 <clipView key="contentView" id="LxD-2Q-UVD">
-                                    <rect key="frame" x="1" y="1" width="718" height="438"/>
+                                    <rect key="frame" x="1" y="1" width="703" height="423"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJV-mS-PYX">
-                                            <rect key="frame" x="0.0" y="0.0" width="703" height="423"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="688" height="408"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="EXs-bE-hig">
-                                    <rect key="frame" x="1" y="423" width="718" height="16"/>
+                                    <rect key="frame" x="1" y="424" width="703" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="fla-Zq-7V9">
-                                    <rect key="frame" x="703" y="1" width="16" height="438"/>
+                                    <rect key="frame" x="704" y="1" width="15" height="423"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -53,20 +53,31 @@
                                     <constraint firstItem="pmM-ky-sfv" firstAttribute="leading" secondItem="AEX-fu-3wh" secondAttribute="leading" id="eg4-Wa-ieW"/>
                                 </constraints>
                             </customView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oIP-hH-1oo">
+                                <rect key="frame" x="596" y="60" width="106" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" placeholderString="Zoom: 100.00%" id="w0G-Th-3wn">
+                                    <font key="font" size="13" name="Courier"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="AEX-fu-3wh" secondAttribute="bottom" id="7R5-ie-f5P"/>
                             <constraint firstItem="0l6-ub-nlu" firstAttribute="leading" secondItem="v1R-Em-VSE" secondAttribute="leading" id="9m1-c7-yez"/>
+                            <constraint firstAttribute="trailing" secondItem="oIP-hH-1oo" secondAttribute="trailing" constant="20" id="Jnx-Hs-44K"/>
                             <constraint firstAttribute="trailing" secondItem="AEX-fu-3wh" secondAttribute="trailing" id="XkM-3Q-dfq"/>
                             <constraint firstItem="0l6-ub-nlu" firstAttribute="top" secondItem="v1R-Em-VSE" secondAttribute="top" id="Z1V-Yt-Kly"/>
+                            <constraint firstItem="AEX-fu-3wh" firstAttribute="top" secondItem="oIP-hH-1oo" secondAttribute="bottom" constant="20" id="eA0-W4-pmY"/>
                             <constraint firstAttribute="trailing" secondItem="0l6-ub-nlu" secondAttribute="trailing" id="meF-IQ-VDE"/>
                             <constraint firstItem="AEX-fu-3wh" firstAttribute="top" secondItem="0l6-ub-nlu" secondAttribute="bottom" id="qHP-zv-jwn"/>
                             <constraint firstItem="AEX-fu-3wh" firstAttribute="leading" secondItem="v1R-Em-VSE" secondAttribute="leading" id="wNx-eJ-x9Z"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_currentZoomLevel" destination="oIP-hH-1oo" id="oZc-Cp-BHy"/>
                         <outlet property="_pathControl" destination="pmM-ky-sfv" id="XEc-lF-FlF"/>
-                        <outlet property="_scrollView" destination="0l6-ub-nlu" id="wK1-Oc-f4f"/>
+                        <outlet property="_scrollView" destination="0l6-ub-nlu" id="ISX-VH-CD1"/>
                     </connections>
                 </viewController>
                 <customObject id="XI9-Ru-GFc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
