@@ -28,6 +28,10 @@ class Canvas: NSView {
 	private let _addBeatMenuItem: NSMenuItem
 	private let _addEventMenuItem: NSMenuItem
 	private let _surfaceMenuItem: NSMenuItem
+	//
+	private var _rmbPanInitialLocation: CGPoint
+	private var _rmbPanCurrentLocation: CGPoint
+	private var _rmbPanInitialMag: CGFloat
 	
 	init(doc: Document) {
 		self.Doc = doc
@@ -45,6 +49,10 @@ class Canvas: NSView {
 		self._addBeatMenuItem = NSMenuItem(title: "Beat", action: #selector(Canvas.onContextAddBeat), keyEquivalent: "")
 		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
 		self._surfaceMenuItem = NSMenuItem(title: "Surface", action: #selector(Canvas.onContextSurface), keyEquivalent: "")
+		//
+		self._rmbPanInitialLocation = CGPoint.zero
+		self._rmbPanCurrentLocation = CGPoint.zero
+		self._rmbPanInitialMag = 0.0
 		super.init(frame: initialFrame)
 		
 		wantsLayer = true
@@ -52,6 +60,10 @@ class Canvas: NSView {
 		let pan = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onPan))
 		pan.buttonMask = 0x1
 		addGestureRecognizer(pan)
+		
+		let rmbPan = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onRmbPan))
+		rmbPan.buttonMask = 0x2
+		addGestureRecognizer(rmbPan)
 		
 		let ctx = NSClickGestureRecognizer(target: self, action: #selector(Canvas.onContext))
 		ctx.buttonMask = 0x2
@@ -206,6 +218,45 @@ class Canvas: NSView {
 				
 				_marquee.InMarquee = false
 			}
+			
+		default:
+			break
+		}
+	}
+	
+	@objc private func onRmbPan(gesture: NSPanGestureRecognizer) {
+		guard let scrollView = superview?.superview as? NSScrollView else {
+			print("Attempted to RMB pan Canvas but it was not correctly embedded within an NSScrollView (NSScrollView->NSClipView->Canvas).")
+			return
+		}
+		
+		switch gesture.state {
+		case .began:
+			_rmbPanInitialLocation = gesture.location(in: scrollView)
+			_rmbPanCurrentLocation = _rmbPanInitialLocation
+			_rmbPanInitialMag = scrollView.magnification
+			
+		case .changed:
+			let currPos = gesture.location(in: scrollView)
+			
+			if NSApp.currentEvent?.modifierFlags.contains(.shift) ?? false {
+				let diff = (currPos - _rmbPanInitialLocation)
+				let dist = (diff.x - diff.y) * 0.001 // TODO: variable this?
+				scrollView.magnification = _rmbPanInitialMag + dist
+			} else {
+				let panSpeed: CGFloat = 0.5 // TODO: variable this
+				var diff = (currPos - _rmbPanCurrentLocation) * panSpeed
+				diff.x *= scrollView.isFlipped ? -1.0 : 1.0
+				diff.y *= scrollView.isFlipped ? 1.0 : -1.0
+				let center = visibleRect.origin + diff
+				scrollView.contentView.scroll(to: center)
+				scrollView.reflectScrolledClipView(scrollView.contentView)
+			}
+			
+			_rmbPanCurrentLocation = currPos
+			
+		case .cancelled, .ended:
+			break
 			
 		default:
 			break
