@@ -20,6 +20,8 @@
 		65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */; };
 		65AE3DB921C3C44B0026DDE1 /* BeatPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */; };
 		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
+		65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18EB21CE269C00DCB05E /* LinkParker.swift */; };
+		65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
 		65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CC99A921C26876008CD7BA /* Assets.xcassets */; };
@@ -78,6 +80,8 @@
 		65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
 		65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeatPropertyView.xib; sourceTree = "<group>"; };
 		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
+		65BB18EB21CE269C00DCB05E /* LinkParker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkParker.swift; sourceTree = "<group>"; };
+		65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ViewAt.swift"; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
 		65CC99A921C26876008CD7BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */,
 				65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */,
 				655864E521C7F6D40080EDFB /* NSRect+Center.swift */,
+				65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				DFCE604B211C3D20005900D8 /* Info.plist */,
 				DFCE604C211C3D20005900D8 /* novella.entitlements */,
 				65CC99A921C26876008CD7BA /* Assets.xcassets */,
+				65BB18EB21CE269C00DCB05E /* LinkParker.swift */,
 			);
 			path = novella;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
+				65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */,
 				DF9492A921BA82ED00BC8AB0 /* CanvasSelection.swift in Sources */,
 				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
 				DF94929F21B98A9A00BC8AB0 /* CanvasBeat.swift in Sources */,
@@ -415,6 +422,7 @@
 				DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */,
 				DF9492A721BA825D00BC8AB0 /* CGPoint+Math.swift in Sources */,
 				DF93F60D21BD99C100CF5B03 /* CanvasBeatLink.swift in Sources */,
+				65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

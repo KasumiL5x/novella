@@ -39,7 +39,7 @@ class NVLog {
 	static let dateFormatter = DateFormatter()
 	
 	static func log(_ msg: String, level: Level) {
-		if !NVLog.logLevel.contains(level) {
+		if !NVLog.logLevel.contains(level) || level == .none {
 			return
 		}
 		

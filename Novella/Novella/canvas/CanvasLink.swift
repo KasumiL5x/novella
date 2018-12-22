@@ -26,6 +26,8 @@ class CanvasLink: NSView {
 	private(set) var _currentTarget: CanvasObject?
 	//
 	var _curvelayer: CAShapeLayer // no protected in swift...
+	//
+	private var _lastParker: LinkParker? // for drag drop onto a LinkParker
 	
 	init(canvas: Canvas, origin: CanvasObject) {
 		self._canvas = canvas
@@ -41,6 +43,8 @@ class CanvasLink: NSView {
 		self._currentTarget = nil
 		//
 		self._curvelayer = CAShapeLayer()
+		//
+		self._lastParker = nil
 		super.init(frame: NSMakeRect(0, 0, CanvasLink.Size, CanvasLink.Size))
 		
 		wantsLayer = true
@@ -132,6 +136,14 @@ class CanvasLink: NSView {
 			// update previous target
 			_previousTarget = _currentTarget
 			
+			// handle global out-of-canvas dragging (in this case for link parkers)
+			let windowPos = gesture.location(in: nil)
+			let globalHitView = window?.contentView?.viewAt(windowPos)
+			_lastParker?.unprime() // previous
+			_lastParker = globalHitView as? LinkParker
+			_lastParker?.prime() // new one
+			
+			
 		case .cancelled, .ended:
 			_isDragging = false
 			
@@ -157,6 +169,11 @@ class CanvasLink: NSView {
 				strokeAnim.fillMode = .forwards
 				strokeAnim.isRemovedOnCompletion = false
 				_dragLayer.add(strokeAnim, forKey: strokeAnim.keyPath)
+			}
+			
+			// handle drop on parker if present
+			if let parker = _lastParker {
+				parker.park(self)
 			}
 
 		default:
