@@ -21,7 +21,6 @@ class CanvasLink: NSView {
 	//
 	private let _dragLayer: CAShapeLayer
 	private var _isDragging: Bool
-	private var _dragPosition: CGPoint
 	private var _previousTarget: CanvasObject?
 	private(set) var _currentTarget: CanvasObject?
 	//
@@ -38,7 +37,6 @@ class CanvasLink: NSView {
 		//
 		self._dragLayer = CAShapeLayer()
 		self._isDragging = false
-		self._dragPosition = CGPoint.zero
 		self._previousTarget = nil
 		self._currentTarget = nil
 		//
@@ -110,15 +108,13 @@ class CanvasLink: NSView {
 		switch gesture.state {
 		case .began:
 			_isDragging = true
-			_dragPosition = gesture.location(in: self)
 			_dragLayer.strokeColor = NSColor.red.cgColor
 			_dragLayer.path = nil // otherwise after removing animations the path will flicker
 			_dragLayer.removeAllAnimations()
 			
 		case .changed:
-			_dragPosition = gesture.location(in: self)
 			let origin = NSMakePoint(bounds.midX, bounds.midY)
-			_dragLayer.path = CurveHelper.catmullRom(points: [origin, _dragPosition], alpha: 1.0, closed: false).cgPath
+			_dragLayer.path = CurveHelper.catmullRom(points: [origin, gesture.location(in: self)], alpha: 1.0, closed: false).cgPath
 			
 			// update target (only if valid and can be connected to as defined by the derived classes)
 			if let target = _canvas.objectAt(point: gesture.location(in: _canvas), ignoring: Origin), canlinkTo(obj: target) {
@@ -183,6 +179,16 @@ class CanvasLink: NSView {
 		setNeedsDisplay(bounds)
 	}
 	
+	func setTarget(_ target: CanvasObject) {
+		if canlinkTo(obj: target) && target != Origin {
+			_lastParker = nil
+			_previousTarget = nil
+			_currentTarget = target
+			connectTo(obj: target)
+			redraw()
+		}
+	}
+	
 	func updateCurveTo(obj: CanvasObject) {
 		_curvelayer.strokeColor = obj.mainColor().cgColor
 		let origin = NSMakePoint(bounds.midX, bounds.midY)
@@ -198,5 +204,4 @@ class CanvasLink: NSView {
 	func connectTo(obj: CanvasObject?) {
 		print("Alan, please override.")
 	}
-
 }

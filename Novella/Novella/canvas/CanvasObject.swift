@@ -28,6 +28,10 @@ class CanvasObject: NSView {
 		case selected
 	}
 	
+	override var tag: Int {
+		return 0 // anything not -1
+	}
+	
 	private(set) var _canvas: Canvas
 	private var _lastPanPos: CGPoint
 	var ContextMenu: NSMenu
