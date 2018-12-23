@@ -45,6 +45,7 @@ class CanvasObject: NSView {
 	private let _outlineLayer: CAShapeLayer
 	private let _labelLayer: CATextLayer
 	private let _parallelLayer: CAShapeLayer
+	private let _entryLayer: CAShapeLayer
 	
 	init(canvas: Canvas, frame: NSRect) {
 		self._canvas = canvas
@@ -53,6 +54,7 @@ class CanvasObject: NSView {
 		self._outlineLayer = CAShapeLayer()
 		self._labelLayer = CATextLayer()
 		self._parallelLayer = CAShapeLayer()
+		self._entryLayer = CAShapeLayer()
 		super.init(frame: frame)
 		
 		self.frame = objectRect()
@@ -115,26 +117,30 @@ class CanvasObject: NSView {
 		let parallelSize: CGFloat = 15.0
 		_parallelLayer.path = NSBezierPath(ovalIn: NSMakeRect(0, 0, parallelSize, parallelSize)).cgPath
 		_parallelLayer.fillColor = primaryColor.cgColor
-		_parallelLayer.strokeColor = NSColor.fromHex("#3c3c3c").cgColor
+		_parallelLayer.strokeColor = NSColor.fromHex("#f2f2f2").withAlphaComponent(0.75).cgColor
 		_parallelLayer.lineWidth = 2.0
 		_parallelLayer.frame.setCenter(NSMakePoint(mainFrame.minX - parallelSize*0.5, mainFrame.maxY - parallelSize*0.5))
 		_parallelLayer.opacity = 0.0
 		layer?.addSublayer(_parallelLayer)
-//		let parallelText = CATextLayer()
-//		parallelText.string = "P"
-//		parallelText.contentsScale = NSScreen.main?.backingScaleFactor ?? 1.0
-//		parallelText.foregroundColor = NSColor.fromHex("#3c3c3c").cgColor
-//		parallelText.font = NSFont.systemFont(ofSize: 1.0, weight: .bold)
-//////		parallelText.fontSize = 2.0
-//////		parallelText.frame.size = parallelText.preferredFrameSize()
-//////		parallelText.frame.setCenter(NSMakePoint(parallelSize/2, parallelSize/2))
-//		parallelText.frame.size = NSMakeSize(parallelSize, parallelSize)// parallelText.preferredFrameSize()
-//		parallelText.fontSize = CGFloat(fontSizeToFit(forString: NSString(string: parallelText.string as! String), forRect: parallelText.frame, withFont: parallelText.font as! NSFont, margins: NSMakePoint(0, 0), minSize: 3, maxSize: 40))
-//////		parallelText.sizeFontToFillFrame()
-//////		parallelText.frame.setCenter(NSMakePoint(parallelSize/2, parallelSize/2))
-//		parallelText.alignmentMode = .center
-//////		parallelText.backgroundColor = NSColor.green.cgColor
-////		_parallelLayer.addSublayer(parallelText)
+		
+		// entry layer
+		let entryArrowWidth: CGFloat = 35.0
+		let entryArrowSize: CGFloat = 0.2
+		let entryArrowHeight: CGFloat = 0.5
+		let entryPath = NSBezierPath()
+		entryPath.move(to: NSMakePoint(mainFrame.minX - entryArrowWidth, mainFrame.midY))
+		entryPath.line(to: NSMakePoint(mainFrame.minX, mainFrame.midY))
+		entryPath.move(to: NSMakePoint(mainFrame.minX - (entryArrowWidth * entryArrowSize), mainFrame.midY + ((mainFrame.maxY - mainFrame.midY) * entryArrowHeight)))
+		entryPath.line(to: NSMakePoint(mainFrame.minX, mainFrame.midY))
+		entryPath.line(to: NSMakePoint(mainFrame.minX - (entryArrowWidth * entryArrowSize), mainFrame.midY - ((mainFrame.midY - mainFrame.minY) * entryArrowHeight)))
+		_entryLayer.path = entryPath.cgPath
+		_entryLayer.lineCap = .round
+		_entryLayer.lineJoin = .bevel
+		_entryLayer.fillColor = nil
+		_entryLayer.strokeColor = NSColor.fromHex("#FAFAFA").withAlphaComponent(0.8).cgColor
+		_entryLayer.lineWidth = 3.0
+		_entryLayer.opacity = 0.0
+		layer?.addSublayer(_entryLayer)
 		
 		// gestures
 		let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onClick))
@@ -189,6 +195,10 @@ class CanvasObject: NSView {
 	
 	func setParallelLayer(state: Bool) {
 		_parallelLayer.opacity = state ? 1.0 : 0.0
+	}
+	
+	func setEntryLayer(state: Bool) {
+		_entryLayer.opacity = state ? 1.0 : 0.0
 	}
 	
 	@objc private func _onClick(gesture: NSClickGestureRecognizer) {
@@ -270,6 +280,3 @@ class CanvasObject: NSView {
 		_labelLayer.string = labelString()
 	}
 }
-
-// todo:
-// - move beat's entry and parallel layers into the main canvas object and defer choice to derived classes)
