@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		65062A3221CB7D24001DD008 /* GroupPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65062A3121CB7D24001DD008 /* GroupPropertyView.xib */; };
 		65062A3421CB80F8001DD008 /* EventPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65062A3321CB80F8001DD008 /* EventPropertyView.xib */; };
+		65308BB621CF888E00830115 /* sizeFontToFillFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */; };
 		6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532644D21C055B5009C0ED8 /* CurveHelper.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
 		655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F41B421C3924000F7E7D8 /* Inspector.storyboard */; };
@@ -69,6 +70,7 @@
 /* Begin PBXFileReference section */
 		65062A3121CB7D24001DD008 /* GroupPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupPropertyView.xib; sourceTree = "<group>"; };
 		65062A3321CB80F8001DD008 /* EventPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPropertyView.xib; sourceTree = "<group>"; };
+		65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizeFontToFillFrame.swift; sourceTree = "<group>"; };
 		6532644D21C055B5009C0ED8 /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
 		655F41B421C3924000F7E7D8 /* Inspector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Inspector.storyboard; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */,
 				655864E521C7F6D40080EDFB /* NSRect+Center.swift */,
 				65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */,
+				65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 			files = (
 				DF94929D21B98A9100BC8AB0 /* CanvasGroup.swift in Sources */,
 				655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */,
+				65308BB621CF888E00830115 /* sizeFontToFillFrame.swift in Sources */,
 				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
 				DF94929321B9705400BC8AB0 /* NSColor+Extras.swift in Sources */,
 				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,

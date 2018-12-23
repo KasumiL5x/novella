@@ -15,9 +15,9 @@ import Cocoa
 
 class CanvasObject: NSView {
 	static let Roundness: CGFloat = 0.075
-	static let NormalOutlineSize: CGFloat = 1.0
-	static let PrimedOutlineSize: CGFloat = 2.0
-	static let SelectedOutlineSize: CGFloat = 4.0
+	static let NormalOutlineSize: CGFloat = 4.0
+	static let PrimedOutlineSize: CGFloat = 8.0
+	static let SelectedOutlineSize: CGFloat = 12.0
 	static let FlagSize: CGFloat = 0.3
 	static let IconSize: CGFloat = 0.55
 	static let LabelOffset: CGFloat = 4.0
@@ -44,6 +44,7 @@ class CanvasObject: NSView {
 	
 	private let _outlineLayer: CAShapeLayer
 	private let _labelLayer: CATextLayer
+	private let _parallelLayer: CAShapeLayer
 	
 	init(canvas: Canvas, frame: NSRect) {
 		self._canvas = canvas
@@ -51,6 +52,7 @@ class CanvasObject: NSView {
 		self.ContextMenu = NSMenu()
 		self._outlineLayer = CAShapeLayer()
 		self._labelLayer = CATextLayer()
+		self._parallelLayer = CAShapeLayer()
 		super.init(frame: frame)
 		
 		self.frame = objectRect()
@@ -109,6 +111,31 @@ class CanvasObject: NSView {
 		_labelLayer.truncationMode = .middle
 		layer?.addSublayer(_labelLayer)
 		
+		// parallel layer
+		let parallelSize: CGFloat = 15.0
+		_parallelLayer.path = NSBezierPath(ovalIn: NSMakeRect(0, 0, parallelSize, parallelSize)).cgPath
+		_parallelLayer.fillColor = primaryColor.cgColor
+		_parallelLayer.strokeColor = NSColor.fromHex("#3c3c3c").cgColor
+		_parallelLayer.lineWidth = 2.0
+		_parallelLayer.frame.setCenter(NSMakePoint(mainFrame.minX - parallelSize*0.5, mainFrame.maxY - parallelSize*0.5))
+		_parallelLayer.opacity = 0.0
+		layer?.addSublayer(_parallelLayer)
+//		let parallelText = CATextLayer()
+//		parallelText.string = "P"
+//		parallelText.contentsScale = NSScreen.main?.backingScaleFactor ?? 1.0
+//		parallelText.foregroundColor = NSColor.fromHex("#3c3c3c").cgColor
+//		parallelText.font = NSFont.systemFont(ofSize: 1.0, weight: .bold)
+//////		parallelText.fontSize = 2.0
+//////		parallelText.frame.size = parallelText.preferredFrameSize()
+//////		parallelText.frame.setCenter(NSMakePoint(parallelSize/2, parallelSize/2))
+//		parallelText.frame.size = NSMakeSize(parallelSize, parallelSize)// parallelText.preferredFrameSize()
+//		parallelText.fontSize = CGFloat(fontSizeToFit(forString: NSString(string: parallelText.string as! String), forRect: parallelText.frame, withFont: parallelText.font as! NSFont, margins: NSMakePoint(0, 0), minSize: 3, maxSize: 40))
+//////		parallelText.sizeFontToFillFrame()
+//////		parallelText.frame.setCenter(NSMakePoint(parallelSize/2, parallelSize/2))
+//		parallelText.alignmentMode = .center
+//////		parallelText.backgroundColor = NSColor.green.cgColor
+////		_parallelLayer.addSublayer(parallelText)
+		
 		// gestures
 		let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onClick))
 		clickGesture.buttonMask = 0x1
@@ -158,6 +185,10 @@ class CanvasObject: NSView {
 		frame.origin = to
 		onMove()
 		_delegates.allObjects.forEach{$0.canvasObjectMoved(obj: self)}
+	}
+	
+	func setParallelLayer(state: Bool) {
+		_parallelLayer.opacity = state ? 1.0 : 0.0
 	}
 	
 	@objc private func _onClick(gesture: NSClickGestureRecognizer) {
@@ -242,5 +273,3 @@ class CanvasObject: NSView {
 
 // todo:
 // - move beat's entry and parallel layers into the main canvas object and defer choice to derived classes)
-// - recolor and size the bench/links as they are too large now (or make the nodes a little larger perhaps).
-//gruigrungreungreungreungunrieguringruneierguni
