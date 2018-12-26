@@ -11,6 +11,8 @@ import Foundation
 class CanvasSelection {
 	private(set) var Selection: [CanvasObject] = []
 	
+	var TheCanvas: Canvas?
+	
 	func select(_ obj: CanvasObject, append: Bool) {
 		select([obj], append: append)
 	}
@@ -22,6 +24,12 @@ class CanvasSelection {
 			Selection.forEach{$0.CurrentState = .normal}
 			Selection = objs
 			Selection.forEach{$0.CurrentState = .selected}
+		}
+		
+		if let canvas = TheCanvas {
+			Selection.forEach { (obj) in
+				canvas.bringSubviewToFront(obj)
+			}
 		}
 		
 		// post selection changed notification

@@ -23,4 +23,13 @@ extension NSView {
 		}
 		return NSMakeSize(w, h)
 	}
+	
+	func bringSubviewToFront(_ sub: NSView, ordering: NSWindow.OrderingMode = .above, relativeTo: NSView? = nil) {
+		if !subviews.contains(sub) {
+			return
+		}
+		
+		sub.removeFromSuperview()
+		self.addSubview(sub, positioned: ordering, relativeTo: relativeTo)
+	}
 }

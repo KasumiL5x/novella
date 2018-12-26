@@ -55,6 +55,8 @@ class Canvas: NSView {
 		self._rmbPanInitialMag = 0.0
 		super.init(frame: initialFrame)
 		
+		Selection.TheCanvas = self
+		
 		wantsLayer = true
 		
 		let pan = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onPan))
