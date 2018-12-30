@@ -25,11 +25,23 @@ extension NSView {
 	}
 	
 	func bringSubviewToFront(_ sub: NSView, ordering: NSWindow.OrderingMode = .above, relativeTo: NSView? = nil) {
+		// must be contained
 		if !subviews.contains(sub) {
 			return
 		}
 		
-		sub.removeFromSuperview()
-		self.addSubview(sub, positioned: ordering, relativeTo: relativeTo)
+		// must have at least two subviews
+		if subviews.count < 2 {
+			return
+		}
+		
+		// cannot be last view already
+		if subviews.last == sub {
+			return
+		}
+		
+		let lastIndex = subviews.count-1
+		let subIndex = subviews.firstIndex(of: sub)!
+		self.subviews.swapAt(subIndex, lastIndex)
 	}
 }
