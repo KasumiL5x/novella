@@ -11,9 +11,6 @@ import AppKit
 class Canvas: NSView {
 	static let DEFAULT_SIZE: CGFloat = 600000.0
 	
-	var didSetupGroup: ((NVGroup) -> Void)?
-	var didSetupBeat: ((NVBeat) -> Void)?
-	
 	private(set) var Doc: Document
 	private(set) var MappedGroup: NVGroup?
 	private(set) var MappedBeat: NVBeat?
@@ -121,7 +118,10 @@ class Canvas: NSView {
 			addBeatLink(link: child)
 		}
 		
-		didSetupGroup?(group)
+		// post setup for group notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForGroup, object: nil, userInfo: [
+			"group": group
+		])
 	}
 	
 	func setupFor(beat: NVBeat) {
@@ -151,7 +151,10 @@ class Canvas: NSView {
 			addEventLink(link: child)
 		}
 		
-		didSetupBeat?(beat)
+		// post setup for beat notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForBeat, object: nil, userInfo: [
+			"beat": beat
+		])
 	}
 	
 	override func mouseDown(with event: NSEvent) {  // this is the default mousedown w/o any gestures

@@ -11,4 +11,6 @@ import AppKit
 extension NSNotification.Name {
 	static let nvCanvasSelectionChanged = NSNotification.Name("nvCanvasSelectionChanged")
 	static let nvCanvasObjectDoubleClicked = NSNotification.Name("nvCanvasObjectDoubleClicked")
+	static let nvCanvasSetupForGroup = NSNotification.Name("nvCanvasSetupForGroup")
+	static let nvCanvasSetupForBeat = NSNotification.Name("nvCanvasSetupForBeat")
 }

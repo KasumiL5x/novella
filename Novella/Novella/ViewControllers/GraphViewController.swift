@@ -23,12 +23,8 @@ class GraphViewController: NSViewController {
 		MainCanvas = Canvas(doc: doc)
 		_scrollView.documentView = MainCanvas
 		
-		MainCanvas!.didSetupGroup = { (group) in
-			self.updatePath(to: group)
-		}
-		MainCanvas!.didSetupBeat = { (beat) in
-			self.updatePath(to: beat)
-		}
+		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForBeat), name: NSNotification.Name.nvCanvasSetupForBeat, object: nil)
 		
 		MainCanvas!.setupFor(group: doc.Story.MainGroup)
 		
@@ -38,6 +34,20 @@ class GraphViewController: NSViewController {
 		_scrollView.contentView.postsBoundsChangedNotifications = true
 		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onScrollViewChanged), name: NSView.boundsDidChangeNotification, object: _scrollView.contentView)
 		updateZoomLabel()
+	}
+	
+	@objc private func onCanvasSetupForGroup(_ sender: NSNotification) {
+		guard let group = sender.userInfo?["group"] as? NVGroup else {
+			return
+		}
+		self.updatePath(to: group)
+	}
+	
+	@objc private func onCanvasSetupForBeat(_ sender: NSNotification) {
+		guard let beat = sender.userInfo?["beat"] as? NVBeat else {
+			return
+		}
+		self.updatePath(to: beat)
 	}
 	
 	@objc func onPathDoubleClick() {

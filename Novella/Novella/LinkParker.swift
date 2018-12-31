@@ -55,6 +55,18 @@ class LinkParker: NSView {
 		let panGesture = NSPanGestureRecognizer(target: self, action: #selector(LinkParker.onPan))
 		panGesture.buttonMask = 0x1
 		addGestureRecognizer(panGesture)
+		
+		// listen for the canvas setup calls as we need to reset the parker when jumping between them
+		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForBeat), name: NSNotification.Name.nvCanvasSetupForBeat, object: nil)
+	}
+	
+	@objc private func onCanvasSetupForGroup(_ sender: NSNotification) {
+		reset()
+	}
+	
+	@objc private func onCanvasSetupForBeat(_ sender: NSNotification) {
+		reset()
 	}
 	
 	private func reset() {
@@ -112,10 +124,6 @@ class LinkParker: NSView {
 			}
 			
 		case .cancelled, .ended:
-			// note: something is going wrong here. everything connects just fine, and after connecting, moving the dest
-			// note (the target below) updates the curve, but the origin being moved does not. Hmm.
-//			brijfbhrfneuinbhne
-			
 			if let target = _currentTarget, let parkedLink = _parkedLink {
 				_dragLayer.strokeColor = CGColor.clear
 				parkedLink.setTarget(target)
