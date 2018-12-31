@@ -14,20 +14,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="200" height="420"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXe-eH-28m" userLabel="Scroll View">
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXe-eH-28m" userLabel="Scroll View">
                                 <rect key="frame" x="0.0" y="30" width="200" height="390"/>
                                 <clipView key="contentView" id="uLI-0Q-xiK">
-                                    <rect key="frame" x="1" y="1" width="198" height="388"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="390"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" viewBased="YES" indentationPerLevel="16" outlineTableColumn="HWY-uP-pia" id="F4I-90-6Lt">
-                                            <rect key="frame" x="0.0" y="0.0" width="198" height="388"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="390"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="195" minWidth="40" maxWidth="1000" id="HWY-uP-pia">
+                                                <tableColumn width="197" minWidth="40" maxWidth="1000" id="HWY-uP-pia">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +41,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="OutlinerCell" id="2Vy-JJ-o9z" userLabel="OutlinerCell">
-                                                            <rect key="frame" x="1" y="1" width="195" height="30"/>
+                                                            <rect key="frame" x="1" y="1" width="197" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WlW-iA-zXH">
@@ -50,7 +50,7 @@
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="uiM-LF-0tD"/>
                                                                 </imageView>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5R4-Mx-afb">
-                                                                    <rect key="frame" x="28" y="7" width="170" height="17"/>
+                                                                    <rect key="frame" x="28" y="7" width="172" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="Unnamed" id="fpR-fU-WZ4">
                                                                         <font key="font" metaFont="system"/>
@@ -131,7 +131,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSCaution" width="128" height="128"/>
+        <image name="NSCaution" width="32" height="32"/>
         <image name="NSQuickLookTemplate" width="19" height="12"/>
     </resources>
 </document>
