@@ -19,6 +19,10 @@ class CanvasGroup: CanvasObject {
 		layer?.masksToBounds = false
 
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasGroup.onSubmerge), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Edit Pre-Condition", action: nil, keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Edit Entry Function", action: nil, keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Edit Exit Function", action: nil, keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

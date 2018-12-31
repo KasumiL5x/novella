@@ -30,6 +30,11 @@ class CanvasBeat: CanvasObject {
 		_entryMenuItem.title = "Entry Beat"
 		_entryMenuItem.action = #selector(CanvasBeat.onEntryBeat)
 		ContextMenu.addItem(_entryMenuItem)
+		//
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Edit Pre-Condition", action: nil, keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Edit Entry Function", action: nil, keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Edit Exit Function", action: nil, keyEquivalent: "")
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
