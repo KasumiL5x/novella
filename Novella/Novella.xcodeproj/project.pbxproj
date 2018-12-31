@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		65062A3221CB7D24001DD008 /* GroupPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65062A3121CB7D24001DD008 /* GroupPropertyView.xib */; };
 		65062A3421CB80F8001DD008 /* EventPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65062A3321CB80F8001DD008 /* EventPropertyView.xib */; };
+		651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */; };
+		651D7C9F21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */; };
 		65308BB621CF888E00830115 /* sizeFontToFillFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */; };
 		6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532644D21C055B5009C0ED8 /* CurveHelper.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
@@ -70,6 +72,8 @@
 /* Begin PBXFileReference section */
 		65062A3121CB7D24001DD008 /* GroupPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupPropertyView.xib; sourceTree = "<group>"; };
 		65062A3321CB80F8001DD008 /* EventPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPropertyView.xib; sourceTree = "<group>"; };
+		651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConditionFunctionEditor.storyboard; sourceTree = "<group>"; };
+		651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionFunctionEditorViewController.swift; sourceTree = "<group>"; };
 		65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizeFontToFillFrame.swift; sourceTree = "<group>"; };
 		6532644D21C055B5009C0ED8 /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 				DF94929421B9716E00BC8AB0 /* Graph.storyboard */,
 				65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */,
 				655F41B421C3924000F7E7D8 /* Inspector.storyboard */,
+				651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */,
 				655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */,
 				65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */,
+				651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -352,6 +358,7 @@
 				65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */,
 				655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */,
 				DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */,
+				651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +412,7 @@
 				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
+				651D7C9F21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift in Sources */,
 				65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */,
 				DF9492A921BA82ED00BC8AB0 /* CanvasSelection.swift in Sources */,
 				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
