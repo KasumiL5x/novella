@@ -9,7 +9,7 @@
         <!--ConditionFunctionEditor-->
         <scene sceneID="nU2-xX-6jW">
             <objects>
-                <viewController storyboardIdentifier="ConditionFunctionEditor" id="wnu-i8-n3q" userLabel="ConditionFunctionEditor" customClass="ConditionFunctionEditorViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConditionFunctionEditor" showSeguePresentationStyle="single" id="wnu-i8-n3q" userLabel="ConditionFunctionEditor" customClass="ConditionFunctionEditorViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="f8P-yb-CvL">
                         <rect key="frame" x="0.0" y="0.0" width="650" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -152,6 +152,9 @@
                             <constraint firstItem="Ktu-rV-OtP" firstAttribute="leading" secondItem="f8P-yb-CvL" secondAttribute="leading" id="npY-0F-7cn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_outlineView" destination="C9M-gz-yCG" id="uJL-Sj-q2k"/>
+                    </connections>
                 </viewController>
                 <customObject id="jhS-a7-7Du" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

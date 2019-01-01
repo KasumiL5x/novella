@@ -12,6 +12,7 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 	private var _graphVC: GraphViewController? = nil
 	private var _outlinerVC: OutlinerViewController? = nil
 	private var _inspectorVC: InspectorViewController? = nil
+	private var _condFuncEdVC: ConditionFunctionEditorViewController? = nil
 	
 	override func viewWillAppear() {
 		guard let doc = view.window?.windowController?.document as? Document else {
@@ -39,6 +40,15 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		if segue.identifier == "InspectorVC" {
 			_inspectorVC = segue.destinationController as? InspectorViewController
+		}
+		
+		if segue.identifier == "ConditionFunctionEditorVC" {
+			_condFuncEdVC = segue.destinationController as? ConditionFunctionEditorViewController
+			guard let doc = view.window?.windowController?.document as? Document else {
+				print("ERROR: Could not find doc when ConditionFunctionEditorVC segue was triggered.")
+				return
+			}
+			_condFuncEdVC?.setup(doc: doc)
 		}
 	}
 	
