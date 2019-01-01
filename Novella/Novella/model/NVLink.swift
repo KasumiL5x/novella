@@ -33,14 +33,13 @@ class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 			}
 		}
 	}
-	var Function: NVFunction
+	weak var Function: NVFunction?
 	
 	init(uuid: NSUUID, story: NVStory, origin: T, destination: T?) {
 		self.UUID = uuid
 		self._story = story
 		self.Origin = origin
 		self.Destination = destination
-		self.Function = NVFunction(story: story)
 	}
 }
 

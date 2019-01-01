@@ -8,7 +8,8 @@
 
 import Foundation
 
-class NVCondition {
+class NVCondition: NVIdentifiable {
+	var UUID: NSUUID
 	private let _story: NVStory
 	var Code: String = "return true;" {
 		didSet {
@@ -20,7 +21,8 @@ class NVCondition {
 	}
 	private(set) var FunctionName: String
 	
-	init(story: NVStory) {
+	init(uuid: NSUUID, story: NVStory) {
+		self.UUID = uuid
 		self._story = story
 		self.FunctionName = "nvCondition" + NVUtil.randomString(length: 10)
 	}
@@ -47,5 +49,11 @@ class NVCondition {
 		}
 		
 		return result.toBool()
+	}
+}
+
+extension NVCondition: Equatable {
+	static func == (lhs: NVCondition, rhs: NVCondition) -> Bool {
+		return lhs.UUID == rhs.UUID
 	}
 }

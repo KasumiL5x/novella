@@ -18,9 +18,9 @@ class NVGroup: NVIdentifiable {
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupLabelDidChange(story: _story, group: self)}
 		}
 	}
-	var PreCondition: NVCondition
-	var EntryFunction: NVFunction
-	var ExitFunction: NVFunction
+	weak var PreCondition: NVCondition?
+	weak var EntryFunction: NVFunction?
+	weak var ExitFunction: NVFunction?
 	var Entry: NVBeat? {
 		didSet {
 			// must be part of the group
@@ -42,9 +42,6 @@ class NVGroup: NVIdentifiable {
 		self._story = story
 		self.Parent = nil
 		self.Label = ""
-		self.PreCondition = NVCondition(story: story)
-		self.EntryFunction = NVFunction(story: story)
-		self.ExitFunction = NVFunction(story: story)
 		self.Entry = nil
 		self.Beats = []
 		self.BeatLinks = []

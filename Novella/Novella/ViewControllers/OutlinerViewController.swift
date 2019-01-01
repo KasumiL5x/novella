@@ -174,6 +174,12 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
 	}
 	
+	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction) {
+	}
+	
+	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition) {
+	}
+	
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 	}
 	
@@ -193,6 +199,12 @@ extension OutlinerViewController: NVStoryDelegate {
 	}
 	
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
+	}
+	
+	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction) {
+	}
+	
+	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
 	}
 	
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {

@@ -41,6 +41,12 @@ class NVStory {
 	var Variables: [NVVariable] {
 		get{ return _identifiables.filter{$0 is NVVariable} as! [NVVariable] }
 	}
+	var Functions: [NVFunction] {
+		get{ return _identifiables.filter{$0 is NVFunction} as! [NVFunction] }
+	}
+	var Conditions: [NVCondition] {
+		get{ return _identifiables.filter{$0 is NVCondition} as! [NVCondition] }
+	}
 	
 	init() {
 		self._identifiables = []
@@ -208,6 +214,22 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeVariable(story: self, variable: variable)}
 		return variable
 	}
+	func makeFunction(uuid: NSUUID?=nil) -> NVFunction {
+		let function = NVFunction(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(function)
+		
+		NVLog.log("Created Function (\(function.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeFunction(story: self, function: function)}
+		return function
+	}
+	func makeCondition(uuid: NSUUID?=nil) -> NVCondition {
+		let condition = NVCondition(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(condition)
+		
+		NVLog.log("Created Condition (\(condition.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeCondition(story: self, condition: condition)}
+		return condition
+	}
 	
 	// DELETION
 	func delete(group: NVGroup) {
@@ -360,5 +382,23 @@ class NVStory {
 		
 		NVLog.log("Deleted Variable (\(variable.UUID.uuidString)).", level: .info)
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteVariable(story: self, variable: variable)}
+	}
+	func delete(function: NVFunction) {
+		// remove from story
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == function.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		NVLog.log("Deleted Function (\(function.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteFunction(story: self, function: function)}
+	}
+	func delete(condition: NVCondition) {
+		// remove from story
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == condition.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		NVLog.log("Deleted Condition (\(condition.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteCondition(story: self, condition: condition)}
 	}
 }

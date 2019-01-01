@@ -95,6 +95,14 @@ extension Document: NVStoryDelegate {
 		}
 	}
 	
+	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 	}
@@ -120,6 +128,14 @@ extension Document: NVStoryDelegate {
 	}
 	
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
 		updateChangeCount(.changeDone)
 	}
 	

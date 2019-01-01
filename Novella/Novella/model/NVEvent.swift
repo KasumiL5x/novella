@@ -24,9 +24,9 @@ class NVEvent: NVIdentifiable {
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventParallelDidChange(story: _story, event: self)}
 		}
 	}
-	var PreCondition: NVCondition
-	var EntryFunction: NVFunction
-	var ExitFunction: NVFunction
+	weak var PreCondition: NVCondition?
+	weak var EntryFunction: NVFunction?
+	weak var ExitFunction: NVFunction?
 	private(set) var Participants: [NVEntity]
 	
 	init(uuid: NSUUID, story: NVStory) {
@@ -35,9 +35,6 @@ class NVEvent: NVIdentifiable {
 		self.Parent = nil
 		self.Label = ""
 		self.Parallel = false
-		self.PreCondition = NVCondition(story: story)
-		self.EntryFunction = NVFunction(story: story)
-		self.ExitFunction = NVFunction(story: story)
 		self.Participants = []
 	}
 	

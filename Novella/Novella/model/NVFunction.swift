@@ -8,7 +8,8 @@
 
 import Foundation
 
-class NVFunction {
+class NVFunction: NVIdentifiable {
+	var UUID: NSUUID
 	private let _story: NVStory
 	var Code: String = "" {
 		didSet {
@@ -17,7 +18,8 @@ class NVFunction {
 	}
 	private(set) var FunctionName: String
 	
-	init(story: NVStory) {
+	init(uuid: NSUUID, story: NVStory) {
+		self.UUID = uuid
 		self._story = story
 		self.FunctionName = "nvFunction" + NVUtil.randomString(length: 10)
 	}
@@ -42,5 +44,11 @@ class NVFunction {
 			NVLog.log("Tried to run Function but it failed (\(FunctionName)).", level: .warning)
 			return
 		}
+	}
+}
+
+extension NVFunction: Equatable {
+	static func == (lhs: NVFunction, rhs: NVFunction) -> Bool {
+		return lhs.UUID == rhs.UUID
 	}
 }

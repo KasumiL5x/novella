@@ -17,6 +17,8 @@ protocol NVStoryDelegate: AnyObject {
 	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink)
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink)
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable)
+	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction)
+	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition)
 	
 	// deletion
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup)
@@ -26,6 +28,8 @@ protocol NVStoryDelegate: AnyObject {
 	func nvStoryDidDeleteBeatLink(story: NVStory, link: NVBeatLink)
 	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink)
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable)
+	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction)
+	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition)
 	
 	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup)

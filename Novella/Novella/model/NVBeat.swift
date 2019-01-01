@@ -24,9 +24,9 @@ class NVBeat: NVIdentifiable {
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatParallelDidChange(story: _story, beat: self)}
 		}
 	}
-	var PreCondition: NVCondition
-	var EntryFunction: NVFunction
-	var ExitFunction: NVFunction
+	weak var PreCondition: NVCondition?
+	weak var EntryFunction: NVFunction?
+	weak var ExitFunction: NVFunction?
 	var Entry: NVEvent? {
 		didSet {
 			// must be part of the beat
@@ -48,9 +48,6 @@ class NVBeat: NVIdentifiable {
 		self.Parent = nil
 		self.Label = ""
 		self.Parallel = false
-		self.PreCondition = NVCondition(story: story)
-		self.EntryFunction = NVFunction(story: story)
-		self.ExitFunction = NVFunction(story: story)
 		self.Entry = nil
 		self.Events = []
 		self.EventLinks = []
