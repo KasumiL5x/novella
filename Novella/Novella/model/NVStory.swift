@@ -384,6 +384,48 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteVariable(story: self, variable: variable)}
 	}
 	func delete(function: NVFunction) {
+		// remove from beats
+		Beats.forEach { (beat) in
+			if beat.EntryFunction == function {
+				beat.EntryFunction = nil
+			}
+			if beat.ExitFunction == function {
+				beat.ExitFunction = nil
+			}
+		}
+		
+		// remove from events
+		Events.forEach { (event) in
+			if event.EntryFunction == function {
+				event.EntryFunction = nil
+			}
+			if event.ExitFunction == function {
+				event.ExitFunction = nil
+			}
+		}
+		
+		// remove from groups
+		Groups.forEach { (group) in
+			if group.EntryFunction == function {
+				group.EntryFunction = nil
+			}
+			if group.ExitFunction == function {
+				group.ExitFunction = nil
+			}
+		}
+		
+		// remove from links
+		BeatLinks.forEach { (link) in
+			if link.Function == function {
+				link.Function = nil
+			}
+		}
+		EventLinks.forEach { (link) in
+			if link.Function == function {
+				link.Function = nil
+			}
+		}
+		
 		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == function.UUID}) {
 			_identifiables.remove(at: idx)
@@ -393,6 +435,27 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteFunction(story: self, function: function)}
 	}
 	func delete(condition: NVCondition) {
+		// remove from beats
+		Beats.forEach { (beat) in
+			if beat.PreCondition == condition {
+				beat.PreCondition = nil
+			}
+		}
+		
+		// remove from events
+		Events.forEach { (event) in
+			if event.PreCondition == condition {
+				event.PreCondition = nil
+			}
+		}
+		
+		// remove from groups
+		Groups.forEach { (group) in
+			if group.PreCondition == condition {
+				group.PreCondition = nil
+			}
+		}
+		
 		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == condition.UUID}) {
 			_identifiables.remove(at: idx)

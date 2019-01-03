@@ -33,7 +33,7 @@ class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 			}
 		}
 	}
-	weak var Function: NVFunction?
+	var Function: NVFunction?
 	
 	init(uuid: NSUUID, story: NVStory, origin: T, destination: T?) {
 		self.UUID = uuid

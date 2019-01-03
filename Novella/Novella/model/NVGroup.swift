@@ -18,9 +18,9 @@ class NVGroup: NVIdentifiable {
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupLabelDidChange(story: _story, group: self)}
 		}
 	}
-	weak var PreCondition: NVCondition?
-	weak var EntryFunction: NVFunction?
-	weak var ExitFunction: NVFunction?
+	var PreCondition: NVCondition?
+	var EntryFunction: NVFunction?
+	var ExitFunction: NVFunction?
 	var Entry: NVBeat? {
 		didSet {
 			// must be part of the group

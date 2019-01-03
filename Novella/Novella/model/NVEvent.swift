@@ -24,9 +24,9 @@ class NVEvent: NVIdentifiable {
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventParallelDidChange(story: _story, event: self)}
 		}
 	}
-	weak var PreCondition: NVCondition?
-	weak var EntryFunction: NVFunction?
-	weak var ExitFunction: NVFunction?
+	var PreCondition: NVCondition?
+	var EntryFunction: NVFunction?
+	var ExitFunction: NVFunction?
 	private(set) var Participants: [NVEntity]
 	
 	init(uuid: NSUUID, story: NVStory) {

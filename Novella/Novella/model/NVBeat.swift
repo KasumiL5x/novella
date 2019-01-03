@@ -24,9 +24,9 @@ class NVBeat: NVIdentifiable {
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvBeatParallelDidChange(story: _story, beat: self)}
 		}
 	}
-	weak var PreCondition: NVCondition?
-	weak var EntryFunction: NVFunction?
-	weak var ExitFunction: NVFunction?
+	var PreCondition: NVCondition?
+	var EntryFunction: NVFunction?
+	var ExitFunction: NVFunction?
 	var Entry: NVEvent? {
 		didSet {
 			// must be part of the beat
