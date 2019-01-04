@@ -12,6 +12,8 @@ class ConditionFunctionEditorViewController: NSViewController {
 	@IBOutlet weak var _outlineView: NSOutlineView!
 	
 	private var _document: Document? = nil
+	private var _functionHeader: String = "Functions"
+	private var _conditionHeader: String = "Conditions"
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
@@ -25,6 +27,11 @@ class ConditionFunctionEditorViewController: NSViewController {
 	
 	func setup(doc: Document) {
 		_document = doc
+		
+		let _ = doc.Story.makeFunction()
+		let _ = doc.Story.makeFunction()
+		let _ = doc.Story.makeCondition()
+		let _ = doc.Story.makeCondition()
 		
 		// todo: make some dummy ones here and test the loading etc.
 		
@@ -45,23 +52,85 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSView?
-		print("TODO: viewFor tableColumn")
+		
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MainCell"), owner: self)
+		
+		switch item {
+		case let asFunction as NVFunction:
+			(view as? NSTableCellView)?.textField?.stringValue = asFunction.FunctionName
+			
+		case let asCondition as NVCondition:
+			(view as? NSTableCellView)?.textField?.stringValue = asCondition.FunctionName
+			
+		case let asString as String:
+			(view as? NSTableCellView)?.textField?.stringValue = asString
+			
+		default:
+			(view as? NSTableCellView)?.textField?.stringValue = "ERROR"
+		}
+		
 		return view
 	}
 }
 
 extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		print("TODO: numberOfChildrenOfItem")
+		if item == nil {
+			return 2 // function and condition headers
+		}
+		if let asString = item as? String {
+			if asString == _functionHeader {
+				return _document?.Story.Functions.count ?? 0
+			}
+			if asString == _conditionHeader {
+				return _document?.Story.Conditions.count ?? 0
+			}
+		}
+//		if item == nil {
+//			guard let doc = _document else {
+//				return 0
+//			}
+//			return doc.Story.Functions.count + doc.Story.Conditions.count
+//		}
 		return 0
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		print("TODO: childOfItem")
-		return ""
+		guard let doc = _document else {
+			fatalError()
+		}
+		
+		if item == nil {
+			if index == 0 {
+				return _functionHeader
+			}
+			if index == 1 {
+				return _conditionHeader
+			}
+		}
+		
+		if let asString = item as? String {
+			if asString == _functionHeader {
+				return doc.Story.Functions[index]
+			}
+			if asString == _conditionHeader {
+				return doc.Story.Conditions[index]
+			}
+		}
+		
+//		if index < doc.Story.Functions.count {
+//			return doc.Story.Functions[index]
+//		}
+//
+//		let offset = doc.Story.Functions.count
+//		if index < (doc.Story.Conditions.count + offset) {
+//			return doc.Story.Conditions[index - offset]
+//		}
+		
+		fatalError()
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		return false
+		return item is String
 	}
 }
