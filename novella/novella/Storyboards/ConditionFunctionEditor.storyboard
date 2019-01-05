@@ -47,8 +47,26 @@
                                                                     </textFieldCell>
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
-                                                                        <tableCellView identifier="MainCell" id="280-OT-HyD" userLabel="MainCell">
+                                                                        <tableCellView identifier="GroupCell" id="Ir3-fR-g1O" userLabel="GroupCell">
                                                                             <rect key="frame" x="1" y="1" width="223" height="30"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FdY-kU-sPh">
+                                                                                    <rect key="frame" x="0.0" y="7" width="223" height="17"/>
+                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Group" id="edh-ht-AaT">
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <connections>
+                                                                                <outlet property="textField" destination="FdY-kU-sPh" id="Voi-s8-7AG"/>
+                                                                            </connections>
+                                                                        </tableCellView>
+                                                                        <tableCellView identifier="MainCell" id="280-OT-HyD" userLabel="MainCell">
+                                                                            <rect key="frame" x="1" y="33" width="223" height="30"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vma-Km-Zls">

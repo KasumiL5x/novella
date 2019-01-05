@@ -53,17 +53,21 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSView?
 		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MainCell"), owner: self)
+		// handle groups
+		if let asString = item as? String {
+			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self)
+			(view as? NSTableCellView)?.textField?.stringValue = asString
+			return view
+		}
 		
+		// handle others
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MainCell"), owner: self)
 		switch item {
 		case let asFunction as NVFunction:
 			(view as? NSTableCellView)?.textField?.stringValue = asFunction.FunctionName
 			
 		case let asCondition as NVCondition:
 			(view as? NSTableCellView)?.textField?.stringValue = asCondition.FunctionName
-			
-		case let asString as String:
-			(view as? NSTableCellView)?.textField?.stringValue = asString
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "ERROR"
@@ -128,6 +132,10 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 //		}
 		
 		fatalError()
+	}
+	
+	func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+		return item is String
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {

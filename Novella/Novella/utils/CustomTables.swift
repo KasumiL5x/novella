@@ -12,9 +12,14 @@ class CustomTableRowView: NSTableRowView {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
-		if isSelected {
-			NSColor(named: "NVTableRowSelected")!.setFill()
+		if isGroupRowStyle {
+			NSColor(named: "NVTableGroupRow")!.setFill()
 			dirtyRect.fill()
+		} else {
+			if isSelected {
+				NSColor(named: "NVTableRowSelected")!.setFill()
+				dirtyRect.fill()
+			}
 		}
 	}
 }
