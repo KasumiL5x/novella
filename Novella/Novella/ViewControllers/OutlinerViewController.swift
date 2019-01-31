@@ -32,6 +32,8 @@ class OutlinerViewController: NSViewController {
 		_document = doc
 		doc.Story.addDelegate(self)
 	}
+	
+	
 }
 
 extension OutlinerViewController: NSOutlineViewDelegate {

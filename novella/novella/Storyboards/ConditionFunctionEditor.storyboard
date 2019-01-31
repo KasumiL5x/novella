@@ -108,6 +108,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="onAddFunction:" target="wnu-i8-n3q" id="uh4-GV-7vz"/>
+                                                        </connections>
                                                     </button>
                                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1d-Ym-Yny">
                                                         <rect key="frame" x="45" y="3" width="30" height="30"/>
@@ -116,6 +119,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="onAddCondition:" target="wnu-i8-n3q" id="THX-06-NzN"/>
+                                                        </connections>
                                                     </button>
                                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fpb-za-GCN">
                                                         <rect key="frame" x="85" y="3" width="30" height="30"/>
@@ -124,6 +130,9 @@
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="onRemoveSelection:" target="wnu-i8-n3q" id="Le8-ZO-3n3"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>

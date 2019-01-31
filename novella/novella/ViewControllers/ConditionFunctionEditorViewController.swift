@@ -8,12 +8,25 @@
 
 import Cocoa
 
+class CFEHeader: Equatable {
+	static func == (lhs: CFEHeader, rhs: CFEHeader) -> Bool {
+		return lhs.name == rhs.name
+	}
+	
+	public var name: String = ""
+	init(name: String) {
+		self.name = name
+	}
+}
+
 class ConditionFunctionEditorViewController: NSViewController {
 	@IBOutlet weak var _outlineView: NSOutlineView!
 	
 	private var _document: Document? = nil
-	private var _functionHeader: String = "Functions"
-	private var _conditionHeader: String = "Conditions"
+	private var _functionHeader: CFEHeader = CFEHeader(name: "Functions")
+	private var _conditionHeader: CFEHeader = CFEHeader(name: "Conditions")
+//	private var _functionHeader: String = "Functions"
+//	private var _conditionHeader: String = "Conditions"
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
@@ -37,6 +50,50 @@ class ConditionFunctionEditorViewController: NSViewController {
 		
 		print("TODO: Implement.")
 	}
+	
+	@IBAction func onAddFunction(_ sender: NSButton) {
+		guard let doc = _document else {
+			return
+		}
+		let _ = doc.Story.makeFunction()
+		_outlineView.expandItem(_functionHeader)
+		_outlineView.reloadItem(_functionHeader, reloadChildren: true)
+	}
+	
+	@IBAction func onAddCondition(_ sender: NSButton) {
+		guard let doc = _document else {
+			return
+		}
+		let _ = doc.Story.makeCondition()
+		_outlineView.expandItem(_conditionHeader)
+		_outlineView.reloadItem(_conditionHeader, reloadChildren: true)
+	}
+	
+	@IBAction func onRemoveSelection(_ sender: NSButton) {
+		guard let doc = _document else {
+			return
+		}
+		
+		if let item = _outlineView.item(atRow: _outlineView.selectedRow) {
+			let childIdx = _outlineView.childIndex(forItem: item)
+			if -1 == childIdx {
+				return
+			}
+			
+			switch item {
+			case let asFunc as NVFunction:
+				doc.Story.delete(function: asFunc)
+			case let asCond as NVCondition:
+				doc.Story.delete(condition: asCond)
+			default:
+				break
+			}
+			
+			let parent = _outlineView.parent(forItem: item)
+			_outlineView.removeItems(at: IndexSet(integer: childIdx), inParent: parent, withAnimation: [.effectFade, .slideLeft])
+			_outlineView.reloadItem(parent, reloadChildren: false) // if false and remove fails, will not reload it, but if true, it flickers
+		}
+	}
 }
 
 extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
@@ -54,9 +111,9 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 		var view: NSView?
 		
 		// handle groups
-		if let asString = item as? String {
+		if let asString = item as? CFEHeader {
 			view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self)
-			(view as? NSTableCellView)?.textField?.stringValue = asString
+			(view as? NSTableCellView)?.textField?.stringValue = asString.name
 			return view
 		}
 		
@@ -82,7 +139,7 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 		if item == nil {
 			return 2 // function and condition headers
 		}
-		if let asString = item as? String {
+		if let asString = item as? CFEHeader {
 			if asString == _functionHeader {
 				return _document?.Story.Functions.count ?? 0
 			}
@@ -113,7 +170,7 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 			}
 		}
 		
-		if let asString = item as? String {
+		if let asString = item as? CFEHeader {
 			if asString == _functionHeader {
 				return doc.Story.Functions[index]
 			}
@@ -135,10 +192,10 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
-		return item is String
+		return item is CFEHeader
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-		return item is String
+		return item is CFEHeader
 	}
 }
