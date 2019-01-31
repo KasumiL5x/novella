@@ -55,18 +55,20 @@ class ConditionFunctionEditorViewController: NSViewController {
 		guard let doc = _document else {
 			return
 		}
-		let _ = doc.Story.makeFunction()
+		let newFunc = doc.Story.makeFunction()
 		_outlineView.expandItem(_functionHeader)
 		_outlineView.reloadItem(_functionHeader, reloadChildren: true)
+		_outlineView.selectRowIndexes(IndexSet(integer: _outlineView.row(forItem: newFunc)), byExtendingSelection: false)
 	}
 	
 	@IBAction func onAddCondition(_ sender: NSButton) {
 		guard let doc = _document else {
 			return
 		}
-		let _ = doc.Story.makeCondition()
+		let newCond = doc.Story.makeCondition()
 		_outlineView.expandItem(_conditionHeader)
 		_outlineView.reloadItem(_conditionHeader, reloadChildren: true)
+		_outlineView.selectRowIndexes(IndexSet(integer: _outlineView.row(forItem: newCond)), byExtendingSelection: false)
 	}
 	
 	@IBAction func onRemoveSelection(_ sender: NSButton) {
