@@ -24,7 +24,7 @@ class GraphViewController: NSViewController {
 		_scrollView.documentView = MainCanvas
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForBeat), name: NSNotification.Name.nvCanvasSetupForBeat, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForSequence), name: NSNotification.Name.nvCanvasSetupForSequence, object: nil)
 		
 		MainCanvas!.setupFor(group: doc.Story.MainGroup)
 		
@@ -43,11 +43,11 @@ class GraphViewController: NSViewController {
 		self.updatePath(to: group)
 	}
 	
-	@objc private func onCanvasSetupForBeat(_ sender: NSNotification) {
-		guard let beat = sender.userInfo?["beat"] as? NVBeat else {
+	@objc private func onCanvasSetupForSequence(_ sender: NSNotification) {
+		guard let sequence = sender.userInfo?["sequence"] as? NVSequence else {
 			return
 		}
-		self.updatePath(to: beat)
+		self.updatePath(to: sequence)
 	}
 	
 	@objc func onPathDoubleClick() {
@@ -55,8 +55,8 @@ class GraphViewController: NSViewController {
 			let obj = _currentPathResult.objects[cell.tag]
 			if let asGroup = obj as? NVGroup, MainCanvas?.MappedGroup != asGroup {
 				MainCanvas?.setupFor(group: asGroup)
-			} else if let asBeat = obj as? NVBeat, MainCanvas?.MappedBeat != asBeat {
-				MainCanvas?.setupFor(beat: asBeat)
+			} else if let asSequence = obj as? NVSequence, MainCanvas?.MappedSequence != asSequence {
+				MainCanvas?.setupFor(sequence: asSequence)
 			}
 		}
 	}
@@ -88,7 +88,7 @@ class GraphViewController: NSViewController {
 			switch _currentPathResult.objects[idx] {
 			case is NVGroup:
 				cell.image = NSImage(named: "NVGroup") ?? NSImage(named: NSImage.cautionName)
-			case is NVBeat:
+			case is NVSequence:
 				cell.image = NSImage(named: NSImage.cautionName)
 			case is NVEvent:
 				cell.image = NSImage(named: NSImage.cautionName)

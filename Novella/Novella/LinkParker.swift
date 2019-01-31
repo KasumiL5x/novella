@@ -58,14 +58,14 @@ class LinkParker: NSView {
 		
 		// listen for the canvas setup calls as we need to reset the parker when jumping between them
 		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForBeat), name: NSNotification.Name.nvCanvasSetupForBeat, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForSequence), name: NSNotification.Name.nvCanvasSetupForSequence, object: nil)
 	}
 	
 	@objc private func onCanvasSetupForGroup(_ sender: NSNotification) {
 		reset()
 	}
 	
-	@objc private func onCanvasSetupForBeat(_ sender: NSNotification) {
+	@objc private func onCanvasSetupForSequence(_ sender: NSNotification) {
 		reset()
 	}
 	

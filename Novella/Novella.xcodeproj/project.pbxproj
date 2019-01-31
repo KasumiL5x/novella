@@ -21,7 +21,7 @@
 		65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */; };
 		65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */; };
 		65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */; };
-		65AE3DB921C3C44B0026DDE1 /* BeatPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */; };
+		65AE3DB921C3C44B0026DDE1 /* SequencePropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB821C3C44B0026DDE1 /* SequencePropertyView.xib */; };
 		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
 		65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18EB21CE269C00DCB05E /* LinkParker.swift */; };
 		65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */; };
@@ -34,13 +34,13 @@
 		DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */; };
 		DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */; };
 		DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */; };
-		DF93F60D21BD99C100CF5B03 /* CanvasBeatLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */; };
+		DF93F60D21BD99C100CF5B03 /* CanvasSequenceLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60C21BD99C100CF5B03 /* CanvasSequenceLink.swift */; };
 		DF93F60F21BD99D200CF5B03 /* CanvasEventLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */; };
 		DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */; };
 		DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */; };
 		DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927021B96D6E00BC8AB0 /* NVLink.swift */; };
 		DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927121B96D6E00BC8AB0 /* NVCondition.swift */; };
-		DF94928121B96D6F00BC8AB0 /* NVBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927221B96D6E00BC8AB0 /* NVBeat.swift */; };
+		DF94928121B96D6F00BC8AB0 /* NVSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927221B96D6E00BC8AB0 /* NVSequence.swift */; };
 		DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927321B96D6F00BC8AB0 /* NVValue.swift */; };
 		DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */; };
 		DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927521B96D6F00BC8AB0 /* NVEvent.swift */; };
@@ -48,7 +48,7 @@
 		DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */; };
 		DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927821B96D6F00BC8AB0 /* NVLog.swift */; };
 		DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927921B96D6F00BC8AB0 /* NVGroup.swift */; };
-		DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927A21B96D6F00BC8AB0 /* NVDiscoverableBeat.swift */; };
+		DF94928921B96D6F00BC8AB0 /* NVDiscoverableSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927A21B96D6F00BC8AB0 /* NVDiscoverableSequence.swift */; };
 		DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927B21B96D6F00BC8AB0 /* NVStory.swift */; };
 		DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */; };
 		DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94928D21B96F8C00BC8AB0 /* Canvas.swift */; };
@@ -59,7 +59,7 @@
 		DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929821B9838F00BC8AB0 /* CanvasObject.swift */; };
 		DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */; };
 		DF94929D21B98A9100BC8AB0 /* CanvasGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */; };
-		DF94929F21B98A9A00BC8AB0 /* CanvasBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929E21B98A9A00BC8AB0 /* CanvasBeat.swift */; };
+		DF94929F21B98A9A00BC8AB0 /* CanvasSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94929E21B98A9A00BC8AB0 /* CanvasSequence.swift */; };
 		DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */; };
 		DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9492A221BA573600BC8AB0 /* NVPath.swift */; };
 		DF9492A721BA825D00BC8AB0 /* CGPoint+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9492A621BA825D00BC8AB0 /* CGPoint+Math.swift */; };
@@ -84,7 +84,7 @@
 		65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransformPropertyView.xib; sourceTree = "<group>"; };
 		65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Nib.swift"; sourceTree = "<group>"; };
 		65AE3DB621C3C3130026DDE1 /* CustomNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotifications.swift; sourceTree = "<group>"; };
-		65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeatPropertyView.xib; sourceTree = "<group>"; };
+		65AE3DB821C3C44B0026DDE1 /* SequencePropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SequencePropertyView.xib; sourceTree = "<group>"; };
 		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
 		65BB18EB21CE269C00DCB05E /* LinkParker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkParker.swift; sourceTree = "<group>"; };
 		65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ViewAt.swift"; sourceTree = "<group>"; };
@@ -97,13 +97,13 @@
 		DF93F60121BD07C000CF5B03 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		DF93F60821BD976E00CF5B03 /* NSView+Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extra.swift"; sourceTree = "<group>"; };
 		DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLink.swift; sourceTree = "<group>"; };
-		DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBeatLink.swift; sourceTree = "<group>"; };
+		DF93F60C21BD99C100CF5B03 /* CanvasSequenceLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSequenceLink.swift; sourceTree = "<group>"; };
 		DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEventLink.swift; sourceTree = "<group>"; };
 		DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVUtil.swift; sourceTree = "<group>"; };
 		DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEntity.swift; sourceTree = "<group>"; };
 		DF94927021B96D6E00BC8AB0 /* NVLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLink.swift; sourceTree = "<group>"; };
 		DF94927121B96D6E00BC8AB0 /* NVCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVCondition.swift; sourceTree = "<group>"; };
-		DF94927221B96D6E00BC8AB0 /* NVBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVBeat.swift; sourceTree = "<group>"; };
+		DF94927221B96D6E00BC8AB0 /* NVSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSequence.swift; sourceTree = "<group>"; };
 		DF94927321B96D6F00BC8AB0 /* NVValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVValue.swift; sourceTree = "<group>"; };
 		DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStoryDelegate.swift; sourceTree = "<group>"; };
 		DF94927521B96D6F00BC8AB0 /* NVEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEvent.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
 		DF94927821B96D6F00BC8AB0 /* NVLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVLog.swift; sourceTree = "<group>"; };
 		DF94927921B96D6F00BC8AB0 /* NVGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVGroup.swift; sourceTree = "<group>"; };
-		DF94927A21B96D6F00BC8AB0 /* NVDiscoverableBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDiscoverableBeat.swift; sourceTree = "<group>"; };
+		DF94927A21B96D6F00BC8AB0 /* NVDiscoverableSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVDiscoverableSequence.swift; sourceTree = "<group>"; };
 		DF94927B21B96D6F00BC8AB0 /* NVStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStory.swift; sourceTree = "<group>"; };
 		DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVVariable.swift; sourceTree = "<group>"; };
 		DF94928D21B96F8C00BC8AB0 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		DF94929821B9838F00BC8AB0 /* CanvasObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasObject.swift; sourceTree = "<group>"; };
 		DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasMarquee.swift; sourceTree = "<group>"; };
 		DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGroup.swift; sourceTree = "<group>"; };
-		DF94929E21B98A9A00BC8AB0 /* CanvasBeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBeat.swift; sourceTree = "<group>"; };
+		DF94929E21B98A9A00BC8AB0 /* CanvasSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSequence.swift; sourceTree = "<group>"; };
 		DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEvent.swift; sourceTree = "<group>"; };
 		DF9492A221BA573600BC8AB0 /* NVPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVPath.swift; sourceTree = "<group>"; };
 		DF9492A621BA825D00BC8AB0 /* CGPoint+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Math.swift"; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */,
-				65AE3DB821C3C44B0026DDE1 /* BeatPropertyView.xib */,
+				65AE3DB821C3C44B0026DDE1 /* SequencePropertyView.xib */,
 				65062A3121CB7D24001DD008 /* GroupPropertyView.xib */,
 				65062A3321CB80F8001DD008 /* EventPropertyView.xib */,
 			);
@@ -197,9 +197,9 @@
 		DF94926D21B96D3900BC8AB0 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				DF94927221B96D6E00BC8AB0 /* NVBeat.swift */,
+				DF94927221B96D6E00BC8AB0 /* NVSequence.swift */,
 				DF94927121B96D6E00BC8AB0 /* NVCondition.swift */,
-				DF94927A21B96D6F00BC8AB0 /* NVDiscoverableBeat.swift */,
+				DF94927A21B96D6F00BC8AB0 /* NVDiscoverableSequence.swift */,
 				DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */,
 				DF94927521B96D6F00BC8AB0 /* NVEvent.swift */,
 				DF94927621B96D6F00BC8AB0 /* NVFunction.swift */,
@@ -225,11 +225,11 @@
 				DF94929821B9838F00BC8AB0 /* CanvasObject.swift */,
 				DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */,
 				DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */,
-				DF94929E21B98A9A00BC8AB0 /* CanvasBeat.swift */,
+				DF94929E21B98A9A00BC8AB0 /* CanvasSequence.swift */,
 				DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */,
 				DF9492A821BA82ED00BC8AB0 /* CanvasSelection.swift */,
 				DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */,
-				DF93F60C21BD99C100CF5B03 /* CanvasBeatLink.swift */,
+				DF93F60C21BD99C100CF5B03 /* CanvasSequenceLink.swift */,
 				DF93F60E21BD99D200CF5B03 /* CanvasEventLink.swift */,
 				65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */,
 			);
@@ -351,7 +351,7 @@
 			files = (
 				65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */,
 				65062A3421CB80F8001DD008 /* EventPropertyView.xib in Resources */,
-				65AE3DB921C3C44B0026DDE1 /* BeatPropertyView.xib in Resources */,
+				65AE3DB921C3C44B0026DDE1 /* SequencePropertyView.xib in Resources */,
 				65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */,
 				65062A3221CB7D24001DD008 /* GroupPropertyView.xib in Resources */,
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
@@ -409,14 +409,14 @@
 				655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */,
 				DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */,
 				DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */,
-				DF94928921B96D6F00BC8AB0 /* NVDiscoverableBeat.swift in Sources */,
+				DF94928921B96D6F00BC8AB0 /* NVDiscoverableSequence.swift in Sources */,
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
 				651D7C9F21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift in Sources */,
 				65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */,
 				DF9492A921BA82ED00BC8AB0 /* CanvasSelection.swift in Sources */,
 				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
-				DF94929F21B98A9A00BC8AB0 /* CanvasBeat.swift in Sources */,
+				DF94929F21B98A9A00BC8AB0 /* CanvasSequence.swift in Sources */,
 				DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */,
 				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
 				DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */,
@@ -430,10 +430,10 @@
 				DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */,
 				65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */,
 				DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */,
-				DF94928121B96D6F00BC8AB0 /* NVBeat.swift in Sources */,
+				DF94928121B96D6F00BC8AB0 /* NVSequence.swift in Sources */,
 				DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */,
 				DF9492A721BA825D00BC8AB0 /* CGPoint+Math.swift in Sources */,
-				DF93F60D21BD99C100CF5B03 /* CanvasBeatLink.swift in Sources */,
+				DF93F60D21BD99C100CF5B03 /* CanvasSequenceLink.swift in Sources */,
 				65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

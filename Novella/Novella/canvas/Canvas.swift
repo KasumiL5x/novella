@@ -13,7 +13,7 @@ class Canvas: NSView {
 	
 	private(set) var Doc: Document
 	private(set) var MappedGroup: NVGroup?
-	private(set) var MappedBeat: NVBeat?
+	private(set) var MappedSequence: NVSequence?
 	private let _background: CanvasBackground
 	private let _marquee: CanvasMarquee
 	private var _allObjects: [CanvasObject]
@@ -22,7 +22,7 @@ class Canvas: NSView {
 	private var _contextMenu: NSMenu
 	private var _lastContextPos: CGPoint
 	private let _addGroupMenuItem: NSMenuItem
-	private let _addBeatMenuItem: NSMenuItem
+	private let _addSequenceMenuItem: NSMenuItem
 	private let _addEventMenuItem: NSMenuItem
 	private let _surfaceMenuItem: NSMenuItem
 	//
@@ -33,7 +33,7 @@ class Canvas: NSView {
 	init(doc: Document) {
 		self.Doc = doc
 		self.MappedGroup = nil
-		self.MappedBeat = nil
+		self.MappedSequence = nil
 		let initialFrame = NSMakeRect(0, 0, Canvas.DEFAULT_SIZE, Canvas.DEFAULT_SIZE)
 		self._background = CanvasBackground(frame: initialFrame)
 		self._marquee = CanvasMarquee(frame: initialFrame)
@@ -43,7 +43,7 @@ class Canvas: NSView {
 		self._contextMenu = NSMenu()
 		self._lastContextPos = CGPoint.zero
 		self._addGroupMenuItem = NSMenuItem(title: "Group", action: #selector(Canvas.onContextAddGroup), keyEquivalent: "")
-		self._addBeatMenuItem = NSMenuItem(title: "Beat", action: #selector(Canvas.onContextAddBeat), keyEquivalent: "")
+		self._addSequenceMenuItem = NSMenuItem(title: "Sequence", action: #selector(Canvas.onContextAddSequence), keyEquivalent: "")
 		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
 		self._surfaceMenuItem = NSMenuItem(title: "Surface", action: #selector(Canvas.onContextSurface), keyEquivalent: "")
 		//
@@ -71,7 +71,7 @@ class Canvas: NSView {
 		let addMenu = NSMenu()
 		addMenu.autoenablesItems = false
 		addMenu.addItem(_addGroupMenuItem)
-		addMenu.addItem(_addBeatMenuItem)
+		addMenu.addItem(_addSequenceMenuItem)
 		addMenu.addItem(_addEventMenuItem)
 		let addMenuItem = NSMenuItem()
 		addMenuItem.title = "Add..."
@@ -89,10 +89,10 @@ class Canvas: NSView {
 	
 	func setupFor(group: NVGroup) {
 		MappedGroup = group
-		MappedBeat = nil
+		MappedSequence = nil
 		
 		_addGroupMenuItem.isEnabled = true
-		_addBeatMenuItem.isEnabled = true
+		_addSequenceMenuItem.isEnabled = true
 		_addEventMenuItem.isEnabled = false
 		_surfaceMenuItem.isEnabled = group.Parent != nil
 		
@@ -109,13 +109,13 @@ class Canvas: NSView {
 		for child in group.Groups {
 			makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
-		// add all child beats
-		for child in group.Beats {
-			makeBeat(nvBeat: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		// add all child sequences
+		for child in group.Sequences {
+			makeSequence(nvSequence: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
-		// add all beat links
-		for child in group.BeatLinks {
-			addBeatLink(link: child)
+		// add all sequence links
+		for child in group.SequenceLinks {
+			addSequenceLink(link: child)
 		}
 		
 		// post setup for group notification
@@ -124,14 +124,14 @@ class Canvas: NSView {
 		])
 	}
 	
-	func setupFor(beat: NVBeat) {
-		MappedBeat = beat
+	func setupFor(sequence: NVSequence) {
+		MappedSequence = sequence
 		MappedGroup = nil
 		
 		_addGroupMenuItem.isEnabled = false
-		_addBeatMenuItem.isEnabled = false
+		_addSequenceMenuItem.isEnabled = false
 		_addEventMenuItem.isEnabled = true
-		_surfaceMenuItem.isEnabled = beat.Parent != nil
+		_surfaceMenuItem.isEnabled = sequence.Parent != nil
 		
 		_allObjects = []
 		_allBenches = [:]
@@ -143,17 +143,17 @@ class Canvas: NSView {
 		addSubview(_marquee)
 		
 		// add all child events
-		for child in beat.Events {
+		for child in sequence.Events {
 			makeEvent(nvEvent: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
 		// add all event links
-		for child in beat.EventLinks {
+		for child in sequence.EventLinks {
 			addEventLink(link: child)
 		}
 		
-		// post setup for beat notification
-		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForBeat, object: nil, userInfo: [
-			"beat": beat
+		// post setup for sequence notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForSequence, object: nil, userInfo: [
+			"sequence": sequence
 		])
 	}
 	
@@ -270,7 +270,7 @@ class Canvas: NSView {
 	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
 		// must be set up to show context menu
-		if MappedGroup != nil || MappedBeat != nil {
+		if MappedGroup != nil || MappedSequence != nil {
 			_lastContextPos = gesture.location(in: self)
 			NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
 		}
@@ -284,18 +284,18 @@ class Canvas: NSView {
 		}
 	}
 	
-	@objc private func onContextAddBeat() {
+	@objc private func onContextAddSequence() {
 		if let mappedGroup = MappedGroup {
-			let newBeat = Doc.Story.makeBeat()
-			mappedGroup.add(beat: newBeat)
-			canvasBeatFor(nvBeat: newBeat)?.move(to: _lastContextPos)
+			let newSequence = Doc.Story.makeSequence()
+			mappedGroup.add(sequence: newSequence)
+			canvasSequenceFor(nvSequence: newSequence)?.move(to: _lastContextPos)
 		}
 	}
 	
 	@objc private func onContextAddEvent() {
-		if let mappedBeat = MappedBeat {
+		if let mappedSequence = MappedSequence {
 			let newEvent = Doc.Story.makeEvent()
-			mappedBeat.add(event: newEvent)
+			mappedSequence.add(event: newEvent)
 			canvasEventFor(nvEvent: newEvent)?.move(to: _lastContextPos)
 		}
 	}
@@ -303,7 +303,7 @@ class Canvas: NSView {
 	@objc private func onContextSurface() {
 		if let parent = MappedGroup?.Parent {
 			setupFor(group: parent)
-		} else if let parent = MappedBeat?.Parent {
+		} else if let parent = MappedSequence?.Parent {
 			setupFor(group: parent)
 		}
 	}
@@ -315,8 +315,8 @@ class Canvas: NSView {
 	private func canvasGroupFor(nvGroup: NVGroup) -> CanvasGroup? {
 		return (_allObjects.filter{$0 is CanvasGroup} as! [CanvasGroup]).first(where: {$0.Group == nvGroup})
 	}
-	func canvasBeatFor(nvBeat: NVBeat) -> CanvasBeat? {
-		return (_allObjects.filter{$0 is CanvasBeat} as! [CanvasBeat]).first(where: {$0.Beat == nvBeat})
+	func canvasSequenceFor(nvSequence: NVSequence) -> CanvasSequence? {
+		return (_allObjects.filter{$0 is CanvasSequence} as! [CanvasSequence]).first(where: {$0.Sequence == nvSequence})
 	}
 	func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
 		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.Event == nvEvent})
@@ -335,8 +335,8 @@ class Canvas: NSView {
 		
 		return obj
 	}
-	@discardableResult private func makeBeat(nvBeat: NVBeat, at: CGPoint) -> CanvasBeat {
-		let obj = CanvasBeat(canvas: self, beat: nvBeat)
+	@discardableResult private func makeSequence(nvSequence: NVSequence, at: CGPoint) -> CanvasSequence {
+		let obj = CanvasSequence(canvas: self, sequence: nvSequence)
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 
@@ -388,11 +388,11 @@ class Canvas: NSView {
 		}
 	}
 	
-	func makeBeatLink(beat: CanvasBeat) {
-		// beats only exist within groups so ensure a group is mapped
+	func makeSequenceLink(sequence: CanvasSequence) {
+		// sequences only exist within groups so ensure a group is mapped
 		if let group = MappedGroup {
-			let link = Doc.Story.makeBeatLink(origin: beat.Beat, dest: nil)
-			group.add(beatLink: link)
+			let link = Doc.Story.makeSequenceLink(origin: sequence.Sequence, dest: nil)
+			group.add(sequenceLink: link)
 		}
 	}
 	private func addEventLink(link: NVEventLink) {
@@ -403,18 +403,18 @@ class Canvas: NSView {
 		benchFor(obj: obj)?.add(CanvasEventLink(canvas: self, origin: obj, link: link))
 	}
 	func makeEventLink(event: CanvasEvent) {
-		// events only exist within beats so ensure a beat is mapped
-		if let beat = MappedBeat {
+		// events only exist within sequences so ensure a sequence is mapped
+		if let sequence = MappedSequence {
 			let link = Doc.Story.makeEventLink(origin: event.Event, dest: nil)
-			beat.add(eventLink: link)
+			sequence.add(eventLink: link)
 		}
 	}
-	private func addBeatLink(link: NVBeatLink) {
-		guard let obj = canvasBeatFor(nvBeat: link.Origin) else {
-			NVLog.log("Tried to add a BeatLink but couldn't find a CanvasBeat for the origin!", level: .error)
+	private func addSequenceLink(link: NVSequenceLink) {
+		guard let obj = canvasSequenceFor(nvSequence: link.Origin) else {
+			NVLog.log("Tried to add a SequenceLink but couldn't find a CanvasSequence for the origin!", level: .error)
 			return
 		}
-		benchFor(obj: obj)?.add(CanvasBeatLink(canvas: self, origin: obj, link: link))
+		benchFor(obj: obj)?.add(CanvasSequenceLink(canvas: self, origin: obj, link: link))
 	}
 }
 
@@ -422,7 +422,7 @@ extension Canvas: NVStoryDelegate {
 	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
 	}
 	
-	func nvStoryDidMakeBeat(story: NVStory, beat: NVBeat) {
+	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent) {
@@ -431,8 +431,8 @@ extension Canvas: NVStoryDelegate {
 	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
 	}
 	
-	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink) {
-		addBeatLink(link: link)
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
+		addSequenceLink(link: link)
 	}
 	
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
@@ -451,7 +451,7 @@ extension Canvas: NVStoryDelegate {
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 	}
 	
-	func nvStoryDidDeleteBeat(story: NVStory, beat: NVBeat) {
+	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent) {
@@ -460,7 +460,7 @@ extension Canvas: NVStoryDelegate {
 	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
 	}
 	
-	func nvStoryDidDeleteBeatLink(story: NVStory, link: NVBeatLink) {
+	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
 	}
 	
 	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
@@ -479,23 +479,23 @@ extension Canvas: NVStoryDelegate {
 		canvasGroupFor(nvGroup: group)?.reloadData()
 	}
 	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
 		if let old = oldEntry {
-			canvasBeatFor(nvBeat: old)?.reloadData()
+			canvasSequenceFor(nvSequence: old)?.reloadData()
 		}
 		if let new = newEntry {
-			canvasBeatFor(nvBeat: new)?.reloadData()
+			canvasSequenceFor(nvSequence: new)?.reloadData()
 		}
 	}
 	
-	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 		if group != MappedGroup {
 			return
 		}
-		makeBeat(nvBeat: beat, at: Doc.Positions[beat.UUID] ?? centerPoint())
+		makeSequence(nvSequence: sequence, at: Doc.Positions[sequence.UUID] ?? centerPoint())
 	}
 	
-	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 	}
 	
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
@@ -509,21 +509,21 @@ extension Canvas: NVStoryDelegate {
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
 	}
 	
-	func nvGroupDidAddBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 	}
 	
-	func nvGroupDidRemoveBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 	}
 	
-	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat) {
-		canvasBeatFor(nvBeat: beat)?.reloadData()
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
+		canvasSequenceFor(nvSequence: sequence)?.reloadData()
 	}
 	
-	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
-		canvasBeatFor(nvBeat: beat)?.reloadData()
+	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
+		canvasSequenceFor(nvSequence: sequence)?.reloadData()
 	}
 	
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?) {
+	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
 		if let old = oldEntry {
 			canvasEventFor(nvEvent: old)?.reloadData()
 		}
@@ -532,32 +532,32 @@ extension Canvas: NVStoryDelegate {
 		}
 	}
 	
-	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
-		if beat != MappedBeat {
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		if sequence != MappedSequence {
 			return
 		}
 		makeEvent(nvEvent: event, at: Doc.Positions[event.UUID] ?? centerPoint())
 	}
 	
-	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
+	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
 	}
 	
-	func nvBeatDidAddEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
+	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
 	}
 	
-	func nvBeatDidRemoveEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
+	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
 	}
 	
-	func nvDNBeatTangibilityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	func nvDNBeatFunctionalityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	func nvDNBeatClarityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	func nvDNBeatDeliveryDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
@@ -586,7 +586,7 @@ extension Canvas: NVStoryDelegate {
 	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
 	}
 	
-	func nvBeatLinkDestinationDidChange(story: NVStory, link: NVBeatLink) {
+	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
 	}
 	
 	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {

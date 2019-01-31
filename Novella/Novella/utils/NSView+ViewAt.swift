@@ -16,7 +16,7 @@ struct NovellaTag: OptionSet {
 	}
 	
 	static let canvasGroup = NovellaTag(rawValue: 1 << 0)
-	static let canvasBeat = NovellaTag(rawValue: 1 << 1)
+	static let canvasSequence = NovellaTag(rawValue: 1 << 1)
 	static let canvasEvent = NovellaTag(rawValue: 1 << 2)
 	static let all = NovellaTag(rawValue: ~0)
 }

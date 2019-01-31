@@ -39,8 +39,8 @@ class InspectorViewController: NSViewController {
 		case let asGroup as CanvasGroup:
 			setupFor(group: asGroup)
 			
-		case let asBeat as CanvasBeat:
-			setupFor(beat: asBeat)
+		case let asSequence as CanvasSequence:
+			setupFor(sequence: asSequence)
 			
 		case let asEvent as CanvasEvent:
 			setupFor(event: asEvent)
@@ -101,8 +101,8 @@ class InspectorViewController: NSViewController {
 		])
 	}
 	
-	private func setupFor(beat: CanvasBeat) {
-		weak var xform = TransformPropertyView.instantiate(obj: beat)
+	private func setupFor(sequence: CanvasSequence) {
+		weak var xform = TransformPropertyView.instantiate(obj: sequence)
 		view.addSubview(xform!)
 		xform!.translatesAutoresizingMaskIntoConstraints = false
 		view.addConstraints([
@@ -112,7 +112,7 @@ class InspectorViewController: NSViewController {
 			NSLayoutConstraint(item: xform!, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0.0)
 		])
 		
-		weak var props = BeatPropertyView.instantiate(beat: beat)
+		weak var props = SequencePropertyView.instantiate(sequence: sequence)
 		view.addSubview(props!)
 		props!.translatesAutoresizingMaskIntoConstraints = false
 		view.addConstraints([

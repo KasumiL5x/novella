@@ -60,43 +60,43 @@ extension TransformPropertyView: CanvasObjectDelegate {
 	}
 }
 
-class BeatPropertyView: NSView {
+class SequencePropertyView: NSView {
 	@IBOutlet weak private var _label: NSTextField!
 	@IBOutlet weak private var _parallel: NSButton!
 	@IBOutlet weak private var _entry: NSButton!
 	
-	private var _beat: CanvasBeat? = nil
+	private var _sequence: CanvasSequence? = nil
 	
-	static func instantiate(beat: CanvasBeat) -> BeatPropertyView {
-		guard let view: BeatPropertyView = initFromNib() else {
+	static func instantiate(sequence: CanvasSequence) -> SequencePropertyView {
+		guard let view: SequencePropertyView = initFromNib() else {
 			fatalError()
 		}
-		view.setupFor(beat: beat)
+		view.setupFor(sequence: sequence)
 		return view
 	}
 	
-	private func setupFor(beat: CanvasBeat) {
-		_beat = beat
+	private func setupFor(sequence: CanvasSequence) {
+		_sequence = sequence
 		
 		wantsLayer = true
 		layer?.backgroundColor = NSColor(named: "NVPropertyBackground")!.cgColor
 		layer?.cornerRadius = (max(frame.width, frame.height) * 0.5) * 0.025
 		
-		_label.stringValue = beat.Beat.Label
-		_parallel.state = beat.Beat.Parallel ? .on : .off
-		_entry.state = beat.Beat.Parent?.Entry == beat.Beat ? .on : .off
+		_label.stringValue = sequence.Sequence.Label
+		_parallel.state = sequence.Sequence.Parallel ? .on : .off
+		_entry.state = sequence.Sequence.Parent?.Entry == sequence.Sequence ? .on : .off
 	}
 	
 	@IBAction func onLabelChanged(_ sender: NSTextField) {
-		_beat?.Beat.Label = sender.stringValue
+		_sequence?.Sequence.Label = sender.stringValue
 	}
 	
 	@IBAction func onParallelChanged(_ sender: NSButton) {
-		_beat?.Beat.Parallel = sender.state == .on
+		_sequence?.Sequence.Parallel = sender.state == .on
 	}
 	
 	@IBAction func onEntryChanged(_ sender: NSButton) {
-		_beat?.Beat.Parent?.Entry = sender.state == .on ? _beat?.Beat : nil
+		_sequence?.Sequence.Parent?.Entry = sender.state == .on ? _sequence?.Sequence : nil
 	}
 }
 

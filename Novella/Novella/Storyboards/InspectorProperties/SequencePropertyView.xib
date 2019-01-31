@@ -9,7 +9,7 @@
         <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe" userLabel="Beat" customClass="BeatPropertyView" customModule="novella" customModuleProvider="target">
+        <customView id="c22-O7-iKe" userLabel="Sequence" customClass="SequencePropertyView" customModule="novella" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="222" height="107"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -57,9 +57,9 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2CP-iu-nlc">
-                    <rect key="frame" x="3" y="91" width="24" height="11"/>
+                    <rect key="frame" x="3" y="91" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Beat" id="EBt-6q-0tD">
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Sequence" id="EBt-6q-0tD">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

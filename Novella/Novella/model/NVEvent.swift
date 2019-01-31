@@ -11,7 +11,7 @@ import Foundation
 class NVEvent: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
-	var Parent: NVBeat? // warning: no friend class support so has to be public
+	var Parent: NVSequence? // warning: no friend class support so has to be public
 	var Label: String {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)

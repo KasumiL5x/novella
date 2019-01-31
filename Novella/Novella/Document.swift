@@ -53,10 +53,10 @@ extension Document: NVStoryDelegate {
 		}
 	}
 	
-	func nvStoryDidMakeBeat(story: NVStory, beat: NVBeat) {
+	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
-		if Positions[beat.UUID] == nil {
-			Positions[beat.UUID] = CGPoint.zero
+		if Positions[sequence.UUID] == nil {
+			Positions[sequence.UUID] = CGPoint.zero
 		}
 	}
 	
@@ -74,7 +74,7 @@ extension Document: NVStoryDelegate {
 		}
 	}
 	
-	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink) {
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
 		updateChangeCount(.changeDone)
 		if Positions[link.UUID] == nil {
 			Positions[link.UUID] = CGPoint.zero
@@ -107,7 +107,7 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvStoryDidDeleteBeat(story: NVStory, beat: NVBeat) {
+	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -119,7 +119,7 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvStoryDidDeleteBeatLink(story: NVStory, link: NVBeatLink) {
+	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -143,15 +143,15 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -163,55 +163,55 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupDidAddBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupDidRemoveBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat) {
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
+	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?) {
+	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
+	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatDidAddEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
+	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatDidRemoveEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
+	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvDNBeatTangibilityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvDNBeatFunctionalityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvDNBeatClarityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvDNBeatDeliveryDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -247,7 +247,7 @@ extension Document: NVStoryDelegate {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvBeatLinkDestinationDidChange(story: NVStory, link: NVBeatLink) {
+	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
 		updateChangeCount(.changeDone)
 	}
 	

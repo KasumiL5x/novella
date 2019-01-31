@@ -1,5 +1,5 @@
 //
-//  CanvasBeat.swift
+//  CanvasSequence.swift
 //  novella
 //
 //  Created by dgreen on 06/12/2018.
@@ -8,27 +8,27 @@
 
 import Cocoa
 
-class CanvasBeat: CanvasObject {
-	let Beat: NVBeat
+class CanvasSequence: CanvasObject {
+	let Sequence: NVSequence
 	private let _parallelMenuItem: NSMenuItem
 	private let _entryMenuItem: NSMenuItem
 	
-	init(canvas: Canvas, beat: NVBeat) {
-		self.Beat = beat
+	init(canvas: Canvas, sequence: NVSequence) {
+		self.Sequence = sequence
 		self._parallelMenuItem = NSMenuItem()
 		self._entryMenuItem = NSMenuItem()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
-		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasBeat.onSubmerge), keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasSequence.onSubmerge), keyEquivalent: "")
 		ContextMenu.addItem(NSMenuItem.separator())
-		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasBeat.onAddLink), keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasSequence.onAddLink), keyEquivalent: "")
 		//
 		_parallelMenuItem.title = "Parallel"
-		_parallelMenuItem.action = #selector(CanvasBeat.onParallel)
+		_parallelMenuItem.action = #selector(CanvasSequence.onParallel)
 		ContextMenu.addItem(_parallelMenuItem)
 		//
-		_entryMenuItem.title = "Entry Beat"
-		_entryMenuItem.action = #selector(CanvasBeat.onEntryBeat)
+		_entryMenuItem.title = "Entry Sequence"
+		_entryMenuItem.action = #selector(CanvasSequence.onEntrySequence)
 		ContextMenu.addItem(_entryMenuItem)
 		//
 		ContextMenu.addItem(NSMenuItem.separator())
@@ -47,45 +47,45 @@ class CanvasBeat: CanvasObject {
 	}
 
 	@objc private func onSubmerge() {
-		_canvas.setupFor(beat: self.Beat)
+		_canvas.setupFor(sequence: self.Sequence)
 	}
 	
 	@objc private func onAddLink() {
-		_canvas.makeBeatLink(beat: self)
+		_canvas.makeSequenceLink(sequence: self)
 	}
 	
 	@objc private func onParallel() {
-		Beat.Parallel = !Beat.Parallel
+		Sequence.Parallel = !Sequence.Parallel
 	}
 	
-	@objc private func onEntryBeat() {
-		if Beat.Parent?.Entry == Beat {
-			Beat.Parent?.Entry = nil
+	@objc private func onEntrySequence() {
+		if Sequence.Parent?.Entry == Sequence {
+			Sequence.Parent?.Entry = nil
 		} else {
-			Beat.Parent?.Entry = Beat
+			Sequence.Parent?.Entry = Sequence
 		}
 	}
 	
 	// virtuals
 	override func onMove() {
 		super.onMove()
-		_canvas.Doc.Positions[Beat.UUID] = frame.origin
+		_canvas.Doc.Positions[Sequence.UUID] = frame.origin
 	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#FF5E3A")
 	}
 	override func labelString() -> String {
-		return Beat.Label.isEmpty ? "Unknown" : Beat.Label
+		return Sequence.Label.isEmpty ? "Unknown" : Sequence.Label
 	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}
 	override func reloadData() {
 		super.reloadData()
-		setParallelLayer(state: Beat.Parallel)
-		_parallelMenuItem.image = Beat.Parallel ? NSImage(named: NSImage.menuOnStateTemplateName) : NSImage(named: NSImage.stopProgressTemplateName)
+		setParallelLayer(state: Sequence.Parallel)
+		_parallelMenuItem.image = Sequence.Parallel ? NSImage(named: NSImage.menuOnStateTemplateName) : NSImage(named: NSImage.stopProgressTemplateName)
 		
-		setEntryLayer(state: Beat.Parent?.Entry == Beat)
-		_entryMenuItem.image = (Beat.Parent?.Entry == Beat) ? NSImage(named: NSImage.menuOnStateTemplateName) : NSImage(named: NSImage.stopProgressTemplateName)
+		setEntryLayer(state: Sequence.Parent?.Entry == Sequence)
+		_entryMenuItem.image = (Sequence.Parent?.Entry == Sequence) ? NSImage(named: NSImage.menuOnStateTemplateName) : NSImage(named: NSImage.stopProgressTemplateName)
 	}
 }

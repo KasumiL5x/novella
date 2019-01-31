@@ -1,5 +1,5 @@
 //
-//  CanvasBeatLink.swift
+//  CanvasSequenceLink.swift
 //  novella
 //
 //  Created by dgreen on 09/12/2018.
@@ -8,11 +8,11 @@
 
 import AppKit
 
-class CanvasBeatLink: CanvasLink {
-	let BeatLink: NVBeatLink
+class CanvasSequenceLink: CanvasLink {
+	let SequenceLink: NVSequenceLink
 	
-	init(canvas: Canvas, origin: CanvasObject, link: NVBeatLink) {
-		self.BeatLink = link
+	init(canvas: Canvas, origin: CanvasObject, link: NVSequenceLink) {
+		self.SequenceLink = link
 		super.init(canvas: canvas, origin: origin)
 	}
 	required init?(coder decoder: NSCoder) {
@@ -21,25 +21,25 @@ class CanvasBeatLink: CanvasLink {
 	
 	// virtuals
 	override func canlinkTo(obj: CanvasObject) -> Bool {
-		return obj is CanvasBeat
+		return obj is CanvasSequence
 	}
 	
 	override func connectTo(obj: CanvasObject?) {
-		// revert old CanvasBeat back to normal state and remove self as delegate
-		if let oldDest = BeatLink.Destination, let oldObj = _canvas.canvasBeatFor(nvBeat: oldDest) {
+		// revert old CanvasSequence back to normal state and remove self as delegate
+		if let oldDest = SequenceLink.Destination, let oldObj = _canvas.canvasSequenceFor(nvSequence: oldDest) {
 			oldObj.CurrentState = .normal
 			oldObj.remove(delegate: self)
 		}
 		
 		// update model link destination
-		BeatLink.Destination = (obj as? CanvasBeat)?.Beat ?? nil
+		SequenceLink.Destination = (obj as? CanvasSequence)?.Sequence ?? nil
 		
 		// add self as delegate
 		obj?.add(delegate: self)
 	}
 }
 
-extension CanvasBeatLink: CanvasObjectDelegate {
+extension CanvasSequenceLink: CanvasObjectDelegate {
 	func canvasObjectMoved(obj: CanvasObject) {
 		updateCurveTo(obj: obj)
 	}

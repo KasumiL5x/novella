@@ -23,8 +23,8 @@ class NVStory {
 	var Groups: [NVGroup] {
 		get{ return _identifiables.filter{$0 is NVGroup} as! [NVGroup] }
 	}
-	var Beats: [NVBeat] {
-		get{ return _identifiables.filter{$0 is NVBeat} as! [NVBeat] }
+	var Sequences: [NVSequence] {
+		get{ return _identifiables.filter{$0 is NVSequence} as! [NVSequence] }
 	}
 	var Events: [NVEvent] {
 		get{ return _identifiables.filter{$0 is NVEvent} as! [NVEvent] }
@@ -32,8 +32,8 @@ class NVStory {
 	var Entities: [NVEntity] {
 		get{ return _identifiables.filter{$0 is NVEntity} as! [NVEntity] }
 	}
-	var BeatLinks: [NVBeatLink] {
-		get{ return _identifiables.filter{$0 is NVBeatLink} as! [NVBeatLink] }
+	var SequenceLinks: [NVSequenceLink] {
+		get{ return _identifiables.filter{$0 is NVSequenceLink} as! [NVSequenceLink] }
 	}
 	var EventLinks: [NVEventLink] {
 		get{ return _identifiables.filter{$0 is NVEventLink} as! [NVEventLink] }
@@ -158,21 +158,21 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeGroup(story: self, group: group)}
 		return group
 	}
-	func makeBeat(uuid: NSUUID?=nil) -> NVBeat {
-		let beat = NVBeat(uuid: uuid ?? NSUUID(), story: self)
-		_identifiables.append(beat)
+	func makeSequence(uuid: NSUUID?=nil) -> NVSequence {
+		let sequence = NVSequence(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(sequence)
 		
-		NVLog.log("Created Beat (\(beat.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeBeat(story: self, beat: beat)}
-		return beat
+		NVLog.log("Created Sequence (\(sequence.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeSequence(story: self, sequence: sequence)}
+		return sequence
 	}
-	func makeDNBeat(uuid: NSUUID?=nil) -> NVDiscoverableBeat {
-		let beat = NVDiscoverableBeat(uuid: uuid ?? NSUUID(), story: self)
-		_identifiables.append(beat)
+	func makeDNSequence(uuid: NSUUID?=nil) -> NVDiscoverableSequence {
+		let sequence = NVDiscoverableSequence(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(sequence)
 		
-		NVLog.log("Created DiscoverableBeat (\(beat.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeBeat(story: self, beat: beat)}
-		return beat
+		NVLog.log("Created DiscoverableSequence (\(sequence.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeSequence(story: self, sequence: sequence)}
+		return sequence
 	}
 	func makeEvent(uuid: NSUUID?=nil) -> NVEvent {
 		let event = NVEvent(uuid: uuid ?? NSUUID(), story: self)
@@ -190,12 +190,12 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEntity(story: self, entity: entity)}
 		return entity
 	}
-	func makeBeatLink(uuid: NSUUID?=nil, origin: NVBeat, dest: NVBeat?) -> NVBeatLink {
-		let link = NVBeatLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
+	func makeSequenceLink(uuid: NSUUID?=nil, origin: NVSequence, dest: NVSequence?) -> NVSequenceLink {
+		let link = NVSequenceLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
 		_identifiables.append(link)
 		
-		NVLog.log("Created BeatLink (\(link.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeBeatLink(story: self, link: link)}
+		NVLog.log("Created SequenceLink (\(link.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeSequenceLink(story: self, link: link)}
 		return link
 	}
 	func makeEventLink(uuid: NSUUID?=nil, origin: NVEvent, dest: NVEvent?) -> NVEventLink {
@@ -248,9 +248,9 @@ class NVStory {
 			}
 		}
 		
-		// remove all child beats
-		for (_, beat) in group.Beats.enumerated().reversed() {
-			delete(beat: beat)
+		// remove all child sequences
+		for (_, sequence) in group.Sequences.enumerated().reversed() {
+			delete(sequence: sequence)
 		}
 		
 		// remove from story
@@ -261,42 +261,42 @@ class NVStory {
 		NVLog.log("Deleted Group (\(group.UUID.uuidString)).", level: .info)
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteGroup(story: self, group: group)}
 	}
-	func delete(beat: NVBeat) {
+	func delete(sequence: NVSequence) {
 		// remove from any links as source or destination
-		for (_, link) in BeatLinks.enumerated().reversed() {
+		for (_, link) in SequenceLinks.enumerated().reversed() {
 			// nil destinations
-			if link.Destination == beat {
+			if link.Destination == sequence {
 				link.Destination = nil
 			}
 			// fully remove if origin
-			if link.Origin == beat {
-				delete(beatLink: link)
+			if link.Origin == sequence {
+				delete(sequenceLink: link)
 			}
 		}
 		
 		// remove from all groups (incl. entry in the remove function)
 		Groups.forEach { (group) in
-			if group.contains(beat: beat) {
-				group.remove(beat: beat)
+			if group.contains(sequence: sequence) {
+				group.remove(sequence: sequence)
 			}
 		}
 		// same treatment for main group since it's not in the list
-		if MainGroup.contains(beat: beat) {
-			MainGroup.remove(beat: beat)
+		if MainGroup.contains(sequence: sequence) {
+			MainGroup.remove(sequence: sequence)
 		}
 		
-		// remove all child events of the beat too
-		for (_, event) in beat.Events.enumerated().reversed() {
+		// remove all child events of the sequence too
+		for (_, event) in sequence.Events.enumerated().reversed() {
 			delete(event: event)
 		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.UUID == beat.UUID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == sequence.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		NVLog.log("Deleted Beat (\(beat.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteBeat(story: self, beat: beat)}
+		NVLog.log("Deleted Sequence (\(sequence.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteSequence(story: self, sequence: sequence)}
 	}
 	func delete(event: NVEvent) {
 		// remove from any links as source or destination
@@ -311,10 +311,10 @@ class NVStory {
 			}
 		}
 		
-		// remove from all beats (incl. entry in the remove function)
-		Beats.forEach { (beat) in
-			if beat.contains(event: event) {
-				beat.remove(event: event)
+		// remove from all sequences (incl. entry in the remove function)
+		Sequences.forEach { (sequence) in
+			if sequence.contains(event: event) {
+				sequence.remove(event: event)
 			}
 		}
 		
@@ -342,27 +342,27 @@ class NVStory {
 		NVLog.log("Deleted Entity (\(entity.UUID.uuidString)).", level: .info)
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEntity(story: self, entity: entity)}
 	}
-	func delete(beatLink: NVBeatLink) {
+	func delete(sequenceLink: NVSequenceLink) {
 		// remove from all groups that contain it
 		Groups.forEach { (group) in
-			if group.contains(beatLink: beatLink) {
-				group.remove(beatLink: beatLink)
+			if group.contains(sequenceLink: sequenceLink) {
+				group.remove(sequenceLink: sequenceLink)
 			}
 		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.UUID == beatLink.UUID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == sequenceLink.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		NVLog.log("Deleted BeatLink (\(beatLink.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteBeatLink(story: self, link: beatLink)}
+		NVLog.log("Deleted SequenceLink (\(sequenceLink.UUID.uuidString)).", level: .info)
+		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteSequenceLink(story: self, link: sequenceLink)}
 	}
 	func delete(eventLink: NVEventLink) {
-		// remove from all beats that contain it
-		Beats.forEach { (beat) in
-			if beat.contains(eventLink: eventLink) {
-				beat.remove(eventLink: eventLink)
+		// remove from all sequences that contain it
+		Sequences.forEach { (sequence) in
+			if sequence.contains(eventLink: eventLink) {
+				sequence.remove(eventLink: eventLink)
 			}
 		}
 		
@@ -384,13 +384,13 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteVariable(story: self, variable: variable)}
 	}
 	func delete(function: NVFunction) {
-		// remove from beats
-		Beats.forEach { (beat) in
-			if beat.EntryFunction == function {
-				beat.EntryFunction = nil
+		// remove from sequences
+		Sequences.forEach { (sequence) in
+			if sequence.EntryFunction == function {
+				sequence.EntryFunction = nil
 			}
-			if beat.ExitFunction == function {
-				beat.ExitFunction = nil
+			if sequence.ExitFunction == function {
+				sequence.ExitFunction = nil
 			}
 		}
 		
@@ -415,7 +415,7 @@ class NVStory {
 		}
 		
 		// remove from links
-		BeatLinks.forEach { (link) in
+		SequenceLinks.forEach { (link) in
 			if link.Function == function {
 				link.Function = nil
 			}
@@ -435,10 +435,10 @@ class NVStory {
 		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteFunction(story: self, function: function)}
 	}
 	func delete(condition: NVCondition) {
-		// remove from beats
-		Beats.forEach { (beat) in
-			if beat.PreCondition == condition {
-				beat.PreCondition = nil
+		// remove from sequences
+		Sequences.forEach { (sequence) in
+			if sequence.PreCondition == condition {
+				sequence.PreCondition = nil
 			}
 		}
 		

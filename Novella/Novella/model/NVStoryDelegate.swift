@@ -11,10 +11,10 @@ import Foundation
 protocol NVStoryDelegate: AnyObject {
 	// creation
 	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup)
-	func nvStoryDidMakeBeat(story: NVStory, beat: NVBeat)
+	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence)
 	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent)
 	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity)
-	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink)
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink)
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink)
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable)
 	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction)
@@ -22,10 +22,10 @@ protocol NVStoryDelegate: AnyObject {
 	
 	// deletion
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup)
-	func nvStoryDidDeleteBeat(story: NVStory, beat: NVBeat)
+	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence)
 	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent)
 	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity)
-	func nvStoryDidDeleteBeatLink(story: NVStory, link: NVBeatLink)
+	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink)
 	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink)
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable)
 	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction)
@@ -33,28 +33,28 @@ protocol NVStoryDelegate: AnyObject {
 	
 	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup)
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?)
-	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat)
-	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat)
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?)
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence)
+	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence)
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup)
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup)
-	func nvGroupDidAddBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink)
-	func nvGroupDidRemoveBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink)
+	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink)
+	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink)
 	
-	// beats
-	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat)
-	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat)
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?)
-	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent)
-	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent)
-	func nvBeatDidAddEventLink(story: NVStory, beat: NVBeat, link: NVEventLink)
-	func nvBeatDidRemoveEventLink(story: NVStory, beat: NVBeat, link: NVEventLink)
+	// sequences
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?)
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent)
+	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent)
+	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink)
+	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink)
 	
-	// discoverable beat
-	func nvDNBeatTangibilityDidChange(story: NVStory, beat: NVDiscoverableBeat)
-	func nvDNBeatFunctionalityDidChange(story: NVStory, beat: NVDiscoverableBeat)
-	func nvDNBeatClarityDidChange(story: NVStory, beat: NVDiscoverableBeat)
-	func nvDNBeatDeliveryDidChange(story: NVStory, beat: NVDiscoverableBeat)
+	// discoverable sequence
+	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence)
+	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence)
+	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence)
+	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence)
 	
 	// event
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent)
@@ -69,7 +69,7 @@ protocol NVStoryDelegate: AnyObject {
 	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable)
 	
 	// links
-	func nvBeatLinkDestinationDidChange(story: NVStory, link: NVBeatLink)
+	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink)
 	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink)
 	
 	// entities

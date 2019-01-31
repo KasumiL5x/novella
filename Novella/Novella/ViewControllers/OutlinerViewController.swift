@@ -57,11 +57,11 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			(view as? NSTableCellView)?.textField?.stringValue = asGroup.Label
 			(view as? NSTableCellView)?.imageView?.image = _groupImage ?? NSImage(named: NSImage.cautionName)
 			
-		case let asBeat as NVBeat:
-			(view as? NSTableCellView)?.textField?.stringValue = asBeat.Label
+		case let asSequence as NVSequence:
+			(view as? NSTableCellView)?.textField?.stringValue = asSequence.Label
 			
-		case let asBeatLink as NVBeatLink:
-			(view as? NSTableCellView)?.textField?.stringValue = "(\(asBeatLink.Origin.Label)) -> (\(asBeatLink.Destination?.Label ?? "nil"))"
+		case let asSequenceLink as NVSequenceLink:
+			(view as? NSTableCellView)?.textField?.stringValue = "(\(asSequenceLink.Origin.Label)) -> (\(asSequenceLink.Destination?.Label ?? "nil"))"
 			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		case let asEvent as NVEvent:
@@ -87,10 +87,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 		
 		switch item {
 		case let asGroup as NVGroup:
-			return (asGroup.Beats.count + asGroup.BeatLinks.count + asGroup.Groups.count) // ordering is mirrored below
+			return (asGroup.Sequences.count + asGroup.SequenceLinks.count + asGroup.Groups.count) // ordering is mirrored below
 			
-		case let asBeat as NVBeat:
-			return (asBeat.Events.count + asBeat.EventLinks.count) // ordering is mirrored below
+		case let asSequence as NVSequence:
+			return (asSequence.Events.count + asSequence.EventLinks.count) // ordering is mirrored below
 			
 		default:
 			return 0
@@ -105,15 +105,15 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 		// order here matches the above function count order
 		switch item {
 		case let asGroup as NVGroup:
-			if index < asGroup.Beats.count {
-				return asGroup.Beats[index]
+			if index < asGroup.Sequences.count {
+				return asGroup.Sequences[index]
 			}
-			var offset = asGroup.Beats.count
+			var offset = asGroup.Sequences.count
 			
-			if index < (asGroup.BeatLinks.count + offset) {
-				return asGroup.BeatLinks[index - offset]
+			if index < (asGroup.SequenceLinks.count + offset) {
+				return asGroup.SequenceLinks[index - offset]
 			}
-			offset += asGroup.BeatLinks.count
+			offset += asGroup.SequenceLinks.count
 			
 			if index < (asGroup.Groups.count + offset) {
 				return asGroup.Groups[index - offset]
@@ -122,16 +122,16 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 			
 			fatalError()
 			
-		case let asBeat as NVBeat:
-			if index < asBeat.Events.count {
-				return asBeat.Events[index]
+		case let asSequence as NVSequence:
+			if index < asSequence.Events.count {
+				return asSequence.Events[index]
 			}
-			var offset = asBeat.Events.count
+			var offset = asSequence.Events.count
 			
-			if index < (asBeat.EventLinks.count + offset) {
-				return asBeat.EventLinks[index - offset]
+			if index < (asSequence.EventLinks.count + offset) {
+				return asSequence.EventLinks[index - offset]
 			}
-			offset += asBeat.EventLinks.count
+			offset += asSequence.EventLinks.count
 			
 			fatalError()
 			
@@ -143,10 +143,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		switch item {
 		case let asGroup as NVGroup:
-			return (asGroup.Beats.count + asGroup.BeatLinks.count + asGroup.Groups.count) > 0
+			return (asGroup.Sequences.count + asGroup.SequenceLinks.count + asGroup.Groups.count) > 0
 			
-		case let asBeat as NVBeat:
-			return (asBeat.Events.count + asBeat.EventLinks.count) > 0
+		case let asSequence as NVSequence:
+			return (asSequence.Events.count + asSequence.EventLinks.count) > 0
 			
 		default:
 			return false
@@ -158,7 +158,7 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
 	}
 	
-	func nvStoryDidMakeBeat(story: NVStory, beat: NVBeat) {
+	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent) {
@@ -167,7 +167,7 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
 	}
 	
-	func nvStoryDidMakeBeatLink(story: NVStory, link: NVBeatLink) {
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
 	}
 	
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
@@ -185,7 +185,7 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 	}
 	
-	func nvStoryDidDeleteBeat(story: NVStory, beat: NVBeat) {
+	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent) {
@@ -194,7 +194,7 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
 	}
 	
-	func nvStoryDidDeleteBeatLink(story: NVStory, link: NVBeatLink) {
+	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
 	}
 	
 	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
@@ -213,14 +213,14 @@ extension OutlinerViewController: NVStoryDelegate {
 		_outlineView.reloadItem(group)
 	}
 	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVBeat?, newEntry: NVBeat?) {
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
 	}
 	
-	func nvGroupDidAddBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
-	func nvGroupDidRemoveBeat(story: NVStory, group: NVGroup, beat: NVBeat) {
+	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
@@ -232,56 +232,56 @@ extension OutlinerViewController: NVStoryDelegate {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
-	func nvGroupDidAddBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
-	func nvGroupDidRemoveBeatLink(story: NVStory, group: NVGroup, link: NVBeatLink) {
+	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
-	func nvBeatLabelDidChange(story: NVStory, beat: NVBeat) {
-		_outlineView.reloadItem(beat)
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
+		_outlineView.reloadItem(sequence)
 		for i in 0..<_outlineView.numberOfRows {
 			let item = _outlineView.item(atRow: i)
-			if let asBeatLink = item as? NVBeatLink, asBeatLink.Origin == beat || asBeatLink.Destination == beat {
+			if let asSequenceLink = item as? NVSequenceLink, asSequenceLink.Origin == sequence || asSequenceLink.Destination == sequence {
 				_outlineView.reloadItem(item)
 			}
 		}
 	}
 	
-	func nvBeatParallelDidChange(story: NVStory, beat: NVBeat) {
+	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
-	func nvBeatEntryDidChange(story: NVStory, beat: NVBeat, oldEntry: NVEvent?, newEntry: NVEvent?) {
+	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
 	}
 	
-	func nvBeatDidAddEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
-		_outlineView.reloadItem(beat, reloadChildren: true)
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvBeatDidRemoveEvent(story: NVStory, beat: NVBeat, event: NVEvent) {
-		_outlineView.reloadItem(beat, reloadChildren: true)
+	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvBeatDidAddEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
-		_outlineView.reloadItem(beat, reloadChildren: true)
+	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvBeatDidRemoveEventLink(story: NVStory, beat: NVBeat, link: NVEventLink) {
-		_outlineView.reloadItem(beat, reloadChildren: true)
+	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvDNBeatTangibilityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	func nvDNBeatFunctionalityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	func nvDNBeatClarityDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	func nvDNBeatDeliveryDidChange(story: NVStory, beat: NVDiscoverableBeat) {
+	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
@@ -316,7 +316,7 @@ extension OutlinerViewController: NVStoryDelegate {
 	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
 	}
 	
-	func nvBeatLinkDestinationDidChange(story: NVStory, link: NVBeatLink) {
+	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
 	}
 	
 	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {

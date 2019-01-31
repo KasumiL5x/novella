@@ -21,20 +21,20 @@ class NVGroup: NVIdentifiable {
 	var PreCondition: NVCondition?
 	var EntryFunction: NVFunction?
 	var ExitFunction: NVFunction?
-	var Entry: NVBeat? {
+	var Entry: NVSequence? {
 		didSet {
 			// must be part of the group
-			if let entry = Entry, !contains(beat: entry) {
+			if let entry = Entry, !contains(sequence: entry) {
 				Entry = nil
-				NVLog.log("Tried to set Group (\(UUID.uuidString)) Entry to a non-included Beat.", level: .warning)
+				NVLog.log("Tried to set Group (\(UUID.uuidString)) Entry to a non-included Sequence.", level: .warning)
 			} else {
 				NVLog.log("Group (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
 			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupEntryDidChange(story: _story, group: self, oldEntry: oldValue, newEntry: Entry)}
 		}
 	}
-	private(set) var Beats: [NVBeat]
-	private(set) var BeatLinks: [NVBeatLink]
+	private(set) var Sequences: [NVSequence]
+	private(set) var SequenceLinks: [NVSequenceLink]
 	private(set) var Groups: [NVGroup]
 	
 	init(uuid: NSUUID, story: NVStory) {
@@ -43,37 +43,37 @@ class NVGroup: NVIdentifiable {
 		self.Parent = nil
 		self.Label = ""
 		self.Entry = nil
-		self.Beats = []
-		self.BeatLinks = []
+		self.Sequences = []
+		self.SequenceLinks = []
 		self.Groups = []
 	}
 	
-	func contains(beat: NVBeat) -> Bool {
-		return Beats.contains(beat)
+	func contains(sequence: NVSequence) -> Bool {
+		return Sequences.contains(sequence)
 	}
-	func add(beat: NVBeat) {
-		if contains(beat: beat) {
-			NVLog.log("Tried to add Beat (\(beat.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
+	func add(sequence: NVSequence) {
+		if contains(sequence: sequence) {
+			NVLog.log("Tried to add Sequence (\(sequence.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
 			return
 		}
-		Beats.append(beat)
-		beat.Parent = self
+		Sequences.append(sequence)
+		sequence.Parent = self
 		
-		NVLog.log("Added Beat (\(beat.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddBeat(story: _story, group: self, beat: beat)}
+		NVLog.log("Added Sequence (\(sequence.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddSequence(story: _story, group: self, sequence: sequence)}
 	}
-	func remove(beat: NVBeat) {
-		guard let idx = Beats.index(of: beat) else {
-			NVLog.log("Tried to remove Beat (\(beat.UUID)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+	func remove(sequence: NVSequence) {
+		guard let idx = Sequences.index(of: sequence) else {
+			NVLog.log("Tried to remove Sequence (\(sequence.UUID)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
-		Beats.remove(at: idx)
-		beat.Parent = nil
+		Sequences.remove(at: idx)
+		sequence.Parent = nil
 		
-		NVLog.log("Removed Beat (\(beat.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveBeat(story: _story, group: self, beat: beat)}
+		NVLog.log("Removed Sequence (\(sequence.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveSequence(story: _story, group: self, sequence: sequence)}
 		
-		if Entry == beat {
+		if Entry == sequence {
 			Entry = nil
 		}
 	}
@@ -109,28 +109,28 @@ class NVGroup: NVIdentifiable {
 		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
 	}
 	
-	func contains(beatLink: NVBeatLink) -> Bool {
-		return BeatLinks.contains(beatLink)
+	func contains(sequenceLink: NVSequenceLink) -> Bool {
+		return SequenceLinks.contains(sequenceLink)
 	}
-	func add(beatLink: NVBeatLink) {
-		if contains(beatLink: beatLink) {
-			NVLog.log("Tried to add BeatLink (\(beatLink.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
+	func add(sequenceLink: NVSequenceLink) {
+		if contains(sequenceLink: sequenceLink) {
+			NVLog.log("Tried to add SequenceLink (\(sequenceLink.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
 			return
 		}
-		BeatLinks.append(beatLink)
+		SequenceLinks.append(sequenceLink)
 		
-		NVLog.log("Added BeatLink (\(beatLink.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddBeatLink(story: _story, group: self, link: beatLink)}
+		NVLog.log("Added SequenceLink (\(sequenceLink.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddSequenceLink(story: _story, group: self, link: sequenceLink)}
 	}
-	func remove(beatLink: NVBeatLink) {
-		guard let idx = BeatLinks.index(of: beatLink) else {
-			NVLog.log("Tried to remove BeatLink (\(beatLink.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+	func remove(sequenceLink: NVSequenceLink) {
+		guard let idx = SequenceLinks.index(of: sequenceLink) else {
+			NVLog.log("Tried to remove SequenceLink (\(sequenceLink.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
-		BeatLinks.remove(at: idx)
+		SequenceLinks.remove(at: idx)
 		
-		NVLog.log("Removed BeatLink (\(beatLink.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveBeatLink(story: _story, group: self, link: beatLink)}
+		NVLog.log("Removed SequenceLink (\(sequenceLink.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
+		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveSequenceLink(story: _story, group: self, link: sequenceLink)}
 	}
 }
 
