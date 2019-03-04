@@ -731,9 +731,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <segue destination="mF0-7K-Mpf" kind="show" identifier="InspectorVC" id="iYt-ko-1ki"/>
-                                        </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hD-Bd-WkR">
                                         <rect key="frame" x="6" y="576" width="28" height="28"/>
@@ -816,14 +813,6 @@
                 <customObject id="2gz-0u-3Ee" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-288" y="1504"/>
-        </scene>
-        <!--Inspector-->
-        <scene sceneID="5En-jA-q23">
-            <objects>
-                <controllerPlaceholder storyboardName="Inspector" referencedIdentifier="Inspector" id="mF0-7K-Mpf" sceneMemberID="viewController"/>
-                <customObject id="cMC-Ss-vhy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-120" y="1504"/>
         </scene>
     </scenes>
     <resources>

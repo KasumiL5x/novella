@@ -11,7 +11,6 @@ import Cocoa
 class MainViewController: NSViewController, NSTableViewDelegate {
 	private var _graphVC: GraphViewController? = nil
 	private var _outlinerVC: OutlinerViewController? = nil
-	private var _inspectorVC: InspectorViewController? = nil
 	private var _condFuncEdVC: ConditionFunctionEditorViewController? = nil
 	
 	override func viewWillAppear() {
@@ -38,10 +37,6 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 			_outlinerVC?.setup(doc: doc)
 		}
 		
-		if segue.identifier == "InspectorVC" {
-			_inspectorVC = segue.destinationController as? InspectorViewController
-		}
-		
 		if segue.identifier == "ConditionFunctionEditorVC" {
 			_condFuncEdVC = segue.destinationController as? ConditionFunctionEditorViewController
 			guard let doc = view.window?.windowController?.document as? Document else {
@@ -57,8 +52,6 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 			return
 		}
 		
-		performSegue(withIdentifier: "InspectorVC", sender: nil)
-		_inspectorVC?.setupFor(object: obj)
-		
+		print("Double clicked \(obj)!")
 	}
 }
