@@ -724,16 +724,8 @@
                                             <segue destination="cRu-fY-t8q" kind="show" identifier="OutlinerVC" id="Y9C-tY-olL"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ffH-kY-mnJ">
-                                        <rect key="frame" x="6" y="614" width="28" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarIconViewTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gpw-QD-lNN">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hD-Bd-WkR">
-                                        <rect key="frame" x="6" y="576" width="28" height="28"/>
+                                        <rect key="frame" x="6" y="614" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarTextStrikethroughTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LPE-e0-wE7">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -816,7 +808,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSTouchBarIconViewTemplate" width="20" height="30"/>
         <image name="NSTouchBarTextListTemplate" width="18" height="30"/>
         <image name="NSTouchBarTextStrikethroughTemplate" width="14" height="30"/>
     </resources>
