@@ -710,17 +710,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eg3-Bo-lPx">
-                                <rect key="frame" x="0.0" y="65" width="1000" height="635"/>
-                                <connections>
-                                    <segue destination="JzM-wE-2ha" kind="embed" identifier="GraphVC" id="lqc-mL-tMK"/>
-                                </connections>
-                            </containerView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="BzC-EN-abE" userLabel="Toolbar">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="65"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="HOI-fZ-4yv" userLabel="Toolbar">
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="700"/>
                                 <subviews>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MhU-NV-nI9" userLabel="Outliner Button">
-                                        <rect key="frame" x="20" y="9" width="48" height="48"/>
+                                        <rect key="frame" x="6" y="652" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarTextListTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="WKw-WQ-HYc">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -731,7 +725,7 @@
                                         </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ffH-kY-mnJ">
-                                        <rect key="frame" x="78" y="9" width="48" height="48"/>
+                                        <rect key="frame" x="6" y="614" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarIconViewTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gpw-QD-lNN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -742,7 +736,7 @@
                                         </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hD-Bd-WkR">
-                                        <rect key="frame" x="136" y="9" width="48" height="48"/>
+                                        <rect key="frame" x="6" y="576" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarTextStrikethroughTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LPE-e0-wE7">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -754,24 +748,50 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="Ak7-s6-wHt"/>
+                                    <constraint firstAttribute="width" constant="40" id="ZIr-l2-pNd"/>
                                 </constraints>
                             </customView>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eg3-Bo-lPx">
+                                <rect key="frame" x="40" y="0.0" width="740" height="700"/>
+                                <connections>
+                                    <segue destination="JzM-wE-2ha" kind="embed" identifier="GraphVC" id="lqc-mL-tMK"/>
+                                </connections>
+                            </containerView>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="lhb-Ly-fUJ">
+                                <rect key="frame" x="780" y="0.0" width="220" height="700"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="LqJ-yf-sNe"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Joi-T8-ZdE" kind="embed" id="FDG-lu-aoR"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="BzC-EN-abE" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="9nb-jw-tgf"/>
-                            <constraint firstAttribute="trailing" secondItem="eg3-Bo-lPx" secondAttribute="trailing" id="JIo-T6-alu"/>
-                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="NMD-Ch-uwa"/>
-                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="TrT-nx-Hpa"/>
-                            <constraint firstItem="BzC-EN-abE" firstAttribute="top" secondItem="eg3-Bo-lPx" secondAttribute="bottom" id="kDj-CM-Ttd"/>
-                            <constraint firstAttribute="bottom" secondItem="BzC-EN-abE" secondAttribute="bottom" id="llR-LM-7sO"/>
-                            <constraint firstAttribute="trailing" secondItem="BzC-EN-abE" secondAttribute="trailing" id="nZj-L2-81f"/>
+                            <constraint firstAttribute="bottom" secondItem="HOI-fZ-4yv" secondAttribute="bottom" id="FKu-e1-P7h"/>
+                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="Kx5-5g-Li3"/>
+                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="leading" secondItem="HOI-fZ-4yv" secondAttribute="trailing" id="QY5-8I-B97"/>
+                            <constraint firstItem="lhb-Ly-fUJ" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="h5E-ku-Aby"/>
+                            <constraint firstAttribute="bottom" secondItem="eg3-Bo-lPx" secondAttribute="bottom" id="kdX-3g-ZNB"/>
+                            <constraint firstAttribute="trailing" secondItem="lhb-Ly-fUJ" secondAttribute="trailing" id="nPM-Qi-JfW"/>
+                            <constraint firstAttribute="bottom" secondItem="lhb-Ly-fUJ" secondAttribute="bottom" id="ngR-Ta-Ucp"/>
+                            <constraint firstItem="HOI-fZ-4yv" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="rRn-d3-TO0"/>
+                            <constraint firstItem="HOI-fZ-4yv" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="sKv-uh-ekJ"/>
+                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="trailing" secondItem="lhb-Ly-fUJ" secondAttribute="leading" id="vbf-yQ-4PM"/>
                         </constraints>
                     </view>
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="981"/>
+        </scene>
+        <!--Properties-->
+        <scene sceneID="GuA-Il-e1J">
+            <objects>
+                <controllerPlaceholder storyboardName="Properties" referencedIdentifier="Properties" id="Joi-T8-ZdE" sceneMemberID="viewController"/>
+                <customObject id="oGh-K8-6lv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="729" y="981"/>
         </scene>
         <!--GraphVC-->
         <scene sceneID="0gr-AA-hDm">

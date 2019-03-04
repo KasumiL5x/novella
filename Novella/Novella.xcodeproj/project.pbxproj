@@ -17,6 +17,13 @@
 		655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655F41B421C3924000F7E7D8 /* Inspector.storyboard */; };
 		655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
+		6587583B222D7B3400EAD491 /* Properties.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6587583A222D7B3400EAD491 /* Properties.storyboard */; };
+		6587583D222D7BAD00EAD491 /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587583C222D7BAD00EAD491 /* PropertiesViewController.swift */; };
+		658C2449222D7CAA00E1FE32 /* PropertyTransformView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658C2448222D7CAA00E1FE32 /* PropertyTransformView.xib */; };
+		658C244B222D7DBB00E1FE32 /* PropertiesViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C244A222D7DBB00E1FE32 /* PropertiesViews.swift */; };
+		658C244D222DE0AA00E1FE32 /* PropertyGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658C244C222DE0AA00E1FE32 /* PropertyGroupView.xib */; };
+		658C244F222DE2A700E1FE32 /* PropertySequenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658C244E222DE2A700E1FE32 /* PropertySequenceView.xib */; };
+		658C2451222DE37100E1FE32 /* PropertyEventView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658C2450222DE37100E1FE32 /* PropertyEventView.xib */; };
 		65AE3DAC21C3B2B50026DDE1 /* InspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */; };
 		65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */; };
 		65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */; };
@@ -80,6 +87,13 @@
 		655F41B421C3924000F7E7D8 /* Inspector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Inspector.storyboard; sourceTree = "<group>"; };
 		655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViews.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
+		6587583A222D7B3400EAD491 /* Properties.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Properties.storyboard; sourceTree = "<group>"; };
+		6587583C222D7BAD00EAD491 /* PropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
+		658C2448222D7CAA00E1FE32 /* PropertyTransformView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PropertyTransformView.xib; sourceTree = "<group>"; };
+		658C244A222D7DBB00E1FE32 /* PropertiesViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViews.swift; sourceTree = "<group>"; };
+		658C244C222DE0AA00E1FE32 /* PropertyGroupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PropertyGroupView.xib; sourceTree = "<group>"; };
+		658C244E222DE2A700E1FE32 /* PropertySequenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PropertySequenceView.xib; sourceTree = "<group>"; };
+		658C2450222DE37100E1FE32 /* PropertyEventView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PropertyEventView.xib; sourceTree = "<group>"; };
 		65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorViewController.swift; sourceTree = "<group>"; };
 		65AE3DB221C3B43D0026DDE1 /* TransformPropertyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransformPropertyView.xib; sourceTree = "<group>"; };
 		65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Nib.swift"; sourceTree = "<group>"; };
@@ -148,6 +162,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		658C2447222D7C7B00E1FE32 /* PropertiesPanels */ = {
+			isa = PBXGroup;
+			children = (
+				658C2448222D7CAA00E1FE32 /* PropertyTransformView.xib */,
+				658C244C222DE0AA00E1FE32 /* PropertyGroupView.xib */,
+				658C244E222DE2A700E1FE32 /* PropertySequenceView.xib */,
+				658C2450222DE37100E1FE32 /* PropertyEventView.xib */,
+			);
+			path = PropertiesPanels;
+			sourceTree = "<group>";
+		};
 		65AE3DB121C3B3790026DDE1 /* InspectorProperties */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,12 +196,14 @@
 		DF22E9E2211D9F5E00606D97 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				658C2447222D7C7B00E1FE32 /* PropertiesPanels */,
 				65AE3DB121C3B3790026DDE1 /* InspectorProperties */,
 				DFCE6048211C3D20005900D8 /* Main.storyboard */,
 				DF94929421B9716E00BC8AB0 /* Graph.storyboard */,
 				65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */,
 				655F41B421C3924000F7E7D8 /* Inspector.storyboard */,
 				651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */,
+				6587583A222D7B3400EAD491 /* Properties.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -190,6 +217,8 @@
 				655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */,
 				65AE3DAB21C3B2B50026DDE1 /* InspectorViewController.swift */,
 				651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */,
+				6587583C222D7BAD00EAD491 /* PropertiesViewController.swift */,
+				658C244A222D7DBB00E1FE32 /* PropertiesViews.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -350,7 +379,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				65AE3DB321C3B43D0026DDE1 /* TransformPropertyView.xib in Resources */,
+				658C244D222DE0AA00E1FE32 /* PropertyGroupView.xib in Resources */,
 				65062A3421CB80F8001DD008 /* EventPropertyView.xib in Resources */,
+				658C2449222D7CAA00E1FE32 /* PropertyTransformView.xib in Resources */,
+				658C244F222DE2A700E1FE32 /* PropertySequenceView.xib in Resources */,
+				658C2451222DE37100E1FE32 /* PropertyEventView.xib in Resources */,
 				65AE3DB921C3C44B0026DDE1 /* SequencePropertyView.xib in Resources */,
 				65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */,
 				65062A3221CB7D24001DD008 /* GroupPropertyView.xib in Resources */,
@@ -359,6 +392,7 @@
 				655F41B521C3924000F7E7D8 /* Inspector.storyboard in Resources */,
 				DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */,
 				651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */,
+				6587583B222D7B3400EAD491 /* Properties.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +438,7 @@
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
+				6587583D222D7BAD00EAD491 /* PropertiesViewController.swift in Sources */,
 				DF93F60F21BD99D200CF5B03 /* CanvasEventLink.swift in Sources */,
 				DF94928E21B96F8C00BC8AB0 /* Canvas.swift in Sources */,
 				655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */,
@@ -413,6 +448,7 @@
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
 				651D7C9F21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift in Sources */,
+				658C244B222D7DBB00E1FE32 /* PropertiesViews.swift in Sources */,
 				65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */,
 				DF9492A921BA82ED00BC8AB0 /* CanvasSelection.swift in Sources */,
 				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
