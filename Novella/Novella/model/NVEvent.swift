@@ -56,6 +56,12 @@ class NVEvent: NVIdentifiable {
 	var ExitFunction: NVFunction?
 	var Instigators: NVSelector?
 	var Targets: NVSelector?
+	var Attributes: [String: NVValue] {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) Attributes changed.", level: .info)
+			_story.Observers.forEach{$0.nvEventAttributesDidChange(story: _story, event: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
@@ -72,6 +78,7 @@ class NVEvent: NVIdentifiable {
 		self.ExitFunction = nil
 		self.Instigators = nil
 		self.Targets = nil
+		self.Attributes = [:]
 	}
 }
 

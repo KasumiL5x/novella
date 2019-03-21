@@ -183,6 +183,10 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
@@ -220,6 +224,10 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -264,6 +272,10 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventAttributesDidChange(story: NVStory, event: NVEvent) {
 		updateChangeCount(.changeDone)
 	}
 	

@@ -67,6 +67,12 @@ class NVSequence: NVIdentifiable {
 	}
 	private(set) var Events: [NVEvent]
 	private(set) var EventLinks: [NVEventLink]
+	var Attributes: [String: NVValue] {
+		didSet {
+			NVLog.log("Sequence (\(UUID.uuidString)) Attributes changed.", level: .info)
+			_story.Observers.forEach{$0.nvSequenceAttributesDidChange(story: _story, sequence: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
@@ -83,6 +89,7 @@ class NVSequence: NVIdentifiable {
 		self.Entry = nil
 		self.Events = []
 		self.EventLinks = []
+		self.Attributes = [:]
 	}
 	
 	func contains(event: NVEvent) -> Bool {

@@ -43,6 +43,7 @@ protocol NVStoryObserver: class {
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup)
 	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup)
 	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup)
+	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup)
 	
 	// sequences
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence)
@@ -55,6 +56,7 @@ protocol NVStoryObserver: class {
 	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence)
 	
 	// discoverable sequence
 	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence)
@@ -70,6 +72,7 @@ protocol NVStoryObserver: class {
 	func nvEventTopmostDidChange(story: NVStory, event: NVEvent)
 	func nvEventMaxActivationsDidChange(story: NVStory, event: NVEvent)
 	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent)
+	func nvEventAttributesDidChange(story: NVStory, event: NVEvent)
 	
 	// variables
 	func nvVariableNameDidChange(story: NVStory, variable: NVVariable)
@@ -184,6 +187,9 @@ extension NVStoryObserver {
 	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup) {
 	}
 	
+	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup) {
+	}
+	
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
@@ -212,6 +218,9 @@ extension NVStoryObserver {
 	}
 	
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
+	}
+	
+	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
@@ -245,6 +254,9 @@ extension NVStoryObserver {
 	}
 	
 	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventAttributesDidChange(story: NVStory, event: NVEvent) {
 	}
 	
 	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {

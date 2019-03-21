@@ -62,6 +62,12 @@ class NVGroup: NVIdentifiable {
 	private(set) var Sequences: [NVSequence]
 	private(set) var SequenceLinks: [NVSequenceLink]
 	private(set) var Groups: [NVGroup]
+	var Attributes: [String: NVValue] {
+		didSet {
+			NVLog.log("Group (\(UUID.uuidString)) Attributes changed.", level: .info)
+			_story.Observers.forEach{$0.nvGroupAttributesDidChange(story: _story, group: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
@@ -78,6 +84,7 @@ class NVGroup: NVIdentifiable {
 		self.Sequences = []
 		self.SequenceLinks = []
 		self.Groups = []
+		self.Attributes = [:]
 	}
 	
 	func contains(sequence: NVSequence) -> Bool {
