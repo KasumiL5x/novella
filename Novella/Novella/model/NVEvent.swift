@@ -27,7 +27,9 @@ class NVEvent: NVIdentifiable {
 	var PreCondition: NVCondition?
 	var EntryFunction: NVFunction?
 	var ExitFunction: NVFunction?
-	private(set) var Participants: [NVEntity]
+	
+	var Instigators: NVSelector?
+	var Targets: NVSelector?
 	
 	var Topmost: Bool {
 		didSet {
@@ -59,32 +61,9 @@ class NVEvent: NVIdentifiable {
 		self.Parent = nil
 		self.Label = ""
 		self.Parallel = false
-		self.Participants = []
 		self.Topmost = false
 		self.MaxActivations = 0
 		self.KeepAlive = false
-	}
-	
-	func contains(participant: NVEntity) -> Bool {
-		return Participants.contains(participant)
-	}
-	func add(participant: NVEntity) {
-		if contains(participant: participant) {
-			NVLog.log("Tried to add Entity (\(participant.UUID.uuidString)) to Event (\(UUID.uuidString)) but it already exists.", level: .warning)
-			return
-		}
-		Participants.append(participant)
-		NVLog.log("Added Entity (\(participant.UUID.uuidString)) to Event (\(UUID.uuidString)).", level: .info)
-		_story.Observers.forEach{$0.nvEventDidAddParticipant(story: _story, event: self, entity: participant)}
-	}
-	func remove(participant: NVEntity) {
-		guard let idx = Participants.index(of: participant) else {
-			NVLog.log("Tried to remove Entity (\(participant.UUID.uuidString)) from Event (\(UUID.uuidString)) but it didn't exist.", level: .warning)
-			return
-		}
-		Participants.remove(at: idx)
-		NVLog.log("Removed Entity (\(participant.UUID.uuidString)) from Event (\(UUID.uuidString)).", level: .info)
-		_story.Observers.forEach{$0.nvEventDidRemoveParticipant(story: _story, event: self, entity: participant)}
 	}
 }
 

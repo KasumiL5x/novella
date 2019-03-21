@@ -90,6 +90,9 @@ protocol NVStoryObserver: class {
 	
 	// conditions
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition)
+	
+	// selectors
+	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector)
 }
 
 // default implementations
@@ -272,5 +275,8 @@ extension NVStoryObserver {
 	}
 	
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
+	}
+	
+	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
 	}
 }

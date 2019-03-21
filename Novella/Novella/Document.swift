@@ -306,4 +306,8 @@ extension Document: NVStoryObserver {
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 		updateChangeCount(.changeDone)
 	}
+	
+	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
 }

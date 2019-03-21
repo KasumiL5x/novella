@@ -247,13 +247,6 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteEvent(story: self, event: event)}
 	}
 	func delete(entity: NVEntity) {
-		// remove from all events
-		Events.forEach { (event) in
-			if event.contains(participant: entity) {
-				event.remove(participant: entity)
-			}
-		}
-		
 		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == entity.UUID}) {
 			_identifiables.remove(at: idx)
