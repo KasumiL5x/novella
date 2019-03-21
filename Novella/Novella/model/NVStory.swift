@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import JavaScriptCore
 
 class NVStory {
 	// Delegates are stored as a generic AnyObject but are actually NVStoryDelegate.  This is because to have weak
@@ -18,7 +17,6 @@ class NVStory {
 	
 	private var _identifiables: [NVIdentifiable]
 	private(set) var MainGroup: NVGroup! // see init for ! usage
-	private(set) var JVM: JSContext
 	
 	var Groups: [NVGroup] {
 		get{ return _identifiables.filter{$0 is NVGroup} as! [NVGroup] }
@@ -51,91 +49,9 @@ class NVStory {
 	init() {
 		self._identifiables = []
 		self.MainGroup = nil // cannot use self here so nil it first
-		self.JVM = JSContext()
-		self.setupJS()
 		
 		self.MainGroup = NVGroup(uuid: NSUUID(), story: self)
 		self.MainGroup.Label = "Main Group"
-	}
-	
-	private func setupJS() {
-		JVM.exceptionHandler = { (ctx, ex) in
-			if let ex = ex {
-				NVLog.log("JS Error: \(ex.toString() ?? "Invalid Error.")", level: .error)
-			}
-		}
-		
-		// nvprint
-		let js_nvprint: @convention(block) (String) -> Void = { msg in
-			NVLog.log("\nJS: \(msg)", level: .info)
-		}
-		JVM.setObject(js_nvprint, forKeyedSubscript: "nvprint" as (NSCopying & NSObjectProtocol))
-		
-		// getbool
-		let js_getbool: @convention(block) (String) -> Any? = { [weak self](name) in
-			if let variable = self!.Variables.first(where: {$0.Name == name}) {
-				NVLog.log("JS get bool: \(name). Found and returning value: \(variable.Value.Raw.asBool)", level: .debug)
-				return variable.Value.Raw.asBool
-			}
-			NVLog.log("JS get bool: \(name). Not found; returning nil.", level: .debug)
-			return nil
-		}
-		JVM.setObject(js_getbool, forKeyedSubscript: "getbool" as (NSCopying & NSObjectProtocol))
-		
-		// getint
-		let js_getint: @convention(block) (String) -> Any? = { [weak self](name) in
-			if let variable = self!.Variables.first(where: {$0.Name == name}) {
-				NVLog.log("JS get int: \(name). Found and returning value: \(variable.Value.Raw.asInt)", level: .debug)
-				return variable.Value.Raw.asInt
-			}
-			NVLog.log("JS get int: \(name). Not found; returning nil.", level: .debug)
-			return nil
-		}
-		JVM.setObject(js_getint, forKeyedSubscript: "getint" as (NSCopying & NSObjectProtocol))
-		
-		// getdub
-		let js_getdub: @convention(block) (String) -> Any? = { [weak self](name) in
-			if let variable = self!.Variables.first(where: {$0.Name == name}) {
-				NVLog.log("JS get dub: \(name). Found and returning value: \(variable.Value.Raw.asDouble)", level: .debug)
-				return variable.Value.Raw.asDouble
-			}
-			NVLog.log("JS get dub: \(name). Not found; returning nil.", level: .debug)
-			return nil
-		}
-		JVM.setObject(js_getdub, forKeyedSubscript: "getdub" as (NSCopying & NSObjectProtocol))
-		
-		// setbool
-		let js_setbool: @convention(block) (String, Bool) -> Void = { [weak self](name, value) in
-			if let variable = self!.Variables.first(where: {$0.Name == name}) {
-				variable.set(value: NVValue(.boolean(value)))
-				NVLog.log("JS set bool: \(name). Found and set to: \(value).", level: .debug)
-			} else {
-				NVLog.log("JS set bool: \(name). Not found; ignoring.", level: .debug)
-			}
-		}
-		JVM.setObject(js_setbool, forKeyedSubscript: "setbool" as (NSCopying & NSObjectProtocol))
-		
-		// setint
-		let js_setint: @convention(block) (String, Int32) -> Void = { [weak self](name, value) in
-			if let variable = self!.Variables.first(where: {$0.Name == name}) {
-				variable.set(value: NVValue(.integer(value)))
-				NVLog.log("JS set int: \(name). Found and set to: \(value).", level: .debug)
-			} else {
-				NVLog.log("JS set int: \(name). Not found; ignoring.", level: .debug)
-			}
-		}
-		JVM.setObject(js_setint, forKeyedSubscript: "setint" as (NSCopying & NSObjectProtocol))
-		
-		// setdub
-		let js_setdub: @convention(block) (String, Double) -> Void = { [weak self](name, value) in
-			if let variable = self!.Variables.first(where: {$0.Name == name}) {
-				variable.set(value: NVValue(.double(value)))
-				NVLog.log("JS set dub: \(name). Found and set to: \(value).", level: .debug)
-			} else {
-				NVLog.log("JS set dub: \(name). Not found; ignoring.", level: .debug)
-			}
-		}
-		JVM.setObject(js_setdub, forKeyedSubscript: "setdub" as (NSCopying & NSObjectProtocol))
 	}
 	
 	func addDelegate(_ delegate: NVStoryDelegate) {
