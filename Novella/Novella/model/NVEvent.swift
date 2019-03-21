@@ -12,25 +12,20 @@ class NVEvent: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
 	var Parent: NVSequence? // warning: no friend class support so has to be public
+	
 	var Label: String {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
 			_story.Observers.forEach{$0.nvEventLabelDidChange(story: _story, event: self)}
 		}
 	}
+	//
 	var Parallel: Bool {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Parallel changed (\(oldValue) -> \(Parallel)).", level: .info)
 			_story.Observers.forEach{$0.nvEventParallelDidChange(story: _story, event: self)}
 		}
 	}
-	var PreCondition: NVCondition?
-	var EntryFunction: NVFunction?
-	var ExitFunction: NVFunction?
-	
-	var Instigators: NVSelector?
-	var Targets: NVSelector?
-	
 	var Topmost: Bool {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Topmost changed (\(oldValue) -> \(Topmost)).", level: .info)
@@ -54,6 +49,13 @@ class NVEvent: NVIdentifiable {
 			_story.Observers.forEach{$0.nvEventKeepAliveDidChange(story: _story, event: self)}
 		}
 	}
+	//
+	var PreCondition: NVCondition?
+	var EntryFunction: NVFunction?
+	var DoFunction: NVFunction?
+	var ExitFunction: NVFunction?
+	var Instigators: NVSelector?
+	var Targets: NVSelector?
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
@@ -64,6 +66,12 @@ class NVEvent: NVIdentifiable {
 		self.Topmost = false
 		self.MaxActivations = 0
 		self.KeepAlive = false
+		self.PreCondition = nil
+		self.EntryFunction = nil
+		self.DoFunction = nil
+		self.ExitFunction = nil
+		self.Instigators = nil
+		self.Targets = nil
 	}
 }
 
