@@ -21,7 +21,7 @@ class CanvasSequenceLink: CanvasLink {
 	
 	// virtuals
 	override func canlinkTo(obj: CanvasObject) -> Bool {
-		return obj is CanvasSequence
+		return (obj is CanvasSequence) && !(obj as! CanvasSequence).Sequence.Parallel
 	}
 	
 	override func connectTo(obj: CanvasObject?) {

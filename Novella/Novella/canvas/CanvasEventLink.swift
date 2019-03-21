@@ -21,7 +21,7 @@ class CanvasEventLink: CanvasLink {
 	
 	// virtuals
 	override func canlinkTo(obj: CanvasObject) -> Bool {
-		return obj is CanvasEvent
+		return (obj is CanvasEvent) && !(obj as! CanvasEvent).Event.Parallel
 	}
 	
 	override func connectTo(obj: CanvasObject?) {
