@@ -40,6 +40,9 @@ protocol NVStoryObserver: class {
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup)
 	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink)
 	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink)
+	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup)
+	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup)
+	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup)
 	
 	// sequences
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence)
@@ -49,6 +52,9 @@ protocol NVStoryObserver: class {
 	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent)
 	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink)
 	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink)
+	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence)
 	
 	// discoverable sequence
 	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence)
@@ -61,6 +67,9 @@ protocol NVStoryObserver: class {
 	func nvEventParallelDidChange(story: NVStory, event: NVEvent)
 	func nvEventDidAddParticipant(story: NVStory, event: NVEvent, entity: NVEntity)
 	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity)
+	func nvEventTopmostDidChange(story: NVStory, event: NVEvent)
+	func nvEventMaxActivationsDidChange(story: NVStory, event: NVEvent)
+	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent)
 	
 	// variables
 	func nvVariableNameDidChange(story: NVStory, variable: NVVariable)
@@ -163,6 +172,15 @@ extension NVStoryObserver {
 	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 	}
 	
+	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup) {
+	}
+	
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
@@ -182,6 +200,15 @@ extension NVStoryObserver {
 	}
 	
 	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	}
+	
+	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence) {
+	}
+	
+	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence) {
+	}
+	
+	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
@@ -206,6 +233,15 @@ extension NVStoryObserver {
 	}
 	
 	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
+	}
+	
+	func nvEventTopmostDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventMaxActivationsDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
 	}
 	
 	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {

@@ -42,6 +42,30 @@ class NVSequence: NVIdentifiable {
 	private(set) var Events: [NVEvent]
 	private(set) var EventLinks: [NVEventLink]
 	
+	var Topmost: Bool {
+		didSet {
+			NVLog.log("Sequence (\(UUID.uuidString)) Topmost changed (\(oldValue) -> \(Topmost)).", level: .info)
+			_story.Observers.forEach{$0.nvSequenceTopmostDidChange(story: _story, sequence: self)}
+		}
+	}
+	var MaxActivations: Int {
+		didSet {
+			if MaxActivations < 0 {
+				MaxActivations = oldValue
+				NVLog.log("Tried to set Sequence (\(UUID.uuidString)) MaxActivations but the value was negative.", level: .warning)
+			} else {
+				NVLog.log("Sequence (\(UUID.uuidString)) MaxActivations changed (\(oldValue) -> \(MaxActivations)).", level: .info)
+				_story.Observers.forEach{$0.nvSequenceMaxActivationsDidChange(story: _story, sequence: self)}
+			}
+		}
+	}
+	var KeepAlive: Bool {
+		didSet {
+			NVLog.log("Sequence (\(UUID.uuidString)) KeepAlive changed (\(oldValue) -> \(KeepAlive)).", level: .info)
+			_story.Observers.forEach{$0.nvSequenceKeepAliveDidChange(story: _story, sequence: self)}
+		}
+	}
+	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
@@ -51,6 +75,9 @@ class NVSequence: NVIdentifiable {
 		self.Entry = nil
 		self.Events = []
 		self.EventLinks = []
+		self.Topmost = false
+		self.MaxActivations = 0
+		self.KeepAlive = false
 	}
 	
 	func contains(event: NVEvent) -> Bool {

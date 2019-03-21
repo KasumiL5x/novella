@@ -29,6 +29,30 @@ class NVEvent: NVIdentifiable {
 	var ExitFunction: NVFunction?
 	private(set) var Participants: [NVEntity]
 	
+	var Topmost: Bool {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) Topmost changed (\(oldValue) -> \(Topmost)).", level: .info)
+			_story.Observers.forEach{$0.nvEventTopmostDidChange(story: _story, event: self)}
+		}
+	}
+	var MaxActivations: Int {
+		didSet {
+			if MaxActivations < 0 {
+				MaxActivations = oldValue
+				NVLog.log("Tried to set Event (\(UUID.uuidString)) MaxActivations but the value was negative.", level: .warning)
+			} else {
+				NVLog.log("Event (\(UUID.uuidString)) MaxActivations changed (\(oldValue) -> \(MaxActivations)).", level: .info)
+				_story.Observers.forEach{$0.nvEventMaxActivationsDidChange(story: _story, event: self)}
+			}
+		}
+	}
+	var KeepAlive: Bool {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) KeepAlive changed (\(oldValue) -> \(KeepAlive)).", level: .info)
+			_story.Observers.forEach{$0.nvEventKeepAliveDidChange(story: _story, event: self)}
+		}
+	}
+	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
@@ -36,6 +60,9 @@ class NVEvent: NVIdentifiable {
 		self.Label = ""
 		self.Parallel = false
 		self.Participants = []
+		self.Topmost = false
+		self.MaxActivations = 0
+		self.KeepAlive = false
 	}
 	
 	func contains(participant: NVEntity) -> Bool {

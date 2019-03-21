@@ -37,6 +37,30 @@ class NVGroup: NVIdentifiable {
 	private(set) var SequenceLinks: [NVSequenceLink]
 	private(set) var Groups: [NVGroup]
 	
+	var Topmost: Bool {
+		didSet {
+			NVLog.log("Group (\(UUID.uuidString)) Topmost changed (\(oldValue) -> \(Topmost)).", level: .info)
+			_story.Observers.forEach{$0.nvGroupTopmostDidChange(story: _story, group: self)}
+		}
+	}
+	var MaxActivations: Int {
+		didSet {
+			if MaxActivations < 0 {
+				MaxActivations = oldValue
+				NVLog.log("Tried to set Group (\(UUID.uuidString)) MaxActivations but the value was negative.", level: .warning)
+			} else {
+				NVLog.log("Group (\(UUID.uuidString)) MaxActivations changed (\(oldValue) -> \(MaxActivations)).", level: .info)
+				_story.Observers.forEach{$0.nvGroupMaxActivationsDidChange(story: _story, group: self)}
+			}
+		}
+	}
+	var KeepAlive: Bool {
+		didSet {
+			NVLog.log("Group (\(UUID.uuidString)) KeepAlive changed (\(oldValue) -> \(KeepAlive)).", level: .info)
+			_story.Observers.forEach{$0.nvGroupKeepAliveDidChange(story: _story, group: self)}
+		}
+	}
+	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
@@ -46,6 +70,9 @@ class NVGroup: NVIdentifiable {
 		self.Sequences = []
 		self.SequenceLinks = []
 		self.Groups = []
+		self.Topmost = false
+		self.MaxActivations = 0
+		self.KeepAlive = false
 	}
 	
 	func contains(sequence: NVSequence) -> Bool {

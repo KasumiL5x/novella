@@ -171,6 +171,18 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
@@ -196,6 +208,18 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -228,6 +252,18 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventTopmostDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventMaxActivationsDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
 		updateChangeCount(.changeDone)
 	}
 	
