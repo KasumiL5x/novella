@@ -81,7 +81,7 @@ class Canvas: NSView {
 		_contextMenu.addItem(_surfaceMenuItem)
 		_contextMenu.autoenablesItems = false
 		
-		doc.Story.addDelegate(self)
+		doc.Story.add(observer: self)
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -418,61 +418,13 @@ class Canvas: NSView {
 	}
 }
 
-extension Canvas: NVStoryDelegate {
-	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
-	}
-	
-	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence) {
-	}
-	
-	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent) {
-	}
-	
-	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
-	}
-	
+extension Canvas: NVStoryObserver {
 	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
 		addSequenceLink(link: link)
 	}
 	
 	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
 		addEventLink(link: link)
-	}
-	
-	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction) {
-	}
-	
-	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition) {
-	}
-	
-	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
-	}
-	
-	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence) {
-	}
-	
-	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent) {
-	}
-	
-	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
-	}
-	
-	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
-	}
-	
-	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction) {
-	}
-	
-	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
 	}
 	
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
@@ -495,24 +447,12 @@ extension Canvas: NVStoryDelegate {
 		makeSequence(nvSequence: sequence, at: Doc.Positions[sequence.UUID] ?? centerPoint())
 	}
 	
-	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
-	}
-	
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
 		if group != MappedGroup {
 			return
 		}
 
 		makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
-	}
-	
-	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
-	}
-	
-	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
-	}
-	
-	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
 	}
 	
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
@@ -539,68 +479,11 @@ extension Canvas: NVStoryDelegate {
 		makeEvent(nvEvent: event, at: Doc.Positions[event.UUID] ?? centerPoint())
 	}
 	
-	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
-	}
-	
-	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
-	}
-	
-	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
-	}
-	
-	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
-	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
-	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
-	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		canvasEventFor(nvEvent: event)?.reloadData()
 	}
 	
 	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
 		canvasEventFor(nvEvent: event)?.reloadData()
-	}
-	
-	func nvEventDidAddParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
-	}
-	
-	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
-	}
-	
-	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableConstantDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableValueDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
-	}
-	
-	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
-	}
-	
-	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvEntityDescriptionDidChange(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
-	}
-	
-	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 	}
 }

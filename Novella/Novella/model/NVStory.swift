@@ -9,11 +9,12 @@
 import Foundation
 
 class NVStory {
-	// Delegates are stored as a generic AnyObject but are actually NVStoryDelegate.  This is because to have weak
-	// references to protocols, you must use a load of hacky code, or NSHashTable/Set. However, they usually require
-	// @objc for protocols, which means that all functions in the protocol need to derive from NSObject. This is shit.
-	// However, it seems you can ADD and then CAST the types. As long as I abstract the adding, I can guarantee the type.
-	private(set) var Delegates = NSHashTable<AnyObject>()
+	private var _observers = [ObjectIdentifier: Observation]()
+	public var Observers: [NVStoryObserver] {
+		get{
+			return _observers.compactMap{ $0.value.observer }
+		}
+	}
 	
 	private var _identifiables: [NVIdentifiable]
 	private(set) var MainGroup: NVGroup! // see init for ! usage
@@ -54,11 +55,14 @@ class NVStory {
 		self.MainGroup.Label = "Main Group"
 	}
 	
-	func addDelegate(_ delegate: NVStoryDelegate) {
-		Delegates.add(delegate)
+	func add(observer: NVStoryObserver) {
+		let id = ObjectIdentifier(observer)
+		_observers[id] = Observation(observer: observer)
 	}
-	func removeDelegate(_ delegate: NVStoryDelegate) {
-		Delegates.remove(delegate)
+	
+	func remove(observer: NVStoryObserver) {
+		let id = ObjectIdentifier(observer)
+		_observers.removeValue(forKey: id)
 	}
 	
 	func find(uuid: String) -> NVIdentifiable? {
@@ -71,7 +75,7 @@ class NVStory {
 		_identifiables.append(group)
 		
 		NVLog.log("Created Group (\(group.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeGroup(story: self, group: group)}
+		Observers.forEach{$0.nvStoryDidMakeGroup(story: self, group: group)}
 		return group
 	}
 	func makeSequence(uuid: NSUUID?=nil) -> NVSequence {
@@ -79,7 +83,7 @@ class NVStory {
 		_identifiables.append(sequence)
 		
 		NVLog.log("Created Sequence (\(sequence.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeSequence(story: self, sequence: sequence)}
+		Observers.forEach{$0.nvStoryDidMakeSequence(story: self, sequence: sequence)}
 		return sequence
 	}
 	func makeDNSequence(uuid: NSUUID?=nil) -> NVDiscoverableSequence {
@@ -87,7 +91,7 @@ class NVStory {
 		_identifiables.append(sequence)
 		
 		NVLog.log("Created DiscoverableSequence (\(sequence.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeSequence(story: self, sequence: sequence)}
+		Observers.forEach{$0.nvStoryDidMakeSequence(story: self, sequence: sequence)}
 		return sequence
 	}
 	func makeEvent(uuid: NSUUID?=nil) -> NVEvent {
@@ -95,7 +99,7 @@ class NVStory {
 		_identifiables.append(event)
 		
 		NVLog.log("Created Event (\(event.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEvent(story: self, event: event)}
+		Observers.forEach{$0.nvStoryDidMakeEvent(story: self, event: event)}
 		return event
 	}
 	func makeEntity(uuid: NSUUID?=nil) -> NVEntity {
@@ -103,7 +107,7 @@ class NVStory {
 		_identifiables.append(entity)
 		
 		NVLog.log("Created Entity (\(entity.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEntity(story: self, entity: entity)}
+		Observers.forEach{$0.nvStoryDidMakeEntity(story: self, entity: entity)}
 		return entity
 	}
 	func makeSequenceLink(uuid: NSUUID?=nil, origin: NVSequence, dest: NVSequence?) -> NVSequenceLink {
@@ -111,7 +115,7 @@ class NVStory {
 		_identifiables.append(link)
 		
 		NVLog.log("Created SequenceLink (\(link.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeSequenceLink(story: self, link: link)}
+		Observers.forEach{$0.nvStoryDidMakeSequenceLink(story: self, link: link)}
 		return link
 	}
 	func makeEventLink(uuid: NSUUID?=nil, origin: NVEvent, dest: NVEvent?) -> NVEventLink {
@@ -119,7 +123,7 @@ class NVStory {
 		_identifiables.append(link)
 		
 		NVLog.log("Created EventLink (\(link.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeEventLink(story: self, link: link)}
+		Observers.forEach{$0.nvStoryDidMakeEventLink(story: self, link: link)}
 		return link
 	}
 	func makeVariable(uuid: NSUUID?=nil) -> NVVariable {
@@ -127,7 +131,7 @@ class NVStory {
 		_identifiables.append(variable)
 		
 		NVLog.log("Created Variable (\(variable.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeVariable(story: self, variable: variable)}
+		Observers.forEach{$0.nvStoryDidMakeVariable(story: self, variable: variable)}
 		return variable
 	}
 	func makeFunction(uuid: NSUUID?=nil) -> NVFunction {
@@ -135,7 +139,7 @@ class NVStory {
 		_identifiables.append(function)
 		
 		NVLog.log("Created Function (\(function.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeFunction(story: self, function: function)}
+		Observers.forEach{$0.nvStoryDidMakeFunction(story: self, function: function)}
 		return function
 	}
 	func makeCondition(uuid: NSUUID?=nil) -> NVCondition {
@@ -143,7 +147,7 @@ class NVStory {
 		_identifiables.append(condition)
 		
 		NVLog.log("Created Condition (\(condition.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidMakeCondition(story: self, condition: condition)}
+		Observers.forEach{$0.nvStoryDidMakeCondition(story: self, condition: condition)}
 		return condition
 	}
 	
@@ -175,7 +179,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Group (\(group.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteGroup(story: self, group: group)}
+		Observers.forEach{$0.nvStoryDidDeleteGroup(story: self, group: group)}
 	}
 	func delete(sequence: NVSequence) {
 		// remove from any links as source or destination
@@ -212,7 +216,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Sequence (\(sequence.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteSequence(story: self, sequence: sequence)}
+		Observers.forEach{$0.nvStoryDidDeleteSequence(story: self, sequence: sequence)}
 	}
 	func delete(event: NVEvent) {
 		// remove from any links as source or destination
@@ -240,7 +244,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Event (\(event.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEvent(story: self, event: event)}
+		Observers.forEach{$0.nvStoryDidDeleteEvent(story: self, event: event)}
 	}
 	func delete(entity: NVEntity) {
 		// remove from all events
@@ -256,7 +260,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Entity (\(entity.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEntity(story: self, entity: entity)}
+		Observers.forEach{$0.nvStoryDidDeleteEntity(story: self, entity: entity)}
 	}
 	func delete(sequenceLink: NVSequenceLink) {
 		// remove from all groups that contain it
@@ -272,7 +276,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted SequenceLink (\(sequenceLink.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteSequenceLink(story: self, link: sequenceLink)}
+		Observers.forEach{$0.nvStoryDidDeleteSequenceLink(story: self, link: sequenceLink)}
 	}
 	func delete(eventLink: NVEventLink) {
 		// remove from all sequences that contain it
@@ -288,7 +292,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted EventLink (\(eventLink.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteEventLink(story: self, link: eventLink)}
+		Observers.forEach{$0.nvStoryDidDeleteEventLink(story: self, link: eventLink)}
 	}
 	func delete(variable: NVVariable) {
 		// remove from story
@@ -297,7 +301,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Variable (\(variable.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteVariable(story: self, variable: variable)}
+		Observers.forEach{$0.nvStoryDidDeleteVariable(story: self, variable: variable)}
 	}
 	func delete(function: NVFunction) {
 		// remove from sequences
@@ -348,7 +352,7 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Function (\(function.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteFunction(story: self, function: function)}
+		Observers.forEach{$0.nvStoryDidDeleteFunction(story: self, function: function)}
 	}
 	func delete(condition: NVCondition) {
 		// remove from sequences
@@ -378,6 +382,12 @@ class NVStory {
 		}
 		
 		NVLog.log("Deleted Condition (\(condition.UUID.uuidString)).", level: .info)
-		Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvStoryDidDeleteCondition(story: self, condition: condition)}
+		Observers.forEach{$0.nvStoryDidDeleteCondition(story: self, condition: condition)}
+	}
+}
+
+private extension NVStory {
+	struct Observation {
+		weak var observer: NVStoryObserver?
 	}
 }

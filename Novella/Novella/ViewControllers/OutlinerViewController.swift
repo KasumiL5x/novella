@@ -30,7 +30,7 @@ class OutlinerViewController: NSViewController {
 	
 	func setup(doc: Document) {
 		_document = doc
-		doc.Story.addDelegate(self)
+		doc.Story.add(observer: self)
 	}
 	
 	
@@ -154,66 +154,9 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 	}
 }
 
-extension OutlinerViewController: NVStoryDelegate {
-	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
-	}
-	
-	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence) {
-	}
-	
-	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent) {
-	}
-	
-	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
-	}
-	
-	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
-	}
-	
-	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction) {
-	}
-	
-	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition) {
-	}
-	
-	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
-	}
-	
-	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence) {
-	}
-	
-	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent) {
-	}
-	
-	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
-	}
-	
-	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
-	}
-	
-	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction) {
-	}
-	
-	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
-	}
-	
+extension OutlinerViewController: NVStoryObserver {
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
 		_outlineView.reloadItem(group)
-	}
-	
-	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
 	}
 	
 	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
@@ -250,12 +193,6 @@ extension OutlinerViewController: NVStoryDelegate {
 		}
 	}
 	
-	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
-	}
-	
-	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
-	}
-	
 	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
@@ -272,18 +209,6 @@ extension OutlinerViewController: NVStoryDelegate {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
-	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
-	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
-	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
-	}
-	
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		_outlineView.reloadItem(event)
 		
@@ -293,44 +218,5 @@ extension OutlinerViewController: NVStoryDelegate {
 				_outlineView.reloadItem(item)
 			}
 		}
-	}
-	
-	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
-	}
-	
-	func nvEventDidAddParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
-	}
-	
-	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
-	}
-	
-	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableConstantDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableValueDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
-	}
-	
-	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
-	}
-	
-	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvEntityDescriptionDidChange(story: NVStory, entity: NVEntity) {
-	}
-	
-	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
-	}
-	
-	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 	}
 }

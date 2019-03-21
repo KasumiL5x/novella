@@ -11,6 +11,7 @@
 		651D7C9F21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */; };
 		65308BB621CF888E00830115 /* sizeFontToFillFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */; };
 		6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532644D21C055B5009C0ED8 /* CurveHelper.swift */; };
+		6550AA6D224415570032232A /* NVStoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550AA6C224415570032232A /* NVStoryObserver.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
 		655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
@@ -43,7 +44,6 @@
 		DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927121B96D6E00BC8AB0 /* NVCondition.swift */; };
 		DF94928121B96D6F00BC8AB0 /* NVSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927221B96D6E00BC8AB0 /* NVSequence.swift */; };
 		DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927321B96D6F00BC8AB0 /* NVValue.swift */; };
-		DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */; };
 		DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927521B96D6F00BC8AB0 /* NVEvent.swift */; };
 		DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927621B96D6F00BC8AB0 /* NVFunction.swift */; };
 		DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */; };
@@ -75,6 +75,7 @@
 		651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionFunctionEditorViewController.swift; sourceTree = "<group>"; };
 		65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizeFontToFillFrame.swift; sourceTree = "<group>"; };
 		6532644D21C055B5009C0ED8 /* CurveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveHelper.swift; sourceTree = "<group>"; };
+		6550AA6C224415570032232A /* NVStoryObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStoryObserver.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
 		655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViews.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
@@ -107,7 +108,6 @@
 		DF94927121B96D6E00BC8AB0 /* NVCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVCondition.swift; sourceTree = "<group>"; };
 		DF94927221B96D6E00BC8AB0 /* NVSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVSequence.swift; sourceTree = "<group>"; };
 		DF94927321B96D6F00BC8AB0 /* NVValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVValue.swift; sourceTree = "<group>"; };
-		DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVStoryDelegate.swift; sourceTree = "<group>"; };
 		DF94927521B96D6F00BC8AB0 /* NVEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVEvent.swift; sourceTree = "<group>"; };
 		DF94927621B96D6F00BC8AB0 /* NVFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVFunction.swift; sourceTree = "<group>"; };
 		DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVIdentifiable.swift; sourceTree = "<group>"; };
@@ -211,11 +211,11 @@
 				DF94927021B96D6E00BC8AB0 /* NVLink.swift */,
 				DF94927821B96D6F00BC8AB0 /* NVLog.swift */,
 				DF94927B21B96D6F00BC8AB0 /* NVStory.swift */,
-				DF94927421B96D6F00BC8AB0 /* NVStoryDelegate.swift */,
 				DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */,
 				DF94927321B96D6F00BC8AB0 /* NVValue.swift */,
 				DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */,
 				DF9492A221BA573600BC8AB0 /* NVPath.swift */,
+				6550AA6C224415570032232A /* NVStoryObserver.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -419,6 +419,7 @@
 				658C244B222D7DBB00E1FE32 /* PropertiesViews.swift in Sources */,
 				65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */,
 				DF9492A921BA82ED00BC8AB0 /* CanvasSelection.swift in Sources */,
+				6550AA6D224415570032232A /* NVStoryObserver.swift in Sources */,
 				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
 				DF94929F21B98A9A00BC8AB0 /* CanvasSequence.swift in Sources */,
 				DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */,
@@ -431,7 +432,6 @@
 				DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */,
 				DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */,
 				6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */,
-				DF94928321B96D6F00BC8AB0 /* NVStoryDelegate.swift in Sources */,
 				65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */,
 				DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */,
 				DF94928121B96D6F00BC8AB0 /* NVSequence.swift in Sources */,

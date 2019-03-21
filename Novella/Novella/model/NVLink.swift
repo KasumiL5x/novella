@@ -26,10 +26,10 @@ class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 			
 			// a bit hacky but watcha' gonna do with templates like these?
 			if self is NVSequenceLink {
-				_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceLinkDestinationDidChange(story: _story, link: self as! NVSequenceLink)}
+				_story.Observers.forEach{$0.nvSequenceLinkDestinationDidChange(story: _story, link: self as! NVSequenceLink)}
 			}
 			if self is NVEventLink {
-				_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventLinkDestinationDidChange(story: _story, link: self as! NVEventLink)}
+				_story.Observers.forEach{$0.nvEventLinkDestinationDidChange(story: _story, link: self as! NVEventLink)}
 			}
 		}
 	}

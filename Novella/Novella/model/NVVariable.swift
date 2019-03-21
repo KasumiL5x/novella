@@ -14,13 +14,13 @@ class NVVariable: NVIdentifiable {
 	var Name: String {
 		didSet {
 			NVLog.log("Variable (\(UUID.uuidString)) Name changed (\(oldValue) -> \(Name)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvVariableNameDidChange(story: _story, variable: self)}
+			_story.Observers.forEach{$0.nvVariableNameDidChange(story: _story, variable: self)}
 		}
 	}
 	var Constant: Bool {
 		didSet {
 			NVLog.log("Variable (\(UUID.uuidString)) Constant changed (\(oldValue) -> \(Constant)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvVariableConstantDidChange(story: _story, variable: self)}
+			_story.Observers.forEach{$0.nvVariableConstantDidChange(story: _story, variable: self)}
 		}
 	}
 	private(set) var Value: NVValue
@@ -44,14 +44,14 @@ class NVVariable: NVIdentifiable {
 		let oldValue = self.Value
 		self.Value = value
 		NVLog.log("Variable (\(UUID.uuidString)) Value changed (\(oldValue) -> \(value)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvVariableValueDidChange(story: _story, variable: self)}
+		_story.Observers.forEach{$0.nvVariableValueDidChange(story: _story, variable: self)}
 	}
 	
 	func set(initialValue: NVValue) {
 		let oldValue = self.InitialValue
 		self.InitialValue = initialValue
 		NVLog.log("Variable (\(UUID.uuidString)) InitialValue changed (\(oldValue) -> \(initialValue)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvVariableInitialValueDidChange(story: _story, variable: self)}
+		_story.Observers.forEach{$0.nvVariableInitialValueDidChange(story: _story, variable: self)}
 	}
 	
 	func reset() {

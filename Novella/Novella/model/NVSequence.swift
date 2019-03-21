@@ -15,13 +15,13 @@ class NVSequence: NVIdentifiable {
 	var Label: String {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceLabelDidChange(story: _story, sequence: self)}
+			_story.Observers.forEach{$0.nvSequenceLabelDidChange(story: _story, sequence: self)}
 		}
 	}
 	var Parallel: Bool {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Parallel changed (\(oldValue) -> \(Parallel)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceParallelDidChange(story: _story, sequence: self)}
+			_story.Observers.forEach{$0.nvSequenceParallelDidChange(story: _story, sequence: self)}
 		}
 	}
 	var PreCondition: NVCondition?
@@ -36,7 +36,7 @@ class NVSequence: NVIdentifiable {
 			} else {
 				NVLog.log("Sequence (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceEntryDidChange(story: _story, sequence: self, oldEntry: oldValue, newEntry: Entry)}
+			_story.Observers.forEach{$0.nvSequenceEntryDidChange(story: _story, sequence: self, oldEntry: oldValue, newEntry: Entry)}
 		}
 	}
 	private(set) var Events: [NVEvent]
@@ -65,7 +65,7 @@ class NVSequence: NVIdentifiable {
 		event.Parent = self
 		
 		NVLog.log("Added Event (\(event.UUID.uuidString)) to Sequence (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceDidAddEvent(story: _story, sequence: self, event: event)}
+		_story.Observers.forEach{$0.nvSequenceDidAddEvent(story: _story, sequence: self, event: event)}
 	}
 	func remove(event: NVEvent) {
 		guard let idx = Events.index(of: event) else {
@@ -76,7 +76,7 @@ class NVSequence: NVIdentifiable {
 		event.Parent = nil
 		
 		NVLog.log("Removed Event (\(event.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceDidRemoveEvent(story: _story, sequence: self, event: event)}
+		_story.Observers.forEach{$0.nvSequenceDidRemoveEvent(story: _story, sequence: self, event: event)}
 		
 		if Entry == event {
 			Entry = nil
@@ -93,7 +93,7 @@ class NVSequence: NVIdentifiable {
 		}
 		EventLinks.append(eventLink)
 		NVLog.log("Added EventLink (\(eventLink.UUID.uuidString)) to Sequence (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceDidAddEventLink(story: _story, sequence: self, link: eventLink)}
+		_story.Observers.forEach{$0.nvSequenceDidAddEventLink(story: _story, sequence: self, link: eventLink)}
 	}
 	func remove(eventLink: NVEventLink) {
 		guard let idx = EventLinks.index(of: eventLink) else {
@@ -102,7 +102,7 @@ class NVSequence: NVIdentifiable {
 		}
 		EventLinks.remove(at: idx)
 		NVLog.log("Removed EventLink (\(eventLink.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvSequenceDidRemoveEventLink(story: _story, sequence: self, link: eventLink)}
+		_story.Observers.forEach{$0.nvSequenceDidRemoveEventLink(story: _story, sequence: self, link: eventLink)}
 	}
 }
 

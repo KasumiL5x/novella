@@ -13,7 +13,7 @@ class NVFunction: NVIdentifiable {
 	private let _story: NVStory
 	var Code: String = "" {
 		didSet {
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvFunctionCodeDidChange(story: _story, function: self)}
+			_story.Observers.forEach{$0.nvFunctionCodeDidChange(story: _story, function: self)}
 		}
 	}
 	private(set) var FunctionName: String

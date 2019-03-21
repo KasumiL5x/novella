@@ -15,13 +15,13 @@ class NVEvent: NVIdentifiable {
 	var Label: String {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventLabelDidChange(story: _story, event: self)}
+			_story.Observers.forEach{$0.nvEventLabelDidChange(story: _story, event: self)}
 		}
 	}
 	var Parallel: Bool {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Parallel changed (\(oldValue) -> \(Parallel)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventParallelDidChange(story: _story, event: self)}
+			_story.Observers.forEach{$0.nvEventParallelDidChange(story: _story, event: self)}
 		}
 	}
 	var PreCondition: NVCondition?
@@ -48,7 +48,7 @@ class NVEvent: NVIdentifiable {
 		}
 		Participants.append(participant)
 		NVLog.log("Added Entity (\(participant.UUID.uuidString)) to Event (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventDidAddParticipant(story: _story, event: self, entity: participant)}
+		_story.Observers.forEach{$0.nvEventDidAddParticipant(story: _story, event: self, entity: participant)}
 	}
 	func remove(participant: NVEntity) {
 		guard let idx = Participants.index(of: participant) else {
@@ -57,7 +57,7 @@ class NVEvent: NVIdentifiable {
 		}
 		Participants.remove(at: idx)
 		NVLog.log("Removed Entity (\(participant.UUID.uuidString)) from Event (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvEventDidRemoveParticipant(story: _story, event: self, entity: participant)}
+		_story.Observers.forEach{$0.nvEventDidRemoveParticipant(story: _story, event: self, entity: participant)}
 	}
 }
 

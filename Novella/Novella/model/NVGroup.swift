@@ -15,7 +15,7 @@ class NVGroup: NVIdentifiable {
 	var Label: String {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupLabelDidChange(story: _story, group: self)}
+			_story.Observers.forEach{$0.nvGroupLabelDidChange(story: _story, group: self)}
 		}
 	}
 	var PreCondition: NVCondition?
@@ -30,7 +30,7 @@ class NVGroup: NVIdentifiable {
 			} else {
 				NVLog.log("Group (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
 			}
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupEntryDidChange(story: _story, group: self, oldEntry: oldValue, newEntry: Entry)}
+			_story.Observers.forEach{$0.nvGroupEntryDidChange(story: _story, group: self, oldEntry: oldValue, newEntry: Entry)}
 		}
 	}
 	private(set) var Sequences: [NVSequence]
@@ -60,7 +60,7 @@ class NVGroup: NVIdentifiable {
 		sequence.Parent = self
 		
 		NVLog.log("Added Sequence (\(sequence.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddSequence(story: _story, group: self, sequence: sequence)}
+		_story.Observers.forEach{$0.nvGroupDidAddSequence(story: _story, group: self, sequence: sequence)}
 	}
 	func remove(sequence: NVSequence) {
 		guard let idx = Sequences.index(of: sequence) else {
@@ -71,7 +71,7 @@ class NVGroup: NVIdentifiable {
 		sequence.Parent = nil
 		
 		NVLog.log("Removed Sequence (\(sequence.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveSequence(story: _story, group: self, sequence: sequence)}
+		_story.Observers.forEach{$0.nvGroupDidRemoveSequence(story: _story, group: self, sequence: sequence)}
 		
 		if Entry == sequence {
 			Entry = nil
@@ -95,7 +95,7 @@ class NVGroup: NVIdentifiable {
 		group.Parent = self
 		
 		NVLog.log("Added Group (\(group.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddGroup(story: _story, group: self, child: group)}
+		_story.Observers.forEach{$0.nvGroupDidAddGroup(story: _story, group: self, child: group)}
 	}
 	func remove(group: NVGroup) {
 		guard let idx = Groups.index(of: group) else {
@@ -106,7 +106,7 @@ class NVGroup: NVIdentifiable {
 		group.Parent = nil
 		
 		NVLog.log("Removed Group (\(group.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
+		_story.Observers.forEach{$0.nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
 	}
 	
 	func contains(sequenceLink: NVSequenceLink) -> Bool {
@@ -120,7 +120,7 @@ class NVGroup: NVIdentifiable {
 		SequenceLinks.append(sequenceLink)
 		
 		NVLog.log("Added SequenceLink (\(sequenceLink.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidAddSequenceLink(story: _story, group: self, link: sequenceLink)}
+		_story.Observers.forEach{$0.nvGroupDidAddSequenceLink(story: _story, group: self, link: sequenceLink)}
 	}
 	func remove(sequenceLink: NVSequenceLink) {
 		guard let idx = SequenceLinks.index(of: sequenceLink) else {
@@ -130,7 +130,7 @@ class NVGroup: NVIdentifiable {
 		SequenceLinks.remove(at: idx)
 		
 		NVLog.log("Removed SequenceLink (\(sequenceLink.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvGroupDidRemoveSequenceLink(story: _story, group: self, link: sequenceLink)}
+		_story.Observers.forEach{$0.nvGroupDidRemoveSequenceLink(story: _story, group: self, link: sequenceLink)}
 	}
 }
 

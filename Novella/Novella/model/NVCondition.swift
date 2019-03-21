@@ -16,7 +16,7 @@ class NVCondition: NVIdentifiable {
 			if Code.isEmpty {
 				Code = "return true;"
 			}
-			_story.Delegates.allObjects.forEach{($0 as! NVStoryDelegate).nvConditionCodeDidChange(story: _story, condition: self)}
+			_story.Observers.forEach{$0.nvConditionCodeDidChange(story: _story, condition: self)}
 		}
 	}
 	private(set) var FunctionName: String

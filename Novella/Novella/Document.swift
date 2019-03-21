@@ -19,7 +19,7 @@ class Document: NSDocument {
 	
 	override init() {
 		super.init()
-		Story.addDelegate(self)
+		Story.add(observer: self)
 	}
 
 	override class var autosavesInPlace: Bool {
@@ -45,7 +45,7 @@ class Document: NSDocument {
 	}
 }
 
-extension Document: NVStoryDelegate {
+extension Document: NVStoryObserver {
 	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 		if Positions[group.UUID] == nil {
