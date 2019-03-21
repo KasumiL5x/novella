@@ -14,7 +14,9 @@ typealias NVEventLink = NVLink<NVEvent>
 class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
+	
 	private(set) var Origin: T
+	//
 	var Destination: T? {
 		didSet {
 			if let dest = Destination, Origin.UUID == dest.UUID {
@@ -33,6 +35,8 @@ class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 			}
 		}
 	}
+	//
+	var Condition: NVCondition?
 	var Function: NVFunction?
 	
 	init(uuid: NSUUID, story: NVStory, origin: T, destination: T?) {
@@ -40,6 +44,8 @@ class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 		self._story = story
 		self.Origin = origin
 		self.Destination = destination
+		self.Condition = nil
+		self.Function = nil
 	}
 }
 
