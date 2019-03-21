@@ -12,36 +12,20 @@ class NVSequence: NVIdentifiable {
 	var UUID: NSUUID
 	let _story: NVStory
 	var Parent: NVGroup? // warning: no friend class support so has to be public
+	
 	var Label: String {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
 			_story.Observers.forEach{$0.nvSequenceLabelDidChange(story: _story, sequence: self)}
 		}
 	}
+	//
 	var Parallel: Bool {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Parallel changed (\(oldValue) -> \(Parallel)).", level: .info)
 			_story.Observers.forEach{$0.nvSequenceParallelDidChange(story: _story, sequence: self)}
 		}
 	}
-	var PreCondition: NVCondition?
-	var EntryFunction: NVFunction?
-	var ExitFunction: NVFunction?
-	var Entry: NVEvent? {
-		didSet {
-			// must be part of the sequence
-			if let entry = Entry, !contains(event: entry) {
-				Entry = nil
-				NVLog.log("Tried to set Sequence (\(UUID.uuidString)) Entry to a non-included Entry.", level: .warning)
-			} else {
-				NVLog.log("Sequence (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
-			}
-			_story.Observers.forEach{$0.nvSequenceEntryDidChange(story: _story, sequence: self, oldEntry: oldValue, newEntry: Entry)}
-		}
-	}
-	private(set) var Events: [NVEvent]
-	private(set) var EventLinks: [NVEventLink]
-	
 	var Topmost: Bool {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Topmost changed (\(oldValue) -> \(Topmost)).", level: .info)
@@ -65,6 +49,24 @@ class NVSequence: NVIdentifiable {
 			_story.Observers.forEach{$0.nvSequenceKeepAliveDidChange(story: _story, sequence: self)}
 		}
 	}
+	//
+	var PreCondition: NVCondition?
+	var EntryFunction: NVFunction?
+	var ExitFunction: NVFunction?
+	var Entry: NVEvent? {
+		didSet {
+			// must be part of the sequence
+			if let entry = Entry, !contains(event: entry) {
+				Entry = nil
+				NVLog.log("Tried to set Sequence (\(UUID.uuidString)) Entry to a non-included Entry.", level: .warning)
+			} else {
+				NVLog.log("Sequence (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
+			}
+			_story.Observers.forEach{$0.nvSequenceEntryDidChange(story: _story, sequence: self, oldEntry: oldValue, newEntry: Entry)}
+		}
+	}
+	private(set) var Events: [NVEvent]
+	private(set) var EventLinks: [NVEventLink]
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
@@ -72,12 +74,15 @@ class NVSequence: NVIdentifiable {
 		self.Parent = nil
 		self.Label = ""
 		self.Parallel = false
-		self.Entry = nil
-		self.Events = []
-		self.EventLinks = []
 		self.Topmost = false
 		self.MaxActivations = 0
 		self.KeepAlive = false
+		self.PreCondition = nil
+		self.EntryFunction = nil
+		self.ExitFunction = nil
+		self.Entry = nil
+		self.Events = []
+		self.EventLinks = []
 	}
 	
 	func contains(event: NVEvent) -> Bool {

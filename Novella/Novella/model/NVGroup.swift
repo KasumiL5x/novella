@@ -12,31 +12,14 @@ class NVGroup: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
 	var Parent: NVGroup? // warning: no friend class support so has to be public
+	
 	var Label: String {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
 			_story.Observers.forEach{$0.nvGroupLabelDidChange(story: _story, group: self)}
 		}
 	}
-	var PreCondition: NVCondition?
-	var EntryFunction: NVFunction?
-	var ExitFunction: NVFunction?
-	var Entry: NVSequence? {
-		didSet {
-			// must be part of the group
-			if let entry = Entry, !contains(sequence: entry) {
-				Entry = nil
-				NVLog.log("Tried to set Group (\(UUID.uuidString)) Entry to a non-included Sequence.", level: .warning)
-			} else {
-				NVLog.log("Group (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
-			}
-			_story.Observers.forEach{$0.nvGroupEntryDidChange(story: _story, group: self, oldEntry: oldValue, newEntry: Entry)}
-		}
-	}
-	private(set) var Sequences: [NVSequence]
-	private(set) var SequenceLinks: [NVSequenceLink]
-	private(set) var Groups: [NVGroup]
-	
+	//
 	var Topmost: Bool {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Topmost changed (\(oldValue) -> \(Topmost)).", level: .info)
@@ -60,19 +43,41 @@ class NVGroup: NVIdentifiable {
 			_story.Observers.forEach{$0.nvGroupKeepAliveDidChange(story: _story, group: self)}
 		}
 	}
+	//
+	var PreCondition: NVCondition?
+	var EntryFunction: NVFunction?
+	var ExitFunction: NVFunction?
+	var Entry: NVSequence? {
+		didSet {
+			// must be part of the group
+			if let entry = Entry, !contains(sequence: entry) {
+				Entry = nil
+				NVLog.log("Tried to set Group (\(UUID.uuidString)) Entry to a non-included Sequence.", level: .warning)
+			} else {
+				NVLog.log("Group (\(UUID.uuidString)) Entry changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Entry?.UUID.uuidString ?? "nil")).", level: .info)
+			}
+			_story.Observers.forEach{$0.nvGroupEntryDidChange(story: _story, group: self, oldEntry: oldValue, newEntry: Entry)}
+		}
+	}
+	private(set) var Sequences: [NVSequence]
+	private(set) var SequenceLinks: [NVSequenceLink]
+	private(set) var Groups: [NVGroup]
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
 		self.Parent = nil
 		self.Label = ""
+		self.Topmost = false
+		self.MaxActivations = 0
+		self.KeepAlive = false
+		self.PreCondition = nil
+		self.EntryFunction = nil
+		self.ExitFunction = nil
 		self.Entry = nil
 		self.Sequences = []
 		self.SequenceLinks = []
 		self.Groups = []
-		self.Topmost = false
-		self.MaxActivations = 0
-		self.KeepAlive = false
 	}
 	
 	func contains(sequence: NVSequence) -> Bool {
