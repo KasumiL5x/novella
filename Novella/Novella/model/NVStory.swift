@@ -46,6 +46,9 @@ class NVStory {
 	var Conditions: [NVCondition] {
 		get{ return _identifiables.filter{$0 is NVCondition} as! [NVCondition] }
 	}
+	var Selectors: [NVSelector] {
+		get{ return _identifiables.filter{$0 is NVSelector} as! [NVSelector] }
+	}
 	
 	init() {
 		self._identifiables = []
@@ -149,6 +152,14 @@ class NVStory {
 		NVLog.log("Created Condition (\(condition.UUID.uuidString)).", level: .info)
 		Observers.forEach{$0.nvStoryDidMakeCondition(story: self, condition: condition)}
 		return condition
+	}
+	func makeSelector(uuid: NSUUID?=nil) -> NVSelector {
+		let selector = NVSelector(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(selector)
+		
+		NVLog.log("Created Selector (\(selector.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeSelector(story: self, selector: selector)}
+		return selector
 	}
 	
 	// DELETION
@@ -376,6 +387,25 @@ class NVStory {
 		
 		NVLog.log("Deleted Condition (\(condition.UUID.uuidString)).", level: .info)
 		Observers.forEach{$0.nvStoryDidDeleteCondition(story: self, condition: condition)}
+	}
+	func delete(selector: NVSelector) {
+		// remove from all events
+		Events.forEach{ (event) in
+			if event.Instigators == selector {
+				event.Instigators = nil
+			}
+			if event.Targets == selector {
+				event.Targets = nil
+			}
+		}
+		
+		// remove frmo story
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == selector.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		NVLog.log("Deleted Selector (\(selector.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteSelector(story: self, selector: selector)}
 	}
 }
 

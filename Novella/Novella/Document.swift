@@ -103,6 +103,10 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 	}
@@ -136,6 +140,10 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteSelector(story: NVStory, selector: NVSelector) {
 		updateChangeCount(.changeDone)
 	}
 	

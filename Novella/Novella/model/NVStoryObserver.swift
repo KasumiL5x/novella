@@ -19,6 +19,7 @@ protocol NVStoryObserver: class {
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable)
 	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction)
 	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition)
+	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector)
 	
 	// deletion
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup)
@@ -30,6 +31,7 @@ protocol NVStoryObserver: class {
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable)
 	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction)
 	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition)
+	func nvStoryDidDeleteSelector(story: NVStory, selector: NVSelector)
 	
 	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup)
@@ -128,6 +130,9 @@ extension NVStoryObserver {
 	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition) {
 	}
 	
+	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector) {
+	}
+	
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 	}
 	
@@ -153,6 +158,9 @@ extension NVStoryObserver {
 	}
 	
 	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
+	}
+	
+	func nvStoryDidDeleteSelector(story: NVStory, selector: NVSelector) {
 	}
 	
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
