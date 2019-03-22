@@ -87,6 +87,7 @@ protocol NVStoryObserver: class {
 	// entities
 	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity)
 	func nvEntityDescriptionDidChange(story: NVStory, entity: NVEntity)
+	func nvEntityTagsDidChange(story: NVStory, entity: NVEntity)
 	
 	// function
 	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction)
@@ -281,6 +282,9 @@ extension NVStoryObserver {
 	}
 	
 	func nvEntityDescriptionDidChange(story: NVStory, entity: NVEntity) {
+	}
+	
+	func nvEntityTagsDidChange(story: NVStory, entity: NVEntity) {
 	}
 	
 	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {

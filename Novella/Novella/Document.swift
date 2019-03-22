@@ -311,6 +311,10 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvEntityTagsDidChange(story: NVStory, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
 		updateChangeCount(.changeDone)
 	}
