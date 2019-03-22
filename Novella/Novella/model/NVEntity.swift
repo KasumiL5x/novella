@@ -21,12 +21,18 @@ class NVEntity: NVIdentifiable {
 			_story.Observers.forEach{$0.nvEntityDescriptionDidChange(story: _story, entity: self)}
 		}
 	}
+	var Tags: [String] {
+		didSet {
+			_story.Observers.forEach{$0.nvEntityTagsDidChange(story: _story, entity: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
 		self.Label = ""
 		self.Description = ""
+		self.Tags = []
 	}
 }
 
