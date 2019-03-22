@@ -12,18 +12,54 @@ class NVDiscoverableSequence: NVSequence {
 	enum DNTangibility {
 		case Tangible
 		case Intangible
+		
+		var toString: String {
+			switch self {
+			case .Tangible:
+				return "tangible"
+			case .Intangible:
+				return "intangible"
+			}
+		}
 	}
 	enum DNFunctionality {
 		case Narrative
 		case Mechanical
+		
+		var toString: String {
+			switch self {
+			case .Narrative:
+				return "narrative"
+			case .Mechanical:
+				return "mechanical"
+			}
+		}
 	}
 	enum DNClarity {
 		case Explicit
 		case Implicit
+		
+		var toString: String {
+			switch self {
+			case .Explicit:
+				return "explicit"
+			case .Implicit:
+				return "implicit"
+			}
+		}
 	}
 	enum DNDelivery {
 		case Active
 		case Passive
+		
+		var toString: String {
+			switch self {
+			case .Active:
+				return "active"
+			case .Passive:
+				return "passive"
+			}
+		}
 	}
 	
 	var Tangibility: DNTangibility {
