@@ -56,7 +56,7 @@ extension NVStory {
 		
 		// selectors
 		var selectors: [JSONDict] = []
-		Selectors.forEach{ (selector) in
+		self.Selectors.forEach{ (selector) in
 			var entry: JSONDict = [:]
 			entry["id"] = selector.UUID.uuidString
 			entry["code"] = selector.Code
@@ -66,7 +66,7 @@ extension NVStory {
 		
 		// entities (and tags)
 		var entities: [JSONDict] = []
-		Entities.forEach{ (entity) in
+		self.Entities.forEach{ (entity) in
 			var entry: JSONDict = [:]
 			entry["id"] = entity.UUID.uuidString
 			entry["label"] = entity.Label
@@ -78,7 +78,7 @@ extension NVStory {
 		
 		// links
 		var links: [JSONDict] = []
-		EventLinks.forEach{ (eventLink) in
+		self.EventLinks.forEach{ (eventLink) in
 			var entry: JSONDict = [:]
 			entry["id"] = eventLink.UUID.uuidString
 			entry["origin"] = eventLink.Origin.UUID.uuidString
@@ -87,7 +87,7 @@ extension NVStory {
 			entry["condition"] = eventLink.Condition?.UUID.uuidString ?? ""
 			links.append(entry)
 		}
-		SequenceLinks.forEach{ (seqLink) in
+		self.SequenceLinks.forEach{ (seqLink) in
 			var entry: JSONDict = [:]
 			entry["id"] = seqLink.UUID.uuidString
 			entry["origin"] = seqLink.Origin.UUID.uuidString
@@ -100,21 +100,21 @@ extension NVStory {
 		
 		// groups
 		var groups: [JSONDict] = []
-		Groups.forEach{ (group) in
+		self.Groups.forEach{ (group) in
 			groups.append(groupToJSON(group: group))
 		}
 		root["groups"] = groups
 		
 		// sequences
 		var sequences: [JSONDict] = []
-		Sequences.forEach{ (sequence) in
+		self.Sequences.forEach{ (sequence) in
 			sequences.append(sequenceToJSON(sequence: sequence))
 		}
 		root["sequences"] = sequences
 		
 		// discoverable (as a derivative of sequence)
 		var discoverables: [JSONDict] = []
-		Discoverables.forEach{ (discoverable) in
+		self.Discoverables.forEach{ (discoverable) in
 			var entry = sequenceToJSON(sequence: discoverable)
 			entry["tangibility"] = discoverable.Tangibility.toString
 			entry["functionality"] = discoverable.Functionality.toString
@@ -126,7 +126,7 @@ extension NVStory {
 		
 		// events
 		var events: [JSONDict] = []
-		Events.forEach{ (event) in
+		self.Events.forEach{ (event) in
 			var entry: JSONDict = [:]
 			entry["id"] = event.UUID.uuidString
 			entry["label"] = event.Label
