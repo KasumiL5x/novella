@@ -15,5 +15,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationWillTerminate(_ aNotification: Notification) {
 	}
+	
+	@IBAction func onExportJSON(_ sender: NSMenuItem) {
+		let viewController = NSApplication.shared.mainWindow?.contentViewController as? MainViewController
+		viewController?.exportJSON()
+	}
 }
 

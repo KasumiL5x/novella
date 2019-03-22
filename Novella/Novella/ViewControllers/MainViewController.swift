@@ -54,4 +54,46 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		print("Double clicked \(obj)!")
 	}
+	
+	func exportJSON() {
+		guard let doc = view.window?.windowController?.document as? Document else {
+			print("ERROR: Could not find doc when exporting to JSON.")
+			return
+		}
+		
+		let savePanel = NSSavePanel()
+		savePanel.title = "Export JSON"
+		savePanel.message = "Please choose a file to export JSON to."
+		savePanel.allowedFileTypes = ["json"]
+		savePanel.isExtensionHidden = false
+		savePanel.canSelectHiddenExtension = true
+		if savePanel.runModal() != NSApplication.ModalResponse.OK {
+			return
+		}
+		
+		guard let fileURL = savePanel.url else {
+			print("ERROR: Could not open URL when exporting to JSON.")
+			return
+		}
+		
+		let jsonStr = doc.Story.toJSON()
+		if jsonStr.isEmpty {
+			print("ERROR: Tried to export to JSON but the resulting string was empty.")
+			return
+		}
+		
+		do {
+			try jsonStr.write(to: fileURL, atomically: false, encoding: .utf8)
+		} catch {
+			print("ERROR: Failed to write JSON to file (\(error)).")
+		}
+		
+		// yay!
+		let alert = NSAlert()
+		alert.messageText = "Export to JSON"
+		alert.informativeText = "Successfully exported JSON to \(fileURL.absoluteString)"
+		alert.alertStyle = .informational
+		alert.addButton(withTitle: "OK")
+		alert.runModal()
+	}
 }
