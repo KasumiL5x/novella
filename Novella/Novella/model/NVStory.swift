@@ -25,6 +25,9 @@ class NVStory {
 	var Sequences: [NVSequence] {
 		get{ return _identifiables.filter{$0 is NVSequence} as! [NVSequence] }
 	}
+	var Discoverables: [NVDiscoverableSequence] {
+		get{ return _identifiables.filter{$0 is NVDiscoverableSequence} as! [NVDiscoverableSequence] }
+	}
 	var Events: [NVEvent] {
 		get{ return _identifiables.filter{$0 is NVEvent} as! [NVEvent] }
 	}
