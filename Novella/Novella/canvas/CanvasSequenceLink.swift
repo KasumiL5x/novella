@@ -14,6 +14,11 @@ class CanvasSequenceLink: CanvasLink {
 	init(canvas: Canvas, origin: CanvasObject, link: NVSequenceLink) {
 		self.SequenceLink = link
 		super.init(canvas: canvas, origin: origin)
+		
+		// handle case where destination already exists
+		if let dest = link.Destination, let destObj = canvas.canvasSequenceFor(nvSequence: dest) {
+			setTarget(destObj)
+		}
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

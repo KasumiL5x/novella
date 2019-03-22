@@ -14,6 +14,11 @@ class CanvasEventLink: CanvasLink {
 	init(canvas: Canvas, origin: CanvasObject, link: NVEventLink) {
 		self.EventLink = link
 		super.init(canvas: canvas, origin: origin)
+		
+		// handle case where destination already exists
+		if let dest = link.Destination, let destObj = canvas.canvasEventFor(nvEvent: dest) {
+			setTarget(destObj)
+		}
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
