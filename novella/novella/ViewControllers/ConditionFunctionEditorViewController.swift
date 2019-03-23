@@ -123,10 +123,10 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MainCell"), owner: self)
 		switch item {
 		case let asFunction as NVFunction:
-			(view as? NSTableCellView)?.textField?.stringValue = asFunction.FunctionName
+			(view as? NSTableCellView)?.textField?.stringValue = asFunction.Label
 			
 		case let asCondition as NVCondition:
-			(view as? NSTableCellView)?.textField?.stringValue = asCondition.FunctionName
+			(view as? NSTableCellView)?.textField?.stringValue = asCondition.Label
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "ERROR"

@@ -16,12 +16,17 @@ class NVFunction: NVIdentifiable {
 			_story.Observers.forEach{$0.nvFunctionCodeDidChange(story: _story, function: self)}
 		}
 	}
-	private(set) var FunctionName: String
+	var Label: String {
+		didSet {
+			NVLog.log("Function (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
+			_story.Observers.forEach{$0.nvFunctionLabelDidChange(story: _story, function: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
-		self.FunctionName = "nvFunction" + NVUtil.randomString(length: 10)
+		self.Label = "nvFunction" + NVUtil.randomString(length: 10)
 	}
 }
 

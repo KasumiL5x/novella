@@ -19,12 +19,17 @@ class NVCondition: NVIdentifiable {
 			_story.Observers.forEach{$0.nvConditionCodeDidChange(story: _story, condition: self)}
 		}
 	}
-	private(set) var FunctionName: String
+	var Label: String {
+		didSet {
+			NVLog.log("Condition (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
+			_story.Observers.forEach{$0.nvConditionLabelDidChange(story: _story, condition: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
-		self.FunctionName = "nvCondition" + NVUtil.randomString(length: 10)
+		self.Label = "nvCondition" + NVUtil.randomString(length: 10)
 	}
 
 }

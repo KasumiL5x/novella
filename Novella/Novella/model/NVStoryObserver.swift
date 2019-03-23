@@ -93,12 +93,15 @@ protocol NVStoryObserver: class {
 	
 	// function
 	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction)
+	func nvFunctionLabelDidChange(story: NVStory, function: NVFunction)
 	
 	// conditions
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition)
+	func nvConditionLabelDidChange(story: NVStory, condition: NVCondition)
 	
 	// selectors
 	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector)
+	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector)
 }
 
 // default implementations
@@ -298,9 +301,18 @@ extension NVStoryObserver {
 	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
 	}
 	
+	func nvFunctionLabelDidChange(story: NVStory, function: NVFunction) {
+	}
+	
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 	}
 	
+	func nvConditionLabelDidChange(story: NVStory, condition: NVCondition) {
+	}
+	
 	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
+	}
+	
+	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector) {
 	}
 }

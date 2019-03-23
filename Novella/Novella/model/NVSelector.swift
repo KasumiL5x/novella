@@ -17,10 +17,17 @@ class NVSelector: NVIdentifiable {
 			_story.Observers.forEach{$0.nvSelectorCodeDidChange(story: _story, selector: self)}
 		}
 	}
+	var Label: String {
+		didSet {
+			NVLog.log("Selector (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
+			_story.Observers.forEach{$0.nvSelectorLabelDidChange(story: _story, selector: self)}
+		}
+	}
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
 		self._story = story
+		self.Label = "nvSelector" + NVUtil.randomString(length: 10)
 	}
 }
 

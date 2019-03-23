@@ -86,6 +86,7 @@ extension Document {
 			var entry: JSONDict = [:]
 			entry["id"] = function.UUID.uuidString
 			entry["code"] = function.Code
+			entry["label"] = function.Label
 			functions.append(entry)
 		}
 		root["functions"] = functions
@@ -96,6 +97,7 @@ extension Document {
 			var entry: JSONDict = [:]
 			entry["id"] = condition.UUID.uuidString
 			entry["code"] = condition.Code
+			entry["label"] = condition.Label
 			conditions.append(entry)
 		}
 		root["conditions"] = conditions
@@ -106,6 +108,7 @@ extension Document {
 			var entry: JSONDict = [:]
 			entry["id"] = selector.UUID.uuidString
 			entry["code"] = selector.Code
+			entry["label"] = selector.Label
 			selectors.append(entry)
 		}
 		root["selectors"] = selectors
@@ -558,11 +561,23 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvFunctionLabelDidChange(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvConditionLabelDidChange(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector) {
 		updateChangeCount(.changeDone)
 	}
 }

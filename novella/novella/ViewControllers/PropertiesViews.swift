@@ -98,12 +98,12 @@ class PropertyGroupView: NSView {
 		_condition.menu?.removeAllItems()
 		_condition.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
 		for condition in doc.Story.Conditions {
-			let item = NSMenuItem(title: condition.FunctionName, action: nil, keyEquivalent: "")
+			let item = NSMenuItem(title: condition.Label, action: nil, keyEquivalent: "")
 			item.representedObject = condition
 			_condition.menu?.addItem(item)
 		}
 		// select actual assigned condition (if nil, then the default 'None' is okay)
-		_condition.selectItem(withTitle: group.Group.PreCondition?.FunctionName ?? "None")
+		_condition.selectItem(withTitle: group.Group.PreCondition?.Label ?? "None")
 		
 		// populate entry/exit functions
 		_entryFunction.menu?.removeAllItems()
@@ -112,16 +112,16 @@ class PropertyGroupView: NSView {
 		_exitFunction.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
 		for function in doc.Story.Functions {
 			// cannot use same NSMenuItem is two dropdowns, so make two
-			let item_a = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_a = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_a.representedObject = function
 			_entryFunction.menu?.addItem(item_a)
 			
-			let item_b = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_b = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_b.representedObject = function
 			_exitFunction.menu?.addItem(item_b)
 		}
-		_entryFunction.selectItem(withTitle: group.Group.EntryFunction?.FunctionName ?? "None")
-		_exitFunction.selectItem(withTitle: group.Group.ExitFunction?.FunctionName ?? "None")
+		_entryFunction.selectItem(withTitle: group.Group.EntryFunction?.Label ?? "None")
+		_exitFunction.selectItem(withTitle: group.Group.ExitFunction?.Label ?? "None")
 	}
 	
 	@IBAction func onLabel(_ sender: NSTextField) {
@@ -189,12 +189,12 @@ class PropertySequenceView: NSView {
 		_condition.menu?.removeAllItems()
 		_condition.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
 		for condition in doc.Story.Conditions {
-			let item = NSMenuItem(title: condition.FunctionName, action: nil, keyEquivalent: "")
+			let item = NSMenuItem(title: condition.Label, action: nil, keyEquivalent: "")
 			item.representedObject = condition
 			_condition.menu?.addItem(item)
 		}
 		// select actual assigned condition (if nil, then the default 'None' is okay)
-		_condition.selectItem(withTitle: sequence.Sequence.PreCondition?.FunctionName ?? "None")
+		_condition.selectItem(withTitle: sequence.Sequence.PreCondition?.Label ?? "None")
 		
 		// populate entry/exit functions
 		_entryFunction.menu?.removeAllItems()
@@ -203,16 +203,16 @@ class PropertySequenceView: NSView {
 		_exitFunction.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
 		for function in doc.Story.Functions {
 			// cannot use same NSMenuItem is two dropdowns, so make two
-			let item_a = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_a = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_a.representedObject = function
 			_entryFunction.menu?.addItem(item_a)
 			
-			let item_b = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_b = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_b.representedObject = function
 			_exitFunction.menu?.addItem(item_b)
 		}
-		_entryFunction.selectItem(withTitle: sequence.Sequence.EntryFunction?.FunctionName ?? "None")
-		_exitFunction.selectItem(withTitle: sequence.Sequence.ExitFunction?.FunctionName ?? "None")
+		_entryFunction.selectItem(withTitle: sequence.Sequence.EntryFunction?.Label ?? "None")
+		_exitFunction.selectItem(withTitle: sequence.Sequence.ExitFunction?.Label ?? "None")
 		
 		_entry.state = sequence.Sequence.Parent?.Entry == sequence.Sequence ? .on : .off
 		_parallel.state = sequence.Sequence.Parallel ? .on : .off
@@ -294,12 +294,12 @@ class PropertyEventView: NSView {
 		_condition.menu?.removeAllItems()
 		_condition.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
 		for condition in doc.Story.Conditions {
-			let item = NSMenuItem(title: condition.FunctionName, action: nil, keyEquivalent: "")
+			let item = NSMenuItem(title: condition.Label, action: nil, keyEquivalent: "")
 			item.representedObject = condition
 			_condition.menu?.addItem(item)
 		}
 		// select actual assigned condition (if nil, then the default 'None' is okay)
-		_condition.selectItem(withTitle: event.Event.PreCondition?.FunctionName ?? "None")
+		_condition.selectItem(withTitle: event.Event.PreCondition?.Label ?? "None")
 		
 		// populate entry/exit/do functions
 		_entryFunction.menu?.removeAllItems()
@@ -310,21 +310,21 @@ class PropertyEventView: NSView {
 		_doFunction.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
 		for function in doc.Story.Functions {
 			// cannot use same NSMenuItem is two dropdowns, so make two
-			let item_a = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_a = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_a.representedObject = function
 			_entryFunction.menu?.addItem(item_a)
 			
-			let item_b = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_b = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_b.representedObject = function
 			_exitFunction.menu?.addItem(item_b)
 
-			let item_c = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			let item_c = NSMenuItem(title: function.Label, action: nil, keyEquivalent: "")
 			item_c.representedObject = function
 			_doFunction.menu?.addItem(item_c)
 		}
-		_entryFunction.selectItem(withTitle: event.Event.EntryFunction?.FunctionName ?? "None")
-		_exitFunction.selectItem(withTitle: event.Event.ExitFunction?.FunctionName ?? "None")
-		_doFunction.selectItem(withTitle: event.Event.DoFunction?.FunctionName ?? "None")
+		_entryFunction.selectItem(withTitle: event.Event.EntryFunction?.Label ?? "None")
+		_exitFunction.selectItem(withTitle: event.Event.ExitFunction?.Label ?? "None")
+		_doFunction.selectItem(withTitle: event.Event.DoFunction?.Label ?? "None")
 		
 		// populate selectors
 		_instigators.menu?.removeAllItems()

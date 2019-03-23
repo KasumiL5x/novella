@@ -43,16 +43,19 @@ extension Document {
 	fileprivate func parseFunction(function: JSON, id: NSUUID) {
 		let entry = Story.makeFunction(uuid: id)
 		entry.Code = function["code"].stringValue
+		entry.Label = function["label"].stringValue
 	}
 	
 	fileprivate func parseCondition(condition: JSON, id: NSUUID) {
 		let entry = Story.makeCondition(uuid: id)
 		entry.Code = condition["code"].stringValue
+		entry.Label = condition["label"].stringValue
 	}
 	
 	fileprivate func parseSelector(selector: JSON, id: NSUUID) {
 		let entry = Story.makeSelector(uuid: id)
 		entry.Code = selector["code"].stringValue
+		entry.Label = selector["label"].stringValue
 	}
 	
 	fileprivate func parseEntity(entity: JSON, id: NSUUID) {
