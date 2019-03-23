@@ -22,13 +22,13 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rmv-V9-WDI">
-                                                <rect key="frame" x="0.0" y="35" width="226" height="365"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="226" height="400"/>
                                                 <clipView key="contentView" id="eS5-Gp-G6Z">
-                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="365"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="400"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" viewBased="YES" indentationPerLevel="16" outlineTableColumn="S5e-ei-Wi8" id="C9M-gz-yCG">
-                                                            <rect key="frame" x="0.0" y="0.0" width="226" height="365"/>
+                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" viewBased="YES" indentationPerLevel="16" outlineTableColumn="S5e-ei-Wi8" id="C9M-gz-yCG" customClass="ConditionFunctionOutlineView" customModule="novella" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="226" height="400"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -98,55 +98,11 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
-                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Spr-at-d3p" userLabel="footer">
-                                                <rect key="frame" x="0.0" y="0.0" width="226" height="35"/>
-                                                <subviews>
-                                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mjf-fR-nsO">
-                                                        <rect key="frame" x="5" y="3" width="30" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gzr-OA-kAj">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="onAddFunction:" target="wnu-i8-n3q" id="uh4-GV-7vz"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1d-Ym-Yny">
-                                                        <rect key="frame" x="45" y="3" width="30" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="c0w-sT-YAy">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="onAddCondition:" target="wnu-i8-n3q" id="THX-06-NzN"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fpb-za-GCN">
-                                                        <rect key="frame" x="85" y="3" width="30" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="vAb-pL-Agx">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="onRemoveSelection:" target="wnu-i8-n3q" id="Le8-ZO-3n3"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="D2f-4I-Qis"/>
-                                                </constraints>
-                                            </customView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="Rmv-V9-WDI" firstAttribute="top" secondItem="cu8-uE-uKr" secondAttribute="top" id="4Bz-i0-UfT"/>
                                             <constraint firstItem="Rmv-V9-WDI" firstAttribute="leading" secondItem="cu8-uE-uKr" secondAttribute="leading" id="7Gx-jz-EnN"/>
-                                            <constraint firstAttribute="bottom" secondItem="Spr-at-d3p" secondAttribute="bottom" id="UcG-fN-9mM"/>
-                                            <constraint firstItem="Spr-at-d3p" firstAttribute="leading" secondItem="cu8-uE-uKr" secondAttribute="leading" id="Uqh-R6-6fT"/>
-                                            <constraint firstAttribute="trailing" secondItem="Spr-at-d3p" secondAttribute="trailing" id="gLG-Up-ETb"/>
-                                            <constraint firstItem="Spr-at-d3p" firstAttribute="top" secondItem="Rmv-V9-WDI" secondAttribute="bottom" id="gaD-CG-MBK"/>
+                                            <constraint firstAttribute="bottom" secondItem="Rmv-V9-WDI" secondAttribute="bottom" id="jYc-GT-che"/>
                                             <constraint firstAttribute="trailing" secondItem="Rmv-V9-WDI" secondAttribute="trailing" id="nVG-EX-V96"/>
                                         </constraints>
                                     </customView>
@@ -180,7 +136,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_outlineView" destination="C9M-gz-yCG" id="uJL-Sj-q2k"/>
+                        <outlet property="_outlineView" destination="C9M-gz-yCG" id="lSF-Mh-W26"/>
                     </connections>
                 </viewController>
                 <customObject id="jhS-a7-7Du" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -188,8 +144,4 @@
             <point key="canvasLocation" x="-234" y="-28"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
-    </resources>
 </document>

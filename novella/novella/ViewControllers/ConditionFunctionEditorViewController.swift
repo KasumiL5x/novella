@@ -19,14 +19,75 @@ class CFEHeader: Equatable {
 	}
 }
 
+class ConditionFunctionOutlineView: NSOutlineView {
+	private var _menu: NSMenu!
+	private var _deleteMenuItem: NSMenuItem?
+	
+	var onNewFunction: (() -> Void)?
+	var onNewCondition: (() -> Void)?
+	var onNewSelector: (() -> Void)?
+	var onDeleteSelection: (() -> Void)?
+	
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		setup()
+	}
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		setup()
+	}
+	
+	private func setup() {
+		_menu = NSMenu()
+		_menu.autoenablesItems = false
+		_menu.addItem(withTitle: "Add Function", action: #selector(ConditionFunctionOutlineView.onMenuNewFunction), keyEquivalent: "")
+		_menu.addItem(withTitle: "Add Condition", action: #selector(ConditionFunctionOutlineView.onMenuNewCondition), keyEquivalent: "")
+		_menu.addItem(withTitle: "Add Selector", action: #selector(ConditionFunctionOutlineView.onMenuNewSelector), keyEquivalent: "")
+		_menu.addItem(NSMenuItem.separator())
+		_deleteMenuItem = NSMenuItem(title: "Delete Selection", action: #selector(ConditionFunctionOutlineView.onMenuDeleteSelection), keyEquivalent: "")
+		_deleteMenuItem!.isEnabled = false
+		_menu.addItem(_deleteMenuItem!)
+	}
+	
+	override func menu(for event: NSEvent) -> NSMenu? {
+		let mousePoint = self.convert(event.locationInWindow, from: nil)
+		let row = self.row(at: mousePoint)
+		if row != -1 {
+			self.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+			_deleteMenuItem?.isEnabled = !(self.item(atRow: row) is CFEHeader) // select anything except headers
+		} else {
+			_deleteMenuItem?.isEnabled = false
+		}
+		
+		return _menu
+	}
+	
+	@objc private func onMenuNewFunction() {
+		onNewFunction?()
+	}
+	
+	@objc private func onMenuNewCondition() {
+		onNewCondition?()
+	}
+	
+	@objc private func onMenuNewSelector() {
+		onNewSelector?()
+	}
+	
+	@objc private func onMenuDeleteSelection() {
+		onDeleteSelection?()
+	}
+}
+
 class ConditionFunctionEditorViewController: NSViewController {
-	@IBOutlet weak var _outlineView: NSOutlineView!
+	@IBOutlet weak var _outlineView: ConditionFunctionOutlineView!
 	
 	private var _document: Document? = nil
 	private var _functionHeader: CFEHeader = CFEHeader(name: "Functions")
 	private var _conditionHeader: CFEHeader = CFEHeader(name: "Conditions")
-//	private var _functionHeader: String = "Functions"
-//	private var _conditionHeader: String = "Conditions"
+	private var _selectorHeader: CFEHeader = CFEHeader(name: "Selectors")
+	
+	private var _contextMenu = NSMenu()
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
@@ -36,22 +97,26 @@ class ConditionFunctionEditorViewController: NSViewController {
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
 		_outlineView.reloadData()
+		
+		_outlineView.onNewFunction = {
+			self.addNewFunction()
+		}
+		_outlineView.onNewCondition = {
+			self.addNewCondition()
+		}
+		_outlineView.onNewSelector = {
+			self.addNewSelector()
+		}
+		_outlineView.onDeleteSelection = {
+			self.deleteSelection()
+		}
 	}
 	
 	func setup(doc: Document) {
 		_document = doc
-		
-		let _ = doc.Story.makeFunction()
-		let _ = doc.Story.makeFunction()
-		let _ = doc.Story.makeCondition()
-		let _ = doc.Story.makeCondition()
-		
-		// todo: make some dummy ones here and test the loading etc.
-		
-		print("TODO: Implement.")
 	}
 	
-	@IBAction func onAddFunction(_ sender: NSButton) {
+	private func addNewFunction() {
 		guard let doc = _document else {
 			return
 		}
@@ -61,7 +126,7 @@ class ConditionFunctionEditorViewController: NSViewController {
 		_outlineView.selectRowIndexes(IndexSet(integer: _outlineView.row(forItem: newFunc)), byExtendingSelection: false)
 	}
 	
-	@IBAction func onAddCondition(_ sender: NSButton) {
+	private func addNewCondition() {
 		guard let doc = _document else {
 			return
 		}
@@ -71,7 +136,17 @@ class ConditionFunctionEditorViewController: NSViewController {
 		_outlineView.selectRowIndexes(IndexSet(integer: _outlineView.row(forItem: newCond)), byExtendingSelection: false)
 	}
 	
-	@IBAction func onRemoveSelection(_ sender: NSButton) {
+	private func addNewSelector() {
+		guard let doc = _document else {
+			return
+		}
+		let newSel = doc.Story.makeSelector()
+		_outlineView.expandItem(_selectorHeader)
+		_outlineView.reloadItem(_selectorHeader, reloadChildren: true)
+		_outlineView.selectRowIndexes(IndexSet(integer: _outlineView.row(forItem: newSel)), byExtendingSelection: false)
+	}
+	
+	private  func deleteSelection() {
 		guard let doc = _document else {
 			return
 		}
@@ -87,8 +162,10 @@ class ConditionFunctionEditorViewController: NSViewController {
 				doc.Story.delete(function: asFunc)
 			case let asCond as NVCondition:
 				doc.Story.delete(condition: asCond)
+			case let asSel as NVSelector:
+				doc.Story.delete(selector: asSel)
 			default:
-				break
+				return // something else like a header - we do not want to delete this!
 			}
 			
 			let parent = _outlineView.parent(forItem: item)
@@ -128,6 +205,9 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 		case let asCondition as NVCondition:
 			(view as? NSTableCellView)?.textField?.stringValue = asCondition.Label
 			
+		case let asSelector as NVSelector:
+			(view as? NSTableCellView)?.textField?.stringValue = asSelector.Label
+			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "ERROR"
 		}
@@ -139,7 +219,7 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if item == nil {
-			return 2 // function and condition headers
+			return 3 // function and condition headers
 		}
 		if let asString = item as? CFEHeader {
 			if asString == _functionHeader {
@@ -148,13 +228,10 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 			if asString == _conditionHeader {
 				return _document?.Story.Conditions.count ?? 0
 			}
+			if asString == _selectorHeader {
+				return _document?.Story.Selectors.count ?? 0
+			}
 		}
-//		if item == nil {
-//			guard let doc = _document else {
-//				return 0
-//			}
-//			return doc.Story.Functions.count + doc.Story.Conditions.count
-//		}
 		return 0
 	}
 	
@@ -170,6 +247,9 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 			if index == 1 {
 				return _conditionHeader
 			}
+			if index == 2 {
+				return _selectorHeader
+			}
 		}
 		
 		if let asString = item as? CFEHeader {
@@ -179,16 +259,10 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDataSource {
 			if asString == _conditionHeader {
 				return doc.Story.Conditions[index]
 			}
+			if asString == _selectorHeader {
+				return doc.Story.Selectors[index]
+			}
 		}
-		
-//		if index < doc.Story.Functions.count {
-//			return doc.Story.Functions[index]
-//		}
-//
-//		let offset = doc.Story.Functions.count
-//		if index < (doc.Story.Conditions.count + offset) {
-//			return doc.Story.Conditions[index - offset]
-//		}
 		
 		fatalError()
 	}
