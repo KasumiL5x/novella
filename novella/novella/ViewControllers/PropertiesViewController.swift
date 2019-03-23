@@ -100,6 +100,11 @@ class PropertiesViewController: NSViewController {
 	}
 	
 	private func setupFor(sequence: CanvasSequence) {
+		guard let doc = _document else {
+			print("Tried to setup for Sequence but _document was not set.")
+			return
+		}
+		
 		print("Setup for sequence")
 		_xformView?.setupFor(object: sequence)
 		
@@ -108,11 +113,16 @@ class PropertiesViewController: NSViewController {
 			view.addSubview(seqPane)
 			seqPane.translatesAutoresizingMaskIntoConstraints = false
 			constrain(a: seqPane, b: _xformView!)
-			seqPane.setupFor(sequence: sequence)
+			seqPane.setupFor(sequence: sequence, doc: doc)
 		}
 	}
 	
 	private func setupFor(event: CanvasEvent) {
+		guard let doc = _document else {
+			print("Tried to setup for Event but _document was not set.")
+			return
+		}
+		
 		print("Setup for event")
 		_xformView?.setupFor(object: event)
 		
@@ -121,7 +131,7 @@ class PropertiesViewController: NSViewController {
 			view.addSubview(eventPane)
 			eventPane.translatesAutoresizingMaskIntoConstraints = false
 			constrain(a: eventPane, b: _xformView!)
-			eventPane.setupFor(event: event)
+			eventPane.setupFor(event: event, doc: doc)
 		}
 	}
 	
