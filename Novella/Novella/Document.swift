@@ -275,6 +275,23 @@ extension Document {
 		return entry
 	}
 	
+	// note: due to how Swift's templates work, this function MUST be called like so (or similar):
+	//       let _: T = findbyIDFromJSON(...)    # in this case, T should be replaced by the actual type.
+	//         INSTEAD OF: findbyIDFromJSON<T>(...) as the compiler doesn't have enough information from this.
+	@discardableResult
+	private func findbyIDFromJSON<T>(json: JSON, name: String, checkEmpty: Bool, onSuccess: (T) -> Void, onFail: (String) -> Void) -> T? {
+		let id = json[name].stringValue
+		if !checkEmpty || (checkEmpty && !id.isEmpty) {
+			if let found = Story.find(uuid: id) as? T {
+				onSuccess(found)
+				return found
+			} else {
+				onFail(id)
+			}
+		}
+		return nil
+	}
+	
 	private func fromJSON(data: Data) -> Bool {
 		guard let json = try? JSON(data: data, options: []) else {
 			Swift.print("Failed to create JSON object from Data.")
@@ -366,52 +383,46 @@ extension Document {
 			Positions[id] = NSMakePoint(CGFloat(event["position"]["x"].floatValue), CGFloat(event["position"]["y"].floatValue))
 			
 			// condition
-			let conditionID = event["condition"].stringValue
-			if !conditionID.isEmpty, let found = Story.find(uuid: conditionID) as? NVCondition {
+			let _: NVCondition? = findbyIDFromJSON(json: event, name: "condition", checkEmpty: true, onSuccess: { (found) in
 				entry.PreCondition = found
-			} else {
-				Swift.print("Unable to find Condition by ID (\(conditionID)) when setting Event's Condition (\(id.uuidString)).")
-			}
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting Event's Condition (\(id.uuidString)).")
+			})
 			
 			// entryfunction
-			let entryfunctionID = event["entryfunction"].stringValue
-			if !entryfunctionID.isEmpty, let found = Story.find(uuid: entryfunctionID) as? NVFunction {
+			let _: NVFunction? = findbyIDFromJSON(json: event, name: "entryfunction", checkEmpty: true, onSuccess: { (found) in
 				entry.EntryFunction = found
-			} else {
-				Swift.print("Unable to find Function by ID (\(entryfunctionID)) when setting Event's EntryFunction (\(id.uuidString)).")
-			}
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Event's EntryFunction (\(id.uuidString)).")
+			})
 			
 			// dofunction
-			let dofunctionID = event["dofunction"].stringValue
-			if !dofunctionID.isEmpty, let found = Story.find(uuid: dofunctionID) as? NVFunction {
+			let _: NVFunction? = findbyIDFromJSON(json: event, name: "dofunction", checkEmpty: true, onSuccess: {(found) in
 				entry.DoFunction = found
-			} else {
-				Swift.print("Unable to find Function by ID (\(dofunctionID)) when setting Event's DoFunction (\(id.uuidString)).")
-			}
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Event's DoFunction (\(id.uuidString)).")
+			})
 			
 			// exitfunction
-			let exitFunctionID = event["exitfunction"].stringValue
-			if !exitFunctionID.isEmpty, let found = Story.find(uuid: exitFunctionID) as? NVFunction {
+			let _: NVFunction? = findbyIDFromJSON(json: event, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
 				entry.ExitFunction = found
-			} else {
-				Swift.print("Unable to find Function by ID (\(exitFunctionID)) when setting Event's ExitFunction (\(id.uuidString)).")
-			}
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Event's ExitFunction (\(id.uuidString)).")
+			})
 			
 			// instigators
-			let instigatorsID = event["instigators"].stringValue
-			if !instigatorsID.isEmpty, let found = Story.find(uuid: instigatorsID) as? NVSelector {
+			let _: NVSelector? = findbyIDFromJSON(json: event, name: "instigators", checkEmpty: true, onSuccess: {(found) in
 				entry.Instigators = found
-			} else {
-				Swift.print("Unable to find Selector by ID (\(instigatorsID)) when setting Event's Instigators (\(id.uuidString)).")
-			}
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Selector by ID (\(searchedID)) when setting Event's Instigators (\(id.uuidString)).")
+			})
 			
 			// targets
-			let targetsID = event["targets"].stringValue
-			if !targetsID.isEmpty, let found = Story.find(uuid: targetsID) as? NVSelector {
+			let _: NVSelector? = findbyIDFromJSON(json: event, name: "targets", checkEmpty: true, onSuccess: {(found) in
 				entry.Targets = found
-			} else {
-				Swift.print("Unable to find Selector by ID (\(targetsID)) when setting Event's Targets (\(id.uuidString)).")
-			}
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Selector by ID (\(searchedID)) when setting Event's Targets (\(id.uuidString)).")
+			})
 			
 			Swift.print("TODO: Event's attributes")
 		}
@@ -434,34 +445,25 @@ extension Document {
 			Positions[id] = NSMakePoint(CGFloat(sequence["position"]["x"].floatValue), CGFloat(sequence["position"]["y"].floatValue))
 			
 			// condition
-			let conditionID = sequence["condition"].stringValue
-			if !conditionID.isEmpty {
-				if let found = Story.find(uuid: conditionID) as? NVCondition {
-					entry.PreCondition = found
-				} else {
-					Swift.print("Unable to find Condition by ID (\(conditionID)) when setting Sequence's Condition (\(id.uuidString)).")
-				}
-			}
+			let _: NVCondition? = findbyIDFromJSON(json: sequence, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.PreCondition = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting Sequence's Condition (\(id.uuidString)).")
+			})
 			
 			// entryfunction
-			let entryfunctionID = sequence["entryfunction"].stringValue
-			if !entryfunctionID.isEmpty {
-				if let found = Story.find(uuid: entryfunctionID) as? NVFunction {
-					entry.EntryFunction = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(entryfunctionID)) when setting Sequence's EntryFunction (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: sequence, name: "entryfunction", checkEmpty: true, onSuccess: {(found) in
+				entry.EntryFunction = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Sequence's EntryFunction (\(id.uuidString)).")
+			})
 			
 			// exitfunction
-			let exitFunctionID = sequence["exitfunction"].stringValue
-			if !exitFunctionID.isEmpty {
-				if let found = Story.find(uuid: exitFunctionID) as? NVFunction {
-					entry.ExitFunction = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(exitFunctionID)) when setting Sequence's ExitFunction (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: sequence, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
+				entry.ExitFunction = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Sequence's ExitFunction (\(id.uuidString)).")
+			})
 			
 			// events
 			sequence["events"].arrayValue.forEach { (child) in
@@ -474,14 +476,11 @@ extension Document {
 			}
 			
 			// entry
-			let entryID = sequence["entry"].stringValue
-			if !entryID.isEmpty {
-				if let found = Story.find(uuid: entryID) as? NVEvent {
-					entry.Entry = found
-				} else {
-					Swift.print("Unable to find Event by ID (\(entryID)) when setting Sequence's Entry (\(id.uuidString)).")
-				}
-			}
+			let _: NVEvent? = findbyIDFromJSON(json: sequence, name: "entry", checkEmpty: true, onSuccess: {(found) in
+				entry.Entry = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Event by ID (\(searchedID)) when setting Sequence's Entry (\(id.uuidString)).")
+			})
 			
 			Swift.print("TODO: Sequence's attributes")
 		}
@@ -504,34 +503,25 @@ extension Document {
 			Positions[id] = NSMakePoint(CGFloat(discoverable["position"]["x"].floatValue), CGFloat(discoverable["position"]["y"].floatValue))
 			
 			// condition
-			let conditionID = discoverable["condition"].stringValue
-			if !conditionID.isEmpty {
-				if let found = Story.find(uuid: conditionID) as? NVCondition {
-					entry.PreCondition = found
-				} else {
-					Swift.print("Unable to find Condition by ID (\(conditionID)) when setting DiscoverableSequence's Condition (\(id.uuidString)).")
-				}
-			}
+			let _: NVCondition? = findbyIDFromJSON(json: discoverable, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.PreCondition = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting DiscoverableSequence's Condition (\(id.uuidString)).")
+			})
 			
 			// entryfunction
-			let entryfunctionID = discoverable["entryfunction"].stringValue
-			if !entryfunctionID.isEmpty {
-				if let found = Story.find(uuid: entryfunctionID) as? NVFunction {
-					entry.EntryFunction = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(entryfunctionID)) when setting DiscoverableSequence's EntryFunction (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: discoverable, name: "entryfunction", checkEmpty: true, onSuccess: {(found) in
+				entry.EntryFunction = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting DiscoverableSequence's EntryFunction (\(id.uuidString)).")
+			})
 			
 			// exitfunction
-			let exitFunctionID = discoverable["exitfunction"].stringValue
-			if !exitFunctionID.isEmpty {
-				if let found = Story.find(uuid: exitFunctionID) as? NVFunction {
-					entry.ExitFunction = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(exitFunctionID)) when setting DiscoverableSequence's ExitFunction (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: discoverable, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
+				entry.ExitFunction = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting DiscoverableSequence's ExitFunction (\(id.uuidString)).")
+			})
 			
 			// events
 			discoverable["events"].arrayValue.forEach { (child) in
@@ -544,14 +534,11 @@ extension Document {
 			}
 			
 			// entry
-			let entryID = discoverable["entry"].stringValue
-			if !entryID.isEmpty {
-				if let found = Story.find(uuid: entryID) as? NVEvent {
-					entry.Entry = found
-				} else {
-					Swift.print("Unable to find Event by ID (\(entryID)) when setting Sequence's Entry (\(id.uuidString)).")
-				}
-			}
+			let _: NVEvent? = findbyIDFromJSON(json: discoverable, name: "entry", checkEmpty: true, onSuccess: {(found) in
+				entry.Entry = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Event by ID (\(searchedID)) when setting Sequence's Entry (\(id.uuidString)).")
+			})
 			
 			// (i should make the enum have a fromString function?)
 			//tangibility
@@ -580,34 +567,25 @@ extension Document {
 			Positions[id] = NSMakePoint(CGFloat(group["position"]["x"].floatValue), CGFloat(group["position"]["y"].floatValue))
 			
 			// condition
-			let conditionID = group["condition"].stringValue
-			if !conditionID.isEmpty {
-				if let found = Story.find(uuid: conditionID) as? NVCondition {
-					entry.PreCondition = found
-				} else {
-					Swift.print("Unable to find Condition by ID (\(conditionID)) when setting Group's Condition (\(id.uuidString)).")
-				}
-			}
+			let _: NVCondition? = findbyIDFromJSON(json: group, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.PreCondition = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting Group's Condition (\(id.uuidString)).")
+			})
 			
 			// entryfunction
-			let entryfunctionID = group["entryfunction"].stringValue
-			if !entryfunctionID.isEmpty {
-				if let found = Story.find(uuid: entryfunctionID) as? NVFunction {
-					entry.EntryFunction = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(entryfunctionID)) when setting Group's EntryFunction (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: group, name: "entryfunction", checkEmpty: true, onSuccess: {(found) in
+				entry.EntryFunction = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Group's EntryFunction (\(id.uuidString)).")
+			})
 			
 			// exitfunction
-			let exitFunctionID = group["exitfunction"].stringValue
-			if !exitFunctionID.isEmpty {
-				if let found = Story.find(uuid: exitFunctionID) as? NVFunction {
-					entry.ExitFunction = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(exitFunctionID)) when setting Group's ExitFunction (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: group, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
+				entry.ExitFunction = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Group's ExitFunction (\(id.uuidString)).")
+			})
 			
 			// sequences
 			group["sequences"].arrayValue.forEach { (child) in
@@ -620,14 +598,11 @@ extension Document {
 			}
 			
 			// entry
-			let entryID = group["entry"].stringValue
-			if !entryID.isEmpty {
-				if let found = Story.find(uuid: entryID) as? NVSequence {
-					entry.Entry = found
-				} else {
-					Swift.print("Unable to find Sequence by ID (\(entryID)) when setting Group's Entry (\(id.uuidString)).")
-				}
-			}
+			let _: NVSequence? = findbyIDFromJSON(json: group, name: "entry", checkEmpty: true, onSuccess: {(found) in
+				entry.Entry = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Sequence by ID (\(searchedID)) when setting Group's Entry (\(id.uuidString)).")
+			})
 			
 			Swift.print("TODO: Group's attributes")
 		}
@@ -648,24 +623,18 @@ extension Document {
 			let entry = Story.makeEventLink(uuid: id, origin: origin, dest: dest)
 			
 			// condition
-			let conditionID = link["condition"].stringValue
-			if !conditionID.isEmpty {
-				if let found = Story.find(uuid: conditionID) as? NVCondition {
-					entry.Condition = found
-				} else {
-					Swift.print("Unable to find Condition by ID (\(conditionID)) when setting EventLink's Condition (\(id.uuidString)).")
-				}
-			}
+			let _: NVCondition? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.Condition = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting EventLink's Condition (\(id.uuidString)).")
+			})
 			
 			// function
-			let functionID = link["condition"].stringValue
-			if !functionID.isEmpty {
-				if let found = Story.find(uuid: functionID) as? NVFunction {
-					entry.Function = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(functionID)) when setting EventLink's Function (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.Function = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting EventLink's Function (\(id.uuidString)).")
+			})
 		}
 		
 		// read sequence links
@@ -684,24 +653,18 @@ extension Document {
 			let entry = Story.makeSequenceLink(uuid: id, origin: origin, dest: dest)
 			
 			// condition
-			let conditionID = link["condition"].stringValue
-			if !conditionID.isEmpty {
-				if let found = Story.find(uuid: conditionID) as? NVCondition {
-					entry.Condition = found
-				} else {
-					Swift.print("Unable to find Condition by ID (\(conditionID)) when setting EventLink's Condition (\(id.uuidString)).")
-				}
-			}
+			let _: NVCondition? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.Condition = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting EventLink's Condition (\(id.uuidString)).")
+			})
 			
 			// function
-			let functionID = link["condition"].stringValue
-			if !functionID.isEmpty {
-				if let found = Story.find(uuid: functionID) as? NVFunction {
-					entry.Function = found
-				} else {
-					Swift.print("Unable to find Function by ID (\(functionID)) when setting EventLink's Function (\(id.uuidString)).")
-				}
-			}
+			let _: NVFunction? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
+				entry.Function = found
+			}, onFail: {(searchedID) in
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting EventLink's Function (\(id.uuidString)).")
+			})
 		}
 		
 		// add sequence links
@@ -769,23 +732,17 @@ extension Document {
 		// main group
 		let mainGroup = json["maingroup"]
 		// entryfunction
-		let mainEntryfunctionID = mainGroup["entryfunction"].stringValue
-		if !mainEntryfunctionID.isEmpty {
-			if let found = Story.find(uuid: mainEntryfunctionID) as? NVFunction {
-				Story.MainGroup.EntryFunction = found
-			} else {
-				Swift.print("Unable to find Function by ID (\(mainEntryfunctionID)) when setting Main Group's EntryFunction.")
-			}
-		}
+		let _: NVFunction? = findbyIDFromJSON(json: mainGroup, name: "entryfunction", checkEmpty: true, onSuccess: {(found) in
+			Story.MainGroup.EntryFunction = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Function by ID (\(searchedID)) when setting Main Group's EntryFunction.")
+		})
 		// exitFunction
-		let mainExitFunctionID = mainGroup["exitfunction"].stringValue
-		if !mainExitFunctionID.isEmpty {
-			if let found = Story.find(uuid: mainExitFunctionID) as? NVFunction {
-				Story.MainGroup.ExitFunction = found
-			} else {
-				Swift.print("Unable to find Function by ID (\(mainExitFunctionID)) when setting Main Group's ExitFunction.")
-			}
-		}
+		let _: NVFunction? = findbyIDFromJSON(json: mainGroup, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
+			Story.MainGroup.ExitFunction = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Function by ID (\(searchedID)) when setting Main Group's ExitFunction.")
+		})
 		// sequences
 		mainGroup["sequences"].arrayValue.forEach { (child) in
 			let childID = child.stringValue
@@ -796,14 +753,11 @@ extension Document {
 			}
 		}
 		// entry
-		let mainEntryID = mainGroup["entry"].stringValue
-		if !mainEntryID.isEmpty {
-			if let found = Story.find(uuid: mainEntryID) as? NVSequence {
-				Story.MainGroup.Entry = found
-			} else {
-				Swift.print("Unable to find Sequence by ID (\(mainEntryID)) when setting Main Group's Entry.")
-			}
-		}
+		let _: NVSequence? = findbyIDFromJSON(json: mainGroup, name: "entry", checkEmpty: true, onSuccess: {(found) in
+			Story.MainGroup.Entry = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Sequence by ID (\(searchedID)) when setting Main Group's Entry.")
+		})
 		// groups
 		mainGroup["groups"].arrayValue.forEach{ (child) in
 			let childID = child.stringValue
