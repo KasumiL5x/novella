@@ -68,7 +68,15 @@ class PropertyTransformView: NSView, CanvasObjectDelegate {
 
 class PropertyGroupView: NSView {
 	@IBOutlet weak private var _label: NSTextField!
+	@IBOutlet weak private var _maxActivations: NSTextField!
+	@IBOutlet weak private var _topmost: NSButton!
+	@IBOutlet weak var _keepAlive: NSButton!
 	
+	@IBOutlet weak private var _condition: NSPopUpButton!
+	@IBOutlet weak var _entryFunction: NSPopUpButton!
+	@IBOutlet weak var _exitFunction: NSPopUpButton!
+	
+	weak private var _doc: Document?
 	weak private var _obj: CanvasGroup?
 	
 	static func instantiate() -> PropertyGroupView {
@@ -78,13 +86,73 @@ class PropertyGroupView: NSView {
 		return view
 	}
 	
-	func setupFor(group: CanvasGroup) {
+	func setupFor(group: CanvasGroup, doc: Document) {
+		_doc = doc
 		_obj = group
 		_label.stringValue = group.Group.Label
+		_maxActivations.stringValue = "\(group.Group.MaxActivations)"
+		_topmost.state = group.Group.Topmost ? .on : .off
+		_keepAlive.state = group.Group.KeepAlive ? .on : .off
+		
+		// populate with all conditions + "None"
+		_condition.menu?.removeAllItems()
+		_condition.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
+		for condition in doc.Story.Conditions {
+			let item = NSMenuItem(title: condition.FunctionName, action: nil, keyEquivalent: "")
+			item.representedObject = condition
+			_condition.menu?.addItem(item)
+		}
+		// select actual assigned condition (if nil, then the default 'None' is okay)
+		_condition.selectItem(withTitle: group.Group.PreCondition?.FunctionName ?? "None")
+		
+		// populate entry function
+		_entryFunction.menu?.removeAllItems()
+		_entryFunction.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
+		_exitFunction.menu?.removeAllItems()
+		_exitFunction.menu?.addItem(withTitle: "None", action: nil, keyEquivalent: "")
+		for function in doc.Story.Functions {
+			// cannot use same NSMenuItem is two dropdowns, so make two
+			let item_a = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			item_a.representedObject = function
+			_entryFunction.menu?.addItem(item_a)
+			
+			let item_b = NSMenuItem(title: function.FunctionName, action: nil, keyEquivalent: "")
+			item_b.representedObject = function
+			_exitFunction.menu?.addItem(item_b)
+		}
+		_entryFunction.selectItem(withTitle: group.Group.EntryFunction?.FunctionName ?? "None")
+		_exitFunction.selectItem(withTitle: group.Group.ExitFunction?.FunctionName ?? "None")
 	}
 	
 	@IBAction func onLabel(_ sender: NSTextField) {
 		_obj?.Group.Label = sender.stringValue
+	}
+	
+	@IBAction func onMaxActivations(_ sender: NSTextField) {
+		_obj?.Group.MaxActivations = Int(sender.stringValue) ?? 0
+	}
+	
+	@IBAction func onTopmost(_ sender: NSButton) {
+		_obj?.Group.Topmost = sender.state == .on
+	}
+	
+	@IBAction func onKeepAlive(_ sender: NSButton) {
+		_obj?.Group.KeepAlive = sender.state == .on
+	}
+	
+	@IBAction func onCondition(_ sender: NSPopUpButton) {
+		let selection = sender.selectedItem?.representedObject as? NVCondition
+		_obj?.Group.PreCondition = selection
+	}
+	
+	@IBAction func onEntryFunction(_ sender: NSPopUpButton) {
+		let selection = sender.selectedItem?.representedObject as? NVFunction
+		_obj?.Group.EntryFunction = selection
+	}
+	
+	@IBAction func onExitFunction(_ sender: NSPopUpButton) {
+		let selection = sender.selectedItem?.representedObject as? NVFunction
+		_obj?.Group.ExitFunction = selection
 	}
 }
 

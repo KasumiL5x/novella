@@ -759,7 +759,7 @@
                                     <constraint firstAttribute="width" constant="220" id="LqJ-yf-sNe"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="Joi-T8-ZdE" kind="embed" id="FDG-lu-aoR"/>
+                                    <segue destination="Joi-T8-ZdE" kind="embed" identifier="Properties" id="FDG-lu-aoR"/>
                                 </connections>
                             </containerView>
                         </subviews>

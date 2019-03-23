@@ -9,6 +9,7 @@
 import Cocoa
 
 class MainViewController: NSViewController, NSTableViewDelegate {
+	private var _propertiesVC: PropertiesViewController? = nil
 	private var _graphVC: GraphViewController? = nil
 	private var _outlinerVC: OutlinerViewController? = nil
 	private var _condFuncEdVC: ConditionFunctionEditorViewController? = nil
@@ -19,11 +20,16 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		}
 		
 		_graphVC?.setup(doc: doc)
+		_propertiesVC?.setup(doc: doc)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onCanvasObjectDoubleClicked), name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+		if segue.identifier == "Properties" {
+			_propertiesVC = segue.destinationController as? PropertiesViewController
+		}
+		
 		if segue.identifier == "GraphVC" {
 			_graphVC = segue.destinationController as? GraphViewController
 		}

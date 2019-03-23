@@ -9,6 +9,8 @@
 import Cocoa
 
 class PropertiesViewController: NSViewController {
+	private var _document: Document? = nil
+	
 	private weak var _xformView: PropertyTransformView?
 	
 	private var _selectedObject: CanvasObject?
@@ -25,6 +27,10 @@ class PropertiesViewController: NSViewController {
 			constrain(a: xv, b: view)
 			xv.disable()
 		}
+	}
+	
+	func setup(doc: Document) {
+		_document = doc
 	}
 	
 	@objc private func onCanvasSelectionChanged(_ sender: NSNotification) {
@@ -76,6 +82,11 @@ class PropertiesViewController: NSViewController {
 	}
 	
 	private func setupFor(group: CanvasGroup) {
+		guard let doc = _document else {
+			print("Tried to setup for Group but _document was not set.")
+			return
+		}
+		
 		print("Setup for group")
 		_xformView?.setupFor(object: group)
 		
@@ -84,7 +95,7 @@ class PropertiesViewController: NSViewController {
 			view.addSubview(groupPane)
 			groupPane.translatesAutoresizingMaskIntoConstraints = false
 			constrain(a: groupPane, b: _xformView!)
-			groupPane.setupFor(group: group)
+			groupPane.setupFor(group: group, doc: doc)
 		}
 	}
 	
