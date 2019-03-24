@@ -77,7 +77,8 @@ class VariablesEditorValueBoolCell: NSTableCellView {
 	}
 	
 	@IBAction func onBoolChanged(_ sender: NSPopUpButton) {
-		variable?.set(value: NVValue(.boolean(sender.stringValue == "True")))
+		let selection = sender.selectedItem?.title ?? "False"
+		variable?.set(value: NVValue(.boolean(selection == "True")))
 	}
 }
 

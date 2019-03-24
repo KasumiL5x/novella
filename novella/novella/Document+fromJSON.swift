@@ -31,12 +31,17 @@ extension Document {
 		let entry = Story.makeVariable(uuid: id)
 		entry.Name = variable["label"].stringValue
 		entry.Constant = variable["constant"].boolValue
-		if let asBool = variable["value"].bool {
-			entry.set(value: NVValue(.boolean(asBool)))
-		} else if let asInt = variable["value"].int32 {
-			entry.set(value: NVValue(.integer(asInt)))
-		} else if let asDouble = variable["value"].double {
-			entry.set(value: NVValue(.double(asDouble)))
+		
+		switch variable["type"].stringValue {
+		case "boolean":
+			entry.set(value: NVValue(.boolean(variable["value"].boolValue)))
+		case "integer":
+			entry.set(value: NVValue(.integer(variable["value"].int32Value)))
+		case "double":
+			entry.set(value: NVValue(.double(variable["value"].doubleValue)))
+		default:
+			Swift.print("Encountered a Variable (\(id.uuidString)) with an invalid type (\(variable["type"].stringValue)).")
+			break
 		}
 	}
 	

@@ -25,10 +25,13 @@ extension NVStory {
 			switch variable.Value.Raw.type {
 			case .boolean:
 				entry["value"] = variable.Value.Raw.asBool
+				entry["type"] = "boolean"
 			case .integer:
 				entry["value"] = variable.Value.Raw.asInt
+				entry["type"] = "integer"
 			case .double:
-				entry["value"] = variable.Value.Raw.asDouble
+				entry["value"] = String(format: "%.2f", variable.Value.Raw.asDouble)
+				entry["type"] = "double"
 			}
 			variables.append(entry)
 		}
