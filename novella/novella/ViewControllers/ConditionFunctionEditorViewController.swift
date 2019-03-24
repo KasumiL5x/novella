@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Highlightr
 
 class CFEHeader: Equatable {
 	static func == (lhs: CFEHeader, rhs: CFEHeader) -> Bool {
@@ -81,13 +82,15 @@ class ConditionFunctionOutlineView: NSOutlineView {
 
 class ConditionFunctionEditorViewController: NSViewController {
 	@IBOutlet weak var _outlineView: ConditionFunctionOutlineView!
+	@IBOutlet var _codeView: NSTextView!
 	
 	private var _document: Document? = nil
 	private var _functionHeader: CFEHeader = CFEHeader(name: "Functions")
 	private var _conditionHeader: CFEHeader = CFEHeader(name: "Conditions")
 	private var _selectorHeader: CFEHeader = CFEHeader(name: "Selectors")
 	
-	private var _contextMenu = NSMenu()
+//	private let _syntax = Highlightr()
+	private let _codeAttrStr = CodeAttributedString()
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
@@ -110,6 +113,18 @@ class ConditionFunctionEditorViewController: NSViewController {
 		_outlineView.onDeleteSelection = {
 			self.deleteSelection()
 		}
+		
+		_codeView.delegate = self
+		// javascript, lua, python
+		_codeAttrStr.language = "lua"
+		_codeAttrStr.highlightr.setTheme(to: "monokai")
+		_codeAttrStr.highlightr.theme.codeFont = NSFont(name: "Courier New", size: 14.0)
+		if let manager = _codeView.layoutManager {
+			_codeAttrStr.addLayoutManager(manager)
+		}
+		print(_codeAttrStr.highlightr.availableThemes())
+		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
+		_codeView.insertionPointColor = _codeView.backgroundColor.inverted()
 	}
 	
 	func setup(doc: Document) {
@@ -171,6 +186,13 @@ class ConditionFunctionEditorViewController: NSViewController {
 			let parent = _outlineView.parent(forItem: item)
 			_outlineView.removeItems(at: IndexSet(integer: childIdx), inParent: parent, withAnimation: [.effectFade, .slideLeft])
 			_outlineView.reloadItem(parent, reloadChildren: false) // if false and remove fails, will not reload it, but if true, it flickers
+		}
+	}
+}
+extension ConditionFunctionEditorViewController: NSTextViewDelegate {
+	func textDidChange(_ notification: Notification) {
+		if notification.object as? NSTextView == _codeView {
+			return
 		}
 	}
 }

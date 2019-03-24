@@ -112,6 +112,36 @@
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="tq9-IR-Ars" userLabel="EditorPlaceholder">
                                                 <rect key="frame" x="0.0" y="0.0" width="415" height="400"/>
+                                                <subviews>
+                                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYw-dw-qVP">
+                                                        <rect key="frame" x="0.0" y="0.0" width="415" height="400"/>
+                                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="tvy-Ks-szs">
+                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textView importsGraphics="NO" verticallyResizable="YES" findStyle="bar" allowsDocumentBackgroundColorChange="YES" smartInsertDelete="YES" id="ZCv-g5-1up">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <size key="minSize" width="400" height="400"/>
+                                                                    <size key="maxSize" width="400" height="10000000"/>
+                                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                </textView>
+                                                            </subviews>
+                                                        </clipView>
+                                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="89S-QT-eUs">
+                                                            <rect key="frame" x="400" y="0.0" width="15" height="400"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                    </scrollView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="DYw-dw-qVP" secondAttribute="trailing" id="1US-gv-e3z"/>
+                                                    <constraint firstAttribute="bottom" secondItem="DYw-dw-qVP" secondAttribute="bottom" id="DwT-Hi-Y4t"/>
+                                                    <constraint firstItem="DYw-dw-qVP" firstAttribute="leading" secondItem="tq9-IR-Ars" secondAttribute="leading" id="VBj-0G-SUk"/>
+                                                    <constraint firstItem="DYw-dw-qVP" firstAttribute="top" secondItem="tq9-IR-Ars" secondAttribute="top" id="ofn-qh-czg"/>
+                                                </constraints>
                                             </customView>
                                         </subviews>
                                         <constraints>
@@ -136,6 +166,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_codeView" destination="ZCv-g5-1up" id="YeC-GG-k7a"/>
                         <outlet property="_outlineView" destination="C9M-gz-yCG" id="lSF-Mh-W26"/>
                     </connections>
                 </viewController>

@@ -54,3 +54,9 @@ public extension NSColor {
 									 alpha: alpha ?? alphaComponent)
 	}
 }
+
+public extension NSColor {
+	public func inverted() -> NSColor {
+		return NSColor(calibratedRed: 1.0 - self.redComponent, green: 1.0 - self.greenComponent, blue: 1.0 - self.blueComponent, alpha: self.alphaComponent)
+	}
+}
