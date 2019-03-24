@@ -9,7 +9,7 @@
         <!--ConditionFunctionEditor-->
         <scene sceneID="nU2-xX-6jW">
             <objects>
-                <viewController storyboardIdentifier="ConditionFunctionEditor" showSeguePresentationStyle="single" id="wnu-i8-n3q" userLabel="ConditionFunctionEditor" customClass="ConditionFunctionEditorViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Conditions, Functions, and Selectors" storyboardIdentifier="ConditionFunctionEditor" showSeguePresentationStyle="single" id="wnu-i8-n3q" userLabel="ConditionFunctionEditor" customClass="ConditionFunctionEditorViewController" customModule="novella" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="f8P-yb-CvL">
                         <rect key="frame" x="0.0" y="0.0" width="650" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -128,7 +128,7 @@
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <size key="minSize" width="400" height="370"/>
-                                                                    <size key="maxSize" width="400" height="10000000"/>
+                                                                    <size key="maxSize" width="415" height="10000000"/>
                                                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                 </textView>
                                                             </subviews>
