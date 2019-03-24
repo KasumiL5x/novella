@@ -24,7 +24,6 @@ class NVVariable: NVIdentifiable {
 		}
 	}
 	private(set) var Value: NVValue
-	private(set) var InitialValue: NVValue
 	
 	init(uuid: NSUUID, story: NVStory) {
 		self.UUID = uuid
@@ -32,7 +31,6 @@ class NVVariable: NVIdentifiable {
 		self.Name = ""
 		self.Constant = false
 		self.Value = NVValue(.boolean(false))
-		self.InitialValue = NVValue(.boolean(false))
 	}
 	
 	func set(value: NVValue) {
@@ -45,17 +43,6 @@ class NVVariable: NVIdentifiable {
 		self.Value = value
 		NVLog.log("Variable (\(UUID.uuidString)) Value changed (\(oldValue) -> \(value)).", level: .info)
 		_story.Observers.forEach{$0.nvVariableValueDidChange(story: _story, variable: self)}
-	}
-	
-	func set(initialValue: NVValue) {
-		let oldValue = self.InitialValue
-		self.InitialValue = initialValue
-		NVLog.log("Variable (\(UUID.uuidString)) InitialValue changed (\(oldValue) -> \(initialValue)).", level: .info)
-		_story.Observers.forEach{$0.nvVariableInitialValueDidChange(story: _story, variable: self)}
-	}
-	
-	func reset() {
-		Value = InitialValue
 	}
 }
 

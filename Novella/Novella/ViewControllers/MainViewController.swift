@@ -10,6 +10,7 @@ import Cocoa
 
 class MainViewController: NSViewController, NSTableViewDelegate {
 	private var _propertiesVC: PropertiesViewController? = nil
+	private var _variablesVC: VariablesEditorViewController? = nil
 	private var _graphVC: GraphViewController? = nil
 	private var _outlinerVC: OutlinerViewController? = nil
 	private var _condFuncEdVC: ConditionFunctionEditorViewController? = nil
@@ -28,6 +29,15 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		if segue.identifier == "Properties" {
 			_propertiesVC = segue.destinationController as? PropertiesViewController
+		}
+		
+		if segue.identifier == "VariablesEditor" {
+			_variablesVC = segue.destinationController as? VariablesEditorViewController
+			guard let doc = view.window?.windowController?.document as? Document else {
+				print("ERROR: Could not find doc when VariablesEditorViewController segue was triggered.")
+				return
+			}
+			_variablesVC?.setup(doc: doc)
 		}
 		
 		if segue.identifier == "GraphVC" {

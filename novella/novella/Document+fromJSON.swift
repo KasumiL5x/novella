@@ -32,11 +32,11 @@ extension Document {
 		entry.Name = variable["label"].stringValue
 		entry.Constant = variable["constant"].boolValue
 		if let asBool = variable["value"].bool {
-			entry.set(initialValue: NVValue(.boolean(asBool)))
+			entry.set(value: NVValue(.boolean(asBool)))
 		} else if let asInt = variable["value"].int32 {
-			entry.set(initialValue: NVValue(.integer(asInt)))
+			entry.set(value: NVValue(.integer(asInt)))
 		} else if let asDouble = variable["value"].double {
-			entry.set(initialValue: NVValue(.double(asDouble)))
+			entry.set(value: NVValue(.double(asDouble)))
 		}
 	}
 	

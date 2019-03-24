@@ -80,7 +80,6 @@ protocol NVStoryObserver: class {
 	func nvVariableNameDidChange(story: NVStory, variable: NVVariable)
 	func nvVariableConstantDidChange(story: NVStory, variable: NVVariable)
 	func nvVariableValueDidChange(story: NVStory, variable: NVVariable)
-	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable)
 	
 	// links
 	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink)
@@ -278,9 +277,6 @@ extension NVStoryObserver {
 	}
 	
 	func nvVariableValueDidChange(story: NVStory, variable: NVVariable) {
-	}
-	
-	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
 	}
 	
 	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {

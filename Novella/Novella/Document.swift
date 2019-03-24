@@ -68,13 +68,13 @@ extension Document {
 			entry["id"] = variable.UUID.uuidString
 			entry["label"] = variable.Name
 			entry["constant"] = variable.Constant
-			switch variable.InitialValue.Raw.type {
+			switch variable.Value.Raw.type {
 			case .boolean:
-				entry["value"] = variable.InitialValue.Raw.asBool
+				entry["value"] = variable.Value.Raw.asBool
 			case .integer:
-				entry["value"] = variable.InitialValue.Raw.asInt
+				entry["value"] = variable.Value.Raw.asInt
 			case .double:
-				entry["value"] = variable.InitialValue.Raw.asDouble
+				entry["value"] = variable.Value.Raw.asDouble
 			}
 			variables.append(entry)
 		}
@@ -530,10 +530,6 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvVariableValueDidChange(story: NVStory, variable: NVVariable) {
-		updateChangeCount(.changeDone)
-	}
-	
-	func nvVariableInitialValueDidChange(story: NVStory, variable: NVVariable) {
 		updateChangeCount(.changeDone)
 	}
 	
