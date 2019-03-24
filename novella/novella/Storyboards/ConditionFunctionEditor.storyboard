@@ -86,6 +86,9 @@
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
+                                                            <connections>
+                                                                <action selector="onSelectionChanged:" target="wnu-i8-n3q" id="y9t-WY-aCr"/>
+                                                            </connections>
                                                         </outlineView>
                                                     </subviews>
                                                 </clipView>

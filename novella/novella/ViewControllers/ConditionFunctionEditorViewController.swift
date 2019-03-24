@@ -89,8 +89,9 @@ class ConditionFunctionEditorViewController: NSViewController {
 	private var _conditionHeader: CFEHeader = CFEHeader(name: "Conditions")
 	private var _selectorHeader: CFEHeader = CFEHeader(name: "Selectors")
 	
-//	private let _syntax = Highlightr()
 	private let _codeAttrStr = CodeAttributedString()
+	
+	private var _activeElement: Any? = nil
 	
 	override func viewDidAppear() {
 		view.window?.level = .floating
@@ -114,17 +115,21 @@ class ConditionFunctionEditorViewController: NSViewController {
 			self.deleteSelection()
 		}
 		
+		_codeView.isAutomaticDashSubstitutionEnabled = false
+		_codeView.isAutomaticQuoteSubstitutionEnabled = false
 		_codeView.delegate = self
-		// javascript, lua, python
-		_codeAttrStr.language = "lua"
+		_codeAttrStr.language = "lua" // javascript, lua, python
 		_codeAttrStr.highlightr.setTheme(to: "monokai")
 		_codeAttrStr.highlightr.theme.codeFont = NSFont(name: "Courier New", size: 14.0)
 		if let manager = _codeView.layoutManager {
 			_codeAttrStr.addLayoutManager(manager)
 		}
-		print(_codeAttrStr.highlightr.availableThemes())
 		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
 		_codeView.insertionPointColor = _codeView.backgroundColor.inverted()
+		//print(_codeAttrStr.highlightr.availableThemes())
+		//print(_codeAttrStr.highlightr.supportedLanguages())
+		
+		resetScript()
 	}
 	
 	func setup(doc: Document) {
@@ -188,10 +193,70 @@ class ConditionFunctionEditorViewController: NSViewController {
 			_outlineView.reloadItem(parent, reloadChildren: false) // if false and remove fails, will not reload it, but if true, it flickers
 		}
 	}
+	
+	private func resetScript() {
+		_codeView.backgroundColor = NSColor.white
+		_codeAttrStr.setAttributedString(NSAttributedString(string: ""))
+		_codeView.isEditable = false
+		_activeElement = nil
+	}
+	
+	private func setupScriptFor(function: NVFunction) {
+		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
+		_codeAttrStr.setAttributedString(NSAttributedString(string: function.Code))
+		_codeView.isEditable = true
+		_activeElement = function
+	}
+	
+	private func setupScriptFor(condition: NVCondition) {
+		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
+		_codeAttrStr.setAttributedString(NSAttributedString(string: condition.Code))
+		_codeView.isEditable = true
+		_activeElement = condition
+	}
+	
+	private func setupScriptFor(selector: NVSelector) {
+		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
+		_codeAttrStr.setAttributedString(NSAttributedString(string: selector.Code))
+		_codeView.isEditable = true
+		_activeElement = selector
+	}
+	
+	@IBAction func onSelectionChanged(_ sender: ConditionFunctionOutlineView) {
+		// select nothing
+		if -1 == sender.selectedRow {
+			resetScript()
+			return
+		}
+		
+		let item = sender.item(atRow: sender.selectedRow)
+		
+		switch item {
+		case let asFunction as NVFunction:
+			setupScriptFor(function: asFunction)
+		case let asCondition as NVCondition:
+			setupScriptFor(condition: asCondition)
+		case let asSelector as NVSelector:
+			setupScriptFor(selector: asSelector)
+		default:
+			resetScript()
+		}
+		return
+	}
 }
 extension ConditionFunctionEditorViewController: NSTextViewDelegate {
 	func textDidChange(_ notification: Notification) {
 		if notification.object as? NSTextView == _codeView {
+			switch _activeElement {
+			case let asFunction as NVFunction:
+				asFunction.Code = _codeView.string
+			case let asCondition as NVCondition:
+				asCondition.Code = _codeView.string
+			case let asSelector as NVSelector:
+				asSelector.Code = _codeView.string
+			default:
+				return
+			}
 			return
 		}
 	}
