@@ -83,6 +83,9 @@ class ConditionFunctionOutlineView: NSOutlineView {
 class ConditionFunctionEditorViewController: NSViewController {
 	@IBOutlet weak var _outlineView: ConditionFunctionOutlineView!
 	@IBOutlet var _codeView: NSTextView!
+	@IBOutlet weak var _themePopup: NSPopUpButton!
+	@IBOutlet weak var _languagePopup: NSPopUpButton!
+	
 	
 	private var _document: Document? = nil
 	private var _functionHeader: CFEHeader = CFEHeader(name: "Functions")
@@ -115,19 +118,27 @@ class ConditionFunctionEditorViewController: NSViewController {
 			self.deleteSelection()
 		}
 		
+		// setup all themes and languages
+		_codeAttrStr.highlightr.availableThemes().sorted().forEach {
+			_themePopup.menu?.addItem(withTitle: $0, action: nil, keyEquivalent: "")
+		}
+		_codeAttrStr.highlightr.supportedLanguages().sorted().forEach {
+			_languagePopup.menu?.addItem(withTitle: $0, action: nil, keyEquivalent: "")
+		}
+		
+		// hardcoded starting theme/language
+		_themePopup.selectItem(withTitle: "monokai")
+		_languagePopup.selectItem(withTitle: "lua")
+		setTheme(to: "monokai")
+		setLanguage(to: "lua")
+		
 		_codeView.isAutomaticDashSubstitutionEnabled = false
 		_codeView.isAutomaticQuoteSubstitutionEnabled = false
 		_codeView.delegate = self
-		_codeAttrStr.language = "lua" // javascript, lua, python
-		_codeAttrStr.highlightr.setTheme(to: "monokai")
-		_codeAttrStr.highlightr.theme.codeFont = NSFont(name: "Courier New", size: 14.0)
+		// add layout manager so that it automatically updates
 		if let manager = _codeView.layoutManager {
 			_codeAttrStr.addLayoutManager(manager)
 		}
-		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
-		_codeView.insertionPointColor = _codeView.backgroundColor.inverted()
-		//print(_codeAttrStr.highlightr.availableThemes())
-		//print(_codeAttrStr.highlightr.supportedLanguages())
 		
 		resetScript()
 	}
@@ -242,6 +253,25 @@ class ConditionFunctionEditorViewController: NSViewController {
 			resetScript()
 		}
 		return
+	}
+	
+	private func setTheme(to: String) {
+		_codeAttrStr.highlightr.setTheme(to: to)
+		_codeAttrStr.highlightr.theme.codeFont = NSFont(name: "Courier New", size: 14.0)
+		_codeView.backgroundColor = _codeAttrStr.highlightr.theme.themeBackgroundColor
+		_codeView.insertionPointColor = _codeView.backgroundColor.inverted()
+	}
+	
+	private func setLanguage(to: String) {
+		_codeAttrStr.language = to
+	}
+	
+	@IBAction func onThemeChanged(_ sender: NSPopUpButton) {
+		setTheme(to: sender.titleOfSelectedItem ?? "")
+	}
+	
+	@IBAction func onLanguageChanged(_ sender: NSPopUpButton) {
+		setLanguage(to: sender.titleOfSelectedItem ?? "")
 	}
 }
 extension ConditionFunctionEditorViewController: NSTextViewDelegate {

@@ -117,32 +117,69 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="415" height="400"/>
                                                 <subviews>
                                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYw-dw-qVP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="415" height="400"/>
+                                                        <rect key="frame" x="0.0" y="30" width="415" height="370"/>
                                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="tvy-Ks-szs">
-                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="370"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textView importsGraphics="NO" verticallyResizable="YES" findStyle="bar" allowsDocumentBackgroundColorChange="YES" smartInsertDelete="YES" id="ZCv-g5-1up">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="370"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <size key="minSize" width="400" height="400"/>
+                                                                    <size key="minSize" width="400" height="370"/>
                                                                     <size key="maxSize" width="400" height="10000000"/>
                                                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                 </textView>
                                                             </subviews>
                                                         </clipView>
                                                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="89S-QT-eUs">
-                                                            <rect key="frame" x="400" y="0.0" width="15" height="400"/>
+                                                            <rect key="frame" x="400" y="0.0" width="15" height="370"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="9BN-zO-IUz" userLabel="EditorToolbar">
+                                                        <rect key="frame" x="0.0" y="0.0" width="415" height="30"/>
+                                                        <subviews>
+                                                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MVw-La-dFh" userLabel="Theme">
+                                                                <rect key="frame" x="8" y="2" width="38" height="25"/>
+                                                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="hEa-xf-hVS">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="menu"/>
+                                                                    <menu key="menu" id="RmV-0B-9f7"/>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="onThemeChanged:" target="wnu-i8-n3q" id="ndg-Kf-o9e"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L6h-pF-D0U" userLabel="Language">
+                                                                <rect key="frame" x="51" y="2" width="38" height="25"/>
+                                                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="J4o-Uq-ChZ">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="menu"/>
+                                                                    <menu key="menu" id="tJF-Pi-Wdp"/>
+                                                                </popUpButtonCell>
+                                                                <connections>
+                                                                    <action selector="onLanguageChanged:" target="wnu-i8-n3q" id="lfk-9Q-pOh"/>
+                                                                </connections>
+                                                            </popUpButton>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="MVw-La-dFh" firstAttribute="centerY" secondItem="9BN-zO-IUz" secondAttribute="centerY" id="3AU-KK-lej"/>
+                                                            <constraint firstItem="L6h-pF-D0U" firstAttribute="leading" secondItem="MVw-La-dFh" secondAttribute="trailing" constant="10" id="6Pg-TM-bSI"/>
+                                                            <constraint firstAttribute="height" constant="30" id="L7q-qa-RfQ"/>
+                                                            <constraint firstItem="L6h-pF-D0U" firstAttribute="centerY" secondItem="MVw-La-dFh" secondAttribute="centerY" id="Ozu-tD-rGY"/>
+                                                            <constraint firstItem="MVw-La-dFh" firstAttribute="leading" secondItem="9BN-zO-IUz" secondAttribute="leading" constant="10" id="sTV-ds-uQV"/>
+                                                        </constraints>
+                                                    </customView>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="DYw-dw-qVP" secondAttribute="trailing" id="1US-gv-e3z"/>
-                                                    <constraint firstAttribute="bottom" secondItem="DYw-dw-qVP" secondAttribute="bottom" id="DwT-Hi-Y4t"/>
+                                                    <constraint firstItem="9BN-zO-IUz" firstAttribute="leading" secondItem="tq9-IR-Ars" secondAttribute="leading" id="2qd-65-HCC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9BN-zO-IUz" secondAttribute="trailing" id="GXb-RN-Kgp"/>
                                                     <constraint firstItem="DYw-dw-qVP" firstAttribute="leading" secondItem="tq9-IR-Ars" secondAttribute="leading" id="VBj-0G-SUk"/>
+                                                    <constraint firstAttribute="bottom" secondItem="9BN-zO-IUz" secondAttribute="bottom" id="YW6-BM-a7s"/>
+                                                    <constraint firstItem="9BN-zO-IUz" firstAttribute="top" secondItem="DYw-dw-qVP" secondAttribute="bottom" id="asW-oE-4us"/>
                                                     <constraint firstItem="DYw-dw-qVP" firstAttribute="top" secondItem="tq9-IR-Ars" secondAttribute="top" id="ofn-qh-czg"/>
                                                 </constraints>
                                             </customView>
@@ -170,7 +207,9 @@
                     </view>
                     <connections>
                         <outlet property="_codeView" destination="ZCv-g5-1up" id="YeC-GG-k7a"/>
+                        <outlet property="_languagePopup" destination="L6h-pF-D0U" id="EGs-mh-UVa"/>
                         <outlet property="_outlineView" destination="C9M-gz-yCG" id="lSF-Mh-W26"/>
+                        <outlet property="_themePopup" destination="MVw-La-dFh" id="8LU-8T-cVR"/>
                     </connections>
                 </viewController>
                 <customObject id="jhS-a7-7Du" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
