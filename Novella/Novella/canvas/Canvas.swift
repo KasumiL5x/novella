@@ -328,10 +328,7 @@ class Canvas: NSView {
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
-		var pos = at
-		pos.x -= obj.frame.width * 0.5
-		pos.y -= obj.frame.height * 0.5
-		obj.frame.origin = pos
+		obj.frame.origin = at
 		
 		return obj
 	}
@@ -340,10 +337,7 @@ class Canvas: NSView {
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 
-		var pos = at
-		pos.x -= obj.frame.width * 0.5
-		pos.y -= obj.frame.height * 0.5
-		obj.frame.origin = pos
+		obj.frame.origin = at
 
 		let bench = makeBench()
 		_allBenches[obj] = bench
@@ -356,10 +350,7 @@ class Canvas: NSView {
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
-		var pos = at
-		pos.x -= obj.frame.width * 0.5
-		pos.y -= obj.frame.height * 0.5
-		obj.frame.origin = pos
+		obj.frame.origin = at
 		
 		let bench = makeBench()
 		_allBenches[obj] = bench
