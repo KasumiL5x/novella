@@ -292,6 +292,38 @@ extension ConditionFunctionEditorViewController: NSTextViewDelegate {
 	}
 }
 
+class ConditionFunctionNameCell: NSTableCellView {
+	@IBOutlet weak private var _label: NSTextField!
+	
+	var object: Any?
+	
+	func setup() {
+		switch object {
+		case let asFunction as NVFunction:
+			_label.stringValue = asFunction.Label
+		case let asCondition as NVCondition:
+			_label.stringValue = asCondition.Label
+		case let asSelector as NVSelector:
+			_label.stringValue = asSelector.Label
+		default:
+			_label.stringValue = "ERROR"
+		}
+	}
+	
+	@IBAction func onLabelChanged(_ sender: NSTextField) {
+		switch object {
+		case let asFunction as NVFunction:
+			asFunction.Label = _label.stringValue
+		case let asCondition as NVCondition:
+			asCondition.Label = _label.stringValue
+		case let asSelector as NVSelector:
+			asSelector.Label = _label.stringValue
+		default:
+			print("Unable to change label of suitable object.")
+		}
+	}
+}
+
 extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 	// custom row class
 	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
@@ -314,19 +346,22 @@ extension ConditionFunctionEditorViewController: NSOutlineViewDelegate {
 		}
 		
 		// handle others
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MainCell"), owner: self)
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("MainCell"), owner: self) as? ConditionFunctionNameCell
 		switch item {
 		case let asFunction as NVFunction:
-			(view as? NSTableCellView)?.textField?.stringValue = asFunction.Label
+			(view as? ConditionFunctionNameCell)?.object = asFunction
+			(view as? ConditionFunctionNameCell)?.setup()
 			
 		case let asCondition as NVCondition:
-			(view as? NSTableCellView)?.textField?.stringValue = asCondition.Label
+			(view as? ConditionFunctionNameCell)?.object = asCondition
+			(view as? ConditionFunctionNameCell)?.setup()
 			
 		case let asSelector as NVSelector:
-			(view as? NSTableCellView)?.textField?.stringValue = asSelector.Label
+			(view as? ConditionFunctionNameCell)?.object = asSelector
+			(view as? ConditionFunctionNameCell)?.setup()
 			
 		default:
-			(view as? NSTableCellView)?.textField?.stringValue = "ERROR"
+			(view as? ConditionFunctionNameCell)?.textField?.stringValue = "ERROR"
 		}
 		
 		return view

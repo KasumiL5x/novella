@@ -65,21 +65,25 @@
                                                                                 <outlet property="textField" destination="FdY-kU-sPh" id="Voi-s8-7AG"/>
                                                                             </connections>
                                                                         </tableCellView>
-                                                                        <tableCellView identifier="MainCell" id="280-OT-HyD" userLabel="MainCell">
+                                                                        <tableCellView identifier="MainCell" id="280-OT-HyD" userLabel="MainCell" customClass="ConditionFunctionNameCell" customModule="novella" customModuleProvider="target">
                                                                             <rect key="frame" x="1" y="33" width="223" height="30"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vma-Km-Zls">
                                                                                     <rect key="frame" x="0.0" y="7" width="223" height="17"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="Function/Condition Name" id="nnM-fN-CZn">
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Function/Condition Name" id="nnM-fN-CZn">
                                                                                         <font key="font" metaFont="system"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
+                                                                                    <connections>
+                                                                                        <action selector="onLabelChanged:" target="280-OT-HyD" id="RZu-4a-jHe"/>
+                                                                                    </connections>
                                                                                 </textField>
                                                                             </subviews>
                                                                             <connections>
+                                                                                <outlet property="_label" destination="vma-Km-Zls" id="DyA-eO-PdH"/>
                                                                                 <outlet property="textField" destination="vma-Km-Zls" id="10G-2c-Ykt"/>
                                                                             </connections>
                                                                         </tableCellView>
@@ -133,7 +137,7 @@
                                                                 </textView>
                                                             </subviews>
                                                         </clipView>
-                                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="89S-QT-eUs">
+                                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="89S-QT-eUs">
                                                             <rect key="frame" x="400" y="0.0" width="15" height="370"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
