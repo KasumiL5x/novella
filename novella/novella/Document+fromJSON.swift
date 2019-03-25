@@ -400,7 +400,7 @@ extension Document {
 			})
 			
 			// function
-			let _: NVFunction? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
+			let _: NVFunction? = findbyIDFromJSON(json: link, name: "function", checkEmpty: true, onSuccess: {(found) in
 				entry.Function = found
 			}, onFail: {(searchedID) in
 				Swift.print("Unable to find Function by ID (\(searchedID)) when setting EventLink's Function (\(id.uuidString)).")
@@ -430,7 +430,7 @@ extension Document {
 			})
 			
 			// function
-			let _: NVFunction? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
+			let _: NVFunction? = findbyIDFromJSON(json: link, name: "function", checkEmpty: true, onSuccess: {(found) in
 				entry.Function = found
 			}, onFail: {(searchedID) in
 				Swift.print("Unable to find Function by ID (\(searchedID)) when setting EventLink's Function (\(id.uuidString)).")
