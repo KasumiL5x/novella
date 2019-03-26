@@ -2,49 +2,36 @@
 //  NVFunction.swift
 //  novella
 //
-//  Created by dgreen on 09/08/2018.
-//  Copyright © 2018 dgreen. All rights reserved.
+//  Created by Daniel Green on 30/11/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Foundation
 
-class NVFunction {
-	// MARK: - Variables
+class NVFunction: NVIdentifiable {
+	var UUID: NSUUID
 	private let _story: NVStory
-	
-	// MARK: - Properties
-	var JavaScript: String = "" {
+	var Code: String = "" {
 		didSet {
-			NVLog.log("Function updated.", level: .info)
-			_story.Delegates.forEach{$0.nvFunctionDidUpdate(function: self)}
+			_story.Observers.forEach{$0.nvFunctionCodeDidChange(story: _story, function: self)}
 		}
 	}
-
-	// MARK: - Initialization
-	init(story: NVStory) {
+	var Label: String {
+		didSet {
+			NVLog.log("Function (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
+			_story.Observers.forEach{$0.nvFunctionLabelDidChange(story: _story, function: self)}
+		}
+	}
+	
+	init(uuid: NSUUID, story: NVStory) {
+		self.UUID = uuid
 		self._story = story
+		self.Label = "nvFunction" + NVUtil.randomString(length: 10)
 	}
+}
 
-	// MARK: - Evaulation
-	func evaluate() {
-		var funcCode = "function executeFunction() {\n"
-		funcCode += JavaScript
-		funcCode += "\n}"
-		NVLog.log("Function JS:\n\(funcCode)", level: .debug)
-		
-		// eval script so the JVM knows about it
-		_story.JVM.evaluateScript(funcCode)
-		
-		// get reference to the function
-		guard let execFunc = _story.JVM.objectForKeyedSubscript("executeFunction") else {
-			NVLog.log("Function could not find function. Skipping.", level: .warning)
-			return
-		}
-		
-		// call the function and get its return value
-		guard let _ = execFunc.call(withArguments: []) else {
-			NVLog.log("Function could not execute. Skipping.", level: .warning)
-			return
-		}
+extension NVFunction: Equatable {
+	static func == (lhs: NVFunction, rhs: NVFunction) -> Bool {
+		return lhs.UUID == rhs.UUID
 	}
 }

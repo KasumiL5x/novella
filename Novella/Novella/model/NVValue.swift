@@ -2,24 +2,20 @@
 //  NVValue.swift
 //  novella
 //
-//  Created by dgreen on 09/08/2018.
-//  Copyright © 2018 dgreen. All rights reserved.
+//  Created by Daniel Green on 02/12/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Foundation
 
-class NVValue: Hashable {
+class NVValue: Equatable {
 	var Raw: NVRawValue
 	
 	init(_ value: NVRawValue) {
 		self.Raw = value
 	}
 	
-	// MARK: Hashable
-	var hashValue: Int {
-		return ObjectIdentifier(self).hashValue
-	}
-	// MARK: Equatable
+	// equatable
 	static func ==(lhs: NVValue, rhs: NVValue) -> Bool {
 		return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
 	}
@@ -47,6 +43,8 @@ enum NVValueType {
 }
 
 enum NVRawValue {
+	static let EPSILON: Double = 0.001
+	
 	case boolean(Bool)
 	case integer(Int32)
 	case double(Double)
@@ -106,7 +104,7 @@ enum NVRawValue {
 		case .integer:
 			return self.asInt == rhs.asInt
 		case .double:
-			return fabs(self.asDouble - rhs.asDouble) <= 0.001
+			return fabs(self.asDouble - rhs.asDouble) <= NVRawValue.EPSILON
 		}
 	}
 }

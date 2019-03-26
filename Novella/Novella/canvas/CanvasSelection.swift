@@ -2,53 +2,66 @@
 //  CanvasSelection.swift
 //  novella
 //
-//  Created by dgreen on 12/08/2018.
+//  Created by dgreen on 07/12/2018.
 //  Copyright © 2018 dgreen. All rights reserved.
 //
 
 import Foundation
 
 class CanvasSelection {
-	// MARK: - Variables
-	private let _canvas: Canvas
-	var selectionDidChange: (([CanvasObject]) -> Void)?
-	
-	// MARK: - Properties
 	private(set) var Selection: [CanvasObject] = []
 	
-	// MARK: - Initialization
-	init(canvas: Canvas) {
-		self._canvas = canvas
-	}
+	var TheCanvas: Canvas?
 	
-	// MARK: - Selection Functions
-	func select(_ object: CanvasObject, append: Bool) {
-		select([object], append: append)
+	func select(_ obj: CanvasObject, append: Bool) {
+		select([obj], append: append)
 	}
-	func select(_ objects: [CanvasObject], append: Bool) {
+	func select(_ objs: [CanvasObject], append: Bool) {
 		if append {
-			Selection = (Selection + objects)
-			objects.forEach{$0.select()} // state change of new objects
+			Selection = Selection + objs
+			objs.forEach{$0.CurrentState = .selected}
 		} else {
-			Selection.forEach{$0.normal()} // state change of old objects
-			Selection = objects
-			objects.forEach{$0.select()}
+			Selection.forEach{$0.CurrentState = .normal}
+			Selection = objs
+			Selection.forEach{$0.CurrentState = .selected}
 		}
 		
-		selectionDidChange?(Selection)
-	}
-	
-	func deselect(_ object: CanvasObject) {
-		deselect([object])
-	}
-	func deselect(_ objects: [CanvasObject]) {
-		objects.forEach { (obj) in
-			if Selection.contains(obj) {
-				obj.normal()
-				Selection.remove(at: Selection.index(of: obj)!)
+		if let canvas = TheCanvas {
+			Selection.forEach { (obj) in
+				canvas.bringSubviewToFront(obj)
 			}
 		}
 		
-		selectionDidChange?(Selection)
+		// post selection changed notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
+			"selection": Selection
+		])
+	}
+
+	func deselect(_ obj: CanvasObject) {
+		deselect([obj])
+	}
+	func deselect(_ objs: [CanvasObject]) {
+		objs.forEach { (obj) in
+			if let idx = Selection.firstIndex(of: obj) {
+				obj.CurrentState = .normal
+				Selection.remove(at: idx)
+			}
+		}
+		
+		// post selection changed notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
+			"selection": Selection
+		])
+	}
+	
+	func clear() {
+		Selection.forEach{$0.CurrentState = .normal}
+		Selection = []
+		
+		// post selection changed notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
+			"selection": Selection
+		])
 	}
 }

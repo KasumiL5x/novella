@@ -2,272 +2,72 @@
 //  OutlinerViewController.swift
 //  novella
 //
-//  Created by Daniel Green on 22/08/2018.
+//  Created by Daniel Green on 12/12/2018.
 //  Copyright © 2018 dgreen. All rights reserved.
 //
 
 import Cocoa
 
-class OutlinerOutlineView: NSOutlineView, NVStoryDelegate {
-	private var _menu: NSMenu!
-	var Doc: Document? {
-		didSet {
-			Doc?.Story.addDelegate(self)
-		}
-	}
-	
-	override init(frame frameRect: NSRect) {
-		super.init(frame: frameRect)
-		setup()
-	}
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		setup()
-	}
-	
-	private func setup() {
-		_menu = NSMenu()
-		_menu.addItem(withTitle: "New Dialog", action: #selector(OutlinerOutlineView.onMenuNewDialog), keyEquivalent: "")
-		_menu.addItem(withTitle: "New Delivery", action: #selector(OutlinerOutlineView.onMenuNewDelivery), keyEquivalent: "")
-		_menu.addItem(withTitle: "New Context", action: #selector(OutlinerOutlineView.onMenuNewContext), keyEquivalent: "")
-		_menu.addItem(withTitle: "New Branch", action: #selector(OutlinerOutlineView.onMenuNewBranch), keyEquivalent: "")
-		_menu.addItem(withTitle: "New Switch", action: #selector(OutlinerOutlineView.onMenuNewSwitch), keyEquivalent: "")
-		_menu.addItem(withTitle: "New Graph", action: #selector(OutlinerOutlineView.onMenuNewGraph), keyEquivalent: "")
-	}
-	
-	override func menu(for event: NSEvent) -> NSMenu? {
-		return _menu
-	}
-	
-	@objc private func onMenuNewDialog() {
-		NotificationCenter.default.post(name: .canvasAddDialog, object: nil)
-	}
-	@objc private func onMenuNewDelivery() {
-		NotificationCenter.default.post(name: .canvasAddDelivery, object: nil)
-	}
-	@objc private func onMenuNewContext() {
-		NotificationCenter.default.post(name: .canvasAddContext, object: nil)
-	}
-	@objc private func onMenuNewBranch() {
-		NotificationCenter.default.post(name: .canvasAddBranch, object: nil)
-	}
-	@objc private func onMenuNewSwitch() {
-		NotificationCenter.default.post(name: .canvasAddSwitch, object: nil)
-	}
-	@objc private func onMenuNewGraph() {
-		guard let doc = Doc, let parentGraph = parentGraphOfSelection() else {
-			return
-		}
-		let newGraph = doc.Story.makeGraph(name: NSUUID().uuidString)
-		parentGraph.add(graph: newGraph)
-		
-		self.reloadData()
-	}
-	
-	func parentGraphOfSelection() -> NVGraph? {
-		let item = self.item(atRow: self.selectedRow)
-		
-		// directly a graph
-		if item is NVGraph {
-			return (item as! NVGraph)
-		}
-		
-		// dig up until we find one
-		var theParent: Any? = self.parent(forItem: item)
-		while theParent != nil {
-			if theParent is NVGraph {
-				return (theParent as! NVGraph)
-			}
-			theParent = self.parent(forItem: theParent)
-		}
-		
-		// give up
-		return nil
-	}
-	
-	private func deleteEntryFor(obj: Any) {
-		let childIdx = self.childIndex(forItem: obj)
-		if -1 == childIdx {
-			return
-		}
-		let parent = self.parent(forItem: obj)
-		self.removeItems(at: IndexSet(integer: childIdx), inParent: parent, withAnimation: [.effectFade, .slideLeft])
-		self.reloadItem(parent) // reload only the parent to reset the expansion triangle while still maintaining selection (if the selection wasn't removed)
-	}
-	
-	// MARK: NVStoryDelegate
-	// renaming
-	func nvGraphDidRename(graph: NVGraph) {
-		self.reloadItem(graph)
-	}
-	func nvNodeDidRename(node: NVNode) {
-		self.reloadItem(node)
-	}
-	// creation
-	func nvStoryDidCreateGraph(graph: NVGraph) {
-		self.reloadData()
-	}
-	func nvStoryDidCreateLink(link: NVLink) {
-		self.reloadData()
-	}
-	func nvStoryDidCreateBranch(branch: NVBranch) {
-		self.reloadData()
-	}
-	func nvStoryDidCreateSwitch(swtch: NVSwitch) {
-		self.reloadData()
-	}
-	func nvStoryDidCreateDialog(dialog: NVDialog) {
-		self.reloadData()
-	}
-	func nvStoryDidCreateDelivery(delivery: NVDelivery) {
-		self.reloadData()
-	}
-	
-	// add to graph
-	func nvGraphDidAddLink(graph: NVGraph, link: NVLink) {
-		self.reloadData()
-	}
-	func nvGraphDidAddNode(parent: NVGraph, child: NVNode) {
-		self.reloadData()
-	}
-	func nvGraphDidAddGraph(parent: NVGraph, child: NVGraph) {
-		self.reloadData()
-	}
-	func nvGraphDidAddSwitch(graph: NVGraph, swtch: NVSwitch) {
-		self.reloadData()
-	}
-	func nvGraphDidAddBranch(graph: NVGraph, branch: NVBranch) {
-		self.reloadData()
-	}
-	// remove from graph
-	func nvGraphDidRemoveLink(graph: NVGraph, link: NVLink) {
-		deleteEntryFor(obj: link)
-	}
-	func nvGraphDidRemoveNode(parent: NVGraph, child: NVNode) {
-		deleteEntryFor(obj: child)
-	}
-	func nvGraphDidRemoveGraph(parent: NVGraph, child: NVGraph) {
-		deleteEntryFor(obj: child)
-	}
-	func nvGraphDidRemoveSwitch(graph: NVGraph, swtch: NVSwitch) {
-		deleteEntryFor(obj: swtch)
-	}
-	func nvGraphDidRemoveBranch(graph: NVGraph, branch: NVBranch) {
-		deleteEntryFor(obj: branch)
-	}
-	
-	// deletion
-	func nvStoryDidDeleteNode(node: NVNode) {
-		deleteEntryFor(obj: node)
-	}
-	func nvStoryDidDeleteLink(link: NVLink) {
-		deleteEntryFor(obj: link)
-	}
-	func nvStoryDidDeleteBranch(branch: NVBranch) {
-		deleteEntryFor(obj: branch)
-	}
-	func nvStoryDidDeleteSwitch(swtch: NVSwitch) {
-		deleteEntryFor(obj: swtch)
-	}
-	func nvStoryDidDeleteGraph(graph: NVGraph) {
-		deleteEntryFor(obj: graph)
-	}
-}
-
 class OutlinerViewController: NSViewController {
-	// MARK: - Outlets
-	@IBOutlet weak var _outlineView: OutlinerOutlineView!
+	@IBOutlet weak private var _outlineView: NSOutlineView!
 	
-	// MARK: - Variables
-	private var _graphIcon: NSImage?
+	private var _document: Document? = nil
 	private var _linkIcon: NSImage?
-	private var _branchIcon: NSImage?
-	private var _switchIcon: NSImage?
-	private var _dialogIcon: NSImage?
-	private var _deliveryIcon: NSImage?
-	
-	// MARK: - Properties
-	var Doc: Document? {
-		didSet {
-			_outlineView.Doc = Doc
-			_outlineView.reloadData()
-		}
-	}
-	
-	var onItemSelected: ((_ item: Any, _ parentGraph: NVGraph) -> ())?
+	private var _groupImage: NSImage?
 	
 	override func viewDidLoad() {
-		_graphIcon = NSImage(named: "Graph")
-		_linkIcon = NSImage(named: "Link")
-		_branchIcon = NSImage(named: "Branch")
-		_switchIcon = NSImage(named: "Switch")
-		_dialogIcon = NSImage(named: "Dialog")
-		_deliveryIcon = NSImage(named: "Delivery")
+		_linkIcon = NSImage(named: "NVLink")
+		_groupImage = NSImage(named: "NVGroup")
 		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
 		_outlineView.reloadData()
 	}
 	
-	override func viewDidAppear() {
+	func setup(doc: Document) {
+		_document = doc
+		doc.Story.add(observer: self)
 		_outlineView.reloadData()
-	}
-	
-	@IBAction func onOutlinerSelectionChanged(_ sender: NSOutlineView) {
-		let idx = sender.selectedRow
-		guard let item = sender.item(atRow: idx), let parentGraph = _outlineView.parentGraphOfSelection() else {
-			return
-		}
-		
-		onItemSelected?(item, parentGraph)
 	}
 }
 
 extension OutlinerViewController: NSOutlineViewDelegate {
 	// custom row class
 	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
-		return VariablesTableRowView(frame: NSRect.zero) // reuse variables for consistency
+		return CustomTableRowView(frame: NSRect.zero)
 	}
 	
-	// color odd/even rows
+	// color even/odd rows
 	func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
-        if row % 2 == 0 {
-            rowView.backgroundColor = Colors.TableRowEven
-        } else {
-            rowView.backgroundColor = Colors.TableRowOdd
-        }
+		rowView.backgroundColor = (row % 2 == 0) ? NSColor(named: "NVTableRowEven")! : NSColor(named: "NVTableRowOdd")!
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		var view: NSView?
 		
-		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "OutlinerCell"), owner: self) as? NSTableCellView
-
+		view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("OutlinerCell"), owner: self)
+		
 		switch item {
-		case let asGraph as NVGraph:
-			(view as? NSTableCellView)?.textField?.stringValue = asGraph.Name
-			(view as? NSTableCellView)?.imageView?.image = _graphIcon
-		case let asNode as NVNode:
-			(view as? NSTableCellView)?.textField?.stringValue = asNode.Name
-			switch asNode {
-			case is NVDialog:
-				(view as? NSTableCellView)?.imageView?.image = _dialogIcon
-			case is NVDelivery:
-				(view as? NSTableCellView)?.imageView?.image = _deliveryIcon
-			default:
-				break
-			}
-		case let asLink as NVLink:
-			(view as? NSTableCellView)?.textField?.stringValue = asLink.ID.uuidString
-			(view as? NSTableCellView)?.imageView?.image = _linkIcon
-		case let asBranch as NVBranch:
-			(view as? NSTableCellView)?.textField?.stringValue = asBranch.ID.uuidString
-			(view as? NSTableCellView)?.imageView?.image = _branchIcon
-		case let asSwitch as NVSwitch:
-			(view as? NSTableCellView)?.textField?.stringValue = asSwitch.ID.uuidString
-			(view as? NSTableCellView)?.imageView?.image = _switchIcon
+		case let asGroup as NVGroup:
+			(view as? NSTableCellView)?.textField?.stringValue = asGroup.Label
+			(view as? NSTableCellView)?.imageView?.image = _groupImage ?? NSImage(named: NSImage.cautionName)
+			
+		case let asSequence as NVSequence:
+			(view as? NSTableCellView)?.textField?.stringValue = asSequence.Label
+			
+		case let asSequenceLink as NVSequenceLink:
+			(view as? NSTableCellView)?.textField?.stringValue = "(\(asSequenceLink.Origin.Label)) -> (\(asSequenceLink.Destination?.Label ?? "nil"))"
+			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
+			
+		case let asEvent as NVEvent:
+			(view as? NSTableCellView)?.textField?.stringValue = asEvent.Label
+			
+		case let asEventLink as NVEventLink:
+			(view as? NSTableCellView)?.textField?.stringValue = "(\(asEventLink.Origin.Label)) -> (\(asEventLink.Destination?.Label ?? "nil"))"
+			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
+			
 		default:
-			(view as? NSTableCellView)?.textField?.stringValue = "ERROR"
+			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"
 		}
 		
 		return view
@@ -276,75 +76,142 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 
 extension OutlinerViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-		if nil == item {
-			return Doc != nil ? 1 : 0 // main graph
+		if item == nil { // nil item is the "first" item in the table
+			return _document != nil ? 1 : 0 // if not nil, we will load the MainGroup
 		}
 		
 		switch item {
-		case let asGraph as NVGraph:
-			var count = 0
-			count += asGraph.Graphs.count
-			count += asGraph.Nodes.count
-			count += asGraph.Links.count
-			count += asGraph.Branches.count
-			count += asGraph.Switches.count
-			return count
+		case let asGroup as NVGroup:
+			return (asGroup.Sequences.count + asGroup.SequenceLinks.count + asGroup.Groups.count) // ordering is mirrored below
+			
+		case let asSequence as NVSequence:
+			return (asSequence.Events.count + asSequence.EventLinks.count) // ordering is mirrored below
+			
 		default:
 			return 0
 		}
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-		if nil == item {
-			return Doc!.Story.MainGraph! // valid at this point
+		if item == nil { // as mentioned above
+			return _document!.Story.MainGroup!
 		}
 		
+		// order here matches the above function count order
 		switch item {
-		case let asGraph as NVGraph:
-			if index < asGraph.Graphs.count {
-				return asGraph.Graphs[index]
+		case let asGroup as NVGroup:
+			if index < asGroup.Sequences.count {
+				return asGroup.Sequences[index]
 			}
-			var offset = asGraph.Graphs.count
+			var offset = asGroup.Sequences.count
 			
-			if index < (asGraph.Nodes.count + offset) {
-				return asGraph.Nodes[index - offset]
+			if index < (asGroup.SequenceLinks.count + offset) {
+				return asGroup.SequenceLinks[index - offset]
 			}
-			offset += asGraph.Nodes.count
+			offset += asGroup.SequenceLinks.count
 			
-			if index < (asGraph.Links.count + offset) {
-				return asGraph.Links[index - offset]
+			if index < (asGroup.Groups.count + offset) {
+				return asGroup.Groups[index - offset]
 			}
-			offset += asGraph.Links.count
+			offset += asGroup.Groups.count
 			
-			if index < (asGraph.Branches.count + offset) {
-				return asGraph.Branches[index - offset]
+			fatalError()
+			
+		case let asSequence as NVSequence:
+			if index < asSequence.Events.count {
+				return asSequence.Events[index]
 			}
-			offset += asGraph.Branches.count
+			var offset = asSequence.Events.count
 			
-			if index < (asGraph.Switches.count + offset) {
-				return asGraph.Switches[index - offset]
+			if index < (asSequence.EventLinks.count + offset) {
+				return asSequence.EventLinks[index - offset]
 			}
-			offset += asGraph.Switches.count
+			offset += asSequence.EventLinks.count
 			
-			fatalError("Math is wrong.")
+			fatalError()
+			
 		default:
-			fatalError("Oh dear.")
+			fatalError()
 		}
 	}
 	
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		switch item {
-		case let asGraph as NVGraph:
-			var count = 0
-			count += asGraph.Graphs.count
-			count += asGraph.Nodes.count
-			count += asGraph.Links.count
-			count += asGraph.Branches.count
-			count += asGraph.Switches.count
-			return count > 0
+		case let asGroup as NVGroup:
+			return (asGroup.Sequences.count + asGroup.SequenceLinks.count + asGroup.Groups.count) > 0
+			
+		case let asSequence as NVSequence:
+			return (asSequence.Events.count + asSequence.EventLinks.count) > 0
 			
 		default:
 			return false
+		}
+	}
+}
+
+extension OutlinerViewController: NVStoryObserver {
+	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
+		_outlineView.reloadItem(group)
+	}
+	
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
+		_outlineView.reloadItem(sequence)
+		for i in 0..<_outlineView.numberOfRows {
+			let item = _outlineView.item(atRow: i)
+			if let asSequenceLink = item as? NVSequenceLink, asSequenceLink.Origin == sequence || asSequenceLink.Destination == sequence {
+				_outlineView.reloadItem(item)
+			}
+		}
+	}
+	
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
+		_outlineView.reloadItem(event)
+		
+		for i in 0..<_outlineView.numberOfRows {
+			let item = _outlineView.item(atRow: i)
+			if let asEventLink = item as? NVEventLink, asEventLink.Origin == event || asEventLink.Destination == event {
+				_outlineView.reloadItem(item)
+			}
 		}
 	}
 }

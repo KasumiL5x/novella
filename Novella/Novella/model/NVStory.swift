@@ -2,493 +2,418 @@
 //  NVStory.swift
 //  novella
 //
-//  Created by dgreen on 09/08/2018.
-//  Copyright © 2018 dgreen. All rights reserved.
+//  Created by Daniel Green on 30/11/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Foundation
-import JavaScriptCore
 
 class NVStory {
-	// MARK: - Variables
+	private var _observers = [ObjectIdentifier: Observation]()
+	public var Observers: [NVStoryObserver] {
+		get{
+			return _observers.compactMap{ $0.value.observer }
+		}
+	}
+	
 	private var _identifiables: [NVIdentifiable]
+	private(set) var MainGroup: NVGroup! // see init for ! usage
 	
-	// MARK: - Properties
-	private(set) var Delegates: [NVStoryDelegate] = []
-	private(set) var MainGraph: NVGraph? = nil
-	private(set) var MainFolder: NVFolder? = nil
-	private(set) var JVM: JSContext = JSContext()
-	
-	// MARK: - Properties
-	var Graphs: [NVGraph] {
-		get{ return _identifiables.filter{$0 is NVGraph} as! [NVGraph] }
+	var Groups: [NVGroup] {
+		get{ return _identifiables.filter{$0 is NVGroup} as! [NVGroup] }
 	}
-	var Folders: [NVFolder] {
-		get{ return _identifiables.filter{$0 is NVFolder} as! [NVFolder] }
+	var Sequences: [NVSequence] {
+		get{ return _identifiables.filter{$0 is NVSequence} as! [NVSequence] }
 	}
-	var Links: [NVLink] {
-		get{ return _identifiables.filter{$0 is NVLink} as! [NVLink] }
+	var Discoverables: [NVDiscoverableSequence] {
+		get{ return _identifiables.filter{$0 is NVDiscoverableSequence} as! [NVDiscoverableSequence] }
 	}
-	var Branches: [NVBranch] {
-		get{ return _identifiables.filter{$0 is NVBranch} as! [NVBranch] }
-	}
-	var Switches: [NVSwitch] {
-		get{ return _identifiables.filter{$0 is NVSwitch} as! [NVSwitch] }
-	}
-	var Variables: [NVVariable] {
-		get{ return _identifiables.filter{$0 is NVVariable} as! [NVVariable] }
-	}
-	var Nodes: [NVNode] {
-		get{ return _identifiables.filter{$0 is NVNode} as! [NVNode] }
+	var Events: [NVEvent] {
+		get{ return _identifiables.filter{$0 is NVEvent} as! [NVEvent] }
 	}
 	var Entities: [NVEntity] {
 		get{ return _identifiables.filter{$0 is NVEntity} as! [NVEntity] }
 	}
+	var SequenceLinks: [NVSequenceLink] {
+		get{ return _identifiables.filter{$0 is NVSequenceLink} as! [NVSequenceLink] }
+	}
+	var EventLinks: [NVEventLink] {
+		get{ return _identifiables.filter{$0 is NVEventLink} as! [NVEventLink] }
+	}
+	var Variables: [NVVariable] {
+		get{ return _identifiables.filter{$0 is NVVariable} as! [NVVariable] }
+	}
+	var Functions: [NVFunction] {
+		get{ return _identifiables.filter{$0 is NVFunction} as! [NVFunction] }
+	}
+	var Conditions: [NVCondition] {
+		get{ return _identifiables.filter{$0 is NVCondition} as! [NVCondition] }
+	}
+	var Selectors: [NVSelector] {
+		get{ return _identifiables.filter{$0 is NVSelector} as! [NVSelector] }
+	}
 	
-	// MARK: - Initialization
 	init() {
 		self._identifiables = []
-		// uuid doesn't matter and we don't want them in the identifiables list.
-		self.MainGraph = NVGraph(id: NSUUID(), story: self, name: "main")
-		self.MainFolder = NVFolder(id: NSUUID(), story: self, name: "main")
+		self.MainGroup = nil // cannot use self here so nil it first
 		
-		setupJavaScript()
+		self.MainGroup = NVGroup(uuid: NSUUID(), story: self)
+		self.MainGroup.Label = "Main Group"
 	}
 	
-	// MARK: - JavaScript
-	func setupJavaScript() {
-		// runtime error handling
-		JVM.exceptionHandler = { (ctx, ex) in
-			if let ex = ex {
-				NVLog.log("JavaScript error: \(ex.toString() ?? "")", level: .error)
-			}
-		}
-		
-		// print to console from JS
-		let js_nvprint: @convention(block) (String) -> Void = { msg in
-			NVLog.log("\nJavaScript Console: \(msg)", level: .info)
-		}
-		JVM.setObject(js_nvprint, forKeyedSubscript: "nvprint" as (NSCopying & NSObjectProtocol))
-		
-		// get bool variable
-		let js_getbool: @convention(block) (String) -> Any? = { [weak self](name) in
-			for v in self!.Variables {
-				if name == NVPath.fullPath(v) {
-					NVLog.log("JavaScript requested boolean: \(name).  Found and returning value: \(v.Value.Raw.asBool).", level: .debug)
-					return v.Value.Raw.asBool
-				}
-			}
-			NVLog.log("JavaScript requested boolean: \(name).  Not found; returning nil.", level: .debug)
-			return nil
-		}
-		JVM.setObject(js_getbool, forKeyedSubscript: "getbool" as (NSCopying & NSObjectProtocol))
-		
-		// get int variable
-		let js_getint: @convention(block) (String) -> Any? = { [weak self](name) in
-			for v in self!.Variables {
-				if name == NVPath.fullPath(v) {
-					NVLog.log("JavaScript requested integer: \(name). Found and returning value: \(v.Value.Raw.asInt).", level: .debug)
-					return v.Value.Raw.asInt
-				}
-			}
-			NVLog.log("JavaScript requested integer: \(name). Not found; returning nil.", level: .debug)
-			return nil
-		}
-		JVM.setObject(js_getint, forKeyedSubscript: "getint" as (NSCopying & NSObjectProtocol))
-		
-		// get double variable
-		let js_getdub: @convention(block) (String) -> Any? = { [weak self](name) in
-			for v in self!.Variables {
-				if name == NVPath.fullPath(v) {
-					NVLog.log("JavaScript requested double: \(name). Found and returning value: \(v.Value.Raw.asDouble).", level: .debug)
-					return v.Value.Raw.asDouble
-				}
-			}
-			NVLog.log("JavaScript requested double: \(name). Not found; returning nil.", level: .debug)
-			return nil
-		}
-		JVM.setObject(js_getdub, forKeyedSubscript: "getdub" as (NSCopying & NSObjectProtocol))
-		
-		// set bool variable
-		let js_setbool: @convention(block) (String, Bool) -> Void = { [weak self](name, value) in
-			var variable: NVVariable? = nil
-			for v in self!.Variables {
-				if name == NVPath.fullPath(v) {
-					variable = v
-					break
-				}
-			}
-			guard let unwrapped = variable else {
-				NVLog.log("JavaScript requested setting bool: \(name). Not found; ignoring.", level: .debug)
-				return
-			}
-			unwrapped.Value = NVValue(.boolean(value))
-			NVLog.log("JavaScript requested setting bool: \(name). Found and set to: \(value).", level: .debug)
-		}
-		JVM.setObject(js_setbool, forKeyedSubscript: "setbool" as (NSCopying & NSObjectProtocol))
-		
-		// set int variable
-		let js_setint: @convention(block) (String, Int32) -> Void = { [weak self](name, value) in
-			var variable: NVVariable? = nil
-			for v in self!.Variables {
-				if name == NVPath.fullPath(v) {
-					variable = v
-					break
-				}
-			}
-			guard let unwrapped = variable else {
-				NVLog.log("JavaScript requested setting integer: \(name). Not found; ignoring.", level: .debug)
-				return
-			}
-			unwrapped.Value = NVValue(.integer(value))
-			NVLog.log("JavaScript requested setting integer: \(name). Found and set to: \(value).", level: .debug)
-		}
-		JVM.setObject(js_setint, forKeyedSubscript: "setint" as (NSCopying & NSObjectProtocol))
-		
-		// set double variable
-		let js_setdub: @convention(block) (String, Double) -> Void = { [weak self](name, value) in
-			var variable: NVVariable? = nil
-			for v in self!.Variables {
-				if name == NVPath.fullPath(v) {
-					variable = v
-					break
-				}
-			}
-			guard let unwrapped = variable else {
-				NVLog.log("JavaScript requested setting double: \(name). Not found; ignoring.", level: .debug)
-				return
-			}
-			unwrapped.Value = NVValue(.double(value))
-			NVLog.log("JavaScript requested setting double: \(name). Found and set to: \(value).", level: .debug)
-		}
-		JVM.setObject(js_setdub, forKeyedSubscript: "setdub" as (NSCopying & NSObjectProtocol))
+	func add(observer: NVStoryObserver) {
+		let id = ObjectIdentifier(observer)
+		_observers[id] = Observation(observer: observer)
 	}
 	
-	// MARK: - Delgates
-	func addDelegate(_ delegate: NVStoryDelegate) {
-		Delegates.append(delegate)
+	func remove(observer: NVStoryObserver) {
+		let id = ObjectIdentifier(observer)
+		_observers.removeValue(forKey: id)
 	}
 	
-	// MARK: - Reading Stuff
-	func prepareForReading() {
-		// reset variable values
-		Variables.forEach { (variable) in
-			variable.Value = variable.InitialValue
-		}
-	}
-	
-	// MARK: - Findng Stuff
 	func find(uuid: String) -> NVIdentifiable? {
-		return _identifiables.first(where: {$0.ID.uuidString == uuid})
-	}
-	func getLinksFrom(linkable: NVLinkable) -> [NVLink] {
-		return Links.filter({$0.Origin.ID == linkable.ID})
+		return _identifiables.first(where: {$0.UUID.uuidString == uuid})
 	}
 	
-	// MARK: - Creation
-	@discardableResult func makeGraph(name: String, uuid: NSUUID?=nil) -> NVGraph {
-		let graph = NVGraph(id: uuid ?? NSUUID(), story: self, name: name)
-		_identifiables.append(graph)
+	// CREATION
+	func makeGroup(uuid: NSUUID?=nil) -> NVGroup {
+		let group = NVGroup(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(group)
 		
-		Delegates.forEach{$0.nvStoryDidCreateGraph(graph: graph)}
-		return graph
+		NVLog.log("Created Group (\(group.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeGroup(story: self, group: group)}
+		return group
 	}
-	@discardableResult func makeFolder(name: String, uuid: NSUUID?=nil) -> NVFolder {
-		let folder = NVFolder(id: uuid ?? NSUUID(), story: self, name: name)
-		_identifiables.append(folder)
+	func makeSequence(uuid: NSUUID?=nil) -> NVSequence {
+		let sequence = NVSequence(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(sequence)
 		
-		Delegates.forEach{$0.nvStoryDidCreateFolder(folder: folder)}
-		return folder
+		NVLog.log("Created Sequence (\(sequence.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeSequence(story: self, sequence: sequence)}
+		return sequence
 	}
-	@discardableResult func makeLink(origin: NVLinkable, uuid: NSUUID?=nil) -> NVLink {
-		let link = NVLink(id: uuid ?? NSUUID(), story: self, origin: origin)
-		_identifiables.append(link)
+	func makeDNSequence(uuid: NSUUID?=nil) -> NVDiscoverableSequence {
+		let sequence = NVDiscoverableSequence(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(sequence)
 		
-		Delegates.forEach{$0.nvStoryDidCreateLink(link: link)}
-		return link
+		NVLog.log("Created DiscoverableSequence (\(sequence.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeSequence(story: self, sequence: sequence)}
+		return sequence
 	}
-	@discardableResult func makeBranch(uuid: NSUUID?=nil) -> NVBranch {
-		let branch = NVBranch(id: uuid ?? NSUUID(), story: self)
-		_identifiables.append(branch)
+	func makeEvent(uuid: NSUUID?=nil) -> NVEvent {
+		let event = NVEvent(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(event)
 		
-		Delegates.forEach{$0.nvStoryDidCreateBranch(branch: branch)}
-		return branch
+		NVLog.log("Created Event (\(event.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeEvent(story: self, event: event)}
+		return event
 	}
-	@discardableResult func makeSwitch(uuid: NSUUID?=nil) -> NVSwitch {
-		let swtch = NVSwitch(id: uuid ?? NSUUID(), story: self)
-		_identifiables.append(swtch)
-		
-		Delegates.forEach{$0.nvStoryDidCreateSwitch(swtch: swtch)}
-		return swtch
-	}
-	@discardableResult func makeDialog(uuid: NSUUID?=nil) -> NVDialog {
-		let dialog = NVDialog(id: uuid ?? NSUUID(), story: self)
-		_identifiables.append(dialog)
-		
-		Delegates.forEach{$0.nvStoryDidCreateDialog(dialog: dialog)}
-		return dialog
-	}
-	@discardableResult func makeDelivery(uuid: NSUUID?=nil) -> NVDelivery {
-		let delivery = NVDelivery(id: uuid ?? NSUUID(), story: self)
-		_identifiables.append(delivery)
-		
-		Delegates.forEach{$0.nvStoryDidCreateDelivery(delivery: delivery)}
-		return delivery
-	}
-	@discardableResult func makeContext(uuid: NSUUID?=nil) -> NVContext {
-		let context = NVContext(id: uuid ?? NSUUID(), story: self)
-		_identifiables.append(context)
-		
-		Delegates.forEach{$0.nvStoryDidCreateContext(context: context)}
-		return context
-	}
-	@discardableResult func makeEntity(uuid: NSUUID?=nil) -> NVEntity {
-		let entity = NVEntity(id: uuid ?? NSUUID(), story: self)
+	func makeEntity(uuid: NSUUID?=nil) -> NVEntity {
+		let entity = NVEntity(uuid: uuid ?? NSUUID(), story: self)
 		_identifiables.append(entity)
 		
-		Delegates.forEach{$0.nvStoryDidCreateEntity(entity: entity)}
+		NVLog.log("Created Entity (\(entity.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeEntity(story: self, entity: entity)}
 		return entity
 	}
-	@discardableResult func makeVariable(name: String, uuid: NSUUID?=nil) -> NVVariable {
-		let variable = NVVariable(id: uuid ?? NSUUID(), story: self, name: name)
+	func makeSequenceLink(uuid: NSUUID?=nil, origin: NVSequence, dest: NVSequence?) -> NVSequenceLink {
+		let link = NVSequenceLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
+		_identifiables.append(link)
+		
+		NVLog.log("Created SequenceLink (\(link.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeSequenceLink(story: self, link: link)}
+		return link
+	}
+	func makeEventLink(uuid: NSUUID?=nil, origin: NVEvent, dest: NVEvent?) -> NVEventLink {
+		let link = NVEventLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
+		_identifiables.append(link)
+		
+		NVLog.log("Created EventLink (\(link.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeEventLink(story: self, link: link)}
+		return link
+	}
+	func makeVariable(uuid: NSUUID?=nil) -> NVVariable {
+		let variable = NVVariable(uuid: uuid ?? NSUUID(), story: self)
 		_identifiables.append(variable)
 		
-		Delegates.forEach{$0.nvStoryDidCreateVariable(variable: variable)}
+		NVLog.log("Created Variable (\(variable.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeVariable(story: self, variable: variable)}
 		return variable
 	}
+	func makeFunction(uuid: NSUUID?=nil) -> NVFunction {
+		let function = NVFunction(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(function)
+		
+		NVLog.log("Created Function (\(function.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeFunction(story: self, function: function)}
+		return function
+	}
+	func makeCondition(uuid: NSUUID?=nil) -> NVCondition {
+		let condition = NVCondition(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(condition)
+		
+		NVLog.log("Created Condition (\(condition.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeCondition(story: self, condition: condition)}
+		return condition
+	}
+	func makeSelector(uuid: NSUUID?=nil) -> NVSelector {
+		let selector = NVSelector(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(selector)
+		
+		NVLog.log("Created Selector (\(selector.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeSelector(story: self, selector: selector)}
+		return selector
+	}
 	
-	// MARK: - Deletion
-	func deleteGraph(graph: NVGraph) {
-		// cannot delete main graph
-		if graph == MainGraph {
-			NVLog.log("Tried to delete MainGraph but that is not allowed!", level: .warning)
-			return
+	// DELETION
+	func delete(group: NVGroup) {
+		if group == MainGroup {
+			NVLog.log("Tried to delete MainGroup.", level: .warning)
+			return // cannot remove main group
 		}
 		
-		// delete all of its contained graphs
-		for (_, graph) in graph.Graphs.enumerated().reversed() {
-			deleteGraph(graph: graph)
+		// remove from all parent groups
+		Groups.forEach { (parentGroup) in
+			if parentGroup == group {
+				return // don't bother with self (only returns the current iteration, like continue)
+			}
+			if parentGroup.contains(group: group) {
+				parentGroup.remove(group: group)
+			}
 		}
 		
-		// delete all of its contained nodes
-		for (_, node) in graph.Nodes.enumerated().reversed() {
-			deleteNode(node: node)
+		// remove all child sequences
+		for (_, sequence) in group.Sequences.enumerated().reversed() {
+			delete(sequence: sequence)
 		}
-		
-		// delete all of its contained links
-		for (_, link) in graph.Links.enumerated().reversed() {
-			deleteLink(link: link)
-		}
-		
-		// delete all of its contained branches
-		for (_, branch) in graph.Branches.enumerated().reversed() {
-			deleteBranch(branch: branch)
-		}
-		
-		// delete all of its contained switches
-		for (_, swtch) in graph.Switches.enumerated().reversed() {
-			deleteSwitch(swtch: swtch)
-		}
-		
-		// remove from parent
-		graph.Parent?.remove(graph: graph)
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == graph.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == group.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Graph (\(graph.ID)) and its contents.", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteGraph(graph: graph)}
+		NVLog.log("Deleted Group (\(group.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteGroup(story: self, group: group)}
 	}
-	func deleteFolder(folder: NVFolder) {
-		// cannot delete main folder
-		if folder == MainFolder {
-			NVLog.log("Tried to delete MainFolder but that is not allowed!", level: .warning)
-			return
+	func delete(sequence: NVSequence) {
+		// remove from any links as source or destination
+		for (_, link) in SequenceLinks.enumerated().reversed() {
+			// nil destinations
+			if link.Destination == sequence {
+				link.Destination = nil
+			}
+			// fully remove if origin
+			if link.Origin == sequence {
+				delete(sequenceLink: link)
+			}
 		}
 		
-		// delete all child folders
-		for (_, child) in folder.Folders.enumerated().reversed() {
-			deleteFolder(folder: child)
+		// remove from all groups (incl. entry in the remove function)
+		Groups.forEach { (group) in
+			if group.contains(sequence: sequence) {
+				group.remove(sequence: sequence)
+			}
+		}
+		// same treatment for main group since it's not in the list
+		if MainGroup.contains(sequence: sequence) {
+			MainGroup.remove(sequence: sequence)
 		}
 		
-		// delete all child variables
-		for (_, child) in folder.Variables.enumerated().reversed() {
-			deleteVariable(variable: child)
+		// remove all child events of the sequence too
+		for (_, event) in sequence.Events.enumerated().reversed() {
+			delete(event: event)
 		}
-		
-		// remove from parent
-		folder.removeFromParent()
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == folder.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == sequence.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Folder (\(folder.ID)) and its contents.", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteFolder(folder: folder)}
+		NVLog.log("Deleted Sequence (\(sequence.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteSequence(story: self, sequence: sequence)}
 	}
-	func deleteLink(link: NVLink) {
-		// remove from all graphs containing it
-		Graphs.forEach { (graph) in
-			if graph.contains(link: link) {
-				graph.remove(link: link)
+	func delete(event: NVEvent) {
+		// remove from any links as source or destination
+		for (_, link) in EventLinks.enumerated().reversed() {
+			// nil destinations
+			if link.Destination == event {
+				link.Destination = nil
+			}
+			// fully remove if origin
+			if link.Origin == event {
+				delete(eventLink: link)
 			}
 		}
-		// main graph
-		if MainGraph?.contains(link: link) ?? false {
-			MainGraph?.remove(link: link)
+		
+		// remove from all sequences (incl. entry in the remove function)
+		Sequences.forEach { (sequence) in
+			if sequence.contains(event: event) {
+				sequence.remove(event: event)
+			}
 		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == link.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == event.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Link (\(link.ID)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteLink(link: link)}
+		NVLog.log("Deleted Event (\(event.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteEvent(story: self, event: event)}
 	}
-	func deleteBranch(branch: NVBranch) {
-		// remove from all graphs containing it
-		Graphs.forEach { (graph) in
-			if graph.contains(branch: branch) {
-				graph.remove(branch: branch)
-			}
-		}
-		// main graph
-		if MainGraph?.contains(branch: branch) ?? false {
-			MainGraph?.remove(branch: branch)
-		}
-		
+	func delete(entity: NVEntity) {
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == branch.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == entity.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Branch (\(branch.ID)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteBranch(branch: branch)}
+		NVLog.log("Deleted Entity (\(entity.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteEntity(story: self, entity: entity)}
 	}
-	func deleteSwitch(swtch: NVSwitch) {
-		// remove from all graphs containing it
-		Graphs.forEach { (graph) in
-			if graph.contains(swtch: swtch) {
-				graph.remove(swtch: swtch)
+	func delete(sequenceLink: NVSequenceLink) {
+		// remove from all groups that contain it
+		Groups.forEach { (group) in
+			if group.contains(sequenceLink: sequenceLink) {
+				group.remove(sequenceLink: sequenceLink)
 			}
-		}
-		// main graph
-		if MainGraph?.contains(swtch: swtch) ?? false {
-			MainGraph?.remove(swtch: swtch)
 		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == swtch.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == sequenceLink.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Switch (\(swtch.ID)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteSwitch(swtch: swtch)}
+		NVLog.log("Deleted SequenceLink (\(sequenceLink.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteSequenceLink(story: self, link: sequenceLink)}
 	}
-	func deleteNode(node: NVNode) {
-		// remove from graphs containing it
-		Graphs.forEach{ (graph) in
-			if graph.contains(node: node) {
-				graph.remove(node: node)
-			}
-		}
-		// main graph
-		if MainGraph?.contains(node: node) ?? false {
-			MainGraph?.remove(node: node)
-		}
-		
-		// nil any graph entry points
-		Graphs.forEach { (graph) in
-			if graph.Entry == node {
-				graph.Entry = nil
-			}
-		}
-		// main graph
-		if MainGraph?.Entry == node {
-			MainGraph?.Entry = nil
-		}
-		
-		// nil any transfer destinations going to it
-		Links.forEach { (link) in
-			if link.Transfer.Destination?.ID == node.ID {
-				link.Transfer.Destination = nil
-			}
-		}
-		Branches.forEach { (branch) in
-			if branch.TrueTransfer.Destination?.ID == node.ID {
-				branch.TrueTransfer.Destination = nil
-			}
-			if branch.FalseTransfer.Destination?.ID == node.ID {
-				branch.FalseTransfer.Destination = nil
-			}
-		}
-		Switches.forEach { (swtch) in
-			if swtch.DefaultOption.transfer.Destination?.ID == node.ID {
-				swtch.DefaultOption.transfer.Destination = nil
-			}
-			swtch.Options.forEach({ (option) in
-				if option.transfer.Destination?.ID == node.ID {
-					option.transfer.Destination = nil
-				}
-			})
-		}
-		
-		// DELETE any links originating at it
-		for (_, link) in Links.enumerated().reversed() {
-			if link.Origin.ID == node.ID {
-				deleteLink(link: link)
+	func delete(eventLink: NVEventLink) {
+		// remove from all sequences that contain it
+		Sequences.forEach { (sequence) in
+			if sequence.contains(eventLink: eventLink) {
+				sequence.remove(eventLink: eventLink)
 			}
 		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == node.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == eventLink.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Node (\(node.ID)).", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteNode(node: node)}
+		NVLog.log("Deleted EventLink (\(eventLink.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteEventLink(story: self, link: eventLink)}
 	}
-	func deleteEntity(entity: NVEntity) {
-		// if any dialog instigators are this entity, nil them
-		(_identifiables.filter{$0 is NVDialog} as! [NVDialog]).forEach { (dlg) in
-			if dlg.Instigator == entity {
-				dlg.Instigator = nil
+	func delete(variable: NVVariable) {
+		// remove from story
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == variable.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		NVLog.log("Deleted Variable (\(variable.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteVariable(story: self, variable: variable)}
+	}
+	func delete(function: NVFunction) {
+		// remove from sequences
+		Sequences.forEach { (sequence) in
+			if sequence.EntryFunction == function {
+				sequence.EntryFunction = nil
+			}
+			if sequence.ExitFunction == function {
+				sequence.ExitFunction = nil
 			}
 		}
 		
-		print("TODO: When adding Entities as instigators (etc) to other elements, don't forget to remove them here.")
+		// remove from events
+		Events.forEach { (event) in
+			if event.EntryFunction == function {
+				event.EntryFunction = nil
+			}
+			if event.ExitFunction == function {
+				event.ExitFunction = nil
+			}
+		}
+		
+		// remove from groups
+		Groups.forEach { (group) in
+			if group.EntryFunction == function {
+				group.EntryFunction = nil
+			}
+			if group.ExitFunction == function {
+				group.ExitFunction = nil
+			}
+		}
+		
+		// remove from links
+		SequenceLinks.forEach { (link) in
+			if link.Function == function {
+				link.Function = nil
+			}
+		}
+		EventLinks.forEach { (link) in
+			if link.Function == function {
+				link.Function = nil
+			}
+		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == entity.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == function.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Entity (\(entity.ID))", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteEntity(entity: entity)}
+		NVLog.log("Deleted Function (\(function.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteFunction(story: self, function: function)}
 	}
-	func deleteVariable(variable: NVVariable) {
-		// remove from parent folder
-		variable._parent?.remove(variable: variable)
+	func delete(condition: NVCondition) {
+		// remove from sequences
+		Sequences.forEach { (sequence) in
+			if sequence.PreCondition == condition {
+				sequence.PreCondition = nil
+			}
+		}
+		
+		// remove from events
+		Events.forEach { (event) in
+			if event.PreCondition == condition {
+				event.PreCondition = nil
+			}
+		}
+		
+		// remove from groups
+		Groups.forEach { (group) in
+			if group.PreCondition == condition {
+				group.PreCondition = nil
+			}
+		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.ID == variable.ID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == condition.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		// print and delegate
-		NVLog.log("Deleted Variable (\(variable.ID))", level: .info)
-		Delegates.forEach{$0.nvStoryDidDeleteVariable(variable: variable)}
+		NVLog.log("Deleted Condition (\(condition.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteCondition(story: self, condition: condition)}
+	}
+	func delete(selector: NVSelector) {
+		// remove from all events
+		Events.forEach{ (event) in
+			if event.Instigators == selector {
+				event.Instigators = nil
+			}
+			if event.Targets == selector {
+				event.Targets = nil
+			}
+		}
+		
+		// remove frmo story
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == selector.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		NVLog.log("Deleted Selector (\(selector.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteSelector(story: self, selector: selector)}
 	}
 }
 
+private extension NVStory {
+	struct Observation {
+		weak var observer: NVStoryObserver?
+	}
+}

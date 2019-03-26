@@ -2,77 +2,52 @@
 //  NVVariable.swift
 //  novella
 //
-//  Created by dgreen on 09/08/2018.
-//  Copyright © 2018 dgreen. All rights reserved.
+//  Created by Daniel Green on 02/12/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Foundation
 
 class NVVariable: NVIdentifiable {
-	// MARK: - Variables
-	var ID: NSUUID
+	var UUID: NSUUID
 	private let _story: NVStory
-	var _parent: NVFolder? // would make this private but swift doesn't support friend classes
+	var Name: String {
+		didSet {
+			NVLog.log("Variable (\(UUID.uuidString)) Name changed (\(oldValue) -> \(Name)).", level: .info)
+			_story.Observers.forEach{$0.nvVariableNameDidChange(story: _story, variable: self)}
+		}
+	}
+	var Constant: Bool {
+		didSet {
+			NVLog.log("Variable (\(UUID.uuidString)) Constant changed (\(oldValue) -> \(Constant)).", level: .info)
+			_story.Observers.forEach{$0.nvVariableConstantDidChange(story: _story, variable: self)}
+		}
+	}
+	private(set) var Value: NVValue
 	
-	// MARK: - Properties
-	var Name: String = "" {
-		didSet {
-			NVLog.log("Variable (\(ID)) renamed (\(oldValue)->\(Name)).", level: .info)
-			_story.Delegates.forEach{$0.nvVariableDidRename(variable: self)}
-		}
-	}
-	var Synopsis: String = "" {
-		didSet {
-			NVLog.log("Variable (\(ID)) synopsis set to \"\(Synopsis)\".", level: .info)
-			_story.Delegates.forEach{$0.nvVariableSynopsisDidChange(variable: self)}
-		}
-	}
-	var Constant: Bool = false {
-		didSet {
-			NVLog.log("Variable (\(ID)) constant changed to \(Constant).", level: .info)
-			_story.Delegates.forEach{$0.nvVariableConstantDidChange(variable: self)}
-		}
-	}
-	var Value: NVValue = NVValue(.boolean(false)) {
-		didSet {
-			if Constant {
-				NVLog.log("Reverting Variable (\(ID)) value change as it is constant.", level: .warning)
-				Value = oldValue
-				return
-			}
-			NVLog.log("Variable (\(ID)) value changed to \(Value).", level: .info)
-			_story.Delegates.forEach{$0.nvVariableValueDidChange(variable: self)}
-		}
-	}
-	var InitialValue: NVValue = NVValue(.boolean(false)) {
-		didSet {
-			Value = InitialValue
-			NVLog.log("Variable (\(ID)) initial value changed to \(InitialValue).", level: .info)
-			_story.Delegates.forEach{$0.nvVariableInitialValueDidChange(variable: self)}
-		}
-	}
-	
-	// MARK: - Initialization
-	init(id: NSUUID, story: NVStory, name: String) {
-		self.ID = id
+	init(uuid: NSUUID, story: NVStory) {
+		self.UUID = uuid
 		self._story = story
-		self.Name = name
-		_parent = nil
-	}
-}
-
-extension NVVariable: NVPathable {
-	func localPath() -> String {
-		return Name
+		self.Name = ""
+		self.Constant = false
+		self.Value = NVValue(.boolean(false))
 	}
 	
-	func parentPathable() -> NVPathable? {
-		return _parent
+	func set(value: NVValue) {
+		if Constant {
+			NVLog.log("Tried to set Variable (\(UUID.uuidString)) Value but it was constant.", level: .warning)
+			return
+		}
+		
+		let oldValue = self.Value
+		self.Value = value
+		NVLog.log("Variable (\(UUID.uuidString)) Value changed (\(oldValue) -> \(value)).", level: .info)
+		_story.Observers.forEach{$0.nvVariableValueDidChange(story: _story, variable: self)}
 	}
 }
 
 extension NVVariable: Equatable {
-	static func ==(lhs: NVVariable, rhs: NVVariable) -> Bool {
-		return lhs.ID == rhs.ID
+	static func == (lhs: NVVariable, rhs: NVVariable) -> Bool {
+		return lhs.UUID == rhs.UUID
 	}
 }

@@ -2,231 +2,174 @@
 //  Canvas.swift
 //  novella
 //
-//  Created by dgreen on 10/08/2018.
+//  Created by dgreen on 06/12/2018.
 //  Copyright © 2018 dgreen. All rights reserved.
 //
 
-import Cocoa
-
-extension NSNotification.Name {
-	static let canvasAddDialog = Notification.Name("canvasAddDialog")
-	static let canvasAddDelivery = Notification.Name("canvasAddDelivery")
-	static let canvasAddContext = Notification.Name("canvasAddContext")
-	static let canvasAddBranch = Notification.Name("canvasAddBranch")
-	static let canvasAddSwitch = Notification.Name("canvasAddSwitch")
-}
+import AppKit
 
 class Canvas: NSView {
 	static let DEFAULT_SIZE: CGFloat = 600000.0
 	
-	// MARK: - Variables
-	private let _background: CanvasBG
+	private(set) var Doc: Document
+	private(set) var MappedGroup: NVGroup?
+	private(set) var MappedSequence: NVSequence?
+	private let _background: CanvasBackground
 	private let _marquee: CanvasMarquee
 	private var _allObjects: [CanvasObject]
-	private var _allLinks: [Link]
-	private var _panGesture: NSPanGestureRecognizer?
-	private var _benches: [CanvasObject:Bench<NSView>]
-	private var _lastContextLocation = CGPoint.zero
-	private var _canvasContextMenu = NSMenu()
-	private var _rmbPanLocation = CGPoint.zero
-	private var _rmbInitialMag: CGFloat = 0.0
-	private var _rmbInitialLoc = CGPoint.zero
+	private var _allBenches: [CanvasObject:CanvasBench]
+	private(set) var Selection: CanvasSelection
+	private var _contextMenu: NSMenu
+	private var _lastContextPos: CGPoint
+	private let _addGroupMenuItem: NSMenuItem
+	private let _addSequenceMenuItem: NSMenuItem
+	private let _addEventMenuItem: NSMenuItem
+	private let _surfaceMenuItem: NSMenuItem
+	//
+	private var _rmbPanInitialLocation: CGPoint
+	private var _rmbPanCurrentLocation: CGPoint
+	private var _rmbPanInitialMag: CGFloat
 	
-	// MARK: - Properties
-	private(set) var Doc: Document
-	private(set) var Graph: NVGraph
-	private(set) var Selection: CanvasSelection?
-	
-	// MARK: - Initialization
-	init(doc: Document, graph: NVGraph) {
+	init(doc: Document) {
 		self.Doc = doc
-		self.Graph = graph
-		self.Selection = nil
+		self.MappedGroup = nil
+		self.MappedSequence = nil
 		let initialFrame = NSMakeRect(0, 0, Canvas.DEFAULT_SIZE, Canvas.DEFAULT_SIZE)
-		self._background = CanvasBG(frame: initialFrame)
+		self._background = CanvasBackground(frame: initialFrame)
 		self._marquee = CanvasMarquee(frame: initialFrame)
 		self._allObjects = []
-		self._allLinks = []
-		self._benches = [:]
-		self._panGesture = nil
+		self._allBenches = [:]
+		self.Selection = CanvasSelection()
+		self._contextMenu = NSMenu()
+		self._lastContextPos = CGPoint.zero
+		self._addGroupMenuItem = NSMenuItem(title: "Group", action: #selector(Canvas.onContextAddGroup), keyEquivalent: "")
+		self._addSequenceMenuItem = NSMenuItem(title: "Sequence", action: #selector(Canvas.onContextAddSequence), keyEquivalent: "")
+		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
+		self._surfaceMenuItem = NSMenuItem(title: "Surface", action: #selector(Canvas.onContextSurface), keyEquivalent: "")
+		//
+		self._rmbPanInitialLocation = CGPoint.zero
+		self._rmbPanCurrentLocation = CGPoint.zero
+		self._rmbPanInitialMag = 0.0
 		super.init(frame: initialFrame)
 		
-		// setup layers
+		Selection.TheCanvas = self
+		
 		wantsLayer = true
 		
-		// pan gesture
-		_panGesture = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onPan))
-		_panGesture?.buttonMask = 0x1 // "primary button"
-		addGestureRecognizer(_panGesture!)
+		let pan = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onPan))
+		pan.buttonMask = 0x1
+		addGestureRecognizer(pan)
 		
-		// rmb pan gesture
-		let rmbPanGesture = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onRmbPan))
-		rmbPanGesture.buttonMask = 0x2
-		addGestureRecognizer(rmbPanGesture)
+		let rmbPan = NSPanGestureRecognizer(target: self, action: #selector(Canvas.onRmbPan))
+		rmbPan.buttonMask = 0x2
+		addGestureRecognizer(rmbPan)
 		
-		// context click gesture
-		let canvasContextGesture = NSClickGestureRecognizer(target: self, action: #selector(Canvas.onContext))
-		canvasContextGesture.buttonMask = 0x2 // "secondary click"
-		canvasContextGesture.numberOfClicksRequired = 1
-		addGestureRecognizer(canvasContextGesture)
+		let ctx = NSClickGestureRecognizer(target: self, action: #selector(Canvas.onContext))
+		ctx.buttonMask = 0x2
+		addGestureRecognizer(ctx)
 		
-		// canvas context menu setup
-		let addSubMenu = NSMenu()
-		addSubMenu.addItem(withTitle: "Dialog", action: #selector(Canvas.onContextAddDialog), keyEquivalent: "")
-		addSubMenu.addItem(withTitle: "Delivery", action: #selector(Canvas.onContextAddDelivery), keyEquivalent: "")
-		addSubMenu.addItem(withTitle: "Context", action: #selector(Canvas.onContextAddContext), keyEquivalent: "")
-		addSubMenu.addItem(withTitle: "Branch", action: #selector(Canvas.onContextAddBranch), keyEquivalent: "")
-		addSubMenu.addItem(withTitle: "Switch", action: #selector(Canvas.onContextAddSwitch), keyEquivalent: "")
+		let addMenu = NSMenu()
+		addMenu.autoenablesItems = false
+		addMenu.addItem(_addGroupMenuItem)
+		addMenu.addItem(_addSequenceMenuItem)
+		addMenu.addItem(_addEventMenuItem)
 		let addMenuItem = NSMenuItem()
 		addMenuItem.title = "Add..."
-		addMenuItem.submenu = addSubMenu
-		_canvasContextMenu.addItem(addMenuItem)
-		//
-		_canvasContextMenu.addItem(withTitle: "Select All", action: #selector(Canvas.onContextSelectAll), keyEquivalent: "")
-		//
-		_canvasContextMenu.addItem(withTitle: "Save to image...", action: #selector(Canvas.onContextSaveImage), keyEquivalent: "")
+		addMenuItem.submenu = addMenu
+		_contextMenu.addItem(addMenuItem)
+		_contextMenu.addItem(NSMenuItem.separator())
+		_contextMenu.addItem(_surfaceMenuItem)
+		_contextMenu.autoenablesItems = false
 		
-		// selection handler
-		Selection = CanvasSelection(canvas: self)
-		
-		// setup for this graph
-		setupForGraph(graph)
-		
-		// setup story delegate
-		doc.Story.addDelegate(self)
-		
-		// setup notification callbacks
-		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddDialog), name: .canvasAddDialog, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddDelivery), name: .canvasAddDelivery, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddContext), name: .canvasAddContext, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddBranch), name: .canvasAddBranch, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(Canvas.onNotificationAddSwitch), name: .canvasAddSwitch, object: nil)
+		doc.Story.add(observer: self)
 	}
 	required init?(coder decoder: NSCoder) {
-		fatalError("Canvas::init(coder) not implemented.")
+		fatalError()
 	}
 	
-	// MARK: - Functions
-	func setupForGraph(_ graph: NVGraph) {
-		// remove selection
-		Selection?.select([], append: false)
-		// clear all objects
+	func setupFor(group: NVGroup) {
+		MappedGroup = group
+		MappedSequence = nil
+		
+		_addGroupMenuItem.isEnabled = true
+		_addSequenceMenuItem.isEnabled = true
+		_addEventMenuItem.isEnabled = false
+		_surfaceMenuItem.isEnabled = group.Parent != nil
+		
 		_allObjects = []
-		// clear all links
-		_allLinks = []
-		// clear all benches
-		_benches = [:]
-		// remove all subviews
+		_allBenches = [:]
+		
+		Selection.clear()
+		
 		subviews.removeAll()
-		
-		// store graph
-		self.Graph = graph
-		
-		// add background and marquee
 		addSubview(_background)
 		addSubview(_marquee)
 		
-		//
-		// create existing graph contents
-		//
-		// nodes (without their links)
-		for curr in graph.Nodes {
-			switch curr {
-			case let asDialog as NVDialog:
-				makeDialog(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvNode: asDialog)
-			case let asDelivery as NVDelivery:
-				makeDelivery(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvNode: asDelivery)
-			case let asContext as NVContext:
-				makeContext(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvNode: asContext)
-			default:
-				NVLog.log("Encountered unhandled node type while creating Canvas.", level: .warning)
-			}
+		// add all child groups
+		for child in group.Groups {
+			makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
-		// branches (without their links)
-		for curr in graph.Branches {
-			makeBranch(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvBranch: curr)
+		// add all child sequences
+		for child in group.Sequences {
+			makeSequence(nvSequence: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
-		// switches (without their links)
-		for curr in graph.Switches {
-			makeSwitch(at: Doc.Positions[curr.ID] ?? CGPoint.zero, nvSwitch: curr)
+		// add all sequence links
+		for child in group.SequenceLinks {
+			addSequenceLink(link: child)
 		}
-		// links
-		for curr in graph.Links {
-			if let node = canvasObjectFor(nvLinkable: curr.Origin) as? CanvasNode {
-				benchFor(object: node)?.add(makeLink(origin: curr.Origin, nvLink: curr))
-			} else {
-				NVLog.log("Tried to add Link but couldn't find the origin's CanvasObject counterpart.", level: .warning)
-			}
-		}
-		// redraw all
-		_allObjects.forEach{$0.redraw()}
+		
+		// post setup for group notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForGroup, object: nil, userInfo: [
+			"group": group
+		])
 	}
 	
-	override func mouseDown(with event: NSEvent) {
-		Selection?.select([], append: false)
+	func setupFor(sequence: NVSequence) {
+		MappedSequence = sequence
+		MappedGroup = nil
+		
+		_addGroupMenuItem.isEnabled = false
+		_addSequenceMenuItem.isEnabled = false
+		_addEventMenuItem.isEnabled = true
+		_surfaceMenuItem.isEnabled = sequence.Parent != nil
+		
+		_allObjects = []
+		_allBenches = [:]
+		
+		Selection.clear()
+		
+		subviews.removeAll()
+		addSubview(_background)
+		addSubview(_marquee)
+		
+		// add all child events
+		for child in sequence.Events {
+			makeEvent(nvEvent: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		// add all event links
+		for child in sequence.EventLinks {
+			addEventLink(link: child)
+		}
+		
+		// post setup for sequence notification
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForSequence, object: nil, userInfo: [
+			"sequence": sequence
+		])
 	}
 	
-	func canvasObjectFor(nvLinkable: NVLinkable) -> CanvasObject? {
+	override func mouseDown(with event: NSEvent) {  // this is the default mousedown w/o any gestures
+		Selection.clear()
+	}
+	
+	func objectAt(point: CGPoint, ignoring: CanvasObject?=nil) -> CanvasObject? {
 		for curr in _allObjects {
-			switch curr {
-			case let asCanvasBranch as CanvasBranch:
-				if asCanvasBranch.Branch.ID == nvLinkable.ID {
-					return curr
-				}
-				
-			case let asCanvasSwitch as CanvasSwitch:
-				if asCanvasSwitch.Switch.ID == nvLinkable.ID {
-					return curr
-				}
-				
-			case let asCanvasNode as CanvasNode:
-				if asCanvasNode.Node.ID == nvLinkable.ID {
-					return curr
-				}
-				
-			default:
-				break
+			let hit = curr.hitTest(point)
+			// ignore objects that didn't hittest themselves
+			if hit != curr {
+				continue
 			}
-		}
-		return nil
-	}
-	
-	func allTransfersTo(nvLinkable: NVLinkable) -> [Transfer] {
-		var result: [Transfer] = []
-		
-		// check all links (covers all nodes, but not branches or switches, as they are using Transfer directly)
-		_allLinks.forEach { (link) in
-			if let canvasTransfer = link.TheTransfer, canvasTransfer.TheTransfer.Destination?.ID == nvLinkable.ID {
-				result.append(canvasTransfer)
-			}
-		}
-		
-		// check all branches
-		(_allObjects.filter{$0 is CanvasBranch} as! [CanvasBranch]).forEach { (branch) in
-			if branch.TrueTransfer.TheTransfer.Destination?.ID == nvLinkable.ID {
-				result.append(branch.TrueTransfer)
-			}
-			if branch.FalseTransfer.TheTransfer.Destination?.ID == nvLinkable.ID {
-				result.append(branch.FalseTransfer)
-			}
-		}
-		
-		// check all switches
-		(_allObjects.filter{$0 is CanvasSwitch} as! [CanvasSwitch]).forEach { (swtch) in
-			// todo: switch stores everything in the bench only... maybe i can do this for the other ones to keep privates private?
-			(benchFor(object: swtch)?.Items as? [SwitchOption])?.forEach{ (option) in
-				if option.TheTransfer.TheTransfer.Destination?.ID == nvLinkable.ID {
-					result.append(option.TheTransfer)
-				}
-			}
-		}
-		
-		return result
-	}
-	
-	func objectAt(point: CGPoint) -> CanvasObject? {
-		for curr in _allObjects {
-			if curr.hitTest(point) != curr {
+			// also ignore a result that is the same as the 'ignoring' value if it's not nil (e.g., self)
+			if ignoring != nil && ignoring == hit {
 				continue
 			}
 			return curr
@@ -238,46 +181,45 @@ class Canvas: NSView {
 	}
 	private func allObjectsIn(rect: NSRect) -> [CanvasObject] {
 		var objs: [CanvasObject] = []
-		_allObjects.forEach({ (curr) in
-			if objectIn(obj: curr, rect: _marquee.Region) {
-				objs.append(curr)
+		_allObjects.forEach { (obj) in
+			if objectIn(obj: obj, rect: _marquee.Region) {
+				objs.append(obj)
 			}
-		})
+		}
 		return objs
 	}
 	
-	func benchFor(object: CanvasObject) -> Bench<NSView>? {
-		return _benches.keys.contains(object) ? _benches[object] : nil
+	private func makeBench() -> CanvasBench {
+		let bench = CanvasBench()
+		addSubview(bench, positioned: .above, relativeTo: _marquee)
+		bench.translatesAutoresizingMaskIntoConstraints = false
+		return bench
+	}
+	private func benchFor(obj: CanvasObject) -> CanvasBench? {
+		return _allBenches.keys.contains(obj) ? _allBenches[obj] : nil
 	}
 	
-	// MARK: Gesture Callbacks
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
 		case .began:
-			if !_marquee.InMarquee {
-				_marquee.Origin = gesture.location(in: self)
-				_marquee.InMarquee = true
-			}
+			_marquee.Origin = gesture.location(in: self)
+			_marquee.InMarquee = true
 			
 		case .changed:
 			if _marquee.InMarquee {
 				_marquee.End = gesture.location(in: self)
 				
-				// handle un/priming of nodes out/in the marquee region
-				let objectsInMarquee = allObjectsIn(rect: _marquee.Region)
-				for curr in _allObjects {
-					if curr.CurrentState == .selected {
-						continue
-					}
-					objectsInMarquee.contains(curr) ? curr.prime() : curr.normal()
+				// handle un/priming of non-selected objects in the selection marquee
+				let objsInMarquee = allObjectsIn(rect: _marquee.Region)
+				_allObjects.filter{$0.CurrentState != .selected}.forEach { (obj) in
+					obj.CurrentState = objsInMarquee.contains(obj) ? .primed : .normal
 				}
 			}
 			
 		case .cancelled, .ended:
 			if _marquee.InMarquee {
-				// select whatever was inside the marquee (appending if shift pressed)
 				let append = NSApp.currentEvent?.modifierFlags.contains(.shift) ?? false
-				Selection?.select(allObjectsIn(rect: _marquee.Region), append: append)
+				Selection.select(allObjectsIn(rect: _marquee.Region), append: append)
 				
 				_marquee.InMarquee = false
 			}
@@ -286,6 +228,7 @@ class Canvas: NSView {
 			break
 		}
 	}
+	
 	@objc private func onRmbPan(gesture: NSPanGestureRecognizer) {
 		guard let scrollView = superview?.superview as? NSScrollView else {
 			print("Attempted to RMB pan Canvas but it was not correctly embedded within an NSScrollView (NSScrollView->NSClipView->Canvas).")
@@ -294,22 +237,20 @@ class Canvas: NSView {
 		
 		switch gesture.state {
 		case .began:
-			_rmbPanLocation = gesture.location(in: scrollView)
-			_rmbInitialLoc = _rmbPanLocation
-			_rmbInitialMag = scrollView.magnification
+			_rmbPanInitialLocation = gesture.location(in: scrollView)
+			_rmbPanCurrentLocation = _rmbPanInitialLocation
+			_rmbPanInitialMag = scrollView.magnification
 			
 		case .changed:
-			let curr = gesture.location(in: scrollView)
-			
-
+			let currPos = gesture.location(in: scrollView)
 			
 			if NSApp.currentEvent?.modifierFlags.contains(.shift) ?? false {
-				let diff = (curr - _rmbInitialLoc)
-				let dist = (diff.x - diff.y) * 0.001
-				scrollView.magnification = _rmbInitialMag + dist
+				let diff = (currPos - _rmbPanInitialLocation)
+				let dist = (diff.x - diff.y) * 0.001 // TODO: variable this?
+				scrollView.magnification = _rmbPanInitialMag + dist
 			} else {
-				let panSpeed: CGFloat = 0.5
-				var diff = (curr - _rmbPanLocation) * panSpeed
+				let panSpeed: CGFloat = 0.5 // TODO: variable this
+				var diff = (currPos - _rmbPanCurrentLocation) * panSpeed
 				diff.x *= scrollView.isFlipped ? -1.0 : 1.0
 				diff.y *= scrollView.isFlipped ? 1.0 : -1.0
 				let center = visibleRect.origin + diff
@@ -317,315 +258,223 @@ class Canvas: NSView {
 				scrollView.reflectScrolledClipView(scrollView.contentView)
 			}
 			
-			_rmbPanLocation = curr
+			_rmbPanCurrentLocation = currPos
+			
+		case .cancelled, .ended:
+			break
 			
 		default:
 			break
 		}
 	}
+	
 	@objc private func onContext(gesture: NSClickGestureRecognizer) {
-		_lastContextLocation = gesture.location(in: self)
-		NSMenu.popUpContextMenu(_canvasContextMenu, with: NSApp.currentEvent!, for: self)
+		// must be set up to show context menu
+		if MappedGroup != nil || MappedSequence != nil {
+			_lastContextPos = gesture.location(in: self)
+			NSMenu.popUpContextMenu(_contextMenu, with: NSApp.currentEvent!, for: self)
+		}
 	}
 	
-	// MARK: Canvas Context Callbacks
-	@objc private func onContextSaveImage() {
-		let rep = self.bitmapImageRepForCachingDisplay(in: visibleRect)!
-		self.cacheDisplay(in: visibleRect, to: rep)
+	@objc private func onContextAddGroup() {
+		if let mappedGroup = MappedGroup {
+			let newGroup = Doc.Story.makeGroup()
+			mappedGroup.add(group: newGroup)
+			canvasGroupFor(nvGroup: newGroup)?.move(to: _lastContextPos)
+		}
+	}
+	
+	@objc private func onContextAddSequence() {
+		if let mappedGroup = MappedGroup {
+			let newSequence = Doc.Story.makeSequence()
+			mappedGroup.add(sequence: newSequence)
+			canvasSequenceFor(nvSequence: newSequence)?.move(to: _lastContextPos)
+		}
+	}
+	
+	@objc private func onContextAddEvent() {
+		if let mappedSequence = MappedSequence {
+			let newEvent = Doc.Story.makeEvent()
+			mappedSequence.add(event: newEvent)
+			canvasEventFor(nvEvent: newEvent)?.move(to: _lastContextPos)
+		}
+	}
+	
+	@objc private func onContextSurface() {
+		if let parent = MappedGroup?.Parent {
+			setupFor(group: parent)
+		} else if let parent = MappedSequence?.Parent {
+			setupFor(group: parent)
+		}
+	}
+	
+	private func centerPoint() -> CGPoint {
+		return NSMakePoint(visibleRect.midX, visibleRect.midY)
+	}
+	
+	private func canvasGroupFor(nvGroup: NVGroup) -> CanvasGroup? {
+		return (_allObjects.filter{$0 is CanvasGroup} as! [CanvasGroup]).first(where: {$0.Group == nvGroup})
+	}
+	func canvasSequenceFor(nvSequence: NVSequence) -> CanvasSequence? {
+		return (_allObjects.filter{$0 is CanvasSequence} as! [CanvasSequence]).first(where: {$0.Sequence == nvSequence})
+	}
+	func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
+		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.Event == nvEvent})
+	}
+	
+	// creating canvas elements from novella elements w/o requesting them from the story
+	@discardableResult private func makeGroup(nvGroup: NVGroup, at: CGPoint) -> CanvasGroup {
+		let obj = CanvasGroup(canvas: self, group: nvGroup)
+		_allObjects.append(obj)
+		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
-		let sp = NSSavePanel()
-		sp.allowedFileTypes = ["png"]
-		if sp.runModal() != NSApplication.ModalResponse.OK {
+		obj.frame.origin = at
+		
+		return obj
+	}
+	@discardableResult private func makeSequence(nvSequence: NVSequence, at: CGPoint) -> CanvasSequence {
+		let obj = CanvasSequence(canvas: self, sequence: nvSequence)
+		_allObjects.append(obj)
+		addSubview(obj, positioned: .below, relativeTo: _marquee)
+
+		obj.frame.origin = at
+
+		let bench = makeBench()
+		_allBenches[obj] = bench
+		bench.constrain(to: obj)
+		
+		return obj
+	}
+	@discardableResult private func makeEvent(nvEvent: NVEvent, at: CGPoint) -> CanvasEvent {
+		let obj = CanvasEvent(canvas: self, event: nvEvent)
+		_allObjects.append(obj)
+		addSubview(obj, positioned: .below, relativeTo: _marquee)
+		
+		obj.frame.origin = at
+		
+		let bench = makeBench()
+		_allBenches[obj] = bench
+		bench.constrain(to: obj)
+		
+		return obj
+	}
+	
+	// shared object functionality
+	func moveSelection(delta: CGPoint) {
+		Selection.Selection.forEach { (obj) in
+			var newPos = NSMakePoint(obj.frame.origin.x + delta.x, obj.frame.origin.y + delta.y)
+			if newPos.x < 0.0 {
+				newPos.x = 0.0
+			}
+			if (newPos.x + obj.frame.width) > bounds.width {
+				newPos.x = bounds.width - obj.frame.width
+			}
+			if newPos.y < 0.0 {
+				newPos.y = 0.0
+			}
+			if (newPos.y + obj.frame.height) > bounds.height {
+				newPos.y = bounds.height - obj.frame.height
+			}
+			obj.move(to: newPos)
+		}
+	}
+	
+	func makeSequenceLink(sequence: CanvasSequence) {
+		// sequences only exist within groups so ensure a group is mapped
+		if let group = MappedGroup {
+			let link = Doc.Story.makeSequenceLink(origin: sequence.Sequence, dest: nil)
+			group.add(sequenceLink: link)
+		}
+	}
+	private func addEventLink(link: NVEventLink) {
+		guard let obj = canvasEventFor(nvEvent: link.Origin) else {
+			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
 			return
 		}
-		let finalData = rep.representation(using: .png, properties: [:])
-		do{ try finalData?.write(to: sp.url!) } catch {
-			print("Failed to write screenshot to disk.")
+		benchFor(obj: obj)?.add(CanvasEventLink(canvas: self, origin: obj, link: link))
+	}
+	func makeEventLink(event: CanvasEvent) {
+		// events only exist within sequences so ensure a sequence is mapped
+		if let sequence = MappedSequence {
+			let link = Doc.Story.makeEventLink(origin: event.Event, dest: nil)
+			sequence.add(eventLink: link)
 		}
 	}
-	@objc private func onContextAddDialog() {
-		makeDialog(at: _lastContextLocation)
-	}
-	@objc private func onContextAddDelivery() {
-		makeDelivery(at: _lastContextLocation)
-	}
-	@objc private func onContextAddContext() {
-		makeContext(at: _lastContextLocation)
-	}
-	@objc private func onContextAddBranch() {
-		makeBranch(at: _lastContextLocation)
-	}
-	@objc private func onContextAddSwitch() {
-		makeSwitch(at: _lastContextLocation)
-	}
-	@objc private func onContextSelectAll() {
-		Selection?.select(_allObjects, append: false)
-	}
-	
-	// MARK: Notification Center Callbacks
-	@objc private func onNotificationAddDialog(_ sender: NSNotification) {
-		makeDialog(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
-	}
-	@objc private func onNotificationAddDelivery(_ sender: NSNotification) {
-		makeDelivery(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
-	}
-	@objc private func onNotificationAddContext(_ sender: NSNotification) {
-		makeContext(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
-	}
-	@objc private func onNotificationAddBranch(_ sender: NSNotification) {
-		makeBranch(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
-	}
-	@objc private func onNotificationAddSwitch(_ sender: NSNotification) {
-		makeSwitch(at: NSMakePoint(visibleRect.midX, visibleRect.midY))
-	}
-	
-	// MARK: External Creation
-	@discardableResult func makeDialog(at: CGPoint) -> CanvasDialog {
-		let dialog = makeDialog(at: at, nvNode: nil)
-		Graph.add(node: dialog.Node)
-		return dialog
-	}
-	@discardableResult func makeDelivery(at: CGPoint) -> CanvasDelivery {
-		let delivery = makeDelivery(at: at, nvNode: nil)
-		Graph.add(node: delivery.Node)
-		return delivery
-	}
-	@discardableResult func makeContext(at: CGPoint) -> CanvasContext {
-		let context = makeContext(at: at, nvNode: nil)
-		Graph.add(node: context.Node)
-		return context
-	}
-	@discardableResult func makeBranch(at: CGPoint) -> CanvasBranch {
-		let branch = makeBranch(at: at, nvBranch: nil)
-		Graph.add(branch: branch.Branch)
-		return branch
-	}
-	@discardableResult func makeSwitch(at: CGPoint) -> CanvasSwitch {
-		let swtch = makeSwitch(at: at, nvSwitch: nil)
-		Graph.add(swtch: swtch.Switch)
-		return swtch
-	}
-	// MARK: Internal Creation
-	@discardableResult private func makeDialog(at: CGPoint, nvNode: NVDialog?) -> CanvasDialog {
-		// make bench
-		let bench = Bench<NSView>()
-		addSubview(bench, positioned: .below, relativeTo: _marquee)
-		bench.translatesAutoresizingMaskIntoConstraints = false
-		
-		let node = CanvasDialog(canvas: self, nvNode: nvNode ?? Doc.Story.makeDialog(), bench: bench)
-		_allObjects.append(node)
-		addSubview(node, positioned: .below, relativeTo: _marquee)
-		var pos = at
-		pos.x -= node.frame.width * 0.5
-		pos.y -= node.frame.height * 0.5
-		node.frame.origin = pos
-		
-		// linking
-		bench.constrainTo(node)
-		_benches[node] = bench
-		
-		return node
-	}
-	@discardableResult private func makeDelivery(at: CGPoint, nvNode: NVDelivery?) -> CanvasDelivery {
-		// make bench
-		let bench = Bench<NSView>()
-		addSubview(bench, positioned: .below, relativeTo: _marquee)
-		bench.translatesAutoresizingMaskIntoConstraints = false
-		
-		let node = CanvasDelivery(canvas: self, nvNode: nvNode ?? Doc.Story.makeDelivery(), bench: bench)
-		_allObjects.append(node)
-		addSubview(node, positioned: .below, relativeTo: _marquee)
-		var pos = at
-		pos.x -= node.frame.width * 0.5
-		pos.y -= node.frame.height * 0.5
-		node.frame.origin = pos
-		
-		// linking
-		bench.constrainTo(node)
-		_benches[node] = bench
-		
-		return node
-	}
-	@discardableResult private func makeContext(at: CGPoint, nvNode: NVContext?) -> CanvasContext {
-		// make bench
-		let bench = Bench<NSView>()
-		addSubview(bench, positioned: .below, relativeTo: _marquee)
-		bench.translatesAutoresizingMaskIntoConstraints = false
-		
-		let node = CanvasContext(canvas: self, nvNode: nvNode ?? Doc.Story.makeContext(), bench: bench)
-		_allObjects.append(node)
-		addSubview(node, positioned: .below, relativeTo: _marquee)
-		var pos = at
-		pos.x -= node.frame.width * 0.5
-		pos.y -= node.frame.height * 0.5
-		node.frame.origin = pos
-		
-		// linking
-		bench.constrainTo(node)
-		_benches[node] = bench
-		
-		return node
-	}
-	@discardableResult private func makeBranch(at: CGPoint, nvBranch: NVBranch?) -> CanvasBranch {
-		// make bench
-		let bench = Bench<NSView>()
-		addSubview(bench, positioned: .below, relativeTo: _marquee)
-		bench.translatesAutoresizingMaskIntoConstraints = false
-		
-		// make branch
-		let branch = CanvasBranch(canvas: self, nvBranch: nvBranch ?? Doc.Story.makeBranch(), bench: bench)
-		_allObjects.append(branch)
-		addSubview(branch, positioned: .below, relativeTo: _marquee)
-		var pos = at
-		pos.x -= branch.frame.width * 0.5
-		pos.y -= branch.frame.height * 0.5
-		branch.frame.origin = pos
-
-		// linking
-		bench.constrainTo(branch)
-		_benches[branch] = bench
-		
-		return branch
-	}
-	@discardableResult private func makeSwitch(at: CGPoint, nvSwitch: NVSwitch?) -> CanvasSwitch {
-		// make bench
-		let bench = Bench<NSView>()
-		addSubview(bench, positioned: .below, relativeTo: _marquee)
-		bench.translatesAutoresizingMaskIntoConstraints = false
-		
-		// make switch
-		let swtch = CanvasSwitch(canvas: self, nvSwitch: nvSwitch ?? Doc.Story.makeSwitch(), bench: bench)
-		_allObjects.append(swtch)
-		addSubview(swtch, positioned: .below, relativeTo: _marquee)
-		var pos = at
-		pos.x -= swtch.frame.width * 0.5
-		pos.y -= swtch.frame.height * 0.5
-		swtch.frame.origin = pos
-		
-		// linking
-		bench.constrainTo(swtch)
-		_benches[swtch] = bench
-
-		return swtch
-	}
-	@discardableResult func makeLink(origin: NVLinkable, nvLink: NVLink?) -> Link {
-		let link = Link(canvas: self, link: nvLink ?? Doc.Story.makeLink(origin: origin))
-		_allLinks.append(link)
-		if nvLink == nil { // only add if we're making a new link
-			Graph.add(link: link.TheLink)
+	private func addSequenceLink(link: NVSequenceLink) {
+		guard let obj = canvasSequenceFor(nvSequence: link.Origin) else {
+			NVLog.log("Tried to add a SequenceLink but couldn't find a CanvasSequence for the origin!", level: .error)
+			return
 		}
-		return link
+		benchFor(obj: obj)?.add(CanvasSequenceLink(canvas: self, origin: obj, link: link))
 	}
 }
 
-// MARK: - NVStoryDelegate
-extension Canvas: NVStoryDelegate {
-	func nvNodeDidRename(node: NVNode) {
-		guard let obj = canvasObjectFor(nvLinkable: node) else {
-			print("Canvas tried to handle nvNodeDidRename(\(node.ID)) but couldn't find a matching CanvasObject.")
-			return
-		}
-		obj.reloadFromModel()
-	}
-	func nvDialogContentDidChange(dialog: NVDialog) {
-		guard let obj = canvasObjectFor(nvLinkable: dialog) else {
-			print("Canvas tried to handle nvDialogContentDidChange(\(dialog.ID)) but couldn't find a matching CanvasObject.")
-			return
-		}
-		obj.reloadFromModel()
-	}
-	func nvDeliveryContentDidChange(delivery: NVDelivery) {
-		guard let obj = canvasObjectFor(nvLinkable: delivery) else {
-			print("Canvas tried to handle nvDeliveryContentDidChange(\(delivery.ID)) but couldn't find a matching CanvasObject.")
-			return
-		}
-		obj.reloadFromModel()
-	}
-	func nvContextContentDidChange(context: NVContext) {
-		guard let obj = canvasObjectFor(nvLinkable: context) else {
-			print("Canvas tried to handle nvContextContentDidChange(\(context.ID)) but couldn't find a matching CanvasObject.")
-			return
-		}
-		obj.reloadFromModel()
+extension Canvas: NVStoryObserver {
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
+		addSequenceLink(link: link)
 	}
 	
-	// deletion
-	func nvStoryDidDeleteLink(link: NVLink) {
-		// find link
-		if let canvasLink = _allLinks.first(where: {$0.TheLink == link}) {
-			// remove from superview
-			canvasLink.removeFromSuperview()
-			
-			// remove from node's board
-			(_allObjects.filter{$0 is CanvasNode} as! [CanvasNode]).forEach { (canvasNode) in
-				if let bench = benchFor(object: canvasNode), bench.contains(canvasLink) {
-					bench.remove(canvasLink)
-				}
-			}
-			
-			// remove from all links
-			if let idx = _allLinks.firstIndex(of: canvasLink) {
-				_allLinks.remove(at: idx)
-			}
+	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
+		addEventLink(link: link)
+	}
+	
+	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
+		canvasGroupFor(nvGroup: group)?.reloadData()
+	}
+	
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
+		if let old = oldEntry {
+			canvasSequenceFor(nvSequence: old)?.reloadData()
+		}
+		if let new = newEntry {
+			canvasSequenceFor(nvSequence: new)?.reloadData()
 		}
 	}
-	func nvStoryDidDeleteNode(node: NVNode) {
-		if let canvasNode = canvasObjectFor(nvLinkable: node) as? CanvasNode {
-			// get and remove the bench
-			if let bench = benchFor(object: canvasNode) {
-				bench.removeFromSuperview()
-				_benches.removeValue(forKey: canvasNode)
-			}
-			
-			// cache transfers that have a the destination as this node so we can refresh them
-			let cachedTransfers = allTransfersTo(nvLinkable: node)
-			
-			// remove from parent view (canvas)
-			canvasNode.removeFromSuperview()
-			
-			// remove from all nodes
-			if let idx = _allObjects.firstIndex(of: canvasNode) {
-				_allObjects.remove(at: idx)
-			}
-			
-			// update cached transfers so they redraw properly
-			cachedTransfers.forEach{$0.redraw()}
+	
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
+		if group != MappedGroup {
+			return
+		}
+		makeSequence(nvSequence: sequence, at: Doc.Positions[sequence.UUID] ?? centerPoint())
+	}
+	
+	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		if group != MappedGroup {
+			return
+		}
+
+		makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+	}
+	
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
+		canvasSequenceFor(nvSequence: sequence)?.reloadData()
+	}
+	
+	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
+		canvasSequenceFor(nvSequence: sequence)?.reloadData()
+	}
+	
+	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
+		if let old = oldEntry {
+			canvasEventFor(nvEvent: old)?.reloadData()
+		}
+		if let new = newEntry {
+			canvasEventFor(nvEvent: new)?.reloadData()
 		}
 	}
-	func nvStoryDidDeleteBranch(branch: NVBranch) {
-		if let canvasBranch = canvasObjectFor(nvLinkable: branch) as? CanvasBranch {
-			if let bench = benchFor(object: canvasBranch) {
-				bench.removeFromSuperview()
-				_benches.removeValue(forKey: canvasBranch)
-			}
-			
-			let cachedTransfers = allTransfersTo(nvLinkable: branch)
-			
-			canvasBranch.removeFromSuperview()
-			
-			if let idx = _allObjects.firstIndex(of: canvasBranch) {
-				_allObjects.remove(at: idx)
-			}
-			
-			cachedTransfers.forEach{$0.redraw()}
+	
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		if sequence != MappedSequence {
+			return
 		}
+		makeEvent(nvEvent: event, at: Doc.Positions[event.UUID] ?? centerPoint())
 	}
-	func nvStoryDidDeleteSwitch(swtch: NVSwitch) {
-		if let canvasSwitch = canvasObjectFor(nvLinkable: swtch) as? CanvasSwitch {
-			if let bench = benchFor(object: canvasSwitch) {
-				bench.removeFromSuperview()
-				_benches.removeValue(forKey: canvasSwitch)
-			}
-			
-			let cachedTransfers = allTransfersTo(nvLinkable: swtch)
-			
-			canvasSwitch.removeFromSuperview()
-			
-			if let idx = _allObjects.firstIndex(of: canvasSwitch) {
-				_allObjects.remove(at: idx)
-			}
-			
-			cachedTransfers.forEach{$0.redraw()}
-		}
+	
+	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
+		canvasEventFor(nvEvent: event)?.reloadData()
+	}
+	
+	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
+		canvasEventFor(nvEvent: event)?.reloadData()
 	}
 }

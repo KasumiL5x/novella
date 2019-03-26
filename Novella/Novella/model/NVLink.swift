@@ -2,34 +2,55 @@
 //  NVLink.swift
 //  novella
 //
-//  Created by dgreen on 09/08/2018.
-//  Copyright © 2018 dgreen. All rights reserved.
+//  Created by Daniel Green on 30/11/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Foundation
 
-class NVLink: NVIdentifiable {
-	// MARK: - Variables
-	var ID: NSUUID
+typealias NVSequenceLink = NVLink<NVSequence>
+typealias NVEventLink = NVLink<NVEvent>
+
+class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
+	var UUID: NSUUID
 	private let _story: NVStory
 	
-	// MARK: - Properties
-	private(set) var Origin: NVLinkable
-	private(set) var PreCondition: NVCondition
-	private(set) var Transfer: NVTransfer
+	private(set) var Origin: T
+	//
+	var Destination: T? {
+		didSet {
+			if let dest = Destination, Origin.UUID == dest.UUID {
+				Destination = nil
+				NVLog.log("Tried to set Link (\(UUID.uuidString)) Destination to its Origin.", level: .warning)
+			} else {
+				NVLog.log("Link (\(UUID.uuidString)) Destination changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Destination?.UUID.uuidString ?? "nil")).", level: .info)
+			}
+			
+			// a bit hacky but watcha' gonna do with templates like these?
+			if self is NVSequenceLink {
+				_story.Observers.forEach{$0.nvSequenceLinkDestinationDidChange(story: _story, link: self as! NVSequenceLink)}
+			}
+			if self is NVEventLink {
+				_story.Observers.forEach{$0.nvEventLinkDestinationDidChange(story: _story, link: self as! NVEventLink)}
+			}
+		}
+	}
+	//
+	var Condition: NVCondition?
+	var Function: NVFunction?
 	
-	// MARK: - Initialization
-	init(id: NSUUID, story: NVStory, origin: NVLinkable) {
-		self.ID = id
+	init(uuid: NSUUID, story: NVStory, origin: T, destination: T?) {
+		self.UUID = uuid
 		self._story = story
 		self.Origin = origin
-		self.PreCondition = NVCondition(story: story)
-		self.Transfer = NVTransfer(story: story)
+		self.Destination = destination
+		self.Condition = nil
+		self.Function = nil
 	}
 }
 
 extension NVLink: Equatable {
-	static func ==(lhs: NVLink, rhs: NVLink) -> Bool {
-		return lhs.ID == rhs.ID
+	static func == (lhs: NVLink, rhs: NVLink) -> Bool {
+		return lhs.UUID == rhs.UUID
 	}
 }

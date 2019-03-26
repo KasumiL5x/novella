@@ -2,52 +2,40 @@
 //  NVCondition.swift
 //  novella
 //
-//  Created by dgreen on 09/08/2018.
-//  Copyright © 2018 dgreen. All rights reserved.
+//  Created by Daniel Green on 30/11/2018.
+//  Copyright © 2018 Daniel Green. All rights reserved.
 //
 
 import Foundation
 
-class NVCondition {
-	// MARK: - Variables
+class NVCondition: NVIdentifiable {
+	var UUID: NSUUID
 	private let _story: NVStory
-	
-	// MARK: - Properties
-	var JavaScript: String = "return true;" {
+	var Code: String = "return true;" {
 		didSet {
-			NVLog.log("Condition updated.", level: .info)
-			_story.Delegates.forEach{$0.nvConditionDidUpdate(condition: self)}
+			if Code.isEmpty {
+				Code = "return true;"
+			}
+			_story.Observers.forEach{$0.nvConditionCodeDidChange(story: _story, condition: self)}
+		}
+	}
+	var Label: String {
+		didSet {
+			NVLog.log("Condition (\(UUID.uuidString)) Label changed (\(oldValue) -> \(Label)).", level: .info)
+			_story.Observers.forEach{$0.nvConditionLabelDidChange(story: _story, condition: self)}
 		}
 	}
 	
-	// MARK: - Initialization
-	init(story: NVStory) {
+	init(uuid: NSUUID, story: NVStory) {
+		self.UUID = uuid
 		self._story = story
+		self.Label = "nvCondition" + NVUtil.randomString(length: 10)
 	}
-	
-	// MARK: - Evaulation
-	func evaluate() -> Bool {
-		var boolFunc = "function executeCondition() {\n"
-		boolFunc += JavaScript.isEmpty ? "return true;" : JavaScript
-		boolFunc += "\n}"
-		NVLog.log("Condition JS:\n\(boolFunc)", level: .debug)
-		
-		// eval script so the JVM knows about it
-		_story.JVM.evaluateScript(boolFunc)
-		
-		// get reference to the function
-		guard let execFunc = _story.JVM.objectForKeyedSubscript("executeCondition") else {
-			NVLog.log("Condition could not find function. Returning false.", level: .warning)
-			return false
-		}
-		
-		// call the function and get its return value
-		guard let result = execFunc.call(withArguments: []) else {
-			NVLog.log("Condition could not execute. Returning false.", level: .warning)
-			return false
-		}
-		
-		// JS always returns something, so worst case we get false
-		return result.toBool()
+
+}
+
+extension NVCondition: Equatable {
+	static func == (lhs: NVCondition, rhs: NVCondition) -> Bool {
+		return lhs.UUID == rhs.UUID
 	}
 }

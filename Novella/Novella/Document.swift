@@ -10,25 +10,16 @@ import Cocoa
 import SwiftyJSON
 
 class Document: NSDocument {
-	// MARK: - Additional Non-Model Data
-	// position of anything in the UI (usually nodes, branches, switches, etc.)
+	// additional non-model data
 	var Positions: [NSUUID:CGPoint] = [:] {
 		didSet { updateChangeCount(.changeDone) }
 	}
-	// image name for entities
-	var EntityImageNames: [NSUUID:String] = [:] {
-		didSet{
-			updateChangeCount(.changeDone)
-		}
-	}
 	
-	
-	// MARK: - Properties
 	private(set) var Story: NVStory = NVStory()
 	
 	override init() {
 		super.init()
-		Story.addDelegate(self)
+		Story.add(observer: self)
 	}
 
 	override class var autosavesInPlace: Bool {
@@ -43,748 +34,549 @@ class Document: NSDocument {
 	}
 
 	override func data(ofType typeName: String) throws -> Data {
-		let jsonString = self.toJSON()
+		let jsonString = saveJSON()
 		if jsonString.isEmpty {
-			NVLog.log("Tried to write JSON but the resulting string was empty.", level: .warning)
-			throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+			Swift.print("Tried to save JSON but the resulting string was empty.")
+			throw NSError(domain: NSOSStatusErrorDomain, code: writErr, userInfo: nil)
 		}
+		
 		guard let jsonData = jsonString.data(using: .utf8) else {
-			NVLog.log("Failed to get data from JSON string.", level: .warning)
-			throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+			Swift.print("Tried to save JSON but failed to get Data from the JSON string.")
+			throw NSError(domain: NSOSStatusErrorDomain, code: writErr, userInfo: nil)
 		}
 		return jsonData
 	}
 
 	override func read(from data: Data, ofType typeName: String) throws {
 		guard self.fromJSON(data: data) else {
-			throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+			Swift.print("Failed to load from JSON.")
+			throw NSError(domain: NSOSStatusErrorDomain, code: readErr, userInfo: nil)
 		}
 	}
 }
 
 extension Document {
-	typealias JSONDict = [String:Any]
-	
-	func fromJSON(data: Data) -> Bool {
-		guard let json = try? JSON(data: data) else {
-			NVLog.log("Failed to parse JSON data.", level: .warning)
-			return false
-		}
-		
-		Swift.print(json)
-
-		
-		// read variables
-		for variable in json["variables"].arrayValue {
-			let id = NSUUID(uuidString: variable["id"].stringValue)!
-			let name = variable["name"].stringValue
-			let entry = Story.makeVariable(name: name, uuid: id)
-			entry.Synopsis = variable["synopsis"].stringValue
-			entry.Constant = variable["constant"].boolValue
-			
-			if let asBool = variable["initial"].bool {
-				entry.InitialValue = NVValue(.boolean(asBool))
-			} else if let asInt = variable["initial"].int32 {
-				entry.InitialValue = NVValue(.integer(asInt))
-			} else if let asDub = variable["initial"].double {
-				entry.InitialValue = NVValue(.double(asDub))
-			}
-		}
-		
-		// read folders
-		for folder in json["folders"].arrayValue {
-			let id = NSUUID(uuidString: folder["id"].stringValue)!
-			let name = folder["name"].stringValue
-			let entry = Story.makeFolder(name: name, uuid: id)
-			entry.Synopsis = folder["synopsis"].stringValue
-			
-			// link variables to this folder by uuid
-			for child in folder["variables"].arrayValue {
-				if let found = Story.find(uuid: child.stringValue) as? NVVariable {
-					entry.add(variable: found)
-				} else {
-					NVLog.log("Unable to find Variable by ID (\(child.stringValue)) when linking to Folder (\(id.uuidString)).", level: .warning)
-				}
-			}
-		}
-		
-		// link folders to folders by id
-		for folder in json["folders"].arrayValue {
-			let id = folder["id"].stringValue
-			guard let thisFolder = Story.find(uuid: id) as? NVFolder else {
-				NVLog.log("Tried to link Folder (\(id)) but couldn't find it!", level: .warning)
-				continue
-			}
-			
-			for child in folder["folders"].arrayValue {
-				if let found = Story.find(uuid: child.stringValue) as? NVFolder {
-					thisFolder.add(folder: found)
-				} else {
-					NVLog.log("Unable to find Folder by ID (\(child.stringValue)) when linking to Folder (\(id)).", level: .warning)
-				}
-			}
-		}
-		
-		// read entities
-		for entity in json["entities"].arrayValue {
-			let id = NSUUID(uuidString: entity["id"].stringValue)!
-			let ent = Story.makeEntity(uuid: id)
-			ent.Name = entity["name"].stringValue
-			ent.Synopsis = entity["synopsis"].stringValue
-			EntityImageNames[id] = entity["image"].stringValue
-		}
-		
-		// read nodes
-		for node in json["nodes"].arrayValue {
-			let id = NSUUID(uuidString: node["id"].stringValue)!
-			let name = node["name"].stringValue
-			let pos = NSMakePoint(CGFloat(node["pos"]["x"].floatValue), CGFloat(node["pos"]["y"].floatValue))
-			Positions[id] = pos
-			
-			switch node["type"].stringValue {
-			case "dialog":
-				let dialog = Story.makeDialog(uuid: id)
-				dialog.Name = name
-				dialog.Content = node["content"].stringValue
-				dialog.Directions = node["directions"].stringValue
-				dialog.Preview = node["preview"].stringValue
-				
-				let instigatorID = node["instigator"].stringValue
-				if !instigatorID.isEmpty {
-					if let instigator = Story.find(uuid: node["instigator"].stringValue) as? NVEntity {
-						dialog.Instigator = instigator
-					} else {
-						NVLog.log("Unable to find Entity by ID (\(node["instigator"].stringValue)) when setting Dialog (\(id.uuidString)) instigator.", level: .warning)
-					}
-				}
-				
-			case "delivery":
-				let delivery = Story.makeDelivery(uuid: id)
-				delivery.Name = name
-				delivery.Content = node["content"].stringValue
-				delivery.Directions = node["directions"].stringValue
-				delivery.Preview = node["preview"].stringValue
-				
-			case "context":
-				let context = Story.makeContext(uuid: id)
-				context.Name = name
-				context.Content = node["content"].stringValue
-				
-			default:
-				NVLog.log("Encountered unknown NVNode type during import (\(node["type"].stringValue)).", level: .warning)
-			}
-		}
-		
-		// read branches w/o transfers (as linkables may not yet be loaded)
-		for branch in json["branches"].arrayValue {
-			let id = NSUUID(uuidString: branch["id"].stringValue)!
-			let entry = Story.makeBranch(uuid: id)
-			
-			let pos = NSMakePoint(CGFloat(branch["pos"]["x"].floatValue), CGFloat(branch["pos"]["y"].floatValue))
-			Positions[id] = pos
-			
-			entry.Condition.JavaScript = branch["cond"]["js"].stringValue
-		}
-		
-		// read switches w/o transfers
-		for swtch in json["switches"].arrayValue {
-			let id = NSUUID(uuidString: swtch["id"].stringValue)!
-			let entry = Story.makeSwitch(uuid: id)
-			
-			let pos = NSMakePoint(CGFloat(swtch["pos"]["x"].floatValue), CGFloat(swtch["pos"]["y"].floatValue))
-			Positions[id] = pos
-			
-			entry.Variable = Story.find(uuid: swtch["var"].stringValue) as? NVVariable // if it fails nil is assigned which is fine
-			
-			// default option
-			var defaultObj = swtch["default"]
-			if let asBool = defaultObj["value"].bool {
-				entry.DefaultOption.value = NVValue(.boolean(asBool))
-			} else if let asInt = defaultObj["value"].int32 {
-				entry.DefaultOption.value = NVValue(.integer(asInt))
-			} else if let asDub = defaultObj["value"].double {
-				entry.DefaultOption.value = NVValue(.double(asDub))
-			}
-			
-			// other options
-			for option in swtch["options"].arrayValue {
-				if let asBool = option["value"].bool {
-					entry.addOption(withValue: NVValue(.boolean(asBool)))
-				} else if let asInt = option["value"].int32 {
-					entry.addOption(withValue: NVValue(.integer(asInt)))
-				} else if let asDub = option["value"].double {
-					entry.addOption(withValue: NVValue(.double(asDub)))
-				}
-			}
-		}
-		
-		// link branch transfers now that everything is loaded
-		for branch in json["branches"].arrayValue {
-			let id = branch["id"].stringValue
-			guard let thisBranch = Story.find(uuid: id) as? NVBranch else {
-				NVLog.log("Tried to link Branch (\(id)) but couldn't find it!", level: .warning)
-				continue
-			}
-			
-			if let ttransfer = branch["ttransfer"].dictionary {
-				let destID = ttransfer["dest"]!.stringValue
-				if !destID.isEmpty {
-					if let destFound = Story.find(uuid: destID) as? NVLinkable {
-						thisBranch.TrueTransfer.Destination = destFound
-					} else {
-						NVLog.log("Unable to find Linkable by ID (\(destID)) when setting a Branch (\(id)) true transfer destination.", level: .warning)
-					}
-				}
-				thisBranch.TrueTransfer.Function.JavaScript = ttransfer["func"]!["js"].stringValue
-			}
-			
-			if let ftransfer = branch["ftransfer"].dictionary {
-				let destID = ftransfer["dest"]!.stringValue
-				if !destID.isEmpty {
-					if let destFound = Story.find(uuid: destID) as? NVLinkable {
-						thisBranch.FalseTransfer.Destination = destFound
-					} else {
-						NVLog.log("Unable to find Linkable by ID (\(destID)) when setting a Branch (\(id)) false transfer destination.", level: .warning)
-					}
-				}
-				thisBranch.FalseTransfer.Function.JavaScript = ftransfer["func"]!["js"].stringValue
-			}
-		}
-		
-		// link switch transfers
-		for swtch in json["switches"].arrayValue {
-			let id = swtch["id"].stringValue
-			guard let thisSwitch = Story.find(uuid: id) as? NVSwitch else {
-				NVLog.log("Tried to link Switch (\(id)) but couldn't find it!", level: .warning)
-				continue
-			}
-			
-			// default option transfer
-			if let defaultTransfer = swtch["default"]["transfer"].dictionary {
-				let destID = defaultTransfer["dest"]!.stringValue
-				if !destID.isEmpty {
-					if let destFound = Story.find(uuid: destID) as? NVLinkable {
-						thisSwitch.DefaultOption.transfer.Destination = destFound
-					} else {
-						NVLog.log("Unable to find Linkable by ID (\(destID)) when setting a Switch (\(id)) default option transfer destination.", level: .warning)
-					}
-				}
-				thisSwitch.DefaultOption.transfer.Function.JavaScript = defaultTransfer["func"]!["js"].stringValue
-			}
-			
-			// other option transfers
-			var switchIndex: Int = 0 // hack: I have no 'id' for the options, so i'm relying on the index of this dictionary being the same as the last read, and hoping the NVSwitch option array has the same order...
-			for option in swtch["options"].arrayValue {
-				if let optionTransfer = option["transfer"].dictionary {
-					let destID = optionTransfer["dest"]!.stringValue
-					if !destID.isEmpty {
-						if let destFound = Story.find(uuid: destID) as? NVLinkable {
-							thisSwitch.Options[switchIndex].transfer.Destination = destFound
-						} else {
-							NVLog.log("Unable to find Linkable by ID (\(destID)) when setting a Switch (\(id)) option transfer destination.", level: .warning)
-						}
-					}
-					thisSwitch.Options[switchIndex].transfer.Function.JavaScript = optionTransfer["func"]!["js"].stringValue
-				}
-				
-				switchIndex += 1
-			}
-		}
-		
-		// read links
-		for link in json["links"].arrayValue {
-			let id = NSUUID(uuidString: link["id"].stringValue)!
-			let originID = link["origin"].stringValue
-			guard let originFound = Story.find(uuid: originID) as? NVLinkable else {
-				NVLog.log("Unable to find Linkable by ID (\(originID)) when creating a Link (\(id.uuidString)).", level: .warning)
-				continue
-			}
-			
-			let entry = Story.makeLink(origin: originFound, uuid: id)
-			entry.PreCondition.JavaScript = link["precond"]["js"].stringValue
-			
-			if let transfer = link["transfer"].dictionary {
-				let destID = transfer["dest"]!.stringValue
-				if !destID.isEmpty {
-					if let destFound = Story.find(uuid: destID) as? NVLinkable {
-						entry.Transfer.Destination = destFound
-					} else {
-						NVLog.log("Unable to find Linkable by ID (\(destID)) when setting a Link (\(id.uuidString)) transfer destination.", level: .warning)
-					}
-				}
-				entry.Transfer.Function.JavaScript = transfer["func"]!["js"].stringValue
-			}
-		}
-		
-		// read graphs
-		for graph in json["graphs"].arrayValue {
-			let id = NSUUID(uuidString: graph["id"].stringValue)!
-			let name = graph["name"].stringValue
-			let entry = Story.makeGraph(name: name, uuid: id)
-			
-			// link nodes by id
-			for child in graph["nodes"].arrayValue {
-				if let childFound = Story.find(uuid: child.stringValue) as? NVNode {
-					entry.add(node: childFound)
-				} else {
-					NVLog.log("Unable to find Node by ID (\(child.stringValue)) when adding to Graph (\(id.uuidString)).", level: .warning)
-				}
-			}
-			
-			// link links by id
-			for child in graph["links"].arrayValue {
-				if let childFound = Story.find(uuid: child.stringValue) as? NVLink {
-					entry.add(link: childFound)
-				} else {
-					NVLog.log("Unable to find Link by ID (\(child.stringValue)) when adding to Graph (\(id.uuidString)).", level: .warning)
-				}
-			}
-			
-			// link branches by id
-			for child in graph["branches"].arrayValue {
-				if let childFound = Story.find(uuid: child.stringValue) as? NVBranch {
-					entry.add(branch: childFound)
-				} else {
-					NVLog.log("Unable to find Branch by ID (\(child.stringValue)) when adding to Graph (\(id.uuidString)).", level: .warning)
-				}
-			}
-			
-			// link switches by id
-			for child in graph["switches"].arrayValue {
-				if let childFound = Story.find(uuid: child.stringValue) as? NVSwitch {
-					entry.add(swtch: childFound)
-				} else {
-					NVLog.log("Unable to find Switch by ID (\(child.stringValue)) when adding to Graph (\(id.uuidString)).", level: .warning)
-				}
-			}
-			
-			let entryID = graph["entry"].stringValue
-			if !entryID.isEmpty {
-				if let entryFound = Story.find(uuid: entryID) as? NVNode {
-					entry.Entry = entryFound
-				} else {
-					NVLog.log("Unable to find Node by ID (\(entryID)) when setting a Graph (\(id.uuidString)) entry.", level: .warning)
-				}
-			}
-		}
-		
-		// link graphs to graphs by id
-		for graph in json["graphs"].arrayValue {
-			let id = graph["id"].stringValue
-			guard let thisGraph = Story.find(uuid: id) as? NVGraph else {
-				NVLog.log("Tried to link Graph (\(id)) but couldn't find it!", level: .warning)
-				continue
-			}
-			
-			for child in graph["graphs"].arrayValue {
-				if let childFound = Story.find(uuid: child.stringValue) as? NVGraph {
-					thisGraph.add(graph: childFound)
-				} else {
-					NVLog.log("Unable to find Graph by ID (\(child.stringValue)) when adding to Graph (\(id)).", level: .warning)
-				}
-			}
-		}
-		
-		// process main graph (separate from other graphs)
-		let mainGraph = json["maingraph"]
-		for child in mainGraph["nodes"].arrayValue {
-			if let childFound = Story.find(uuid: child.stringValue) as? NVNode {
-				Story.MainGraph?.add(node: childFound)
-			} else {
-				NVLog.log("Unable to find Node by ID (\(child.stringValue)) when adding to the main Graph.", level: .warning)
-			}
-		}
-		for child in mainGraph["links"].arrayValue {
-			if let childFound = Story.find(uuid: child.stringValue) as? NVLink {
-				Story.MainGraph?.add(link: childFound)
-			} else {
-				NVLog.log("Unable to find Link by ID (\(child.stringValue)) when adding to the main Graph.", level: .warning)
-			}
-		}
-		for child in mainGraph["branches"].arrayValue {
-			if let childFound = Story.find(uuid: child.stringValue) as? NVBranch {
-				Story.MainGraph?.add(branch: childFound)
-			} else {
-				NVLog.log("Unable to find Branch by ID (\(child.stringValue)) when adding to the main Graph.", level: .warning)
-			}
-		}
-		for child in mainGraph["switches"].arrayValue {
-			if let childFound = Story.find(uuid: child.stringValue) as? NVSwitch {
-				Story.MainGraph?.add(swtch: childFound)
-			} else {
-				NVLog.log("Unable to find Switch by ID (\(child.stringValue)) when adding to the main Graph.", level: .warning)
-			}
-		}
-		for child in mainGraph["graphs"].arrayValue {
-			if let childFound = Story.find(uuid: child.stringValue) as? NVGraph {
-				Story.MainGraph?.add(graph: childFound)
-			} else {
-				NVLog.log("Unable to find Graph by ID (\(child.stringValue)) when adding to the main Graph.", level: .warning)
-			}
-		}
-		let mgEntryID = mainGraph["entry"].stringValue
-		if !mgEntryID.isEmpty {
-			if let entryFound = Story.find(uuid: mgEntryID) as? NVNode {
-				Story.MainGraph?.Entry = entryFound
-			} else {
-				NVLog.log("Unable to find Node by ID (\(mgEntryID)) when setting the main Graph entry.", level: .warning)
-			}
-		}
-		
-		// process mainfolder (separate from other folders)
-		let mainFolder = json["mainfolder"]
-		Story.MainFolder?.Synopsis = mainFolder["synopsis"].stringValue
-		for child in mainFolder["variables"].arrayValue {
-			if let found = Story.find(uuid: child.stringValue) as? NVVariable {
-				Story.MainFolder?.add(variable: found)
-			} else {
-				NVLog.log("Unable to find Variable by ID (\(child.stringValue)) when linking to main Folder.", level: .warning)
-			}
-		}
-		for child in mainFolder["folders"].arrayValue {
-			if let found = Story.find(uuid: child.stringValue) as? NVFolder {
-				Story.MainFolder?.add(folder: found)
-			} else {
-				NVLog.log("Unable to find Folder by ID (\(child.stringValue)) when linking to main Folder.", level: .warning)
-			}
-		}
-		
-		return true
-	}
-	
-	func toJSON() -> String {
+	private func saveJSON() -> String {
+		// Note: This function is almost identical to NVStory::toJSON(), but it includes extra editor-only information.
+		//       It was decided to keep them entirely separate as they shouldn't match or rely on each other.
 		var root: JSONDict = [:]
 		
-		// add folders
-		var folders: [JSONDict] = []
-		Story.Folders.forEach { (folder) in
-			var entry: JSONDict = [:]
-			entry["id"] = folder.ID.uuidString
-			entry["name"] = folder.Name
-			entry["synopsis"] = folder.Synopsis
-			entry["folders"] = folder.Folders.map{$0.ID.uuidString}
-			entry["variables"] = folder.Variables.map{$0.ID.uuidString}
-			folders.append(entry)
-		}
-		root["folders"] = folders
-		
-		// add variables
+		// variables
 		var variables: [JSONDict] = []
-		Story.Variables.forEach { (variable) in
+		Story.Variables.forEach{ (variable) in
 			var entry: JSONDict = [:]
-			entry["id"] = variable.ID.uuidString
-			entry["name"] = variable.Name
-			entry["synopsis"] = variable.Synopsis
+			entry["id"] = variable.UUID.uuidString
+			entry["label"] = variable.Name
 			entry["constant"] = variable.Constant
-			switch variable.InitialValue.Raw.type {
+			switch variable.Value.Raw.type {
 			case .boolean:
-				entry["initial"] = variable.InitialValue.Raw.asBool
+				entry["value"] = variable.Value.Raw.asBool
+				entry["type"] = "boolean"
 			case .integer:
-				entry["initial"] = variable.InitialValue.Raw.asInt
+				entry["value"] = variable.Value.Raw.asInt
+				entry["type"] = "integer"
 			case .double:
-				entry["initial"] = variable.InitialValue.Raw.asDouble
+				entry["value"] = String(format: "%.2f", variable.Value.Raw.asDouble)
+				entry["type"] = "double"
 			}
 			variables.append(entry)
 		}
 		root["variables"] = variables
 		
-		// add links
-		var links: [JSONDict] = []
-		Story.Links.forEach { (link) in
+		// functions
+		var functions: [JSONDict] = []
+		Story.Functions.forEach{ (function) in
 			var entry: JSONDict = [:]
-			entry["id"] = link.ID.uuidString
-			entry["origin"] = link.Origin.ID.uuidString
-			
-			var precond: JSONDict = [:]
-				precond["js"] = link.PreCondition.JavaScript
-			entry["precond"] = precond
-			
-			var transfer: JSONDict = [:]
-				transfer["dest"] = link.Transfer.Destination?.ID.uuidString ?? ""
-				var function: JSONDict = [:]
-					function["js"] = link.Transfer.Function.JavaScript
-				transfer["func"] = function
-			entry["transfer"] = transfer
-			links.append(entry)
+			entry["id"] = function.UUID.uuidString
+			entry["code"] = function.Code
+			entry["label"] = function.Label
+			functions.append(entry)
 		}
-		root["links"] = links
+		root["functions"] = functions
 		
-		// add branches
-		var branches: [JSONDict] = []
-		Story.Branches.forEach { (branch) in
+		// conditions
+		var conditions: [JSONDict] = []
+		Story.Conditions.forEach{ (condition) in
 			var entry: JSONDict = [:]
-			entry["id"] = branch.ID.uuidString
-			let pos = Positions[branch.ID] ?? CGPoint.zero
-			entry["pos"] = [
-				"x": pos.x,
-				"y": pos.y
-			]
-
-			var cond: JSONDict = [:]
-				cond["js"] = branch.Condition.JavaScript
-			entry["cond"] = cond
-
-			var trueTransfer: JSONDict = [:]
-				trueTransfer["dest"] = branch.TrueTransfer.Destination?.ID.uuidString ?? ""
-				var trueFunc: JSONDict = [:]
-					trueFunc["js"] = branch.TrueTransfer.Function.JavaScript
-				trueTransfer["func"] = trueFunc
-			entry["ttransfer"] = trueTransfer
-
-			var falseTransfer: JSONDict = [:]
-				falseTransfer["dest"] = branch.FalseTransfer.Destination?.ID.uuidString ?? ""
-				var falseFunc: JSONDict = [:]
-					falseFunc["js"] = branch.FalseTransfer.Function.JavaScript
-				falseTransfer["func"] = falseFunc
-			entry["ftransfer"] = falseTransfer
-			branches.append(entry)
+			entry["id"] = condition.UUID.uuidString
+			entry["code"] = condition.Code
+			entry["label"] = condition.Label
+			conditions.append(entry)
 		}
-		root["branches"] = branches
+		root["conditions"] = conditions
 		
-		// add switches
-		var switches: [JSONDict] = []
-		Story.Switches.forEach { (swtch) in
+		// selectors
+		var selectors: [JSONDict] = []
+		Story.Selectors.forEach{ (selector) in
 			var entry: JSONDict = [:]
-			entry["id"] = swtch.ID.uuidString
-			
-			let pos = Positions[swtch.ID] ?? CGPoint.zero
-			entry["pos"] = [
-				"x": pos.x,
-				"y": pos.y
-			]
-			
-			entry["var"] = swtch.Variable?.ID.uuidString ?? ""
-			
-			// export default option
-			var defaultOption: JSONDict = [:]
-				switch swtch.DefaultOption.value.Raw.type {
-				case .boolean:
-					defaultOption["value"] = swtch.DefaultOption.value.Raw.asBool
-				case .integer:
-					defaultOption["value"] = swtch.DefaultOption.value.Raw.asInt
-				case .double:
-					defaultOption["value"] = swtch.DefaultOption.value.Raw.asDouble
-				}
-				var defaultTransfer: JSONDict = [:]
-					defaultTransfer["dest"] = swtch.DefaultOption.transfer.Destination?.ID.uuidString ?? ""
-					var defaultFunc: JSONDict = [:]
-						defaultFunc["js"] = swtch.DefaultOption.transfer.Function.JavaScript
-					defaultTransfer["func"] = defaultFunc
-				defaultOption["transfer"] = defaultTransfer
-			entry["default"] = defaultOption
-			
-			// export all options
-			var options: [JSONDict] = []
-			for option in swtch.Options {
-				var opt: JSONDict = [:]
-				switch option.value.Raw.type {
-				case .boolean:
-					opt["value"] = option.value.Raw.asBool
-				case .integer:
-					opt["value"] = option.value.Raw.asInt
-				case .double:
-					opt["value"] = option.value.Raw.asDouble
-				}
-				var optTransfer: JSONDict = [:]
-					optTransfer["dest"] = option.transfer.Destination?.ID.uuidString ?? ""
-					var optFunc: JSONDict = [:]
-						optFunc["js"] = option.transfer.Function.JavaScript
-					optTransfer["func"] = optFunc
-				opt["transfer"] = optTransfer
-				options.append(opt)
-			}
-			entry["options"] = options
-			
-			switches.append(entry)
+			entry["id"] = selector.UUID.uuidString
+			entry["code"] = selector.Code
+			entry["label"] = selector.Label
+			selectors.append(entry)
 		}
-		root["switches"] = switches
+		root["selectors"] = selectors
 		
-		// add nodes
-		var nodes: [JSONDict] = []
-		Story.Nodes.forEach { (node) in
-			var entry: JSONDict = [:]
-			entry["id"] = node.ID.uuidString
-			entry["name"] = node.Name
-			
-			let pos = Positions[node.ID] ?? CGPoint.zero
-			entry["pos"] = [
-				"x": pos.x,
-				"y": pos.y
-			]
-			
-			switch node {
-			case let asDialog as NVDialog:
-				entry["type"] = "dialog"
-				entry["content"] = asDialog.Content
-				entry["directions"] = asDialog.Directions
-				entry["preview"] = asDialog.Preview
-				entry["instigator"] = asDialog.Instigator?.ID.uuidString ?? ""
-			case let asDelivery as NVDelivery:
-				entry["type"] = "delivery"
-				entry["content"] = asDelivery.Content
-				entry["directions"] = asDelivery.Directions
-				entry["preview"] = asDelivery.Preview
-			case let asContext as NVContext:
-				entry["type"] = "context"
-				entry["content"] = asContext.Content
-			default:
-				NVLog.log("Encountered unknown NVNode type during export.", level: .warning)
-			}
-			nodes.append(entry)
-		}
-		root["nodes"] = nodes
-		
-		// add graphs
-		var graphs: [JSONDict] = []
-		Story.Graphs.forEach { (graph) in
-			var entry: JSONDict = [:]
-			entry["id"] = graph.ID.uuidString
-			entry["name"] = graph.Name
-			entry["entry"] = graph.Entry?.ID.uuidString ?? ""
-			entry["graphs"] = graph.Graphs.map{$0.ID.uuidString}
-			entry["nodes"] = graph.Nodes.map{$0.ID.uuidString}
-			entry["links"] = graph.Links.map{$0.ID.uuidString}
-			entry["branches"] = graph.Branches.map{$0.ID.uuidString}
-			entry["switches"] = graph.Switches.map{$0.ID.uuidString}
-			graphs.append(entry)
-		}
-		root["graphs"] = graphs
-		
-		// add main graph
-		var mainGraph: JSONDict = [:]
-		mainGraph["id"] = Story.MainGraph!.ID.uuidString
-		mainGraph["name"] = Story.MainGraph!.Name
-		mainGraph["entry"] = Story.MainGraph!.Entry?.ID.uuidString ?? ""
-		mainGraph["graphs"] = Story.MainGraph!.Graphs.map{$0.ID.uuidString}
-		mainGraph["nodes"] = Story.MainGraph!.Nodes.map{$0.ID.uuidString}
-		mainGraph["links"] = Story.MainGraph!.Links.map{$0.ID.uuidString}
-		mainGraph["branches"] = Story.MainGraph!.Branches.map{$0.ID.uuidString}
-		mainGraph["switches"] = Story.MainGraph!.Switches.map{$0.ID.uuidString}
-		root["maingraph"] = mainGraph
-		
-		// add main folder
-		var mainFolder: JSONDict = [:]
-		mainFolder["id"] = Story.MainFolder!.ID.uuidString
-		mainFolder["name"] = Story.MainFolder!.Name
-		mainFolder["synopsis"] = Story.MainFolder!.Synopsis
-		mainFolder["folders"] = Story.MainFolder!.Folders.map{$0.ID.uuidString}
-		mainFolder["variables"] = Story.MainFolder!.Variables.map{$0.ID.uuidString}
-		root["mainfolder"] = mainFolder
-		
-		// add entities
+		// entities (and tags)
 		var entities: [JSONDict] = []
-		Story.Entities.forEach { (entity) in
+		Story.Entities.forEach{ (entity) in
 			var entry: JSONDict = [:]
-			entry["id"] = entity.ID.uuidString
-			entry["name"] = entity.Name
-			entry["synopsis"] = entity.Synopsis
-			entry["image"] = EntityImageNames[entity.ID] ?? ""
+			entry["id"] = entity.UUID.uuidString
+			entry["label"] = entity.Label
+			entry["desc"] = entity.Description
+			entry["tags"] = entity.Tags
 			entities.append(entry)
 		}
 		root["entities"] = entities
 		
+		// event links
+		var eventLinks: [JSONDict] = []
+		Story.EventLinks.forEach{ (eventLink) in
+			var entry: JSONDict = [:]
+			entry["id"] = eventLink.UUID.uuidString
+			entry["origin"] = eventLink.Origin.UUID.uuidString
+			entry["dest"] = eventLink.Destination?.UUID.uuidString ?? ""
+			entry["function"] = eventLink.Function?.UUID.uuidString ?? ""
+			entry["condition"] = eventLink.Condition?.UUID.uuidString ?? ""
+			eventLinks.append(entry)
+		}
+		root["eventlinks"] = eventLinks
+		
+		// sequence links
+		var sequenceLinks: [JSONDict] = []
+		Story.SequenceLinks.forEach{ (seqLink) in
+			var entry: JSONDict = [:]
+			entry["id"] = seqLink.UUID.uuidString
+			entry["origin"] = seqLink.Origin.UUID.uuidString
+			entry["dest"] = seqLink.Destination?.UUID.uuidString ?? ""
+			entry["function"] = seqLink.Function?.UUID.uuidString ?? ""
+			entry["condition"] = seqLink.Condition?.UUID.uuidString ?? ""
+			sequenceLinks.append(entry)
+		}
+		root["sequencelinks"] = sequenceLinks
+		
+		// groups
+		var groups: [JSONDict] = []
+		Story.Groups.forEach{ (group) in
+			groups.append(groupToJSON(group: group))
+		}
+		root["groups"] = groups
+		
+		// sequences
+		var sequences: [JSONDict] = []
+		Story.Sequences.forEach{ (sequence) in
+			sequences.append(sequenceToJSON(sequence: sequence))
+		}
+		root["sequences"] = sequences
+		
+		// discoverable (as a derivative of sequence)
+		var discoverables: [JSONDict] = []
+		Story.Discoverables.forEach{ (discoverable) in
+			var entry = sequenceToJSON(sequence: discoverable)
+			entry["tangibility"] = discoverable.Tangibility.toString
+			entry["functionality"] = discoverable.Functionality.toString
+			entry["clarity"] = discoverable.Clarity.toString
+			entry["delivery"] = discoverable.Delivery.toString
+			discoverables.append(entry)
+		}
+		root["discoverables"] = discoverables
+		
+		// events
+		var events: [JSONDict] = []
+		Story.Events.forEach{ (event) in
+			var entry: JSONDict = [:]
+			entry["id"] = event.UUID.uuidString
+			entry["label"] = event.Label
+			entry["parallel"] = event.Parallel
+			entry["topmost"] = event.Topmost
+			entry["maxactivations"] = event.MaxActivations
+			entry["keepalive"] = event.KeepAlive
+			entry["condition"] = event.PreCondition?.UUID.uuidString ?? ""
+			entry["entryfunction"] = event.EntryFunction?.UUID.uuidString ?? ""
+			entry["dofunction"] = event.DoFunction?.UUID.uuidString ?? ""
+			entry["exitfunction"] = event.ExitFunction?.UUID.uuidString ?? ""
+			entry["instigators"] = event.Instigators?.UUID.uuidString ?? ""
+			entry["targets"] = event.Targets?.UUID.uuidString ?? ""
+			
+			let pos = Positions[event.UUID] ?? CGPoint.zero
+			entry["position"] = [
+				"x": pos.x,
+				"y": pos.y
+			]
+			
+			Swift.print("TODO: Export attributes for Events.")
+			events.append(entry)
+		}
+		root["events"] = events
+		
+		// main group
+		root["maingroup"] = groupToJSON(group: Story.MainGroup)
+		
+		// valid JSON object check
 		if !JSONSerialization.isValidJSONObject(root) {
-			Swift.print("JSON object wasn't valid.")
+			Swift.print("JSON object is invalid.")
 			return ""
 		}
 		
-		guard let jsonData = try? JSONSerialization.data(withJSONObject: root, options: .prettyPrinted) else {
-			Swift.print("JSON data couldn't be formed.")
+		// get data
+		guard let jsonData = try? JSONSerialization.data(withJSONObject: root, options: [.prettyPrinted]) else {
+			Swift.print("Failed to get JSON Data.")
 			return ""
 		}
 		
-		let jsonString = String(data: jsonData, encoding: .utf8)!
+		guard let jsonString = String(data: jsonData, encoding: .utf8) else {
+			Swift.print("Failed to get JSON String from Data.")
+			return ""
+		}
+		
 		return jsonString
+	}
+	
+	private func groupToJSON(group: NVGroup) -> JSONDict {
+		var entry: JSONDict = [:]
+		entry["id"] = group.UUID.uuidString
+		entry["label"] = group.Label
+		entry["topmost"] = group.Topmost
+		entry["maxactivations"] = group.MaxActivations
+		entry["keepalive"] = group.KeepAlive
+		entry["condition"] = group.PreCondition?.UUID.uuidString ?? ""
+		entry["entryfunction"] = group.EntryFunction?.UUID.uuidString ?? ""
+		entry["exitfunction"] = group.ExitFunction?.UUID.uuidString ?? ""
+		entry["entry"] = group.Entry?.UUID.uuidString ?? ""
+		entry["sequences"] = group.Sequences.map{$0.UUID.uuidString}
+		entry["links"] = group.SequenceLinks.map{$0.UUID.uuidString}
+		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
+		
+		let pos = Positions[group.UUID] ?? CGPoint.zero
+		entry["position"] = [
+			"x": pos.x,
+			"y": pos.y
+		]
+		
+		Swift.print("TODO: Export attributes for Groups.")
+		return entry
+	}
+	
+	private func sequenceToJSON(sequence: NVSequence) -> JSONDict {
+		var entry: JSONDict = [:]
+		entry["id"] = sequence.UUID.uuidString
+		entry["label"] = sequence.Label
+		entry["parallel"] = sequence.Parallel
+		entry["topmost"] = sequence.Topmost
+		entry["maxactivations"] = sequence.MaxActivations
+		entry["keepalive"] = sequence.KeepAlive
+		entry["condition"] = sequence.PreCondition?.UUID.uuidString ?? ""
+		entry["entryfunction"] = sequence.EntryFunction?.UUID.uuidString ?? ""
+		entry["exitfunction"] = sequence.ExitFunction?.UUID.uuidString ?? ""
+		entry["entry"] = sequence.Entry?.UUID.uuidString ?? ""
+		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
+		entry["links"] = sequence.EventLinks.map{$0.UUID.uuidString}
+		
+		let pos = Positions[sequence.UUID] ?? CGPoint.zero
+		entry["position"] = [
+			"x": pos.x,
+			"y": pos.y
+		]
+		
+		Swift.print("TODO: Export attributes for Sequences.")
+		return entry
 	}
 }
 
-extension Document: NVStoryDelegate {
-	func nvVariableDidRename(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvVariableSynopsisDidChange(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvVariableConstantDidChange(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvVariableValueDidChange(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvVariableInitialValueDidChange(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvFolderDidRename(folder: NVFolder) { updateChangeCount(.changeDone) }
-	func nvFolderSynopsisDidChange(folder: NVFolder) { updateChangeCount(.changeDone) }
-	func nvFolderDidAddFolder(parent: NVFolder, child: NVFolder) { updateChangeCount(.changeDone) }
-	func nvFolderDidRemoveFolder(parent: NVFolder, child: NVFolder) { updateChangeCount(.changeDone) }
-	func nvFolderDidAddVariable(parent: NVFolder, child: NVVariable) { updateChangeCount(.changeDone) }
-	func nvFolderDidRemoveVariable(parent: NVFolder, child: NVVariable) { updateChangeCount(.changeDone) }
-	func nvTransferDestinationDidSet(transfer: NVTransfer) { updateChangeCount(.changeDone) }
-	func nvStoryDidCreateGraph(graph: NVGraph) { updateChangeCount(.changeDone) }
-	func nvStoryDidCreateFolder(folder: NVFolder) { updateChangeCount(.changeDone) }
-	func nvStoryDidCreateLink(link: NVLink) { updateChangeCount(.changeDone) }
-	func nvStoryDidCreateBranch(branch: NVBranch) {
+extension Document: NVStoryObserver {
+	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
-		if Positions[branch.ID] == nil {
-			Positions[branch.ID] = CGPoint.zero
+		if Positions[group.UUID] == nil {
+			Positions[group.UUID] = CGPoint.zero
 		}
 	}
-	func nvStoryDidCreateSwitch(swtch: NVSwitch) {
+	
+	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
-		if Positions[swtch.ID] == nil {
-			Positions[swtch.ID] = CGPoint.zero
+		if Positions[sequence.UUID] == nil {
+			Positions[sequence.UUID] = CGPoint.zero
 		}
 	}
-	func nvStoryDidCreateDialog(dialog: NVDialog) {
+	
+	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent) {
 		updateChangeCount(.changeDone)
-		if Positions[dialog.ID] == nil {
-			Positions[dialog.ID] = CGPoint.zero
+		if Positions[event.UUID] == nil {
+			Positions[event.UUID] = CGPoint.zero
 		}
 	}
-	func nvStoryDidCreateDelivery(delivery: NVDelivery) {
+	
+	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
 		updateChangeCount(.changeDone)
-		if Positions[delivery.ID] == nil {
-			Positions[delivery.ID] = CGPoint.zero
+		if Positions[entity.UUID] == nil {
+			Positions[entity.UUID] = CGPoint.zero
 		}
 	}
-	func nvStoryDidCreateContext(context: NVContext) {
+	
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
 		updateChangeCount(.changeDone)
-		if Positions[context.ID] == nil {
-			Positions[context.ID] = CGPoint.zero
+		if Positions[link.UUID] == nil {
+			Positions[link.UUID] = CGPoint.zero
 		}
 	}
-	func nvStoryDidCreateEntity(entity: NVEntity) {
+	
+	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
 		updateChangeCount(.changeDone)
-		if EntityImageNames[entity.ID] != nil {
-			EntityImageNames[entity.ID] = ""
+		if Positions[link.UUID] == nil {
+			Positions[link.UUID] = CGPoint.zero
 		}
 	}
-	func nvStoryDidCreateVariable(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteFolder(folder: NVFolder) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteVariable(variable: NVVariable) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteEntity(entity: NVEntity) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteNode(node: NVNode) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteLink(link: NVLink) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteBranch(branch: NVBranch) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteSwitch(swtch: NVSwitch) { updateChangeCount(.changeDone) }
-	func nvStoryDidDeleteGraph(graph: NVGraph) { updateChangeCount(.changeDone) }
-	func nvGraphDidRename(graph: NVGraph) { updateChangeCount(.changeDone) }
-	func nvGraphDidAddGraph(parent: NVGraph, child: NVGraph) { updateChangeCount(.changeDone) }
-	func nvGraphDidRemoveGraph(parent: NVGraph, child: NVGraph) { updateChangeCount(.changeDone) }
-	func nvGraphDidAddNode(parent: NVGraph, child: NVNode) { updateChangeCount(.changeDone) }
-	func nvGraphDidRemoveNode(parent: NVGraph, child: NVNode) { updateChangeCount(.changeDone) }
-	func nvGraphDidSetEntry(graph: NVGraph, entry: NVNode?) { updateChangeCount(.changeDone) }
-	func nvGraphDidAddLink(graph: NVGraph, link: NVLink) { updateChangeCount(.changeDone) }
-	func nvGraphDidRemoveLink(graph: NVGraph, link: NVLink) { updateChangeCount(.changeDone) }
-	func nvGraphDidAddBranch(graph: NVGraph, branch: NVBranch) { updateChangeCount(.changeDone) }
-	func nvGraphDidRemoveBranch(graph: NVGraph, branch: NVBranch) { updateChangeCount(.changeDone) }
-	func nvGraphDidAddSwitch(graph: NVGraph, swtch: NVSwitch) { updateChangeCount(.changeDone) }
-	func nvGraphDidRemoveSwitch(graph: NVGraph, swtch: NVSwitch) { updateChangeCount(.changeDone) }
-	func nvNodeDidRename(node: NVNode) { updateChangeCount(.changeDone) }
-	func nvDialogContentDidChange(dialog: NVDialog) { updateChangeCount(.changeDone) }
-	func nvDialogDirectionsDidChange(dialog: NVDialog) { updateChangeCount(.changeDone) }
-	func nvDialogPreviewDidChange(dialog: NVDialog) { updateChangeCount(.changeDone) }
-	func nvDialogInstigatorDidChange(dialog: NVDialog) { updateChangeCount(.changeDone) }
-	func nvDeliveryContentDidChange(delivery: NVDelivery) { updateChangeCount(.changeDone) }
-	func nvDeliveryDirectionsDidChange(delivery: NVDelivery) { updateChangeCount(.changeDone) }
-	func nvDeliveryPreviewDidChange(delivery: NVDelivery) { updateChangeCount(.changeDone) }
-	func nvContextContentDidChange(context: NVContext) { updateChangeCount(.changeDone) }
-	func nvConditionDidUpdate(condition: NVCondition) { updateChangeCount(.changeDone) }
-	func nvFunctionDidUpdate(function: NVFunction) { updateChangeCount(.changeDone) }
-	func nvSwitchVariableDidChange(swtch: NVSwitch) { updateChangeCount(.changeDone) }
-	func nvSwitchDidAddOption(swtch: NVSwitch, option: NVSwitchOption) { updateChangeCount(.changeDone) }
-	func nvSwitchDidRemoveOption(swtch: NVSwitch, option: NVSwitchOption) { updateChangeCount(.changeDone) }
-	func nvEntityDidRename(entity: NVEntity) { updateChangeCount(.changeDone) }
-	func nvEntitySynopsisDidChange(entity: NVEntity) { updateChangeCount(.changeDone) }
+	
+	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
+		updateChangeCount(.changeDone)
+		if Positions[variable.UUID] == nil {
+			Positions[variable.UUID] = CGPoint.zero
+		}
+	}
+	
+	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteSelector(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvDNSequenceClarityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventDidAddParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventDidRemoveParticipant(story: NVStory, event: NVEvent, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventTopmostDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventMaxActivationsDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventAttributesDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvVariableConstantDidChange(story: NVStory, variable: NVVariable) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvVariableValueDidChange(story: NVStory, variable: NVVariable) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEntityDescriptionDidChange(story: NVStory, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEntityTagsDidChange(story: NVStory, entity: NVEntity) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvFunctionLabelDidChange(story: NVStory, function: NVFunction) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvConditionLabelDidChange(story: NVStory, condition: NVCondition) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
 }

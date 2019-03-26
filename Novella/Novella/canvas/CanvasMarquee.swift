@@ -2,7 +2,7 @@
 //  CanvasMarquee.swift
 //  novella
 //
-//  Created by dgreen on 12/08/2018.
+//  Created by dgreen on 06/12/2018.
 //  Copyright © 2018 dgreen. All rights reserved.
 //
 
@@ -11,9 +11,8 @@ import Cocoa
 class CanvasMarquee: NSView {
 	static let ROUNDNESS: CGFloat = 3.0
 	static let THICKNESS: CGFloat = 2.0
-	static let COLOR: NSColor = NSColor.fromHex("#D6D6D6")
+	static let COLOR: NSColor = NSColor.fromHex("#D6D6D6") // or 483D3F
 	
-	// MARK: - Properties
 	var InMarquee: Bool = false {
 		didSet {
 			if !InMarquee {
@@ -39,7 +38,6 @@ class CanvasMarquee: NSView {
 		}
 	}
 	
-	// MARK: - Initialization
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 	}
@@ -47,12 +45,10 @@ class CanvasMarquee: NSView {
 		fatalError("CanvasMarquee::init(coder) not implemented.")
 	}
 	
-	// MARK: - Disable Hit Test
 	override func hitTest(_ point: NSPoint) -> NSView? {
 		return nil
 	}
 	
-	// MARK: - Drawing
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
@@ -64,11 +60,11 @@ class CanvasMarquee: NSView {
 			path.lineWidth = CanvasMarquee.THICKNESS
 			
 			// fill color
-			NSColor(calibratedWhite: 0.8, alpha: 0.2).setFill()
+			CanvasMarquee.COLOR.withAlphaComponent(0.2).setFill()
 			path.fill()
 			
 			// outline
-			CanvasMarquee.COLOR.setStroke()
+			CanvasMarquee.COLOR.withAlphaComponent(0.6).setStroke()
 			path.stroke()
 			
 			context.restoreGState()
