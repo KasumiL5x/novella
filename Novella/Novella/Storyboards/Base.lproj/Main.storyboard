@@ -728,7 +728,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <segue destination="bcU-XD-nqO" kind="show" identifier="ConditionFunctionEditorVC" id="2hM-pv-giK"/>
+                                            <segue destination="bcU-XD-nqO" kind="modal" identifier="ConditionFunctionEditorVC" id="2hM-pv-giK"/>
                                         </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NeA-RM-BPd">
@@ -739,7 +739,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <segue destination="X5w-lW-ot9" kind="show" identifier="VariablesEditor" id="OOf-oS-Mpo"/>
+                                            <segue destination="X5w-lW-ot9" kind="modal" identifier="VariablesEditor" id="OOf-oS-Mpo"/>
                                         </connections>
                                     </button>
                                 </subviews>
