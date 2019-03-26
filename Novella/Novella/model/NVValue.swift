@@ -8,17 +8,13 @@
 
 import Foundation
 
-class NVValue: Hashable {
+class NVValue: Equatable {
 	var Raw: NVRawValue
 	
 	init(_ value: NVRawValue) {
 		self.Raw = value
 	}
 	
-	// hashable
-	var hashValue: Int {
-		return ObjectIdentifier(self).hashValue
-	}
 	// equatable
 	static func ==(lhs: NVValue, rhs: NVValue) -> Bool {
 		return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)

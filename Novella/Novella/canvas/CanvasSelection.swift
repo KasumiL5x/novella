@@ -43,7 +43,7 @@ class CanvasSelection {
 	}
 	func deselect(_ objs: [CanvasObject]) {
 		objs.forEach { (obj) in
-			if let idx = Selection.index(of: obj) {
+			if let idx = Selection.firstIndex(of: obj) {
 				obj.CurrentState = .normal
 				Selection.remove(at: idx)
 			}

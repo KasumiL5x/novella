@@ -102,7 +102,7 @@ class NVGroup: NVIdentifiable {
 		_story.Observers.forEach{$0.nvGroupDidAddSequence(story: _story, group: self, sequence: sequence)}
 	}
 	func remove(sequence: NVSequence) {
-		guard let idx = Sequences.index(of: sequence) else {
+		guard let idx = Sequences.firstIndex(of: sequence) else {
 			NVLog.log("Tried to remove Sequence (\(sequence.UUID)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
@@ -137,7 +137,7 @@ class NVGroup: NVIdentifiable {
 		_story.Observers.forEach{$0.nvGroupDidAddGroup(story: _story, group: self, child: group)}
 	}
 	func remove(group: NVGroup) {
-		guard let idx = Groups.index(of: group) else {
+		guard let idx = Groups.firstIndex(of: group) else {
 			NVLog.log("Tried to remove Group (\(group.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
@@ -162,7 +162,7 @@ class NVGroup: NVIdentifiable {
 		_story.Observers.forEach{$0.nvGroupDidAddSequenceLink(story: _story, group: self, link: sequenceLink)}
 	}
 	func remove(sequenceLink: NVSequenceLink) {
-		guard let idx = SequenceLinks.index(of: sequenceLink) else {
+		guard let idx = SequenceLinks.firstIndex(of: sequenceLink) else {
 			NVLog.log("Tried to remove SequenceLink (\(sequenceLink.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}

@@ -9,11 +9,11 @@
 import Foundation
 
 public extension CGPoint {
-	public init(angle: CGFloat) {
+	init(angle: CGFloat) {
 		self.init(x: cos(angle), y: sin(angle))
 	}
 	
-	public func length() -> CGFloat {
+	func length() -> CGFloat {
 		return sqrt(x*x + y*y)
 	}
 	
@@ -22,7 +22,7 @@ public extension CGPoint {
 		return len>0 ? self / len : CGPoint.zero
 	}
 	
-	public var angle: CGFloat {
+	var angle: CGFloat {
 		return atan2(y, x)
 	}
 }

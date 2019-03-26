@@ -55,7 +55,7 @@ class CanvasBench: NSView {
 	}
 	
 	func remove(_ item: CanvasLink) {
-		guard let idx = Items.index(of: item) else {
+		guard let idx = Items.firstIndex(of: item) else {
 			return
 		}
 		Items.remove(at: idx)

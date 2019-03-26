@@ -107,7 +107,7 @@ class NVSequence: NVIdentifiable {
 		_story.Observers.forEach{$0.nvSequenceDidAddEvent(story: _story, sequence: self, event: event)}
 	}
 	func remove(event: NVEvent) {
-		guard let idx = Events.index(of: event) else {
+		guard let idx = Events.firstIndex(of: event) else {
 			NVLog.log("Tried to remove Event (\(event.UUID.uuidString)) from Sequence (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
@@ -135,7 +135,7 @@ class NVSequence: NVIdentifiable {
 		_story.Observers.forEach{$0.nvSequenceDidAddEventLink(story: _story, sequence: self, link: eventLink)}
 	}
 	func remove(eventLink: NVEventLink) {
-		guard let idx = EventLinks.index(of: eventLink) else {
+		guard let idx = EventLinks.firstIndex(of: eventLink) else {
 			NVLog.log("Tried to remove EventLink (\(eventLink.UUID.uuidString)) from Sequence (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}

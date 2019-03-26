@@ -9,7 +9,7 @@
 import AppKit
 
 public extension NSColor {
-	public static func fromHex(_ hex:String) -> NSColor {
+	static func fromHex(_ hex:String) -> NSColor {
 		var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 		
 		if (cString.hasPrefix("#")) {
@@ -31,7 +31,7 @@ public extension NSColor {
 		)
 	}
 	
-	public func toHex() -> String {
+	func toHex() -> String {
 		let red = Int(round(self.redComponent * 0xFF))
 		let green = Int(round(self.greenComponent * 0xFF))
 		let blue = Int(round(self.blueComponent * 0xFF))
@@ -41,13 +41,13 @@ public extension NSColor {
 }
 
 public extension NSColor {
-	public func lighter(removeSaturation val: CGFloat, resultAlpha alpha: CGFloat?=nil) -> NSColor {
+	func lighter(removeSaturation val: CGFloat, resultAlpha alpha: CGFloat?=nil) -> NSColor {
 		return NSColor(calibratedHue: hueComponent,
 									 saturation: max(saturationComponent - val, 0.0),
 									 brightness: brightnessComponent,
 									 alpha: alpha ?? alphaComponent)
 	}
-	public func darker(removeValue val: CGFloat, resultAlpha alpha: CGFloat?=nil) -> NSColor {
+	func darker(removeValue val: CGFloat, resultAlpha alpha: CGFloat?=nil) -> NSColor {
 		return NSColor(calibratedHue: hueComponent,
 									 saturation: saturationComponent,
 									 brightness: max(brightnessComponent - val, 0.0),
@@ -56,7 +56,7 @@ public extension NSColor {
 }
 
 public extension NSColor {
-	public func inverted() -> NSColor {
+	func inverted() -> NSColor {
 		return NSColor(calibratedRed: 1.0 - self.redComponent, green: 1.0 - self.greenComponent, blue: 1.0 - self.blueComponent, alpha: self.alphaComponent)
 	}
 }
