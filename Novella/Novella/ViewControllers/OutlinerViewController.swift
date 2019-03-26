@@ -99,7 +99,7 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 	
 	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if item == nil { // as mentioned above
-			return _document!.Story.MainGroup
+			return _document!.Story.MainGroup!
 		}
 		
 		// order here matches the above function count order
