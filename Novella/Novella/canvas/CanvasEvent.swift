@@ -64,7 +64,7 @@ class CanvasEvent: CanvasObject {
 		_canvas.Doc.Positions[Event.UUID] = frame.origin
 	}
 	override func mainColor() -> NSColor {
-		return NSColor.fromHex("#FF00FF") // also not implemented this class properly yet
+		return NSColor.fromHex("#88D1B0")
 	}
 	override func labelString() -> String {
 		return Event.Label.isEmpty ? "Unknown" : Event.Label
