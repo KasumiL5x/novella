@@ -9,6 +9,8 @@
 import Cocoa
 
 class MainViewController: NSViewController, NSTableViewDelegate {
+	@IBOutlet weak private var _splitView: NSSplitView!
+	
 	private var _propertiesVC: PropertiesViewController? = nil
 	private var _variablesVC: VariablesEditorViewController? = nil
 	private var _graphVC: GraphViewController? = nil
@@ -20,6 +22,9 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 			return
 		}
 		
+		_splitView.delegate = self
+		
+		_outlinerVC?.setup(doc: doc)
 		_graphVC?.setup(doc: doc)
 		_propertiesVC?.setup(doc: doc)
 		
@@ -46,11 +51,6 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		if segue.identifier == "OutlinerVC" {
 			_outlinerVC = segue.destinationController as? OutlinerViewController
-			guard let doc = view.window?.windowController?.document as? Document else {
-				print("ERROR: Could not find doc when OutlinerVC segue was triggered.")
-				return
-			}
-			_outlinerVC?.setup(doc: doc)
 		}
 		
 		if segue.identifier == "ConditionFunctionEditorVC" {
@@ -111,5 +111,35 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		alert.alertStyle = .informational
 		alert.addButton(withTitle: "OK")
 		alert.runModal()
+	}
+}
+
+extension MainViewController: NSSplitViewDelegate {
+	// Just FYI, NSSplitView now stores its subviews as all actual child views followed by all dividers.
+	// For example, with 3 children, it would have 3 NSView children followed by 2 divider (derivative of NSView) children.
+	
+	func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+		// only the first and last ones
+		return (subview == splitView.subviews[0]) || (subview == splitView.subviews[2])
+	}
+	
+	func splitView(_ splitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAt dividerIndex: Int) -> Bool {
+		return true
+	}
+	
+	func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+		// constrain size of first panel
+		if dividerIndex == 0 {
+			return proposedMinimumPosition + 200.0
+		}
+		return proposedMinimumPosition
+	}
+	
+	func splitView(_ splitView: NSSplitView, constrainMaxCoordinate proposedMaximumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+		// constrain size of last panel
+		if dividerIndex == 1 {
+			return proposedMaximumPosition - 200.0
+		}
+		return proposedMaximumPosition
 	}
 }

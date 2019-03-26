@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -627,7 +627,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSourceList:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -720,17 +720,6 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="HOI-fZ-4yv" userLabel="Toolbar">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="700"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MhU-NV-nI9" userLabel="Outliner Button">
-                                        <rect key="frame" x="6" y="652" width="28" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarTextListTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="WKw-WQ-HYc">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <segue destination="cRu-fY-t8q" kind="show" identifier="OutlinerVC" id="Y9C-tY-olL"/>
-                                        </connections>
-                                    </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hD-Bd-WkR">
                                         <rect key="frame" x="6" y="614" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -758,35 +747,84 @@
                                     <constraint firstAttribute="width" constant="40" id="ZIr-l2-pNd"/>
                                 </constraints>
                             </customView>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eg3-Bo-lPx">
-                                <rect key="frame" x="40" y="0.0" width="740" height="700"/>
-                                <connections>
-                                    <segue destination="JzM-wE-2ha" kind="embed" identifier="GraphVC" id="lqc-mL-tMK"/>
-                                </connections>
-                            </containerView>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="lhb-Ly-fUJ">
-                                <rect key="frame" x="780" y="0.0" width="220" height="700"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="LqJ-yf-sNe"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="Joi-T8-ZdE" kind="embed" identifier="Properties" id="FDG-lu-aoR"/>
-                                </connections>
-                            </containerView>
+                            <splitView arrangesAllSubviews="NO" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgG-HK-NbX">
+                                <rect key="frame" x="40" y="0.0" width="960" height="700"/>
+                                <subviews>
+                                    <customView id="Euj-Dd-jy4" userLabel="Left">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-7K-lbu" userLabel="Outliner">
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
+                                                <connections>
+                                                    <segue destination="09l-Zd-XRM" kind="embed" identifier="OutlinerVC" id="jxo-A9-tHT"/>
+                                                </connections>
+                                            </containerView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="5Ts-7K-lbu" secondAttribute="trailing" id="Qu1-Su-uOa"/>
+                                            <constraint firstAttribute="bottom" secondItem="5Ts-7K-lbu" secondAttribute="bottom" id="UTi-Dk-XDi"/>
+                                            <constraint firstItem="5Ts-7K-lbu" firstAttribute="leading" secondItem="Euj-Dd-jy4" secondAttribute="leading" id="hiT-Dt-BvB"/>
+                                            <constraint firstItem="5Ts-7K-lbu" firstAttribute="top" secondItem="Euj-Dd-jy4" secondAttribute="top" id="zpk-3M-sDl"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView id="nby-ee-krr" userLabel="Middle">
+                                        <rect key="frame" x="209" y="0.0" width="542" height="700"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eg3-Bo-lPx" userLabel="Graph">
+                                                <rect key="frame" x="0.0" y="0.0" width="542" height="700"/>
+                                                <connections>
+                                                    <segue destination="JzM-wE-2ha" kind="embed" identifier="GraphVC" id="lqc-mL-tMK"/>
+                                                </connections>
+                                            </containerView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="eg3-Bo-lPx" secondAttribute="bottom" id="3jh-SP-q5H"/>
+                                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="top" secondItem="nby-ee-krr" secondAttribute="top" id="8jm-cl-875"/>
+                                            <constraint firstAttribute="trailing" secondItem="eg3-Bo-lPx" secondAttribute="trailing" id="WMJ-rK-PQd"/>
+                                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="leading" secondItem="nby-ee-krr" secondAttribute="leading" id="fpr-Gf-vao"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView id="TGU-gv-PIx" userLabel="Right">
+                                        <rect key="frame" x="760" y="0.0" width="200" height="700"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="lhb-Ly-fUJ" userLabel="Properties">
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
+                                                <connections>
+                                                    <segue destination="Joi-T8-ZdE" kind="embed" identifier="Properties" id="FDG-lu-aoR"/>
+                                                </connections>
+                                            </containerView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="lhb-Ly-fUJ" secondAttribute="bottom" id="3Tj-Qf-SF9"/>
+                                            <constraint firstAttribute="trailing" secondItem="lhb-Ly-fUJ" secondAttribute="trailing" id="Sq0-3H-dTp"/>
+                                            <constraint firstItem="lhb-Ly-fUJ" firstAttribute="top" secondItem="TGU-gv-PIx" secondAttribute="top" id="dbs-U4-J6s"/>
+                                            <constraint firstItem="lhb-Ly-fUJ" firstAttribute="leading" secondItem="TGU-gv-PIx" secondAttribute="leading" id="gNv-Dt-dwd"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <holdingPriorities>
+                                    <real value="250"/>
+                                    <real value="250"/>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                            </splitView>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="VgG-HK-NbX" secondAttribute="bottom" id="65l-eh-KJ9"/>
                             <constraint firstAttribute="bottom" secondItem="HOI-fZ-4yv" secondAttribute="bottom" id="FKu-e1-P7h"/>
-                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="Kx5-5g-Li3"/>
-                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="leading" secondItem="HOI-fZ-4yv" secondAttribute="trailing" id="QY5-8I-B97"/>
-                            <constraint firstItem="lhb-Ly-fUJ" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="h5E-ku-Aby"/>
-                            <constraint firstAttribute="bottom" secondItem="eg3-Bo-lPx" secondAttribute="bottom" id="kdX-3g-ZNB"/>
-                            <constraint firstAttribute="trailing" secondItem="lhb-Ly-fUJ" secondAttribute="trailing" id="nPM-Qi-JfW"/>
-                            <constraint firstAttribute="bottom" secondItem="lhb-Ly-fUJ" secondAttribute="bottom" id="ngR-Ta-Ucp"/>
+                            <constraint firstItem="VgG-HK-NbX" firstAttribute="leading" secondItem="HOI-fZ-4yv" secondAttribute="trailing" id="Jil-9p-EFa"/>
+                            <constraint firstAttribute="trailing" secondItem="VgG-HK-NbX" secondAttribute="trailing" id="ip6-XJ-5dt"/>
                             <constraint firstItem="HOI-fZ-4yv" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="rRn-d3-TO0"/>
                             <constraint firstItem="HOI-fZ-4yv" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="sKv-uh-ekJ"/>
-                            <constraint firstItem="eg3-Bo-lPx" firstAttribute="trailing" secondItem="lhb-Ly-fUJ" secondAttribute="leading" id="vbf-yQ-4PM"/>
+                            <constraint firstItem="VgG-HK-NbX" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="y1F-So-Jwp"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_splitView" destination="VgG-HK-NbX" id="592-0o-pad"/>
+                    </connections>
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -808,14 +846,6 @@
             </objects>
             <point key="canvasLocation" x="101" y="1504"/>
         </scene>
-        <!--Outliner-->
-        <scene sceneID="Qjc-dk-QDn">
-            <objects>
-                <controllerPlaceholder storyboardName="Outliner" referencedIdentifier="Outliner" id="cRu-fY-t8q" sceneMemberID="viewController"/>
-                <customObject id="bFW-RT-XNu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-27" y="1504"/>
-        </scene>
         <!--VariablesEditor-->
         <scene sceneID="Utx-Yu-zHG">
             <objects>
@@ -832,10 +862,17 @@
             </objects>
             <point key="canvasLocation" x="-288" y="1504"/>
         </scene>
+        <!--Outliner-->
+        <scene sceneID="BAL-tF-x6N">
+            <objects>
+                <controllerPlaceholder storyboardName="Outliner" referencedIdentifier="Outliner" id="09l-Zd-XRM" sceneMemberID="viewController"/>
+                <customObject id="8vc-U0-7p7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-58" y="1516"/>
+        </scene>
     </scenes>
     <resources>
         <image name="NSTouchBarTextBoxTemplate" width="20" height="30"/>
-        <image name="NSTouchBarTextListTemplate" width="18" height="30"/>
         <image name="NSTouchBarTextStrikethroughTemplate" width="14" height="30"/>
     </resources>
 </document>

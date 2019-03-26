@@ -15,10 +15,6 @@ class OutlinerViewController: NSViewController {
 	private var _linkIcon: NSImage?
 	private var _groupImage: NSImage?
 	
-	override func viewDidAppear() {
-		view.window?.level = .floating
-	}
-	
 	override func viewDidLoad() {
 		_linkIcon = NSImage(named: "NVLink")
 		_groupImage = NSImage(named: "NVGroup")
@@ -31,9 +27,8 @@ class OutlinerViewController: NSViewController {
 	func setup(doc: Document) {
 		_document = doc
 		doc.Story.add(observer: self)
+		_outlineView.reloadData()
 	}
-	
-	
 }
 
 extension OutlinerViewController: NSOutlineViewDelegate {
