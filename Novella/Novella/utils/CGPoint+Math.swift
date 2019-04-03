@@ -25,6 +25,16 @@ public extension CGPoint {
 	var angle: CGFloat {
 		return atan2(y, x)
 	}
+	
+	func sqrDistance(to: CGPoint) -> CGFloat {
+		let dx = (self.x - to.x)
+		let dy = (self.y - to.y)
+		return (dx * dx) + (dy * dy)
+	}
+	
+	func distance(to: CGPoint) -> CGFloat {
+		return sqrt(sqrDistance(to: to))
+	}
 }
 
 public func / (point: CGPoint, scalar: CGFloat) -> CGPoint {
@@ -32,6 +42,10 @@ public func / (point: CGPoint, scalar: CGFloat) -> CGPoint {
 }
 
 public func * (point: CGPoint, scalar: CGFloat) -> CGPoint {
+	return CGPoint(x: point.x * scalar, y: point.y * scalar)
+}
+
+public func * (scalar: CGFloat, point: CGPoint) -> CGPoint {
 	return CGPoint(x: point.x * scalar, y: point.y * scalar)
 }
 

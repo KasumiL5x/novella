@@ -110,4 +110,15 @@ class CurveHelper {
 		}
 		return path
 	}
+	
+	static func curve(start: NSPoint, end: NSPoint) -> NSBezierPath {
+		let path = NSBezierPath()
+		let a = start
+		let d = end
+		let b = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: a.y)
+		let c = NSPoint(x: a.x + (d.x - a.x) * 0.5, y: d.y)
+		path.move(to: a)
+		path.curve(to: d, controlPoint1: b, controlPoint2: c)
+		return path
+	}
 }
