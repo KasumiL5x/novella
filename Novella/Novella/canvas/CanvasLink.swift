@@ -196,7 +196,7 @@ class CanvasLink: NSView {
 			// is the centerpoint of this link below(ish) the center of the object?  this will decide the loop direction
 			let objY = obj.convert(NSMakePoint(0, obj.bounds.midY), to: nil).y
 			let thisY = self.convert(NSMakePoint(0.0, bounds.midY), to: nil).y
-			let belowCenter = abs(objY - thisY) > 0.5 // the values are not identical even when constrained, so add a little buffer room
+			let belowCenter = (objY - thisY) > 0.5 // the values are not identical even when constrained, so add a little buffer room
 			
 			// compute start and end points
 			let origin = NSMakePoint(bounds.midX, bounds.midY)
@@ -205,32 +205,13 @@ class CanvasLink: NSView {
 			// compute circle containing the points and the angle of the points in that circle in radians
 			let center = (end + origin) * 0.5
 			let radius = center.distance(to: origin)
-			let originAngle = atan2(origin.y - center.y, origin.x - center.x)
-			let endAngle = atan2(end.y - center.y, end.x - center.x)
-			
-			// compute an array of points stepping between the angles
-			var points: [CGPoint] = []
-			points.append(origin) // needs 2 origins for catmull rom
-			let circleSteps: Int = 10
-			let angleStep: CGFloat = (originAngle - endAngle) / CGFloat(circleSteps)
-			for i in stride(from: originAngle, to: endAngle, by: -angleStep) {
-				let x = center.x + (radius * cos(i))
-				let y = center.y + (radius * sin(i))
-				points.append(NSMakePoint(x, y))
-			}
-			points.append(end) // needs 2 end points for catmull rom
-			points.append(end)
-			
-			// add the points to a curve (NOTE: if the curve type changes, remove extra catmull rom points above)
-			let curve: Curve = Curve(steps: 10, type: .catmullrom)
-			points.forEach{curve.add(point: $0)}
+			let originAngle = atan2(origin.y - center.y, origin.x - center.x) * 57.2958
+			let endAngle = atan2(end.y - center.y, end.x - center.x) * 57.2958
 			
 			// line the computed curve
 			let path = NSBezierPath()
-			for i in 0..<curve.Nodes.count-1 {
-				path.move(to: curve.Nodes[i])
-				path.line(to: curve.Nodes[i+1])
-			}
+			path.appendArc(withCenter: center, radius: radius, startAngle: originAngle, endAngle: endAngle, clockwise: belowCenter)
+			
 			_curvelayer.path = path.cgPath
 		} else {
 			let origin = NSMakePoint(bounds.midX, bounds.midY)
