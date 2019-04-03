@@ -19,12 +19,7 @@ class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
 	//
 	var Destination: T? {
 		didSet {
-			if let dest = Destination, Origin.UUID == dest.UUID {
-				Destination = nil
-				NVLog.log("Tried to set Link (\(UUID.uuidString)) Destination to its Origin.", level: .warning)
-			} else {
-				NVLog.log("Link (\(UUID.uuidString)) Destination changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Destination?.UUID.uuidString ?? "nil")).", level: .info)
-			}
+			NVLog.log("Link (\(UUID.uuidString)) Destination changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Destination?.UUID.uuidString ?? "nil")).", level: .info)
 			
 			// a bit hacky but watcha' gonna do with templates like these?
 			if self is NVSequenceLink {
