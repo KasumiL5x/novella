@@ -147,7 +147,9 @@ class PropertiesViewController: NSViewController {
 	
 	private func constrain(a: NSView, b: NSView) {
 		self.view.addConstraints([
-			NSLayoutConstraint(item: a, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: a.frame.width),
+//			NSLayoutConstraint(item: a, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: a.frame.width),
+			NSLayoutConstraint(item: a, attribute: .left, relatedBy: .equal, toItem: b, attribute: .left, multiplier: 1.0, constant: 0.0),
+			NSLayoutConstraint(item: a, attribute: .right, relatedBy: .equal, toItem: b, attribute: .right, multiplier: 1.0, constant: 0.0),
 			NSLayoutConstraint(item: a, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: a.frame.height),
 			NSLayoutConstraint(item: a, attribute: .top, relatedBy: .equal, toItem: b, attribute: (b == self.view) ? .top : .bottom, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: a, attribute: .centerX, relatedBy: .equal, toItem: b, attribute: .centerX, multiplier: 1.0, constant: 0)
