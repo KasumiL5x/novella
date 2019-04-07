@@ -10,9 +10,11 @@ import Cocoa
 
 class CanvasGroup: CanvasObject {
 	let Group: NVGroup
+	private let _popover: GroupPopover
 	
 	init(canvas: Canvas, group: NVGroup) {
 		self.Group = group
+		self._popover = GroupPopover()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1))
 		
 		wantsLayer = true
@@ -33,6 +35,12 @@ class CanvasGroup: CanvasObject {
 	}
 	
 	// virtuals
+	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
+		super.onDoubleClick(gesture: gesture)
+		
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(group: self, doc: _canvas.Doc)
+	}
 	override func onMove() {
 		super.onMove()
 		_canvas.Doc.Positions[Group.UUID] = frame.origin

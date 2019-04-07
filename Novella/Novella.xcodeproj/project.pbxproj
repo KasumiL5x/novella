@@ -36,6 +36,10 @@
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
 		65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CC99A921C26876008CD7BA /* Assets.xcassets */; };
+		65E1B3682259EADC00D31884 /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B3672259EADC00D31884 /* Popover.swift */; };
+		65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B3692259EDBF00D31884 /* GroupPopover.swift */; };
+		65E1B36C2259EE2500D31884 /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65E1B36B2259EE2500D31884 /* Popovers.storyboard */; };
+		65E1B36F2259EF0100D31884 /* GroupPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */; };
 		65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */; };
 		65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
@@ -106,6 +110,10 @@
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
 		65CC99A921C26876008CD7BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		65E1B3672259EADC00D31884 /* Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
+		65E1B3692259EDBF00D31884 /* GroupPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPopover.swift; sourceTree = "<group>"; };
+		65E1B36B2259EE2500D31884 /* Popovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
+		65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPopoverViewController.swift; sourceTree = "<group>"; };
 		65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Outliner.storyboard; sourceTree = "<group>"; };
 		65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinerViewController.swift; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +190,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		65E1B3662259EAC600D31884 /* popovers */ = {
+			isa = PBXGroup;
+			children = (
+				65E1B3672259EADC00D31884 /* Popover.swift */,
+				65E1B3692259EDBF00D31884 /* GroupPopover.swift */,
+			);
+			path = popovers;
+			sourceTree = "<group>";
+		};
+		65E1B36D2259EEF400D31884 /* popovers */ = {
+			isa = PBXGroup;
+			children = (
+				65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */,
+			);
+			path = popovers;
+			sourceTree = "<group>";
+		};
 		DF22E9E2211D9F5E00606D97 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +217,7 @@
 				651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */,
 				6587583A222D7B3400EAD491 /* Properties.storyboard */,
 				6526E889224805F800442AF5 /* VariablesEditor.storyboard */,
+				65E1B36B2259EE2500D31884 /* Popovers.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -199,6 +225,7 @@
 		DF22E9E5211DA00E00606D97 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				65E1B36D2259EEF400D31884 /* popovers */,
 				DF22E9EB211DA6DE00606D97 /* MainViewController.swift */,
 				DF94929621B9723900BC8AB0 /* GraphViewController.swift */,
 				65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */,
@@ -294,6 +321,7 @@
 		DFCE603F211C3D20005900D8 /* novella */ = {
 			isa = PBXGroup;
 			children = (
+				65E1B3662259EAC600D31884 /* popovers */,
 				DF94929121B9704000BC8AB0 /* utils */,
 				DF94928C21B96F7E00BC8AB0 /* canvas */,
 				DF94926D21B96D3900BC8AB0 /* model */,
@@ -379,6 +407,7 @@
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
 				65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */,
 				6526E88A224805F800442AF5 /* VariablesEditor.storyboard in Resources */,
+				65E1B36C2259EE2500D31884 /* Popovers.storyboard in Resources */,
 				DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */,
 				651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */,
 				6587583B222D7B3400EAD491 /* Properties.storyboard in Resources */,
@@ -423,6 +452,7 @@
 				65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */,
 				DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */,
 				DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */,
+				65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */,
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
@@ -433,6 +463,7 @@
 				6526E88C22480DF400442AF5 /* VariablesEditorViewController.swift in Sources */,
 				DF93F60221BD07C000CF5B03 /* NSBezierPath+CGPath.swift in Sources */,
 				DF9492A321BA573600BC8AB0 /* NVPath.swift in Sources */,
+				65E1B36F2259EF0100D31884 /* GroupPopoverViewController.swift in Sources */,
 				DF94928921B96D6F00BC8AB0 /* NVDiscoverableSequence.swift in Sources */,
 				DF94927F21B96D6F00BC8AB0 /* NVLink.swift in Sources */,
 				DF94928B21B96D6F00BC8AB0 /* NVVariable.swift in Sources */,
@@ -447,6 +478,7 @@
 				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
 				DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
+				65E1B3682259EADC00D31884 /* Popover.swift in Sources */,
 				DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */,
 				DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */,
 				65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */,
@@ -606,6 +638,7 @@
 				);
 				INFOPLIST_FILE = novella/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = dgreen.me.novella;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -625,6 +658,7 @@
 				);
 				INFOPLIST_FILE = novella/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = dgreen.me.novella;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
