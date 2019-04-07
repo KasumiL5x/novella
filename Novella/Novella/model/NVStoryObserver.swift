@@ -45,6 +45,9 @@ protocol NVStoryObserver: class {
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup)
 	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup)
 	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup)
+	func nvGroupConditionDidChange(story: NVStory, group: NVGroup)
+	func nvGroupEntryFunctionDidChange(story: NVStory, group: NVGroup)
+	func nvGroupExitFunctionDidChange(story: NVStory, group: NVGroup)
 	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup)
 	
 	// sequences
@@ -58,6 +61,9 @@ protocol NVStoryObserver: class {
 	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceConditionDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceEntryFunctionDidChange(story: NVStory, sequence: NVSequence)
+	func nvSequenceExitFunctionDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence)
 	
 	// discoverable sequence
@@ -74,6 +80,12 @@ protocol NVStoryObserver: class {
 	func nvEventTopmostDidChange(story: NVStory, event: NVEvent)
 	func nvEventMaxActivationsDidChange(story: NVStory, event: NVEvent)
 	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent)
+	func nvEventConditionDidChange(story: NVStory, event: NVEvent)
+	func nvEventEntryFunctionDidChange(story: NVStory, event: NVEvent)
+	func nvEventDoFunctionDidChange(story: NVStory, event: NVEvent)
+	func nvEventExitFunctionDidChange(story: NVStory, event: NVEvent)
+	func nvEventInstigatorsDidChange(story: NVStory, event: NVEvent)
+	func nvEventTargetsDidChange(story: NVStory, event: NVEvent)
 	func nvEventAttributesDidChange(story: NVStory, event: NVEvent)
 	
 	// variables
@@ -198,6 +210,15 @@ extension NVStoryObserver {
 	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup) {
 	}
 	
+	func nvGroupConditionDidChange(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvGroupEntryFunctionDidChange(story: NVStory, group: NVGroup) {
+	}
+	
+	func nvGroupExitFunctionDidChange(story: NVStory, group: NVGroup) {
+	}
+	
 	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup) {
 	}
 	
@@ -229,6 +250,15 @@ extension NVStoryObserver {
 	}
 	
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
+	}
+	
+	func nvSequenceConditionDidChange(story: NVStory, sequence: NVSequence) {
+	}
+	
+	func nvSequenceEntryFunctionDidChange(story: NVStory, sequence: NVSequence) {
+	}
+	
+	func nvSequenceExitFunctionDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
 	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence) {
@@ -265,6 +295,24 @@ extension NVStoryObserver {
 	}
 	
 	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventConditionDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventEntryFunctionDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventDoFunctionDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventExitFunctionDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventInstigatorsDidChange(story: NVStory, event: NVEvent) {
+	}
+	
+	func nvEventTargetsDidChange(story: NVStory, event: NVEvent) {
 	}
 	
 	func nvEventAttributesDidChange(story: NVStory, event: NVEvent) {

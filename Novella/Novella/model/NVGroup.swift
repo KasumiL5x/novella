@@ -44,9 +44,24 @@ class NVGroup: NVIdentifiable {
 		}
 	}
 	//
-	var PreCondition: NVCondition?
-	var EntryFunction: NVFunction?
-	var ExitFunction: NVFunction?
+	var PreCondition: NVCondition? {
+		didSet {
+			NVLog.log("Group (\(UUID.uuidString)) Condition changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(PreCondition?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvGroupConditionDidChange(story: _story, group: self)}
+		}
+	}
+	var EntryFunction: NVFunction? {
+		didSet {
+			NVLog.log("Group (\(UUID.uuidString)) entry Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(EntryFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvGroupEntryFunctionDidChange(story: _story, group: self)}
+		}
+	}
+	var ExitFunction: NVFunction? {
+		didSet {
+			NVLog.log("Group (\(UUID.uuidString)) exit Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(ExitFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvGroupExitFunctionDidChange(story: _story, group: self)}
+		}
+	}
 	var Entry: NVSequence? {
 		didSet {
 			// must be part of the group

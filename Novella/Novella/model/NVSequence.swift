@@ -50,9 +50,24 @@ class NVSequence: NVIdentifiable {
 		}
 	}
 	//
-	var PreCondition: NVCondition?
-	var EntryFunction: NVFunction?
-	var ExitFunction: NVFunction?
+	var PreCondition: NVCondition? {
+		didSet {
+			NVLog.log("Sequence (\(UUID.uuidString)) Condition changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(PreCondition?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvSequenceConditionDidChange(story: _story, sequence: self)}
+		}
+	}
+	var EntryFunction: NVFunction? {
+		didSet {
+			NVLog.log("Sequence (\(UUID.uuidString)) entry Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(EntryFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvSequenceEntryFunctionDidChange(story: _story, sequence: self)}
+		}
+	}
+	var ExitFunction: NVFunction? {
+		didSet {
+			NVLog.log("Sequence (\(UUID.uuidString)) exit Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(ExitFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvSequenceExitFunctionDidChange(story: _story, sequence: self)}
+		}
+	}
 	var Entry: NVEvent? {
 		didSet {
 			// must be part of the sequence

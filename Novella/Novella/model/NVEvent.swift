@@ -50,12 +50,42 @@ class NVEvent: NVIdentifiable {
 		}
 	}
 	//
-	var PreCondition: NVCondition?
-	var EntryFunction: NVFunction?
-	var DoFunction: NVFunction?
-	var ExitFunction: NVFunction?
-	var Instigators: NVSelector?
-	var Targets: NVSelector?
+	var PreCondition: NVCondition? {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) Condition changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(PreCondition?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvEventConditionDidChange(story: _story, event: self)}
+		}
+	}
+	var EntryFunction: NVFunction? {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) entry Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(EntryFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvEventEntryFunctionDidChange(story: _story, event: self)}
+		}
+	}
+	var DoFunction: NVFunction? {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) do Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(DoFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvEventDoFunctionDidChange(story: _story, event: self)}
+		}
+	}
+	var ExitFunction: NVFunction? {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) exit Function changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(ExitFunction?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvEventExitFunctionDidChange(story: _story, event: self)}
+		}
+	}
+	var Instigators: NVSelector? {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) Instigators changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Instigators?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvEventInstigatorsDidChange(story: _story, event: self)}
+		}
+	}
+	var Targets: NVSelector? {
+		didSet {
+			NVLog.log("Event (\(UUID.uuidString)) Targets changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Instigators?.UUID.uuidString ?? "nil")).", level: .info)
+			_story.Observers.forEach{$0.nvEventTargetsDidChange(story: _story, event: self)}
+		}
+	}
 	var Attributes: [String: NVValue] {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Attributes changed.", level: .info)

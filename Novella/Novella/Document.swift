@@ -428,6 +428,18 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvGroupConditionDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupEntryFunctionDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupExitFunctionDidChange(story: NVStory, group: NVGroup) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvGroupAttributesDidChange(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 	}
@@ -469,6 +481,18 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceConditionDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceEntryFunctionDidChange(story: NVStory, sequence: NVSequence) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceExitFunctionDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -517,6 +541,30 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvEventKeepAliveDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventConditionDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventEntryFunctionDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventDoFunctionDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventExitFunctionDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventInstigatorsDidChange(story: NVStory, event: NVEvent) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvEventTargetsDidChange(story: NVStory, event: NVEvent) {
 		updateChangeCount(.changeDone)
 	}
 	
