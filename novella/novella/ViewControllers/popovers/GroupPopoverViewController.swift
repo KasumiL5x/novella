@@ -16,7 +16,9 @@ class GroupPopoverViewController: NSViewController {
 	@IBOutlet weak private var _activations: NSTextField!
 	@IBOutlet weak private var _topmost: NSButton!
 	@IBOutlet weak private var _keepAlive: NSButton!
-	@IBOutlet weak private var _attributesTable: NSTableView!
+	@IBOutlet weak private var _attributesTable: AttributeTableView!
+	//
+	@IBOutlet var _dc: NSDictionaryController!
 	
 	weak private var _doc: Document?
 	weak private var _group: CanvasGroup?
@@ -24,6 +26,18 @@ class GroupPopoverViewController: NSViewController {
 	func setup(group: CanvasGroup, doc: Document) {
 		self._group = group
 		self._doc = doc
+		
+		_dc.content = group.Group.Attributes
+		
+		_attributesTable.onAdd = {
+			let kvp = self._dc.newObject()
+			kvp.key = NVUtil.randomString(length: 10)
+			kvp.value = "value"
+			self._dc.addObject(kvp)
+		}
+		_attributesTable.onDelete = { (key) in
+			self._dc.remove(key)
+		}
 		
 		setupLabel(group: group)
 		setupCondition(group: group, doc: doc)

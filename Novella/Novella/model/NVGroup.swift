@@ -77,7 +77,7 @@ class NVGroup: NVIdentifiable {
 	private(set) var Sequences: [NVSequence]
 	private(set) var SequenceLinks: [NVSequenceLink]
 	private(set) var Groups: [NVGroup]
-	var Attributes: [String: NVValue] {
+	var Attributes: NSMutableDictionary {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Attributes changed.", level: .info)
 			_story.Observers.forEach{$0.nvGroupAttributesDidChange(story: _story, group: self)}

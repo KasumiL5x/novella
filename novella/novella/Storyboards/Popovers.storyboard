@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -179,7 +178,7 @@
                                                 <rect key="frame" x="1" y="0.0" width="276" height="186"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="eT4-OR-O5c" viewBased="YES" id="IqB-T5-yF1">
+                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="eT4-OR-O5c" viewBased="YES" id="IqB-T5-yF1" customClass="AttributeTableView" customModule="novella" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="276" height="161"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
@@ -199,18 +198,21 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
-                                                                    <tableCellView id="ieV-gA-JZE">
+                                                                    <tableCellView identifier="KeyCell" id="ieV-gA-JZE" customClass="MyKeyTableCellView" customModule="novella" customModuleProvider="target">
                                                                         <rect key="frame" x="1" y="1" width="118" height="17"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Wh-td-rzo">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="118" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="mj6-ak-L13">
+                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="mj6-ak-L13">
                                                                                     <font key="font" metaFont="system"/>
                                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                 </textFieldCell>
+                                                                                <connections>
+                                                                                    <binding destination="ieV-gA-JZE" name="value" keyPath="objectValue.key" id="GtR-Y9-6O2"/>
+                                                                                </connections>
                                                                             </textField>
                                                                         </subviews>
                                                                         <connections>
@@ -232,18 +234,21 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
-                                                                    <tableCellView id="7Mq-L2-sxd">
+                                                                    <tableCellView identifier="ValueCell" id="7Mq-L2-sxd" customClass="MyValueTableCellView" customModule="novella" customModuleProvider="target">
                                                                         <rect key="frame" x="122" y="1" width="152" height="17"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WtS-24-oGU">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="152" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="gXW-Xa-imT">
+                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="gXW-Xa-imT">
                                                                                     <font key="font" metaFont="system"/>
                                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                 </textFieldCell>
+                                                                                <connections>
+                                                                                    <binding destination="7Mq-L2-sxd" name="value" keyPath="objectValue.value" id="zgS-ws-YhM"/>
+                                                                                </connections>
                                                                             </textField>
                                                                         </subviews>
                                                                         <connections>
@@ -253,6 +258,9 @@
                                                                 </prototypeCellViews>
                                                             </tableColumn>
                                                         </tableColumns>
+                                                        <connections>
+                                                            <binding destination="xyr-y4-3tZ" name="content" keyPath="arrangedObjects" id="N3Q-wE-aBH"/>
+                                                        </connections>
                                                     </tableView>
                                                 </subviews>
                                             </clipView>
@@ -293,6 +301,7 @@
                         <outlet property="_activations" destination="Eva-wU-kfw" id="nDo-U5-zaI"/>
                         <outlet property="_attributesTable" destination="IqB-T5-yF1" id="F4I-XS-zMX"/>
                         <outlet property="_condition" destination="ucL-kQ-GRY" id="En2-9D-ado"/>
+                        <outlet property="_dc" destination="xyr-y4-3tZ" id="Col-D2-6uJ"/>
                         <outlet property="_entryFunction" destination="zXN-mn-nZT" id="diz-J9-xAJ"/>
                         <outlet property="_exitFunction" destination="Mge-If-bWb" id="EDS-Dl-Dcq"/>
                         <outlet property="_keepAlive" destination="53m-Kb-Dmh" id="T4P-Qk-M0U"/>
@@ -302,6 +311,7 @@
                 </viewController>
                 <customObject id="zdg-H6-aoG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="owb-6r-N6f"/>
+                <dictionaryController objectClassName="_NSDictionaryControllerKeyValuePair" id="xyr-y4-3tZ"/>
             </objects>
             <point key="canvasLocation" x="-577" y="26.5"/>
         </scene>

@@ -18,6 +18,7 @@
 		6550AA6D224415570032232A /* NVStoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550AA6C224415570032232A /* NVStoryObserver.swift */; };
 		6550AA6F224424950032232A /* NVSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550AA6E224424950032232A /* NVSelector.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
+		655D4804225A8A320001AA73 /* AttributeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655D4803225A8A320001AA73 /* AttributeTableView.swift */; };
 		655F41B921C3B16F00F7E7D8 /* PropertyViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */; };
 		656C141E2254B8A6002A6144 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656C141D2254B8A6002A6144 /* Curve.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
@@ -92,6 +93,7 @@
 		6550AA6C224415570032232A /* NVStoryObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStoryObserver.swift; sourceTree = "<group>"; };
 		6550AA6E224424950032232A /* NVSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSelector.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
+		655D4803225A8A320001AA73 /* AttributeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableView.swift; sourceTree = "<group>"; };
 		655F41B821C3B16F00F7E7D8 /* PropertyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViews.swift; sourceTree = "<group>"; };
 		656C141D2254B8A6002A6144 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				65CC99A921C26876008CD7BA /* Assets.xcassets */,
 				65BB18EB21CE269C00DCB05E /* LinkParker.swift */,
 				651DEED722462AA60010173F /* Document+fromJSON.swift */,
+				655D4803225A8A320001AA73 /* AttributeTableView.swift */,
 			);
 			path = novella;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */,
 				DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */,
 				DF94928121B96D6F00BC8AB0 /* NVSequence.swift in Sources */,
+				655D4804225A8A320001AA73 /* AttributeTableView.swift in Sources */,
 				656C141E2254B8A6002A6144 /* Curve.swift in Sources */,
 				DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */,
 				DF9492A721BA825D00BC8AB0 /* CGPoint+Math.swift in Sources */,
