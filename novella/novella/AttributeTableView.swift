@@ -13,6 +13,7 @@ class AttributeTableView: NSTableView, NSTableViewDataSource, NSTableViewDelegat
 	var onDelete: ((String) -> Void)?
 	
 	private let _menu = NSMenu()
+	private var _deleteMenuItem = NSMenuItem()
 	
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -26,8 +27,10 @@ class AttributeTableView: NSTableView, NSTableViewDataSource, NSTableViewDelegat
 	private func sharedInit() {
 		self.delegate = self
 		
+		_menu.autoenablesItems = false
 		_menu.addItem(withTitle: "Add", action: #selector(AttributeTableView.onMenuAdd), keyEquivalent: "")
-		_menu.addItem(withTitle: "Delete", action: #selector(AttributeTableView.onMenuDelete), keyEquivalent: "")
+		_deleteMenuItem = NSMenuItem(title: "Delete", action: #selector(AttributeTableView.onMenuDelete), keyEquivalent: "")
+		_menu.addItem(_deleteMenuItem)
 	}
 	
 	@objc private func onMenuAdd() {
@@ -47,6 +50,8 @@ class AttributeTableView: NSTableView, NSTableViewDataSource, NSTableViewDelegat
 	}
 	
 	override func menu(for event: NSEvent) -> NSMenu? {
+		_deleteMenuItem.isEnabled = self.selectedRow != -1
+		
 		return _menu
 	}
 
