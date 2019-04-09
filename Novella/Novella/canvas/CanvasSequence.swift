@@ -10,31 +10,17 @@ import Cocoa
 
 class CanvasSequence: CanvasObject {
 	let Sequence: NVSequence
-	private let _parallelMenuItem: NSMenuItem
-	private let _entryMenuItem: NSMenuItem
+	private let _popover: SequencePopover
 	
 	init(canvas: Canvas, sequence: NVSequence) {
 		self.Sequence = sequence
-		self._parallelMenuItem = NSMenuItem()
-		self._entryMenuItem = NSMenuItem()
+		self._popover = SequencePopover()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasSequence.onSubmerge), keyEquivalent: "")
 		ContextMenu.addItem(NSMenuItem.separator())
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasSequence.onAddLink), keyEquivalent: "")
-		//
-		_parallelMenuItem.title = "Parallel"
-		_parallelMenuItem.action = #selector(CanvasSequence.onParallel)
-		ContextMenu.addItem(_parallelMenuItem)
-		//
-		_entryMenuItem.title = "Entry Sequence"
-		_entryMenuItem.action = #selector(CanvasSequence.onEntrySequence)
-		ContextMenu.addItem(_entryMenuItem)
-		//
-		ContextMenu.addItem(NSMenuItem.separator())
-		ContextMenu.addItem(withTitle: "Edit Pre-Condition", action: nil, keyEquivalent: "")
-		ContextMenu.addItem(withTitle: "Edit Entry Function", action: nil, keyEquivalent: "")
-		ContextMenu.addItem(withTitle: "Edit Exit Function", action: nil, keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasSequence.onEdit), keyEquivalent: "")
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
@@ -50,23 +36,22 @@ class CanvasSequence: CanvasObject {
 		_canvas.setupFor(sequence: self.Sequence)
 	}
 	
+	@objc private func onEdit() {
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(sequence: self, doc: _canvas.Doc)
+	}
+	
 	@objc private func onAddLink() {
 		_canvas.makeSequenceLink(sequence: self)
 	}
 	
-	@objc private func onParallel() {
-		Sequence.Parallel = !Sequence.Parallel
-	}
-	
-	@objc private func onEntrySequence() {
-		if Sequence.Parent?.Entry == Sequence {
-			Sequence.Parent?.Entry = nil
-		} else {
-			Sequence.Parent?.Entry = Sequence
-		}
-	}
-	
 	// virtuals
+	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
+		super.onDoubleClick(gesture: gesture)
+		
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(sequence: self, doc: _canvas.Doc)
+	}
 	override func onMove() {
 		super.onMove()
 		_canvas.Doc.Positions[Sequence.UUID] = frame.origin
@@ -83,9 +68,6 @@ class CanvasSequence: CanvasObject {
 	override func reloadData() {
 		super.reloadData()
 		setParallelLayer(state: Sequence.Parallel)
-		_parallelMenuItem.image = Sequence.Parallel ? NSImage(named: NSImage.menuOnStateTemplateName) : NSImage(named: NSImage.stopProgressTemplateName)
-		
 		setEntryLayer(state: Sequence.Parent?.Entry == Sequence)
-		_entryMenuItem.image = (Sequence.Parent?.Entry == Sequence) ? NSImage(named: NSImage.menuOnStateTemplateName) : NSImage(named: NSImage.stopProgressTemplateName)
 	}
 }

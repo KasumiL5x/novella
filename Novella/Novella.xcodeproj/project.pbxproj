@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65155A44225C7CF30041ED74 /* SequencePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */; };
+		65155A46225C7D290041ED74 /* SequencePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65155A45225C7D290041ED74 /* SequencePopover.swift */; };
 		651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */; };
 		651D7C9F21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */; };
 		651DEED822462AA60010173F /* Document+fromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651DEED722462AA60010173F /* Document+fromJSON.swift */; };
@@ -82,6 +84,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencePopoverViewController.swift; sourceTree = "<group>"; };
+		65155A45225C7D290041ED74 /* SequencePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencePopover.swift; sourceTree = "<group>"; };
 		651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConditionFunctionEditor.storyboard; sourceTree = "<group>"; };
 		651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionFunctionEditorViewController.swift; sourceTree = "<group>"; };
 		651DEED722462AA60010173F /* Document+fromJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Document+fromJSON.swift"; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 			children = (
 				65E1B3672259EADC00D31884 /* Popover.swift */,
 				65E1B3692259EDBF00D31884 /* GroupPopover.swift */,
+				65155A45225C7D290041ED74 /* SequencePopover.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */,
+				65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -446,6 +452,7 @@
 				655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */,
 				65308BB621CF888E00830115 /* sizeFontToFillFrame.swift in Sources */,
 				DF94928721B96D6F00BC8AB0 /* NVLog.swift in Sources */,
+				65155A46225C7D290041ED74 /* SequencePopover.swift in Sources */,
 				DF94929321B9705400BC8AB0 /* NSColor+Extras.swift in Sources */,
 				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
@@ -497,6 +504,7 @@
 				655D4804225A8A320001AA73 /* AttributeTableView.swift in Sources */,
 				656C141E2254B8A6002A6144 /* Curve.swift in Sources */,
 				DF9492A121B98AA100BC8AB0 /* CanvasEvent.swift in Sources */,
+				65155A44225C7CF30041ED74 /* SequencePopoverViewController.swift in Sources */,
 				DF9492A721BA825D00BC8AB0 /* CGPoint+Math.swift in Sources */,
 				DF93F60D21BD99C100CF5B03 /* CanvasSequenceLink.swift in Sources */,
 				65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */,

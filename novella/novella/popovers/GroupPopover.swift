@@ -6,7 +6,7 @@
 //  Copyright © 2019 dgreen. All rights reserved.
 //
 
-import AppKit
+import Cocoa
 
 class GroupPopover: Popover {
 	override func createViewController() -> NSViewController? {
