@@ -43,6 +43,8 @@
 		65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B3692259EDBF00D31884 /* GroupPopover.swift */; };
 		65E1B36C2259EE2500D31884 /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65E1B36B2259EE2500D31884 /* Popovers.storyboard */; };
 		65E1B36F2259EF0100D31884 /* GroupPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */; };
+		65F8171A225D14CA006136C2 /* EventPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F81719225D14CA006136C2 /* EventPopoverViewController.swift */; };
+		65F8171C225D14E1006136C2 /* EventPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F8171B225D14E1006136C2 /* EventPopover.swift */; };
 		65FDF7A821C1CB4F00A8EFAA /* Outliner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */; };
 		65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */; };
 		DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22E9EB211DA6DE00606D97 /* MainViewController.swift */; };
@@ -120,6 +122,8 @@
 		65E1B3692259EDBF00D31884 /* GroupPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPopover.swift; sourceTree = "<group>"; };
 		65E1B36B2259EE2500D31884 /* Popovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
 		65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPopoverViewController.swift; sourceTree = "<group>"; };
+		65F81719225D14CA006136C2 /* EventPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPopoverViewController.swift; sourceTree = "<group>"; };
+		65F8171B225D14E1006136C2 /* EventPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPopover.swift; sourceTree = "<group>"; };
 		65FDF7A721C1CB4F00A8EFAA /* Outliner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Outliner.storyboard; sourceTree = "<group>"; };
 		65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinerViewController.swift; sourceTree = "<group>"; };
 		DF22E9EB211DA6DE00606D97 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				65E1B3672259EADC00D31884 /* Popover.swift */,
 				65E1B3692259EDBF00D31884 /* GroupPopover.swift */,
 				65155A45225C7D290041ED74 /* SequencePopover.swift */,
+				65F8171B225D14E1006136C2 /* EventPopover.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 			children = (
 				65E1B36E2259EF0100D31884 /* GroupPopoverViewController.swift */,
 				65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */,
+				65F81719225D14CA006136C2 /* EventPopoverViewController.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -465,6 +471,7 @@
 				65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */,
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
+				65F8171A225D14CA006136C2 /* EventPopoverViewController.swift in Sources */,
 				DF94928A21B96D6F00BC8AB0 /* NVStory.swift in Sources */,
 				6587583D222D7BAD00EAD491 /* PropertiesViewController.swift in Sources */,
 				DF93F60F21BD99D200CF5B03 /* CanvasEventLink.swift in Sources */,
@@ -487,6 +494,7 @@
 				DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */,
 				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
 				DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */,
+				65F8171C225D14E1006136C2 /* EventPopover.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
 				65E1B3682259EADC00D31884 /* Popover.swift in Sources */,
 				DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */,
