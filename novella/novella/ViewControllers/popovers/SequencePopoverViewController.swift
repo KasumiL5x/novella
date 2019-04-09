@@ -16,6 +16,8 @@ class SequencePopoverViewController: NSViewController {
 	@IBOutlet weak private var _activations: NSTextField!
 	@IBOutlet weak private var _topmost: NSButton!
 	@IBOutlet weak private var _keepAlive: NSButton!
+	@IBOutlet weak private var _entry: NSButton!
+	@IBOutlet weak private var _parallel: NSButton!
 	@IBOutlet weak private var _attributesTable: AttributeTableView!
 	//
 	@IBOutlet private var _dc: NSDictionaryController!
@@ -47,6 +49,8 @@ class SequencePopoverViewController: NSViewController {
 		setupActivations(sequence: sequence)
 		setupTopmost(sequence: sequence)
 		setupKeepAlive(sequence: sequence)
+		setupEntry(sequence: sequence)
+		setupParallel(sequence: sequence)
 	}
 	
 	private func setupLabel(sequence: CanvasSequence) {
@@ -99,6 +103,14 @@ class SequencePopoverViewController: NSViewController {
 	
 	private func setupKeepAlive(sequence: CanvasSequence) {
 		_keepAlive.state = sequence.Sequence.KeepAlive ? .on : .off
+	}
+	
+	private func setupEntry(sequence: CanvasSequence) {
+		_entry.state = sequence.Sequence.Parent?.Entry == sequence.Sequence ? .on : .off
+	}
+	
+	private func setupParallel(sequence: CanvasSequence) {
+		_parallel.state = sequence.Sequence.Parallel ? .on : .off
 	}
 	
 	@IBAction func labelDidChange(_ sender: NSTextField) {
@@ -160,5 +172,15 @@ class SequencePopoverViewController: NSViewController {
 	
 	@IBAction func keepAliveDidChange(_ sender: NSButton) {
 		_sequence?.Sequence.KeepAlive = sender.state == .on
+	}
+	
+	@IBAction func entryDidChange(_ sender: NSButton) {
+		_sequence?.Sequence.Parent?.Entry = (sender.state == .on) ? _sequence?.Sequence : nil
+		_sequence?.reloadData() // refresh entry icon
+	}
+	
+	@IBAction func parallelDidChange(_ sender: NSButton) {
+		_sequence?.Sequence.Parallel = sender.state == .on
+		_sequence?.reloadData() // refresh parallel icon
 	}
 }
