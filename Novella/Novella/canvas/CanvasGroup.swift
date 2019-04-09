@@ -22,9 +22,7 @@ class CanvasGroup: CanvasObject {
 
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasGroup.onSubmerge), keyEquivalent: "")
 		ContextMenu.addItem(NSMenuItem.separator())
-		ContextMenu.addItem(withTitle: "Edit Pre-Condition", action: nil, keyEquivalent: "")
-		ContextMenu.addItem(withTitle: "Edit Entry Function", action: nil, keyEquivalent: "")
-		ContextMenu.addItem(withTitle: "Edit Exit Function", action: nil, keyEquivalent: "")
+		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasGroup.onEdit), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -32,6 +30,11 @@ class CanvasGroup: CanvasObject {
 	
 	@objc private func onSubmerge() {
 		_canvas.setupFor(group: self.Group)
+	}
+	
+	@objc private func onEdit() {
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(group: self, doc: _canvas.Doc)
 	}
 	
 	// virtuals
