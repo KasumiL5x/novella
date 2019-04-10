@@ -43,6 +43,7 @@
 		65D78C6E225DC44900DE24B7 /* SequenceLinkPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D78C6D225DC44900DE24B7 /* SequenceLinkPopover.swift */; };
 		65D78C70225DC6D600DE24B7 /* EventLinkPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D78C6F225DC6D600DE24B7 /* EventLinkPopoverViewController.swift */; };
 		65D78C72225DC70100DE24B7 /* EventLinkPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D78C71225DC70100DE24B7 /* EventLinkPopover.swift */; };
+		65D78C74225DCB9B00DE24B7 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D78C73225DCB9B00DE24B7 /* Alerts.swift */; };
 		65E1B3682259EADC00D31884 /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B3672259EADC00D31884 /* Popover.swift */; };
 		65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E1B3692259EDBF00D31884 /* GroupPopover.swift */; };
 		65E1B36C2259EE2500D31884 /* Popovers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65E1B36B2259EE2500D31884 /* Popovers.storyboard */; };
@@ -126,6 +127,7 @@
 		65D78C6D225DC44900DE24B7 /* SequenceLinkPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceLinkPopover.swift; sourceTree = "<group>"; };
 		65D78C6F225DC6D600DE24B7 /* EventLinkPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLinkPopoverViewController.swift; sourceTree = "<group>"; };
 		65D78C71225DC70100DE24B7 /* EventLinkPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLinkPopover.swift; sourceTree = "<group>"; };
+		65D78C73225DCB9B00DE24B7 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		65E1B3672259EADC00D31884 /* Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
 		65E1B3692259EDBF00D31884 /* GroupPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPopover.swift; sourceTree = "<group>"; };
 		65E1B36B2259EE2500D31884 /* Popovers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popovers.storyboard; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */,
 				65308BB521CF888E00830115 /* sizeFontToFillFrame.swift */,
 				656C141D2254B8A6002A6144 /* Curve.swift */,
+				65D78C73225DCB9B00DE24B7 /* Alerts.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
+				65D78C74225DCB9B00DE24B7 /* Alerts.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
 				65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */,
 				65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */,

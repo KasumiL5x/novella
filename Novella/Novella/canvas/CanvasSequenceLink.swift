@@ -37,7 +37,9 @@ class CanvasSequenceLink: CanvasLink {
 	}
 	
 	@objc private func onDelete() {
-		print("Not yet Cap'n!")
+		if Alerts.okCancel(msg: "Delete Link?", info: "Are you sure you want to delete this link? This action cannot be undone.", style: .critical) {
+			_canvas.Doc.Story.delete(sequenceLink: self.SequenceLink)
+		}
 	}
 	
 	// virtuals
