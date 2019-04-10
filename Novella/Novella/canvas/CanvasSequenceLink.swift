@@ -10,10 +10,17 @@ import AppKit
 
 class CanvasSequenceLink: CanvasLink {
 	let SequenceLink: NVSequenceLink
+	let _popover: SequenceLinkPopover
 	
 	init(canvas: Canvas, origin: CanvasObject, link: NVSequenceLink) {
 		self.SequenceLink = link
+		self._popover = SequenceLinkPopover()
 		super.init(canvas: canvas, origin: origin)
+		
+		
+		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasSequenceLink.onEdit), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasSequenceLink.onDelete), keyEquivalent: "")
 		
 		// handle case where destination already exists
 		if let dest = link.Destination, let destObj = canvas.canvasSequenceFor(nvSequence: dest) {
@@ -22,6 +29,15 @@ class CanvasSequenceLink: CanvasLink {
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
+	}
+	
+	@objc private func onEdit() {
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(link: self, doc: _canvas.Doc)
+	}
+	
+	@objc private func onDelete() {
+		print("Not yet Cap'n!")
 	}
 	
 	// virtuals

@@ -27,6 +27,8 @@ class CanvasLink: NSView {
 	var _curvelayer: CAShapeLayer // no protected in swift...
 	//
 	private var _lastParker: LinkParker? // for drag drop onto a LinkParker
+	//
+	var ContextMenu: NSMenu
 	
 	init(canvas: Canvas, origin: CanvasObject) {
 		self._canvas = canvas
@@ -43,6 +45,8 @@ class CanvasLink: NSView {
 		self._curvelayer = CAShapeLayer()
 		//
 		self._lastParker = nil
+		//
+		self.ContextMenu = NSMenu()
 		super.init(frame: NSMakeRect(0, 0, CanvasLink.Size, CanvasLink.Size))
 		
 		wantsLayer = true
@@ -72,10 +76,15 @@ class CanvasLink: NSView {
 		_fillLayer.path = NSBezierPath(ovalIn: fillRect).cgPath
 		layer?.addSublayer(_fillLayer)
 		
-		// pan gesture
+		// gestures
 		let panGesture = NSPanGestureRecognizer(target: self, action: #selector(CanvasLink.onPan))
 		panGesture.buttonMask = 0x1
 		addGestureRecognizer(panGesture)
+		//
+		let ctxGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasLink._onContextClick))
+		ctxGesture.buttonMask = 0x2
+		ctxGesture.numberOfClicksRequired = 1
+		addGestureRecognizer(ctxGesture)
 		
 		// drag layer
 		_dragLayer.fillColor = nil
@@ -179,6 +188,11 @@ class CanvasLink: NSView {
 		setNeedsDisplay(bounds)
 	}
 	
+	@objc private func _onContextClick(gesture: NSClickGestureRecognizer) {
+		NSMenu.popUpContextMenu(ContextMenu, with: NSApp.currentEvent!, for: self)
+		onContextClick(gesture: gesture)
+	}
+	
 	func setTarget(_ target: CanvasObject) {
 		if canlinkTo(obj: target) {
 			_lastParker = nil
@@ -221,6 +235,8 @@ class CanvasLink: NSView {
 	}
 	
 	// virtuals
+	func onContextClick(gesture: NSClickGestureRecognizer) {
+	}
 	func canlinkTo(obj: CanvasObject) -> Bool {
 		print("Alan, please override.")
 		return false

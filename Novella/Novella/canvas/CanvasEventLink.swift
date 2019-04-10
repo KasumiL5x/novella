@@ -10,10 +10,16 @@ import AppKit
 
 class CanvasEventLink: CanvasLink {
 	let EventLink: NVEventLink
+	let _popover: EventLinkPopover
 	
 	init(canvas: Canvas, origin: CanvasObject, link: NVEventLink) {
 		self.EventLink = link
+		self._popover = EventLinkPopover()
 		super.init(canvas: canvas, origin: origin)
+		
+		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasEventLink.onEdit), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasEventLink.onDelete), keyEquivalent: "")
 		
 		// handle case where destination already exists
 		if let dest = link.Destination, let destObj = canvas.canvasEventFor(nvEvent: dest) {
@@ -22,6 +28,15 @@ class CanvasEventLink: CanvasLink {
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
+	}
+	
+	@objc private func onEdit() {
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(link: self, doc: _canvas.Doc)
+	}
+	
+	@objc private func onDelete() {
+		print("Not yet Cap'n!")
 	}
 	
 	// virtuals
