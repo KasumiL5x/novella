@@ -21,8 +21,8 @@ class CanvasLink: NSView {
 	//
 	private let _dragLayer: CAShapeLayer
 	private var _isDragging: Bool
-	private var _previousTarget: CanvasObject?
-	private(set) var _currentTarget: CanvasObject?
+	private weak var _previousTarget: CanvasObject?
+	private(set) weak var _currentTarget: CanvasObject?
 	//
 	var _curvelayer: CAShapeLayer // no protected in swift...
 	//
@@ -106,11 +106,7 @@ class CanvasLink: NSView {
 	}
 	
 	func redraw() {
-		// calculate curve as the origin will have changed
-		if let target = _currentTarget {
-			updateCurveTo(obj: target)
-		}
-		setNeedsDisplay(bounds)
+		updateCurve()
 	}
 	
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
@@ -155,12 +151,11 @@ class CanvasLink: NSView {
 			// let the delegate handle connection
 			connectTo(obj: _currentTarget)
 			
+			// update target state and drag layer state
 			if let target = _currentTarget {
 				target.CurrentState = .normal
-				updateCurveTo(obj: target)
 				_dragLayer.strokeColor = CGColor.clear // don't want a nice transition otherwise there would be two curves
 			} else {
-				_curvelayer.strokeColor = CGColor.clear
 				// animate the drag layer back to the origin
 				let colorAnim = CABasicAnimation(keyPath: "strokeColor")
 				colorAnim.duration = 0.3
@@ -175,6 +170,9 @@ class CanvasLink: NSView {
 				strokeAnim.isRemovedOnCompletion = false
 				_dragLayer.add(strokeAnim, forKey: strokeAnim.keyPath)
 			}
+			
+			// update curve to target (automatically handles nil/valid/self)
+			updateCurve()
 			
 			// handle drop on parker if present
 			if let parker = _lastParker {
@@ -193,8 +191,15 @@ class CanvasLink: NSView {
 		onContextClick(gesture: gesture)
 	}
 	
-	func setTarget(_ target: CanvasObject) {
-		if canlinkTo(obj: target) {
+	func setTarget(_ target: CanvasObject?) {
+		if nil == target {
+			_lastParker = nil
+			_previousTarget = nil
+			_currentTarget = nil
+			redraw()
+		}
+		
+		if let target = target, canlinkTo(obj: target) {
 			_lastParker = nil
 			_previousTarget = nil
 			_currentTarget = target
@@ -203,39 +208,46 @@ class CanvasLink: NSView {
 		}
 	}
 	
-	func updateCurveTo(obj: CanvasObject) {
-		_curvelayer.strokeColor = obj.mainColor().cgColor
-		
-		if obj == Origin { // special case for linking to self
-			// is the centerpoint of this link below(ish) the center of the object?  this will decide the loop direction
-			let objY = obj.convert(NSMakePoint(0, obj.bounds.midY), to: nil).y
-			let thisY = self.convert(NSMakePoint(0.0, bounds.midY), to: nil).y
-			let belowCenter = (objY - thisY) > 0.5 // the values are not identical even when constrained, so add a little buffer room
+	func updateCurve() {
+		if let target = _currentTarget { // has a valid target
+			_curvelayer.strokeColor = target.mainColor().cgColor
 			
-			// compute start and end points
-			let origin = NSMakePoint(bounds.midX, bounds.midY)
-			let end = obj.convert(NSMakePoint(obj.bounds.width * 0.8, belowCenter ? 0.0 : obj.bounds.height), to: self)
+			// linking to self
+			if target == Origin {
+				// is the centerpoint of this link below(ish) the center of the object?  this will decide the loop direction
+				let objY = target.convert(NSMakePoint(0, target.bounds.midY), to: nil).y
+				let thisY = self.convert(NSMakePoint(0.0, bounds.midY), to: nil).y
+				let belowCenter = (objY - thisY) > 0.5 // the values are not identical even when constrained, so add a little buffer room
+				
+				// compute start and end points
+				let origin = NSMakePoint(bounds.midX, bounds.midY)
+				let end = target.convert(NSMakePoint(target.bounds.width * 0.8, belowCenter ? 0.0 : target.bounds.height), to: self)
+				
+				// compute circle containing the points and the angle of the points in that circle in radians
+				let center = (end + origin) * 0.5
+				let radius = center.distance(to: origin)
+				let originAngle = atan2(origin.y - center.y, origin.x - center.x) * 57.2958
+				let endAngle = atan2(end.y - center.y, end.x - center.x) * 57.2958
+				
+				// line the computed curve
+				let path = NSBezierPath()
+				path.appendArc(withCenter: center, radius: radius, startAngle: originAngle, endAngle: endAngle, clockwise: belowCenter)
+				
+				_curvelayer.path = path.cgPath
+			} else { // linking to other object
+				let origin = NSMakePoint(bounds.midX, bounds.midY)
+				let end = target.convert(NSMakePoint(0.0, target.frame.height * 0.5), to: self)
+				_curvelayer.path = CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false).cgPath
+			}
 			
-			// compute circle containing the points and the angle of the points in that circle in radians
-			let center = (end + origin) * 0.5
-			let radius = center.distance(to: origin)
-			let originAngle = atan2(origin.y - center.y, origin.x - center.x) * 57.2958
-			let endAngle = atan2(end.y - center.y, end.x - center.x) * 57.2958
-			
-			// line the computed curve
-			let path = NSBezierPath()
-			path.appendArc(withCenter: center, radius: radius, startAngle: originAngle, endAngle: endAngle, clockwise: belowCenter)
-			
-			_curvelayer.path = path.cgPath
-		} else {
-			let origin = NSMakePoint(bounds.midX, bounds.midY)
-			let end = obj.convert(NSMakePoint(0.0, obj.frame.height * 0.5), to: self)
-			_curvelayer.path = CurveHelper.catmullRom(points: [origin, end], alpha: 1.0, closed: false).cgPath
+		} else { // nil target - animate out
+			_curvelayer.strokeColor = CGColor.clear
 		}
 	}
 	
 	// virtuals
 	func onContextClick(gesture: NSClickGestureRecognizer) {
+		print("Alan, please override.")
 	}
 	func canlinkTo(obj: CanvasObject) -> Bool {
 		print("Alan, please override.")

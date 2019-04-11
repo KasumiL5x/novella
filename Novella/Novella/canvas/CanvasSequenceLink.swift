@@ -64,6 +64,6 @@ class CanvasSequenceLink: CanvasLink {
 
 extension CanvasSequenceLink: CanvasObjectDelegate {
 	func canvasObjectMoved(obj: CanvasObject) {
-		updateCurveTo(obj: obj)
+		updateCurve()
 	}
 }

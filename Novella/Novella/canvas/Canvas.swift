@@ -479,7 +479,10 @@ extension Canvas: NVStoryObserver {
 		_allBenches.removeValue(forKey: canvasSequence)
 		
 		// redraw any links with this as its destination
-		allLinksTo(sequence: sequence).forEach{$0.redraw()}
+		allLinksTo(sequence: sequence).forEach{
+			$0.setTarget(nil)
+			$0.redraw()
+		}
 	}
 	
 	func nvStoryWillDeleteEvent(story: NVStory, event: NVEvent) {
@@ -503,7 +506,10 @@ extension Canvas: NVStoryObserver {
 		_allBenches.removeValue(forKey: canvasEvent)
 		
 		// redraw any links with this as its destination
-		allLinksTo(event: event).forEach{$0.redraw()}
+		allLinksTo(event: event).forEach{
+			$0.setTarget(nil)
+			$0.redraw()
+		}
 	}
 	
 	func nvStoryWillDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
