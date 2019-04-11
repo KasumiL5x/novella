@@ -18,9 +18,10 @@ class CanvasSequence: CanvasObject {
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasSequence.onSubmerge), keyEquivalent: "")
-		ContextMenu.addItem(NSMenuItem.separator())
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasSequence.onAddLink), keyEquivalent: "")
 		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasSequence.onEdit), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasSequence.onDelete), keyEquivalent: "")
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
@@ -43,6 +44,12 @@ class CanvasSequence: CanvasObject {
 	
 	@objc private func onAddLink() {
 		_canvas.makeSequenceLink(sequence: self)
+	}
+	
+	@objc private func onDelete() {
+		if Alerts.okCancel(msg: "Delete Sequence?", info: "Are you sure you want to delete this Sequence? This action cannot be undone.", style: .critical) {
+			_canvas.Doc.Story.delete(sequence: self.Sequence)
+		}
 	}
 	
 	// virtuals

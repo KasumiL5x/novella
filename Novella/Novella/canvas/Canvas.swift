@@ -18,6 +18,7 @@ class Canvas: NSView {
 	private let _marquee: CanvasMarquee
 	private var _allObjects: [CanvasObject]
 	private var _allBenches: [CanvasObject:CanvasBench]
+	private var _allLinks: [CanvasLink]
 	private(set) var Selection: CanvasSelection
 	private var _contextMenu: NSMenu
 	private var _lastContextPos: CGPoint
@@ -39,6 +40,7 @@ class Canvas: NSView {
 		self._marquee = CanvasMarquee(frame: initialFrame)
 		self._allObjects = []
 		self._allBenches = [:]
+		self._allLinks = []
 		self.Selection = CanvasSelection()
 		self._contextMenu = NSMenu()
 		self._lastContextPos = CGPoint.zero
@@ -98,6 +100,7 @@ class Canvas: NSView {
 		
 		_allObjects = []
 		_allBenches = [:]
+		_allLinks = []
 		
 		Selection.clear()
 		
@@ -135,6 +138,7 @@ class Canvas: NSView {
 		
 		_allObjects = []
 		_allBenches = [:]
+		_allLinks = []
 		
 		Selection.clear()
 		
@@ -187,6 +191,29 @@ class Canvas: NSView {
 			}
 		}
 		return objs
+	}
+	
+	private func allLinksTo(event: NVEvent) -> [CanvasEventLink] {
+		var result: [CanvasEventLink] = []
+		
+		_allLinks.filter{$0 is CanvasEventLink}.forEach { (link) in
+			if (link as! CanvasEventLink).EventLink.Destination == event {
+				result.append(link as! CanvasEventLink)
+			}
+		}
+		
+		return result
+	}
+	private func allLinksTo(sequence: NVSequence) -> [CanvasSequenceLink] {
+		var result: [CanvasSequenceLink] = []
+		
+		_allLinks.filter{$0 is CanvasSequenceLink}.forEach { (link) in
+			if (link as! CanvasSequenceLink).SequenceLink.Destination == sequence {
+				result.append(link as! CanvasSequenceLink)
+			}
+		}
+		
+		return result
 	}
 	
 	private func makeBench() -> CanvasBench {
@@ -385,7 +412,9 @@ class Canvas: NSView {
 			NVLog.log("Tried to add a SequenceLink but couldn't find a CanvasSequence for the origin!", level: .error)
 			return
 		}
-		benchFor(obj: obj)?.add(CanvasSequenceLink(canvas: self, origin: obj, link: link))
+		let canvasLink = CanvasSequenceLink(canvas: self, origin: obj, link: link)
+		_allLinks.append(canvasLink)
+		benchFor(obj: obj)?.add(canvasLink)
 	}
 	func makeSequenceLink(sequence: CanvasSequence) {
 		// sequences only exist within groups so ensure a group is mapped
@@ -400,7 +429,9 @@ class Canvas: NSView {
 			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
 			return
 		}
-		benchFor(obj: obj)?.add(CanvasEventLink(canvas: self, origin: obj, link: link))
+		let canvasLink = CanvasEventLink(canvas: self, origin: obj, link: link)
+		_allLinks.append(canvasLink)
+		benchFor(obj: obj)?.add(canvasLink)
 	}
 	func makeEventLink(event: CanvasEvent) {
 		// events only exist within sequences so ensure a sequence is mapped
@@ -411,17 +442,71 @@ class Canvas: NSView {
 	}
 }
 
+// MARK: - NVStoryObserver -
 extension Canvas: NVStoryObserver {
-	// link creation
-	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
-		addSequenceLink(link: link)
-	}
-	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
-		addEventLink(link: link)
+	// MARK: - deletion
+	func nvStoryWillDeleteGroup(story: NVStory, group: NVGroup) {
+		guard let canvasGroup = canvasGroupFor(nvGroup: group) else {
+			NVLog.log("Tried to delete Group but couldn't find matching CanvasGroup.", level: .error)
+			return
+		}
+		// remove from canvas
+		canvasGroup.removeFromSuperview()
+		// remove reference from all objects
+		if let idx = _allObjects.firstIndex(of: canvasGroup) {
+			_allObjects.remove(at: idx)
+		}
 	}
 	
-	// link deletion
-	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
+	func nvStoryWillDeleteSequence(story: NVStory, sequence: NVSequence) {
+		guard let canvasSequence = canvasSequenceFor(nvSequence: sequence) else {
+			NVLog.log("Tried to delete Sequence but couldn't find matching CanvasSequence.", level: .error)
+			return
+		}
+		// remove from canvas
+		canvasSequence.removeFromSuperview()
+		// remove reference from all objects
+		if let idx = _allObjects.firstIndex(of: canvasSequence) {
+			_allObjects.remove(at: idx)
+		}
+		
+		// remove bench
+		guard let bench = benchFor(obj: canvasSequence) else {
+			NVLog.log("Tried to delete Sequence but could't find its Bench.", level: .error)
+			return
+		}
+		bench.removeFromSuperview()
+		_allBenches.removeValue(forKey: canvasSequence)
+		
+		// redraw any links with this as its destination
+		allLinksTo(sequence: sequence).forEach{$0.redraw()}
+	}
+	
+	func nvStoryWillDeleteEvent(story: NVStory, event: NVEvent) {
+		guard let canvasEvent = canvasEventFor(nvEvent: event) else {
+			NVLog.log("Tried to delete Event but couldn't find matching CanvasEvent.", level: .error)
+			return
+		}
+		// remove from canvas
+		canvasEvent.removeFromSuperview()
+		// remove reference from all objects
+		if let idx = _allObjects.firstIndex(of: canvasEvent) {
+			_allObjects.remove(at: idx)
+		}
+		
+		// remove bench
+		guard let bench = benchFor(obj: canvasEvent) else {
+			NVLog.log("Tried to delete Event but couldn't find its Bench.", level: .error)
+			return
+		}
+		bench.removeFromSuperview()
+		_allBenches.removeValue(forKey: canvasEvent)
+		
+		// redraw any links with this as its destination
+		allLinksTo(event: event).forEach{$0.redraw()}
+	}
+	
+	func nvStoryWillDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
 		// find CanvasSequence for the link from its origin
 		guard let canvasSequence = canvasSequenceFor(nvSequence: link.Origin) else {
 			NVLog.log("Tried to delete SequenceLink but couldn't find parent Sequence in the Canvas.", level: .error)
@@ -440,9 +525,16 @@ extension Canvas: NVStoryObserver {
 			return
 		}
 		
+		// remove from its bench
 		bench.remove(canvasLink)
+		
+		// remove from all links
+		if let idx = _allLinks.firstIndex(of: canvasLink) {
+			_allLinks.remove(at: idx)
+		}
 	}
-	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
+	
+	func nvStoryWillDeleteEventLink(story: NVStory, link: NVEventLink) {
 		guard let canvasEvent = canvasEventFor(nvEvent: link.Origin) else {
 			NVLog.log("Tried to delete EventLink but couldn't find parent Event in the Canvas.", level: .error)
 			return
@@ -459,12 +551,26 @@ extension Canvas: NVStoryObserver {
 		}
 		
 		bench.remove(canvasLink)
+		
+		if let idx = _allLinks.firstIndex(of: canvasLink) {
+			_allLinks.remove(at: idx)
+		}
 	}
 	
-	// group changes
+	// MARK: - Creation
+	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
+		addSequenceLink(link: link)
+	}
+	
+	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
+		addEventLink(link: link)
+	}
+	
+	// MARK: - Group Changes
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
 		canvasGroupFor(nvGroup: group)?.reloadData()
 	}
+	
 	func nvGroupEntryDidChange(story: NVStory, group: NVGroup, oldEntry: NVSequence?, newEntry: NVSequence?) {
 		if let old = oldEntry {
 			canvasSequenceFor(nvSequence: old)?.reloadData()
@@ -473,12 +579,14 @@ extension Canvas: NVStoryObserver {
 			canvasSequenceFor(nvSequence: new)?.reloadData()
 		}
 	}
+	
 	func nvGroupDidAddSequence(story: NVStory, group: NVGroup, sequence: NVSequence) {
 		if group != MappedGroup {
 			return
 		}
 		makeSequence(nvSequence: sequence, at: Doc.Positions[sequence.UUID] ?? centerPoint())
 	}
+	
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup) {
 		if group != MappedGroup {
 			return
@@ -487,13 +595,15 @@ extension Canvas: NVStoryObserver {
 		makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 	}
 	
-	// sequence changes
+	// MARK: - Sequence Changes
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		canvasSequenceFor(nvSequence: sequence)?.reloadData()
 	}
+	
 	func nvSequenceParallelDidChange(story: NVStory, sequence: NVSequence) {
 		canvasSequenceFor(nvSequence: sequence)?.reloadData()
 	}
+	
 	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?) {
 		if let old = oldEntry {
 			canvasEventFor(nvEvent: old)?.reloadData()
@@ -502,6 +612,7 @@ extension Canvas: NVStoryObserver {
 			canvasEventFor(nvEvent: new)?.reloadData()
 		}
 	}
+	
 	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
 		if sequence != MappedSequence {
 			return
@@ -509,10 +620,11 @@ extension Canvas: NVStoryObserver {
 		makeEvent(nvEvent: event, at: Doc.Positions[event.UUID] ?? centerPoint())
 	}
 	
-	// event changes
+	// MARK: - Event Changes
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		canvasEventFor(nvEvent: event)?.reloadData()
 	}
+	
 	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
 		canvasEventFor(nvEvent: event)?.reloadData()
 	}

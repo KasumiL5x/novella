@@ -21,8 +21,9 @@ class CanvasGroup: CanvasObject {
 		layer?.masksToBounds = false
 
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasGroup.onSubmerge), keyEquivalent: "")
-		ContextMenu.addItem(NSMenuItem.separator())
 		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasGroup.onEdit), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasGroup.onDelete), keyEquivalent: "")
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -35,6 +36,12 @@ class CanvasGroup: CanvasObject {
 	@objc private func onEdit() {
 		_popover.show(forView: self, at: .maxX)
 		_popover.setup(group: self, doc: _canvas.Doc)
+	}
+	
+	@objc private func onDelete() {
+		if Alerts.okCancel(msg: "Delete Group?", info: "Are you sure you want to delete this Group? This action cannot be undone.", style: .critical) {
+			_canvas.Doc.Story.delete(group: self.Group)
+		}
 	}
 	
 	// virtuals

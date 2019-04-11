@@ -19,6 +19,8 @@ class CanvasEvent: CanvasObject {
 		
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasEvent.onAddLink), keyEquivalent: "")
 		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasEvent.onEdit), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasEvent.onDelete), keyEquivalent: "")
 		
 		// load initial model data
 		reloadData()
@@ -34,6 +36,12 @@ class CanvasEvent: CanvasObject {
 	@objc private func onEdit() {
 		_popover.show(forView: self, at: .maxX)
 		_popover.setup(event: self, doc: _canvas.Doc)
+	}
+	
+	@objc private func onDelete() {
+		if Alerts.okCancel(msg: "Delete Event?", info: "Are you sure you want to delete this Event? This action cannot be undone.", style: .critical) {
+			_canvas.Doc.Story.delete(event: self.Event)
+		}
 	}
 	
 	// virtuals

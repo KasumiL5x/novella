@@ -172,6 +172,8 @@ class NVStory {
 			return // cannot remove main group
 		}
 		
+		Observers.forEach{$0.nvStoryWillDeleteGroup(story: self, group: group)}
+		
 		// remove from all parent groups
 		Groups.forEach { (parentGroup) in
 			if parentGroup == group {
@@ -196,6 +198,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteGroup(story: self, group: group)}
 	}
 	func delete(sequence: NVSequence) {
+		Observers.forEach{$0.nvStoryWillDeleteSequence(story: self, sequence: sequence)}
+		
 		// remove from any links as source or destination
 		for (_, link) in SequenceLinks.enumerated().reversed() {
 			// nil destinations
@@ -233,6 +237,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteSequence(story: self, sequence: sequence)}
 	}
 	func delete(event: NVEvent) {
+		Observers.forEach{$0.nvStoryWillDeleteEvent(story: self, event: event)}
+		
 		// remove from any links as source or destination
 		for (_, link) in EventLinks.enumerated().reversed() {
 			// nil destinations
@@ -261,6 +267,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteEvent(story: self, event: event)}
 	}
 	func delete(entity: NVEntity) {
+		Observers.forEach{$0.nvStoryWillDeleteEntity(story: self, entity: entity)}
+		
 		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == entity.UUID}) {
 			_identifiables.remove(at: idx)
@@ -270,6 +278,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteEntity(story: self, entity: entity)}
 	}
 	func delete(sequenceLink: NVSequenceLink) {
+		Observers.forEach{$0.nvStoryWillDeleteSequenceLink(story: self, link: sequenceLink)}
+		
 		// remove from all groups that contain it
 		Groups.forEach { (group) in
 			if group.contains(sequenceLink: sequenceLink) {
@@ -286,6 +296,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteSequenceLink(story: self, link: sequenceLink)}
 	}
 	func delete(eventLink: NVEventLink) {
+		Observers.forEach{$0.nvStoryWillDeleteEventLink(story: self, link: eventLink)}
+		
 		// remove from all sequences that contain it
 		Sequences.forEach { (sequence) in
 			if sequence.contains(eventLink: eventLink) {
@@ -302,6 +314,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteEventLink(story: self, link: eventLink)}
 	}
 	func delete(variable: NVVariable) {
+		Observers.forEach{$0.nvStoryWillDeleteVariable(story: self, variable: variable)}
+		
 		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == variable.UUID}) {
 			_identifiables.remove(at: idx)
@@ -311,6 +325,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteVariable(story: self, variable: variable)}
 	}
 	func delete(function: NVFunction) {
+		Observers.forEach{$0.nvStoryWillDeleteFunction(story: self, function: function)}
+		
 		// remove from sequences
 		Sequences.forEach { (sequence) in
 			if sequence.EntryFunction == function {
@@ -362,6 +378,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteFunction(story: self, function: function)}
 	}
 	func delete(condition: NVCondition) {
+		Observers.forEach{$0.nvStoryWillDeleteCondition(story: self, condition: condition)}
+		
 		// remove from sequences
 		Sequences.forEach { (sequence) in
 			if sequence.PreCondition == condition {
@@ -392,6 +410,8 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidDeleteCondition(story: self, condition: condition)}
 	}
 	func delete(selector: NVSelector) {
+		Observers.forEach{$0.nvStoryWillDeleteSelector(story: self, selector: selector)}
+		
 		// remove from all events
 		Events.forEach{ (event) in
 			if event.Instigators == selector {
