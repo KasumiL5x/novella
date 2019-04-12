@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -792,9 +791,6 @@
                                         <subviews>
                                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="lhb-Ly-fUJ" userLabel="Properties">
                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
-                                                <connections>
-                                                    <segue destination="Joi-T8-ZdE" kind="embed" identifier="Properties" id="FDG-lu-aoR"/>
-                                                </connections>
                                             </containerView>
                                         </subviews>
                                         <constraints>
@@ -829,14 +825,6 @@
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="981"/>
-        </scene>
-        <!--Properties-->
-        <scene sceneID="GuA-Il-e1J">
-            <objects>
-                <controllerPlaceholder storyboardName="Properties" referencedIdentifier="Properties" id="Joi-T8-ZdE" sceneMemberID="viewController"/>
-                <customObject id="oGh-K8-6lv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="729" y="981"/>
         </scene>
         <!--GraphVC-->
         <scene sceneID="0gr-AA-hDm">

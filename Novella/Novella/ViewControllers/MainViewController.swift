@@ -11,7 +11,6 @@ import Cocoa
 class MainViewController: NSViewController, NSTableViewDelegate {
 	@IBOutlet weak private var _splitView: NSSplitView!
 	
-	private var _propertiesVC: PropertiesViewController? = nil
 	private var _variablesVC: VariablesEditorViewController? = nil
 	private var _graphVC: GraphViewController? = nil
 	private var _outlinerVC: OutlinerViewController? = nil
@@ -26,16 +25,11 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		_outlinerVC?.setup(doc: doc)
 		_graphVC?.setup(doc: doc)
-		_propertiesVC?.setup(doc: doc)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onCanvasObjectDoubleClicked), name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-		if segue.identifier == "Properties" {
-			_propertiesVC = segue.destinationController as? PropertiesViewController
-		}
-		
 		if segue.identifier == "VariablesEditor" {
 			_variablesVC = segue.destinationController as? VariablesEditorViewController
 			guard let doc = view.window?.windowController?.document as? Document else {
