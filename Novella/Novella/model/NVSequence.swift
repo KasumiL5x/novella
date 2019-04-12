@@ -82,7 +82,7 @@ class NVSequence: NVIdentifiable {
 	}
 	private(set) var Events: [NVEvent]
 	private(set) var EventLinks: [NVEventLink]
-	var Attributes: [String: NVValue] {
+	var Attributes: NSMutableDictionary {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Attributes changed.", level: .info)
 			_story.Observers.forEach{$0.nvSequenceAttributesDidChange(story: _story, sequence: self)}

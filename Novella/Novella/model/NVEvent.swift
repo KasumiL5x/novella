@@ -86,7 +86,7 @@ class NVEvent: NVIdentifiable {
 			_story.Observers.forEach{$0.nvEventTargetsDidChange(story: _story, event: self)}
 		}
 	}
-	var Attributes: [String: NVValue] {
+	var Attributes: NSMutableDictionary {
 		didSet {
 			NVLog.log("Event (\(UUID.uuidString)) Attributes changed.", level: .info)
 			_story.Observers.forEach{$0.nvEventAttributesDidChange(story: _story, event: self)}
