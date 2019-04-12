@@ -233,12 +233,11 @@ extension Document {
 			Swift.print("Unable to find Event by ID (\(searchedID)) when setting Sequence's Entry (\(id.uuidString)).")
 		})
 		
-		// (i should make the enum have a fromString function?)
-		//tangibility
-		Swift.print("TODO: DiscoverableSequence's tangibility")
-		Swift.print("TODO: DiscoverableSequence's functionality")
-		Swift.print("TODO: DiscoverableSequence's clarity")
-		Swift.print("TODO: DiscoverableSequence's delivery")
+		// discoverable narrative matrix enums
+		entry.Tangibility = NVDiscoverableSequence.DNTangibility.fromString(discoverable["tangibility"].stringValue)
+		entry.Functionality = NVDiscoverableSequence.DNFunctionality.fromString(discoverable["functionality"].stringValue)
+		entry.Clarity = NVDiscoverableSequence.DNClarity.fromString(discoverable["clarity"].stringValue)
+		entry.Delivery = NVDiscoverableSequence.DNDelivery.fromString(discoverable["delivery"].stringValue)
 		
 		// attributes
 		for curr in discoverable["attributes"].dictionaryValue {

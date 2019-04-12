@@ -21,6 +21,17 @@ class NVDiscoverableSequence: NVSequence {
 				return "intangible"
 			}
 		}
+		
+		static func fromString(_ str: String) -> DNTangibility {
+			switch str {
+			case "tangible":
+				return .Tangible
+			case "intangible":
+				return .Intangible
+			default:
+				fatalError("Unable to convert string to DNTangibility (\(str)).")
+			}
+		}
 	}
 	enum DNFunctionality {
 		case Narrative
@@ -32,6 +43,17 @@ class NVDiscoverableSequence: NVSequence {
 				return "narrative"
 			case .Mechanical:
 				return "mechanical"
+			}
+		}
+		
+		static func fromString(_ str: String) -> DNFunctionality {
+			switch str {
+			case "narrative":
+				return .Narrative
+			case "mechanical":
+				return .Mechanical
+			default:
+				fatalError("Unable to convert string to DNFunctionality (\(str)).")
 			}
 		}
 	}
@@ -47,6 +69,17 @@ class NVDiscoverableSequence: NVSequence {
 				return "implicit"
 			}
 		}
+		
+		static func fromString(_ str: String) -> DNClarity {
+			switch str {
+			case "explicit":
+				return .Explicit
+			case "implicit":
+				return .Implicit
+			default:
+				fatalError("Unable to convert string to DNClarity (\(str)).")
+			}
+		}
 	}
 	enum DNDelivery {
 		case Active
@@ -58,6 +91,17 @@ class NVDiscoverableSequence: NVSequence {
 				return "active"
 			case .Passive:
 				return "passive"
+			}
+		}
+		
+		static func fromString(_ str: String) -> DNDelivery {
+			switch str {
+			case "active":
+				return .Active
+			case "passive":
+				return .Passive
+			default:
+				fatalError("Unable to convert string to DNDelivery (\(str)).")
 			}
 		}
 	}
