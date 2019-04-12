@@ -149,7 +149,9 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 	}
 }
 
+// MARK: - NVStoryObserver -
 extension OutlinerViewController: NVStoryObserver {
+	// MARK: - Groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
 		_outlineView.reloadItem(group)
 	}
@@ -178,6 +180,7 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
+	// MARK: - Sequences
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		_outlineView.reloadItem(sequence)
 		for i in 0..<_outlineView.numberOfRows {
@@ -204,6 +207,7 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
+	// MARK: - Events
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		_outlineView.reloadItem(event)
 		
@@ -213,5 +217,14 @@ extension OutlinerViewController: NVStoryObserver {
 				_outlineView.reloadItem(item)
 			}
 		}
+	}
+	
+	// MARK: - Links
+	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
+		_outlineView.reloadItem(link)
+	}
+	
+	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
+		_outlineView.reloadItem(link)
 	}
 }
