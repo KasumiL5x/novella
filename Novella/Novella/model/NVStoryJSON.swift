@@ -145,7 +145,13 @@ extension NVStory {
 			entry["exitfunction"] = event.ExitFunction?.UUID.uuidString ?? ""
 			entry["instigators"] = event.Instigators?.UUID.uuidString ?? ""
 			entry["targets"] = event.Targets?.UUID.uuidString ?? ""
-			print("TODO: Export attributes for Events.")
+			
+			var attribs: JSONDict = [:]
+			for (attrKey, attrValue) in event.Attributes {
+				attribs[attrKey as! String] = (attrValue as! String)
+			}
+			entry["attributes"] = attribs
+			
 			events.append(entry)
 		}
 		root["events"] = events
@@ -187,7 +193,13 @@ extension NVStory {
 		entry["sequences"] = group.Sequences.map{$0.UUID.uuidString}
 		entry["links"] = group.SequenceLinks.map{$0.UUID.uuidString}
 		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
-		print("TODO: Export attributes for Groups.")
+		
+		var attribs: JSONDict = [:]
+		for (attrKey, attrValue) in group.Attributes {
+			attribs[attrKey as! String] = (attrValue as! String)
+		}
+		entry["attributes"] = attribs
+		
 		return entry
 	}
 	
@@ -205,7 +217,13 @@ extension NVStory {
 		entry["entry"] = sequence.Entry?.UUID.uuidString ?? ""
 		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
 		entry["links"] = sequence.EventLinks.map{$0.UUID.uuidString}
-		print("TODO: Export attributes for Sequences.")
+		
+		var attribs: JSONDict = [:]
+		for (attrKey, attrValue) in sequence.Attributes {
+			attribs[attrKey as! String] = (attrValue as! String)
+		}
+		entry["attributes"] = attribs
+		
 		return entry
 	}
 }

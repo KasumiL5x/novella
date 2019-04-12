@@ -203,7 +203,12 @@ extension Document {
 				"y": pos.y
 			]
 			
-			Swift.print("TODO: Export attributes for Events.")
+			var attribs: JSONDict = [:]
+			for (attrKey, attrValue) in event.Attributes {
+				attribs[attrKey as! String] = (attrValue as! String)
+			}
+			entry["attributes"] = attribs
+			
 			events.append(entry)
 		}
 		root["events"] = events
@@ -252,7 +257,12 @@ extension Document {
 			"y": pos.y
 		]
 		
-		Swift.print("TODO: Export attributes for Groups.")
+		var attribs: JSONDict = [:]
+		for (attrKey, attrValue) in group.Attributes {
+			attribs[attrKey as! String] = (attrValue as! String)
+		}
+		entry["attributes"] = attribs
+		
 		return entry
 	}
 	
@@ -277,7 +287,12 @@ extension Document {
 			"y": pos.y
 		]
 		
-		Swift.print("TODO: Export attributes for Sequences.")
+		var attribs: JSONDict = [:]
+		for (attrKey, attrValue) in sequence.Attributes {
+			attribs[attrKey as! String] = (attrValue as! String)
+		}
+		entry["attributes"] = attribs
+		
 		return entry
 	}
 }

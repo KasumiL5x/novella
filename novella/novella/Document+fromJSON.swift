@@ -123,7 +123,10 @@ extension Document {
 			Swift.print("Unable to find Selector by ID (\(searchedID)) when setting Event's Targets (\(id.uuidString)).")
 		})
 		
-		Swift.print("TODO: Event's attributes")
+		// attributes
+		for curr in event["attributes"].dictionaryValue {
+			entry.Attributes[curr.key] = curr.value.stringValue
+		}
 	}
 	
 	fileprivate func parseSequence(sequence: JSON, id: NSUUID) {
@@ -175,7 +178,10 @@ extension Document {
 			Swift.print("Unable to find Event by ID (\(searchedID)) when setting Sequence's Entry (\(id.uuidString)).")
 		})
 		
-		Swift.print("TODO: Sequence's attributes")
+		// attributes
+		for curr in sequence["attributes"].dictionaryValue {
+			entry.Attributes[curr.key] = curr.value.stringValue
+		}
 	}
 	
 	fileprivate func parseDiscoverable(discoverable: JSON, id: NSUUID) {
@@ -234,7 +240,10 @@ extension Document {
 		Swift.print("TODO: DiscoverableSequence's clarity")
 		Swift.print("TODO: DiscoverableSequence's delivery")
 		
-		Swift.print("TODO: DiscoverableSequence's attributes")
+		// attributes
+		for curr in discoverable["attributes"].dictionaryValue {
+			entry.Attributes[curr.key] = curr.value.stringValue
+		}
 	}
 	
 	fileprivate func parseGroup(group: JSON, id: NSUUID) {
@@ -285,7 +294,10 @@ extension Document {
 			Swift.print("Unable to find Sequence by ID (\(searchedID)) when setting Group's Entry (\(id.uuidString)).")
 		})
 		
-		Swift.print("TODO: Group's attributes")
+		// attributes
+		for curr in group["attributes"].dictionaryValue {
+			entry.Attributes[curr.key] = curr.value.stringValue
+		}
 	}
 	
 	func fromJSON(data: Data) -> Bool {
