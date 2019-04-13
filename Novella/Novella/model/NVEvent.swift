@@ -8,7 +8,11 @@
 
 import Foundation
 
-class NVEvent: NVIdentifiable {
+class NVEvent: NVIdentifiable, NVLinkable {
+	func canBecomeOrigin() -> Bool {
+		return true
+	}
+	
 	var UUID: NSUUID
 	private let _story: NVStory
 	var Parent: NVSequence? // warning: no friend class support so has to be public

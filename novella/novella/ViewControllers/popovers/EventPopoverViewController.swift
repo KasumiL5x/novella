@@ -30,7 +30,7 @@ class EventPopoverViewController: NSViewController {
 		self._event = event
 		self._doc = doc
 		
-		_dc.content = event.Event.Attributes
+		_dc.content = event.nvEvent().Attributes
 		
 		_attributesTable.onAdd = {
 			let kvp = self._dc.newObject()
@@ -55,14 +55,14 @@ class EventPopoverViewController: NSViewController {
 	}
 	
 	private func setupLabel(event: CanvasEvent) {
-		_label.stringValue = event.Event.Label
+		_label.stringValue = event.nvEvent().Label
 	}
 	
 	private func setupCondition(event: CanvasEvent, doc: Document) {
 		_condition.removeAllItems()
 		doc.Story.Conditions.forEach{ _condition.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _condition.indexOfItem(withObjectValue: event.Event.PreCondition?.Label ?? "")
+		let idx = _condition.indexOfItem(withObjectValue: event.nvEvent().PreCondition?.Label ?? "")
 		if idx != NSNotFound {
 			_condition.selectItem(at: idx)
 		} else {
@@ -74,7 +74,7 @@ class EventPopoverViewController: NSViewController {
 		_entryFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _entryFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _entryFunction.indexOfItem(withObjectValue: event.Event.EntryFunction?.Label ?? "")
+		let idx = _entryFunction.indexOfItem(withObjectValue: event.nvEvent().EntryFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_entryFunction.selectItem(at: idx)
 		} else {
@@ -86,7 +86,7 @@ class EventPopoverViewController: NSViewController {
 		_doFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _doFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _doFunction.indexOfItem(withObjectValue: event.Event.DoFunction?.Label ?? "")
+		let idx = _doFunction.indexOfItem(withObjectValue: event.nvEvent().DoFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_doFunction.selectItem(at: idx)
 		} else {
@@ -98,7 +98,7 @@ class EventPopoverViewController: NSViewController {
 		_exitFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _exitFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _exitFunction.indexOfItem(withObjectValue: event.Event.ExitFunction?.Label ?? "")
+		let idx = _exitFunction.indexOfItem(withObjectValue: event.nvEvent().ExitFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_exitFunction.selectItem(at: idx)
 		} else {
@@ -107,27 +107,27 @@ class EventPopoverViewController: NSViewController {
 	}
 	
 	private func setupActivations(event: CanvasEvent) {
-		_activations.stringValue = "\(event.Event.MaxActivations)"
+		_activations.stringValue = "\(event.nvEvent().MaxActivations)"
 	}
 	
 	private func setupTopmost(event: CanvasEvent) {
-		_topmost.state = event.Event.Topmost ? .on : .off
+		_topmost.state = event.nvEvent().Topmost ? .on : .off
 	}
 	
 	private func setupKeepAlive(event: CanvasEvent) {
-		_keepAlive.state = event.Event.KeepAlive ? .on : .off
+		_keepAlive.state = event.nvEvent().KeepAlive ? .on : .off
 	}
 	
 	private func setupEntry(event: CanvasEvent) {
-		_entry.state = event.Event.Parent?.Entry == event.Event ? .on : .off
+		_entry.state = event.nvEvent().Parent?.Entry == event.nvEvent() ? .on : .off
 	}
 	
 	private func setupParallel(event: CanvasEvent) {
-		_parallel.state = event.Event.Parallel ? .on : .off
+		_parallel.state = event.nvEvent().Parallel ? .on : .off
 	}
 	
 	@IBAction func labelDidChange(_ sender: NSTextField) {
-		_event?.Event.Label = sender.stringValue
+		_event?.nvEvent().Label = sender.stringValue
 	}
 	
 	@IBAction func conditionDidChange(_ sender: NSComboBox) {
@@ -139,10 +139,10 @@ class EventPopoverViewController: NSViewController {
 		guard let condition = doc.Story.Conditions.first(where: {$0.Label == label}) else {
 			print("Could not find Condition: \(label). Setting to nil.")
 			sender.stringValue = ""
-			event.Event.PreCondition = nil
+			event.nvEvent().PreCondition = nil
 			return
 		}
-		event.Event.PreCondition = condition
+		event.nvEvent().PreCondition = condition
 	}
 	
 	@IBAction func entryFunctionDidChange(_ sender: NSComboBox) {
@@ -154,10 +154,10 @@ class EventPopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			event.Event.EntryFunction = nil
+			event.nvEvent().EntryFunction = nil
 			return
 		}
-		event.Event.EntryFunction = function
+		event.nvEvent().EntryFunction = function
 	}
 	
 	@IBAction func doFunctionDidChange(_ sender: NSComboBox) {
@@ -169,10 +169,10 @@ class EventPopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			event.Event.DoFunction = nil
+			event.nvEvent().DoFunction = nil
 			return
 		}
-		event.Event.DoFunction = function
+		event.nvEvent().DoFunction = function
 	}
 	
 	@IBAction func exitFunctionDidChange(_ sender: NSComboBox) {
@@ -184,31 +184,31 @@ class EventPopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			event.Event.ExitFunction = nil
+			event.nvEvent().ExitFunction = nil
 			return
 		}
-		event.Event.ExitFunction = function
+		event.nvEvent().ExitFunction = function
 	}
 	
 	@IBAction func activationsDidChange(_ sender: NSTextField) {
-		_event?.Event.MaxActivations = Int(sender.stringValue) ?? 0
+		_event?.nvEvent().MaxActivations = Int(sender.stringValue) ?? 0
 	}
 	
 	@IBAction func topmostDidChange(_ sender: NSButton) {
-		_event?.Event.Topmost = sender.state == .on
+		_event?.nvEvent().Topmost = sender.state == .on
 	}
 	
 	@IBAction func keepAliveDidChange(_ sender: NSButton) {
-		_event?.Event.KeepAlive = sender.state == .on
+		_event?.nvEvent().KeepAlive = sender.state == .on
 	}
 	
 	@IBAction func entryDidChange(_ sender: NSButton) {
-		_event?.Event.Parent?.Entry = (sender.state == .on) ? _event?.Event : nil
+		_event?.nvEvent().Parent?.Entry = (sender.state == .on) ? _event?.nvEvent() : nil
 		_event?.reloadData() // refresh entry icon
 	}
 	
 	@IBAction func parallelDidChange(_ sender: NSButton) {
-		_event?.Event.Parallel = sender.state == .on
+		_event?.nvEvent().Parallel = sender.state == .on
 		_event?.reloadData() // refresh parallel icon
 	}
 }

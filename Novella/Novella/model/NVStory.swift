@@ -34,11 +34,8 @@ class NVStory {
 	var Entities: [NVEntity] {
 		get{ return _identifiables.filter{$0 is NVEntity} as! [NVEntity] }
 	}
-	var SequenceLinks: [NVSequenceLink] {
-		get{ return _identifiables.filter{$0 is NVSequenceLink} as! [NVSequenceLink] }
-	}
-	var EventLinks: [NVEventLink] {
-		get{ return _identifiables.filter{$0 is NVEventLink} as! [NVEventLink] }
+	var Links: [NVLink] {
+		get{ return _identifiables.filter{$0 is NVLink} as! [NVLink] }
 	}
 	var Variables: [NVVariable] {
 		get{ return _identifiables.filter{$0 is NVVariable} as! [NVVariable] }
@@ -116,20 +113,12 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidMakeEntity(story: self, entity: entity)}
 		return entity
 	}
-	func makeSequenceLink(uuid: NSUUID?=nil, origin: NVSequence, dest: NVSequence?) -> NVSequenceLink {
-		let link = NVSequenceLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
+	func makeLink(uuid: NSUUID?=nil, origin: NVLinkable, dest: NVLinkable?) -> NVLink {
+		let link = NVLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
 		_identifiables.append(link)
-		
-		NVLog.log("Created SequenceLink (\(link.UUID.uuidString)).", level: .info)
-		Observers.forEach{$0.nvStoryDidMakeSequenceLink(story: self, link: link)}
-		return link
-	}
-	func makeEventLink(uuid: NSUUID?=nil, origin: NVEvent, dest: NVEvent?) -> NVEventLink {
-		let link = NVEventLink(uuid: uuid ?? NSUUID(), story: self, origin: origin, destination: dest)
-		_identifiables.append(link)
-		
-		NVLog.log("Created EventLink (\(link.UUID.uuidString)).", level: .info)
-		Observers.forEach{$0.nvStoryDidMakeEventLink(story: self, link: link)}
+
+		NVLog.log("Created Link (\(link.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeLink(story: self, link: link)}
 		return link
 	}
 	func makeVariable(uuid: NSUUID?=nil) -> NVVariable {
@@ -201,14 +190,14 @@ class NVStory {
 		Observers.forEach{$0.nvStoryWillDeleteSequence(story: self, sequence: sequence)}
 		
 		// remove from any links as source or destination
-		for (_, link) in SequenceLinks.enumerated().reversed() {
+		for (_, link) in Links.enumerated().reversed() {
 			// nil destinations
-			if link.Destination == sequence {
+			if link.Destination?.UUID == sequence.UUID {
 				link.Destination = nil
 			}
 			// fully remove if origin
-			if link.Origin == sequence {
-				delete(sequenceLink: link)
+			if link.Origin.UUID == sequence.UUID {
+				delete(link: link)
 			}
 		}
 		
@@ -240,14 +229,14 @@ class NVStory {
 		Observers.forEach{$0.nvStoryWillDeleteEvent(story: self, event: event)}
 		
 		// remove from any links as source or destination
-		for (_, link) in EventLinks.enumerated().reversed() {
+		for (_, link) in Links.enumerated().reversed() {
 			// nil destinations
-			if link.Destination == event {
+			if link.Destination?.UUID == event.UUID {
 				link.Destination = nil
 			}
 			// fully remove if origin
-			if link.Origin == event {
-				delete(eventLink: link)
+			if link.Origin.UUID == event.UUID {
+				delete(link: link)
 			}
 		}
 		
@@ -277,41 +266,23 @@ class NVStory {
 		NVLog.log("Deleted Entity (\(entity.UUID.uuidString)).", level: .info)
 		Observers.forEach{$0.nvStoryDidDeleteEntity(story: self, entity: entity)}
 	}
-	func delete(sequenceLink: NVSequenceLink) {
-		Observers.forEach{$0.nvStoryWillDeleteSequenceLink(story: self, link: sequenceLink)}
+	func delete(link: NVLink) {
+		Observers.forEach{$0.nvStoryWillDeleteLink(story: self, link: link)}
 		
 		// remove from all groups that contain it
 		Groups.forEach { (group) in
-			if group.contains(sequenceLink: sequenceLink) {
-				group.remove(sequenceLink: sequenceLink)
+			if group.contains(link: link) {
+				group.remove(link: link)
 			}
 		}
 		
 		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.UUID == sequenceLink.UUID}) {
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == link.UUID}) {
 			_identifiables.remove(at: idx)
 		}
 		
-		NVLog.log("Deleted SequenceLink (\(sequenceLink.UUID.uuidString)).", level: .info)
-		Observers.forEach{$0.nvStoryDidDeleteSequenceLink(story: self, link: sequenceLink)}
-	}
-	func delete(eventLink: NVEventLink) {
-		Observers.forEach{$0.nvStoryWillDeleteEventLink(story: self, link: eventLink)}
-		
-		// remove from all sequences that contain it
-		Sequences.forEach { (sequence) in
-			if sequence.contains(eventLink: eventLink) {
-				sequence.remove(eventLink: eventLink)
-			}
-		}
-		
-		// remove from story
-		if let idx = _identifiables.firstIndex(where: {$0.UUID == eventLink.UUID}) {
-			_identifiables.remove(at: idx)
-		}
-		
-		NVLog.log("Deleted EventLink (\(eventLink.UUID.uuidString)).", level: .info)
-		Observers.forEach{$0.nvStoryDidDeleteEventLink(story: self, link: eventLink)}
+		NVLog.log("Deleted Link (\(link.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteLink(story: self, link: link)}
 	}
 	func delete(variable: NVVariable) {
 		Observers.forEach{$0.nvStoryWillDeleteVariable(story: self, variable: variable)}
@@ -358,12 +329,7 @@ class NVStory {
 		}
 		
 		// remove from links
-		SequenceLinks.forEach { (link) in
-			if link.Function == function {
-				link.Function = nil
-			}
-		}
-		EventLinks.forEach { (link) in
+		Links.forEach { (link) in
 			if link.Function == function {
 				link.Function = nil
 			}
@@ -401,6 +367,13 @@ class NVStory {
 			}
 		}
 		
+		// remove from links
+		Links.forEach { (link) in
+			if link.Condition == condition {
+				link.Condition = nil
+			}
+		}
+		
 		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == condition.UUID}) {
 			_identifiables.remove(at: idx)
@@ -422,7 +395,7 @@ class NVStory {
 			}
 		}
 		
-		// remove frmo story
+		// remove from story
 		if let idx = _identifiables.firstIndex(where: {$0.UUID == selector.UUID}) {
 			_identifiables.remove(at: idx)
 		}

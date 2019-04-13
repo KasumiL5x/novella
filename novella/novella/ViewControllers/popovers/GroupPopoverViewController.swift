@@ -27,7 +27,7 @@ class GroupPopoverViewController: NSViewController {
 		self._group = group
 		self._doc = doc
 		
-		_dc.content = group.Group.Attributes
+		_dc.content = group.nvGroup().Attributes
 		
 		_attributesTable.onAdd = {
 			let kvp = self._dc.newObject()
@@ -49,14 +49,14 @@ class GroupPopoverViewController: NSViewController {
 	}
 	
 	private func setupLabel(group: CanvasGroup) {
-		_label.stringValue = group.Group.Label
+		_label.stringValue = group.nvGroup().Label
 	}
 	
 	private func setupCondition(group: CanvasGroup, doc: Document) {
 		_condition.removeAllItems()
 		doc.Story.Conditions.forEach{ _condition.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _condition.indexOfItem(withObjectValue: group.Group.PreCondition?.Label ?? "")
+		let idx = _condition.indexOfItem(withObjectValue: group.nvGroup().PreCondition?.Label ?? "")
 		if idx != NSNotFound {
 			_condition.selectItem(at: idx)
 		} else {
@@ -68,7 +68,7 @@ class GroupPopoverViewController: NSViewController {
 		_entryFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _entryFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _entryFunction.indexOfItem(withObjectValue: group.Group.EntryFunction?.Label ?? "")
+		let idx = _entryFunction.indexOfItem(withObjectValue: group.nvGroup().EntryFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_entryFunction.selectItem(at: idx)
 		} else {
@@ -80,7 +80,7 @@ class GroupPopoverViewController: NSViewController {
 		_exitFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _exitFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _exitFunction.indexOfItem(withObjectValue: group.Group.ExitFunction?.Label ?? "")
+		let idx = _exitFunction.indexOfItem(withObjectValue: group.nvGroup().ExitFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_exitFunction.selectItem(at: idx)
 		} else {
@@ -89,19 +89,19 @@ class GroupPopoverViewController: NSViewController {
 	}
 	
 	private func setupActivations(group: CanvasGroup) {
-		_activations.stringValue = "\(group.Group.MaxActivations)"
+		_activations.stringValue = "\(group.nvGroup().MaxActivations)"
 	}
 	
 	private func setupTopmost(group: CanvasGroup) {
-		_topmost.state = group.Group.Topmost ? .on : .off
+		_topmost.state = group.nvGroup().Topmost ? .on : .off
 	}
 	
 	private func setupKeepAlive(group: CanvasGroup) {
-		_keepAlive.state = group.Group.KeepAlive ? .on : .off
+		_keepAlive.state = group.nvGroup().KeepAlive ? .on : .off
 	}
 	
 	@IBAction func labelDidChange(_ sender: NSTextField) {
-		_group?.Group.Label = sender.stringValue
+		_group?.nvGroup().Label = sender.stringValue
 	}
 	
 	@IBAction func conditionDidChange(_ sender: NSComboBox) {
@@ -113,10 +113,10 @@ class GroupPopoverViewController: NSViewController {
 		guard let condition = doc.Story.Conditions.first(where: {$0.Label == label}) else {
 			print("Could not find Condition: \(label). Setting to nil.")
 			sender.stringValue = ""
-			group.Group.PreCondition = nil
+			group.nvGroup().PreCondition = nil
 			return
 		}
-		group.Group.PreCondition = condition
+		group.nvGroup().PreCondition = condition
 	}
 	
 	@IBAction func entryFunctionDidChange(_ sender: NSComboBox) {
@@ -128,10 +128,10 @@ class GroupPopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			group.Group.EntryFunction = nil
+			group.nvGroup().EntryFunction = nil
 			return
 		}
-		group.Group.EntryFunction = function
+		group.nvGroup().EntryFunction = function
 	}
 	
 	@IBAction func exitFunctionDidChange(_ sender: NSComboBox) {
@@ -143,21 +143,21 @@ class GroupPopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			group.Group.ExitFunction = nil
+			group.nvGroup().ExitFunction = nil
 			return
 		}
-		group.Group.ExitFunction = function
+		group.nvGroup().ExitFunction = function
 	}
 	
 	@IBAction func activationsDidChange(_ sender: NSTextField) {
-		_group?.Group.MaxActivations = Int(sender.stringValue) ?? 0
+		_group?.nvGroup().MaxActivations = Int(sender.stringValue) ?? 0
 	}
 	
 	@IBAction func topmostDidChange(_ sender: NSButton) {
-		_group?.Group.Topmost = sender.state == .on
+		_group?.nvGroup().Topmost = sender.state == .on
 	}
 	
 	@IBAction func keepAliveDidChange(_ sender: NSButton) {
-		_group?.Group.KeepAlive = sender.state == .on
+		_group?.nvGroup().KeepAlive = sender.state == .on
 	}
 }

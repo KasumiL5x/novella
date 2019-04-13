@@ -117,8 +117,8 @@ class Canvas: NSView {
 			makeSequence(nvSequence: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
 		// add all sequence links
-		for child in group.SequenceLinks {
-			addSequenceLink(link: child)
+		for child in group.Links {
+			addLink(link: child)
 		}
 		
 		// post setup for group notification
@@ -151,8 +151,8 @@ class Canvas: NSView {
 			makeEvent(nvEvent: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
 		// add all event links
-		for child in sequence.EventLinks {
-			addEventLink(link: child)
+		for child in sequence.Links {
+			addLink(link: child)
 		}
 		
 		// post setup for sequence notification
@@ -193,23 +193,12 @@ class Canvas: NSView {
 		return objs
 	}
 	
-	private func allLinksTo(event: NVEvent) -> [CanvasEventLink] {
-		var result: [CanvasEventLink] = []
+	private func allLinksTo(linkable: NVLinkable) -> [CanvasLink] {
+		var result: [CanvasLink] = []
 		
-		_allLinks.filter{$0 is CanvasEventLink}.forEach { (link) in
-			if (link as! CanvasEventLink).EventLink.Destination == event {
-				result.append(link as! CanvasEventLink)
-			}
-		}
-		
-		return result
-	}
-	private func allLinksTo(sequence: NVSequence) -> [CanvasSequenceLink] {
-		var result: [CanvasSequenceLink] = []
-		
-		_allLinks.filter{$0 is CanvasSequenceLink}.forEach { (link) in
-			if (link as! CanvasSequenceLink).SequenceLink.Destination == sequence {
-				result.append(link as! CanvasSequenceLink)
+		_allLinks.forEach { (link) in
+			if (link.Link.Destination?.UUID == linkable.UUID) {
+				result.append(link)
 			}
 		}
 		
@@ -339,14 +328,17 @@ class Canvas: NSView {
 		return NSMakePoint(visibleRect.midX, visibleRect.midY)
 	}
 	
+	func canvasObjectFor(linkable: NVLinkable) -> CanvasObject? {
+		return _allObjects.first(where: {$0.Linkable.UUID == linkable.UUID})
+	}
 	private func canvasGroupFor(nvGroup: NVGroup) -> CanvasGroup? {
-		return (_allObjects.filter{$0 is CanvasGroup} as! [CanvasGroup]).first(where: {$0.Group == nvGroup})
+		return (_allObjects.filter{$0 is CanvasGroup} as! [CanvasGroup]).first(where: {$0.nvGroup() == nvGroup})
 	}
 	func canvasSequenceFor(nvSequence: NVSequence) -> CanvasSequence? {
-		return (_allObjects.filter{$0 is CanvasSequence} as! [CanvasSequence]).first(where: {$0.Sequence == nvSequence})
+		return (_allObjects.filter{$0 is CanvasSequence} as! [CanvasSequence]).first(where: {$0.nvSequence() == nvSequence})
 	}
 	func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
-		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.Event == nvEvent})
+		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.nvEvent() == nvEvent})
 	}
 	
 	// creating canvas elements from novella elements w/o requesting them from the story
@@ -407,37 +399,27 @@ class Canvas: NSView {
 	}
 	
 	// links
-	private func addSequenceLink(link: NVSequenceLink) {
-		guard let obj = canvasSequenceFor(nvSequence: link.Origin) else {
-			NVLog.log("Tried to add a SequenceLink but couldn't find a CanvasSequence for the origin!", level: .error)
+	private func addLink(link: NVLink) {
+		guard let obj = canvasObjectFor(linkable: link.Origin) else {
+			NVLog.log("Tried to add Link but couldn't find a CanvasObject for the origin!", level: .error)
 			return
 		}
-		let canvasLink = CanvasSequenceLink(canvas: self, origin: obj, link: link)
+		let canvasLink = CanvasLink(canvas: self, origin: obj, link: link)
 		_allLinks.append(canvasLink)
 		benchFor(obj: obj)?.add(canvasLink)
 	}
-	func makeSequenceLink(sequence: CanvasSequence) {
+	func makeLink(forSequence: CanvasSequence) {
 		// sequences only exist within groups so ensure a group is mapped
 		if let group = MappedGroup {
-			let link = Doc.Story.makeSequenceLink(origin: sequence.Sequence, dest: nil)
-			group.add(sequenceLink: link)
+			let link = Doc.Story.makeLink(origin: forSequence.Linkable, dest: nil)
+			group.add(link: link)
 		}
 	}
-	
-	private func addEventLink(link: NVEventLink) {
-		guard let obj = canvasEventFor(nvEvent: link.Origin) else {
-			NVLog.log("Tried to add an EventLink but couldn't find a CanvasEvent for the origin!", level: .error)
-			return
-		}
-		let canvasLink = CanvasEventLink(canvas: self, origin: obj, link: link)
-		_allLinks.append(canvasLink)
-		benchFor(obj: obj)?.add(canvasLink)
-	}
-	func makeEventLink(event: CanvasEvent) {
+	func makeLink(forEvent: CanvasEvent) {
 		// events only exist within sequences so ensure a sequence is mapped
 		if let sequence = MappedSequence {
-			let link = Doc.Story.makeEventLink(origin: event.Event, dest: nil)
-			sequence.add(eventLink: link)
+			let link = Doc.Story.makeLink(origin: forEvent.Linkable, dest: nil)
+			sequence.add(link: link)
 		}
 	}
 }
@@ -479,7 +461,7 @@ extension Canvas: NVStoryObserver {
 		_allBenches.removeValue(forKey: canvasSequence)
 		
 		// redraw any links with this as its destination
-		allLinksTo(sequence: sequence).forEach{
+		allLinksTo(linkable: sequence).forEach{
 			$0.setTarget(nil)
 			$0.redraw()
 		}
@@ -506,28 +488,29 @@ extension Canvas: NVStoryObserver {
 		_allBenches.removeValue(forKey: canvasEvent)
 		
 		// redraw any links with this as its destination
-		allLinksTo(event: event).forEach{
+		allLinksTo(linkable: event).forEach{
 			$0.setTarget(nil)
 			$0.redraw()
 		}
 	}
 	
-	func nvStoryWillDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
-		// find CanvasSequence for the link from its origin
-		guard let canvasSequence = canvasSequenceFor(nvSequence: link.Origin) else {
-			NVLog.log("Tried to delete SequenceLink but couldn't find parent Sequence in the Canvas.", level: .error)
+	func nvStoryWillDeleteLink(story: NVStory, link: NVLink) {
+		// find CanvasObject for the link from its origin
+		guard let canvasObject = canvasObjectFor(linkable: link.Origin) else {
+			NVLog.log("Tried to delete Link but couldn't find parent Object in the Canvas.", level: .error)
 			return
 		}
 		
 		// get the bench for this object
-		guard let bench = benchFor(obj: canvasSequence) else {
-			NVLog.log("Tried to delete SequenceLink but couldn't find the Bench for the CanvasSequence.", level: .error)
+		// get the bench for this object
+		guard let bench = benchFor(obj: canvasObject) else {
+			NVLog.log("Tried to delete Link but couldn't find the Bench for the CanvasObject.", level: .error)
 			return
 		}
 		
 		// find the canvas link with the same model link
-		guard let canvasLink = bench.Items.first(where: {($0 as? CanvasSequenceLink)?.SequenceLink == link}) else {
-			NVLog.log("Tried to delete SequenceLink but couldn't find CanvasSequenceLink from its origin's Bench.", level: .error)
+		guard let canvasLink = bench.Items.first(where: {$0.Link == link}) else {
+			NVLog.log("Tried to delete Link but couldn't find CanvasLink from its origin's Bench.", level: .error)
 			return
 		}
 		
@@ -540,36 +523,9 @@ extension Canvas: NVStoryObserver {
 		}
 	}
 	
-	func nvStoryWillDeleteEventLink(story: NVStory, link: NVEventLink) {
-		guard let canvasEvent = canvasEventFor(nvEvent: link.Origin) else {
-			NVLog.log("Tried to delete EventLink but couldn't find parent Event in the Canvas.", level: .error)
-			return
-		}
-		
-		guard let bench = benchFor(obj: canvasEvent) else {
-			NVLog.log("Tried to delete EventLink but couldn't find the Bench for the CanvasEvent.", level: .error)
-			return
-		}
-		
-		guard let canvasLink = bench.Items.first(where: {($0 as? CanvasEventLink)?.EventLink == link}) else {
-			NVLog.log("Tried to delete EventLink but couldn't find CanvasEventLink from its origin's Bench.", level: .error)
-			return
-		}
-		
-		bench.remove(canvasLink)
-		
-		if let idx = _allLinks.firstIndex(of: canvasLink) {
-			_allLinks.remove(at: idx)
-		}
-	}
-	
 	// MARK: - Creation
-	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
-		addSequenceLink(link: link)
-	}
-	
-	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
-		addEventLink(link: link)
+	func nvStoryDidMakeLink(story: NVStory, link: NVLink) {
+		addLink(link: link)
 	}
 	
 	// MARK: - Group Changes

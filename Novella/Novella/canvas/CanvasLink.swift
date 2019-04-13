@@ -9,12 +9,15 @@
 import AppKit
 
 class CanvasLink: NSView {
+	let Link: NVLink
+	let _popover: LinkPopover
+	
 	static let Size: CGFloat = 15.0
 	static let OutlineInset: CGFloat = 3.0
 	static let FillInset: CGFloat = 1.5
 	
 	private(set) var _canvas: Canvas
-	private(set) var Origin: CanvasObject?
+	private(set) var Origin: CanvasObject
 	//
 	private let _outlineLayer: CAShapeLayer
 	private let _fillLayer: CAShapeLayer
@@ -30,7 +33,9 @@ class CanvasLink: NSView {
 	//
 	var ContextMenu: NSMenu
 	
-	init(canvas: Canvas, origin: CanvasObject) {
+	init(canvas: Canvas, origin: CanvasObject, link: NVLink) {
+		self.Link = link
+		self._popover = LinkPopover()
 		self._canvas = canvas
 		self.Origin = origin
 		//
@@ -100,6 +105,16 @@ class CanvasLink: NSView {
 		_curvelayer.lineWidth = 2.0
 		_curvelayer.strokeColor = NSColor.black.cgColor
 		layer?.addSublayer(_curvelayer)
+		
+		 // menu
+		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasLink.onEdit), keyEquivalent: "")
+		ContextMenu.addItem(NSMenuItem.separator())
+		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasLink.onDelete), keyEquivalent: "")
+		
+		// handle case where destination already exists
+		if let dest = link.Destination, let destObj = canvas.canvasObjectFor(linkable: dest) {
+			setTarget(destObj)
+		}
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
@@ -107,6 +122,17 @@ class CanvasLink: NSView {
 	
 	func redraw() {
 		updateCurve()
+	}
+	
+	@objc private func onEdit() {
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(link: self, doc: _canvas.Doc)
+	}
+	
+	@objc private func onDelete() {
+		if Alerts.okCancel(msg: "Delete Link?", info: "Are you sure you want to delete this link? This action cannot be undone.", style: .critical) {
+			_canvas.Doc.Story.delete(link: Link)
+		}
 	}
 	
 	@objc private func onPan(gesture: NSPanGestureRecognizer) {
@@ -250,10 +276,46 @@ class CanvasLink: NSView {
 		print("Alan, please override.")
 	}
 	func canlinkTo(obj: CanvasObject) -> Bool {
-		print("Alan, please override.")
-		return false
+		// must be same type
+		if type(of: obj.Linkable) != type(of: Origin.Linkable) {
+			return false
+		}
+		
+		// cannot be parllel
+		switch obj {
+		case let seq as CanvasSequence:
+			if seq.nvSequence().Parallel {
+				return false
+			}
+			
+		case let evt as CanvasEvent:
+			if evt.nvEvent().Parallel {
+				return false
+			}
+			
+		default:
+			break
+		}
+		
+		return true
 	}
 	func connectTo(obj: CanvasObject?) {
-		print("Alan, please override.")
+		// revert previous object back to normal state and remove self as delegate
+		if let oldDest = Link.Destination, let oldObj = _canvas.canvasObjectFor(linkable: oldDest) {
+			oldObj.CurrentState = .normal
+			oldObj.remove(delegate: self)
+		}
+		
+		// update model link destination
+		Link.Destination = obj?.Linkable ?? nil
+		
+		// add self as delegate
+		obj?.add(delegate: self)
+	}
+}
+
+extension CanvasLink: CanvasObjectDelegate {
+	func canvasObjectMoved(obj: CanvasObject) {
+		updateCurve()
 	}
 }

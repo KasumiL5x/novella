@@ -1,5 +1,5 @@
 //
-//  EventLinkPopoverViewController.swift
+//  SequenceLinkPopoverViewController.swift
 //  novella
 //
 //  Created by Daniel Green on 10/04/2019.
@@ -8,14 +8,14 @@
 
 import Cocoa
 
-class EventLinkPopoverViewController: NSViewController {
+class LinkPopoverViewController: NSViewController {
 	@IBOutlet weak private var _condition: NSComboBox!
 	@IBOutlet weak private var _function: NSComboBox!
 	
 	weak private var _doc: Document?
-	weak private var _link: CanvasEventLink?
+	weak private var _link: CanvasLink?
 	
-	func setup(link: CanvasEventLink, doc: Document) {
+	func setup(link: CanvasLink, doc: Document) {
 		self._link = link
 		self._doc = doc
 		
@@ -23,11 +23,11 @@ class EventLinkPopoverViewController: NSViewController {
 		setupFunction(link: link, doc: doc)
 	}
 	
-	private func setupCondition(link: CanvasEventLink, doc: Document) {
+	private func setupCondition(link: CanvasLink, doc: Document) {
 		_condition.removeAllItems()
 		doc.Story.Conditions.forEach{ _condition.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _condition.indexOfItem(withObjectValue: link.EventLink.Condition?.Label ?? "")
+		let idx = _condition.indexOfItem(withObjectValue: link.Link.Condition?.Label ?? "")
 		if idx != NSNotFound {
 			_condition.selectItem(at: idx)
 		} else {
@@ -35,11 +35,11 @@ class EventLinkPopoverViewController: NSViewController {
 		}
 	}
 	
-	private func setupFunction(link: CanvasEventLink, doc: Document) {
+	private func setupFunction(link: CanvasLink, doc: Document) {
 		_function.removeAllItems()
 		doc.Story.Functions.forEach{ _function.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _function.indexOfItem(withObjectValue: link.EventLink.Function?.Label ?? "")
+		let idx = _function.indexOfItem(withObjectValue: link.Link.Function?.Label ?? "")
 		if idx != NSNotFound {
 			_function.selectItem(at: idx)
 		} else {
@@ -56,10 +56,10 @@ class EventLinkPopoverViewController: NSViewController {
 		guard let condition = doc.Story.Conditions.first(where: {$0.Label == label}) else {
 			print("Could not find Condition: \(label). Setting to nil.")
 			sender.stringValue = ""
-			link.EventLink.Condition = nil
+			link.Link.Condition = nil
 			return
 		}
-		link.EventLink.Condition = condition
+		link.Link.Condition = condition
 	}
 	
 	@IBAction func functionDidChange(_ sender: NSComboBox) {
@@ -71,9 +71,9 @@ class EventLinkPopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			link.EventLink.Function = nil
+			link.Link.Function = nil
 			return
 		}
-		link.EventLink.Function = function
+		link.Link.Function = function
 	}
 }

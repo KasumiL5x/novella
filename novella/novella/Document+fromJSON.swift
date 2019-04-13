@@ -388,63 +388,33 @@ extension Document {
 			parseGroup(group: group, id: id)
 		}
 		
-		// read event links
-		for link in json["eventlinks"].arrayValue {
+		// read links
+		for link in json["links"].arrayValue {
 			guard let id = NSUUID(uuidString: link["id"].stringValue) else {
-				Swift.print("Failed to load Event Link as the ID was invalid (\(link["id"].stringValue)).")
+				Swift.print("Failed to load Link as the ID was invalid (\(link["id"].stringValue)).")
 				continue
 			}
 			
-			guard let origin = Story.find(uuid: link["origin"].stringValue) as? NVEvent else {
-				Swift.print("Failed to find origin Event (\(link["origin"].stringValue)) when setting up an EventLink (\(id.uuidString)).")
+			guard let origin = Story.find(uuid: link["origin"].stringValue) as? NVLinkable else {
+				Swift.print("Failed to find origin Linkable (\(link["origin"].stringValue)) when setting up a Link (\(id.uuidString)).")
 				continue
 			}
-			let dest = Story.find(uuid: link["dest"].stringValue) as? NVEvent // returns nil if it fails to find, so no check required
+			let dest = Story.find(uuid: link["dest"].stringValue) as? NVLinkable // returns nil if it fails to find, so no check required
 			
-			let entry = Story.makeEventLink(uuid: id, origin: origin, dest: dest)
+			let entry = Story.makeLink(uuid: id, origin: origin, dest: dest)
 			
 			// condition
 			let _: NVCondition? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
 				entry.Condition = found
 			}, onFail: {(searchedID) in
-				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting EventLink's Condition (\(id.uuidString)).")
+				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting Link's Condition (\(id.uuidString)).")
 			})
 			
 			// function
 			let _: NVFunction? = findbyIDFromJSON(json: link, name: "function", checkEmpty: true, onSuccess: {(found) in
 				entry.Function = found
 			}, onFail: {(searchedID) in
-				Swift.print("Unable to find Function by ID (\(searchedID)) when setting EventLink's Function (\(id.uuidString)).")
-			})
-		}
-		
-		// read sequence links
-		for link in json["sequencelinks"].arrayValue {
-			guard let id = NSUUID(uuidString: link["id"].stringValue) else {
-				Swift.print("Failed to load SequenceLink as the ID was invalid (\(link["id"].stringValue)).")
-				continue
-			}
-			
-			guard let origin = Story.find(uuid: link["origin"].stringValue) as? NVSequence else {
-				Swift.print("Failed to find origin Sequence (\(link["origin"].stringValue)) when setting up an SequenceLink (\(id.uuidString)).")
-				continue
-			}
-			let dest = Story.find(uuid: link["dest"].stringValue) as? NVSequence // returns nil if it fails to find, so no check required
-			
-			let entry = Story.makeSequenceLink(uuid: id, origin: origin, dest: dest)
-			
-			// condition
-			let _: NVCondition? = findbyIDFromJSON(json: link, name: "condition", checkEmpty: true, onSuccess: {(found) in
-				entry.Condition = found
-			}, onFail: {(searchedID) in
-				Swift.print("Unable to find Condition by ID (\(searchedID)) when setting EventLink's Condition (\(id.uuidString)).")
-			})
-			
-			// function
-			let _: NVFunction? = findbyIDFromJSON(json: link, name: "function", checkEmpty: true, onSuccess: {(found) in
-				entry.Function = found
-			}, onFail: {(searchedID) in
-				Swift.print("Unable to find Function by ID (\(searchedID)) when setting EventLink's Function (\(id.uuidString)).")
+				Swift.print("Unable to find Function by ID (\(searchedID)) when setting Link's Function (\(id.uuidString)).")
 			})
 		}
 		
@@ -457,10 +427,10 @@ extension Document {
 			
 			sequence["links"].arrayValue.forEach{ (link) in
 				let childID = link.stringValue
-				if let found = Story.find(uuid: childID) as? NVEventLink {
-					entry.add(eventLink: found)
+				if let found = Story.find(uuid: childID) as? NVLink {
+					entry.add(link: found)
 				} else {
-					Swift.print("Unable to find EventLink by ID (\(childID)) when adding to Sequence (\(sequence["id"].stringValue)).")
+					Swift.print("Unable to find Link by ID (\(childID)) when adding to Sequence (\(sequence["id"].stringValue)).")
 				}
 			}
 		}
@@ -474,10 +444,10 @@ extension Document {
 			
 			discoverable["links"].arrayValue.forEach{ (link) in
 				let childID = link.stringValue
-				if let found = Story.find(uuid: childID) as? NVEventLink {
-					entry.add(eventLink: found)
+				if let found = Story.find(uuid: childID) as? NVLink {
+					entry.add(link: found)
 				} else {
-					Swift.print("Unable to find EventLink by ID (\(childID)) when adding to DiscoverableSequence (\(discoverable["id"].stringValue)).")
+					Swift.print("Unable to find Link by ID (\(childID)) when adding to DiscoverableSequence (\(discoverable["id"].stringValue)).")
 				}
 			}
 		}
@@ -492,10 +462,10 @@ extension Document {
 			// links
 			group["links"].arrayValue.forEach{ (link) in
 				let childID = link.stringValue
-				if let found = Story.find(uuid: childID) as? NVSequenceLink {
-					entry.add(sequenceLink: found)
+				if let found = Story.find(uuid: childID) as? NVLink {
+					entry.add(link: found)
 				} else {
-					Swift.print("Unable to find SequenceLink by ID (\(childID)) when adding to Group (\(group["id"].stringValue)).")
+					Swift.print("Unable to find Link by ID (\(childID)) when adding to Group (\(group["id"].stringValue)).")
 				}
 			}
 			
@@ -551,10 +521,10 @@ extension Document {
 		// links
 		mainGroup["links"].arrayValue.forEach{ (child) in
 			let childID = child.stringValue
-			if let found = Story.find(uuid: childID) as? NVSequenceLink {
-				Story.MainGroup.add(sequenceLink: found)
+			if let found = Story.find(uuid: childID) as? NVLink {
+				Story.MainGroup.add(link: found)
 			} else {
-				Swift.print("Unable to find SequenceLink by ID (\(childID)) when adding a SequeceLink to the Main Group.")
+				Swift.print("Unable to find Link by ID (\(childID)) when adding a SequeceLink to the Main Group.")
 			}
 		}
 		

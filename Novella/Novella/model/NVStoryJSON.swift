@@ -81,7 +81,7 @@ extension NVStory {
 		
 		// links
 		var eventLinks: [JSONDict] = []
-		self.EventLinks.forEach{ (eventLink) in
+		self.Links.forEach{ (eventLink) in
 			var entry: JSONDict = [:]
 			entry["id"] = eventLink.UUID.uuidString
 			entry["origin"] = eventLink.Origin.UUID.uuidString
@@ -90,18 +90,7 @@ extension NVStory {
 			entry["condition"] = eventLink.Condition?.UUID.uuidString ?? ""
 			eventLinks.append(entry)
 		}
-		root["eventlinks"] = eventLinks
-		var sequenceLinks: [JSONDict] = []
-		self.SequenceLinks.forEach{ (seqLink) in
-			var entry: JSONDict = [:]
-			entry["id"] = seqLink.UUID.uuidString
-			entry["origin"] = seqLink.Origin.UUID.uuidString
-			entry["dest"] = seqLink.Destination?.UUID.uuidString ?? ""
-			entry["function"] = seqLink.Function?.UUID.uuidString ?? ""
-			entry["condition"] = seqLink.Condition?.UUID.uuidString ?? ""
-			sequenceLinks.append(entry)
-		}
-		root["sequencelinks"] = sequenceLinks
+		root["links"] = eventLinks
 		
 		// groups
 		var groups: [JSONDict] = []
@@ -191,7 +180,7 @@ extension NVStory {
 		entry["exitfunction"] = group.ExitFunction?.UUID.uuidString ?? ""
 		entry["entry"] = group.Entry?.UUID.uuidString ?? ""
 		entry["sequences"] = group.Sequences.map{$0.UUID.uuidString}
-		entry["links"] = group.SequenceLinks.map{$0.UUID.uuidString}
+		entry["links"] = group.Links.map{$0.UUID.uuidString}
 		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
 		
 		var attribs: JSONDict = [:]
@@ -216,7 +205,7 @@ extension NVStory {
 		entry["exitfunction"] = sequence.ExitFunction?.UUID.uuidString ?? ""
 		entry["entry"] = sequence.Entry?.UUID.uuidString ?? ""
 		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
-		entry["links"] = sequence.EventLinks.map{$0.UUID.uuidString}
+		entry["links"] = sequence.Links.map{$0.UUID.uuidString}
 		
 		var attribs: JSONDict = [:]
 		for (attrKey, attrValue) in sequence.Attributes {

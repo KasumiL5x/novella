@@ -8,13 +8,13 @@
 
 import Cocoa
 
-class SequenceLinkPopover: Popover {
+class LinkPopover: Popover {
 	override func createViewController() -> NSViewController? {
 		let sb = NSStoryboard(name: "Popovers", bundle: nil)
-		return sb.instantiateController(withIdentifier: "SequenceLink") as? SequenceLinkPopoverViewController
+		return sb.instantiateController(withIdentifier: "Link") as? LinkPopoverViewController
 	}
 	
-	func setup(link: CanvasSequenceLink, doc: Document) {
-		(ViewController as? SequenceLinkPopoverViewController)?.setup(link: link, doc: doc)
+	func setup(link: CanvasLink, doc: Document) {
+		(ViewController as? LinkPopoverViewController)?.setup(link: link, doc: doc)
 	}
 }
