@@ -32,6 +32,22 @@ class OutlinerViewController: NSViewController {
 }
 
 extension OutlinerViewController: NSOutlineViewDelegate {
+	func labelFor(linkable: NVLinkable?) -> String {
+		switch linkable {
+		case let seq as NVSequence:
+			return seq.Label.isEmpty ? "Unnamed" : seq.Label
+			
+		case let evt as NVEvent:
+			return evt.Label.isEmpty ? "Unnamed" : evt.Label
+			
+		case nil:
+			return "nil"
+			
+		default:
+			return "error"
+		}
+	}
+	
 	// custom row class
 	func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
 		return CustomTableRowView(frame: NSRect.zero)
@@ -56,8 +72,7 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			(view as? NSTableCellView)?.textField?.stringValue = asSequence.Label
 			
 		case let asLink as NVLink:
-//			(view as? NSTableCellView)?.textField?.stringValue = "(\(asLink.Origin.Label)) -> (\(asSequenceLink.Destination?.Label ?? "nil"))"
-			(view as? NSTableCellView)?.textField?.stringValue = "(FIXME) -> (FIXME)"
+			(view as? NSTableCellView)?.textField?.stringValue = "(\(labelFor(linkable: asLink.Origin))) -> (\(labelFor(linkable: asLink.Destination)))"
 			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		case let asEvent as NVEvent:
