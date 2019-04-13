@@ -8,39 +8,33 @@
 
 import Foundation
 
-typealias NVSequenceLink = NVLink<NVSequence>
-typealias NVEventLink = NVLink<NVEvent>
-
-class NVLink<T>: NVIdentifiable where T: NVIdentifiable {
+class NVLink: NVIdentifiable {
 	var UUID: NSUUID
 	private let _story: NVStory
 	
-	private(set) var Origin: T
+	private(set) var Origin: NVLinkable
 	//
-	var Destination: T? {
+	var Destination: NVLinkable? {
 		didSet {
 			NVLog.log("Link (\(UUID.uuidString)) Destination changed (\(oldValue?.UUID.uuidString ?? "nil") -> \(Destination?.UUID.uuidString ?? "nil")).", level: .info)
-			
-			// a bit hacky but watcha' gonna do with templates like these?
-			if self is NVSequenceLink {
-				_story.Observers.forEach{$0.nvSequenceLinkDestinationDidChange(story: _story, link: self as! NVSequenceLink)}
-			}
-			if self is NVEventLink {
-				_story.Observers.forEach{$0.nvEventLinkDestinationDidChange(story: _story, link: self as! NVEventLink)}
-			}
+			_story.Observers.forEach{$0.nvLinkDestinationChanged(story: _story, link: self)}
 		}
 	}
 	//
 	var Condition: NVCondition?
 	var Function: NVFunction?
 	
-	init(uuid: NSUUID, story: NVStory, origin: T, destination: T?) {
+	init(uuid: NSUUID, story: NVStory, origin: NVLinkable, destination: NVLinkable?) {
 		self.UUID = uuid
 		self._story = story
 		self.Origin = origin
 		self.Destination = destination
 		self.Condition = nil
 		self.Function = nil
+		
+		if !origin.canBecomeOrigin() {
+			fatalError("Tried to create link with a Linkable that cannot become an origin.")
+		}
 	}
 }
 

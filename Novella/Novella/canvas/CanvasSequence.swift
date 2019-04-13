@@ -15,7 +15,7 @@ class CanvasSequence: CanvasObject {
 	init(canvas: Canvas, sequence: NVSequence) {
 		self.Sequence = sequence
 		self._popover = SequencePopover()
-		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75), linkable: sequence)
 		
 		ContextMenu.addItem(withTitle: "Submerge", action: #selector(CanvasSequence.onSubmerge), keyEquivalent: "")
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasSequence.onAddLink), keyEquivalent: "")
@@ -43,7 +43,7 @@ class CanvasSequence: CanvasObject {
 	}
 	
 	@objc private func onAddLink() {
-		_canvas.makeSequenceLink(sequence: self)
+		_canvas.makeLink(forSequence: self)
 	}
 	
 	@objc private func onDelete() {

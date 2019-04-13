@@ -8,7 +8,11 @@
 
 import Foundation
 
-class NVGroup: NVIdentifiable {
+class NVGroup: NVIdentifiable, NVLinkable {
+	func canBecomeOrigin() -> Bool {
+		return true
+	}
+	
 	var UUID: NSUUID
 	private let _story: NVStory
 	var Parent: NVGroup? // warning: no friend class support so has to be public
@@ -75,7 +79,7 @@ class NVGroup: NVIdentifiable {
 		}
 	}
 	private(set) var Sequences: [NVSequence]
-	private(set) var SequenceLinks: [NVSequenceLink]
+	private(set) var Links: [NVLink]
 	private(set) var Groups: [NVGroup]
 	var Attributes: NSMutableDictionary {
 		didSet {
@@ -97,7 +101,7 @@ class NVGroup: NVIdentifiable {
 		self.ExitFunction = nil
 		self.Entry = nil
 		self.Sequences = []
-		self.SequenceLinks = []
+		self.Links = []
 		self.Groups = []
 		self.Attributes = [:]
 	}
@@ -163,28 +167,28 @@ class NVGroup: NVIdentifiable {
 		_story.Observers.forEach{$0.nvGroupDidRemoveGroup(story: _story, group: self, child: group)}
 	}
 	
-	func contains(sequenceLink: NVSequenceLink) -> Bool {
-		return SequenceLinks.contains(sequenceLink)
+	func contains(link: NVLink) -> Bool {
+		return Links.contains(link)
 	}
-	func add(sequenceLink: NVSequenceLink) {
-		if contains(sequenceLink: sequenceLink) {
-			NVLog.log("Tried to add SequenceLink (\(sequenceLink.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
+	func add(link: NVLink) {
+		if contains(link: link) {
+			NVLog.log("Tried to add Link (\(link.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
 			return
 		}
-		SequenceLinks.append(sequenceLink)
+		Links.append(link)
 		
-		NVLog.log("Added SequenceLink (\(sequenceLink.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
-		_story.Observers.forEach{$0.nvGroupDidAddSequenceLink(story: _story, group: self, link: sequenceLink)}
+		NVLog.log("Added Link (\(link.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvGroupDidAddLink(story: _story, group: self, link: link)}
 	}
-	func remove(sequenceLink: NVSequenceLink) {
-		guard let idx = SequenceLinks.firstIndex(of: sequenceLink) else {
-			NVLog.log("Tried to remove SequenceLink (\(sequenceLink.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+	func remove(link: NVLink) {
+		guard let idx = Links.firstIndex(of: link) else {
+			NVLog.log("Tried to remove Link (\(link.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
-		SequenceLinks.remove(at: idx)
+		Links.remove(at: idx)
 		
-		NVLog.log("Removed SequenceLink (\(sequenceLink.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
-		_story.Observers.forEach{$0.nvGroupDidRemoveSequenceLink(story: _story, group: self, link: sequenceLink)}
+		NVLog.log("Removed Link (\(link.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvGroupDidRemoveLink(story: _story, group: self, link: link)}
 	}
 }
 

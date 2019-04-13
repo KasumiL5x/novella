@@ -32,6 +32,7 @@ class CanvasObject: NSView {
 		return 0 // anything not -1
 	}
 	
+	let Linkable: NVLinkable
 	private(set) var _canvas: Canvas
 	private var _lastPanPos: CGPoint
 	var ContextMenu: NSMenu
@@ -47,7 +48,8 @@ class CanvasObject: NSView {
 	private let _parallelLayer: CAShapeLayer
 	private let _entryLayer: CAShapeLayer
 	
-	init(canvas: Canvas, frame: NSRect) {
+	init(canvas: Canvas, frame: NSRect, linkable: NVLinkable) {
+		self.Linkable = linkable
 		self._canvas = canvas
 		self._lastPanPos = CGPoint.zero
 		self.ContextMenu = NSMenu()

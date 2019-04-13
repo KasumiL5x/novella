@@ -128,9 +128,9 @@ extension Document {
 		}
 		root["entities"] = entities
 		
-		// event links
+		// links
 		var eventLinks: [JSONDict] = []
-		Story.EventLinks.forEach{ (eventLink) in
+		Story.Links.forEach{ (eventLink) in
 			var entry: JSONDict = [:]
 			entry["id"] = eventLink.UUID.uuidString
 			entry["origin"] = eventLink.Origin.UUID.uuidString
@@ -139,20 +139,7 @@ extension Document {
 			entry["condition"] = eventLink.Condition?.UUID.uuidString ?? ""
 			eventLinks.append(entry)
 		}
-		root["eventlinks"] = eventLinks
-		
-		// sequence links
-		var sequenceLinks: [JSONDict] = []
-		Story.SequenceLinks.forEach{ (seqLink) in
-			var entry: JSONDict = [:]
-			entry["id"] = seqLink.UUID.uuidString
-			entry["origin"] = seqLink.Origin.UUID.uuidString
-			entry["dest"] = seqLink.Destination?.UUID.uuidString ?? ""
-			entry["function"] = seqLink.Function?.UUID.uuidString ?? ""
-			entry["condition"] = seqLink.Condition?.UUID.uuidString ?? ""
-			sequenceLinks.append(entry)
-		}
-		root["sequencelinks"] = sequenceLinks
+		root["links"] = eventLinks
 		
 		// groups
 		var groups: [JSONDict] = []
@@ -248,7 +235,7 @@ extension Document {
 		entry["exitfunction"] = group.ExitFunction?.UUID.uuidString ?? ""
 		entry["entry"] = group.Entry?.UUID.uuidString ?? ""
 		entry["sequences"] = group.Sequences.map{$0.UUID.uuidString}
-		entry["links"] = group.SequenceLinks.map{$0.UUID.uuidString}
+		entry["links"] = group.Links.map{$0.UUID.uuidString}
 		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
 		
 		let pos = Positions[group.UUID] ?? CGPoint.zero
@@ -279,7 +266,7 @@ extension Document {
 		entry["exitfunction"] = sequence.ExitFunction?.UUID.uuidString ?? ""
 		entry["entry"] = sequence.Entry?.UUID.uuidString ?? ""
 		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
-		entry["links"] = sequence.EventLinks.map{$0.UUID.uuidString}
+		entry["links"] = sequence.Links.map{$0.UUID.uuidString}
 		
 		let pos = Positions[sequence.UUID] ?? CGPoint.zero
 		entry["position"] = [
@@ -326,18 +313,8 @@ extension Document: NVStoryObserver {
 		}
 	}
 	
-	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
+	func nvStoryDidMakeLink(story: NVStory, link: NVLink) {
 		updateChangeCount(.changeDone)
-		if Positions[link.UUID] == nil {
-			Positions[link.UUID] = CGPoint.zero
-		}
-	}
-	
-	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
-		updateChangeCount(.changeDone)
-		if Positions[link.UUID] == nil {
-			Positions[link.UUID] = CGPoint.zero
-		}
 	}
 	
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
@@ -375,11 +352,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
-		updateChangeCount(.changeDone)
-	}
-	
-	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
+	func nvStoryDidDeleteLink(story: NVStory, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -423,11 +396,11 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+	func nvGroupDidAddLink(story: NVStory, group: NVGroup, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+	func nvGroupDidRemoveLink(story: NVStory, group: NVGroup, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -479,11 +452,11 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	func nvSequenceDidAddLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -599,11 +572,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
-	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
-		updateChangeCount(.changeDone)
-	}
-	
-	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
+	func nvLinkDestinationChanged(story: NVStory, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	

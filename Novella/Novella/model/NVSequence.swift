@@ -8,7 +8,11 @@
 
 import Foundation
 
-class NVSequence: NVIdentifiable {
+class NVSequence: NVIdentifiable, NVLinkable {
+	func canBecomeOrigin() -> Bool {
+		return true
+	}
+	
 	var UUID: NSUUID
 	let _story: NVStory
 	var Parent: NVGroup? // warning: no friend class support so has to be public
@@ -81,7 +85,7 @@ class NVSequence: NVIdentifiable {
 		}
 	}
 	private(set) var Events: [NVEvent]
-	private(set) var EventLinks: [NVEventLink]
+	private(set) var Links: [NVLink]
 	var Attributes: NSMutableDictionary {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Attributes changed.", level: .info)
@@ -103,7 +107,7 @@ class NVSequence: NVIdentifiable {
 		self.ExitFunction = nil
 		self.Entry = nil
 		self.Events = []
-		self.EventLinks = []
+		self.Links = []
 		self.Attributes = [:]
 	}
 	
@@ -137,26 +141,26 @@ class NVSequence: NVIdentifiable {
 		}
 	}
 	
-	func contains(eventLink: NVEventLink) -> Bool {
-		return EventLinks.contains(eventLink)
+	func contains(link: NVLink) -> Bool {
+		return Links.contains(link)
 	}
-	func add(eventLink: NVEventLink) {
-		if contains(eventLink: eventLink) {
-			NVLog.log("Tried to add EventLink (\(eventLink.UUID.uuidString)) to Sequence (\(UUID.uuidString)) but it already exists.", level: .warning)
+	func add(link: NVLink) {
+		if contains(link: link) {
+			NVLog.log("Tried to add Link (\(link.UUID.uuidString)) to Sequence (\(UUID.uuidString)) but it already exists.", level: .warning)
 			return
 		}
-		EventLinks.append(eventLink)
-		NVLog.log("Added EventLink (\(eventLink.UUID.uuidString)) to Sequence (\(UUID.uuidString)).", level: .info)
-		_story.Observers.forEach{$0.nvSequenceDidAddEventLink(story: _story, sequence: self, link: eventLink)}
+		Links.append(link)
+		NVLog.log("Added Link (\(link.UUID.uuidString)) to Sequence (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvSequenceDidAddLink(story: _story, sequence: self, link: link)}
 	}
-	func remove(eventLink: NVEventLink) {
-		guard let idx = EventLinks.firstIndex(of: eventLink) else {
-			NVLog.log("Tried to remove EventLink (\(eventLink.UUID.uuidString)) from Sequence (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+	func remove(link: NVLink) {
+		guard let idx = Links.firstIndex(of: link) else {
+			NVLog.log("Tried to remove Link (\(link.UUID.uuidString)) from Sequence (\(UUID.uuidString)) but it didn't exist.", level: .warning)
 			return
 		}
-		EventLinks.remove(at: idx)
-		NVLog.log("Removed EventLink (\(eventLink.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
-		_story.Observers.forEach{$0.nvSequenceDidRemoveEventLink(story: _story, sequence: self, link: eventLink)}
+		Links.remove(at: idx)
+		NVLog.log("Removed Link (\(link.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvSequenceDidRemoveLink(story: _story, sequence: self, link: link)}
 	}
 }
 

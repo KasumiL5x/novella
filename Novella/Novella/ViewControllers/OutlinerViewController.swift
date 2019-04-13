@@ -55,16 +55,13 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 		case let asSequence as NVSequence:
 			(view as? NSTableCellView)?.textField?.stringValue = asSequence.Label
 			
-		case let asSequenceLink as NVSequenceLink:
-			(view as? NSTableCellView)?.textField?.stringValue = "(\(asSequenceLink.Origin.Label)) -> (\(asSequenceLink.Destination?.Label ?? "nil"))"
+		case let asLink as NVLink:
+//			(view as? NSTableCellView)?.textField?.stringValue = "(\(asLink.Origin.Label)) -> (\(asSequenceLink.Destination?.Label ?? "nil"))"
+			(view as? NSTableCellView)?.textField?.stringValue = "(FIXME) -> (FIXME)"
 			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		case let asEvent as NVEvent:
 			(view as? NSTableCellView)?.textField?.stringValue = asEvent.Label
-			
-		case let asEventLink as NVEventLink:
-			(view as? NSTableCellView)?.textField?.stringValue = "(\(asEventLink.Origin.Label)) -> (\(asEventLink.Destination?.Label ?? "nil"))"
-			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"
@@ -82,10 +79,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 		
 		switch item {
 		case let asGroup as NVGroup:
-			return (asGroup.Sequences.count + asGroup.SequenceLinks.count + asGroup.Groups.count) // ordering is mirrored below
+			return (asGroup.Sequences.count + asGroup.Links.count + asGroup.Groups.count) // ordering is mirrored below
 			
 		case let asSequence as NVSequence:
-			return (asSequence.Events.count + asSequence.EventLinks.count) // ordering is mirrored below
+			return (asSequence.Events.count + asSequence.Links.count) // ordering is mirrored below
 			
 		default:
 			return 0
@@ -105,10 +102,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 			}
 			var offset = asGroup.Sequences.count
 			
-			if index < (asGroup.SequenceLinks.count + offset) {
-				return asGroup.SequenceLinks[index - offset]
+			if index < (asGroup.Links.count + offset) {
+				return asGroup.Links[index - offset]
 			}
-			offset += asGroup.SequenceLinks.count
+			offset += asGroup.Links.count
 			
 			if index < (asGroup.Groups.count + offset) {
 				return asGroup.Groups[index - offset]
@@ -123,10 +120,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 			}
 			var offset = asSequence.Events.count
 			
-			if index < (asSequence.EventLinks.count + offset) {
-				return asSequence.EventLinks[index - offset]
+			if index < (asSequence.Links.count + offset) {
+				return asSequence.Links[index - offset]
 			}
-			offset += asSequence.EventLinks.count
+			offset += asSequence.Links.count
 			
 			fatalError()
 			
@@ -138,10 +135,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		switch item {
 		case let asGroup as NVGroup:
-			return (asGroup.Sequences.count + asGroup.SequenceLinks.count + asGroup.Groups.count) > 0
+			return (asGroup.Sequences.count + asGroup.Links.count + asGroup.Groups.count) > 0
 			
 		case let asSequence as NVSequence:
-			return (asSequence.Events.count + asSequence.EventLinks.count) > 0
+			return (asSequence.Events.count + asSequence.Links.count) > 0
 			
 		default:
 			return false
@@ -172,11 +169,11 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
-	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+	func nvGroupDidAddLink(story: NVStory, group: NVGroup, link: NVLink) {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
-	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+	func nvGroupDidRemoveLink(story: NVStory, group: NVGroup, link: NVLink) {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
@@ -185,7 +182,7 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(sequence)
 		for i in 0..<_outlineView.numberOfRows {
 			let item = _outlineView.item(atRow: i)
-			if let asSequenceLink = item as? NVSequenceLink, asSequenceLink.Origin == sequence || asSequenceLink.Destination == sequence {
+			if let asLink = item as? NVLink, asLink.Origin.UUID == sequence.UUID || asLink.Destination?.UUID == sequence.UUID {
 				_outlineView.reloadItem(item)
 			}
 		}
@@ -199,11 +196,11 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	func nvSequenceDidAddLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
-	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
@@ -213,18 +210,14 @@ extension OutlinerViewController: NVStoryObserver {
 		
 		for i in 0..<_outlineView.numberOfRows {
 			let item = _outlineView.item(atRow: i)
-			if let asEventLink = item as? NVEventLink, asEventLink.Origin == event || asEventLink.Destination == event {
+			if let asLink = item as? NVLink, asLink.Origin.UUID == event.UUID || asLink.Destination?.UUID == event.UUID {
 				_outlineView.reloadItem(item)
 			}
 		}
 	}
 	
 	// MARK: - Links
-	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
-		_outlineView.reloadItem(link)
-	}
-	
-	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
+	func nvLinkDestinationChanged(story: NVStory, link: NVLink) {
 		_outlineView.reloadItem(link)
 	}
 }

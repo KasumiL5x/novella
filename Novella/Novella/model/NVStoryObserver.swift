@@ -14,8 +14,7 @@ protocol NVStoryObserver: class {
 	func nvStoryDidMakeSequence(story: NVStory, sequence: NVSequence)
 	func nvStoryDidMakeEvent(story: NVStory, event: NVEvent)
 	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity)
-	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink)
-	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink)
+	func nvStoryDidMakeLink(story: NVStory, link: NVLink)
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable)
 	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction)
 	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition)
@@ -26,8 +25,7 @@ protocol NVStoryObserver: class {
 	func nvStoryWillDeleteSequence(story: NVStory, sequence: NVSequence)
 	func nvStoryWillDeleteEvent(story: NVStory, event: NVEvent)
 	func nvStoryWillDeleteEntity(story: NVStory, entity: NVEntity)
-	func nvStoryWillDeleteSequenceLink(story: NVStory, link: NVSequenceLink)
-	func nvStoryWillDeleteEventLink(story: NVStory, link: NVEventLink)
+	func nvStoryWillDeleteLink(story: NVStory, link: NVLink)
 	func nvStoryWillDeleteVariable(story: NVStory, variable: NVVariable)
 	func nvStoryWillDeleteFunction(story: NVStory, function: NVFunction)
 	func nvStoryWillDeleteCondition(story: NVStory, condition: NVCondition)
@@ -38,8 +36,7 @@ protocol NVStoryObserver: class {
 	func nvStoryDidDeleteSequence(story: NVStory, sequence: NVSequence)
 	func nvStoryDidDeleteEvent(story: NVStory, event: NVEvent)
 	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity)
-	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink)
-	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink)
+	func nvStoryDidDeleteLink(story: NVStory, link: NVLink)
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable)
 	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction)
 	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition)
@@ -52,8 +49,8 @@ protocol NVStoryObserver: class {
 	func nvGroupDidRemoveSequence(story: NVStory, group: NVGroup, sequence: NVSequence)
 	func nvGroupDidAddGroup(story: NVStory, group: NVGroup, child: NVGroup)
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup)
-	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink)
-	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink)
+	func nvGroupDidAddLink(story: NVStory, group: NVGroup, link: NVLink)
+	func nvGroupDidRemoveLink(story: NVStory, group: NVGroup, link: NVLink)
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup)
 	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup)
 	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup)
@@ -68,8 +65,8 @@ protocol NVStoryObserver: class {
 	func nvSequenceEntryDidChange(story: NVStory, sequence: NVSequence, oldEntry: NVEvent?, newEntry: NVEvent?)
 	func nvSequenceDidAddEvent(story: NVStory, sequence: NVSequence, event: NVEvent)
 	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent)
-	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink)
-	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink)
+	func nvSequenceDidAddLink(story: NVStory, sequence: NVSequence, link: NVLink)
+	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink)
 	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence)
@@ -106,8 +103,7 @@ protocol NVStoryObserver: class {
 	func nvVariableValueDidChange(story: NVStory, variable: NVVariable)
 	
 	// links
-	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink)
-	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink)
+	func nvLinkDestinationChanged(story: NVStory, link: NVLink)
 	
 	// entities
 	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity)
@@ -138,9 +134,7 @@ extension NVStoryObserver {
 	}
 	func nvStoryDidMakeEntity(story: NVStory, entity: NVEntity) {
 	}
-	func nvStoryDidMakeSequenceLink(story: NVStory, link: NVSequenceLink) {
-	}
-	func nvStoryDidMakeEventLink(story: NVStory, link: NVEventLink) {
+	func nvStoryDidMakeLink(story: NVStory, link: NVLink) {
 	}
 	func nvStoryDidMakeVariable(story: NVStory, variable: NVVariable) {
 	}
@@ -160,9 +154,7 @@ extension NVStoryObserver {
 	}
 	func nvStoryWillDeleteEntity(story: NVStory, entity: NVEntity) {
 	}
-	func nvStoryWillDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
-	}
-	func nvStoryWillDeleteEventLink(story: NVStory, link: NVEventLink) {
+	func nvStoryWillDeleteLink(story: NVStory, link: NVLink) {
 	}
 	func nvStoryWillDeleteVariable(story: NVStory, variable: NVVariable) {
 	}
@@ -182,9 +174,7 @@ extension NVStoryObserver {
 	}
 	func nvStoryDidDeleteEntity(story: NVStory, entity: NVEntity) {
 	}
-	func nvStoryDidDeleteSequenceLink(story: NVStory, link: NVSequenceLink) {
-	}
-	func nvStoryDidDeleteEventLink(story: NVStory, link: NVEventLink) {
+	func nvStoryDidDeleteLink(story: NVStory, link: NVLink) {
 	}
 	func nvStoryDidDeleteVariable(story: NVStory, variable: NVVariable) {
 	}
@@ -208,9 +198,9 @@ extension NVStoryObserver {
 	}
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup) {
 	}
-	func nvGroupDidAddSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+	func nvGroupDidAddLink(story: NVStory, group: NVGroup, link: NVLink) {
 	}
-	func nvGroupDidRemoveSequenceLink(story: NVStory, group: NVGroup, link: NVSequenceLink) {
+	func nvGroupDidRemoveLink(story: NVStory, group: NVGroup, link: NVLink) {
 	}
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup) {
 	}
@@ -238,9 +228,9 @@ extension NVStoryObserver {
 	}
 	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent) {
 	}
-	func nvSequenceDidAddEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	func nvSequenceDidAddLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 	}
-	func nvSequenceDidRemoveEventLink(story: NVStory, sequence: NVSequence, link: NVEventLink) {
+	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 	}
 	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence) {
 	}
@@ -306,9 +296,7 @@ extension NVStoryObserver {
 	}
 	
 	// links
-	func nvSequenceLinkDestinationDidChange(story: NVStory, link: NVSequenceLink) {
-	}
-	func nvEventLinkDestinationDidChange(story: NVStory, link: NVEventLink) {
+	func nvLinkDestinationChanged(story: NVStory, link: NVLink) {
 	}
 	
 	// entities

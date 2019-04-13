@@ -15,7 +15,7 @@ class CanvasEvent: CanvasObject {
 	init(canvas: Canvas, event: NVEvent) {
 		self.Event = event
 		self._popover = EventPopover()
-		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 15, 15), linkable: event)
 		
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasEvent.onAddLink), keyEquivalent: "")
 		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasEvent.onEdit), keyEquivalent: "")
@@ -30,7 +30,7 @@ class CanvasEvent: CanvasObject {
 	}
 	
 	@objc private func onAddLink() {
-		_canvas.makeEventLink(event: self)
+		_canvas.makeLink(forEvent: self)
 	}
 	
 	@objc private func onEdit() {

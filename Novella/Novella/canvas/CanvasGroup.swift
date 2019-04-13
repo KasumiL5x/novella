@@ -15,7 +15,7 @@ class CanvasGroup: CanvasObject {
 	init(canvas: Canvas, group: NVGroup) {
 		self.Group = group
 		self._popover = GroupPopover()
-		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1))
+		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1), linkable: group)
 		
 		wantsLayer = true
 		layer?.masksToBounds = false
