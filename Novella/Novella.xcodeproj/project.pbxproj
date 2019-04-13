@@ -257,14 +257,14 @@
 			children = (
 				DF94928D21B96F8C00BC8AB0 /* Canvas.swift */,
 				DF94928F21B96F9F00BC8AB0 /* CanvasBackground.swift */,
-				DF94929821B9838F00BC8AB0 /* CanvasObject.swift */,
-				DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */,
-				DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */,
-				DF94929E21B98A9A00BC8AB0 /* CanvasSequence.swift */,
-				DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */,
-				DF9492A821BA82ED00BC8AB0 /* CanvasSelection.swift */,
-				DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */,
 				65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */,
+				DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */,
+				DF94929C21B98A9100BC8AB0 /* CanvasGroup.swift */,
+				DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */,
+				DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */,
+				DF94929821B9838F00BC8AB0 /* CanvasObject.swift */,
+				DF9492A821BA82ED00BC8AB0 /* CanvasSelection.swift */,
+				DF94929E21B98A9A00BC8AB0 /* CanvasSequence.swift */,
 			);
 			path = canvas;
 			sourceTree = "<group>";

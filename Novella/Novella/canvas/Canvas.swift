@@ -332,13 +332,13 @@ class Canvas: NSView {
 		return _allObjects.first(where: {$0.Linkable.UUID == linkable.UUID})
 	}
 	private func canvasGroupFor(nvGroup: NVGroup) -> CanvasGroup? {
-		return (_allObjects.filter{$0 is CanvasGroup} as! [CanvasGroup]).first(where: {$0.Group == nvGroup})
+		return (_allObjects.filter{$0 is CanvasGroup} as! [CanvasGroup]).first(where: {$0.nvGroup() == nvGroup})
 	}
 	func canvasSequenceFor(nvSequence: NVSequence) -> CanvasSequence? {
-		return (_allObjects.filter{$0 is CanvasSequence} as! [CanvasSequence]).first(where: {$0.Sequence == nvSequence})
+		return (_allObjects.filter{$0 is CanvasSequence} as! [CanvasSequence]).first(where: {$0.nvSequence() == nvSequence})
 	}
 	func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
-		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.Event == nvEvent})
+		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.nvEvent() == nvEvent})
 	}
 	
 	// creating canvas elements from novella elements w/o requesting them from the story

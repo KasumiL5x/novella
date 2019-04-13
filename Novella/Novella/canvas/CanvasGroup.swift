@@ -9,11 +9,9 @@
 import Cocoa
 
 class CanvasGroup: CanvasObject {
-	let Group: NVGroup
 	private let _popover: GroupPopover
 	
 	init(canvas: Canvas, group: NVGroup) {
-		self.Group = group
 		self._popover = GroupPopover()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1), linkable: group)
 		
@@ -29,8 +27,12 @@ class CanvasGroup: CanvasObject {
 		fatalError()
 	}
 	
+	func nvGroup() -> NVGroup {
+		return Linkable as! NVGroup
+	}
+	
 	@objc private func onSubmerge() {
-		_canvas.setupFor(group: self.Group)
+		_canvas.setupFor(group: nvGroup())
 	}
 	
 	@objc private func onEdit() {
@@ -40,7 +42,7 @@ class CanvasGroup: CanvasObject {
 	
 	@objc private func onDelete() {
 		if Alerts.okCancel(msg: "Delete Group?", info: "Are you sure you want to delete this Group? This action cannot be undone.", style: .critical) {
-			_canvas.Doc.Story.delete(group: self.Group)
+			_canvas.Doc.Story.delete(group: nvGroup())
 		}
 	}
 	
@@ -53,13 +55,13 @@ class CanvasGroup: CanvasObject {
 	}
 	override func onMove() {
 		super.onMove()
-		_canvas.Doc.Positions[Group.UUID] = frame.origin
+		_canvas.Doc.Positions[Linkable.UUID] = frame.origin
 	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#99b1c8")
 	}
 	override func labelString() -> String {
-		return Group.Label.isEmpty ? "Unknown" : Group.Label
+		return nvGroup().Label.isEmpty ? "Unknown" : nvGroup().Label
 	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)

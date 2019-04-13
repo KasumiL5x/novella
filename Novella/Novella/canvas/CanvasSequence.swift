@@ -9,11 +9,9 @@
 import Cocoa
 
 class CanvasSequence: CanvasObject {
-	let Sequence: NVSequence
 	private let _popover: SequencePopover
 	
 	init(canvas: Canvas, sequence: NVSequence) {
-		self.Sequence = sequence
 		self._popover = SequencePopover()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 90, 75), linkable: sequence)
 		
@@ -32,9 +30,13 @@ class CanvasSequence: CanvasObject {
 	required init?(coder decoder: NSCoder) {
 		fatalError()
 	}
+	
+	func nvSequence() -> NVSequence {
+		return Linkable as! NVSequence
+	}
 
 	@objc private func onSubmerge() {
-		_canvas.setupFor(sequence: self.Sequence)
+		_canvas.setupFor(sequence: nvSequence())
 	}
 	
 	@objc private func onEdit() {
@@ -48,7 +50,7 @@ class CanvasSequence: CanvasObject {
 	
 	@objc private func onDelete() {
 		if Alerts.okCancel(msg: "Delete Sequence?", info: "Are you sure you want to delete this Sequence? This action cannot be undone.", style: .critical) {
-			_canvas.Doc.Story.delete(sequence: self.Sequence)
+			_canvas.Doc.Story.delete(sequence: nvSequence())
 		}
 	}
 	
@@ -61,20 +63,20 @@ class CanvasSequence: CanvasObject {
 	}
 	override func onMove() {
 		super.onMove()
-		_canvas.Doc.Positions[Sequence.UUID] = frame.origin
+		_canvas.Doc.Positions[Linkable.UUID] = frame.origin
 	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#FF5E3A")
 	}
 	override func labelString() -> String {
-		return Sequence.Label.isEmpty ? "Unknown" : Sequence.Label
+		return nvSequence().Label.isEmpty ? "Unknown" : nvSequence().Label
 	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}
 	override func reloadData() {
 		super.reloadData()
-		setParallelLayer(state: Sequence.Parallel)
-		setEntryLayer(state: Sequence.Parent?.Entry == Sequence)
+		setParallelLayer(state: nvSequence().Parallel)
+		setEntryLayer(state: nvSequence().Parent?.Entry == nvSequence())
 	}
 }

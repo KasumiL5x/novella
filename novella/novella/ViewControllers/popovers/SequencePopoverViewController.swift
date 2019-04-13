@@ -30,7 +30,7 @@ class SequencePopoverViewController: NSViewController {
 		self._sequence = sequence
 		self._doc = doc
 		
-		_dc.content = sequence.Sequence.Attributes
+		_dc.content = sequence.nvSequence().Attributes
 		
 		_attributesTable.onAdd = {
 			let kvp = self._dc.newObject()
@@ -54,14 +54,14 @@ class SequencePopoverViewController: NSViewController {
 	}
 	
 	private func setupLabel(sequence: CanvasSequence) {
-		_label.stringValue = sequence.Sequence.Label
+		_label.stringValue = sequence.nvSequence().Label
 	}
 	
 	private func setupCondition(sequence: CanvasSequence, doc: Document) {
 		_condition.removeAllItems()
 		doc.Story.Conditions.forEach{ _condition.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _condition.indexOfItem(withObjectValue: sequence.Sequence.PreCondition?.Label ?? "")
+		let idx = _condition.indexOfItem(withObjectValue: sequence.nvSequence().PreCondition?.Label ?? "")
 		if idx != NSNotFound {
 			_condition.selectItem(at: idx)
 		} else {
@@ -73,7 +73,7 @@ class SequencePopoverViewController: NSViewController {
 		_entryFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _entryFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _entryFunction.indexOfItem(withObjectValue: sequence.Sequence.EntryFunction?.Label ?? "")
+		let idx = _entryFunction.indexOfItem(withObjectValue: sequence.nvSequence().EntryFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_entryFunction.selectItem(at: idx)
 		} else {
@@ -85,7 +85,7 @@ class SequencePopoverViewController: NSViewController {
 		_exitFunction.removeAllItems()
 		doc.Story.Functions.forEach{ _exitFunction.addItem(withObjectValue: $0.Label) }
 		
-		let idx = _exitFunction.indexOfItem(withObjectValue: sequence.Sequence.ExitFunction?.Label ?? "")
+		let idx = _exitFunction.indexOfItem(withObjectValue: sequence.nvSequence().ExitFunction?.Label ?? "")
 		if idx != NSNotFound {
 			_exitFunction.selectItem(at: idx)
 		} else {
@@ -94,27 +94,27 @@ class SequencePopoverViewController: NSViewController {
 	}
 	
 	private func setupActivations(sequence: CanvasSequence) {
-		_activations.stringValue = "\(sequence.Sequence.MaxActivations)"
+		_activations.stringValue = "\(sequence.nvSequence().MaxActivations)"
 	}
 	
 	private func setupTopmost(sequence: CanvasSequence) {
-		_topmost.state = sequence.Sequence.Topmost ? .on : .off
+		_topmost.state = sequence.nvSequence().Topmost ? .on : .off
 	}
 	
 	private func setupKeepAlive(sequence: CanvasSequence) {
-		_keepAlive.state = sequence.Sequence.KeepAlive ? .on : .off
+		_keepAlive.state = sequence.nvSequence().KeepAlive ? .on : .off
 	}
 	
 	private func setupEntry(sequence: CanvasSequence) {
-		_entry.state = sequence.Sequence.Parent?.Entry == sequence.Sequence ? .on : .off
+		_entry.state = sequence.nvSequence().Parent?.Entry == sequence.nvSequence() ? .on : .off
 	}
 	
 	private func setupParallel(sequence: CanvasSequence) {
-		_parallel.state = sequence.Sequence.Parallel ? .on : .off
+		_parallel.state = sequence.nvSequence().Parallel ? .on : .off
 	}
 	
 	@IBAction func labelDidChange(_ sender: NSTextField) {
-		_sequence?.Sequence.Label = sender.stringValue
+		_sequence?.nvSequence().Label = sender.stringValue
 	}
 	
 	@IBAction func conditionDidChange(_ sender: NSComboBox) {
@@ -126,10 +126,10 @@ class SequencePopoverViewController: NSViewController {
 		guard let condition = doc.Story.Conditions.first(where: {$0.Label == label}) else {
 			print("Could not find Condition: \(label). Setting to nil.")
 			sender.stringValue = ""
-			sequence.Sequence.PreCondition = nil
+			sequence.nvSequence().PreCondition = nil
 			return
 		}
-		sequence.Sequence.PreCondition = condition
+		sequence.nvSequence().PreCondition = condition
 	}
 	
 	@IBAction func entryFunctionDidChange(_ sender: NSComboBox) {
@@ -141,10 +141,10 @@ class SequencePopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			sequence.Sequence.EntryFunction = nil
+			sequence.nvSequence().EntryFunction = nil
 			return
 		}
-		sequence.Sequence.EntryFunction = function
+		sequence.nvSequence().EntryFunction = function
 	}
 	
 	@IBAction func exitFunctionDidChange(_ sender: NSComboBox) {
@@ -156,31 +156,31 @@ class SequencePopoverViewController: NSViewController {
 		guard let function = doc.Story.Functions.first(where: {$0.Label == label}) else {
 			print("Could not find Function: \(label). Setting to nil.")
 			sender.stringValue = ""
-			sequence.Sequence.ExitFunction = nil
+			sequence.nvSequence().ExitFunction = nil
 			return
 		}
-		sequence.Sequence.ExitFunction = function
+		sequence.nvSequence().ExitFunction = function
 	}
 	
 	@IBAction func activationsDidChange(_ sender: NSTextField) {
-		_sequence?.Sequence.MaxActivations = Int(sender.stringValue) ?? 0
+		_sequence?.nvSequence().MaxActivations = Int(sender.stringValue) ?? 0
 	}
 	
 	@IBAction func topmostDidChange(_ sender: NSButton) {
-		_sequence?.Sequence.Topmost = sender.state == .on
+		_sequence?.nvSequence().Topmost = sender.state == .on
 	}
 	
 	@IBAction func keepAliveDidChange(_ sender: NSButton) {
-		_sequence?.Sequence.KeepAlive = sender.state == .on
+		_sequence?.nvSequence().KeepAlive = sender.state == .on
 	}
 	
 	@IBAction func entryDidChange(_ sender: NSButton) {
-		_sequence?.Sequence.Parent?.Entry = (sender.state == .on) ? _sequence?.Sequence : nil
+		_sequence?.nvSequence().Parent?.Entry = (sender.state == .on) ? _sequence?.nvSequence() : nil
 		_sequence?.reloadData() // refresh entry icon
 	}
 	
 	@IBAction func parallelDidChange(_ sender: NSButton) {
-		_sequence?.Sequence.Parallel = sender.state == .on
+		_sequence?.nvSequence().Parallel = sender.state == .on
 		_sequence?.reloadData() // refresh parallel icon
 	}
 }

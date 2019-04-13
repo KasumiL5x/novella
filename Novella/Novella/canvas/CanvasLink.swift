@@ -284,12 +284,12 @@ class CanvasLink: NSView {
 		// cannot be parllel
 		switch obj {
 		case let seq as CanvasSequence:
-			if seq.Sequence.Parallel {
+			if seq.nvSequence().Parallel {
 				return false
 			}
 			
 		case let evt as CanvasEvent:
-			if evt.Event.Parallel {
+			if evt.nvEvent().Parallel {
 				return false
 			}
 			
