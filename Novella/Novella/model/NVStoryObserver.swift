@@ -19,6 +19,8 @@ protocol NVStoryObserver: class {
 	func nvStoryDidMakeFunction(story: NVStory, function: NVFunction)
 	func nvStoryDidMakeCondition(story: NVStory, condition: NVCondition)
 	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector)
+	func nvStoryDidMakeHub(story: NVStory, hub: NVHub)
+	func nvStoryDidMakeReturn(story: NVStory, rtrn: NVReturn)
 	
 	// pre-deletion
 	func nvStoryWillDeleteGroup(story: NVStory, group: NVGroup)
@@ -30,6 +32,8 @@ protocol NVStoryObserver: class {
 	func nvStoryWillDeleteFunction(story: NVStory, function: NVFunction)
 	func nvStoryWillDeleteCondition(story: NVStory, condition: NVCondition)
 	func nvStoryWillDeleteSelector(story: NVStory, selector: NVSelector)
+	func nvStoryWillDeleteHub(story: NVStory, hub: NVHub)
+	func nvStoryWillDeleteReturn(story: NVStory, rtrn: NVReturn)
 	
 	// deletion
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup)
@@ -41,6 +45,8 @@ protocol NVStoryObserver: class {
 	func nvStoryDidDeleteFunction(story: NVStory, function: NVFunction)
 	func nvStoryDidDeleteCondition(story: NVStory, condition: NVCondition)
 	func nvStoryDidDeleteSelector(story: NVStory, selector: NVSelector)
+	func nvStoryDidDeleteHub(story: NVStory, hub: NVHub)
+	func nvStoryDidDeleteReturn(story: NVStory, rtrn: NVReturn)
 	
 	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup)
@@ -51,6 +57,10 @@ protocol NVStoryObserver: class {
 	func nvGroupDidRemoveGroup(story: NVStory, group: NVGroup, child: NVGroup)
 	func nvGroupDidAddLink(story: NVStory, group: NVGroup, link: NVLink)
 	func nvGroupDidRemoveLink(story: NVStory, group: NVGroup, link: NVLink)
+	func nvGroupDidAddHub(story: NVStory, group: NVGroup, hub: NVHub)
+	func nvGroupDidRemoveHub(story: NVStory, group: NVGroup, hub: NVHub)
+	func nvGroupDidAddReturn(story: NVStory, group: NVGroup, rtrn: NVReturn)
+	func nvGroupDidRemoveReturn(story: NVStory, group: NVGroup, rtrn: NVReturn)
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup)
 	func nvGroupMaxActivationsDidChange(story: NVStory, group: NVGroup)
 	func nvGroupKeepAliveDidChange(story: NVStory, group: NVGroup)
@@ -67,6 +77,10 @@ protocol NVStoryObserver: class {
 	func nvSequenceDidRemoveEvent(story: NVStory, sequence: NVSequence, event: NVEvent)
 	func nvSequenceDidAddLink(story: NVStory, sequence: NVSequence, link: NVLink)
 	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink)
+	func nvSequenceDidAddHub(story: NVStory, sequence: NVSequence, hub: NVHub)
+	func nvSequenceDidRemoveHub(story: NVStory, sequence: NVSequence, hub: NVHub)
+	func nvSequenceDidAddReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn)
+	func nvSequenceDidRemoveReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn)
 	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence)
 	func nvSequenceKeepAliveDidChange(story: NVStory, sequence: NVSequence)
@@ -121,6 +135,17 @@ protocol NVStoryObserver: class {
 	// selectors
 	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector)
 	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector)
+	
+	// hubs
+	func nvHubLabelDidChange(story: NVStory, hub: NVHub)
+	func nvHubConditionDidChange(story: NVStory, hub: NVHub)
+	func nvHubEntryFunctionDidChange(story: NVStory, hub: NVHub)
+	func nvHubReturnFunctionDidChange(story: NVStory, hub: NVHub)
+	func nvHubExitFunctionDidChange(story: NVStory, hub: NVHub)
+	
+	// returns
+	func nvReturnLabelDidChange(story: NVStory, rtrn: NVReturn)
+	func nvReturnExitFunctionDidChange(story: NVStory, rtrn: NVReturn)
 }
 
 // default implementations
@@ -144,6 +169,10 @@ extension NVStoryObserver {
 	}
 	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector) {
 	}
+	func nvStoryDidMakeHub(story: NVStory, hub: NVHub) {
+	}
+	func nvStoryDidMakeReturn(story: NVStory, rtrn: NVReturn) {
+	}
 	
 	// pre-deletion
 	func nvStoryWillDeleteGroup(story: NVStory, group: NVGroup) {
@@ -163,6 +192,10 @@ extension NVStoryObserver {
 	func nvStoryWillDeleteCondition(story: NVStory, condition: NVCondition) {
 	}
 	func nvStoryWillDeleteSelector(story: NVStory, selector: NVSelector) {
+	}
+	func nvStoryWillDeleteHub(story: NVStory, hub: NVHub) {
+	}
+	func nvStoryWillDeleteReturn(story: NVStory, rtrn: NVReturn) {
 	}
 	
 	// deletion
@@ -184,6 +217,10 @@ extension NVStoryObserver {
 	}
 	func nvStoryDidDeleteSelector(story: NVStory, selector: NVSelector) {
 	}
+	func nvStoryDidDeleteHub(story: NVStory, hub: NVHub) {
+	}
+	func nvStoryDidDeleteReturn(story: NVStory, rtrn: NVReturn) {
+	}
 	
 	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
@@ -201,6 +238,14 @@ extension NVStoryObserver {
 	func nvGroupDidAddLink(story: NVStory, group: NVGroup, link: NVLink) {
 	}
 	func nvGroupDidRemoveLink(story: NVStory, group: NVGroup, link: NVLink) {
+	}
+	func nvGroupDidAddHub(story: NVStory, group: NVGroup, hub: NVHub) {
+	}
+	func nvGroupDidRemoveHub(story: NVStory, group: NVGroup, hub: NVHub) {
+	}
+	func nvGroupDidAddReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
+	}
+	func nvGroupDidRemoveReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
 	}
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup) {
 	}
@@ -232,6 +277,14 @@ extension NVStoryObserver {
 	}
 	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink) {
 	}
+	func nvSequenceDidAddHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
+	}
+	func nvSequenceDidRemoveHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
+	}
+	func nvSequenceDidAddReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
+	}
+	func nvSequenceDidRemoveReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
+	}
 	func nvSequenceTopmostDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	func nvSequenceMaxActivationsDidChange(story: NVStory, sequence: NVSequence) {
@@ -247,7 +300,7 @@ extension NVStoryObserver {
 	func nvSequenceAttributesDidChange(story: NVStory, sequence: NVSequence) {
 	}
 	
-	// discoverable sequence
+	// discoverable sequences
 	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	func nvDNSequenceFunctionalityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
@@ -257,7 +310,7 @@ extension NVStoryObserver {
 	func nvDNSequenceDeliveryDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 	}
 	
-	// event
+	// events
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 	}
 	func nvEventParallelDidChange(story: NVStory, event: NVEvent) {
@@ -323,5 +376,23 @@ extension NVStoryObserver {
 	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
 	}
 	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector) {
+	}
+	
+	// hubs
+	func nvHubLabelDidChange(story: NVStory, hub: NVHub) {
+	}
+	func nvHubConditionDidChange(story: NVStory, hub: NVHub) {
+	}
+	func nvHubEntryFunctionDidChange(story: NVStory, hub: NVHub) {
+	}
+	func nvHubReturnFunctionDidChange(story: NVStory, hub: NVHub) {
+	}
+	func nvHubExitFunctionDidChange(story: NVStory, hub: NVHub) {
+	}
+	
+	// returns
+	func nvReturnLabelDidChange(story: NVStory, rtrn: NVReturn) {
+	}
+	func nvReturnExitFunctionDidChange(story: NVStory, rtrn: NVReturn) {
 	}
 }

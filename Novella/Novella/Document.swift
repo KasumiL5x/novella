@@ -285,6 +285,7 @@ extension Document {
 }
 
 extension Document: NVStoryObserver {
+	// creation
 	func nvStoryDidMakeGroup(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 		if Positions[group.UUID] == nil {
@@ -335,7 +336,20 @@ extension Document: NVStoryObserver {
 	func nvStoryDidMakeSelector(story: NVStory, selector: NVSelector) {
 		updateChangeCount(.changeDone)
 	}
+	func nvStoryDidMakeHub(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+		if Positions[hub.UUID] == nil {
+			Positions[hub.UUID] = CGPoint.zero
+		}
+	}
+	func nvStoryDidMakeReturn(story: NVStory, rtrn: NVReturn) {
+		updateChangeCount(.changeDone)
+		if Positions[rtrn.UUID] == nil {
+			Positions[rtrn.UUID] = CGPoint.zero
+		}
+	}
 	
+	// deletion
 	func nvStoryDidDeleteGroup(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 	}
@@ -372,6 +386,15 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvStoryDidDeleteHub(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvStoryDidDeleteReturn(story: NVStory, rtrn: NVReturn) {
+		updateChangeCount(.changeDone)
+	}
+	
+	// groups
 	func nvGroupLabelDidChange(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 	}
@@ -404,6 +427,22 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	func nvGroupDidAddHub(story: NVStory, group: NVGroup, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidRemoveHub(story: NVStory, group: NVGroup, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidAddReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvGroupDidRemoveReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
+		updateChangeCount(.changeDone)
+	}
+	
 	func nvGroupTopmostDidChange(story: NVStory, group: NVGroup) {
 		updateChangeCount(.changeDone)
 	}
@@ -432,6 +471,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// sequences
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		updateChangeCount(.changeDone)
 	}
@@ -457,6 +497,22 @@ extension Document: NVStoryObserver {
 	}
 	
 	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidAddHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidRemoveHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidAddReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
+		updateChangeCount(.changeDone)
+	}
+	
+	func nvSequenceDidRemoveReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
 		updateChangeCount(.changeDone)
 	}
 	
@@ -488,6 +544,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// discoverable sequences
 	func nvDNSequenceTangibilityDidChange(story: NVStory, sequence: NVDiscoverableSequence) {
 		updateChangeCount(.changeDone)
 	}
@@ -504,6 +561,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// events
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		updateChangeCount(.changeDone)
 	}
@@ -560,6 +618,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// variables
 	func nvVariableNameDidChange(story: NVStory, variable: NVVariable) {
 		updateChangeCount(.changeDone)
 	}
@@ -572,10 +631,12 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// links
 	func nvLinkDestinationChanged(story: NVStory, link: NVLink) {
 		updateChangeCount(.changeDone)
 	}
 	
+	// entities
 	func nvEntityLabelDidChange(story: NVStory, entity: NVEntity) {
 		updateChangeCount(.changeDone)
 	}
@@ -588,6 +649,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// functions
 	func nvFunctionCodeDidChange(story: NVStory, function: NVFunction) {
 		updateChangeCount(.changeDone)
 	}
@@ -596,6 +658,7 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// conditions
 	func nvConditionCodeDidChange(story: NVStory, condition: NVCondition) {
 		updateChangeCount(.changeDone)
 	}
@@ -604,11 +667,37 @@ extension Document: NVStoryObserver {
 		updateChangeCount(.changeDone)
 	}
 	
+	// selectors
 	func nvSelectorCodeDidChange(story: NVStory, selector: NVSelector) {
 		updateChangeCount(.changeDone)
 	}
 	
 	func nvSelectorLabelDidChange(story: NVStory, selector: NVSelector) {
+		updateChangeCount(.changeDone)
+	}
+	
+	// hubs
+	func nvHubLabelDidChange(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	func nvHubConditionDidChange(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	func nvHubEntryFunctionDidChange(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	func nvHubReturnFunctionDidChange(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	func nvHubExitFunctionDidChange(story: NVStory, hub: NVHub) {
+		updateChangeCount(.changeDone)
+	}
+	
+	// returns
+	func nvReturnLabelDidChange(story: NVStory, rtrn: NVReturn) {
+		updateChangeCount(.changeDone)
+	}
+	func nvReturnExitFunctionDidChange(story: NVStory, rtrn: NVReturn) {
 		updateChangeCount(.changeDone)
 	}
 }

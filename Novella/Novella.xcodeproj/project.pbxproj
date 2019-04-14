@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650672442263173000A561BC /* NVHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650672432263173000A561BC /* NVHub.swift */; };
+		6506724622631A8400A561BC /* NVReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6506724522631A8400A561BC /* NVReturn.swift */; };
 		65155A44225C7CF30041ED74 /* SequencePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */; };
 		65155A46225C7D290041ED74 /* SequencePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65155A45225C7D290041ED74 /* SequencePopover.swift */; };
 		651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */; };
@@ -80,6 +82,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		650672432263173000A561BC /* NVHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVHub.swift; sourceTree = "<group>"; };
+		6506724522631A8400A561BC /* NVReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVReturn.swift; sourceTree = "<group>"; };
 		65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencePopoverViewController.swift; sourceTree = "<group>"; };
 		65155A45225C7D290041ED74 /* SequencePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencePopover.swift; sourceTree = "<group>"; };
 		651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConditionFunctionEditor.storyboard; sourceTree = "<group>"; };
@@ -229,25 +233,27 @@
 		DF94926D21B96D3900BC8AB0 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				DF94927221B96D6E00BC8AB0 /* NVSequence.swift */,
 				DF94927121B96D6E00BC8AB0 /* NVCondition.swift */,
 				DF94927A21B96D6F00BC8AB0 /* NVDiscoverableSequence.swift */,
 				DF94926F21B96D6E00BC8AB0 /* NVEntity.swift */,
 				DF94927521B96D6F00BC8AB0 /* NVEvent.swift */,
 				DF94927621B96D6F00BC8AB0 /* NVFunction.swift */,
 				DF94927921B96D6F00BC8AB0 /* NVGroup.swift */,
+				650672432263173000A561BC /* NVHub.swift */,
 				DF94927721B96D6F00BC8AB0 /* NVIdentifiable.swift */,
 				DF94927021B96D6E00BC8AB0 /* NVLink.swift */,
+				657946EA22612A6900D502F8 /* NVLinkable.swift */,
 				DF94927821B96D6F00BC8AB0 /* NVLog.swift */,
+				DF9492A221BA573600BC8AB0 /* NVPath.swift */,
+				6506724522631A8400A561BC /* NVReturn.swift */,
+				6550AA6E224424950032232A /* NVSelector.swift */,
+				DF94927221B96D6E00BC8AB0 /* NVSequence.swift */,
 				DF94927B21B96D6F00BC8AB0 /* NVStory.swift */,
+				653E69632244C2030006BE5D /* NVStoryJSON.swift */,
+				6550AA6C224415570032232A /* NVStoryObserver.swift */,
 				DF94926E21B96D6E00BC8AB0 /* NVUtil.swift */,
 				DF94927321B96D6F00BC8AB0 /* NVValue.swift */,
 				DF94927C21B96D6F00BC8AB0 /* NVVariable.swift */,
-				DF9492A221BA573600BC8AB0 /* NVPath.swift */,
-				6550AA6C224415570032232A /* NVStoryObserver.swift */,
-				6550AA6E224424950032232A /* NVSelector.swift */,
-				653E69632244C2030006BE5D /* NVStoryJSON.swift */,
-				657946EA22612A6900D502F8 /* NVLinkable.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -465,6 +471,7 @@
 				65F8171C225D14E1006136C2 /* EventPopover.swift in Sources */,
 				DF22E9EC211DA6DE00606D97 /* MainViewController.swift in Sources */,
 				65E1B3682259EADC00D31884 /* Popover.swift in Sources */,
+				6506724622631A8400A561BC /* NVReturn.swift in Sources */,
 				DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */,
 				DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */,
 				65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */,
@@ -474,6 +481,7 @@
 				651DEED822462AA60010173F /* Document+fromJSON.swift in Sources */,
 				653E69642244C2030006BE5D /* NVStoryJSON.swift in Sources */,
 				6532644E21C055B5009C0ED8 /* CurveHelper.swift in Sources */,
+				650672442263173000A561BC /* NVHub.swift in Sources */,
 				65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */,
 				DF93F60921BD976E00CF5B03 /* NSView+Extra.swift in Sources */,
 				DF94928121B96D6F00BC8AB0 /* NVSequence.swift in Sources */,

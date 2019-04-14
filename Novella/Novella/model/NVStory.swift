@@ -49,6 +49,12 @@ class NVStory {
 	var Selectors: [NVSelector] {
 		get{ return _identifiables.filter{$0 is NVSelector} as! [NVSelector] }
 	}
+	var Hubs: [NVHub] {
+		get{ return _identifiables.filter{$0 is NVHub} as! [NVHub] }
+	}
+	var Returns: [NVReturn] {
+		get{ return _identifiables.filter{$0 is NVReturn} as! [NVReturn] }
+	}
 	
 	init() {
 		self._identifiables = []
@@ -153,6 +159,22 @@ class NVStory {
 		Observers.forEach{$0.nvStoryDidMakeSelector(story: self, selector: selector)}
 		return selector
 	}
+	func makeHub(uuid: NSUUID?=nil) -> NVHub {
+		let hub = NVHub(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(hub)
+		
+		NVLog.log("Created Hub (\(hub.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeHub(story: self, hub: hub)}
+		return hub
+	}
+	func makeReturn(uuid: NSUUID?=nil) -> NVReturn {
+		let rtrn = NVReturn(uuid: uuid ?? NSUUID(), story: self)
+		_identifiables.append(rtrn)
+		
+		NVLog.log("Created Return (\(rtrn.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidMakeReturn(story: self, rtrn: rtrn)}
+		return rtrn
+	}
 	
 	// DELETION
 	func delete(group: NVGroup) {
@@ -173,9 +195,29 @@ class NVStory {
 			}
 		}
 		
+		// remove all child links
+		for (_, link) in group.Links.enumerated().reversed() {
+			delete(link: link)
+		}
+		
 		// remove all child sequences
 		for (_, sequence) in group.Sequences.enumerated().reversed() {
 			delete(sequence: sequence)
+		}
+		
+		// remove all child hubs
+		for (_, hub) in group.Hubs.enumerated().reversed() {
+			delete(hub: hub)
+		}
+		
+		// remove all child returns
+		for (_, rtrn) in group.Returns.enumerated().reversed() {
+			delete(rtrn: rtrn)
+		}
+		
+		// remove all child groups
+		for (_, childGroup) in group.Groups.enumerated().reversed() {
+			delete(group: childGroup)
 		}
 		
 		// remove from story
@@ -215,6 +257,21 @@ class NVStory {
 		// remove all child events of the sequence too
 		for (_, event) in sequence.Events.enumerated().reversed() {
 			delete(event: event)
+		}
+		
+		// remove child links
+		for (_, link) in sequence.Links.enumerated().reversed() {
+			delete(link: link)
+		}
+		
+		// remove child hubs
+		for (_, hub) in sequence.Hubs.enumerated().reversed() {
+			delete(hub: hub)
+		}
+		
+		// delete child returns
+		for (_, rtrn) in sequence.Returns.enumerated().reversed() {
+			delete(rtrn: rtrn)
 		}
 		
 		// remove from story
@@ -402,6 +459,59 @@ class NVStory {
 		
 		NVLog.log("Deleted Selector (\(selector.UUID.uuidString)).", level: .info)
 		Observers.forEach{$0.nvStoryDidDeleteSelector(story: self, selector: selector)}
+	}
+	func delete(hub: NVHub) {
+		Observers.forEach{$0.nvStoryWillDeleteHub(story: self, hub: hub)}
+		
+		// TODO: Delete hub from groups and sequences when they delete above.
+		
+		// remove from all groups
+		Groups.forEach { (group) in
+			if group.contains(hub: hub) {
+				group.remove(hub: hub)
+			}
+		}
+		
+		// remove from all sequences
+		Sequences.forEach { (sequence) in
+			if sequence.contains(hub: hub) {
+				sequence.remove(hub: hub)
+			}
+		}
+		
+		// remove from model
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == hub.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		NVLog.log("Deleted Hub (\(hub.UUID.uuidString)).", level: .info)
+		Observers.forEach{$0.nvStoryDidDeleteHub(story: self, hub: hub)}
+	}
+	func delete(rtrn: NVReturn) {
+		Observers.forEach{$0.nvStoryWillDeleteReturn(story: self, rtrn: rtrn)}
+		
+		// TODO: Delete return from groups and sequences when they delete above.
+		
+		// remove from all groups
+		Groups.forEach { (group) in
+			if group.contains(rtrn: rtrn) {
+				group.remove(rtrn: rtrn)
+			}
+		}
+		
+		// remove from all sequences
+		Sequences.forEach { (sequence) in
+			if sequence.contains(rtrn: rtrn) {
+				sequence.remove(rtrn: rtrn)
+			}
+		}
+		
+		// remove from model
+		if let idx = _identifiables.firstIndex(where: {$0.UUID == rtrn.UUID}) {
+			_identifiables.remove(at: idx)
+		}
+		
+		Observers.forEach{$0.nvStoryDidDeleteReturn(story: self, rtrn: rtrn)}
 	}
 }
 

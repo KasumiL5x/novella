@@ -81,6 +81,8 @@ class NVGroup: NVIdentifiable, NVLinkable {
 	private(set) var Sequences: [NVSequence]
 	private(set) var Links: [NVLink]
 	private(set) var Groups: [NVGroup]
+	private(set) var Hubs: [NVHub]
+	private(set) var Returns: [NVReturn]
 	var Attributes: NSMutableDictionary {
 		didSet {
 			NVLog.log("Group (\(UUID.uuidString)) Attributes changed.", level: .info)
@@ -103,6 +105,8 @@ class NVGroup: NVIdentifiable, NVLinkable {
 		self.Sequences = []
 		self.Links = []
 		self.Groups = []
+		self.Hubs = []
+		self.Returns = []
 		self.Attributes = [:]
 	}
 	
@@ -189,6 +193,56 @@ class NVGroup: NVIdentifiable, NVLinkable {
 		
 		NVLog.log("Removed Link (\(link.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
 		_story.Observers.forEach{$0.nvGroupDidRemoveLink(story: _story, group: self, link: link)}
+	}
+	
+	// hubs
+	func contains(hub: NVHub) -> Bool {
+		return Hubs.contains(hub)
+	}
+	func add(hub: NVHub) {
+		if contains(hub: hub) {
+			NVLog.log("Tried to add Hub (\(hub.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
+			return
+		}
+		Hubs.append(hub)
+		
+		NVLog.log("Added Hub (\(hub.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvGroupDidAddHub(story: _story, group: self, hub: hub)}
+	}
+	func remove(hub: NVHub) {
+		guard let idx = Hubs.firstIndex(of: hub) else {
+			NVLog.log("Tried to remove Hub (\(hub.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+			return
+		}
+		Hubs.remove(at: idx)
+		
+		NVLog.log("Removed Hub (\(hub.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvGroupDidRemoveHub(story: _story, group: self, hub: hub)}
+	}
+	
+	// returns
+	func contains(rtrn: NVReturn) -> Bool {
+		return Returns.contains(rtrn)
+	}
+	func add(rtrn: NVReturn) {
+		if contains(rtrn: rtrn) {
+			NVLog.log("Tried to add Return (\(rtrn.UUID.uuidString)) to Group (\(UUID.uuidString)) but it already exists.", level: .warning)
+			return
+		}
+		Returns.append(rtrn)
+		
+		NVLog.log("Added Return (\(rtrn.UUID.uuidString)) to Group (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvGroupDidAddReturn(story: _story, group: self, rtrn: rtrn)}
+	}
+	func remove(rtrn: NVReturn) {
+		guard let idx = Returns.firstIndex(of: rtrn) else {
+			NVLog.log("Tried to remove Return (\(rtrn.UUID.uuidString)) from Group (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+			return
+		}
+		Returns.remove(at: idx)
+		
+		NVLog.log("Removed Return (\(rtrn.UUID.uuidString)) from Group (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvGroupDidRemoveReturn(story: _story, group: self, rtrn: rtrn)}
 	}
 }
 

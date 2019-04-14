@@ -86,6 +86,8 @@ class NVSequence: NVIdentifiable, NVLinkable {
 	}
 	private(set) var Events: [NVEvent]
 	private(set) var Links: [NVLink]
+	private(set) var Hubs: [NVHub]
+	private(set) var Returns: [NVReturn]
 	var Attributes: NSMutableDictionary {
 		didSet {
 			NVLog.log("Sequence (\(UUID.uuidString)) Attributes changed.", level: .info)
@@ -108,6 +110,8 @@ class NVSequence: NVIdentifiable, NVLinkable {
 		self.Entry = nil
 		self.Events = []
 		self.Links = []
+		self.Hubs = []
+		self.Returns = []
 		self.Attributes = [:]
 	}
 	
@@ -161,6 +165,56 @@ class NVSequence: NVIdentifiable, NVLinkable {
 		Links.remove(at: idx)
 		NVLog.log("Removed Link (\(link.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
 		_story.Observers.forEach{$0.nvSequenceDidRemoveLink(story: _story, sequence: self, link: link)}
+	}
+	
+	// hubs
+	func contains(hub: NVHub) -> Bool {
+		return Hubs.contains(hub)
+	}
+	func add(hub: NVHub) {
+		if contains(hub: hub) {
+			NVLog.log("Tried to add Hub (\(hub.UUID.uuidString)) to Sequence (\(UUID.uuidString)) but it already exists.", level: .warning)
+			return
+		}
+		Hubs.append(hub)
+		
+		NVLog.log("Added Hub (\(hub.UUID.uuidString)) to Sequence (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvSequenceDidAddHub(story: _story, sequence: self, hub: hub)}
+	}
+	func remove(hub: NVHub) {
+		guard let idx = Hubs.firstIndex(of: hub) else {
+			NVLog.log("Tried to remove Hub (\(hub.UUID.uuidString)) from Sequence (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+			return
+		}
+		Hubs.remove(at: idx)
+		
+		NVLog.log("Removed Hub (\(hub.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvSequenceDidRemoveHub(story: _story, sequence: self, hub: hub)}
+	}
+	
+	// returns
+	func contains(rtrn: NVReturn) -> Bool {
+		return Returns.contains(rtrn)
+	}
+	func add(rtrn: NVReturn) {
+		if contains(rtrn: rtrn) {
+			NVLog.log("Tried to add Return (\(rtrn.UUID.uuidString)) to Sequence (\(UUID.uuidString)) but it already exists.", level: .warning)
+			return
+		}
+		Returns.append(rtrn)
+		
+		NVLog.log("Added Return (\(rtrn.UUID.uuidString)) to Sequence (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvSequenceDidAddReturn(story: _story, sequence: self, rtrn: rtrn)}
+	}
+	func remove(rtrn: NVReturn) {
+		guard let idx = Returns.firstIndex(of: rtrn) else {
+			NVLog.log("Tried to remove Return (\(rtrn.UUID.uuidString)) from Sequence (\(UUID.uuidString)) but it didn't exist.", level: .warning)
+			return
+		}
+		Returns.remove(at: idx)
+		
+		NVLog.log("Removed Return (\(rtrn.UUID.uuidString)) from Sequence (\(UUID.uuidString)).", level: .info)
+		_story.Observers.forEach{$0.nvSequenceDidRemoveReturn(story: _story, sequence: self, rtrn: rtrn)}
 	}
 }
 
