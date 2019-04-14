@@ -8,6 +8,8 @@
 
 import Foundation
 
+let NV_DEBUG_INDENT = 2 // move this somewhere possibly
+
 class NVStory {
 	private var _observers = [ObjectIdentifier: Observation]()
 	public var Observers: [NVStoryObserver] {
@@ -512,6 +514,29 @@ class NVStory {
 		}
 		
 		Observers.forEach{$0.nvStoryDidDeleteReturn(story: self, rtrn: rtrn)}
+	}
+	
+	func debugPrint() {
+		print("--- BEGIN STORY DEBUG PRINT ---")
+		
+		print("Groups: \(Groups.count)")
+		print("Sequences: \(Sequences.count)")
+		print("Discoverables: \(Discoverables.count)")
+		print("Events: \(Events.count)")
+		print("Entities: \(Entities.count)")
+		print("Links: \(Links.count)")
+		print("Variables: \(Variables.count)")
+		print("Functions: \(Functions.count)")
+		print("Conditions: \(Conditions.count)")
+		print("Selectors: \(Selectors.count)")
+		print("Hubs: \(Hubs.count)")
+		print("Returns: \(Returns.count)")
+		print()
+		
+		MainGroup.debugPrint(indent: 0)
+		
+		print()
+		print("--- END STORY DEBUG PRINT ---")
 	}
 }
 

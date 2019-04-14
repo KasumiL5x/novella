@@ -237,3 +237,18 @@ extension NVSequence: Equatable {
 		return lhs.UUID == rhs.UUID
 	}
 }
+
+extension NVSequence {
+	func debugPrint(indent: Int) {
+		print(String(repeating: "-", count: indent) + "Sequence(\(Label))")
+		
+		let indentStr = String(repeating: "-", count: indent + NV_DEBUG_INDENT)
+		
+		print(indentStr + "Links: \(Links.count)")
+		print(indentStr + "Hubs: \(Hubs.count)")
+		print(indentStr + "Returns: \(Returns.count)")
+		
+		print(indentStr + "Events: \(Events.count)")
+		Events.forEach{$0.debugPrint(indent: indent + NV_DEBUG_INDENT + NV_DEBUG_INDENT)}
+	}
+}

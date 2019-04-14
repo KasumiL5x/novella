@@ -135,3 +135,9 @@ extension NVEvent: Equatable {
 		return lhs.UUID == rhs.UUID
 	}
 }
+
+extension NVEvent {
+	func debugPrint(indent: Int) {
+		print(String(repeating: "-", count: indent) + "Event(\(Label))")
+	}
+}

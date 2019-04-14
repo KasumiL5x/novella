@@ -265,3 +265,21 @@ extension NVGroup: Equatable {
 		return lhs.UUID == rhs.UUID
 	}
 }
+
+extension NVGroup {
+	func debugPrint(indent: Int) {
+		print(String(repeating: "-", count: indent) + "Group(\(Label))")
+		
+		let indentStr = String(repeating: "-", count: indent + NV_DEBUG_INDENT)
+		
+		print(indentStr + "Links: \(Links.count)")
+		print(indentStr + "Hubs: \(Hubs.count)")
+		print(indentStr + "Returns: \(Returns.count)")
+		
+		print(indentStr + "Sequences: \(Sequences.count)")
+		Sequences.forEach{$0.debugPrint(indent: indent + NV_DEBUG_INDENT + NV_DEBUG_INDENT)}
+		
+		print(indentStr + "Groups: \(Groups.count)")
+		Groups.forEach{$0.debugPrint(indent: indent + NV_DEBUG_INDENT + NV_DEBUG_INDENT)}
+	}
+}
