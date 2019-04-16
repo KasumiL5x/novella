@@ -26,7 +26,7 @@
                                                     <rect key="frame" x="1" y="1" width="147" height="326"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" viewBased="YES" indentationPerLevel="16" outlineTableColumn="iJ1-47-ufk" id="wdO-6R-Qqq">
+                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" viewBased="YES" indentationPerLevel="16" outlineTableColumn="iJ1-47-ufk" id="wdO-6R-Qqq" customClass="EntitiesEditorOutlineView" customModule="novella" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="147" height="326"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -46,7 +46,7 @@
                                                                     </textFieldCell>
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
-                                                                        <tableCellView id="zeb-3G-LE2">
+                                                                        <tableCellView identifier="LabelCell" id="zeb-3G-LE2">
                                                                             <rect key="frame" x="1" y="1" width="144" height="30"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
@@ -215,6 +215,9 @@
                             <constraint firstAttribute="trailing" secondItem="e5b-M4-xNf" secondAttribute="trailing" id="iqT-Qo-xV3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="_entitiesOutlineView" destination="wdO-6R-Qqq" id="Kto-UI-Nm6"/>
+                    </connections>
                 </viewController>
                 <customObject id="g31-cE-rqM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
