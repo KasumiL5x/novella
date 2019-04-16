@@ -32,6 +32,7 @@
 		65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18EB21CE269C00DCB05E /* LinkParker.swift */; };
 		65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */; };
 		65BE159D2266537F00A04FE5 /* EntitiesEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65BE159C2266537F00A04FE5 /* EntitiesEditor.storyboard */; };
+		65BE159F22666B4E00A04FE5 /* EntitiesEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BE159E22666B4E00A04FE5 /* EntitiesEditorViewController.swift */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
 		65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CC99A921C26876008CD7BA /* Assets.xcassets */; };
@@ -108,6 +109,7 @@
 		65BB18EB21CE269C00DCB05E /* LinkParker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkParker.swift; sourceTree = "<group>"; };
 		65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ViewAt.swift"; sourceTree = "<group>"; };
 		65BE159C2266537F00A04FE5 /* EntitiesEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EntitiesEditor.storyboard; sourceTree = "<group>"; };
+		65BE159E22666B4E00A04FE5 /* EntitiesEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesEditorViewController.swift; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
 		65CC99A921C26876008CD7BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				65FDF7A921C1D01C00A8EFAA /* OutlinerViewController.swift */,
 				651D7C9E21DA1EF300DE3EBB /* ConditionFunctionEditorViewController.swift */,
 				6526E88B22480DF400442AF5 /* VariablesEditorViewController.swift */,
+				65BE159E22666B4E00A04FE5 /* EntitiesEditorViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				DF94929321B9705400BC8AB0 /* NSColor+Extras.swift in Sources */,
 				65AE3DB721C3C3130026DDE1 /* CustomNotifications.swift in Sources */,
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
+				65BE159F22666B4E00A04FE5 /* EntitiesEditorViewController.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
 				65D78C74225DCB9B00DE24B7 /* Alerts.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,

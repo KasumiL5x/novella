@@ -749,7 +749,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <segue destination="jfx-dL-hSc" kind="modal" id="ACw-fq-UuX"/>
+                                            <segue destination="jfx-dL-hSc" kind="modal" identifier="EntitiesEditor" id="ACw-fq-UuX"/>
                                         </connections>
                                     </button>
                                 </subviews>

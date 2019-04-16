@@ -15,6 +15,7 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 	private var _graphVC: GraphViewController? = nil
 	private var _outlinerVC: OutlinerViewController? = nil
 	private var _condFuncEdVC: ConditionFunctionEditorViewController? = nil
+	private var _entitiesEditorVC: EntitiesEditorViewController? = nil
 	
 	override func viewWillAppear() {
 		guard let doc = view.window?.windowController?.document as? Document else {
@@ -30,6 +31,15 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+		if segue.identifier == "EntitiesEditor" {
+			_entitiesEditorVC = segue.destinationController as? EntitiesEditorViewController
+			guard let doc = view.window?.windowController?.document as? Document else {
+				print("ERROR: Could not find doc when EntitiesEditorViewController segue was triggered.")
+				return
+			}
+			_entitiesEditorVC?.setup(doc: doc)
+		}
+		
 		if segue.identifier == "VariablesEditor" {
 			_variablesVC = segue.destinationController as? VariablesEditorViewController
 			guard let doc = view.window?.windowController?.document as? Document else {
