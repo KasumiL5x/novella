@@ -31,6 +31,7 @@
 		65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */; };
 		65BB18EC21CE269C00DCB05E /* LinkParker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18EB21CE269C00DCB05E /* LinkParker.swift */; };
 		65BB18EE21CE318B00DCB05E /* NSView+ViewAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */; };
+		65BE159D2266537F00A04FE5 /* EntitiesEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65BE159C2266537F00A04FE5 /* EntitiesEditor.storyboard */; };
 		65BFD9AD212575A900FDA31B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */; };
 		65CC99A621C23F63008CD7BA /* CustomTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CC99A521C23F63008CD7BA /* CustomTables.swift */; };
 		65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CC99A921C26876008CD7BA /* Assets.xcassets */; };
@@ -106,6 +107,7 @@
 		65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasBench.swift; sourceTree = "<group>"; };
 		65BB18EB21CE269C00DCB05E /* LinkParker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkParker.swift; sourceTree = "<group>"; };
 		65BB18ED21CE318B00DCB05E /* NSView+ViewAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ViewAt.swift"; sourceTree = "<group>"; };
+		65BE159C2266537F00A04FE5 /* EntitiesEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EntitiesEditor.storyboard; sourceTree = "<group>"; };
 		65BFD9AC212575A900FDA31B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		65CC99A521C23F63008CD7BA /* CustomTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTables.swift; sourceTree = "<group>"; };
 		65CC99A921C26876008CD7BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				651D7C9C21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard */,
 				6526E889224805F800442AF5 /* VariablesEditor.storyboard */,
 				65E1B36B2259EE2500D31884 /* Popovers.storyboard */,
+				65BE159C2266537F00A04FE5 /* EntitiesEditor.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				DFCE604A211C3D20005900D8 /* Main.storyboard in Resources */,
 				65CC99AA21C26876008CD7BA /* Assets.xcassets in Resources */,
 				6526E88A224805F800442AF5 /* VariablesEditor.storyboard in Resources */,
+				65BE159D2266537F00A04FE5 /* EntitiesEditor.storyboard in Resources */,
 				65E1B36C2259EE2500D31884 /* Popovers.storyboard in Resources */,
 				DF94929521B9716E00BC8AB0 /* Graph.storyboard in Resources */,
 				651D7C9D21DA1BBC00DE3EBB /* ConditionFunctionEditor.storyboard in Resources */,

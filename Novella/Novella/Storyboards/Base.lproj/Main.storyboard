@@ -741,6 +741,17 @@
                                             <segue destination="X5w-lW-ot9" kind="modal" identifier="VariablesEditor" id="OOf-oS-Mpo"/>
                                         </connections>
                                     </button>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R7j-62-Jp1">
+                                        <rect key="frame" x="6" y="588" width="28" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NVEntity" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7PS-6Y-Boa">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <segue destination="jfx-dL-hSc" kind="modal" id="ACw-fq-UuX"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="ZIr-l2-pNd"/>
@@ -834,6 +845,14 @@
             </objects>
             <point key="canvasLocation" x="101" y="1504"/>
         </scene>
+        <!--EntitiesEditor-->
+        <scene sceneID="DjC-Hq-fZs">
+            <objects>
+                <controllerPlaceholder storyboardName="EntitiesEditor" referencedIdentifier="EntitiesEditor" id="jfx-dL-hSc" sceneMemberID="viewController"/>
+                <customObject id="aH4-eE-IaO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="509" y="1504"/>
+        </scene>
         <!--VariablesEditor-->
         <scene sceneID="Utx-Yu-zHG">
             <objects>
@@ -862,5 +881,6 @@
     <resources>
         <image name="NSTouchBarTextBoxTemplate" width="20" height="30"/>
         <image name="NSTouchBarTextStrikethroughTemplate" width="14" height="30"/>
+        <image name="NVEntity" width="512" height="512"/>
     </resources>
 </document>
