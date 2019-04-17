@@ -84,6 +84,16 @@ class Canvas: NSView {
 		_contextMenu.autoenablesItems = false
 		
 		doc.Story.add(observer: self)
+		
+		// setup a callback for any time any selection changes (as it can change from outside of this class such as in individual objects)
+		Selection.selectionDidChange = { (selection) in
+			// remove all bench highlights (a bit messy - if i had previous selection i could iterate them)
+			self._allBenches.forEach{$0.value.disableHighlight()}
+			// highlight all benches in the selection
+			selection.forEach({ (sel) in
+				self.benchFor(obj: sel)?.highlight()
+			})
+		}
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()

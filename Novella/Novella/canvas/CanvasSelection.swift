@@ -12,6 +12,7 @@ class CanvasSelection {
 	private(set) var Selection: [CanvasObject] = []
 	
 	var TheCanvas: Canvas?
+	var selectionDidChange: (([CanvasObject]) -> Void)?
 	
 	func select(_ obj: CanvasObject, append: Bool) {
 		select([obj], append: append)
@@ -32,7 +33,8 @@ class CanvasSelection {
 			}
 		}
 		
-		// post selection changed notification
+		// call changed callback and post selection changed notification
+		selectionDidChange?(Selection)
 		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
 			"selection": Selection
 		])
@@ -49,7 +51,8 @@ class CanvasSelection {
 			}
 		}
 		
-		// post selection changed notification
+		// call changed callback and post selection changed notification
+		selectionDidChange?(Selection)
 		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
 			"selection": Selection
 		])
@@ -59,7 +62,8 @@ class CanvasSelection {
 		Selection.forEach{$0.CurrentState = .normal}
 		Selection = []
 		
-		// post selection changed notification
+		// call changed callback and post selection changed notification
+		selectionDidChange?(Selection)
 		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSelectionChanged, object: nil, userInfo: [
 			"selection": Selection
 		])

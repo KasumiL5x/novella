@@ -44,6 +44,14 @@ class CanvasBench: NSView {
 		fatalError()
 	}
 	
+	func highlight() {
+		Items.forEach{$0.highlight()}
+	}
+	
+	func disableHighlight() {
+		Items.forEach{$0.disableHighlight()}
+	}
+	
 	func add(_ item: CanvasLink) {
 		if(Items.contains(item)) {
 			return

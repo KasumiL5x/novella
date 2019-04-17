@@ -32,6 +32,8 @@ class CanvasLink: NSView {
 	private var _lastParker: LinkParker? // for drag drop onto a LinkParker
 	//
 	var ContextMenu: NSMenu
+	//
+	var _highlighted: Bool
 	
 	init(canvas: Canvas, origin: CanvasObject, link: NVLink) {
 		self.Link = link
@@ -52,6 +54,8 @@ class CanvasLink: NSView {
 		self._lastParker = nil
 		//
 		self.ContextMenu = NSMenu()
+		//
+		self._highlighted = false
 		super.init(frame: NSMakeRect(0, 0, CanvasLink.Size, CanvasLink.Size))
 		
 		wantsLayer = true
@@ -217,6 +221,16 @@ class CanvasLink: NSView {
 		onContextClick(gesture: gesture)
 	}
 	
+	func highlight() {
+		_highlighted = true
+		redraw()
+	}
+	
+	func disableHighlight() {
+		_highlighted = false
+		redraw()
+	}
+	
 	func setTarget(_ target: CanvasObject?) {
 		if nil == target {
 			_lastParker = nil
@@ -236,7 +250,22 @@ class CanvasLink: NSView {
 	
 	func updateCurve() {
 		if let target = _currentTarget { // has a valid target
-			_curvelayer.strokeColor = target.mainColor().cgColor
+			if _highlighted {
+				_curvelayer.strokeColor = _highlighted ? NSColor.white.cgColor : target.mainColor().cgColor
+				_curvelayer.lineWidth = 3.0
+				_curvelayer.lineDashPattern = [5.0, 5.0]
+				let dashAnim = CABasicAnimation(keyPath: "lineDashPhase")
+				dashAnim.fromValue = _curvelayer.lineDashPattern?.reduce(0) { $0 + $1.intValue }
+				dashAnim.toValue = 0.0
+				dashAnim.duration = 0.2
+				dashAnim.repeatCount = Float.greatestFiniteMagnitude
+				_curvelayer.add(dashAnim, forKey: nil)
+			} else {
+				_curvelayer.removeAllAnimations()
+				_curvelayer.strokeColor = target.mainColor().cgColor
+				_curvelayer.lineDashPattern = nil
+				_curvelayer.lineWidth = 2.0
+			}
 			
 			// linking to self
 			if target == Origin {
