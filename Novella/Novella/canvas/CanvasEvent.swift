@@ -63,6 +63,9 @@ class CanvasEvent: CanvasObject {
 	override func labelString() -> String {
 		return nvEvent().Label.isEmpty ? "Unknown" : nvEvent().Label
 	}
+	override func icon() -> NSImage? {
+		return NSImage(named: "NVEvent")
+	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}

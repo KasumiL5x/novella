@@ -71,6 +71,9 @@ class CanvasSequence: CanvasObject {
 	override func labelString() -> String {
 		return nvSequence().Label.isEmpty ? "Unknown" : nvSequence().Label
 	}
+	override func icon() -> NSImage? {
+		return NSImage(named: "NVSequence")
+	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}

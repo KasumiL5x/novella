@@ -63,6 +63,9 @@ class CanvasGroup: CanvasObject {
 	override func labelString() -> String {
 		return nvGroup().Label.isEmpty ? "Unknown" : nvGroup().Label
 	}
+	override func icon() -> NSImage? {
+		return NSImage(named: "NVGroup")
+	}
 	override func objectRect() -> NSRect {
 		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}

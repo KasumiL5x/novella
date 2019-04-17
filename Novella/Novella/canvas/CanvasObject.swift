@@ -98,7 +98,7 @@ class CanvasObject: NSView {
 		let typeIconSize = flagRect.width * CanvasObject.IconSize // square as a percentage of the flag
 		iconLayer.frame = NSMakeRect(0, 0, typeIconSize, typeIconSize)
 		iconLayer.frame.setCenter(flagRect.center)
-		iconLayer.contents = NSImage(named: NSImage.cautionName)
+		iconLayer.contents = icon()
 		iconLayer.contentsRect = NSMakeRect(0, 0, 1, 1)
 		iconLayer.contentsGravity = .resizeAspectFill
 		layer?.addSublayer(iconLayer)
@@ -273,6 +273,9 @@ class CanvasObject: NSView {
 	func labelString() -> String {
 		// for derived classes to return the model object's label as everything has this
 		return "Alan, please implement this."
+	}
+	func icon() -> NSImage? {
+		return NSImage(named: NSImage.cautionName)
 	}
 	func objectRect() -> NSRect {
 		 // rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
