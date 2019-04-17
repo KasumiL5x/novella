@@ -2,54 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "group-colored.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "group.png",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "group-dark.png",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "group@2x.png",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "group-dark@2x.png",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
+      "filename" : "group-colored@2x.png",
       "scale" : "2x"
     },
     {
