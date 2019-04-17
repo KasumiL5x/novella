@@ -67,7 +67,7 @@ extension Document {
 		let entry = Story.makeEntity(uuid: id)
 		entry.Label = entity["label"].stringValue
 		entry.Description = entity["desc"].stringValue
-		entry.Tags = entity["tags"].arrayValue.map{$0.stringValue}
+		entry.Tags = NSMutableArray(array: entity["tags"].arrayValue.map{$0.stringValue})
 	}
 	
 	fileprivate func parseEvent(event: JSON, id: NSUUID) {

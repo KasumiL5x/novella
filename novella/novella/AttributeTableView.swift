@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class AttributeTableView: NSTableView, NSTableViewDataSource, NSTableViewDelegate {
+class AttributeTableView: NSTableView, NSTableViewDelegate {
 	var onAdd: (() -> Void)?
 	var onDelete: ((String) -> Void)?
 	

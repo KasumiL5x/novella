@@ -21,7 +21,7 @@ class NVEntity: NVIdentifiable {
 			_story.Observers.forEach{$0.nvEntityDescriptionDidChange(story: _story, entity: self)}
 		}
 	}
-	var Tags: [String] {
+	var Tags: NSMutableArray {
 		didSet {
 			_story.Observers.forEach{$0.nvEntityTagsDidChange(story: _story, entity: self)}
 		}
