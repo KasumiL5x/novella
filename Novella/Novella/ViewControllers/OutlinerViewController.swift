@@ -14,10 +14,12 @@ class OutlinerViewController: NSViewController {
 	private var _document: Document? = nil
 	private var _linkIcon: NSImage?
 	private var _groupImage: NSImage?
+	private var _sequenceImage: NSImage?
 	
 	override func viewDidLoad() {
 		_linkIcon = NSImage(named: "NVLink")
 		_groupImage = NSImage(named: "NVGroup")
+		_sequenceImage = NSImage(named: "NVSequence")
 		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
@@ -70,6 +72,7 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			
 		case let asSequence as NVSequence:
 			(view as? NSTableCellView)?.textField?.stringValue = asSequence.Label
+			(view as? NSTableCellView)?.imageView?.image = _sequenceImage ?? NSImage(named: NSImage.cautionName)
 			
 		case let asLink as NVLink:
 			(view as? NSTableCellView)?.textField?.stringValue = "(\(labelFor(linkable: asLink.Origin))) -> (\(labelFor(linkable: asLink.Destination)))"
