@@ -15,11 +15,13 @@ class OutlinerViewController: NSViewController {
 	private var _linkIcon: NSImage?
 	private var _groupImage: NSImage?
 	private var _sequenceImage: NSImage?
+	private var _eventImage: NSImage?
 	
 	override func viewDidLoad() {
 		_linkIcon = NSImage(named: "NVLink")
 		_groupImage = NSImage(named: "NVGroup")
 		_sequenceImage = NSImage(named: "NVSequence")
+		_eventImage = NSImage(named: "NVEvent")
 		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
@@ -80,6 +82,7 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			
 		case let asEvent as NVEvent:
 			(view as? NSTableCellView)?.textField?.stringValue = asEvent.Label
+			(view as? NSTableCellView)?.imageView?.image = _eventImage ?? NSImage(named: NSImage.cautionName)
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"

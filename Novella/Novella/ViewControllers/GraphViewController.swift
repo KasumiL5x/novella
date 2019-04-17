@@ -91,7 +91,7 @@ class GraphViewController: NSViewController {
 			case is NVSequence:
 				cell.image = NSImage(named: "NVSequence") ?? NSImage(named: NSImage.cautionName)
 			case is NVEvent:
-				cell.image = NSImage(named: NSImage.cautionName)
+				cell.image = NSImage(named: "NVEvent") ?? NSImage(named: NSImage.cautionName)
 			default:
 				cell.image = NSImage(named: NSImage.cautionName)
 			}
