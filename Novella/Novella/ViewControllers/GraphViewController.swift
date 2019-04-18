@@ -51,8 +51,15 @@ class GraphViewController: NSViewController {
 	}
 	
 	@objc func onPathDoubleClick() {
-		if let cell = _pathControl.clickedPathComponentCell() {
-			let obj = _currentPathResult.objects[cell.tag]
+		if let cell = _pathControl.clickedPathItem {
+			// HACK: The new NSPathControl removed the cell access so I cannot set tags. Instead, I'm relying on URL comparison.
+			//       It's not nice, but it appears to be the only unique parameter.  I cannot use the object reference as it seems
+			//       to be instantiated (i.e., is different each time).
+			let idx = _pathControl.pathItems.firstIndex(where: {$0.url == cell.url}) ?? -1
+			if -1 == idx {
+				return
+			}
+			let obj = _currentPathResult.objects[idx]
 			if let asGroup = obj as? NVGroup, MainCanvas?.MappedGroup != asGroup {
 				MainCanvas?.setupFor(group: asGroup)
 			} else if let asSequence = obj as? NVSequence, MainCanvas?.MappedSequence != asSequence {
@@ -82,9 +89,8 @@ class GraphViewController: NSViewController {
 		_currentPathResult.path = _currentPathResult.path.replacingOccurrences(of: " ", with: "%20")
 		
 		_pathControl.url = URL(string: _currentPathResult.path)
-		for idx in 0..<_pathControl.pathComponentCells().count {
-			let cell = _pathControl.pathComponentCells()[idx]
-			cell.tag = idx
+		for idx in 0..<_pathControl.pathItems.count {
+			let cell = _pathControl.pathItems[idx]
 			switch _currentPathResult.objects[idx] {
 			case is NVGroup:
 				cell.image = NSImage(named: "NVGroup") ?? NSImage(named: NSImage.cautionName)
