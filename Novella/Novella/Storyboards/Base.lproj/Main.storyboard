@@ -752,6 +752,17 @@
                                             <segue destination="jfx-dL-hSc" kind="modal" identifier="EntitiesEditor" id="ACw-fq-UuX"/>
                                         </connections>
                                     </button>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZEQ-AQ-S5L">
+                                        <rect key="frame" x="6" y="550" width="28" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Debug" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="50f-dj-m9d">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onDebug:" target="5gI-5U-AMq" id="cNT-FV-zgd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="ZIr-l2-pNd"/>
@@ -879,6 +890,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Debug" width="512" height="512"/>
         <image name="NSTouchBarTextBoxTemplate" width="20" height="30"/>
         <image name="NSTouchBarTextStrikethroughTemplate" width="14" height="30"/>
         <image name="NVEntity" width="512" height="512"/>

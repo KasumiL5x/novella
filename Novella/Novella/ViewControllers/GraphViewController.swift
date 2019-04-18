@@ -97,8 +97,4 @@ class GraphViewController: NSViewController {
 			}
 		}
 	}
-	
-	@IBAction func onDebugPrint(_ sender: NSButton) {
-		_document?.Story.debugPrint()
-	}
 }

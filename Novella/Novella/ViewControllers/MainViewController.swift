@@ -116,6 +116,14 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		alert.addButton(withTitle: "OK")
 		alert.runModal()
 	}
+	
+	@IBAction func onDebug(_ sender: NSButton) {
+		guard let doc = view.window?.windowController?.document as? Document else {
+			print("ERROR: Could not find doc when trying to use debug button.")
+			return
+		}
+		doc.Story.debugPrint()
+	}
 }
 
 extension MainViewController: NSSplitViewDelegate {
