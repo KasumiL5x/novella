@@ -305,8 +305,8 @@ class CanvasLink: NSView {
 		print("Alan, please override.")
 	}
 	func canlinkTo(obj: CanvasObject) -> Bool {
-		// must be same type
-		if type(of: obj.Linkable) != type(of: Origin.Linkable) {
+		// must be same type or a hub
+		if type(of: obj.Linkable) != type(of: Origin.Linkable) && !(obj.Linkable is NVHub) {
 			return false
 		}
 		

@@ -475,6 +475,17 @@ class Canvas: NSView {
 			sequence.add(link: link)
 		}
 	}
+	func makeLink(forHub: CanvasHub) {
+		// at least one has to be valid
+		if nil == MappedGroup && nil == MappedSequence {
+			return
+		}
+		
+		// only one has to succeed; doesn't matter which
+		let link = Doc.Story.makeLink(origin: forHub.Linkable, dest: nil)
+		MappedGroup?.add(link: link)
+		MappedSequence?.add(link: link)
+	}
 }
 
 // MARK: - NVStoryObserver -
@@ -542,6 +553,33 @@ extension Canvas: NVStoryObserver {
 		
 		// redraw any links with this as its destination
 		allLinksTo(linkable: event).forEach{
+			$0.setTarget(nil)
+			$0.redraw()
+		}
+	}
+	
+	func nvStoryWillDeleteHub(story: NVStory, hub: NVHub) {
+		guard let canvasHub = canvasHubFor(nvHub: hub) else {
+			NVLog.log("Tried to delete Hub but couldn't find matching CanvasHub.", level: .error)
+			return
+		}
+		// remove from canvas
+		canvasHub.removeFromSuperview()
+		// remove reference from all objects
+		if let idx = _allObjects.firstIndex(of: canvasHub) {
+			_allObjects.remove(at: idx)
+		}
+		
+		// remove bench
+		guard let bench = benchFor(obj: canvasHub) else {
+			NVLog.log("Tried to delete Hub but couldn't find its Bench.", level: .error)
+			return
+		}
+		bench.removeFromSuperview()
+		_allBenches.removeValue(forKey: canvasHub)
+		
+		// redraw any links with this as its destination
+		allLinksTo(linkable: hub).forEach{
 			$0.setTarget(nil)
 			$0.redraw()
 		}
