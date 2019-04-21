@@ -25,6 +25,7 @@ class Canvas: NSView {
 	private let _addGroupMenuItem: NSMenuItem
 	private let _addSequenceMenuItem: NSMenuItem
 	private let _addEventMenuItem: NSMenuItem
+	private let _addHubMenuItem: NSMenuItem
 	private let _surfaceMenuItem: NSMenuItem
 	//
 	private var _rmbPanInitialLocation: CGPoint
@@ -47,6 +48,7 @@ class Canvas: NSView {
 		self._addGroupMenuItem = NSMenuItem(title: "Group", action: #selector(Canvas.onContextAddGroup), keyEquivalent: "")
 		self._addSequenceMenuItem = NSMenuItem(title: "Sequence", action: #selector(Canvas.onContextAddSequence), keyEquivalent: "")
 		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
+		self._addHubMenuItem = NSMenuItem(title: "Hub", action: #selector(Canvas.onContextAddHub), keyEquivalent: "")
 		self._surfaceMenuItem = NSMenuItem(title: "Surface", action: #selector(Canvas.onContextSurface), keyEquivalent: "")
 		//
 		self._rmbPanInitialLocation = CGPoint.zero
@@ -75,6 +77,7 @@ class Canvas: NSView {
 		addMenu.addItem(_addGroupMenuItem)
 		addMenu.addItem(_addSequenceMenuItem)
 		addMenu.addItem(_addEventMenuItem)
+		addMenu.addItem(_addHubMenuItem)
 		let addMenuItem = NSMenuItem()
 		addMenuItem.title = "Add..."
 		addMenuItem.submenu = addMenu
@@ -106,6 +109,7 @@ class Canvas: NSView {
 		_addGroupMenuItem.isEnabled = true
 		_addSequenceMenuItem.isEnabled = true
 		_addEventMenuItem.isEnabled = false
+		_addHubMenuItem.isEnabled = true
 		_surfaceMenuItem.isEnabled = group.Parent != nil
 		
 		_allObjects = []
@@ -126,7 +130,11 @@ class Canvas: NSView {
 		for child in group.Sequences {
 			makeSequence(nvSequence: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
-		// add all sequence links
+		// add all child hubs
+		for child in group.Hubs {
+			makeHub(nvHub: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		// add all links
 		for child in group.Links {
 			addLink(link: child)
 		}
@@ -144,6 +152,7 @@ class Canvas: NSView {
 		_addGroupMenuItem.isEnabled = false
 		_addSequenceMenuItem.isEnabled = false
 		_addEventMenuItem.isEnabled = true
+		_addHubMenuItem.isEnabled = true
 		_surfaceMenuItem.isEnabled = sequence.Parent != nil
 		
 		_allObjects = []
@@ -160,7 +169,11 @@ class Canvas: NSView {
 		for child in sequence.Events {
 			makeEvent(nvEvent: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
-		// add all event links
+		// add all child hubs
+		for child in sequence.Hubs {
+			makeHub(nvHub: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		// add all links
 		for child in sequence.Links {
 			addLink(link: child)
 		}
@@ -326,6 +339,20 @@ class Canvas: NSView {
 		}
 	}
 	
+	@objc private func onContextAddHub() {
+		if nil == MappedGroup && nil == MappedSequence {
+			return
+		}
+		
+		let newHub = Doc.Story.makeHub()
+		
+		// one of these will succeed, doesn't really matter which
+		MappedGroup?.add(hub: newHub)
+		MappedSequence?.add(hub: newHub)
+		
+		canvasHubFor(nvHub: newHub)?.move(to: _lastContextPos)
+	}
+	
 	@objc private func onContextSurface() {
 		if let parent = MappedGroup?.Parent {
 			setupFor(group: parent)
@@ -349,6 +376,9 @@ class Canvas: NSView {
 	}
 	func canvasEventFor(nvEvent: NVEvent) -> CanvasEvent? {
 		return (_allObjects.filter{$0 is CanvasEvent} as! [CanvasEvent]).first(where: {$0.nvEvent() == nvEvent})
+	}
+	func canvasHubFor(nvHub: NVHub) -> CanvasHub? {
+		return (_allObjects.filter{$0 is CanvasHub} as! [CanvasHub]).first(where: {$0.nvHub() == nvHub})
 	}
 	
 	// creating canvas elements from novella elements w/o requesting them from the story
@@ -376,6 +406,19 @@ class Canvas: NSView {
 	}
 	@discardableResult private func makeEvent(nvEvent: NVEvent, at: CGPoint) -> CanvasEvent {
 		let obj = CanvasEvent(canvas: self, event: nvEvent)
+		_allObjects.append(obj)
+		addSubview(obj, positioned: .below, relativeTo: _marquee)
+		
+		obj.frame.origin = at
+		
+		let bench = makeBench()
+		_allBenches[obj] = bench
+		bench.constrain(to: obj)
+		
+		return obj
+	}
+	@discardableResult private func makeHub(nvHub: NVHub, at: CGPoint) -> CanvasHub {
+		let obj = CanvasHub(canvas: self, hub: nvHub)
 		_allObjects.append(obj)
 		addSubview(obj, positioned: .below, relativeTo: _marquee)
 		
@@ -567,6 +610,13 @@ extension Canvas: NVStoryObserver {
 		makeGroup(nvGroup: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 	}
 	
+	func nvGroupDidAddHub(story: NVStory, group: NVGroup, hub: NVHub) {
+		if group != MappedGroup {
+			return
+		}
+		makeHub(nvHub: hub, at: Doc.Positions[hub.UUID] ?? centerPoint())
+	}
+	
 	// MARK: - Sequence Changes
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		canvasSequenceFor(nvSequence: sequence)?.reloadData()
@@ -590,6 +640,13 @@ extension Canvas: NVStoryObserver {
 			return
 		}
 		makeEvent(nvEvent: event, at: Doc.Positions[event.UUID] ?? centerPoint())
+	}
+	
+	func nvSequenceDidAddHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
+		if sequence != MappedSequence {
+			return
+		}
+		makeHub(nvHub: hub, at: Doc.Positions[hub.UUID] ?? centerPoint())
 	}
 	
 	// MARK: - Event Changes
