@@ -24,15 +24,20 @@ class CanvasHub: CanvasObject {
 	}
 	
 	// virtuals
+	override func objectRect() -> NSRect {
+		return NSMakeRect(0, 0, 64.0, 64.0)
+	}
 	override func shapeRoundness() -> CGFloat {
 		return 1.0
 	}
 	override func layoutStyle() -> CanvasObject.LayoutStyle {
 		return .iconOnly
 	}
-	override func onMove() {
-		super.onMove()
-		_canvas.Doc.Positions[Linkable.UUID] = frame.origin
+	override func hasParallelLayer() -> Bool {
+		return false
+	}
+	override func hasEntryLayer() -> Bool {
+		return false
 	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#ff00ff")
@@ -40,7 +45,8 @@ class CanvasHub: CanvasObject {
 	override func labelString() -> String {
 		return "HUB"
 	}
-	override func objectRect() -> NSRect {
-		return NSMakeRect(0, 0, 64.0, 64.0)
+	override func didMove() {
+		super.didMove()
+		_canvas.Doc.Positions[Linkable.UUID] = frame.origin
 	}
 }

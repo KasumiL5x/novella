@@ -55,15 +55,8 @@ class CanvasSequence: CanvasObject {
 	}
 	
 	// virtuals
-	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
-		super.onDoubleClick(gesture: gesture)
-		
-		_popover.show(forView: self, at: .maxX)
-		_popover.setup(sequence: self, doc: _canvas.Doc)
-	}
-	override func onMove() {
-		super.onMove()
-		_canvas.Doc.Positions[Linkable.UUID] = frame.origin
+	override func objectRect() -> NSRect {
+		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
 	}
 	override func mainColor() -> NSColor {
 		return NSColor.fromHex("#FF5E3A")
@@ -71,11 +64,18 @@ class CanvasSequence: CanvasObject {
 	override func labelString() -> String {
 		return nvSequence().Label.isEmpty ? "Unknown" : nvSequence().Label
 	}
-	override func icon() -> NSImage? {
+	override func iconImage() -> NSImage? {
 		return NSImage(named: "NVSequence")
 	}
-	override func objectRect() -> NSRect {
-		return NSMakeRect(0, 0, 125.0, 125.0 * 0.25)
+	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
+		super.onDoubleClick(gesture: gesture)
+		
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(sequence: self, doc: _canvas.Doc)
+	}
+	override func didMove() {
+		super.didMove()
+		_canvas.Doc.Positions[Linkable.UUID] = frame.origin
 	}
 	override func reloadData() {
 		super.reloadData()

@@ -8,24 +8,16 @@
 
 import Cocoa
 
-// has to be objc due to some compiled bug according to SO
+// has to be objc due to some compiler bug according to StackOverflow (lost the link)
 @objc protocol CanvasObjectDelegate: AnyObject {
 	func canvasObjectMoved(obj: CanvasObject)
 }
 
 class CanvasObject: NSView {
 	enum LayoutStyle {
-		case iconFlagText
+		case standard
 		case iconOnly
 	}
-	
-	static let Roundness: CGFloat = 0.075
-	static let NormalOutlineSize: CGFloat = 4.0
-	static let PrimedOutlineSize: CGFloat = 8.0
-	static let SelectedOutlineSize: CGFloat = 12.0
-	static let FlagSize: CGFloat = 0.3
-	static let IconSize: CGFloat = 0.55
-	static let LabelOffset: CGFloat = 4.0
 	
 	enum State {
 		case normal
@@ -43,7 +35,7 @@ class CanvasObject: NSView {
 	var ContextMenu: NSMenu
 	var CurrentState: State = .normal {
 		didSet {
-			onStateChanged()
+			stateDidChange()
 		}
 	}
 	private var _delegates = NSHashTable<CanvasObjectDelegate>.weakObjects()
@@ -87,47 +79,51 @@ class CanvasObject: NSView {
 		// outline layer
 		_outlineLayer.fillColor = nil
 		_outlineLayer.path = NSBezierPath(roundedRect: _bgLayer.frame, xRadius: _bgLayer.cornerRadius, yRadius: _bgLayer.cornerRadius).cgPath
-		_outlineLayer.strokeColor = darkerColor.withAlphaComponent(0.4).cgColor //99b1c8
-		setupOutlineLayer()
+		_outlineLayer.strokeColor = darkerColor.withAlphaComponent(0.4).cgColor
+		updateOutlineWidth()
 		layer?.addSublayer(_outlineLayer) // add before bg so it's below it
 		layer?.addSublayer(_bgLayer)
 		
 		// setup the main layout (BG and outline are always present)
 		switch layoutStyle() {
-		case .iconFlagText:
+		case .standard:
 			setupStyleIconFlagText()
 		case .iconOnly:
 			setupStyleIconOnly()
 		}
 		
 		// parallel layer
-		let parallelSize: CGFloat = 15.0
-		_parallelLayer.path = NSBezierPath(ovalIn: NSMakeRect(0, 0, parallelSize, parallelSize)).cgPath
-		_parallelLayer.fillColor = primaryColor.cgColor
-		_parallelLayer.strokeColor = NSColor.fromHex("#f2f2f2").withAlphaComponent(0.75).cgColor
-		_parallelLayer.lineWidth = 2.0
-		_parallelLayer.frame.setCenter(NSMakePoint(mainFrame.minX - parallelSize*0.5, mainFrame.maxY - parallelSize*0.5))
-		_parallelLayer.opacity = 0.0
-		layer?.addSublayer(_parallelLayer)
+		if hasParallelLayer() {
+			let parallelSize: CGFloat = 15.0
+			_parallelLayer.path = NSBezierPath(ovalIn: NSMakeRect(0, 0, parallelSize, parallelSize)).cgPath
+			_parallelLayer.fillColor = primaryColor.cgColor
+			_parallelLayer.strokeColor = NSColor.fromHex("#f2f2f2").withAlphaComponent(0.75).cgColor
+			_parallelLayer.lineWidth = 2.0
+			_parallelLayer.frame.setCenter(NSMakePoint(mainFrame.minX - parallelSize*0.5, mainFrame.maxY - parallelSize*0.5))
+			_parallelLayer.opacity = 0.0
+			layer?.addSublayer(_parallelLayer)
+		}
 		
 		// entry layer
-		let entryArrowWidth: CGFloat = 35.0
-		let entryArrowSize: CGFloat = 0.2
-		let entryArrowHeight: CGFloat = 0.5
-		let entryPath = NSBezierPath()
-		entryPath.move(to: NSMakePoint(mainFrame.minX - entryArrowWidth, mainFrame.midY))
-		entryPath.line(to: NSMakePoint(mainFrame.minX, mainFrame.midY))
-		entryPath.move(to: NSMakePoint(mainFrame.minX - (entryArrowWidth * entryArrowSize), mainFrame.midY + ((mainFrame.maxY - mainFrame.midY) * entryArrowHeight)))
-		entryPath.line(to: NSMakePoint(mainFrame.minX, mainFrame.midY))
-		entryPath.line(to: NSMakePoint(mainFrame.minX - (entryArrowWidth * entryArrowSize), mainFrame.midY - ((mainFrame.midY - mainFrame.minY) * entryArrowHeight)))
-		_entryLayer.path = entryPath.cgPath
-		_entryLayer.lineCap = .round
-		_entryLayer.lineJoin = .bevel
-		_entryLayer.fillColor = nil
-		_entryLayer.strokeColor = NSColor.fromHex("#FAFAFA").withAlphaComponent(0.8).cgColor
-		_entryLayer.lineWidth = 3.0
-		_entryLayer.opacity = 0.0
-		layer?.addSublayer(_entryLayer)
+		if hasEntryLayer() {
+			let entryArrowWidth: CGFloat = 35.0
+			let entryArrowSize: CGFloat = 0.2
+			let entryArrowHeight: CGFloat = 0.5
+			let entryPath = NSBezierPath()
+			entryPath.move(to: NSMakePoint(mainFrame.minX - entryArrowWidth, mainFrame.midY))
+			entryPath.line(to: NSMakePoint(mainFrame.minX, mainFrame.midY))
+			entryPath.move(to: NSMakePoint(mainFrame.minX - (entryArrowWidth * entryArrowSize), mainFrame.midY + ((mainFrame.maxY - mainFrame.midY) * entryArrowHeight)))
+			entryPath.line(to: NSMakePoint(mainFrame.minX, mainFrame.midY))
+			entryPath.line(to: NSMakePoint(mainFrame.minX - (entryArrowWidth * entryArrowSize), mainFrame.midY - ((mainFrame.midY - mainFrame.minY) * entryArrowHeight)))
+			_entryLayer.path = entryPath.cgPath
+			_entryLayer.lineCap = .round
+			_entryLayer.lineJoin = .bevel
+			_entryLayer.fillColor = nil
+			_entryLayer.strokeColor = NSColor.fromHex("#FAFAFA").withAlphaComponent(0.8).cgColor
+			_entryLayer.lineWidth = 3.0
+			_entryLayer.opacity = 0.0
+			layer?.addSublayer(_entryLayer)
+		}
 		
 		// gestures
 		let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(CanvasObject._onClick))
@@ -153,48 +149,37 @@ class CanvasObject: NSView {
 		fatalError()
 	}
 	
-	private func setupOutlineLayer() {
-		let width: CGFloat
-		switch CurrentState {
-		case .normal:
-			width = CanvasObject.NormalOutlineSize
-		case .primed:
-			width = CanvasObject.PrimedOutlineSize
-		case .selected:
-			width = CanvasObject.SelectedOutlineSize
-		}
-		_outlineLayer.lineWidth = width
-	}
-	
+	// MARK: - Styling/Drawing
 	private func setupStyleIconFlagText() {
 		let mainFrame = objectRect()
-		let primaryColor = mainColor()
 		
 		// flag layer
+		let flagSize: CGFloat = 0.3
 		let flagLayer = CAShapeLayer()
-		let flagRect = NSMakeRect(0, 0, mainFrame.width * CanvasObject.FlagSize, mainFrame.height)
+		let flagRect = NSMakeRect(0, 0, mainFrame.width * flagSize, mainFrame.height)
 		flagLayer.path = NSBezierPath.withRoundedCorners(rect: flagRect, byRoundingCorners: [.minXMinY, .minXMaxY], withRadius: _bgLayer.cornerRadius, includingEdges: [.all]).cgPath
-		flagLayer.fillColor = primaryColor.cgColor
+		flagLayer.fillColor = mainColor().cgColor
 		layer?.addSublayer(flagLayer)
 		
 		// type icon layer
 		let iconLayer = CALayer()
-		let typeIconSize = flagRect.width * CanvasObject.IconSize // square as a percentage of the flag
-		iconLayer.frame = NSMakeRect(0, 0, typeIconSize, typeIconSize)
+		let iconSize = flagRect.width * 0.55 // square as a percentage of the flag
+		iconLayer.frame = NSMakeRect(0, 0, iconSize, iconSize)
 		iconLayer.frame.setCenter(flagRect.center)
-		iconLayer.contents = icon()
+		iconLayer.contents = iconImage()
 		iconLayer.contentsRect = NSMakeRect(0, 0, 1, 1)
 		iconLayer.contentsGravity = .resizeAspectFill
 		layer?.addSublayer(iconLayer)
 		
 		// label layer
+		let labelOffset: CGFloat = 4.0
 		_labelLayer.string = "Alan please change this."
 		_labelLayer.contentsScale = NSScreen.main?.backingScaleFactor ?? 1.0
 		_labelLayer.font = NSFont.systemFont(ofSize: 1.0, weight: .light)
 		_labelLayer.fontSize = 8.0
 		_labelLayer.foregroundColor = NSColor.fromHex("#3c3c3c").withAlphaComponent(0.75).cgColor
 		_labelLayer.frame.size = _labelLayer.preferredFrameSize()
-		_labelLayer.frame.origin = NSMakePoint(flagRect.maxX + CanvasObject.LabelOffset, flagRect.midY - _labelLayer.frame.height * 0.5)
+		_labelLayer.frame.origin = NSMakePoint(flagRect.maxX + labelOffset, flagRect.midY - _labelLayer.frame.height * 0.5)
 		_labelLayer.frame.size.width = mainFrame.width - _labelLayer.frame.minX
 		_labelLayer.truncationMode = .middle
 		layer?.addSublayer(_labelLayer)
@@ -204,27 +189,26 @@ class CanvasObject: NSView {
 		let mainFrame = objectRect()
 		
 		let iconLayer = CALayer()
-		let typeIconSize = mainFrame.width * 0.75 * CanvasObject.IconSize
-		iconLayer.frame = NSMakeRect(0, 0, typeIconSize, typeIconSize)
+		let iconSize = (mainFrame.width * 0.75) * 0.55
+		iconLayer.frame = NSMakeRect(0, 0, iconSize, iconSize)
 		iconLayer.frame.setCenter(mainFrame.center)
-		iconLayer.contents = icon()
+		iconLayer.contents = iconImage()
 		iconLayer.contentsRect = NSMakeRect(0, 0, 1, 1)
 		iconLayer.contentsGravity = .resizeAspectFill
 		layer?.addSublayer(iconLayer)
 	}
 	
-	func add(delegate: CanvasObjectDelegate) {
-		_delegates.add(delegate)
-	}
-	func remove(delegate: CanvasObjectDelegate) {
-		_delegates.remove(delegate)
-		// not strictly necesary as NSHashTable removes nil values from allObjects
-	}
-	
-	func move(to: CGPoint) {
-		frame.origin = to
-		onMove()
-		_delegates.allObjects.forEach{$0.canvasObjectMoved(obj: self)}
+	private func updateOutlineWidth() {
+		let width: CGFloat
+		switch CurrentState {
+		case .normal:
+			width = 4.0
+		case .primed:
+			width = 8.0
+		case .selected:
+			width = 12.0
+		}
+		_outlineLayer.lineWidth = width
 	}
 	
 	func setParallelLayer(state: Bool) {
@@ -235,6 +219,23 @@ class CanvasObject: NSView {
 		_entryLayer.opacity = state ? 1.0 : 0.0
 	}
 	
+	// MARK: - Delegates
+	func add(delegate: CanvasObjectDelegate) {
+		_delegates.add(delegate)
+	}
+	func remove(delegate: CanvasObjectDelegate) {
+		_delegates.remove(delegate)
+		// not strictly necesary as NSHashTable removes nil values from allObjects
+	}
+	
+	// MARK: - Public
+	func move(to: CGPoint) {
+		frame.origin = to
+		didMove()
+		_delegates.allObjects.forEach{$0.canvasObjectMoved(obj: self)}
+	}
+	
+	// MARK: - Internal Callbacks
 	@objc private func _onClick(gesture: NSClickGestureRecognizer) {
 		let append = NSApp.currentEvent?.modifierFlags.contains(.shift) ?? false
 		if append {
@@ -248,13 +249,16 @@ class CanvasObject: NSView {
 		}
 		onClick(gesture: gesture)
 	}
+	
 	@objc private func _onDoubleClick(gesture: NSClickGestureRecognizer) {
 		onDoubleClick(gesture: gesture)
 	}
+	
 	@objc private func _onContextClick(gesture: NSClickGestureRecognizer) {
 		NSMenu.popUpContextMenu(ContextMenu, with: NSApp.currentEvent!, for: self)
 		onContextClick(gesture: gesture)
 	}
+	
 	@objc private func _onPan(gesture: NSPanGestureRecognizer) {
 		switch gesture.state {
 		case .began:
@@ -279,45 +283,73 @@ class CanvasObject: NSView {
 		onPan(gesture: gesture)
 	}
 	
-	//
-	// virtual functions
+	// MARK: - Virtual Functions -
+	// MARK: Styling/Drawing
+	func objectRect() -> NSRect {
+		// rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
+		return bounds
+	}
+	
 	func shapeRoundness() -> CGFloat {
-		return CanvasObject.Roundness
+		// roundness of background where 0 is square and 1 is circle
+		return 0.075
 	}
+	
 	func layoutStyle() -> LayoutStyle {
-		return .iconFlagText
+		// the layout (beyond the bg) of the object; used for different drawing styles by derivatives
+		return .standard
 	}
+	
+	func hasParallelLayer() -> Bool {
+		// does the node have a parallel layer? false is mostly for optimization (does not add it)
+		return true
+	}
+	
+	func hasEntryLayer() -> Bool {
+		// does the node have an entry layer? false is mostly for optimization (does not add it)
+		return true
+	}
+	
+	func mainColor() -> NSColor {
+		// primary color of the node
+		return NSColor.fromHex("#FF00FF")
+	}
+	
+	func labelString() -> String {
+		// for derived classes to return the model object's label as everything has this
+		return "Alan, please implement this."
+	}
+	
+	func iconImage() -> NSImage? {
+		return NSImage(named: NSImage.cautionName)
+	}
+	
+	// MARK: (Internal) Callbacks
 	func onClick(gesture: NSClickGestureRecognizer) {
 	}
+	
 	func onDoubleClick(gesture: NSClickGestureRecognizer) {
 		// send double click notification
 		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil, userInfo: [
 			"object": self
 		])
 	}
+	
 	func onContextClick(gesture: NSClickGestureRecognizer) {
 	}
+	
 	func onPan(gesture: NSPanGestureRecognizer) {
 	}
-	func onMove() {
+	
+	// MARK: (Other) Callbacks
+	func didMove() {
+		// literal movement on the canvas, i.e. self.frame.origin changed
 	}
-	func onStateChanged() {
-		setupOutlineLayer()
+	
+	func stateDidChange() {
+		updateOutlineWidth()
 	}
-	func mainColor() -> NSColor {
-		return NSColor.fromHex("#FF00FF")
-	}
-	func labelString() -> String {
-		// for derived classes to return the model object's label as everything has this
-		return "Alan, please implement this."
-	}
-	func icon() -> NSImage? {
-		return NSImage(named: NSImage.cautionName)
-	}
-	func objectRect() -> NSRect {
-		 // rect within the object's bounds that are the "main" object (used mostly for when the frame is expanded but the object shouldn't change size)
-		return bounds
-	}
+
 	func reloadData() {
 		_labelLayer.string = labelString()
 	}
