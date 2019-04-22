@@ -305,6 +305,34 @@ class CanvasLink: NSView {
 		print("Alan, please override.")
 	}
 	func canlinkTo(obj: CanvasObject) -> Bool {
+		// unique handling for hubs as their behavior is different
+		if (Origin.Linkable is NVHub) {
+			// cannot link back to themselves (but can link to other hubs)
+			if Origin.Linkable.UUID == obj.Linkable.UUID {
+				return false
+			}
+			
+			// handle connecting to object types
+			switch obj {
+			case let seq as CanvasSequence:
+				if seq.nvSequence().Parallel {
+					return false
+				}
+				
+			case let evt as CanvasEvent:
+				if evt.nvEvent().Parallel {
+					return false
+				}
+				
+			default:
+				return false // don't know what this is (likely a Group, etc.), don't allow it
+			}
+			
+			return true
+		}
+		
+		// handle everything else...
+		
 		// must be same type or a hub
 		if type(of: obj.Linkable) != type(of: Origin.Linkable) && !(obj.Linkable is NVHub) {
 			return false
@@ -323,7 +351,7 @@ class CanvasLink: NSView {
 			}
 			
 		default:
-			break
+			return false
 		}
 		
 		return true
