@@ -129,6 +129,42 @@ extension Document {
 		}
 	}
 	
+	fileprivate func parseHub(hub: JSON, id: NSUUID) {
+		let entry = Story.makeHub(uuid: id)
+		entry.Label = hub["label"].stringValue
+		
+		//position (x/y)
+		Positions[id] = NSMakePoint(CGFloat(hub["position"]["x"].floatValue), CGFloat(hub["position"]["y"].floatValue))
+		
+		// condition
+		let _: NVCondition? = findbyIDFromJSON(json: hub, name: "condition", checkEmpty: true, onSuccess: { (found) in
+			entry.Condition = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Condition by ID (\(searchedID)) when setting Hub's Condition (\(id.uuidString)).")
+		})
+		
+		// entryfunction
+		let _: NVFunction? = findbyIDFromJSON(json: hub, name: "entryfunction", checkEmpty: true, onSuccess: { (found) in
+			entry.EntryFunction = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Function by ID (\(searchedID)) when setting Hub's EntryFunction (\(id.uuidString)).")
+		})
+		
+		// returnfunction
+		let _: NVFunction? = findbyIDFromJSON(json: hub, name: "returnfunction", checkEmpty: true, onSuccess: {(found) in
+			entry.ReturnFunction = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Function by ID (\(searchedID)) when setting Hub's ReturnFunction (\(id.uuidString)).")
+		})
+		
+		// exitfunction
+		let _: NVFunction? = findbyIDFromJSON(json: hub, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
+			entry.ExitFunction = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Function by ID (\(searchedID)) when setting Hub's ExitFunction (\(id.uuidString)).")
+		})
+	}
+	
 	fileprivate func parseSequence(sequence: JSON, id: NSUUID) {
 		let entry = Story.makeSequence(uuid: id)
 		entry.Label = sequence["label"].stringValue
@@ -168,6 +204,16 @@ extension Document {
 				entry.add(event: found)
 			} else {
 				Swift.print("Unable to find Event by ID (\(childID)) when adding an Entry to Sequence (\(id.uuidString)).")
+			}
+		}
+		
+		// hubs
+		sequence["hubs"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVHub {
+				entry.add(hub: found)
+			} else {
+				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to Sequence (\(id.uuidString)).")
 			}
 		}
 		
@@ -222,7 +268,17 @@ extension Document {
 			if let found = Story.find(uuid: childID) as? NVEvent {
 				entry.add(event: found)
 			} else {
-				Swift.print("Unable to find Event by ID (\(childID)) when adding an Entry to Sequence (\(id.uuidString)).")
+				Swift.print("Unable to find Event by ID (\(childID)) when adding an Entry to DiscoverableSequence (\(id.uuidString)).")
+			}
+		}
+		
+		// hubs
+		discoverable["hubs"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVHub {
+				entry.add(hub: found)
+			} else {
+				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to DiscoverableSequence (\(id.uuidString)).")
 			}
 		}
 		
@@ -230,7 +286,7 @@ extension Document {
 		let _: NVEvent? = findbyIDFromJSON(json: discoverable, name: "entry", checkEmpty: true, onSuccess: {(found) in
 			entry.Entry = found
 		}, onFail: {(searchedID) in
-			Swift.print("Unable to find Event by ID (\(searchedID)) when setting Sequence's Entry (\(id.uuidString)).")
+			Swift.print("Unable to find Event by ID (\(searchedID)) when setting DiscoverableSequence's Entry (\(id.uuidString)).")
 		})
 		
 		// discoverable narrative matrix enums
@@ -283,6 +339,16 @@ extension Document {
 				entry.add(sequence: found)
 			} else {
 				Swift.print("Unable to find Sequence by ID (\(childID)) when adding an Entry to Group (\(id.uuidString)).")
+			}
+		}
+		
+		// hubs
+		group["hubs"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVHub {
+				entry.add(hub: found)
+			} else {
+				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to Group (\(id.uuidString)).")
 			}
 		}
 		
@@ -350,6 +416,15 @@ extension Document {
 				continue
 			}
 			parseEntity(entity: entity, id: id)
+		}
+		
+		// read hubs
+		for hub in json["hubs"].arrayValue {
+			guard let id = NSUUID(uuidString: hub["id"].stringValue) else {
+				Swift.print("Failed to load Hub as the ID was invalid (\(hub["id"].stringValue)).")
+				continue
+			}
+			parseHub(hub: hub, id: id)
 		}
 		
 		// read events
@@ -516,6 +591,15 @@ extension Document {
 				Story.MainGroup.add(group: found)
 			} else {
 				Swift.print("Unable to find Group by ID (\(childID)) when adding a Group to the Main Group.")
+			}
+		}
+		// hubs
+		mainGroup["hubs"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVHub {
+				Story.MainGroup.add(hub: found)
+			} else {
+				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to the Main Group.")
 			}
 		}
 		// links

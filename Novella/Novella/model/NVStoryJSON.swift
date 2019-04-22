@@ -145,6 +145,20 @@ extension NVStory {
 		}
 		root["events"] = events
 		
+		// hubs
+		var hubs: [JSONDict] = []
+		self.Hubs.forEach { (hub) in
+			var entry: JSONDict = [:]
+			entry["id"] = hub.UUID.uuidString
+			entry["label"] = hub.Label
+			entry["condition"] = hub.Condition?.UUID.uuidString ?? ""
+			entry["entryfunction"] = hub.EntryFunction?.UUID.uuidString ?? ""
+			entry["returnfunction"] = hub.ReturnFunction?.UUID.uuidString ?? ""
+			entry["exitfunction"] = hub.ExitFunction?.UUID.uuidString ?? ""
+			hubs.append(entry)
+		}
+		root["hubs"] = hubs
+		
 		// main group
 		root["maingroup"] = groupToJSON(group: self.MainGroup)
 		
@@ -182,6 +196,7 @@ extension NVStory {
 		entry["sequences"] = group.Sequences.map{$0.UUID.uuidString}
 		entry["links"] = group.Links.map{$0.UUID.uuidString}
 		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
+		entry["hubs"] = group.Hubs.map{$0.UUID.uuidString}
 		
 		var attribs: JSONDict = [:]
 		for (attrKey, attrValue) in group.Attributes {
@@ -206,6 +221,7 @@ extension NVStory {
 		entry["entry"] = sequence.Entry?.UUID.uuidString ?? ""
 		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
 		entry["links"] = sequence.Links.map{$0.UUID.uuidString}
+		entry["hubs"] = sequence.Hubs.map{$0.UUID.uuidString}
 		
 		var attribs: JSONDict = [:]
 		for (attrKey, attrValue) in sequence.Attributes {
