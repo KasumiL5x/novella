@@ -350,6 +350,9 @@ class CanvasLink: NSView {
 				return false
 			}
 			
+		case is CanvasHub:
+			return true // always accept hubs
+			
 		default:
 			return false
 		}
