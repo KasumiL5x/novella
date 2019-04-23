@@ -38,11 +38,17 @@ class OutlinerViewController: NSViewController {
 extension OutlinerViewController: NSOutlineViewDelegate {
 	func labelFor(linkable: NVLinkable?) -> String {
 		switch linkable {
+		case let grp as NVGroup:
+			return grp.Label.isEmpty ? "Unnamed" : grp.Label
+			
 		case let seq as NVSequence:
 			return seq.Label.isEmpty ? "Unnamed" : seq.Label
 			
 		case let evt as NVEvent:
 			return evt.Label.isEmpty ? "Unnamed" : evt.Label
+			
+		case let hub as NVHub:
+			return hub.Label.isEmpty ? "Unnamed" : hub.Label
 			
 		case nil:
 			return "nil"
@@ -69,11 +75,11 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 		
 		switch item {
 		case let asGroup as NVGroup:
-			(view as? NSTableCellView)?.textField?.stringValue = asGroup.Label
+			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asGroup)
 			(view as? NSTableCellView)?.imageView?.image = _groupImage ?? NSImage(named: NSImage.cautionName)
 			
 		case let asSequence as NVSequence:
-			(view as? NSTableCellView)?.textField?.stringValue = asSequence.Label
+			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asSequence)
 			(view as? NSTableCellView)?.imageView?.image = _sequenceImage ?? NSImage(named: NSImage.cautionName)
 			
 		case let asLink as NVLink:
@@ -81,8 +87,12 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			(view as? NSTableCellView)?.imageView?.image = _linkIcon ?? NSImage(named: NSImage.cautionName)
 			
 		case let asEvent as NVEvent:
-			(view as? NSTableCellView)?.textField?.stringValue = asEvent.Label
+			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asEvent)
 			(view as? NSTableCellView)?.imageView?.image = _eventImage ?? NSImage(named: NSImage.cautionName)
+			
+		case let asHub as NVHub:
+			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asHub)
+			(view as? NSTableCellView)?.imageView?.image = NSImage(named: NSImage.cautionName)
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"
@@ -100,10 +110,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 		
 		switch item {
 		case let asGroup as NVGroup:
-			return (asGroup.Sequences.count + asGroup.Links.count + asGroup.Groups.count) // ordering is mirrored below
+			return (asGroup.Sequences.count + asGroup.Links.count + asGroup.Groups.count + asGroup.Hubs.count) // ordering is mirrored below
 			
 		case let asSequence as NVSequence:
-			return (asSequence.Events.count + asSequence.Links.count) // ordering is mirrored below
+			return (asSequence.Events.count + asSequence.Links.count + asSequence.Hubs.count) // ordering is mirrored below
 			
 		default:
 			return 0
@@ -133,6 +143,11 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 			}
 			offset += asGroup.Groups.count
 			
+			if index < (asGroup.Hubs.count + offset) {
+				return asGroup.Hubs[index - offset]
+			}
+			offset += asGroup.Hubs.count
+			
 			fatalError()
 			
 		case let asSequence as NVSequence:
@@ -145,6 +160,11 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 				return asSequence.Links[index - offset]
 			}
 			offset += asSequence.Links.count
+			
+			if index < (asSequence.Hubs.count + offset) {
+				return asSequence.Hubs[index - offset]
+			}
+			offset += asSequence.Hubs.count
 			
 			fatalError()
 			
@@ -198,6 +218,14 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
+	func nvGroupDidAddHub(story: NVStory, group: NVGroup, hub: NVHub) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveHub(story: NVStory, group: NVGroup, hub: NVHub) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
 	// MARK: - Sequences
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		_outlineView.reloadItem(sequence)
@@ -222,6 +250,14 @@ extension OutlinerViewController: NVStoryObserver {
 	}
 	
 	func nvSequenceDidRemoveLink(story: NVStory, sequence: NVSequence, link: NVLink) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvSequenceDidAddHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvSequenceDidRemoveHub(story: NVStory, sequence: NVSequence, hub: NVHub) {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
