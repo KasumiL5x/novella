@@ -9,7 +9,10 @@
 import Cocoa
 
 class CanvasHub: CanvasObject {
+	private let _popover: HubPopover
+	
 	init(canvas: Canvas, hub: NVHub) {
+		self._popover = HubPopover()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1), linkable: hub)
 		
 		ContextMenu.addItem(withTitle: "Add Link", action: #selector(CanvasHub.onAddLink), keyEquivalent: "")
@@ -33,7 +36,8 @@ class CanvasHub: CanvasObject {
 	}
 	
 	@objc private func onEdit() {
-		fatalError()
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(hub: self, doc: _canvas.Doc)
 	}
 	
 	@objc private func onDelete() {
@@ -63,6 +67,12 @@ class CanvasHub: CanvasObject {
 	}
 	override func labelString() -> String {
 		return "HUB"
+	}
+	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
+		super.onDoubleClick(gesture: gesture)
+		
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(hub: self, doc: _canvas.Doc)
 	}
 	override func didMove() {
 		super.didMove()

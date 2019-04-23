@@ -24,6 +24,8 @@
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
 		655D4804225A8A320001AA73 /* AttributeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655D4803225A8A320001AA73 /* AttributeTableView.swift */; };
 		656C141E2254B8A6002A6144 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656C141D2254B8A6002A6144 /* Curve.swift */; };
+		65706E38226EE8AC000A61CD /* HubPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */; };
+		65706E3A226EEB76000A61CD /* HubPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65706E39226EEB76000A61CD /* HubPopover.swift */; };
 		657946EB22612A6900D502F8 /* NVLinkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657946EA22612A6900D502F8 /* NVLinkable.swift */; };
 		657DBAAF2142587B00C7CF17 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657DBAAE2142587B00C7CF17 /* Highlightr.framework */; };
 		65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */; };
@@ -102,6 +104,8 @@
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
 		655D4803225A8A320001AA73 /* AttributeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableView.swift; sourceTree = "<group>"; };
 		656C141D2254B8A6002A6144 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
+		65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubPopoverViewController.swift; sourceTree = "<group>"; };
+		65706E39226EEB76000A61CD /* HubPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubPopover.swift; sourceTree = "<group>"; };
 		657946EA22612A6900D502F8 /* NVLinkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVLinkable.swift; sourceTree = "<group>"; };
 		657DBAAE2142587B00C7CF17 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 		65AE3DB421C3B8B10026DDE1 /* NSView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Nib.swift"; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				65155A45225C7D290041ED74 /* SequencePopover.swift */,
 				65F8171B225D14E1006136C2 /* EventPopover.swift */,
 				65D78C6D225DC44900DE24B7 /* LinkPopover.swift */,
+				65706E39226EEB76000A61CD /* HubPopover.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				65155A43225C7CF30041ED74 /* SequencePopoverViewController.swift */,
 				65F81719225D14CA006136C2 /* EventPopoverViewController.swift */,
 				65D78C6B225DC42A00DE24B7 /* LinkPopoverViewController.swift */,
+				65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -449,12 +455,14 @@
 				DF94929B21B9848E00BC8AB0 /* CanvasMarquee.swift in Sources */,
 				65BE159F22666B4E00A04FE5 /* EntitiesEditorViewController.swift in Sources */,
 				DF94929021B96F9F00BC8AB0 /* CanvasBackground.swift in Sources */,
+				65706E3A226EEB76000A61CD /* HubPopover.swift in Sources */,
 				65D78C74225DCB9B00DE24B7 /* Alerts.swift in Sources */,
 				DFCE6041211C3D20005900D8 /* AppDelegate.swift in Sources */,
 				65FDF7AA21C1D01C00A8EFAA /* OutlinerViewController.swift in Sources */,
 				65AEA63F21BEEC1800D288F0 /* CanvasBench.swift in Sources */,
 				DF94928521B96D6F00BC8AB0 /* NVFunction.swift in Sources */,
 				DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */,
+				65706E38226EE8AC000A61CD /* HubPopoverViewController.swift in Sources */,
 				65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */,
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,

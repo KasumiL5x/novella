@@ -273,6 +273,18 @@ extension OutlinerViewController: NVStoryObserver {
 		}
 	}
 	
+	// MARK: - Hubs
+	func nvHubLabelDidChange(story: NVStory, hub: NVHub) {
+		_outlineView.reloadItem(hub)
+		
+		for i in 0..<_outlineView.numberOfRows {
+			let item = _outlineView.item(atRow: i)
+			if let asLink = item as? NVLink, asLink.Origin.UUID == hub.UUID || asLink.Destination?.UUID == hub.UUID {
+				_outlineView.reloadItem(item)
+			}
+		}
+	}
+	
 	// MARK: - Links
 	func nvLinkDestinationChanged(story: NVStory, link: NVLink) {
 		_outlineView.reloadItem(link)
