@@ -63,6 +63,9 @@ class CanvasReturn: CanvasObject {
 	override func labelString() -> String {
 		return "Return"
 	}
+	override func iconImage() -> NSImage? {
+		return NSImage(named: "NVReturn")
+	}
 	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
 		super.onDoubleClick(gesture: gesture)
 		

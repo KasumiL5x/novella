@@ -16,12 +16,14 @@ class OutlinerViewController: NSViewController {
 	private var _groupImage: NSImage?
 	private var _sequenceImage: NSImage?
 	private var _eventImage: NSImage?
+	private var _returnImage: NSImage?
 	
 	override func viewDidLoad() {
 		_linkIcon = NSImage(named: "NVLink")
 		_groupImage = NSImage(named: "NVGroup")
 		_sequenceImage = NSImage(named: "NVSequence")
 		_eventImage = NSImage(named: "NVEvent")
+		_returnImage = NSImage(named: "NVReturn")
 		
 		_outlineView.delegate = self
 		_outlineView.dataSource = self
@@ -99,7 +101,7 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			
 		case let asReturn as NVReturn:
 			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asReturn)
-			(view as? NSTableCellView)?.imageView?.image = NSImage(named: NSImage.cautionName)
+			(view as? NSTableCellView)?.imageView?.image = _returnImage ?? NSImage(named: NSImage.cautionName)
 			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"
