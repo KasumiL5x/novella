@@ -9,6 +9,9 @@ novella/Carthage/Build
 # comment out this line to commit downloaded libraries
 novella/Carthage/Checkouts
 
+# assets export folder
+assets/export
+
 # GitHub Pages/Jekyll Stuff
 docs/_site
 docs/.sass-cache
