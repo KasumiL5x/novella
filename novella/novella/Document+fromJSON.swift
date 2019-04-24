@@ -165,6 +165,21 @@ extension Document {
 		})
 	}
 	
+	fileprivate func parseReturn(rtrn: JSON, id: NSUUID) {
+		let entry = Story.makeReturn(uuid: id)
+		entry.Label = rtrn["label"].stringValue
+		
+		//position (x/y)
+		Positions[id] = NSMakePoint(CGFloat(rtrn["position"]["x"].floatValue), CGFloat(rtrn["position"]["y"].floatValue))
+		
+		// exitfunction
+		let _: NVFunction? = findbyIDFromJSON(json: rtrn, name: "exitfunction", checkEmpty: true, onSuccess: {(found) in
+			entry.ExitFunction = found
+		}, onFail: {(searchedID) in
+			Swift.print("Unable to find Function by ID (\(searchedID)) when setting Return's ExitFunction (\(id.uuidString)).")
+		})
+	}
+	
 	fileprivate func parseSequence(sequence: JSON, id: NSUUID) {
 		let entry = Story.makeSequence(uuid: id)
 		entry.Label = sequence["label"].stringValue
@@ -214,6 +229,16 @@ extension Document {
 				entry.add(hub: found)
 			} else {
 				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to Sequence (\(id.uuidString)).")
+			}
+		}
+		
+		// returns
+		sequence["returns"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVReturn {
+				entry.add(rtrn: found)
+			} else {
+				Swift.print("Unable to find Return by ID (\(childID)) when adding Return to Sequence (\(id.uuidString)).")
 			}
 		}
 		
@@ -279,6 +304,16 @@ extension Document {
 				entry.add(hub: found)
 			} else {
 				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to DiscoverableSequence (\(id.uuidString)).")
+			}
+		}
+		
+		// returns
+		discoverable["returns"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVReturn {
+				entry.add(rtrn: found)
+			} else {
+				Swift.print("Unable to find Return by ID (\(childID)) when adding Return to DiscoverableSequence (\(id.uuidString)).")
 			}
 		}
 		
@@ -349,6 +384,16 @@ extension Document {
 				entry.add(hub: found)
 			} else {
 				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to Group (\(id.uuidString)).")
+			}
+		}
+		
+		// returns
+		group["returns"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVReturn {
+				entry.add(rtrn: found)
+			} else {
+				Swift.print("Unable to find Return by ID (\(childID)) when adding Return to Group (\(id.uuidString)).")
 			}
 		}
 		
@@ -425,6 +470,15 @@ extension Document {
 				continue
 			}
 			parseHub(hub: hub, id: id)
+		}
+		
+		// read returns
+		for rtrn in json["returns"].arrayValue {
+			guard let id = NSUUID(uuidString: rtrn["id"].stringValue) else {
+				Swift.print("Failed to load Return as the ID was invalid (\(rtrn["id"].stringValue)).")
+				continue
+			}
+			parseReturn(rtrn: rtrn, id: id)
 		}
 		
 		// read events
@@ -600,6 +654,15 @@ extension Document {
 				Story.MainGroup.add(hub: found)
 			} else {
 				Swift.print("Unable to find Hub by ID (\(childID)) when adding a Hub to the Main Group.")
+			}
+		}
+		// returns
+		mainGroup["returns"].arrayValue.forEach { (child) in
+			let childID = child.stringValue
+			if let found = Story.find(uuid: childID) as? NVReturn {
+				Story.MainGroup.add(rtrn: found)
+			} else {
+				Swift.print("Unable to find Return by ID (\(childID)) when adding Return to the Main Group.")
 			}
 		}
 		// links

@@ -159,6 +159,17 @@ extension NVStory {
 		}
 		root["hubs"] = hubs
 		
+		// returns
+		var rtrns: [JSONDict] = []
+		self.Returns.forEach { (rtrn) in
+			var entry: JSONDict = [:]
+			entry["id"] = rtrn.UUID.uuidString
+			entry["label"] = rtrn.Label
+			entry["exitfunction"] = rtrn.ExitFunction?.UUID.uuidString ?? ""
+			rtrns.append(entry)
+		}
+		root["returns"] = rtrns
+		
 		// main group
 		root["maingroup"] = groupToJSON(group: self.MainGroup)
 		
@@ -197,6 +208,7 @@ extension NVStory {
 		entry["links"] = group.Links.map{$0.UUID.uuidString}
 		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
 		entry["hubs"] = group.Hubs.map{$0.UUID.uuidString}
+		entry["returns"] = group.Returns.map{$0.UUID.uuidString}
 		
 		var attribs: JSONDict = [:]
 		for (attrKey, attrValue) in group.Attributes {
@@ -222,6 +234,7 @@ extension NVStory {
 		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
 		entry["links"] = sequence.Links.map{$0.UUID.uuidString}
 		entry["hubs"] = sequence.Hubs.map{$0.UUID.uuidString}
+		entry["returns"] = sequence.Returns.map{$0.UUID.uuidString}
 		
 		var attribs: JSONDict = [:]
 		for (attrKey, attrValue) in sequence.Attributes {

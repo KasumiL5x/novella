@@ -221,6 +221,24 @@ extension Document {
 		}
 		root["hubs"] = hubs
 		
+		// returns
+		var rtrns: [JSONDict] = []
+		Story.Returns.forEach { (rtrn) in
+			var entry: JSONDict = [:]
+			entry["id"] = rtrn.UUID.uuidString
+			entry["label"] = rtrn.Label
+			entry["exitfunction"] = rtrn.ExitFunction?.UUID.uuidString ?? ""
+			
+			let pos = Positions[rtrn.UUID] ?? CGPoint.zero
+			entry["position"] = [
+				"x": pos.x,
+				"y": pos.y
+			]
+			
+			rtrns.append(entry)
+		}
+		root["returns"] = rtrns
+		
 		// main group
 		root["maingroup"] = groupToJSON(group: Story.MainGroup)
 		
@@ -259,6 +277,7 @@ extension Document {
 		entry["links"] = group.Links.map{$0.UUID.uuidString}
 		entry["groups"] = group.Groups.map{$0.UUID.uuidString}
 		entry["hubs"] = group.Hubs.map{$0.UUID.uuidString}
+		entry["returns"] = group.Returns.map{$0.UUID.uuidString}
 		
 		let pos = Positions[group.UUID] ?? CGPoint.zero
 		entry["position"] = [
@@ -290,6 +309,7 @@ extension Document {
 		entry["events"] = sequence.Events.map{$0.UUID.uuidString}
 		entry["links"] = sequence.Links.map{$0.UUID.uuidString}
 		entry["hubs"] = sequence.Hubs.map{$0.UUID.uuidString}
+		entry["returns"] = sequence.Returns.map{$0.UUID.uuidString}
 		
 		let pos = Positions[sequence.UUID] ?? CGPoint.zero
 		entry["position"] = [
