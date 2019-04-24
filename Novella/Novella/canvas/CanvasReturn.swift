@@ -9,8 +9,10 @@
 import Cocoa
 
 class CanvasReturn: CanvasObject {
+	private let _popover: ReturnPopover
 	
 	init(canvas: Canvas, rtrn: NVReturn) {
+		self._popover = ReturnPopover()
 		super.init(canvas: canvas, frame: NSMakeRect(0, 0, 1, 1), linkable: rtrn)
 		
 		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasReturn.onEdit), keyEquivalent: "")
@@ -29,7 +31,8 @@ class CanvasReturn: CanvasObject {
 	}
 	
 	@objc private func onEdit() {
-		fatalError()
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(rtrn: self, doc: _canvas.Doc)
 	}
 	
 	@objc private func onDelete() {
@@ -63,7 +66,8 @@ class CanvasReturn: CanvasObject {
 	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
 		super.onDoubleClick(gesture: gesture)
 		
-		fatalError()
+		_popover.show(forView: self, at: .maxX)
+		_popover.setup(rtrn: self, doc: _canvas.Doc)
 	}
 	override func didMove() {
 		super.didMove()

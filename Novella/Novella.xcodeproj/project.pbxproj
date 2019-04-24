@@ -23,6 +23,8 @@
 		6550AA6F224424950032232A /* NVSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550AA6E224424950032232A /* NVSelector.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
 		655B9734227035D90059626B /* CanvasReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B9733227035D90059626B /* CanvasReturn.swift */; };
+		655B973622703EE20059626B /* ReturnPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B973522703EE20059626B /* ReturnPopoverViewController.swift */; };
+		655B973822703FEC0059626B /* ReturnPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B973722703FEC0059626B /* ReturnPopover.swift */; };
 		655D4804225A8A320001AA73 /* AttributeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655D4803225A8A320001AA73 /* AttributeTableView.swift */; };
 		656C141E2254B8A6002A6144 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656C141D2254B8A6002A6144 /* Curve.swift */; };
 		65706E38226EE8AC000A61CD /* HubPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */; };
@@ -104,6 +106,8 @@
 		6550AA6E224424950032232A /* NVSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSelector.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
 		655B9733227035D90059626B /* CanvasReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasReturn.swift; sourceTree = "<group>"; };
+		655B973522703EE20059626B /* ReturnPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnPopoverViewController.swift; sourceTree = "<group>"; };
+		655B973722703FEC0059626B /* ReturnPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnPopover.swift; sourceTree = "<group>"; };
 		655D4803225A8A320001AA73 /* AttributeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableView.swift; sourceTree = "<group>"; };
 		656C141D2254B8A6002A6144 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubPopoverViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				65F8171B225D14E1006136C2 /* EventPopover.swift */,
 				65D78C6D225DC44900DE24B7 /* LinkPopover.swift */,
 				65706E39226EEB76000A61CD /* HubPopover.swift */,
+				655B973722703FEC0059626B /* ReturnPopover.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 				65F81719225D14CA006136C2 /* EventPopoverViewController.swift */,
 				65D78C6B225DC42A00DE24B7 /* LinkPopoverViewController.swift */,
 				65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */,
+				655B973522703EE20059626B /* ReturnPopoverViewController.swift */,
 			);
 			path = popovers;
 			sourceTree = "<group>";
@@ -278,7 +284,6 @@
 			isa = PBXGroup;
 			children = (
 				DF94928D21B96F8C00BC8AB0 /* Canvas.swift */,
-				655B9733227035D90059626B /* CanvasReturn.swift */,
 				DF94928F21B96F9F00BC8AB0 /* CanvasBackground.swift */,
 				65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */,
 				DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */,
@@ -287,6 +292,7 @@
 				DF93F60A21BD992D00CF5B03 /* CanvasLink.swift */,
 				DF94929A21B9848E00BC8AB0 /* CanvasMarquee.swift */,
 				DF94929821B9838F00BC8AB0 /* CanvasObject.swift */,
+				655B9733227035D90059626B /* CanvasReturn.swift */,
 				DF9492A821BA82ED00BC8AB0 /* CanvasSelection.swift */,
 				DF94929E21B98A9A00BC8AB0 /* CanvasSequence.swift */,
 			);
@@ -467,6 +473,7 @@
 				DF94928821B96D6F00BC8AB0 /* NVGroup.swift in Sources */,
 				65706E38226EE8AC000A61CD /* HubPopoverViewController.swift in Sources */,
 				65E1B36A2259EDBF00D31884 /* GroupPopover.swift in Sources */,
+				655B973822703FEC0059626B /* ReturnPopover.swift in Sources */,
 				DF94927D21B96D6F00BC8AB0 /* NVUtil.swift in Sources */,
 				DFCE6045211C3D20005900D8 /* Document.swift in Sources */,
 				65F8171A225D14CA006136C2 /* EventPopoverViewController.swift in Sources */,
@@ -487,6 +494,7 @@
 				DF93F60B21BD992D00CF5B03 /* CanvasLink.swift in Sources */,
 				DF94929F21B98A9A00BC8AB0 /* CanvasSequence.swift in Sources */,
 				65D78C6E225DC44900DE24B7 /* LinkPopover.swift in Sources */,
+				655B973622703EE20059626B /* ReturnPopoverViewController.swift in Sources */,
 				DF94927E21B96D6F00BC8AB0 /* NVEntity.swift in Sources */,
 				DF94928021B96D6F00BC8AB0 /* NVCondition.swift in Sources */,
 				DF94928621B96D6F00BC8AB0 /* NVIdentifiable.swift in Sources */,
