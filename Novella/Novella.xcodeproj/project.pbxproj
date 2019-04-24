@@ -22,6 +22,7 @@
 		6550AA6D224415570032232A /* NVStoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550AA6C224415570032232A /* NVStoryObserver.swift */; };
 		6550AA6F224424950032232A /* NVSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550AA6E224424950032232A /* NVSelector.swift */; };
 		655864E621C7F6D40080EDFB /* NSRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655864E521C7F6D40080EDFB /* NSRect+Center.swift */; };
+		655B9734227035D90059626B /* CanvasReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655B9733227035D90059626B /* CanvasReturn.swift */; };
 		655D4804225A8A320001AA73 /* AttributeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655D4803225A8A320001AA73 /* AttributeTableView.swift */; };
 		656C141E2254B8A6002A6144 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656C141D2254B8A6002A6144 /* Curve.swift */; };
 		65706E38226EE8AC000A61CD /* HubPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */; };
@@ -102,6 +103,7 @@
 		6550AA6C224415570032232A /* NVStoryObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVStoryObserver.swift; sourceTree = "<group>"; };
 		6550AA6E224424950032232A /* NVSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVSelector.swift; sourceTree = "<group>"; };
 		655864E521C7F6D40080EDFB /* NSRect+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Center.swift"; sourceTree = "<group>"; };
+		655B9733227035D90059626B /* CanvasReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasReturn.swift; sourceTree = "<group>"; };
 		655D4803225A8A320001AA73 /* AttributeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTableView.swift; sourceTree = "<group>"; };
 		656C141D2254B8A6002A6144 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		65706E37226EE8AC000A61CD /* HubPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubPopoverViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				DF94928D21B96F8C00BC8AB0 /* Canvas.swift */,
+				655B9733227035D90059626B /* CanvasReturn.swift */,
 				DF94928F21B96F9F00BC8AB0 /* CanvasBackground.swift */,
 				65AEA63E21BEEC1800D288F0 /* CanvasBench.swift */,
 				DF9492A021B98AA100BC8AB0 /* CanvasEvent.swift */,
@@ -494,6 +497,7 @@
 				DF94929921B9838F00BC8AB0 /* CanvasObject.swift in Sources */,
 				DF94928221B96D6F00BC8AB0 /* NVValue.swift in Sources */,
 				65AE3DB521C3B8B10026DDE1 /* NSView+Nib.swift in Sources */,
+				655B9734227035D90059626B /* CanvasReturn.swift in Sources */,
 				DF94928421B96D6F00BC8AB0 /* NVEvent.swift in Sources */,
 				6550AA6F224424950032232A /* NVSelector.swift in Sources */,
 				DF94929721B9723900BC8AB0 /* GraphViewController.swift in Sources */,

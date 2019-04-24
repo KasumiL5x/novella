@@ -324,6 +324,9 @@ class CanvasLink: NSView {
 					return false
 				}
 				
+			case is CanvasReturn:
+				return true // can always link to
+				
 			default:
 				return false // don't know what this is (likely a Group, etc.), don't allow it
 			}
@@ -333,8 +336,8 @@ class CanvasLink: NSView {
 		
 		// handle everything else...
 		
-		// must be same type or a hub
-		if type(of: obj.Linkable) != type(of: Origin.Linkable) && !(obj.Linkable is NVHub) {
+		// must be same type, or a hub, or a return
+		if type(of: obj.Linkable) != type(of: Origin.Linkable) && !(obj.Linkable is NVHub) && !(obj.Linkable is NVReturn) {
 			return false
 		}
 		
@@ -351,7 +354,10 @@ class CanvasLink: NSView {
 			}
 			
 		case is CanvasHub:
-			return true // always accept hubs
+			return true // can always link to
+			
+		case is CanvasReturn:
+			return true // can always link to
 			
 		default:
 			return false

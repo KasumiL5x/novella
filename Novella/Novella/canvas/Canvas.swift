@@ -26,6 +26,7 @@ class Canvas: NSView {
 	private let _addSequenceMenuItem: NSMenuItem
 	private let _addEventMenuItem: NSMenuItem
 	private let _addHubMenuItem: NSMenuItem
+	private let _addReturnMenuItem: NSMenuItem
 	private let _surfaceMenuItem: NSMenuItem
 	//
 	private var _rmbPanInitialLocation: CGPoint
@@ -49,6 +50,7 @@ class Canvas: NSView {
 		self._addSequenceMenuItem = NSMenuItem(title: "Sequence", action: #selector(Canvas.onContextAddSequence), keyEquivalent: "")
 		self._addEventMenuItem = NSMenuItem(title: "Event", action: #selector(Canvas.onContextAddEvent), keyEquivalent: "")
 		self._addHubMenuItem = NSMenuItem(title: "Hub", action: #selector(Canvas.onContextAddHub), keyEquivalent: "")
+		self._addReturnMenuItem = NSMenuItem(title: "Return", action: #selector(Canvas.onContextAddReturn), keyEquivalent: "")
 		self._surfaceMenuItem = NSMenuItem(title: "Surface", action: #selector(Canvas.onContextSurface), keyEquivalent: "")
 		//
 		self._rmbPanInitialLocation = CGPoint.zero
@@ -78,6 +80,7 @@ class Canvas: NSView {
 		addMenu.addItem(_addSequenceMenuItem)
 		addMenu.addItem(_addEventMenuItem)
 		addMenu.addItem(_addHubMenuItem)
+		addMenu.addItem(_addReturnMenuItem)
 		let addMenuItem = NSMenuItem()
 		addMenuItem.title = "Add..."
 		addMenuItem.submenu = addMenu
@@ -110,6 +113,7 @@ class Canvas: NSView {
 		_addSequenceMenuItem.isEnabled = true
 		_addEventMenuItem.isEnabled = false
 		_addHubMenuItem.isEnabled = true
+		_addReturnMenuItem.isEnabled = true
 		_surfaceMenuItem.isEnabled = group.Parent != nil
 		
 		_allObjects = []
@@ -134,6 +138,10 @@ class Canvas: NSView {
 		for child in group.Hubs {
 			makeHub(nvHub: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
+		// add all child returns
+		for child in group.Returns {
+			makeReturn(nvRtrn: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
 		// add all links
 		for child in group.Links {
 			addLink(link: child)
@@ -153,6 +161,7 @@ class Canvas: NSView {
 		_addSequenceMenuItem.isEnabled = false
 		_addEventMenuItem.isEnabled = true
 		_addHubMenuItem.isEnabled = true
+		_addReturnMenuItem.isEnabled = true
 		_surfaceMenuItem.isEnabled = sequence.Parent != nil
 		
 		_allObjects = []
@@ -172,6 +181,10 @@ class Canvas: NSView {
 		// add all child hubs
 		for child in sequence.Hubs {
 			makeHub(nvHub: child, at: Doc.Positions[child.UUID] ?? centerPoint())
+		}
+		// add all child returns
+		for child in sequence.Returns {
+			makeReturn(nvRtrn: child, at: Doc.Positions[child.UUID] ?? centerPoint())
 		}
 		// add all links
 		for child in sequence.Links {
@@ -353,6 +366,20 @@ class Canvas: NSView {
 		canvasHubFor(nvHub: newHub)?.move(to: _lastContextPos)
 	}
 	
+	@objc private func onContextAddReturn() {
+		if nil == MappedGroup && nil == MappedSequence {
+			return
+		}
+		
+		let newRtrn = Doc.Story.makeReturn()
+		
+		// one of these will succeed, doesn't really matter which
+		MappedGroup?.add(rtrn: newRtrn)
+		MappedSequence?.add(rtrn: newRtrn)
+		
+		canvasReturnFor(nvRtrn: newRtrn)?.move(to: _lastContextPos)
+	}
+	
 	@objc private func onContextSurface() {
 		if let parent = MappedGroup?.Parent {
 			setupFor(group: parent)
@@ -379,6 +406,9 @@ class Canvas: NSView {
 	}
 	func canvasHubFor(nvHub: NVHub) -> CanvasHub? {
 		return (_allObjects.filter{$0 is CanvasHub} as! [CanvasHub]).first(where: {$0.nvHub() == nvHub})
+	}
+	func canvasReturnFor(nvRtrn: NVReturn) -> CanvasReturn? {
+		return (_allObjects.filter{$0 is CanvasReturn} as! [CanvasReturn]).first(where: {$0.nvReturn() == nvRtrn})
 	}
 	
 	// creating canvas elements from novella elements w/o requesting them from the story
@@ -427,6 +457,15 @@ class Canvas: NSView {
 		let bench = makeBench()
 		_allBenches[obj] = bench
 		bench.constrain(to: obj)
+		
+		return obj
+	}
+	@discardableResult private func makeReturn(nvRtrn: NVReturn, at: CGPoint) -> CanvasReturn {
+		let obj = CanvasReturn(canvas: self, rtrn: nvRtrn)
+		_allObjects.append(obj)
+		addSubview(obj, positioned: .below, relativeTo: _marquee)
+		
+		obj.frame.origin = at
 		
 		return obj
 	}
@@ -585,6 +624,25 @@ extension Canvas: NVStoryObserver {
 		}
 	}
 	
+	func nvStoryWillDeleteReturn(story: NVStory, rtrn: NVReturn) {
+		guard let canvasRtrn = canvasReturnFor(nvRtrn: rtrn) else {
+			NVLog.log("Tried to delete Return but couldn't find matching CanvaReturn.", level: .error)
+			return
+		}
+		// remove from canvas
+		canvasRtrn.removeFromSuperview()
+		// remove reference from all objects
+		if let idx = _allObjects.firstIndex(of: canvasRtrn) {
+			_allObjects.remove(at: idx)
+		}
+		// ** doesn't have a bench - don't remove **
+		// redraw any links with this as its destination
+		allLinksTo(linkable: rtrn).forEach{
+			$0.setTarget(nil)
+			$0.redraw()
+		}
+	}
+	
 	func nvStoryWillDeleteLink(story: NVStory, link: NVLink) {
 		// find CanvasObject for the link from its origin
 		guard let canvasObject = canvasObjectFor(linkable: link.Origin) else {
@@ -655,6 +713,13 @@ extension Canvas: NVStoryObserver {
 		makeHub(nvHub: hub, at: Doc.Positions[hub.UUID] ?? centerPoint())
 	}
 	
+	func nvGroupDidAddReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
+		if group != MappedGroup {
+			return
+		}
+		makeReturn(nvRtrn: rtrn, at: Doc.Positions[rtrn.UUID] ?? centerPoint())
+	}
+	
 	// MARK: - Sequence Changes
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		canvasSequenceFor(nvSequence: sequence)?.reloadData()
@@ -685,6 +750,13 @@ extension Canvas: NVStoryObserver {
 			return
 		}
 		makeHub(nvHub: hub, at: Doc.Positions[hub.UUID] ?? centerPoint())
+	}
+	
+	func nvSequenceDidAddReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
+		if sequence != MappedSequence {
+			return
+		}
+		makeReturn(nvRtrn: rtrn, at: Doc.Positions[rtrn.UUID] ?? centerPoint())
 	}
 	
 	// MARK: - Event Changes
