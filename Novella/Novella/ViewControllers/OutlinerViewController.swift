@@ -50,6 +50,9 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 		case let hub as NVHub:
 			return hub.Label.isEmpty ? "Unnamed" : hub.Label
 			
+		case let rtrn as NVReturn:
+			return rtrn.Label.isEmpty ? "Unnamed" : rtrn.Label
+			
 		case nil:
 			return "nil"
 			
@@ -94,6 +97,10 @@ extension OutlinerViewController: NSOutlineViewDelegate {
 			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asHub)
 			(view as? NSTableCellView)?.imageView?.image = NSImage(named: NSImage.cautionName)
 			
+		case let asReturn as NVReturn:
+			(view as? NSTableCellView)?.textField?.stringValue = labelFor(linkable: asReturn)
+			(view as? NSTableCellView)?.imageView?.image = NSImage(named: NSImage.cautionName)
+			
 		default:
 			(view as? NSTableCellView)?.textField?.stringValue = "UNKNOWN TYPE"
 		}
@@ -110,10 +117,10 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 		
 		switch item {
 		case let asGroup as NVGroup:
-			return (asGroup.Sequences.count + asGroup.Links.count + asGroup.Groups.count + asGroup.Hubs.count) // ordering is mirrored below
+			return (asGroup.Sequences.count + asGroup.Links.count + asGroup.Groups.count + asGroup.Hubs.count + asGroup.Returns.count) // ordering is mirrored below
 			
 		case let asSequence as NVSequence:
-			return (asSequence.Events.count + asSequence.Links.count + asSequence.Hubs.count) // ordering is mirrored below
+			return (asSequence.Events.count + asSequence.Links.count + asSequence.Hubs.count + asSequence.Returns.count) // ordering is mirrored below
 			
 		default:
 			return 0
@@ -148,6 +155,11 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 			}
 			offset += asGroup.Hubs.count
 			
+			if index < (asGroup.Returns.count + offset) {
+				return asGroup.Returns[index - offset]
+			}
+			offset += asGroup.Returns.count
+			
 			fatalError()
 			
 		case let asSequence as NVSequence:
@@ -165,6 +177,11 @@ extension OutlinerViewController: NSOutlineViewDataSource {
 				return asSequence.Hubs[index - offset]
 			}
 			offset += asSequence.Hubs.count
+			
+			if index < (asSequence.Returns.count + offset) {
+				return asSequence.Returns[index - offset]
+			}
+			offset += asSequence.Returns.count
 			
 			fatalError()
 			
@@ -226,6 +243,14 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(group, reloadChildren: true)
 	}
 	
+	func nvGroupDidAddReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
+	func nvGroupDidRemoveReturn(story: NVStory, group: NVGroup, rtrn: NVReturn) {
+		_outlineView.reloadItem(group, reloadChildren: true)
+	}
+	
 	// MARK: - Sequences
 	func nvSequenceLabelDidChange(story: NVStory, sequence: NVSequence) {
 		_outlineView.reloadItem(sequence)
@@ -261,6 +286,14 @@ extension OutlinerViewController: NVStoryObserver {
 		_outlineView.reloadItem(sequence, reloadChildren: true)
 	}
 	
+	func nvSequenceDidAddReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
+	func nvSequenceDidRemoveReturn(story: NVStory, sequence: NVSequence, rtrn: NVReturn) {
+		_outlineView.reloadItem(sequence, reloadChildren: true)
+	}
+	
 	// MARK: - Events
 	func nvEventLabelDidChange(story: NVStory, event: NVEvent) {
 		_outlineView.reloadItem(event)
@@ -280,6 +313,18 @@ extension OutlinerViewController: NVStoryObserver {
 		for i in 0..<_outlineView.numberOfRows {
 			let item = _outlineView.item(atRow: i)
 			if let asLink = item as? NVLink, asLink.Origin.UUID == hub.UUID || asLink.Destination?.UUID == hub.UUID {
+				_outlineView.reloadItem(item)
+			}
+		}
+	}
+	
+	// MARK: - Returns
+	func nvReturnLabelDidChange(story: NVStory, rtrn: NVReturn) {
+		_outlineView.reloadItem(rtrn)
+		
+		for i in 0..<_outlineView.numberOfRows {
+			let item = _outlineView.item(atRow: i)
+			if let asLink = item as? NVLink, asLink.Origin.UUID == rtrn.UUID || asLink.Destination?.UUID == rtrn.UUID {
 				_outlineView.reloadItem(item)
 			}
 		}
