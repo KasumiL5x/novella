@@ -22,6 +22,9 @@ class CanvasGroup: CanvasObject {
 		ContextMenu.addItem(withTitle: "Edit...", action: #selector(CanvasGroup.onEdit), keyEquivalent: "")
 		ContextMenu.addItem(NSMenuItem.separator())
 		ContextMenu.addItem(withTitle: "Delete", action: #selector(CanvasGroup.onDelete), keyEquivalent: "")
+		
+		// load initial model data
+		reloadData()
 	}
 	required init?(coder decoder: NSCoder) {
 		fatalError()
