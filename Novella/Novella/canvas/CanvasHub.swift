@@ -66,7 +66,10 @@ class CanvasHub: CanvasObject {
 		return NSColor.fromHex("#B0DB43")//#A379C9 #46B1C9
 	}
 	override func labelString() -> String {
-		return "HUB"
+		return "Hub"
+	}
+	override func iconImage() -> NSImage? {
+		return NSImage(named: "NVHub")
 	}
 	override func onDoubleClick(gesture: NSClickGestureRecognizer) {
 		super.onDoubleClick(gesture: gesture)
