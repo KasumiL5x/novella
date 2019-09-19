@@ -18,7 +18,11 @@ This part is to come.
 ## Research
 This project is part of a PhD on narrative models and authoring systems at Bournemouth University in the UK.  The following literature has been published alongside this project.
 
-(NHT '18) Novella: A Proposition for Game-Based Storytelling
+Green, D., Hargood, C., and Charles, F. (2019). Novella 2.0: A Hypertextual Architecture for Interactive Narrative in Games. ACM Hypertext 2019.
+
+Green, D., Hargood, C., and Charles, F. (2018). Contemporary Issues in Interactive Storytelling Authoring Systems. ICIDS 2018.
+
+Green, D., Hargood, C., Charles, F., and jones, A. (2018). Novella: A Proposition for Game-Based Storytelling. Narrative and Hypertext 2018.
 
 ## Development setup
 Novella is built with Swift 5.0 targeting the latest version of macOS.  Carthage package manager is used for external libraries.
