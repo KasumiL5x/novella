@@ -23,8 +23,8 @@ class GraphViewController: NSViewController {
 		MainCanvas = Canvas(doc: doc)
 		_scrollView.documentView = MainCanvas
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForSequence), name: NSNotification.Name.nvCanvasSetupForSequence, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: MainCanvas)
+		NotificationCenter.default.addObserver(self, selector: #selector(GraphViewController.onCanvasSetupForSequence), name: NSNotification.Name.nvCanvasSetupForSequence, object: MainCanvas)
 		
 		MainCanvas!.setupFor(group: doc.Story.MainGroup)
 		

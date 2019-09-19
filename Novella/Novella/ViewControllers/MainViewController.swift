@@ -26,8 +26,6 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		_outlinerVC?.setup(doc: doc)
 		_graphVC?.setup(doc: doc)
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onCanvasObjectDoubleClicked), name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: nil)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -51,6 +49,11 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		if segue.identifier == "GraphVC" {
 			_graphVC = segue.destinationController as? GraphViewController
+      guard let canvas = _graphVC?.MainCanvas else {
+        print("ERROR: Could not find Canvas when GraphViewController segue was triggered.")
+        return
+      }
+      NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onCanvasObjectDoubleClicked), name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: canvas)
 		}
 		
 		if segue.identifier == "OutlinerVC" {

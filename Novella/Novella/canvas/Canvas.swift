@@ -148,7 +148,7 @@ class Canvas: NSView {
 		}
 		
 		// post setup for group notification
-		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForGroup, object: nil, userInfo: [
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForGroup, object: self, userInfo: [
 			"group": group
 		])
 	}
@@ -192,7 +192,7 @@ class Canvas: NSView {
 		}
 		
 		// post setup for sequence notification
-		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForSequence, object: nil, userInfo: [
+		NotificationCenter.default.post(name: NSNotification.Name.nvCanvasSetupForSequence, object: self, userInfo: [
 			"sequence": sequence
 		])
 	}

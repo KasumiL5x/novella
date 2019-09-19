@@ -56,7 +56,9 @@ class LinkParker: NSView {
 		panGesture.buttonMask = 0x1
 		addGestureRecognizer(panGesture)
 		
-		// listen for the canvas setup calls as we need to reset the parker when jumping between them
+		// listen for the canvas setup calls as we need to reset the parker when jumping between them.
+    // also the canvas isn't accessible from here, hmm
+    print("ISSUE: All documents will trigger this unless the `object` is set to a specific `Canvas` instance, but I do ont have one available.")
 		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForGroup), name: NSNotification.Name.nvCanvasSetupForGroup, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(LinkParker.onCanvasSetupForSequence), name: NSNotification.Name.nvCanvasSetupForSequence, object: nil)
 	}
