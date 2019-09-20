@@ -63,7 +63,8 @@ class CanvasHub: CanvasObject {
 		return false
 	}
 	override func mainColor() -> NSColor {
-		return NSColor.fromHex("#B0DB43")//#A379C9 #46B1C9
+//		return NSColor.fromHex("#B0DB43")//#A379C9 #46B1C9
+    return NSColor.fromHex("#AAFAC8")
 	}
 	override func labelString() -> String {
 		return "Hub"
