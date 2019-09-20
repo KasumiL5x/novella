@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -772,11 +773,11 @@
                                 <rect key="frame" x="40" y="0.0" width="960" height="700"/>
                                 <subviews>
                                     <customView id="Euj-Dd-jy4" userLabel="Left">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="256" height="700"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-7K-lbu" userLabel="Outliner">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256" height="700"/>
                                                 <connections>
                                                     <segue destination="09l-Zd-XRM" kind="embed" identifier="OutlinerVC" id="jxo-A9-tHT"/>
                                                 </connections>
@@ -790,11 +791,11 @@
                                         </constraints>
                                     </customView>
                                     <customView id="nby-ee-krr" userLabel="Middle">
-                                        <rect key="frame" x="209" y="0.0" width="542" height="700"/>
+                                        <rect key="frame" x="265" y="0.0" width="695" height="700"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="eg3-Bo-lPx" userLabel="Graph">
-                                                <rect key="frame" x="0.0" y="0.0" width="542" height="700"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="695" height="700"/>
                                                 <connections>
                                                     <segue destination="JzM-wE-2ha" kind="embed" identifier="GraphVC" id="lqc-mL-tMK"/>
                                                 </connections>
@@ -807,24 +808,8 @@
                                             <constraint firstItem="eg3-Bo-lPx" firstAttribute="leading" secondItem="nby-ee-krr" secondAttribute="leading" id="fpr-Gf-vao"/>
                                         </constraints>
                                     </customView>
-                                    <customView id="TGU-gv-PIx" userLabel="Right">
-                                        <rect key="frame" x="760" y="0.0" width="200" height="700"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <subviews>
-                                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="lhb-Ly-fUJ" userLabel="Properties">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="700"/>
-                                            </containerView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="lhb-Ly-fUJ" secondAttribute="bottom" id="3Tj-Qf-SF9"/>
-                                            <constraint firstAttribute="trailing" secondItem="lhb-Ly-fUJ" secondAttribute="trailing" id="Sq0-3H-dTp"/>
-                                            <constraint firstItem="lhb-Ly-fUJ" firstAttribute="top" secondItem="TGU-gv-PIx" secondAttribute="top" id="dbs-U4-J6s"/>
-                                            <constraint firstItem="lhb-Ly-fUJ" firstAttribute="leading" secondItem="TGU-gv-PIx" secondAttribute="leading" id="gNv-Dt-dwd"/>
-                                        </constraints>
-                                    </customView>
                                 </subviews>
                                 <holdingPriorities>
-                                    <real value="250"/>
                                     <real value="250"/>
                                     <real value="250"/>
                                 </holdingPriorities>
