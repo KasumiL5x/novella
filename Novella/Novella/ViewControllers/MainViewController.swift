@@ -24,8 +24,21 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		_splitView.delegate = self
 		
-		_outlinerVC?.setup(doc: doc)
-		_graphVC?.setup(doc: doc)
+    if let outliner = _outlinerVC, let graph = _graphVC {
+      // outliner setup
+      outliner.setup(doc: doc)
+      
+      // graph setup
+      graph.setup(doc: doc)
+      // setup `nvCanvasObjectDoubleClicked` from graph's canvas
+      if let canvas = graph.MainCanvas {
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onCanvasObjectDoubleClicked), name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: canvas)
+      } else {
+        print("ERROR: Could not find Canvas when viewWillAppear was triggered.")
+      }
+    } else {
+      print("ERROR: Outliner or Graph were not available during viewWillAppear.")
+    }
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -49,11 +62,6 @@ class MainViewController: NSViewController, NSTableViewDelegate {
 		
 		if segue.identifier == "GraphVC" {
 			_graphVC = segue.destinationController as? GraphViewController
-      guard let canvas = _graphVC?.MainCanvas else {
-        print("ERROR: Could not find Canvas when GraphViewController segue was triggered.")
-        return
-      }
-      NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onCanvasObjectDoubleClicked), name: NSNotification.Name.nvCanvasObjectDoubleClicked, object: canvas)
 		}
 		
 		if segue.identifier == "OutlinerVC" {
